@@ -1,0 +1,284 @@
+.Signup-bg {
+  box-sizing: border-box;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: linear-gradient(
+    to right,
+    rgb(67, 184, 232),
+    rgb(52, 118, 214)
+  );
+  position: fixed;
+  overflow-y: auto;
+}
+.Signup-container {
+  margin: 5vh 5vw;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.signup-logo-container {
+  height: 70px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+  position: relative;
+  top: 0;
+  left: 0;
+  padding-left: 50px;
+}
+.signup-logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(235, 84, 84);
+  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
+  border-top: 2px solid whitesmoke;
+  border-left: 2px solid whitesmoke;
+  border-right: 2px solid whitesmoke;
+  height: 70px;
+  padding: 0px 20px;
+  font-size: 40px;
+  font-family: "Staatliches", cursive;
+  z-index: 1;
+  color: whitesmoke;
+  letter-spacing: 3px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.login-logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(119, 235, 84);
+  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
+  border-top: 2px solid whitesmoke;
+  border-left: 2px solid whitesmoke;
+  border-right: 2px solid whitesmoke;
+  height: 70px;
+  padding: 0px 20px;
+  margin: 0px 20px;
+  font-size: 40px;
+  font-family: "Staatliches", cursive;
+  z-index: 1;
+  color: whitesmoke;
+  letter-spacing: 3px;
+  border-radius: 10px 10px 0px 0px;
+}
+.login-logo-box:hover {
+  background-color: rgb(84, 221, 42);
+}
+.login-logo-box a {
+  text-decoration: none;
+  color: whitesmoke;
+}
+.login-logo-bookshlf {
+  margin-left: calc(100% - 669.8px);
+}
+
+.signup-logo-end {
+  height: 15px;
+  background-color: rgb(235, 84, 84);
+  /*box-shadow: 1px 3px 6px rgba(8, 1, 1, 0.9);*/
+  border-left: 2px solid whitesmoke;
+  border-right: 2px solid whitesmoke;
+  border-radius: 10px 10px 0px 0px;
+  z-index: 2;
+}
+.signup-main {
+  width: 100%;
+  padding: 20px;
+  background-color: rgb(35, 47, 62);
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 1px 3px 6px rgba(8, 1, 1, 0.9);
+  border-left: 2px solid whitesmoke;
+  border-right: 2px solid whitesmoke;
+  z-index: 2;
+  font-family: "Roboto", sans-serif;
+  color: whitesmoke;
+  letter-spacing: 1.5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.signup-lable {
+  font-weight: bold;
+  margin: 10px 0px;
+  font-size: 20px;
+}
+.signup-lable sup {
+  color: rgb(241, 88, 88);
+  font-weight: boldder;
+}
+.signup-input input {
+  width: 400px;
+  height: 50px;
+  font-size: 20px;
+  padding: 0px 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: rgb(78, 80, 79);
+  margin-right: 10px;
+  background-color: rgb(232, 228, 228, 0.8);
+  border: none;
+  border-bottom: 5px solid whitesmoke;
+}
+.signup-input input:focus {
+  outline: none;
+  transition: 0.2s;
+  border-bottom: 3px solid rgb(36, 175, 36);
+  border-radius: 5px 5px 0 0;
+  background-color: white;
+}
+.signup-input input[type="text"]:focus,
+.signup-input input[type="email"]:focus {
+  width: 700px;
+}
+.signup-submit {
+  width: 400px;
+  padding: 10px;
+  height: 60px;
+  margin: 20px 0px;
+  font-size: 24px;
+  font-family: "Staatliches", cursive;
+  border: none;
+  background-color: rgb(46, 81, 177);
+  color: rgb(245, 241, 241);
+  letter-spacing: 3px;
+  box-shadow: 1px 3px 5px rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signup-submit img {
+  z-index: 2;
+}
+.signup-submit input {
+  width: 400px;
+  padding: 10px;
+  height: 60px;
+  margin-left: -50px;
+  font-size: 24px;
+  font-family: "Staatliches", cursive;
+  border: none;
+  background-color: rgb(46, 81, 177);
+  color: rgb(245, 241, 241);
+  letter-spacing: 3px;
+}
+.signup-submit input:hover {
+  color: rgb(240, 222, 58);
+}
+.signup-submit input:focus {
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid white;
+}
+.signup-logo-sm {
+  display: none;
+}
+
+/* For Medium small screens */
+@media only screen and (max-width: 893px) {
+  .signup-logo-container {
+    padding: 0 0 0 20px;
+  }
+  .login-logo-box,
+  .signup-logo-box {
+    margin: 0px 10px;
+    padding: 0px 10px;
+    font-size: 30px;
+  }
+  .login-logo-bookshlf {
+    margin-left: calc(100% - 569px);
+  }
+  .signup-input input[type="text"]:focus,
+  .signup-input input[type="email"]:focus {
+    width: 600px;
+  }
+}
+/* for Mobile phone screens */
+@media only screen and (max-width: 760px) {
+  .login-logo-bookshlf {
+    display: none;
+  }
+  .signup-logo-sm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .signup-input input[type="text"]:focus,
+  .signup-input input[type="email"]:focus {
+    width: 500px;
+  }
+}
+/* for smaller screens */
+@media only screen and (max-width: 560px) {
+  .Signup-container {
+    margin: 5px;
+  }
+  .signup-logo-container {
+    padding: 0 0 0 10px;
+  }
+  .signup-input input,
+  .signup-submit {
+    width: 300px;
+  }
+  .login-logo-box,
+  .signup-logo-box {
+    margin: 0px 10px;
+    padding: 0px 10px;
+    font-size: 30px;
+  }
+  .login-logo-bookshlf {
+    display: none;
+  }
+  .signup-logo-sm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .signup-input input[type="text"]:focus,
+  .signup-input input[type="email"]:focus {
+    width: 320px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .Signup-container {
+    margin: 0px;
+  }
+  .signup-main {
+    padding: 10px;
+  }
+  .signup-logo-container {
+    padding: 0 0 0 10px;
+  }
+  .signup-input input,
+  .signup-submit {
+    width: 300px;
+  }
+  .login-logo-box,
+  .signup-logo-box {
+    margin: 0px 10px;
+    padding: 0px 10px;
+    font-size: 30px;
+  }
+  .login-logo-bookshlf {
+    display: none;
+  }
+  .signup-logo-sm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .signup-input input[type="text"]:focus,
+  .signup-input input[type="email"]:focus {
+    width: 320px;
+  }
+}

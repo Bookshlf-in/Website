@@ -15,7 +15,7 @@
   width: 80vw;
   height: 80%;
   margin: 10vh auto;
-  background-color: aliceblue;
+  background-color: rgb(35, 47, 62);
   box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: row;
@@ -24,19 +24,22 @@
 /* Left container Css */
 .login-container-left {
   display: flex;
+  min-width: 70%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .login-container-left-logo {
-  font-size: 30px;
   margin: 20px;
-  font-family: "Poiret One", cursive;
-  letter-spacing: 3px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .login-container-left-main {
   width: 100%;
   padding: 20px 40px;
+  color: aliceblue;
 }
 .login-container-left-main h2 {
   font-size: 4em;
@@ -94,8 +97,8 @@
   font-weight: 900;
 }
 .login-form-forgot-password:hover {
-  color: rgb(96, 8, 179);
-  font-weight: bold;
+  color: rgb(238, 159, 113);
+  font-weight: boldder;
 }
 .login-form-submit-button {
   padding: 10px 0px;
@@ -172,12 +175,15 @@
   .login-container-right-container-register-button-card-back {
   transform: rotateX(0deg);
 }
-
+.login-container-right-container-register-button-card-back a {
+  text-decoration: none;
+  color: antiquewhite;
+}
 .login-container-right-container-register-button-card-front {
   height: 100%;
   width: 100%;
   color: whitesmoke;
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
   backface-visibility: hidden;
   transform: rotateX(0deg);
@@ -191,7 +197,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(59, 178, 224, 0.9);
+  background-color: rgba(255, 107, 49, 0.9);
   backface-visibility: hidden;
   transform: rotateX(180deg);
   transition: 0.5s;

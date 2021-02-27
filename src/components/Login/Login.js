@@ -1,5 +1,6 @@
 import React from "react";
 import "./Login.css";
+import {Link} from "react-router-dom";
 function Login() {
   return (
     <div className="app">
@@ -7,7 +8,13 @@ function Login() {
         <div className="login-container">
           {/* Left container in login container starts */}
           <div className="login-container-left">
-            <div className="login-container-left-logo">Bookshlf</div>
+            <div className="login-container-left-logo">
+              <img
+                src="./images/logoView[900x240].png"
+                height="50px"
+                alt="Bookshlf.in"
+              />
+            </div>
             <div className="login-container-left-main">
               <h2> Login </h2>
               <div className="login-container-left-main-form">
@@ -50,7 +57,7 @@ function Login() {
             <div className="login-container-right-container">
               <div className="login-container-right-container-logo">
                 <img
-                  src="/images/bookshlf-logo.png"
+                  src="/images/smallLogo.svg"
                   alt="bookshlf.in"
                   height="250px"
                   width="250px"
@@ -64,7 +71,7 @@ function Login() {
                     </div>
                     <div class="login-container-right-container-register-button-card-back">
                       <h2>
-                        {/* <Link to="#">*/}Register{/*</Link> */}
+                        <Link to="/Signup">Register</Link>
                       </h2>
                     </div>
                   </div>
