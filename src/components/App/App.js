@@ -3,6 +3,8 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import Login from "../Login/Login.js";
 import Signup from "../Signup/Signup.js";
+import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
+import Verify from "../VerifyAccount/Verify.js";
 import {Link} from "react-router-dom";
 function App() {
   return (
@@ -10,6 +12,8 @@ function App() {
       <div className="app">
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
+        <Route path="/ForgotPassword" component={ForgotPassword} />
+        <Route path="/Verify" component={Verify} />
         <div className="temp-nav">
           <ul>
             <Link to="/Login">
@@ -18,8 +22,11 @@ function App() {
             <Link to="/Signup">
               <li>Signup</li>
             </Link>
-            <Link to="/">
-              <li>Home</li>
+            <Link to="/ForgotPassword">
+              <li>ForgotPassword</li>
+            </Link>
+            <Link to="/Verify">
+              <li>Verify Account</li>
             </Link>
           </ul>
         </div>

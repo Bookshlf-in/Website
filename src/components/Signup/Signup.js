@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Signup.css";
-import InputMask from "react-input-mask";
+// import InputMask from "react-input-mask";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import {green} from "@material-ui/core/colors";
 import {Link} from "react-router-dom";
+
 function Signup() {
   return (
     <div className="app">
@@ -30,6 +34,7 @@ function Signup() {
             style={{backgroundImage: `url(./images/signup-main.png)`}}
           >
             <form action="#" autoComplete="off">
+              {/* input-field-starts */}
               <div className="signup-lable">
                 Full&nbsp;Name&nbsp;<sup title="Required Field">*</sup>
               </div>
@@ -41,6 +46,9 @@ function Signup() {
                   required
                 />
               </div>
+              {/* input-field-ends */}
+
+              {/* input-field-starts */}
               <div className="signup-lable">
                 Email&nbsp;<sup title="Required Field">*</sup>
               </div>
@@ -52,18 +60,61 @@ function Signup() {
                   required
                 />
               </div>
+
+              {/* input-field-starts */}
               <div className="signup-lable">
                 Password&nbsp;<sup title="Required Field">*</sup>
               </div>
               <div className="signup-input signup-password">
                 <input
-                  type="text"
+                  type="password"
                   id="signup-password"
                   placeholder="Password"
                   required
                 />
+                <span id="visible-icon">
+                  <VisibilityIcon
+                    focusable="true"
+                    viewBox="20 20"
+                    style={{color: green[500]}}
+                  />
+                </span>
+                <span id="hidden-icon">
+                  <VisibilityOffIcon
+                    focusable="true"
+                    viewBox="20 20"
+                    style={{color: green[500]}}
+                  />
+                </span>
               </div>
+
+              {/* input-field-starts */}
               <div className="signup-lable">
+                Confirm Password&nbsp;<sup title="Required Field">*</sup>
+              </div>
+              <div className="signup-input signup-password">
+                <input
+                  type="password"
+                  id="signup-password"
+                  placeholder="Confirm Password"
+                  required
+                />
+                <span id="visible-icon">
+                  <VisibilityIcon
+                    focusable="true"
+                    viewBox="20 20"
+                    style={{color: green[500]}}
+                  />
+                </span>
+                <span id="hidden-icon">
+                  <VisibilityOffIcon
+                    focusable="true"
+                    viewBox="20 20"
+                    style={{color: green[500]}}
+                  />
+                </span>
+              </div>
+              {/* <div className="signup-lable">
                 Phone&nbsp;Number&nbsp;<sup title="Required Field">*</sup>
               </div>
               <div className="signup-input signup-phone">
@@ -91,6 +142,7 @@ function Signup() {
               <div className="signup-input signup-pincode">
                 <InputMask mask="999-999" alwaysShowMask id="signup-phone" />
               </div>
+
               <div className="signup-lable">Current&nbsp;Address</div>
               <div className="signup-input signup-address">
                 <input
@@ -98,11 +150,16 @@ function Signup() {
                   id="signup-address"
                   placeholder="Delivery Address"
                 />
-              </div>
+              </div> */}
+              {/* input-field-ends */}
+              {/* submit-button-starts */}
+              <Link to="/Verify">
               <div className="signup-submit">
                 <img src="./images/smallLogo.svg" alt="" height="40px" />
                 <input type="submit" id="signup-register" value="Register" />
               </div>
+              </Link>
+              {/* submit-button-ends */}
             </form>
           </div>
           {/* Main Form Ends */}

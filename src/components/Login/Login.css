@@ -88,7 +88,10 @@
   border-bottom: 2px solid rgb(67, 232, 122);
   background-color: white;
 }
-.login-form-forgot-password {
+.login-form-forgot-password a {
+  text-decoration: none;
+}
+.login-form-forgot-password a {
   display: flex;
   justify-content: center;
   color: blueviolet;
@@ -96,7 +99,7 @@
   padding-top: 5px;
   font-weight: 900;
 }
-.login-form-forgot-password:hover {
+.login-form-forgot-password a:hover {
   color: rgb(238, 159, 113);
   font-weight: boldder;
 }

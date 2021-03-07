@@ -138,6 +138,12 @@
 .signup-input input[type="email"]:focus {
   width: 700px;
 }
+#visible-icon {
+  margin-left: -50px;
+}
+#hidden-icon {
+  margin-left: -24px;
+}
 .signup-submit {
   width: 400px;
   padding: 10px;
@@ -153,6 +159,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+a {
+  text-decoration: none;
 }
 .signup-submit img {
   z-index: 2;

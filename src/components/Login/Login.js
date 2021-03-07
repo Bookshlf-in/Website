@@ -38,8 +38,9 @@ function Login() {
                     />
                   </div>
                   <div className="login-form-forgot-password">
-                    {/* <Link to=""> */}
-                    Forgot Your Password ?{/* </Link> */}
+                    <Link to="/ForgotPassword">
+                    Forgot Your Password ?
+                    </Link>
                   </div>
                   <div className="login-form-submit-button">
                     <button>Login</button>
