@@ -26,16 +26,16 @@ function Footer() {
                 <div className="social-media-wrap">
                     <div className="footer-logo">
                         <Link to='/' className="social-logo">
-                        <img src="/images/logo.png[800x150].png" alt="" />
+                        <img src="./images/logo[800x150].png" alt="" />
                         </Link>
                     </div>
                     <div className="footer-address">
-                        <p className="footer-address-para">1418 River Drive, Suite 35 Cottonhall, CA 9622
-United States</p>
+                        <p className="footer-address-para">IIIT Lucknow, Ahmamau 226002 UP, India</p>
                     </div>
                     <div className="footer-contact">
-                        <Link to='/'>Sale@bookworm.com</Link>
-                        <Link to='/'>+124329849814</Link>
+                        <Link to='/'>bookshlf@outlook.com</Link>
+                        <br/>
+                        <Link to='/'>+91 97926 66122</Link>
                     </div>
                     {/* <small className="website-rights">MyYoutube &copy; 2021</small> */}
                     <div className="social-icons">
@@ -63,17 +63,15 @@ United States</p>
                         <h4>Explore</h4>
                         <Link to='/'>About Us</Link>
                         <Link to='/'>Sitemap</Link>
-                        <Link to='/'>Bookmarks</Link>
-                        <Link to='/'>Sign in/Join</Link>
+                        <Link to='/'>Sign in</Link>
+                        <Link to='/'>Join Us</Link>
                     </div>
                     <div className="footer-link-items">
                         <h4>Customer Service</h4>
-                        <Link to='/'>Help Center</Link>
                         <Link to='/'>Returns</Link>
-                        <Link to='/'>Product Recalls</Link>
+                        <Link to='/'>Report Product</Link>
                         <Link to='/'>Accessibility</Link>
                         <Link to='/'>Contact Us</Link>
-                        <Link to='/'>Store Pickup</Link>
                     </div>
                 </div>
                 <div className="footer-link-wrapper">
@@ -86,18 +84,18 @@ United States</p>
                     </div>
                     <div className="footer-link-items">
                         <h4>Categories</h4>
-                        <Link to='/'>Action</Link>
-                        <Link to='/'>Comedy</Link>
-                        <Link to='/'>Drama</Link>
-                        <Link to='/'>Horror</Link>
-                        <Link to='/'>Kids</Link>
-                        <Link to='/'>Romantic Comedy</Link>
+                        <Link to='/'>JEE Mains</Link>
+                        <Link to='/'>NEET PG</Link>
+                        <Link to='/'>JEE Advanced</Link>
+                        <Link to='/'>High School</Link>
+                        <Link to='/'>Programming</Link>
+                        <Link to='/'>Novels</Link>
                     </div>
                 </div>
             </div>
             </div>
             <div className="footer-container3">
-            &copy; 2021 BookShelf. All Rights Reserved
+            &copy; 2021 BookShlf. All Rights Reserved
             </div>
             
         </div>

@@ -12,6 +12,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Navbar/>
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
         <Route path="/ForgotPassword" component={ForgotPassword} />
