@@ -8,7 +8,6 @@ import {Link} from "react-router-dom";
 
 function Signup() {
   return (
-    <div className="app">
       <div className="Signup-bg">
         {/* Main Container Starts */}
         <div className="Signup-container">
@@ -166,7 +165,6 @@ function Signup() {
         </div>
         {/* Main Container Ends */}
       </div>
-    </div>
   );
 }
 

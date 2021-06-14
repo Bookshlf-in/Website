@@ -3,7 +3,7 @@ import "./Verify.css";
 import {Link} from "react-router-dom";
 function Verify() {
   return (
-    <div className="app">
+    
       <div className="login-bg">
         <div className="forgotmain-container">
           {/* Left container in login container starts */}
@@ -36,7 +36,6 @@ function Verify() {
           {/* Left container ends here */}
         </div>
       </div>
-    </div>
   );
 }
 export default Verify;

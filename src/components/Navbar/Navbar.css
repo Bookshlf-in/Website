@@ -1,0 +1,118 @@
+.navbar-container {
+  background-color: rgb(250, 237, 217);
+  width: 100%;
+  overflow: hidden;
+  padding: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+}
+.navbar-logo {
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70px;
+}
+.navbar-items ul {
+  float: left;
+  margin-left: 30px;
+  min-height: 50px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar-items li {
+  margin: 10px;
+}
+
+.navbar-items-chip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+.navbar-items-chip:hover {
+  color: rgb(235, 95, 95);
+}
+
+.navbar-right ul {
+  float: right;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar-right li {
+  margin: 10px;
+}
+.navbar-items-chip-searchbox {
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar-items-chip-searchbox input {
+  height: 30px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  padding-left: 2px;
+}
+.navbar-items-chip-searchbox input:focus {
+  outline: none;
+  width: 400px;
+  transition: 0.3s;
+  background-color: rgba(255, 255, 255);
+  border-bottom: 1px solid rgb(98, 221, 98);
+}
+
+.navbar-items-chip .dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.navbar-items-chip .dropdown .dropbtn {
+  border: none;
+  outline: none;
+  color: black;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding: 14px 10px;
+  font-size: 18px;
+  background-color: inherit;
+  margin: 0;
+}
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+  background-color: rgba(65, 64, 64, 0.1);
+  color: rgb(235, 95, 95);
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

@@ -5,31 +5,24 @@ import Login from "../Login/Login.js";
 import Signup from "../Signup/Signup.js";
 import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
 import Verify from "../VerifyAccount/Verify.js";
+import Navbar from "../Navbar/Navbar.js";
 import {Link} from "react-router-dom";
 function App() {
   return (
     <Router>
-      <div className="app">
-        <Route path="/Login" component={Login} />
-        <Route path="/Signup" component={Signup} />
-        <Route path="/ForgotPassword" component={ForgotPassword} />
-        <Route path="/Verify" component={Verify} />
-        <div className="temp-nav">
-          <ul>
-            <Link to="/Login">
-              <li>Login</li>
-            </Link>
-            <Link to="/Signup">
-              <li>Signup</li>
-            </Link>
-            <Link to="/ForgotPassword">
-              <li>ForgotPassword</li>
-            </Link>
-            <Link to="/Verify">
-              <li>Verify Account</li>
-            </Link>
-          </ul>
-        </div>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          <Route path="/Login" component={Login} />
+          <Route path="/Signup" component={Signup} />
+          <Route path="/ForgotPassword" component={ForgotPassword} />
+          <Route path="/Verify" component={Verify} />
+        </Switch>
+
+        {/* <Link to="/Login">Login </Link>
+      <Link to="/Signup">Signup </Link>
+      <Link to="/ForgotPassword">ForgotPassword </Link>
+      <Link to="/Verify">Verify Account</Link> */}
       </div>
     </Router>
   );

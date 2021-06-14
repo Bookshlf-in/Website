@@ -3,7 +3,6 @@ import "./ForgotPassword.css";
 import {Link} from "react-router-dom";
 function ForgotPassword() {
   return (
-    <div className="app">
       <div className="login-bg">
         <div className="forgotmain-container">
           {/* Left container in login container starts */}
@@ -45,7 +44,7 @@ function ForgotPassword() {
           {/* Left container ends here */}
         </div>
       </div>
-    </div>
+    
   );
 }
 export default ForgotPassword;

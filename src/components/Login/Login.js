@@ -3,7 +3,6 @@ import "./Login.css";
 import {Link} from "react-router-dom";
 function Login() {
   return (
-    <div className="app">
       <div className="login-bg">
         <div className="login-container">
           {/* Left container in login container starts */}
@@ -83,7 +82,6 @@ function Login() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 export default Login;
