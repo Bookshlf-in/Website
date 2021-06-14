@@ -6,6 +6,7 @@ import Signup from "../Signup/Signup.js";
 import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
 import Verify from "../VerifyAccount/Verify.js";
 import {Link} from "react-router-dom";
+import Footer from "../Footer/Footer";
 function App() {
   return (
     <Router>
@@ -29,6 +30,7 @@ function App() {
               <li>Verify Account</li>
             </Link>
           </ul>
+          <Footer/>
         </div>
       </div>
     </Router>
