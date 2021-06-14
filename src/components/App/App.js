@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar/>
+        <Navbar />
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
         <Route path="/ForgotPassword" component={ForgotPassword} />
@@ -32,8 +32,8 @@ function App() {
               <li>Verify Account</li>
             </Link>
           </ul>
-          <Footer/>
         </div>
+        <Footer />
       </div>
     </Router>
   );

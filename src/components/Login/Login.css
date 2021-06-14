@@ -1,18 +1,19 @@
 .login-bg {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
   box-sizing: border-box;
   margin: 0;
-  height: 100vh;
-  width: 100vw;
   background-image: linear-gradient(
     to right,
     rgb(67, 184, 232),
     rgb(52, 118, 214)
   );
-  position: fixed;
-  overflow-y: auto;
 }
 .login-container {
-  width: 80vw;
+  width: 80%;
   height: 80%;
   margin: 10vh auto;
   background-color: rgb(35, 47, 62);
@@ -30,7 +31,8 @@
   align-items: center;
 }
 .login-container-left-logo {
-  margin: 20px;
+  margin: 10px;
+  padding-top: 10px;
   width: 100%;
   display: flex;
   justify-content: center;

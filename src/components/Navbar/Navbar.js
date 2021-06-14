@@ -4,6 +4,12 @@ import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import SideNav from "../Sidenav/Sidenav.js";
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  console.log("Clicked");
+}
 
 function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -19,6 +25,10 @@ function Navbar() {
     <div className="main-navbar" id="main-navbar">
       {/* navbar container starts */}
       <div className="navbar-container">
+        <span onClick={openNav} className="Sidenav-open">
+          <i class="fas fa-bars"></i>
+        </span>
+        <SideNav />
         {/* navbar logo */}
         <div className="navbar-logo">
           <img

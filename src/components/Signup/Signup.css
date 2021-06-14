@@ -1,15 +1,10 @@
 .Signup-bg {
   box-sizing: border-box;
-  margin: 0;
-  height: 100vh;
-  width: 100vw;
   background-image: linear-gradient(
     to right,
     rgb(67, 184, 232),
     rgb(52, 118, 214)
   );
-  position: fixed;
-  overflow-y: auto;
 }
 .Signup-container {
   margin: 5vh 5vw;

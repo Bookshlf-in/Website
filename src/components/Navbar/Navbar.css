@@ -1,3 +1,8 @@
+.main-navbar {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
 .navbar-container {
   background-color: rgb(250, 237, 217);
   width: 100%;
@@ -6,6 +11,9 @@
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   font-size: 18px;
+}
+.Sidenav-open {
+  display: none;
 }
 .navbar-logo {
   float: left;
@@ -73,6 +81,7 @@
 .navbar-items-chip .dropdown {
   float: left;
   overflow: hidden;
+  z-index: 10;
 }
 
 .navbar-items-chip .dropdown .dropbtn {
@@ -85,11 +94,13 @@
   font-size: 18px;
   background-color: inherit;
   margin: 0;
+  z-index: 10;
 }
 .navbar a:hover,
 .dropdown:hover .dropbtn {
   background-color: rgba(65, 64, 64, 0.1);
   color: rgb(235, 95, 95);
+  z-index: 10;
 }
 .dropdown-content {
   display: none;
@@ -107,12 +118,39 @@
   text-decoration: none;
   display: block;
   text-align: left;
+  z-index: 10;
 }
 
 .dropdown-content a:hover {
   background-color: #ddd;
+  z-index: 10;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media screen and (max-width: 660px) {
+  .navbar-right {
+    display: none;
+  }
+}
+@media screen and (max-width: 800px) {
+  .Sidenav-open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    float: left;
+    margin: 10px;
+    font-size: 30px;
+    color: rgb(235, 95, 95);
+  }
+  .navbar-logo img {
+    height: 40px;
+    width: 210px;
+  }
+  .navbar-items {
+    display: none;
+  }
 }
