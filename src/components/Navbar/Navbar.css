@@ -2,6 +2,7 @@
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
+  z-index: 1000;
 }
 .navbar-container {
   background-color: rgb(250, 237, 217);

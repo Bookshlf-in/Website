@@ -37,7 +37,7 @@ function Sidenav() {
         <Link>
           Blog&nbsp;<i class="fab fa-blogger"></i>
         </Link>
-        <Link>
+        <Link to ="/Contact">
           Contact&nbsp;Us&nbsp;<i class="fas fa-headset"></i>
         </Link>
         <Link>

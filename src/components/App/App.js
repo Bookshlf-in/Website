@@ -7,17 +7,24 @@ import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
 import Verify from "../VerifyAccount/Verify.js";
 import Navbar from "../Navbar/Navbar.js";
 import {Link} from "react-router-dom";
-import Footer from "../Footer/Footer";
+import Footer from "../Footer/Footer.js";
+import About from "../About/About.js";
+import Contact from "../Contact/Contact.js";
 function App() {
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <Route path="/Login" component={Login} />
-        <Route path="/Signup" component={Signup} />
-        <Route path="/ForgotPassword" component={ForgotPassword} />
-        <Route path="/Verify" component={Verify} />
-        <div className="temp-nav">
+        <Switch>
+          <Route path="/Login" component={Login} />
+          <Route path="/Signup" component={Signup} />
+          <Route path="/ForgotPassword" component={ForgotPassword} />
+          <Route path="/Verify" component={Verify} />
+          <Route path="/About" component={About} />
+          <Route path="/Contact" component={Contact} />
+        </Switch>
+
+        {/* <div className="temp-nav">
           <ul>
             <Link to="/Login">
               <li>Login</li>
@@ -32,7 +39,7 @@ function App() {
               <li>Verify Account</li>
             </Link>
           </ul>
-        </div>
+        </div> */}
         <Footer />
       </div>
     </Router>
