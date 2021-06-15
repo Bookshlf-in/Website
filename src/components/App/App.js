@@ -8,6 +8,7 @@ import Verify from "../VerifyAccount/Verify.js";
 import Navbar from "../Navbar/Navbar.js";
 import {Link} from "react-router-dom";
 import Footer from "../Footer/Footer";
+import Reviews from "../Reviews/Reviews";
 function App() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/Signup" component={Signup} />
         <Route path="/ForgotPassword" component={ForgotPassword} />
         <Route path="/Verify" component={Verify} />
+        <Route path="/Reviews" component={Reviews}/>
         <div className="temp-nav">
           <ul>
             <Link to="/Login">
@@ -30,6 +32,9 @@ function App() {
             </Link>
             <Link to="/Verify">
               <li>Verify Account</li>
+            </Link>
+            <Link to="/Reviews">
+              <li>Reviews</li>
             </Link>
           </ul>
         </div>

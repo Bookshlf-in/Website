@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^12.6.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icon": "^1.0.0",
+    "react-icons": "^4.2.0",
     "react-input-mask": "^3.0.0-alpha.2",
     "react-masked-field": "^2.1.0",
     "react-router-dom": "^5.2.0",
