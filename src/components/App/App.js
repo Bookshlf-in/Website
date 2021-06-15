@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import Login from "../Login/Login.js";
@@ -8,8 +8,11 @@ import Verify from "../VerifyAccount/Verify.js";
 import Navbar from "../Navbar/Navbar.js";
 import {Link} from "react-router-dom";
 import Footer from "../Footer/Footer";
-import Reviews from "../Reviews/Reviews";
+import Display from "../DisplayReview/Display";
 function App() {
+
+  
+
   return (
     <Router>
       <div className="App">
@@ -18,7 +21,10 @@ function App() {
         <Route path="/Signup" component={Signup} />
         <Route path="/ForgotPassword" component={ForgotPassword} />
         <Route path="/Verify" component={Verify} />
-        <Route path="/Reviews" component={Reviews}/>
+        <Route path="/Display" component={Display} />
+
+
+
         <div className="temp-nav">
           <ul>
             <Link to="/Login">
@@ -33,8 +39,8 @@ function App() {
             <Link to="/Verify">
               <li>Verify Account</li>
             </Link>
-            <Link to="/Reviews">
-              <li>Reviews</li>
+            <Link to="/Display">
+              <li>DisplayReview</li>
             </Link>
           </ul>
         </div>

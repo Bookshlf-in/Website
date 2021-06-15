@@ -14,6 +14,7 @@
     "react-icons": "^4.2.0",
     "react-input-mask": "^3.0.0-alpha.2",
     "react-masked-field": "^2.1.0",
+    "react-player": "^2.9.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0"
