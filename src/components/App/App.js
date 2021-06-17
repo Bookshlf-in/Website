@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import Footer from "../Footer/Footer.js";
 import About from "../About/About.js";
 import Contact from "../Contact/Contact.js";
+import Display from "../DisplayReview/Display";
 function App() {
   return (
     <Router>
@@ -22,9 +23,10 @@ function App() {
           <Route path="/Verify" component={Verify} />
           <Route path="/About" component={About} />
           <Route path="/Contact" component={Contact} />
+          <Route path="/Display" component={Display} />
         </Switch>
 
-        {/* <div className="temp-nav">
+        <div className="temp-nav">
           <ul>
             <Link to="/Login">
               <li>Login</li>
@@ -38,8 +40,11 @@ function App() {
             <Link to="/Verify">
               <li>Verify Account</li>
             </Link>
+            <Link to="/Display">
+              <li>DisplayReview</li>
+            </Link>
           </ul>
-        </div> */}
+        </div>
         <Footer />
       </div>
     </Router>
