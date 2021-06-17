@@ -1,4 +1,4 @@
-.reviews{
+.addreviews{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,7 +7,7 @@
     /* border: 4px solid red; */
 }
 
-.review{
+.addreview{
     padding: 10px 35px;
     display: flex;
     width: 50%;

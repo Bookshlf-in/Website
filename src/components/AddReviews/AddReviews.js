@@ -35,11 +35,11 @@ function Reviews(props) {
   }
 
   return (
-    <div className="reviews">
+    <div className="addreviews">
         <div className="review-by">
               <p>Review by Rahul yadav</p>
           </div>
-      <div className="review">
+      <div className="addreview">
           
         <div className="review-header">
             
