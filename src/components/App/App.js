@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import Login from "../Login/Login.js";
@@ -12,6 +12,7 @@ import About from "../About/About.js";
 import Contact from "../Contact/Contact.js";
 import Cart from "../Cart/Cart.js";
 import Display from "../DisplayReview/Display";
+
 function App() {
   return (
     <Router>
@@ -27,26 +28,6 @@ function App() {
           <Route path="/Cart" component={Cart} />
           <Route path="/Display" component={Display} />
         </Switch>
-
-        {/* <div className="temp-nav">
-          <ul>
-            <Link to="/Login">
-              <li>Login</li>
-            </Link>
-            <Link to="/Signup">
-              <li>Signup</li>
-            </Link>
-            <Link to="/ForgotPassword">
-              <li>ForgotPassword</li>
-            </Link>
-            <Link to="/Verify">
-              <li>Verify Account</li>
-            </Link>
-            <Link to="/Display">
-              <li>DisplayReview</li>
-            </Link>
-          </ul>
-        </div> */}
         <Footer />
       </div>
     </Router>
