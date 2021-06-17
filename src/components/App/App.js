@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import Login from "../Login/Login.js";
@@ -11,6 +11,7 @@ import Footer from "../Footer/Footer.js";
 import About from "../About/About.js";
 import Contact from "../Contact/Contact.js";
 import Cart from "../Cart/Cart.js";
+import Display from "../DisplayReview/Display";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
           <Route path="/About" component={About} />
           <Route path="/Contact" component={Contact} />
           <Route path="/Cart" component={Cart} />
+          <Route path="/Display" component={Display} />
         </Switch>
 
         {/* <div className="temp-nav">
@@ -39,6 +41,9 @@ function App() {
             </Link>
             <Link to="/Verify">
               <li>Verify Account</li>
+            </Link>
+            <Link to="/Display">
+              <li>DisplayReview</li>
             </Link>
           </ul>
         </div> */}
