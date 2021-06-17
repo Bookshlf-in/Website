@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import Footer from "../Footer/Footer.js";
 import About from "../About/About.js";
 import Contact from "../Contact/Contact.js";
+import Cart from "../Cart/Cart.js";
 function App() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function App() {
           <Route path="/Verify" component={Verify} />
           <Route path="/About" component={About} />
           <Route path="/Contact" component={Contact} />
+          <Route path="/Cart" component={Cart} />
         </Switch>
 
         {/* <div className="temp-nav">

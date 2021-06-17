@@ -114,12 +114,13 @@ function Navbar() {
             </li>
             <li>
               <div className="navbar-items-chip">
-                <img
+                <Link to = "/Cart"><img
                   src="./images/carts.svg"
                   alt="My cart"
                   height="30px"
                   width="30px"
                 />
+                </Link>
               </div>
             </li>
             <li>
