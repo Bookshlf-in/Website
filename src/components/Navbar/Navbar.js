@@ -80,15 +80,15 @@ function Navbar() {
                   <div class="dropdown">
                     <button class="dropbtn">Other&nbsp;&#709;</button>
                     <div class="dropdown-content">
-                      <Link to="">Contact Us</Link>
-                      <Link to="">Contribute</Link>
+                      <Link to="/Contact">Contact Us</Link>
+                      <Link to="github.com/Bookshlf-in/Website">Contribute</Link>
                       <Link to="">Blog</Link>
                     </div>
                   </div>
                 </div>
               </li>
             </Link>
-            <Link to="/">
+            <Link to="/About">
               <li>
                 <div className="navbar-items-chip">AboutUs</div>
               </li>
@@ -114,12 +114,13 @@ function Navbar() {
             </li>
             <li>
               <div className="navbar-items-chip">
-                <img
+                <Link to = "/Cart"><img
                   src="./images/carts.svg"
                   alt="My cart"
                   height="30px"
                   width="30px"
                 />
+                </Link>
               </div>
             </li>
             <li>

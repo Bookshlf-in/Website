@@ -61,7 +61,7 @@ function Footer() {
                 <div className="footer-link-wrapper">
                     <div className="footer-link-items">
                         <h4>Explore</h4>
-                        <Link to='/'>About Us</Link>
+                        <Link to='/About'>About Us</Link>
                         <Link to='/'>Sitemap</Link>
                         <Link to='/'>Sign in</Link>
                         <Link to='/'>Join Us</Link>
@@ -71,7 +71,7 @@ function Footer() {
                         <Link to='/'>Returns</Link>
                         <Link to='/'>Report Product</Link>
                         <Link to='/'>Accessibility</Link>
-                        <Link to='/'>Contact Us</Link>
+                        <Link to='/Contact'>Contact Us</Link>
                     </div>
                 </div>
                 <div className="footer-link-wrapper">

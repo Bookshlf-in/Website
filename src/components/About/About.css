@@ -1,0 +1,19 @@
+.About-bg {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+}
+.About-textbox {
+  padding: 50px;
+  max-width: 800px;
+  background-color: rgba(0, 0, 0, 0.486);
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  color: white;
+  border: 1px solid white;
+  box-shadow: 6px 4px 3px rgba(240, 243, 34, 0.5);
+  font-weight: bold;
+}

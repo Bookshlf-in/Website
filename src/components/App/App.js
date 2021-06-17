@@ -7,25 +7,28 @@ import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
 import Verify from "../VerifyAccount/Verify.js";
 import Navbar from "../Navbar/Navbar.js";
 import {Link} from "react-router-dom";
-import Footer from "../Footer/Footer";
+import Footer from "../Footer/Footer.js";
+import About from "../About/About.js";
+import Contact from "../Contact/Contact.js";
+import Cart from "../Cart/Cart.js";
 import Display from "../DisplayReview/Display";
 function App() {
-
-  
-
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <Route path="/Login" component={Login} />
-        <Route path="/Signup" component={Signup} />
-        <Route path="/ForgotPassword" component={ForgotPassword} />
-        <Route path="/Verify" component={Verify} />
-        <Route path="/Display" component={Display} />
+        <Switch>
+          <Route path="/Login" component={Login} />
+          <Route path="/Signup" component={Signup} />
+          <Route path="/ForgotPassword" component={ForgotPassword} />
+          <Route path="/Verify" component={Verify} />
+          <Route path="/About" component={About} />
+          <Route path="/Contact" component={Contact} />
+          <Route path="/Cart" component={Cart} />
+          <Route path="/Display" component={Display} />
+        </Switch>
 
-
-
-        <div className="temp-nav">
+        {/* <div className="temp-nav">
           <ul>
             <Link to="/Login">
               <li>Login</li>
@@ -43,7 +46,7 @@ function App() {
               <li>DisplayReview</li>
             </Link>
           </ul>
-        </div>
+        </div> */}
         <Footer />
       </div>
     </Router>

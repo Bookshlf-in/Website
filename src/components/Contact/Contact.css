@@ -1,0 +1,132 @@
+.contact-main {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+}
+.contact-main h1 {
+  font-family: "Poiret", sans-serif;
+  margin: 5px;
+  font-size: 3em;
+}
+.contact-map iframe {
+  width: 1366px;
+  height: 450px;
+  border: none;
+  outline: none;
+}
+.contact-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 800px;
+  font-family: "Roboto", sans-serif;
+  background-color: white;
+  margin-top: -100px;
+  z-index: 40;
+  padding: 20px;
+}
+.contact-form .social-icons i:hover {
+  color: rgb(246, 77, 77);
+}
+#contactName,
+#contactEmail,
+#contactSubject,
+#contactReview,
+.contactForm label,
+#contactSubmit {
+  float: left;
+}
+#contactName,
+#contactEmail {
+  width: 300px;
+  height: 50px;
+  margin: 20px;
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 0px 10px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+}
+
+#contactSubject {
+  width: 640px;
+  margin: 20px;
+  height: 50px;
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 0px 10px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+}
+#contactReview {
+  width: 640px;
+  margin: 20px;
+  height: 150px;
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 10px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+}
+#contactName:focus,
+#contactEmail:focus,
+#contactSubject:focus,
+#contactReview:focus {
+  border: 1px solid rgb(246, 77, 77);
+  transition: 0.2s ease-in-out;
+  color: rgb(126, 33, 126);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+#contactName::placeholder,
+#contactEmail::placeholder,
+#contactSubject::placeholder,
+#contactReview::placeholder {
+  color: rgb(246, 77, 77);
+  font-weight: bold;
+}
+
+#contactSubmit {
+  width: 200px;
+  margin: 20px;
+  height: 60px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgb(26, 26, 26);
+  color: white;
+  padding: 10px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  border: none;
+}
+#contactSubmit:hover {
+  box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.4);
+  border: 1px solid white;
+  transition: 0.2s ease-in-out;
+}
+
+.contact-main hr {
+  width: 100%;
+  border: 1px solid grey;
+}
+
+@media screen and (max-width: 700px) {
+  .contact-map iframe {
+    width: 600px;
+    height: 350px;
+  }
+  .contact-form {
+    max-width: 600px;
+  }
+  #contactName,
+  #contactEmail,
+  #contactSubject,
+  #contactReview {
+    width: 100%;
+  }
+}
