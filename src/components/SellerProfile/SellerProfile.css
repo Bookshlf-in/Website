@@ -1,0 +1,44 @@
+.SellerProfile-container {
+  height: 100vh;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.SellerProfile-container .card {
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  max-width: 340px;
+  margin: auto;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.SellerProfile-container .title {
+  color: grey;
+  font-size: 18px;
+}
+.SellerProfile-container .card i {
+  margin: 0px 5px;
+}
+.SellerProfile-container button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.SellerProfile-container a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+.SellerProfile-container button:hover,
+a:hover {
+  opacity: 0.7;
+}

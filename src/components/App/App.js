@@ -13,6 +13,8 @@ import Contact from "../Contact/Contact.js";
 import Cart from "../Cart/Cart.js";
 import Review from "../Reviews/Reviews.js";
 import AddReviews from "../AddReviews/AddReviews.js";
+import UserProfile from "../UserProfile/UserProfile.js";
+import SellerProfile from "../SellerProfile/SellerProfile.js";
 function App() {
   return (
     <Router>
@@ -28,6 +30,8 @@ function App() {
           <Route path="/Cart" component={Cart} />
           <Route path="/Review" component={Review} />
           <Route path="/AddReview" component={AddReviews} />
+          <Route path="/UserProfile" component={UserProfile} />
+          <Route path="/SellerProfile" component={SellerProfile} />
         </Switch>
         <Review />
         <Footer />
