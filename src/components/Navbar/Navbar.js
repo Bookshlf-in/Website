@@ -26,7 +26,7 @@ function Navbar() {
       {/* navbar container starts */}
       <div className="navbar-container">
         <span onClick={openNav} className="Sidenav-open">
-          <i class="fas fa-bars"></i>
+          <i className="fas fa-bars"></i>
         </span>
         <SideNav />
         {/* navbar logo */}
@@ -57,9 +57,9 @@ function Navbar() {
             <Link to="/">
               <li>
                 <div className="navbar-items-chip">
-                  <div class="dropdown">
-                    <button class="dropbtn">Categories&nbsp;&#709;</button>
-                    <div class="dropdown-content">
+                  <div className="dropdown">
+                    <button className="dropbtn">Categories&nbsp;&#709;</button>
+                    <div className="dropdown-content">
                       <Link to="">JEE Mains</Link>
                       <Link to="">JEE Advanced</Link>
                       <Link to="">NEET</Link>
@@ -77,9 +77,9 @@ function Navbar() {
             <Link to="/">
               <li>
                 <div className="navbar-items-chip">
-                  <div class="dropdown">
-                    <button class="dropbtn">Other&nbsp;&#709;</button>
-                    <div class="dropdown-content">
+                  <div className="dropdown">
+                    <button className="dropbtn">Other&nbsp;&#709;</button>
+                    <div className="dropdown-content">
                       <Link to="/Contact">Contact Us</Link>
                       <Link to="github.com/Bookshlf-in/Website">Contribute</Link>
                       <Link to="">Blog</Link>
