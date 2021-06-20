@@ -41,20 +41,26 @@
   justify-content: center;
   align-items: center;
   color: white;
-}
-.navbar-items-chip a {
-  color: white;
-  padding: 5px;
-  font-size: 20px;
-}
-.navbar-items-chip a:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-.navbar-items-chip:hover {
-  color: rgb(235, 95, 95);
   font-size: 18px;
 }
-
+.navbar-items-chip a,
+.navbar-items-chip p {
+  padding: 14px 10px;
+  color: white;
+}
+.navbar-items-chip a:hover,
+.navbar-items-chip p:hover {
+  background-color: rgba(207, 199, 199, 0.452);
+}
+.navbar-items-chip .Cart-items-notify-bubble {
+  float: right;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: rgb(233, 159, 61);
+  padding: 2px 5px;
+  border-radius: 10px;
+  margin-top: -20px;
+}
 .navbar-right ul {
   float: right;
   list-style: none;
