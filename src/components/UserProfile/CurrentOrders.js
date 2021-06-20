@@ -1,15 +1,15 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-function PendingOrders() {
-  
+function CurrentOrders() {
   return (
-    <div className="seller-complete-orders" id="seller-pending-orders">
-       <table>
+    <div className="user-current-orders" id="user-current-orders">
+      <table>
         <tr>
           <th> Order ID </th>
           <th> Details </th>
           <th> Price </th>
+          <th> Tracking </th>
         </tr>
         {/* item order details */}
         <tr>
@@ -25,6 +25,9 @@ function PendingOrders() {
           <td>
             <i className="fas fa-rupee-sign"></i> 540/-
           </td>
+          <td>
+            <Link className="tracking-order-link">Track You Order</Link>
+          </td>
         </tr>
         {/* item order details */}
         <tr>
@@ -39,10 +42,13 @@ function PendingOrders() {
           </td>
           <td>
             <i className="fas fa-rupee-sign"></i> 540/-
+          </td>
+          <td>
+            <Link className="tracking-order-link">Track You Order</Link>
           </td>
         </tr>
       </table>
     </div>
   );
 }
-export default PendingOrders;
+export default CurrentOrders;

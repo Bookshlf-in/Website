@@ -29,11 +29,11 @@ function SellerProfile() {
     var show3 = document.getElementById("seller-complete-orders").style.display;
     if (show2 === "none") {
       show1 = "none";
-      show2 = "block";
+      show2 = "flex";
       show3 = "none";
     } else {
       show1 = "none";
-      show2 = "block";
+      show2 = "flex";
       show3 = "none";
     }
     document.getElementById("seller-account-details").style.display = show1;
@@ -48,11 +48,11 @@ function SellerProfile() {
     if (show3 === "none") {
       show1 = "none";
       show2 = "none";
-      show3 = "block";
+      show3 = "flex";
     } else {
       show1 = "none";
       show2 = "none";
-      show3 = "block";
+      show3 = "flex";
     }
     document.getElementById("seller-account-details").style.display = show1;
     document.getElementById("seller-pending-orders").style.display = show2;

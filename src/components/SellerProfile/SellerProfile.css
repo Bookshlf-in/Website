@@ -97,3 +97,27 @@
   width: 500px;
   height: 400px;
 }
+.seller-complete-orders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.seller-complete-orders table {
+  width: 100%;
+  background-color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+.seller-complete-orders table,
+.seller-complete-orders table th,
+.seller-complete-orders table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.seller-complete-orders table th,
+.seller-complete-orders table td {
+  padding: 10px;
+}
+.seller-complete-orders table td {
+  text-align: center;
+}
