@@ -5,7 +5,7 @@
   z-index: 1000;
 }
 .navbar-container {
-  background-color: rgb(250, 237, 217);
+  background: linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%);
   width: 100%;
   overflow: hidden;
   padding: 10px;
@@ -40,7 +40,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: rgb(255, 255, 255);
 }
 .navbar-items-chip:hover {
   color: rgb(235, 95, 95);
@@ -88,7 +88,7 @@
 .navbar-items-chip .dropdown .dropbtn {
   border: none;
   outline: none;
-  color: black;
+  color: rgb(255, 255, 255);
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   padding: 14px 10px;
@@ -99,8 +99,7 @@
 }
 .navbar a:hover,
 .dropdown:hover .dropbtn {
-  background-color: rgba(65, 64, 64, 0.1);
-  color: rgb(235, 95, 95);
+  background-color: rgba(207, 199, 199, 0.452);
   z-index: 100;
 }
 .dropdown-content {

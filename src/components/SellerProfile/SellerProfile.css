@@ -91,11 +91,26 @@
 }
 .seller-reviews-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 2px solid grey;
   width: 500px;
   height: 400px;
+}
+.customer-review-container {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.customer-review-container p,
+.customer-review-container img,
+.customer-review-container h3 {
+  margin: 5px 10px;
+}
+.customer-review-container h3 {
+  color: rgb(59, 223, 59);
 }
 .seller-complete-orders {
   display: flex;

@@ -44,13 +44,7 @@ function Navbar() {
             <Link to="/">
               <li>
                 <div className="navbar-items-chip">
-                  <img
-                    src="./images/home.svg"
-                    alt="Home"
-                    height="18px"
-                    width="18px"
-                  />
-                  <p>&nbsp;&nbsp;&nbsp;Home</p>
+                  <p><i class="fas fa-home"/>&nbsp;&nbsp;Home</p>
                 </div>
               </li>
             </Link>
@@ -58,7 +52,7 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
-                    <button className="dropbtn">Categories&nbsp;&#709;</button>
+                    <button className="dropbtn">Categories&nbsp;<i class="fas fa-caret-down"/></button>
                     <div className="dropdown-content">
                       <Link to="">JEE Mains</Link>
                       <Link to="">JEE Advanced</Link>
@@ -78,7 +72,7 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
-                    <button className="dropbtn">Other&nbsp;&#709;</button>
+                    <button className="dropbtn">Other&nbsp;<i class="fas fa-caret-down"/></button>
                     <div className="dropdown-content">
                       <Link to="/Contact">Contact Us</Link>
                       <Link to="github.com/Bookshlf-in/Website">Contribute</Link>
