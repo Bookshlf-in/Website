@@ -40,10 +40,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(255, 255, 255);
+  color: white;
+}
+.navbar-items-chip a {
+  color: white;
+  padding: 5px;
+  font-size: 20px;
+}
+.navbar-items-chip a:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 .navbar-items-chip:hover {
   color: rgb(235, 95, 95);
+  font-size: 18px;
 }
 
 .navbar-right ul {
@@ -73,12 +82,14 @@
 }
 .navbar-items-chip-searchbox input:focus {
   outline: none;
-  width: 400px;
+  width: 300px;
   transition: 0.5s;
   background-color: rgba(255, 255, 255);
-  border-bottom: 1px solid rgb(98, 221, 98);
+  border-bottom: 2px solid rgb(98, 221, 98);
 }
-
+.navbar-searchbox-submit {
+  padding: 0px 5px;
+}
 .navbar-items-chip .dropdown {
   float: left;
   overflow: hidden;
