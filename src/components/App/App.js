@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import "./App.css";
 import Login from "../Login/Login.js";
 import Signup from "../Signup/Signup.js";
 import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
 import Verify from "../VerifyAccount/Verify.js";
 import Navbar from "../Navbar/Navbar.js";
-import {Link} from "react-router-dom";
 import Footer from "../Footer/Footer.js";
 import About from "../About/About.js";
 import Contact from "../Contact/Contact.js";
@@ -15,6 +14,7 @@ import Review from "../Reviews/Reviews.js";
 import AddReviews from "../AddReviews/AddReviews.js";
 import UserProfile from "../UserProfile/UserProfile.js";
 import SellerProfile from "../SellerProfile/SellerProfile.js";
+
 function App() {
   return (
     <Router>

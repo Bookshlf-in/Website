@@ -1,17 +1,53 @@
 .SellerProfile-container {
-  height: 100vh;
-  padding: 20px;
   background-color: rgba(0, 0, 0, 0.1);
+  padding-bottom: 20px;
+}
+.SellerProfile-navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0px 0px 10px 0px;
+}
+.SellerProfile-navbar .Account-details,
+.SellerProfile-navbar .Pending-orders,
+.SellerProfile-navbar .Completed-orders {
+  background-color: orange;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  font-size: 24px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.SellerProfile-navbar .Account-details:hover,
+.SellerProfile-navbar .Pending-orders:hover,
+.SellerProfile-navbar .Completed-orders:hover {
+  background-color: rgb(255, 115, 0);
+  cursor: pointer;
 }
 .SellerProfile-container .card {
+  display: block;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-  max-width: 340px;
+  width: 340px;
   margin: auto;
   text-align: center;
   background-color: white;
   border-radius: 10px;
+  padding: 20px;
 }
-
+#seller-pending-orders {
+  display: none;
+}
+#seller-complete-orders {
+  display: none;
+}
+#seller-reviews {
+  display: none;
+}
 .SellerProfile-container .title {
   color: grey;
   font-size: 18px;
@@ -19,26 +55,69 @@
 .SellerProfile-container .card i {
   margin: 0px 5px;
 }
-.SellerProfile-container button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
 
 .SellerProfile-container a {
   text-decoration: none;
-  font-size: 22px;
+  font-size: 24px;
   color: black;
 }
-
-.SellerProfile-container button:hover,
-a:hover {
-  opacity: 0.7;
+.SellerProfile-container a:hover {
+  color: rgb(250, 59, 59);
+}
+.SellerProfile-container .seller-rating,
+.SellerProfile-container .books-sold {
+  font-size: 20px;
+  color: rgb(88, 23, 241);
+  font-weight: bold;
+}
+.SellerProfile-container .seller-rating i {
+  color: rgb(241, 190, 23);
+}
+.SellerProfile-container .seller-reviews {
+  background-color: rgb(48, 245, 48);
+  padding: 10px;
+  color: white;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.SellerProfile-container .seller-reviews:hover {
+  background-color: rgb(0, 170, 0);
+  color: white;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.seller-reviews-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid grey;
+  width: 500px;
+  height: 400px;
+}
+.seller-complete-orders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.seller-complete-orders table {
+  width: 100%;
+  background-color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+.seller-complete-orders table,
+.seller-complete-orders table th,
+.seller-complete-orders table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.seller-complete-orders table th,
+.seller-complete-orders table td {
+  padding: 10px;
+}
+.seller-complete-orders table td {
+  text-align: center;
 }

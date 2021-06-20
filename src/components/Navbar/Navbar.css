@@ -74,7 +74,7 @@
 .navbar-items-chip-searchbox input:focus {
   outline: none;
   width: 400px;
-  transition: 0.3s;
+  transition: 0.5s;
   background-color: rgba(255, 255, 255);
   border-bottom: 1px solid rgb(98, 221, 98);
 }
@@ -82,7 +82,7 @@
 .navbar-items-chip .dropdown {
   float: left;
   overflow: hidden;
-  z-index: 10;
+  z-index: 100;
 }
 
 .navbar-items-chip .dropdown .dropbtn {
@@ -95,13 +95,13 @@
   font-size: 18px;
   background-color: inherit;
   margin: 0;
-  z-index: 10;
+  z-index: 100;
 }
 .navbar a:hover,
 .dropdown:hover .dropbtn {
   background-color: rgba(65, 64, 64, 0.1);
   color: rgb(235, 95, 95);
-  z-index: 10;
+  z-index: 100;
 }
 .dropdown-content {
   display: none;
@@ -109,7 +109,7 @@
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 10;
+  z-index: 100;
 }
 
 .dropdown-content a {
