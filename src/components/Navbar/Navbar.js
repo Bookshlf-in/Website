@@ -108,14 +108,16 @@ function Navbar() {
               <div className="navbar-items-chip">
                 <div className="navbar-items-chip-searchbox">
                   <input type="text" />
-                  <div className="navbar-searchbox-submit">
-                    <img
-                      src="./images/loupe.svg"
-                      alt="search"
-                      height="20px"
-                      width="20px"
-                    />
-                  </div>
+                  <Link to="/SearchResult">
+                    <div className="navbar-searchbox-submit">
+                      <img
+                        src="./images/loupe.svg"
+                        alt="search"
+                        height="20px"
+                        width="20px"
+                      />
+                    </div>
+                  </Link>
                 </div>
               </div>
             </li>

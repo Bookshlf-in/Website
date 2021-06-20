@@ -86,6 +86,13 @@
   font-size: 16px;
   padding-left: 2px;
 }
+.navbar-items-chip-searchbox a {
+  padding: 3.5px 10px;
+  z-index: 1;
+}
+.navbar-items-chip-searchbox a:hover {
+  background-color: rgb(246, 218, 56);
+}
 .navbar-items-chip-searchbox input:focus {
   outline: none;
   width: 300px;
