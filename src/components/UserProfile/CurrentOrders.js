@@ -26,7 +26,7 @@ function CurrentOrders() {
             <i className="fas fa-rupee-sign"></i> 540/-
           </td>
           <td>
-            <Link className="tracking-order-link">Track You Order</Link>
+            <Link className="tracking-order-link" to="/Track">Track You Order</Link>
           </td>
         </tr>
         {/* item order details */}
@@ -44,7 +44,7 @@ function CurrentOrders() {
             <i className="fas fa-rupee-sign"></i> 540/-
           </td>
           <td>
-            <Link className="tracking-order-link">Track You Order</Link>
+            <Link className="tracking-order-link" to="/Track">Track You Order</Link>
           </td>
         </tr>
       </table>

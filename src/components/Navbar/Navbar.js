@@ -44,7 +44,10 @@ function Navbar() {
             <Link to="/">
               <li>
                 <div className="navbar-items-chip">
-                  <p><i class="fas fa-home"/>&nbsp;&nbsp;Home</p>
+                  <p>
+                    <i class="fas fa-home" />
+                    &nbsp;Home
+                  </p>
                 </div>
               </li>
             </Link>
@@ -52,7 +55,10 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
-                    <button className="dropbtn">Categories&nbsp;<i class="fas fa-caret-down"/></button>
+                    <button className="dropbtn">
+                      Categories&nbsp;
+                      <i class="fas fa-caret-down" />
+                    </button>
                     <div className="dropdown-content">
                       <Link to="">JEE Mains</Link>
                       <Link to="">JEE Advanced</Link>
@@ -72,10 +78,15 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
-                    <button className="dropbtn">Other&nbsp;<i class="fas fa-caret-down"/></button>
+                    <button className="dropbtn">
+                      Other&nbsp;
+                      <i class="fas fa-caret-down" />
+                    </button>
                     <div className="dropdown-content">
                       <Link to="/Contact">Contact Us</Link>
-                      <Link to="github.com/Bookshlf-in/Website">Contribute</Link>
+                      <Link to="github.com/Bookshlf-in/Website">
+                        Contribute
+                      </Link>
                       <Link to="">Blog</Link>
                     </div>
                   </div>
@@ -84,7 +95,12 @@ function Navbar() {
             </Link>
             <Link to="/About">
               <li>
-                <div className="navbar-items-chip">AboutUs</div>
+                <div className="navbar-items-chip">
+                  <p>
+                    <i class="fas fa-info-circle" />
+                    &nbsp;AboutUs
+                  </p>
+                </div>
               </li>
             </Link>
           </ul>
@@ -95,26 +111,25 @@ function Navbar() {
               <div className="navbar-items-chip">
                 <div className="navbar-items-chip-searchbox">
                   <input type="text" />
-                  <div className="navbar-searchbox-submit">
-                    <img
-                      src="./images/loupe.svg"
-                      alt="search"
-                      height="20px"
-                      width="20px"
-                    />
-                  </div>
+                  <Link to="/SearchResult">
+                    <div className="navbar-searchbox-submit">
+                      <img
+                        src="./images/loupe.svg"
+                        alt="search"
+                        height="20px"
+                        width="20px"
+                      />
+                    </div>
+                  </Link>
                 </div>
               </div>
             </li>
             <li>
               <div className="navbar-items-chip">
-                <Link to = "/Cart"><img
-                  src="./images/carts.svg"
-                  alt="My cart"
-                  height="30px"
-                  width="30px"
-                />
+                <Link to="/Cart" className="cart-icon">
+                  <i class="fas fa-shopping-cart" />
                 </Link>
+                <p className="Cart-items-notify-bubble">2</p>
               </div>
             </li>
             <li>

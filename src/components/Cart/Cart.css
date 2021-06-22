@@ -10,8 +10,6 @@
 .cart-container-left {
   background-color: rgb(255, 253, 253);
   margin: 0px 20px;
-  overflow-y: auto;
-  max-height: 500px;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
@@ -20,8 +18,9 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: white;
+  background-color: rgb(158, 158, 251);
   padding: 10px;
+  color: aliceblue;
 }
 .cart-item {
   padding: 10px;

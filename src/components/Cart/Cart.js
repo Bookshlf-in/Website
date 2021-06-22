@@ -6,7 +6,7 @@ function Cart() {
   return (
     <div className="cart-main">
       <div className="cart-container-left">
-        <h1> Cart (1 item)</h1>
+        <h1><i class="fas fa-cart-arrow-down"></i>&nbsp;Cart (3 item)</h1>
         {/* Cart item starts */}
         <div className="cart-item">
           <div className="cart-item-img">
@@ -154,7 +154,7 @@ function Cart() {
           </h3>
         </div>
         <div className="cart-checkout">
-          <i className="fas fa-shipping-fast"></i> &nbsp;Checkout
+        <i class="fas fa-money-check-alt"></i>&nbsp;Checkout
         </div>
       </div>
     </div>

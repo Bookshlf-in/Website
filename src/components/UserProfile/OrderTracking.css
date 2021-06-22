@@ -1,0 +1,215 @@
+.order-tracking-container-body {
+  background-color: #8c9eff;
+  width: 100%;
+  height: 100%;
+  padding: 20px 80px;
+}
+.order-tracking-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: whitesmoke;
+  border-radius: 20px;
+}
+.order-description {
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  width: 100%;
+}
+.order-status {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order-status .checkpoint {
+  font-size: 40px;
+  color: rgb(243, 72, 72);
+  z-index: 5;
+  position: relative;
+}
+.order-status .progress-bar {
+  width: 25%;
+  margin-left: -3px;
+  margin-right: -3px;
+  z-index: 4;
+  height: 12px;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+.order-status .checkpoint .fas.fa-check-circle {
+  color: rgb(47, 218, 47);
+}
+.filled-25 {
+  width: 25%;
+  height: 10px;
+  background-color: rgb(47, 218, 47);
+}
+.filled-50 {
+  width: 50%;
+  height: 10px;
+  background-color: rgb(47, 218, 47);
+}
+.filled-75 {
+  width: 75%;
+  height: 10px;
+  /* background-color: rgb(47, 218, 47); */
+}
+.filled-100 {
+  width: 100%;
+  height: 10px;
+  background-color: rgb(47, 218, 47);
+}
+.order-status-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0px;
+}
+.order-status-icons p {
+  width: 25%;
+  text-align: center;
+  font-size: 18px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(100, 100, 228);
+}
+.order-status-icons i {
+  font-size: 40px;
+  color: rgb(100, 100, 228);
+}
+.order-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+  padding: 0 20px;
+  width: 100%;
+}
+.order-details li {
+  font-size: 18px;
+  margin: 5px;
+  color: rgb(42, 42, 42);
+}
+.order-details i {
+  font-size: 20px;
+  color: rgb(35, 236, 136);
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+}
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.wave {
+  position: absolute;
+  float: left;
+  color: rgb(47, 218, 47);
+  top: 0px;
+  left: 0px;
+  font-size: 40px;
+}
+.sonar-wave1 {
+  animation: sonarWave 1s linear infinite;
+}
+.sonar-wave2 {
+  animation: sonarWave 2s linear infinite;
+}
+@keyframes sonarWave {
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.animated-filled {
+  background: linear-gradient(
+    90deg,
+    rgb(47, 218, 47),
+    #02ff39,
+    #7bff00,
+    #bbff00
+  );
+  background-size: 400% 400%;
+  animation: gradient 5s ease infinite;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.order-tracking-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+.download-receipt-button {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  padding: 10px;
+  background-color: rgb(77, 108, 248);
+  border-radius: 5px;
+  color: white;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.cancel-order-button {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  padding: 10px;
+  background-color: rgb(253, 44, 44);
+  border-radius: 5px;
+  color: white;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.cancel-order-button:hover {
+  cursor: pointer;
+  background-color: rgb(250, 0, 0);
+}
+.download-receipt-button:hover {
+  cursor: pointer;
+  background-color: rgb(0, 44, 240);
+}
