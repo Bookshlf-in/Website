@@ -7,7 +7,8 @@ function SearchResult() {
   var productWrapper = {
     display: "flex",
     flexDirection: "column",
-    paddingLeft: "10px",
+    justifyContent: "center",
+    alignItems: "center",
   };
   return (
     <div className="search-results-container">
@@ -30,7 +31,7 @@ function SearchResult() {
                 width="150px"
               />
               <h3>Book Name</h3>
-              <p>Book Details</p>
+              <p>Collins English Learning book</p>
             </div>
           </div>
         </Link>

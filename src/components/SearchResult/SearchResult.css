@@ -13,30 +13,48 @@
   margin-bottom: 20px;
 }
 .search-results-main {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  gap: 10px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.search-results-main a {
+  margin: 10px 20px;
+}
+.product-search-result {
+  width: 250px;
+  height: 300px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid rgb(172, 170, 170);
+  position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-.product-search-result {
-  min-width: 250px;
-  min-height: 300px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  margin: 10px 20px;
-  border-radius: 10px;
-  border: 1px solid rgb(172, 170, 170);
+.product-search-result h3 {
+  color: black;
+  font-family: "Roboto", sans-serif;
 }
-.book-price-tag {
+.product-search-result p {
+  color: rgb(241, 73, 109);
+  font-family: "Times New Roman", Times, serif;
+}
+.product-search-result:hover {
+  background-color: rgba(0, 68, 255, 0.2);
+}
+h1.book-price-tag {
+  position: absolute;
   float: left;
-  top: 0;
-  left: 0;
+  top: -35px;
+  left: -35px;
   font-size: 16px;
   background-color: rgb(44, 211, 44);
   padding: 28px 10px;
   border-radius: 50%;
-  margin-top: -40px;
-  margin-left: -45px;
   color: white;
 }

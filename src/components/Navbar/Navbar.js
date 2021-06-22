@@ -46,7 +46,7 @@ function Navbar() {
                 <div className="navbar-items-chip">
                   <p>
                     <i class="fas fa-home" />
-                    &nbsp;&nbsp;Home
+                    &nbsp;Home
                   </p>
                 </div>
               </li>
@@ -96,7 +96,10 @@ function Navbar() {
             <Link to="/About">
               <li>
                 <div className="navbar-items-chip">
-                  <p>AboutUs</p>
+                  <p>
+                    <i class="fas fa-info-circle" />
+                    &nbsp;AboutUs
+                  </p>
                 </div>
               </li>
             </Link>
@@ -123,7 +126,7 @@ function Navbar() {
             </li>
             <li>
               <div className="navbar-items-chip">
-                <Link to="/Cart">
+                <Link to="/Cart" className="cart-icon">
                   <i class="fas fa-shopping-cart" />
                 </Link>
                 <p className="Cart-items-notify-bubble">2</p>
