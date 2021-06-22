@@ -13,6 +13,7 @@ import Cart from "../Cart/Cart.js";
 import Review from "../Reviews/Reviews.js";
 import AddReviews from "../AddReviews/AddReviews.js";
 import UserProfile from "../UserProfile/UserProfile.js";
+import Track from "../UserProfile/OrderTracking.js";
 import SellerProfile from "../SellerProfile/SellerProfile.js";
 import SearchResult from "../SearchResult/SearchResult.js";
 function App() {
@@ -28,13 +29,14 @@ function App() {
           <Route path="/About" component={About} />
           <Route path="/Contact" component={Contact} />
           <Route path="/Cart" component={Cart} />
+          <Route path="/Track" component={Track} />
           <Route path="/Review" component={Review} />
           <Route path="/AddReview" component={AddReviews} />
           <Route path="/UserProfile" component={UserProfile} />
           <Route path="/SellerProfile" component={SellerProfile} />
           <Route path="/SearchResult" component={SearchResult} />
         </Switch>
-        <Review />
+        {/* <Review /> */}
         <Footer />
       </div>
     </Router>

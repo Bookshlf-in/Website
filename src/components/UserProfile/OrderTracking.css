@@ -1,0 +1,90 @@
+.order-tracking-container-body {
+  background-color: #8c9eff;
+  width: 100%;
+  height: 100%;
+  padding: 20px 80px;
+}
+.order-tracking-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: whitesmoke;
+  border-radius: 20px;
+}
+.order-description {
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10px;
+  width: 100%;
+}
+.order-status {
+  padding: 20px 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order-status .checkpoint {
+  font-size: 40px;
+  color: rgb(243, 72, 72);
+  z-index: 5;
+}
+.order-status .progress-bar {
+  width: 25%;
+  margin-left: -5px;
+  margin-right: -5px;
+  z-index: 4;
+  height: 12px;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+.order-status .checkpoint .fas.fa-check-circle {
+  color: rgb(47, 218, 47);
+}
+.filled-25 {
+  width: 25%;
+  height: 10px;
+  background-color: rgb(47, 218, 47);
+}
+.filled-50 {
+  width: 50%;
+  height: 10px;
+  background-color: rgb(47, 218, 47);
+}
+.filled-75 {
+  width: 75%;
+  height: 10px;
+  background-color: rgb(47, 218, 47);
+}
+.filled-100 {
+  width: 100%;
+  height: 10px;
+  background-color: rgb(47, 218, 47);
+}
+.order-status-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0px;
+}
+.order-status-icons p {
+  width: 25%;
+  text-align: center;
+  font-size: 18px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(100, 100, 228);
+}
+.order-status-icons i {
+  font-size: 40px;
+  color: rgb(100, 100, 228);
+}
