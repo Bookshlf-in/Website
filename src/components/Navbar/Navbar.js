@@ -45,7 +45,7 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <p>
-                    <i class="fas fa-home" />
+                    <i className="fas fa-home" />
                     &nbsp;Home
                   </p>
                 </div>
@@ -80,7 +80,7 @@ function Navbar() {
                   <div className="dropdown">
                     <button className="dropbtn">
                       Other&nbsp;
-                      <i class="fas fa-caret-down" />
+                      <i className="fas fa-caret-down" />
                     </button>
                     <div className="dropdown-content">
                       <Link to="/Contact">Contact Us</Link>
@@ -95,7 +95,7 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <p>
-                    <i class="fas fa-info-circle" />
+                    <i className="fas fa-info-circle" />
                     &nbsp;AboutUs
                   </p>
                 </div>
@@ -125,7 +125,7 @@ function Navbar() {
             <li>
               <div className="navbar-items-chip">
                 <Link to="/Cart" className="cart-icon">
-                  <i class="fas fa-shopping-cart" />
+                  <i className="fas fa-shopping-cart" />
                 </Link>
                 <p className="Cart-items-notify-bubble">2</p>
               </div>
