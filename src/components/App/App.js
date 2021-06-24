@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import "./App.css";
 import Login from "../Login/Login.js";
-import Signup from "../Signup/Signup.js";
+import UserSignup from "../Signup/UserSignup.js";
 import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
 import Verify from "../VerifyAccount/Verify.js";
 import Navbar from "../Navbar/Navbar.js";
@@ -20,24 +20,51 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar />
         <Switch>
+          <Route path="/" exact>
+            <Navbar />
+            <Review />
+            <Footer />
+          </Route>
           <Route path="/Login" component={Login} />
-          <Route path="/Signup" component={Signup} />
+          <Route path="/UserSignup" component={UserSignup} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/Verify" component={Verify} />
-          <Route path="/About" component={About} />
-          <Route path="/Contact" component={Contact} />
-          <Route path="/Cart" component={Cart} />
-          <Route path="/Track" component={Track} />
-          <Route path="/Review" component={Review} />
-          <Route path="/AddReview" component={AddReviews} />
-          <Route path="/UserProfile" component={UserProfile} />
-          <Route path="/SellerProfile" component={SellerProfile} />
-          <Route path="/SearchResult" component={SearchResult} />
+          <Route path="/About">
+            <Navbar />
+            <About />
+            <Footer />
+          </Route>
+          <Route path="/Contact">
+            <Navbar />
+            <Contact />
+          </Route>
+          <Route path="/Cart">
+            <Navbar />
+            <Cart />
+          </Route>
+          <Route path="/Track">
+            <Navbar />
+            <Track />
+          </Route>
+          <Route path="/AddReview">
+            <Navbar />
+            <AddReviews />
+          </Route>
+          <Route path="/UserProfile">
+            <Navbar />
+            <UserProfile />
+          </Route>
+          <Route path="/SellerProfile">
+            <Navbar />
+            <SellerProfile />
+          </Route>
+          <Route path="/SearchResult">
+            <Navbar />
+            <SearchResult />
+            <Footer />
+          </Route>
         </Switch>
-        {/* <Review /> */}
-        <Footer />
       </div>
     </Router>
   );

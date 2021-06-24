@@ -84,9 +84,7 @@ function Navbar() {
                     </button>
                     <div className="dropdown-content">
                       <Link to="/Contact">Contact Us</Link>
-                      <Link to="github.com/Bookshlf-in/Website">
-                        Contribute
-                      </Link>
+                      <Link to="">Sell Old Books</Link>
                       <Link to="">Blog</Link>
                     </div>
                   </div>
