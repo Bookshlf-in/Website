@@ -16,6 +16,7 @@ import UserProfile from "../UserProfile/UserProfile.js";
 import Track from "../UserProfile/OrderTracking.js";
 import SellerProfile from "../SellerProfile/SellerProfile.js";
 import SearchResult from "../SearchResult/SearchResult.js";
+import BookDetails from "../BookDetails/BookDetails.js"
 function App() {
   return (
     <Router>
@@ -62,6 +63,11 @@ function App() {
           <Route path="/SearchResult">
             <Navbar />
             <SearchResult />
+            <Footer />
+          </Route>
+          <Route path="/BookDetails">
+            <Navbar />
+            <BookDetails />
             <Footer />
           </Route>
         </Switch>
