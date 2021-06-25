@@ -1,0 +1,148 @@
+.signup-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  min-height: 100vh;
+  width: 100vw;
+  padding-top: 50px;
+  overflow: hidden;
+}
+.signup-box {
+  width: 80%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  border-radius: 10px;
+}
+.floating-login-button {
+  float: left;
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  border-radius: 50%;
+}
+.floating-login-button:hover {
+  background-color: rgb(253, 143, 70);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid white;
+  border-right: 1px solid white;
+  transition: 0.3s;
+}
+.floating-login-button a {
+  color: rgb(0, 0, 0);
+  letter-spacing: 2px;
+}
+.signup-logo {
+  width: 100%;
+}
+.signup-form {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+}
+.signup-form h1 {
+  color: white;
+  font-size: 4em;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  animation: flicker 1.5s infinite alternate;
+}
+.signup-name,
+.signup-email,
+.signup-password,
+.signup-confirm-password,
+.signup-button {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-form input[type="text"] {
+  height: 50px;
+  width: 200px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+}
+
+.signup-form input[type="mail"],
+.signup-form input[type="password"] {
+  height: 50px;
+  width: 400px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+}
+.signup-form span {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: whitesmoke;
+  border: 1px solid white;
+}
+.signup-name input:focus,
+.signup-email input:focus,
+.signup-password input:focus,
+.signup-confirm-password input:focus {
+  border-bottom: 2px solid rgb(52, 248, 52);
+  background-color: white;
+  transition: 0.1s;
+}
+.signup-name input:focus::placeholder,
+.signup-email input:focus::placeholder,
+.signup-password input:focus::placeholder,
+.signup-confirm-password input:focus::placeholder {
+  letter-spacing: 2px;
+  color: rgb(241, 58, 58);
+  transition: 0.3s;
+}
+.signup-button input {
+  height: 50px;
+  width: 150px;
+  border: none;
+  background-color: rgb(253, 143, 70);
+  color: whitesmoke;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+.signup-button span {
+  border-top: 1px solid rgb(253, 143, 70);
+  border-left: 1px solid rgb(253, 143, 70);
+  border-bottom: 1px solid rgb(253, 143, 70);
+  border-right: none;
+  color: rgb(253, 143, 70);
+}
+.signup-button input:hover {
+  box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.8);
+  background-color: rgb(248, 119, 34);
+}

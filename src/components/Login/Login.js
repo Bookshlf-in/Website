@@ -69,7 +69,7 @@ function Login() {
                   </div>
                   <div class="login-container-right-container-register-button-card-back">
                     <h2>
-                      <Link to="/Signup">Register</Link>
+                      <Link to="/UserSignup">Register</Link>
                     </h2>
                   </div>
                 </div>
