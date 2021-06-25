@@ -3,6 +3,7 @@ import "./BookDetails.css";
 import {Link} from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
+import BookDesc from "./BookDesc";
 
 function BookDetails() {
   return (
@@ -10,34 +11,26 @@ function BookDetails() {
       <div className="book-main-container">
         <Booksnaps />
         <Bookfullsnap />
-        <div className="book-description">
-          <div className="book-fullname"></div>
-          <div className="book-subheading">
-            <span className="book-isbn"></span>
-            <span className="book-edition"></span>
-          </div>
-          <div className="about-book">
-            <span className="book-rating"></span>
-            <span className="book-cutomer-reviews"></span>
-          </div>
-          <div className="book-selling">
-            <div className="book-mrp">MRP : </div>
-            <div className="book-selling-price"></div>
-            <div className="book-savings"></div>
-          </div>
-          <div className="book-other-details"></div>
-          <div className="book-tags">
-            <div className="book-tag"></div>
-          </div>
-          <div className="book-seller"></div>
-        </div>
+        <BookDesc />
       </div>
       <div className="book-purchase-container">
-        <div className="wish-list"></div>
-        <div className="add-to-cart"></div>
-        <div className="buy-now-button"></div>
+        <div className="wish-list">
+          <i class="far fa-heart"></i>
+          <input type="button" value="Add to Wish List" />
+        </div>
+        <div className="add-to-cart">
+          <i class="fas fa-cart-arrow-down" />
+          <input type="button" value="Add to Cart" />
+        </div>
+        <div className="buy-now-button">
+          <i class="fas fa-shopping-basket" />
+          <input type="button" value="Buy Now" />
+        </div>
         <div className="recommened-tags">
-          <div className="book-tag"></div>
+          <h3>Recommended Tags</h3>
+          <div className="book-tag"> JEE Mains</div>
+          <div className="book-tag"> Maths</div>
+          <div className="book-tag"> Best Seller</div>
         </div>
       </div>
     </div>

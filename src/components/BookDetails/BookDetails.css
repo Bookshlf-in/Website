@@ -29,18 +29,17 @@
   border-radius: 5px;
 }
 .book-snaps-full {
-  border: 1px solid rgba(0, 0, 0, 0.5);
   margin-top: 10px;
   margin-left: 10px;
-  height: 390px;
-  width: 300px;
+  height: 500px;
+  width: 400px;
 }
 .book-description {
   border: 1px solid rgba(0, 0, 0, 0.5);
   margin-top: 10px;
   margin-left: 10px;
-  height: 600px;
-  width: 600px;
+  height: 500px;
+  width: 500px;
 }
 .book-purchase-container {
   border: 1px solid rgba(0, 0, 0, 0.5);
@@ -48,4 +47,7 @@
   margin-left: 10px;
   height: 250px;
   width: 300px;
+}
+.book-description {
+  color: black;
 }
