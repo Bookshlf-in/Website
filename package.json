@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
     "react": "^17.0.1",
+    "react-animated-slider": "^2.0.0",
     "react-dom": "^17.0.1",
     "react-input-mask": "^3.0.0-alpha.2",
     "react-masked-field": "^2.1.0",

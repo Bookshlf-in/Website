@@ -6,6 +6,12 @@
 }
 .navbar-container {
   background-color: rgb(250, 237, 217);
+  /* background-color:  #12232E;
+  background-color:  #A28089;
+  background-color:  #000000;
+  background-color:  #2d545e;
+  background-color:  #1d1e22; */
+  color: white;
   width: 100%;
   overflow: hidden;
   padding: 10px;
@@ -41,6 +47,7 @@
   justify-content: center;
   align-items: center;
   color: black;
+  /* color: white; */
 }
 .navbar-items-chip:hover {
   color: rgb(235, 95, 95);
@@ -89,6 +96,7 @@
   border: none;
   outline: none;
   color: black;
+  /* color: white; */
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   padding: 14px 10px;

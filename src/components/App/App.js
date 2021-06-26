@@ -11,6 +11,7 @@ import Footer from "../Footer/Footer.js";
 import About from "../About/About.js";
 import Contact from "../Contact/Contact.js";
 import Cart from "../Cart/Cart.js";
+import Carousel from "../carousel/Carousel";
 function App() {
   return (
     <Router>
@@ -42,6 +43,7 @@ function App() {
             </Link>
           </ul>
         </div> */}
+        <Carousel />
         <Footer />
       </div>
     </Router>
