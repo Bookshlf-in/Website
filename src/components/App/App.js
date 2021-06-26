@@ -34,7 +34,6 @@ function App() {
           <Route path="/About">
             <Navbar />
             <About />
-            <Footer />
           </Route>
           <Route path="/Contact">
             <Navbar />

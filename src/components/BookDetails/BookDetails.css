@@ -10,6 +10,7 @@
   padding: 5px;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .book-snaps {
   display: flex;
@@ -28,6 +29,10 @@
 .book-snaps .snapshot img {
   border-radius: 5px;
 }
+.book-snaps .snapshot:hover,
+.book-snaps .video-snapshot:hover {
+  box-shadow: 2px 2px 2px 2px rgba(255, 218, 6, 0.6);
+}
 .book-snaps-full {
   margin-top: 10px;
   margin-left: 10px;
@@ -35,19 +40,249 @@
   width: 400px;
 }
 .book-description {
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  /* border: 1px solid rgba(0, 0, 0, 0.5); */
   margin-top: 10px;
   margin-left: 10px;
   height: 500px;
   width: 500px;
 }
 .book-purchase-container {
-  border: 1px solid rgba(0, 0, 0, 0.5);
   margin-top: 10px;
   margin-left: 10px;
-  height: 250px;
   width: 300px;
+  color: black;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .book-description {
   color: black;
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.book-fullname {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.book-subheading {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.book-isbn {
+  padding: 5px 10px;
+  border: 1px solid rgb(44, 238, 44);
+  border-radius: 15px;
+  color: rgb(40, 5, 197);
+}
+.book-isbn b {
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 2px;
+  color: rgb(231, 56, 56);
+}
+.book-edition {
+  padding: 5px 10px;
+  border: 1px solid rgb(44, 238, 44);
+  border-radius: 15px;
+  color: rgb(40, 5, 197);
+}
+.book-edition b {
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 2px;
+  color: rgb(231, 56, 56);
+}
+.about-book {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  align-items: center;
+  border-bottom: 1px solid grey;
+}
+.book-rating {
+  letter-spacing: 3px;
+}
+.book-cutomer-reviews a {
+  background: #eee;
+  border-radius: 3px;
+  color: rgb(29, 79, 243);
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+.book-cutomer-reviews a:hover {
+  background: rgb(67, 246, 13);
+  color: rgb(255, 255, 255);
+}
+.book-selling {
+  padding-left: 20px;
+  padding-top: 20px;
+  color: rgb(44, 44, 44);
+}
+.book-mrp,
+.book-selling-price,
+.book-savings {
+  padding-top: 10px;
+}
+.book-mrp b,
+.book-selling-price b,
+.book-savings b {
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 2px;
+}
+.book-mrp b {
+  background-color: rgb(251, 84, 84);
+  text-decoration: line-through;
+  padding: 2px 10px;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+}
+.book-selling-price b {
+  background-color: rgb(61, 194, 44);
+  padding: 2px 10px;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+}
+.book-savings b {
+  background-color: rgba(0, 0, 0, 0.685);
+  padding: 2px 10px;
+  border-radius: 10px;
+  color: white;
+}
+.book-other-details {
+  padding-left: 20px;
+  padding-top: 20px;
+}
+.book-tags {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.book-tags a {
+  margin: 10px;
+  font: 12px/1.5 "PT Sans", serif;
+}
+
+.tag {
+  background: rgb(200, 200, 200);
+  border-radius: 3px 0 0 3px;
+  color: rgb(107, 107, 107);
+  display: inline-block;
+  height: 26px;
+  max-width: 200px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: "";
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid rgb(200, 200, 200);
+  border-top: 13px solid transparent;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+  border-left-color: crimson;
+}
+.book-seller {
+  padding-left: 20px;
+}
+.book-seller-name a {
+  color: grey;
+  letter-spacing: 1px;
+}
+.book-seller-rating {
+  margin-top: 5px;
+  letter-spacing: 2px;
+}
+.book-purchase-container input {
+  width: 150px;
+  height: 50px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 0px 15px 15px 0px;
+  color: white;
+  text-align: center;
+}
+.book-purchase-container span {
+  height: 50px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px 0px 0px 15px;
+  color: white;
+}
+.wish-list,
+.add-to-cart,
+.buy-now-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.wish-list input,
+.wish-list span {
+  background-color: crimson;
+}
+.add-to-cart input,
+.add-to-cart span {
+  background-color: rgb(240, 159, 28);
+}
+.buy-now-button input,
+.buy-now-button span {
+  background-color: rgb(16, 106, 250);
+}
+.wish-list:hover,
+.add-to-cart:hover,
+.buy-now-button:hover {
+  opacity: 0.9;
+  border-radius: 15px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
 }

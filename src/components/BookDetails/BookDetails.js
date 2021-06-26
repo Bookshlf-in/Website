@@ -15,22 +15,34 @@ function BookDetails() {
       </div>
       <div className="book-purchase-container">
         <div className="wish-list">
-          <i class="far fa-heart"></i>
-          <input type="button" value="Add to Wish List" />
+          <span>
+            <i class="far fa-heart"></i>
+          </span>
+          <input type="submit" value="Add to Wish List" />
         </div>
         <div className="add-to-cart">
-          <i class="fas fa-cart-arrow-down" />
-          <input type="button" value="Add to Cart" />
+          <span>
+            <i class="fas fa-cart-arrow-down" />
+          </span>
+          <input type="submit" value="Add to Cart" />
         </div>
         <div className="buy-now-button">
-          <i class="fas fa-shopping-basket" />
-          <input type="button" value="Buy Now" />
+          <span>
+            <i class="fas fa-shopping-basket" />
+          </span>
+          <input type="submit" value="Buy Now" />
         </div>
         <div className="recommened-tags">
           <h3>Recommended Tags</h3>
-          <div className="book-tag"> JEE Mains</div>
-          <div className="book-tag"> Maths</div>
-          <div className="book-tag"> Best Seller</div>
+          <Link to="" className="tag">
+            Physcis
+          </Link>
+          <Link to="" className="tag">
+            JEE Advanced
+          </Link>
+          <Link to="" className="tag">
+            Best Seller
+          </Link>
         </div>
       </div>
     </div>

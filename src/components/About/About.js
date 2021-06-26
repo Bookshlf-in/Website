@@ -2,12 +2,30 @@ import React from "react";
 import "./About.css";
 
 function About() {
-  var bgstyle = {
-    backgroundImage: "url(./images/3025.jpg)",
-    height: "100vh",
-  };
   return (
-    <div className="About-bg" style={bgstyle}>
+    <div className="About-bg">
+      <div class="night">
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+      </div>
       <div className="About-textbox">
         <p>
           We are a small team of students who are enthusiastic developers. We
