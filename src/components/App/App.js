@@ -12,12 +12,14 @@ import About from "../About/About.js";
 import Contact from "../Contact/Contact.js";
 import Display from "../DisplayReview/Display";
 import Carousel from "../carousel/Carousel";
+import Categories from "../Categories/Categories";
 function App() {
   return (
     <Router>
       <div className="App">
         <Navbar />
         <Carousel/>
+        <Categories/>
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/Signup" component={Signup} />
