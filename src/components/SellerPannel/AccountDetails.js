@@ -1,17 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import SellerReview from "./SellerReviews";
 
 function AccountDetails() {
-  function handleClick() {
-    var show = document.getElementById("seller-reviews").style.display;
-    if (show === "none") {
-      show = "flex";
-    } else {
-      show = "none";
-    }
-    document.getElementById("seller-reviews").style.display = show;
-  }
   var verified = {
     user: "verified-user",
     tag: "Verified",
@@ -65,12 +55,11 @@ function AccountDetails() {
         </p>
         <p className="books-sold">Total Books Sold&nbsp;:&nbsp;11</p>
         <br />
-        <p className="seller-reviews" onClick={handleClick}>
+        <p className="seller-reviews" >
           <i class="fas fa-comments" />
           &nbsp;Reviews
         </p>
       </div>
-      <SellerReview />
     </div>
   );
 }

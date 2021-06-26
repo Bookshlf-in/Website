@@ -17,7 +17,7 @@ function SearchResult() {
       </div>
       <div className="search-results-main">
         {/* a particular search result*/}
-        <Link to="">
+        <Link to="/BookDetails">
           <div className="product-search-result">
             <h1 className="book-price-tag">
               <i className="fas fa-rupee-sign" />
