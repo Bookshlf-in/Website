@@ -17,6 +17,7 @@ import Track from "../UserProfile/OrderTracking.js";
 import SellerProfile from "../SellerProfile/SellerProfile.js";
 import SearchResult from "../SearchResult/SearchResult.js";
 import BookDetails from "../BookDetails/BookDetails.js"
+import Carousel from "../carousel/Carousel";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <Navbar />
+            <Carousel/>
             <Review />
             <Footer />
           </Route>
