@@ -8,7 +8,7 @@ import Verify from "../VerifyAccount/Verify";
 import Navbar from "../Navbar/Navbar.js";
 import Footer from "../Footer/Footer"
 import About from "../About/About.js";
-import Contact from "../Contact/Contact"
+import Contact from "../Contact/Contact.js";
 import Cart from "../Cart/Cart.js";
 import Review from "../Reviews/Reviews.js";
 import AddReviews from "../AddReviews/AddReviews.js";
