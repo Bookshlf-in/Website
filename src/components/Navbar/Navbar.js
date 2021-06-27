@@ -63,12 +63,6 @@ function Navbar() {
                       <Link to="">JEE Mains</Link>
                       <Link to="">JEE Advanced</Link>
                       <Link to="">NEET</Link>
-                      <Link to="">
-                        CBSE 12<sup>th</sup>
-                      </Link>
-                      <Link to="">
-                        CBSE 10<sup>th</sup>
-                      </Link>
                     </div>
                   </div>
                 </div>
