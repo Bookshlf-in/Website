@@ -6,7 +6,7 @@ function Cart() {
   return (
     <div className="cart-main">
       <div className="cart-container-left">
-        <h1> Cart (1 item)</h1>
+        <h1><i class="fas fa-cart-arrow-down"></i>&nbsp;Cart (3 item)</h1>
         {/* Cart item starts */}
         <div className="cart-item">
           <div className="cart-item-img">
@@ -23,7 +23,7 @@ function Cart() {
             <h3>Author : lauda sur</h3>
             <h5>Details : lavda ki kitaab hai</h5>
             <h4>
-              <i class="fas fa-trash-alt"></i>&nbsp;Remove Item
+              <i className="fas fa-trash-alt"></i>&nbsp;Remove Item
             </h4>
           </div>
           <div className="cart-item-price">
@@ -43,7 +43,7 @@ function Cart() {
             </h3>
           </div>
           <p className="alert-cart-item">
-            <i class="fas fa-info-circle"></i> Do not delay the purchase, adding
+            <i className="fas fa-info-circle"></i> Do not delay the purchase, adding
             items to your cart does not mean booking them.
           </p>
         </div>
@@ -64,7 +64,7 @@ function Cart() {
             <h3>Author : lauda sur</h3>
             <h5>Details : lavda ki kitaab hai</h5>
             <h4>
-              <i class="fas fa-trash-alt"></i>&nbsp;Remove Item
+              <i className="fas fa-trash-alt"></i>&nbsp;Remove Item
             </h4>
           </div>
           <div className="cart-item-price">
@@ -84,7 +84,7 @@ function Cart() {
             </h3>
           </div>
           <p className="alert-cart-item">
-            <i class="fas fa-info-circle"></i> Do not delay the purchase, adding
+            <i className="fas fa-info-circle"></i> Do not delay the purchase, adding
             items to your cart does not mean booking them.
           </p>
         </div>
@@ -104,7 +104,7 @@ function Cart() {
             <h3>Author : lauda sur</h3>
             <h5>Details : lavda ki kitaab hai</h5>
             <h4>
-              <i class="fas fa-trash-alt"></i>&nbsp;Remove Item
+              <i className="fas fa-trash-alt"></i>&nbsp;Remove Item
             </h4>
           </div>
           <div className="cart-item-price">
@@ -124,7 +124,7 @@ function Cart() {
             </h3>
           </div>
           <p className="alert-cart-item">
-            <i class="fas fa-info-circle"></i> Do not delay the purchase, adding
+            <i className="fas fa-info-circle"></i> Do not delay the purchase, adding
             items to your cart does not mean booking them.
           </p>
         </div>
@@ -135,13 +135,13 @@ function Cart() {
         <div className="cart-net-amount">
           <h3> Net Amount </h3>
           <h3>
-            <i class="fas fa-rupee-sign"></i>&nbsp;1080/-
+            <i className="fas fa-rupee-sign"></i>&nbsp;1080/-
           </h3>
         </div>
         <div className="cart-net-shipping">
           <h3> Shipping Amount</h3>
           <h3>
-            <i class="fas fa-rupee-sign"></i>&nbsp;40/-
+            <i className="fas fa-rupee-sign"></i>&nbsp;40/-
           </h3>
         </div>
         <div className="cart-total">
@@ -150,11 +150,11 @@ function Cart() {
             <i>(including GST and shipping charges)</i>
           </p>
           <h3>
-            <i class="fas fa-rupee-sign"></i>&nbsp;1120/-
+            <i className="fas fa-rupee-sign"></i>&nbsp;1120/-
           </h3>
         </div>
         <div className="cart-checkout">
-          <i class="fas fa-shipping-fast"></i> &nbsp;Checkout
+        <i class="fas fa-money-check-alt"></i>&nbsp;Checkout
         </div>
       </div>
     </div>

@@ -1,288 +1,148 @@
-.Signup-bg {
-  box-sizing: border-box;
-  background-image: linear-gradient(
-    to right,
-    rgb(67, 184, 232),
-    rgb(52, 118, 214)
-  );
-}
-.Signup-container {
-  margin: 5vh 5vw;
-  background-color: transparent;
+.signup-bg {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  min-height: 100vh;
+  width: 100vw;
+  padding-top: 50px;
+  overflow: hidden;
+}
+.signup-box {
+  width: 80%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   position: relative;
+  border-radius: 10px;
 }
-.signup-logo-container {
-  height: 70px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: transparent;
-  position: relative;
-  top: 0;
-  left: 0;
-  padding-left: 50px;
-}
-.signup-logo-box {
+.floating-login-button {
+  float: left;
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  background-color: whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(235, 84, 84);
-  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
-  border-top: 2px solid whitesmoke;
-  border-left: 2px solid whitesmoke;
-  border-right: 2px solid whitesmoke;
-  height: 70px;
-  padding: 0px 20px;
-  font-size: 40px;
-  font-family: "Staatliches", cursive;
-  z-index: 1;
-  color: whitesmoke;
-  letter-spacing: 3px;
-  border-radius: 10px 10px 0px 0px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  border-radius: 50%;
 }
-
-.login-logo-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(119, 235, 84);
-  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
-  border-top: 2px solid whitesmoke;
-  border-left: 2px solid whitesmoke;
-  border-right: 2px solid whitesmoke;
-  height: 70px;
-  padding: 0px 20px;
-  margin: 0px 20px;
-  font-size: 40px;
-  font-family: "Staatliches", cursive;
-  z-index: 1;
-  color: whitesmoke;
-  letter-spacing: 3px;
-  border-radius: 10px 10px 0px 0px;
+.floating-login-button:hover {
+  background-color: rgb(253, 143, 70);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid white;
+  border-right: 1px solid white;
+  transition: 0.3s;
 }
-.login-logo-box:hover {
-  background-color: rgb(84, 221, 42);
+.floating-login-button a {
+  color: rgb(0, 0, 0);
+  letter-spacing: 2px;
 }
-.login-logo-box a {
-  text-decoration: none;
-  color: whitesmoke;
-}
-.login-logo-bookshlf {
-  margin-left: calc(100% - 669.8px);
-}
-
-.signup-logo-end {
-  height: 15px;
-  background-color: rgb(235, 84, 84);
-  /*box-shadow: 1px 3px 6px rgba(8, 1, 1, 0.9);*/
-  border-left: 2px solid whitesmoke;
-  border-right: 2px solid whitesmoke;
-  border-radius: 10px 10px 0px 0px;
-  z-index: 2;
-}
-.signup-main {
+.signup-logo {
   width: 100%;
-  padding: 20px;
-  background-color: rgb(35, 47, 62);
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: 1px 3px 6px rgba(8, 1, 1, 0.9);
-  border-left: 2px solid whitesmoke;
-  border-right: 2px solid whitesmoke;
-  z-index: 2;
-  font-family: "Roboto", sans-serif;
-  color: whitesmoke;
-  letter-spacing: 1.5px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 }
-
-.signup-lable {
-  font-weight: bold;
-  margin: 10px 0px;
-  font-size: 20px;
-}
-.signup-lable sup {
-  color: rgb(241, 88, 88);
-  font-weight: boldder;
-}
-.signup-input input {
-  width: 400px;
-  height: 50px;
-  font-size: 20px;
-  padding: 0px 10px;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  color: rgb(78, 80, 79);
-  margin-right: 10px;
-  background-color: rgb(232, 228, 228, 0.8);
-  border: none;
-  border-bottom: 5px solid whitesmoke;
-}
-.signup-input input:focus {
-  outline: none;
-  transition: 0.2s;
-  border-bottom: 3px solid rgb(36, 175, 36);
-  border-radius: 5px 5px 0 0;
-  background-color: white;
-}
-.signup-input input[type="text"]:focus,
-.signup-input input[type="email"]:focus {
-  width: 700px;
-}
-#visible-icon {
-  margin-left: -50px;
-}
-#hidden-icon {
-  margin-left: -24px;
-}
-.signup-submit {
-  width: 400px;
+.signup-form {
   padding: 10px;
-  height: 60px;
-  margin: 20px 0px;
-  font-size: 24px;
-  font-family: "Staatliches", cursive;
-  border: none;
-  background-color: rgb(46, 81, 177);
-  color: rgb(245, 241, 241);
-  letter-spacing: 3px;
-  box-shadow: 1px 3px 5px rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+}
+.signup-form h1 {
+  color: white;
+  font-size: 4em;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  animation: flicker 1.5s infinite alternate;
+}
+.signup-name,
+.signup-email,
+.signup-password,
+.signup-confirm-password,
+.signup-button {
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-a {
-  text-decoration: none;
-}
-.signup-submit img {
-  z-index: 2;
-}
-.signup-submit input {
-  width: 400px;
-  padding: 10px;
-  height: 60px;
-  margin-left: -50px;
-  font-size: 24px;
-  font-family: "Staatliches", cursive;
-  border: none;
-  background-color: rgb(46, 81, 177);
-  color: rgb(245, 241, 241);
-  letter-spacing: 3px;
-}
-.signup-submit input:hover {
-  color: rgb(240, 222, 58);
-}
-.signup-submit input:focus {
+
+.signup-form input[type="text"] {
+  height: 50px;
+  width: 200px;
   outline: none;
-  border-radius: 5px;
-  border: 2px solid white;
-}
-.signup-logo-sm {
-  display: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
 }
 
-/* For Medium small screens */
-@media only screen and (max-width: 893px) {
-  .signup-logo-container {
-    padding: 0 0 0 20px;
-  }
-  .login-logo-box,
-  .signup-logo-box {
-    margin: 0px 10px;
-    padding: 0px 10px;
-    font-size: 30px;
-  }
-  .login-logo-bookshlf {
-    margin-left: calc(100% - 569px);
-  }
-  .signup-input input[type="text"]:focus,
-  .signup-input input[type="email"]:focus {
-    width: 600px;
-  }
+.signup-form input[type="mail"],
+.signup-form input[type="password"] {
+  height: 50px;
+  width: 400px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
 }
-/* for Mobile phone screens */
-@media only screen and (max-width: 760px) {
-  .login-logo-bookshlf {
-    display: none;
-  }
-  .signup-logo-sm {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .signup-input input[type="text"]:focus,
-  .signup-input input[type="email"]:focus {
-    width: 500px;
-  }
+.signup-form span {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: whitesmoke;
+  border: 1px solid white;
 }
-/* for smaller screens */
-@media only screen and (max-width: 560px) {
-  .Signup-container {
-    margin: 5px;
-  }
-  .signup-logo-container {
-    padding: 0 0 0 10px;
-  }
-  .signup-input input,
-  .signup-submit {
-    width: 300px;
-  }
-  .login-logo-box,
-  .signup-logo-box {
-    margin: 0px 10px;
-    padding: 0px 10px;
-    font-size: 30px;
-  }
-  .login-logo-bookshlf {
-    display: none;
-  }
-  .signup-logo-sm {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .signup-input input[type="text"]:focus,
-  .signup-input input[type="email"]:focus {
-    width: 320px;
-  }
+.signup-name input:focus,
+.signup-email input:focus,
+.signup-password input:focus,
+.signup-confirm-password input:focus {
+  border-bottom: 2px solid rgb(52, 248, 52);
+  background-color: white;
+  transition: 0.1s;
 }
-@media only screen and (max-width: 400px) {
-  .Signup-container {
-    margin: 0px;
-  }
-  .signup-main {
-    padding: 10px;
-  }
-  .signup-logo-container {
-    padding: 0 0 0 10px;
-  }
-  .signup-input input,
-  .signup-submit {
-    width: 300px;
-  }
-  .login-logo-box,
-  .signup-logo-box {
-    margin: 0px 10px;
-    padding: 0px 10px;
-    font-size: 30px;
-  }
-  .login-logo-bookshlf {
-    display: none;
-  }
-  .signup-logo-sm {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .signup-input input[type="text"]:focus,
-  .signup-input input[type="email"]:focus {
-    width: 320px;
-  }
+.signup-name input:focus::placeholder,
+.signup-email input:focus::placeholder,
+.signup-password input:focus::placeholder,
+.signup-confirm-password input:focus::placeholder {
+  letter-spacing: 2px;
+  color: rgb(241, 58, 58);
+  transition: 0.3s;
+}
+.signup-button input {
+  height: 50px;
+  width: 150px;
+  border: none;
+  background-color: rgb(253, 143, 70);
+  color: whitesmoke;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+.signup-button span {
+  border-top: 1px solid rgb(253, 143, 70);
+  border-left: 1px solid rgb(253, 143, 70);
+  border-bottom: 1px solid rgb(253, 143, 70);
+  border-right: none;
+  color: rgb(253, 143, 70);
+}
+.signup-button input:hover {
+  box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.8);
+  background-color: rgb(248, 119, 34);
 }

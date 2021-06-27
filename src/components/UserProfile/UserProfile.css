@@ -1,0 +1,177 @@
+.user-profile-main {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding-bottom: 20px;
+}
+.user-profile-navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0px 0px 10px 0px;
+}
+.user-profile-navbar .Account-details,
+.user-profile-navbar .Pending-orders,
+.user-profile-navbar .Completed-orders {
+  background-color: rgb(163, 6, 202);
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  font-size: 24px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.user-profile-navbar .Account-details:hover,
+.user-profile-navbar .Pending-orders:hover,
+.user-profile-navbar .Completed-orders:hover {
+  background-color: rgb(234, 0, 255);
+  cursor: pointer;
+}
+.user-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-profile-container .flip-card {
+  background-color: transparent;
+  width: 350px;
+  height: 400px;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.user-profile-container .flip-card-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.user-profile-container .flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.user-profile-container .flip-card-front,
+.user-profile-container .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.user-profile-container .flip-card-front {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  padding: 20px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 25px;
+  border: 1px solid black;
+}
+
+.user-profile-container .flip-card-back {
+  background-color: rgb(22, 22, 22);
+  color: white;
+  transform: rotateY(180deg);
+  padding: 20px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 25px;
+}
+.verify-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.verified-user {
+  border-radius: 30px;
+  width: 100px;
+  padding: 5px;
+  color: rgb(36, 228, 36);
+  border: 1px solid rgb(36, 228, 36);
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.non-verified-user {
+  border-radius: 30px;
+  width: 100px;
+  padding: 5px;
+  color: rgb(240, 17, 17);
+  border: 1px solid rgb(240, 17, 17);
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.user-previous-orders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.user-previous-orders table {
+  width: 100%;
+  background-color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+.user-previous-orders table,
+.user-previous-orders table th,
+.user-previous-orders table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.user-previous-orders table th,
+.user-previous-orders table td {
+  padding: 10px;
+}
+.user-previous-orders table td {
+  text-align: center;
+}
+
+.user-current-orders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.user-current-orders table {
+  width: 100%;
+  background-color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+.user-current-orders table,
+.user-current-orders table th,
+.user-current-orders table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.user-current-orders table th,
+.user-current-orders table td {
+  padding: 10px;
+}
+.user-current-orders table td {
+  text-align: center;
+}
+.tracking-order-link {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid rgb(71, 255, 47);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.tracking-order-link:hover {
+  background-color: rgb(71, 255, 47);
+  transition: 0.5s;
+  border: 1px solid white;
+}
+#user-current-orders,
+#user-previous-orders {
+  display: none;
+}
