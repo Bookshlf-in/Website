@@ -15,36 +15,6 @@ var bookdetails = {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, explicabo aliquam. A maiores, dolorem ad provident pariatur quas odio impedit.",
 };
 
-// Rating generator function
-function colorratings(ratings1, ratings2, id1, id2) {
-  let parent1 = document.getElementById(id1);
-  let parent2 = document.getElementById(id2);
-  let r = parseInt(ratings1);
-  if (r <= 1) {
-    parent1.style.color = "red";
-  } else if (r <= 2) {
-    parent1.style.color = "rgb(255, 123, 0)";
-  } else if (r <= 3) {
-    parent1.style.color = "rgb(255, 217, 0)";
-  } else if (r <= 4) {
-    parent1.style.color = "rgb(166, 255, 0)";
-  } else {
-    parent1.style.color = "rgb(30, 255, 0)";
-  }
-  r = parseInt(ratings2);
-  if (r <= 1) {
-    parent2.style.color = "red";
-  } else if (r <= 2) {
-    parent2.style.color = "rgb(255, 123, 0)";
-  } else if (r <= 3) {
-    parent2.style.color = "rgb(255, 217, 0)";
-  } else if (r <= 4) {
-    parent2.style.color = "rgb(166, 255, 0)";
-  } else {
-    parent2.style.color = "rgb(30, 255, 0)";
-  }
-}
-
 function BookDesc() {
   return (
     <div className="book-description">
@@ -122,16 +92,6 @@ function BookDesc() {
             }
             return <i className="fas fa-star-half-alt"></i>;
           })}
-          {
-            (window.onload = () => {
-              colorratings(
-                bookdetails.rating,
-                bookdetails.sellerRating,
-                "book-rating",
-                "book-seller-rating"
-              );
-            })
-          }
         </div>
       </div>
     </div>

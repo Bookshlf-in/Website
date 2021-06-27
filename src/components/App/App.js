@@ -14,7 +14,7 @@ import Review from "../Reviews/Reviews";
 import AddReviews from "../AddReviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
 import Track from "../UserProfile/OrderTracking";
-import SellerPannel from "../SellerPannel/SellerPannel";
+import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/SearchResult";
 import BookDetails from "../BookDetails/BookDetails"
 function App() {
@@ -55,9 +55,9 @@ function App() {
             <Navbar />
             <UserProfile />
           </Route>
-          <Route path="/SellerProfile">
+          <Route path="/SellerPanel">
             <Navbar />
-            <SellerPannel />
+            <SellerPanel />
           </Route>
           <Route path="/SearchResult">
             <Navbar />
