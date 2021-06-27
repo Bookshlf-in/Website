@@ -1,0 +1,109 @@
+.SellerPanel-container {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  padding-bottom: 20px;
+  display: flex;
+  min-height: calc(100vh - 90px);
+}
+.SellerPanel-navbar {
+  display: flex;
+  width: 300px;
+  min-height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.panel-nav-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 40px 10px 20px;
+}
+.panel-item {
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 10px 10px 0px;
+  height: 60px;
+  padding: 10px;
+  background-color: #ffffff;
+  position: relative;
+  color: rgb(22, 22, 22);
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+.panel-item span,
+.panel-item p {
+  padding: 5px;
+}
+.panel-item::before {
+  content: "";
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 30px solid #ffffff;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+}
+.panel-item:hover {
+  background-color: #444444;
+  box-shadow: 3px 6px 6px white;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  color: #ffffff;
+}
+.panel-item:hover::before {
+  content: "";
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 30px solid #444444;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  cursor: pointer;
+  color: white;
+}
+
+/* Account Details CSS */
+.card {
+  width: 400px;
+  border: 1px solid white;
+  border-radius: 15px;
+  box-shadow: 3px 4px 5px rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 20px;
+}
+.seller-social-links {
+  display: flex;
+  flex-direction: row;
+}
+.seller-social-links a {
+  margin: 5px 10px;
+  color: rgb(241, 42, 42);
+}
+.seller-social-links a:hover {
+  color: white;
+}
+.seller-rating {
+  padding: 10px;
+}
+.seller-rating i {
+  letter-spacing: 5px;
+  color: yellow;
+}
+.books-sold b {
+  color: rgb(38, 255, 38);
+}

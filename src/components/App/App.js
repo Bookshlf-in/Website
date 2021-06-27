@@ -1,22 +1,22 @@
 import React, {useState, useEffect} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import "./App.css";
-import Login from "../Login/Login.js";
-import UserSignup from "../Signup/UserSignup.js";
-import ForgotPassword from "../ForgotPassword/ForgotPassword.js";
-import Verify from "../VerifyAccount/Verify.js";
-import Navbar from "../Navbar/Navbar.js";
-import Footer from "../Footer/Footer.js";
-import About from "../About/About.js";
-import Contact from "../Contact/Contact.js";
-import Cart from "../Cart/Cart.js";
-import Review from "../Reviews/Reviews.js";
-import AddReviews from "../AddReviews/AddReviews.js";
-import UserProfile from "../UserProfile/UserProfile.js";
-import Track from "../UserProfile/OrderTracking.js";
-import SellerProfile from "../SellerProfile/SellerProfile.js";
-import SearchResult from "../SearchResult/SearchResult.js";
-import BookDetails from "../BookDetails/BookDetails.js"
+import Login from "../Login/Login";
+import UserSignup from "../Signup/UserSignup";
+import ForgotPassword from "../ForgotPassword/ForgotPassword";
+import Verify from "../VerifyAccount/Verify";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+import About from "../About/About";
+import Contact from "../Contact/Contact";
+import Cart from "../Cart/Cart";
+import Review from "../Reviews/Reviews";
+import AddReviews from "../AddReviews/AddReviews";
+import UserProfile from "../UserProfile/UserProfile";
+import Track from "../UserProfile/OrderTracking";
+import SellerPanel from "../SellerPanel/SellerPanel";
+import SearchResult from "../SearchResult/SearchResult";
+import BookDetails from "../BookDetails/BookDetails"
 function App() {
   return (
     <Router>
@@ -55,9 +55,9 @@ function App() {
             <Navbar />
             <UserProfile />
           </Route>
-          <Route path="/SellerProfile">
+          <Route path="/SellerPanel">
             <Navbar />
-            <SellerProfile />
+            <SellerPanel />
           </Route>
           <Route path="/SearchResult">
             <Navbar />

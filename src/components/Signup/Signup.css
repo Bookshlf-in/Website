@@ -77,7 +77,7 @@
   align-items: center;
 }
 
-.signup-form input[type="text"] {
+.signup-name input[type="text"] {
   height: 50px;
   width: 200px;
   outline: none;
@@ -88,8 +88,7 @@
   border: none;
 }
 
-.signup-form input[type="mail"],
-.signup-form input[type="password"] {
+.signup-form input {
   height: 50px;
   width: 400px;
   outline: none;
@@ -145,4 +144,26 @@
 .signup-button input:hover {
   box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.8);
   background-color: rgb(248, 119, 34);
+}
+.signup-password {
+  position: relative;
+}
+.signup-password i.fas.fa-eye-slash,
+.signup-password i.far.fa-eye {
+  position: absolute;
+  float: right;
+  right: 20px;
+  cursor: pointer;
+  font-size: 20px;
+}
+.signup-confirm-password {
+  position: relative;
+}
+.signup-confirm-password i.fas.fa-eye-slash,
+.signup-confirm-password i.far.fa-eye {
+  float: right;
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }

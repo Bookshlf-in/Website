@@ -108,6 +108,7 @@
 }
 .book-rating {
   letter-spacing: 3px;
+  color: rgb(231, 231, 35);
 }
 .book-cutomer-reviews a {
   background: #eee;
@@ -235,6 +236,7 @@
 .book-seller-rating {
   margin-top: 5px;
   letter-spacing: 2px;
+  color: rgb(16, 106, 250);
 }
 .book-purchase-container input {
   width: 150px;
