@@ -9,13 +9,13 @@
   width: 300px;
   min-height: 100%;
   justify-content: center;
-  align-items: center;
+  align-items: top;
 }
 .panel-nav-bg {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   padding: 10px 40px 10px 20px;
@@ -106,4 +106,199 @@
 }
 .books-sold b {
   color: rgb(38, 255, 38);
+}
+
+/* Orders CSS */
+
+.orders-bg {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
+.orders-details {
+  padding: 10px 10px 10px 30px;
+  width: 100%;
+}
+.orders-details table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: whitesmoke;
+  overflow-x: auto;
+}
+.orders-details table,
+.orders-details th,
+.orders-details td {
+  border: 2px solid rgb(0, 0, 0);
+  padding: 10px;
+}
+.orders-details th {
+  height: 70px;
+  text-align: center;
+  vertical-align: middle;
+  color: rgb(0, 0, 0);
+  letter-spacing: 2px;
+}
+.orders-details td {
+  text-align: center;
+  vertical-align: middle;
+  color: rgb(0, 0, 0);
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 1px;
+}
+.orders-filter form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.orders-filter .select-wrapper {
+  position: relative;
+  width: 650px;
+}
+.orders-filter .select-wrapper::after {
+  color: black;
+  content: "▾";
+  margin-right: 10px;
+  pointer-events: none;
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  font-size: 24px;
+}
+.orders-filter .select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: white;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 12px;
+  width: 100%;
+  font-size: 18px;
+  outline: none;
+  border: 1px solid white;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.orders-filter .select:focus {
+  color: black;
+  border: 1px solid rgb(55, 251, 55);
+}
+.orders-filter .select::-ms-expand {
+  display: none;
+}
+.orders-filter .select-wrapper .select option {
+  font-weight: bold;
+}
+.orders-filter input {
+  width: 50px;
+  height: 50px;
+  margin: 10px auto;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  border: 2px solid white;
+  background-color: rgb(22, 22, 22);
+  color: white;
+  border-radius: 10px;
+}
+.orders-filter input:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgb(15, 15, 15);
+  border-radius: 10px;
+}
+
+/* Address CSS*/
+
+.address-bg {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  padding: 20px;
+}
+.address-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.address-table {
+  width: 100%;
+  color: rgb(255, 255, 255);
+  border-collapse: collapse;
+  font-size: 20px;
+}
+.address-table th,
+.address-table td {
+  padding: 20px;
+  text-align: center;
+  vertical-align: middle;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.close-btn {
+  font-size: 32px;
+  color: rgb(255, 38, 38);
+}
+.close-btn i:hover {
+  cursor: pointer;
+  color: rgb(235, 0, 0);
+}
+
+.add-address-table {
+  width: 80%;
+  margin-top: 20px;
+  color: rgb(255, 255, 255);
+  border-collapse: collapse;
+  font-size: 20px;
+}
+.add-address-table th,
+.add-address-table td {
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.add-btn i {
+  font-size: 32px;
+  color: rgb(38, 255, 103);
+}
+.add-btn i:hover {
+  cursor: pointer;
+  color: rgb(20, 235, 0);
+}
+#Newaddress {
+  height: 50px;
+  width: 400px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+  font-size: 18px;
+}
+
+/* Seller Reviews And Rating Css */
+.seller-reviews {
+  padding: 30px;
+}
+.reviewed-title {
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  text-align: center;
+}
+
+.your-rating-as-seller {
+  width: 100%;
+  text-align: center;
+  color: white;
+  letter-spacing: 2px;
 }

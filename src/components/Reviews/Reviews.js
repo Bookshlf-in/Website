@@ -31,7 +31,7 @@ export default function Reviews(props) {
               explicabo aliquam. A maiores, dolorem ad provident pariatur quas
               odio impedit.
             </p>
-            <div className="profile"></div>
+            <div className="Customerprofile"> lavda sur </div>
           </div>
           <div className="reviews_item">
             <div className="ratings">
@@ -46,7 +46,7 @@ export default function Reviews(props) {
               explicabo aliquam. A maiores, dolorem ad provident pariatur quas
               odio impedit.
             </p>
-            <div className="profile"></div>
+            <div className="Customerprofile"></div>
           </div>
           <div className="reviews_item">
             <div className="ratings">
@@ -61,7 +61,7 @@ export default function Reviews(props) {
               explicabo aliquam. A maiores, dolorem ad provident pariatur quas
               odio impedit.
             </p>
-            <div className="profile"></div>
+            <div className="Customerprofile"></div>
           </div>
           <div className="reviews_item">
             <div className="ratings">
@@ -76,7 +76,7 @@ export default function Reviews(props) {
               explicabo aliquam. A maiores, dolorem ad provident pariatur quas
               odio impedit.
             </p>
-            <div className="profile"></div>
+            <div className="Customerprofile"></div>
           </div>
           <div className="reviews_item">
             <div className="ratings">
@@ -91,7 +91,7 @@ export default function Reviews(props) {
               explicabo aliquam. A maiores, dolorem ad provident pariatur quas
               odio impedit.
             </p>
-            <div className="profile"></div>
+            <div className="Customerprofile"></div>
           </div>
           <div className="reviews_item">
             <div className="ratings">
@@ -106,7 +106,7 @@ export default function Reviews(props) {
               explicabo aliquam. A maiores, dolorem ad provident pariatur quas
               odio impedit.
             </p>
-            <div className="profile"></div>
+            <div className="Customerprofile"></div>
           </div>
         </div>
       </div>
