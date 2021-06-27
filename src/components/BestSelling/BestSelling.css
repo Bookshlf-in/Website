@@ -1,0 +1,145 @@
+.best-container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    /* border: 2px solid red; */
+}
+
+.bs-header{
+    margin: 20px 0px;
+    display: inline-block;
+    width: 100%;
+    /* border: 2px solid green; */
+
+
+}
+.header-heading{
+    display: inline-block;
+    width: 100%;
+    padding: 0px 30px;
+
+}
+
+.header-viewall{
+    display: inline-block;
+    position: absolute;
+    right: 40px;
+}
+
+.header-viewall a{
+    color: #525252;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.header-viewall a:hover{
+    color: #222222;
+    transition: 0.3s ease-out;
+    transition: all 0.2s ease-in-out;
+    background-position: 0 100%;
+    transform: translateX(5px);
+
+}
+
+.bs-books{
+    display: flex;
+    padding: 0px 30px;
+    margin: 20px 0px;
+    justify-content:center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.book{
+    display: flex;
+    flex-direction: column;
+    border: 0.2px solid rgb(216, 216, 216);
+    width:290px;
+    height: 470px;
+}
+.book:hover{
+    border: 0.2px solid black;
+}
+
+.book-pic{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+
+}
+
+.book-details{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 35px;
+    align-items: flex-start;
+    /* border: 2px solid blue; */
+    padding: 4px;
+}
+
+.details-para1{
+    font-size: 11px;
+    color: rgb(252, 62, 62);
+}
+
+.details-para2{
+    font-weight:500;
+    padding: 8px 0px;
+}
+
+.details-para3{
+    color: rgb(99, 99, 99);
+    padding: 6px 0px;
+}
+
+.details-para4{
+    font-weight: 500;
+}
+
+.hidden-items{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items:flex-start;
+    margin: 20px 0px;
+}
+
+.cart{
+    color: rgb(79, 145, 207);
+    font-weight: 490;
+    font-size: 18px;
+    padding: 4px 15px;
+    margin: 0px 20px;
+}
+
+.hidden-items i{
+    margin-top: 8px;
+    margin-right: 25px;
+}
+
+.cart:hover{
+    color: rgb(29, 68, 104);
+    /* border: 0.01px solid rgb(218, 218, 218); */
+    background-color: rgb(241, 241, 241);
+    border-radius: 40px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .header-heading{
+        font-size: 25px;
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .header-viewall{
+        display: flex;
+        position: static;
+        justify-content: center;
+        align-items: center;
+    }
+}
