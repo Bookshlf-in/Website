@@ -26,7 +26,7 @@ function Navbar() {
       {/* navbar container starts */}
       <div className="navbar-container">
         <span onClick={openNav} className="Sidenav-open">
-          <i class="fas fa-bars"></i>
+          <i className="fas fa-bars"></i>
         </span>
         <SideNav />
         {/* navbar logo */}
@@ -44,22 +44,22 @@ function Navbar() {
             <Link to="/">
               <li>
                 <div className="navbar-items-chip">
-                  <img
-                    src="./images/home.svg"
-                    alt="Home"
-                    height="18px"
-                    width="18px"
-                  />
-                  <p>&nbsp;&nbsp;&nbsp;Home</p>
+                  <p>
+                    <i className="fas fa-home" />
+                    &nbsp;Home
+                  </p>
                 </div>
               </li>
             </Link>
             <Link to="/">
               <li>
                 <div className="navbar-items-chip">
-                  <div class="dropdown">
-                    <button class="dropbtn">Categories&nbsp;&#709;</button>
-                    <div class="dropdown-content">
+                  <div className="dropdown">
+                    <button className="dropbtn">
+                      Categories&nbsp;
+                      <i class="fas fa-caret-down" />
+                    </button>
+                    <div className="dropdown-content">
                       <Link to="">JEE Mains</Link>
                       <Link to="">JEE Advanced</Link>
                       <Link to="">NEET</Link>
@@ -77,11 +77,14 @@ function Navbar() {
             <Link to="/">
               <li>
                 <div className="navbar-items-chip">
-                  <div class="dropdown">
-                    <button class="dropbtn">Other&nbsp;&#709;</button>
-                    <div class="dropdown-content">
+                  <div className="dropdown">
+                    <button className="dropbtn">
+                      Other&nbsp;
+                      <i className="fas fa-caret-down" />
+                    </button>
+                    <div className="dropdown-content">
                       <Link to="/Contact">Contact Us</Link>
-                      <Link to="github.com/Bookshlf-in/Website">Contribute</Link>
+                      <Link to="">Sell Old Books</Link>
                       <Link to="">Blog</Link>
                     </div>
                   </div>
@@ -90,7 +93,12 @@ function Navbar() {
             </Link>
             <Link to="/About">
               <li>
-                <div className="navbar-items-chip">AboutUs</div>
+                <div className="navbar-items-chip">
+                  <p>
+                    <i className="fas fa-info-circle" />
+                    &nbsp;AboutUs
+                  </p>
+                </div>
               </li>
             </Link>
           </ul>
@@ -101,25 +109,25 @@ function Navbar() {
               <div className="navbar-items-chip">
                 <div className="navbar-items-chip-searchbox">
                   <input type="text" />
-                  <div className="navbar-searchbox-submit">
-                    <img
-                      src="./images/loupe.svg"
-                      alt="search"
-                      height="20px"
-                      width="20px"
-                    />
-                  </div>
+                  <Link to="/SearchResult">
+                    <div className="navbar-searchbox-submit">
+                      <img
+                        src="./images/loupe.svg"
+                        alt="search"
+                        height="20px"
+                        width="20px"
+                      />
+                    </div>
+                  </Link>
                 </div>
               </div>
             </li>
             <li>
               <div className="navbar-items-chip">
-                <img
-                  src="./images/carts.svg"
-                  alt="My cart"
-                  height="30px"
-                  width="30px"
-                />
+                <Link to="/Cart" className="cart-icon">
+                  <i className="fas fa-shopping-cart" />
+                </Link>
+                <p className="Cart-items-notify-bubble">2</p>
               </div>
             </li>
             <li>

@@ -5,7 +5,7 @@
   z-index: 1000;
 }
 .navbar-container {
-  background-color: rgb(250, 237, 217);
+  background: linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%);
   width: 100%;
   overflow: hidden;
   padding: 10px;
@@ -40,12 +40,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: white;
+  font-size: 18px;
 }
-.navbar-items-chip:hover {
-  color: rgb(235, 95, 95);
+.navbar-items-chip a,
+.navbar-items-chip p {
+  padding: 14px 10px;
+  color: white;
 }
-
+.navbar-items-chip a:hover,
+.navbar-items-chip p:hover {
+  background-color: rgba(207, 199, 199, 0.452);
+}
+.navbar-items-chip .Cart-items-notify-bubble {
+  float: right;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: rgb(233, 159, 61);
+  padding: 2px 5px;
+  border-radius: 10px;
+  margin-top: -25px;
+}
+.navbar-items-chip a.cart-icon {
+  padding: 0;
+  font-size: 20px;
+}
+.navbar-items-chip a.cart-icon:hover {
+  color: rgb(240, 240, 63);
+  background-color: transparent;
+}
 .navbar-right ul {
   float: right;
   list-style: none;
@@ -71,37 +94,45 @@
   font-size: 16px;
   padding-left: 2px;
 }
+.navbar-items-chip-searchbox a {
+  padding: 3.5px 10px;
+  z-index: 1;
+}
+.navbar-items-chip-searchbox a:hover {
+  background-color: rgb(246, 218, 56);
+}
 .navbar-items-chip-searchbox input:focus {
   outline: none;
-  width: 400px;
-  transition: 0.3s;
+  width: 300px;
+  transition: 0.5s;
   background-color: rgba(255, 255, 255);
-  border-bottom: 1px solid rgb(98, 221, 98);
+  border-bottom: 2px solid rgb(98, 221, 98);
 }
-
+.navbar-searchbox-submit {
+  padding: 0px 5px;
+}
 .navbar-items-chip .dropdown {
   float: left;
   overflow: hidden;
-  z-index: 10;
+  z-index: 100;
 }
 
 .navbar-items-chip .dropdown .dropbtn {
   border: none;
   outline: none;
-  color: black;
+  color: rgb(255, 255, 255);
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   padding: 14px 10px;
   font-size: 18px;
   background-color: inherit;
   margin: 0;
-  z-index: 10;
+  z-index: 100;
 }
 .navbar a:hover,
 .dropdown:hover .dropbtn {
-  background-color: rgba(65, 64, 64, 0.1);
-  color: rgb(235, 95, 95);
-  z-index: 10;
+  background-color: rgba(207, 199, 199, 0.452);
+  z-index: 100;
 }
 .dropdown-content {
   display: none;
@@ -109,7 +140,7 @@
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 10;
+  z-index: 100;
 }
 
 .dropdown-content a {

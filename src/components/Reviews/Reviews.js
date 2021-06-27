@@ -108,22 +108,6 @@ export default function Reviews(props) {
             </p>
             <div className="profile"></div>
           </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((star) => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="profile"></div>
-          </div>
-          
         </div>
       </div>
     </div>

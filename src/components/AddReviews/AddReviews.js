@@ -37,14 +37,13 @@ function Reviews(props) {
   return (
     <div className="addreviews">
         <div className="review-by">
-              <p>Review by Rahul yadav</p>
+              <p><i class="fas fa-comment-dots"></i>&nbsp;Add Your Review</p>
           </div>
       <div className="addreview">
           
         <div className="review-header">
-            
           <p>
-            Reviews are public and editable. Everyone can see your Google
+          <i class="fas fa-info-circle"></i>&nbsp;Reviews are public and editable. Everyone can see your Google
             Account name and photo. Developers can also see your country and
             device information (such as language, model and OS version) and may
             use this information to respond to you.
@@ -59,7 +58,7 @@ function Reviews(props) {
             <div className="desc">
               <form className="desc-form">
                 <label htmlFor="desc" className="desc-label"></label>
-                <input
+                <textarea
                   type="text"
                     value={desc}
                     onChange={(e) => {
@@ -67,9 +66,9 @@ function Reviews(props) {
                     }}
                   className="desc-input"
                   id="desc"
-                  placeholder="Tell others what you think about this book."
+                  placeholder="Tell others what you think about this book. Would you recommened it, and why?"
                 />
-                <p>Most helpful reviews have 100 words or more.</p>
+                <p><i class="fas fa-lightbulb"></i> Most helpful reviews have 100 words or more.</p>
               </form>
             </div>
             <div className="rating">
@@ -104,8 +103,8 @@ function Reviews(props) {
           </div>
         </div>
         <div className="btn">
-          <form onSubmit={submit}>
-            <button type="submit" className="btn-submit">submit</button>
+          <form onSubmit="">
+            <button type="submit" className="btn-submit">Submit</button>
           </form>
         </div>
       </div>

@@ -24,7 +24,7 @@ function Sidenav() {
         <Link className="Profile">
           Profile&nbsp;<i class="fas fa-user-circle"></i>
         </Link>
-        <Link className="Profile">
+        <Link className="Profile" to = "/Cart">
           Cart&nbsp;<i class="fas fa-shopping-cart"></i>
         </Link>
         {/* ends here */}
