@@ -1,51 +1,50 @@
-.reviews{
-    padding: 30px;
-    /* border: 2px solid green; */
-    background-color: #0a2540;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.reviews {
+  padding: 30px;
+  /* border: 2px solid green; */
+  background-color: #0a2540;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.reviewed_by{
-    text-align: center;
-    font-size: 30px;
+.reviewed_by {
+  text-align: center;
+  font-size: 30px;
 }
 
-.book_desc{
-    margin:20px 0px;
-    margin-bottom: 40px;
-    font-style: italic;
-    text-align: center;
+.book_desc {
+  margin: 20px 0px;
+  margin-bottom: 40px;
+  font-style: italic;
+  text-align: center;
 }
 
-.reviews_wrapper{
-    /* border: 2px solid red; */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
+.reviews_wrapper {
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
-.reviews_item{
-    background-color: rgb(238, 238, 238);
-    border-radius: 10px;
-    color: black;
-    margin: 20px;
-    border: 4px solid rgb(148, 148, 148);
-    height: 300px;
-    width: 270px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    justify-content: flex-start;
-    align-items: flex-start;
+.reviews_item {
+  background-color: rgb(238, 238, 238);
+  border-radius: 10px;
+  color: black;
+  margin: 10px;
+  font-size: 12px;
+  border: 4px solid rgb(148, 148, 148);
+  height: 250px;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.rating_value{
-    margin: 8px 0px;
+.rating_value {
+  margin: 8px 0px;
 }
-
-

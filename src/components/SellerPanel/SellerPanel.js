@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import SideNav from "./PanelNavbar";
 import Orders from "./Orders";
 import Address from "./Address";
+import Reviews from "./SellerReviews";
+import AddBook from "./AddBook";
 function SellerPanel() {
   return (
     <div className="SellerPanel-container">
@@ -13,7 +15,9 @@ function SellerPanel() {
       </div>
       <AccountDetails visible="none" />
       <Orders visible="none" />
-      <Address />
+      <Address visible="none" />
+      <Reviews visible="none" />
+      <AddBook visible="flex" />
     </div>
   );
 }

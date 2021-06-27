@@ -1,9 +1,9 @@
 import React from "react";
-function Address() {
+function Address(props) {
   var address = "IIIT lucknow, 226002 India";
   var AdNo = 1;
   return (
-    <div className="address-bg">
+    <div className="address-bg" style={{display: props.visible}}>
       <div className="address-container">
         <table className="address-table">
           <tr>
