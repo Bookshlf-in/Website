@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-function AccountDetails() {
+function AccountDetails(props) {
   // all seller profile details here
   var sellerDetails = {
     sellerName: "John Smith",
@@ -20,7 +20,7 @@ function AccountDetails() {
     tag: "Not Verified",
   };
   var style = {
-    display: "flex",
+    display: props.visible,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
