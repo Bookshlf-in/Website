@@ -38,12 +38,14 @@ function Footer() {
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState("success");
   const [alert, setAlert] = useState(messages.Success);
+  const [loading, setLoading] = useState("none");
 
   // Handeling subscription
   const handelSubscription = () => {
     // console.log(Email);
     if (Email !== null) {
       if ((Email.length > 5) & Email.includes("@") & Email.includes(".")) {
+        setLoading("block");
         axios
           .post("/newsletterSubscribe", {
             email: Email,
@@ -58,6 +60,7 @@ function Footer() {
               setSeverity("warning");
               setAlert(messages.Warning);
             }
+            setLoading("none");
           })
           .catch(function (error) {
             //   Bad Request or Already subscribed
@@ -72,6 +75,7 @@ function Footer() {
               setSeverity("warning");
               setAlert(messages.Warning);
             }
+            setLoading("none");
           });
       } else {
         // Invalid Email
@@ -112,29 +116,27 @@ function Footer() {
               placeholder="Enter email for weekly newsletter"
               onChange={(e) => changeEmail(e.target.value)}
             />
-            <input
-              type="button"
-              className="footer-subscription-button"
-              onClick={handelSubscription}
-              value="Subscribe"
-            />
-
-            {/* !!! do not change !!! */}
-            {/*  snackbar starts*/}
-            <div className={classes.root}>
-              <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-              >
-                <Alert onClose={handleClose} severity={severity}>
-                  {alert}
-                </Alert>
-              </Snackbar>
+            <div className="footer-subscription-button-container">
+              <input
+                type="button"
+                className="footer-subscription-button"
+                onClick={handelSubscription}
+                value="Subscribe"
+              />
+              <div id="loading" style={{display: loading}}></div>
             </div>
-            {/* snackbar ends */}
-            {/* !!! do not change !!! */}
           </form>
+          {/* !!! do not change !!! */}
+          {/*  snackbar starts*/}
+          <div className={classes.root}>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity={severity}>
+                {alert}
+              </Alert>
+            </Snackbar>
+          </div>
+          {/* snackbar ends */}
+          {/* !!! do not change !!! */}
         </div>
       </section>
       <div className="footer-container2">
