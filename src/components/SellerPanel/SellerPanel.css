@@ -302,3 +302,88 @@
   color: white;
   letter-spacing: 2px;
 }
+
+/* Add Book CSS */
+
+.add-book-bg {
+  width: 80%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+}
+
+.add-book-form {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+}
+.add-book-field2,
+.add-book-field1 {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-book-form input[type="text"],
+.add-book-form input[type="mail"],
+.add-book-form input[type="number"] {
+  height: 50px;
+  width: 500px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+}
+.add-book-field2 input[type="text"] {
+  height: 50px;
+  width: 250px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+}
+
+.add-book-form .add-book-field1 span,
+.add-book-form .add-book-field2 span {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: whitesmoke;
+  border: 1px solid white;
+}
+.add-book-field2 input:focus,
+.add-book-field1 input:focus {
+  border-bottom: 2px solid rgb(52, 248, 52);
+  background-color: white;
+  transition: 0.1s;
+}
+.add-book-field2 input:focus::placeholder,
+.add-book-field1 input:focus::placeholder {
+  letter-spacing: 2px;
+  color: rgb(241, 58, 58);
+  transition: 0.3s;
+}
+/* .add-book-upload input {
+  height: 50px;
+  width: 170px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  padding-left: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+  position: relative;
+} */

@@ -1,7 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
-
-function Orders(props) {
+function Orders() {
   var orderDetails = {
     id: "#JS213WQERQ12",
     date: "25/06/2021",
@@ -14,7 +12,7 @@ function Orders(props) {
     buyer: "Gadha chand",
   };
   return (
-    <div style = {{display: props.visible}}className="orders-bg">
+    <div className="orders-bg">
       <div className="orders-filter">
         <form action="">
           <div className="select-wrapper">

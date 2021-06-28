@@ -1,7 +1,13 @@
-import React from "react";
+import {React, useState} from "react";
 import "./Login.css";
 import {Link} from "react-router-dom";
+import axios from "../../axios";
 function Login() {
+  const [name, setName] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  // Handeling the Login
+  const handleClick = () => {};
   return (
     <div className="login-bg">
       <div className="login-container">
@@ -17,6 +23,7 @@ function Login() {
           <div className="login-container-left-main">
             <h2> Login </h2>
             <div className="login-container-left-main-form">
+              {/* Login form */}
               <form autoComplete="off">
                 <div className="login-form-email-lable">Email</div>
                 <div className="login-form-email-input">
@@ -25,28 +32,32 @@ function Login() {
                     placeholder="yourname@email.com"
                     required
                     autoComplete="off"
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="login-form-password-lable">Password</div>
                 <div className="login-form-password-input">
                   <input
                     type="Password"
-                    placeholder="**************"
+                    placeholder="Password"
                     required
                     autoComplete="off"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="login-form-forgot-password">
                   <Link to="/ForgotPassword">Forgot Your Password ?</Link>
                 </div>
                 <div className="login-form-submit-button">
-                  <button>Login</button>
+                  <button onClick={handleClick}>Login</button>
                 </div>
               </form>
+              {/* Login Form Ends */}
             </div>
           </div>
         </div>
         {/* Left container ends here */}
+
         <div
           className="login-container-right"
           style={{backgroundImage: `url(/images/login-city.svg)`}}
