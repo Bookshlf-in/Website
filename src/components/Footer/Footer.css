@@ -41,7 +41,12 @@ footer-subscription > p {
   font-size: 20px;
   color: #5e5e5e;
 }
-
+.input-areas form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .footer-subscription-input {
   width: 400px;
   height: 55px;
@@ -53,6 +58,7 @@ footer-subscription > p {
   outline: none;
   font-family: "Roboto", sans-serif;
   font-weight: 900;
+  margin-right: 20px;
 }
 .footer-subscription-input::placeholder {
   color: rgb(240, 79, 79);
@@ -64,13 +70,13 @@ footer-subscription > p {
 .footer-subscription-input:focus::placeholder {
   color: rgb(97, 226, 136);
 }
-.footer-subscription-button {
-  padding: 15px 45px;
+.footer-subscription-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
   font-size: 20px;
   margin: 0px 30px;
-  display: inline-block;
-  box-sizing: border-box;
-  outline: none;
   background-color: black;
   color: white;
   box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
@@ -79,10 +85,19 @@ footer-subscription > p {
   border-right: 1.8px solid whitesmoke;
   font-family: "Roboto", sans-serif;
 }
-
+.footer-subscription-button {
+  width: 150px;
+  border: none;
+  height: 52px;
+  outline: none;
+  font-size: 20px;
+  background-color: black;
+  color: white;
+  font-family: "Roboto", sans-serif;
+}
+.footer-subscription-button-container:hover,
 .footer-subscription-button:hover {
   background-color: rgb(240, 79, 79);
-  transition: 0.2s ease-in-out;
   font-weight: bold;
 }
 .footer-input {
@@ -342,5 +357,30 @@ footer-subscription > p {
     padding: 8px 15px;
     margin: 8px 0;
     text-align: center;
+  }
+}
+
+/* css loader */
+
+#loading {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 6px solid #ffffff;
+  border-top: 6px solid #790000;
+  border-radius: 100%;
+  margin: auto;
+  display: none;
+  animation: spin 0.5s infinite linear;
+  padding: 0.5rem;
+}
+#loading.display {
+  display: block;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

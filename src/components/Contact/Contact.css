@@ -44,6 +44,7 @@
 #contactName,
 #contactEmail {
   width: 300px;
+  font-weight: bold;
   height: 50px;
   margin: 20px;
   font-size: 18px;
@@ -54,6 +55,7 @@
 }
 
 #contactSubject {
+  font-weight: bold;
   width: 640px;
   margin: 20px;
   height: 50px;
@@ -64,6 +66,7 @@
   font-family: "Roboto", sans-serif;
 }
 #contactReview {
+  font-weight: bold;
   width: 640px;
   margin: 20px;
   height: 150px;
@@ -81,7 +84,8 @@
   transition: 0.2s ease-in-out;
   color: rgb(126, 33, 126);
   font-weight: bold;
-  letter-spacing: 0.5px;
+  letter-spacing: 2px;
+  transition: 0.3s;
 }
 #contactName::placeholder,
 #contactEmail::placeholder,
