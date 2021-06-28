@@ -1,8 +1,115 @@
-import React from "react";
+import {React, useState} from "react";
 import "./Contact.css";
 import {Link} from "react-router-dom";
+import {makeStyles} from "@material-ui/core/styles";
+import Alert from "@material-ui/lab/Alert";
+import axios from "../../axios";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
+// alert Styles
+const alertStyle = {
+  color: {
+    success: "#4caf50",
+    error: "#f44336",
+  },
+};
+
+// Alert Messages
+const alertMessage = {
+  success: "We have recieved your request. Kindly wait for 2-3 working days.",
+  error: {
+    default: "Please fill all fields!",
+    mail: "Your Email Address is Incorrect!",
+    sub: "Subject is too short (should have atleast 10 letters)",
+    msg: "Message is too short (should have atleast 30 letters)",
+  },
+};
 
 function Contact() {
+  const classes = useStyles();
+  // form states
+  const [Name, setName] = useState(null);
+  const [Email, setEmail] = useState(null);
+  const [Subject, setSubject] = useState(null);
+  const [Message, setMessage] = useState(null);
+
+  // alert states
+  const [Alerttype, setAlerttype] = useState("success");
+  const [showAlert, setshowAlert] = useState("none");
+  const [loader, setloader] = useState("none");
+  const [alertColor, setalertColor] = useState(alertStyle.color.success);
+  const [alertText, setalertText] = useState(alertMessage.success);
+
+  // Handeling the submit button
+  const handelSubmit = () => {
+    setAlerttype("error");
+    if (
+      (Name !== null) &
+      (Email !== null) &
+      (Subject !== null) &
+      (Message !== null)
+    ) {
+      if (Email.includes("@") & Email.includes(".") ? true : false) {
+        if (Subject.length > 10 ? true : false) {
+          if (Message.length > 30 ? true : false) {
+            setloader("block");
+            axios
+              .post("/sendMessage", {
+                name: Name,
+                email: Email,
+                subject: Subject,
+                message: Message,
+              })
+              .then(function (response) {
+                console.log(response);
+                setalertColor(alertStyle.color.success);
+                setalertText(alertMessage.success);
+                setAlerttype("success");
+                setshowAlert("block");
+                setloader("none");
+              })
+              .catch(function (error) {
+                //   Bad Request or Already subscribed
+                if (error.response) {
+                  setalertColor(alertStyle.color.error);
+                  setalertText(alertMessage.error.mail);
+                  setshowAlert("block");
+                }
+                setloader("none");
+              });
+          } else {
+            setalertColor(alertStyle.color.error);
+            setalertText(alertMessage.error.msg);
+            setshowAlert("block");
+          }
+        } else {
+          setalertColor(alertStyle.color.error);
+          setalertText(alertMessage.error.sub);
+          setshowAlert("block");
+        }
+      } else {
+        setalertColor(alertStyle.color.error);
+        setalertText(alertMessage.error.mail);
+        setshowAlert("block");
+      }
+    } else {
+      setalertColor(alertStyle.color.error);
+      setalertText(alertMessage.error.default);
+      setshowAlert("block");
+    }
+    setTimeout(() => {
+      setshowAlert("none");
+    }, 10000);
+  };
+
+  // default export component
   return (
     <div className="contact-main">
       <h1> Contact Us</h1>
@@ -21,42 +128,87 @@ function Contact() {
         <h2>Social Media</h2>
         <div className="social-icons">
           <Link>
-            <i className="fab fa-facebook-f"></i>
+            <i className="fab fa-facebook-f" />
           </Link>
           <Link>
-            <i className="fab fa-instagram"></i>
+            <i className="fab fa-instagram" />
           </Link>
           <Link>
-            <i className="fab fa-twitter"></i>
+            <i className="fab fa-twitter" />
           </Link>
           <Link>
-            <i className="fab fa-linkedin"></i>
+            <i className="fab fa-linkedin" />
           </Link>
           <Link>
-            <i className="fab fa-youtube"></i>
+            <i className="fab fa-youtube" />
           </Link>
         </div>
         <h1 style={{fontSize: "3em"}}> Get In Touch</h1>
         <div className="contactForm">
-          <form action="put">
-            <input type="text" id="contactName" placeholder="Name" required />
-            <input type="mail" id="contactEmail" placeholder="Email" required />
+          <form action="">
+            <input
+              type="text"
+              id="contactName"
+              placeholder="Name"
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="mail"
+              id="contactEmail"
+              placeholder="Email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <br />
             <input
               type="text"
               id="contactSubject"
               placeholder="Subject"
               required
+              onChange={(e) => setSubject(e.target.value)}
             />
             <br />
             <textarea
               id="contactReview"
               placeholder="Details please! Your review helps other shoppers."
               required
+              onChange={(e) => setMessage(e.target.value)}
             />
             <br />
-            <input type="submit" id="contactSubmit" value="Submit Message" />
+            <input
+              type="button"
+              id="contactSubmit"
+              value="Submit Message"
+              onClick={handelSubmit}
+            />
+            {/* Loader starts*/}
+            <div
+              id="loading"
+              style={{
+                display: loader,
+                width: "8rem",
+                height: "8rem",
+                animation: "spin 1s infinite linear",
+                border: "6px solid transparent",
+                borderTop: "6px solid #3ab800",
+              }}
+            ></div>
+            {/* Loader ends */}
           </form>
+        </div>
+        <div className={classes.root} style={{display: showAlert}}>
+          <Alert
+            variant="outlined"
+            severity={Alerttype}
+            style={{
+              fontFamily: "PT Sans",
+              fontWeight: "bold",
+              color: alertColor,
+            }}
+          >
+            {alertText}
+          </Alert>
         </div>
       </div>
       <hr />
