@@ -9,10 +9,11 @@ function BestSelling() {
         <div className="bs-header">
           <h1 className="header-heading">Best Selling Books</h1>
           <p className="header-viewall">
-            <Link to="/">View All > </Link>
+            <Link to="/">View All&nbsp;<i className="fas fa-angle-right"/></Link>
           </p>
         </div>
         <div className="bs-books">
+          {/* best Selling book Component starts*/}
           <div className="book book1">
             <div className="book-pic">
               <img src="/images/best_selling/bs2.jpg" alt="" srcset="" className="bs-image" />
@@ -32,6 +33,8 @@ function BestSelling() {
                   <i class="far fa-heart"></i>
               </div>
           </div>
+          {/* best Selling Component Ends */}
+          {/* ===================== */}
           <div className="book book1">
             <div className="book-pic">
             <img src="/images/best_selling/bs3.jpg" alt="" srcset="" className="bs-image" />
@@ -50,6 +53,7 @@ function BestSelling() {
                   <i class="far fa-heart"></i>
               </div>
           </div>
+          {/* =================== */}
           <div className="book book1">
             <div className="book-pic">
             <img src="/images/best_selling/bs1.jpg" alt="" srcset="" className="bs-image" />
@@ -66,6 +70,7 @@ function BestSelling() {
                   <i class="far fa-heart"></i>
               </div>
           </div>
+          {/* =================== */}
           <div className="book book1">
             <div className="book-pic">
             <img src="/images/best_selling/bs4.jpg" alt="" srcset="" className="bs-image" />
@@ -82,24 +87,7 @@ function BestSelling() {
                   <i class="far fa-heart"></i>
               </div>
           </div>
-          <div className="book book1">
-            <div className="book-pic">
-            <img src="/images/best_selling/bs5.jpg" alt="" srcset="" className="bs-image" />
-            </div>
-            <div className="book-details">
-              <p className="details-para1">KINDLE EDITION</p>
-              <p className="details-para2">
-                The Last Sister ( Columbia River Book 1 )
-              </p>
-              <p className="details-para3">Kelly Harms</p>
-              <p className="details-para4">$29</p>
-            </div>
-              <div className="hidden-items">
-                  <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h"></i>
-                  <i class="far fa-heart"></i>
-              </div>
-          </div>
+          {/* =================== */}
         </div>
       </div>
     </div>

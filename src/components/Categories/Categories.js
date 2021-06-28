@@ -9,7 +9,7 @@ function Categories() {
         <div className="heading-wrapper">
           <h1 className="heading">Featured Categories</h1>
           <p className="heading-para">
-          <Link to='/'>All Categories ></Link>
+          <Link to='/'>All Categories&nbsp;<i className="fas fa-angle-right"/></Link>
             </p>
         </div>
         <div className="item-wrapper">
