@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "https://bookshlf.web.app"
+    baseURL: "https://bookshlf.herokuapp.com"
 });
 
 export default instance;

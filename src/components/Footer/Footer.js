@@ -1,8 +1,100 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import "./Footer.css";
 import axios from "../../axios";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import {makeStyles} from "@material-ui/core/styles";
+
+// Alert
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+// Use Styles
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
+// Footer App starts here
 function Footer() {
+  const classes = useStyles();
+
+  // Alert Messages
+  var messages = {
+    Success: "Successfully Subscribed!",
+    Info: "You Are Already Subscribed!",
+    Warning: "Something Went Wrong Please Try Again!",
+    Error: "Incorrect Email!",
+  };
+
+  // All states
+  const [Email, changeEmail] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [severity, setSeverity] = useState("success");
+  const [alert, setAlert] = useState(messages.Success);
+
+  // Handeling subscription
+  const handelSubscription = () => {
+    // console.log(Email);
+    if (Email !== null) {
+      if ((Email.length > 5) & Email.includes("@") & Email.includes(".")) {
+        axios
+          .post("/newsletterSubscribe", {
+            email: Email,
+          })
+          .then(function (response) {
+            if (response.data.msg === "Added subscription") {
+              setOpen(true);
+              setSeverity("success");
+              setAlert(messages.Success);
+            } else {
+              setOpen(true);
+              setSeverity("warning");
+              setAlert(messages.Warning);
+            }
+          })
+          .catch(function (error) {
+            //   Bad Request or Already subscribed
+            if (error.response) {
+              if (error.response.data.error === "Already subscribed") {
+                setOpen(true);
+                setSeverity("info");
+                setAlert(messages.Info);
+              }
+            } else {
+              setOpen(true);
+              setSeverity("warning");
+              setAlert(messages.Warning);
+            }
+          });
+      } else {
+        // Invalid Email
+        setOpen(true);
+        setSeverity("error");
+        setAlert(messages.Error);
+      }
+    } else {
+      // Invalid Email
+      setOpen(true);
+      setSeverity("error");
+      setAlert(messages.Error);
+    }
+  };
+
+  // Handeling snackbar closing
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <div className="footer-container">
       <section className="footer-subscription">
@@ -18,11 +110,30 @@ function Footer() {
               type="email"
               name="email"
               placeholder="Enter email for weekly newsletter"
-              required
+              onChange={(e) => changeEmail(e.target.value)}
             />
-            <button type="submit" className="footer-subscription-button">
-              Subscribe
-            </button>
+            <input
+              type="button"
+              className="footer-subscription-button"
+              onClick={handelSubscription}
+              value="Subscribe"
+            />
+
+            {/* !!! do not change !!! */}
+            {/*  snackbar starts*/}
+            <div className={classes.root}>
+              <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+              >
+                <Alert onClose={handleClose} severity={severity}>
+                  {alert}
+                </Alert>
+              </Snackbar>
+            </div>
+            {/* snackbar ends */}
+            {/* !!! do not change !!! */}
           </form>
         </div>
       </section>
