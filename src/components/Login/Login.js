@@ -8,18 +8,30 @@ const eye = {
   close: "fas fa-eye-slash",
 };
 
+const Errorstyle = {
+  border: "2px solid red",
+  color: "red",
+};
 function Login() {
   // login states
-  const [Name, setName] = useState(null);
-  const [Password, setPassword] = useState(null);
-  const [Log, setLog] = useState(false);
+  const [Name, setName] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Log, setLog] = useState(true);
   const [adminRole, setadminRole] = useState(true);
   const [userRole, setuserRole] = useState(true);
   const [sellerRole, setsellerRole] = useState(true);
+
   // other states
   const [show, setshow] = useState(eye.close);
   const [val, setval] = useState("password");
-
+  const [alert1, setalert1] = useState("none");
+  const [alert2, setalert2] = useState("none");
+  const [alertText1, setalertText1] = useState("Email is Incorrect");
+  const [alertText2, setalertText2] = useState("Password is Incorrect");
+  const [Red1, makeRed1] = useState(false);
+  const [Red2, makeRed2] = useState(false);
+  const [loader, setloader] = useState("none");
+  const [bigLoader, setBigLoader] = useState("none");
   // showing password and hiding
   const handelClick = () => {
     if (show === eye.close) {
@@ -31,9 +43,60 @@ function Login() {
     }
   };
 
-  // Handeling the Login
-  const handelLogin = () => {};
+  const setDefault = () => {
+    setalert1("none");
+    setalert2("none");
+    makeRed1(false);
+    makeRed2(false);
+  };
 
+  const handleDefaultError = () => {
+    if (Name === "") {
+      setalert1("block");
+      setalertText1("Please Fill Your Email.");
+      makeRed1(true);
+    }
+    if (Password === "") {
+      setalert2("block");
+      setalertText2("Please Fill Your Password.");
+      makeRed2(true);
+    }
+  };
+
+  // Handeling the Login
+  const handelLogin = () => {
+    setDefault();
+    if ((Name !== "") & (Password !== "")) {
+      // post request to login
+      setloader("block");
+      axios
+        .post("/signIn", {
+          email: Name,
+          password: Password,
+        })
+        .then((response) => {
+          localStorage.setItem("Token", response.data.token);
+          setLog(false);
+          setloader("none");
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data.error);
+          }
+          setloader("none");
+        });
+    } else {
+      handleDefaultError();
+    }
+  };
+
+  // Handeling User Role
+  const handleUserRole = () => {
+    setBigLoader("flex");
+    setTimeout(() => {
+      setBigLoader("none");
+    }, 6000);
+  };
   return (
     <div className="login-bg">
       {Log ? (
@@ -56,6 +119,7 @@ function Login() {
                   <div className="login-form-email-input">
                     <input
                       type="email"
+                      value={Name}
                       placeholder="yourname@email.com"
                       autoComplete="off"
                       onChange={(e) => setName(e.target.value)}
@@ -65,13 +129,18 @@ function Login() {
                           handelLogin();
                         }
                       }}
+                      style={Red1 ? Errorstyle : {}}
                     />
+                    <span style={{display: alert1}}>
+                      <i class="fas fa-exclamation-circle"></i> {alertText1}
+                    </span>
                   </div>
                   <div className="login-form-password-lable">Password</div>
                   <div className="login-form-password-input">
-                    <i className={show} onClick={handelClick} />
+                    <i className={show} id="eye" onClick={handelClick} />
                     <input
                       type={val}
+                      value={Password}
                       placeholder="Password"
                       autoComplete="off"
                       onChange={(e) => setPassword(e.target.value)}
@@ -81,15 +150,24 @@ function Login() {
                           handelLogin();
                         }
                       }}
+                      style={Red2 ? Errorstyle : {}}
                     />
+                    <span style={{display: alert2}}>
+                      <i class="fas fa-exclamation-circle"></i> {alertText2}
+                    </span>
                   </div>
                   <div className="login-form-forgot-password">
                     <Link to="/ForgotPassword">Forgot Your Password ?</Link>
                   </div>
                   <div className="login-form-submit-button">
-                    <button onClick={handelLogin}>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handelLogin();
+                      }}
+                    >
                       Login
-                      <div id="loading"></div>
+                      <div id="loading" style={{display: loader}}></div>
                     </button>
                   </div>
                 </form>
@@ -133,13 +211,13 @@ function Login() {
         </div>
       ) : (
         <div className="login-as-bg">
-          <div className="login-as-loading-bg">
+          <div className="login-as-loading-bg" style={{display: bigLoader}}>
             <div id="loading"></div>
           </div>
           <h1>LOGIN AS</h1>
           <div className="login-as-container">
             {userRole ? (
-              <div className="login-as-box">
+              <div className="login-as-box" onClick={handleUserRole}>
                 <div className="login-as-box-img">
                   <i class="fas fa-user-alt"></i>
                 </div>
@@ -149,7 +227,7 @@ function Login() {
               <div> </div>
             )}
             {sellerRole ? (
-              <div className="login-as-box">
+              <div className="login-as-box" onClick={handleUserRole}>
                 <div className="login-as-box-img">
                   <i class="fas fa-user-friends"></i>
                 </div>
@@ -159,7 +237,7 @@ function Login() {
               <div> </div>
             )}
             {adminRole ? (
-              <div className="login-as-box">
+              <div className="login-as-box" onClick={handleUserRole}>
                 <div className="login-as-box-img">
                   <i class="fas fa-user-cog"></i>
                 </div>

@@ -72,7 +72,8 @@
   letter-spacing: 3px;
   margin: 10px 0px;
 }
-.login-form-password-input {
+.login-form-password-input,
+.login-form-email-input {
   position: relative;
 }
 
@@ -96,17 +97,27 @@
   background-color: white;
   color: black;
 }
+.login-form-email-input span,
+.login-form-password-input span {
+  position: absolute;
+  float: right;
+  top: 0px;
+  right: 10px;
+  font-size: 12px;
+  color: red;
+  display: none;
+}
 .login-form-email-input input:focus::placeholder,
 .login-form-password-input input:focus::placeholder {
   letter-spacing: 2px;
   transition: 0.3s;
   color: rgb(67, 232, 122);
 }
-.login-form-password-input i {
+.login-form-password-input i#eye {
   position: absolute;
   float: right;
   right: 20px;
-  top: 12px;
+  top: 15px;
   font-size: 26px;
   color: rgb(0, 0, 0);
 }
@@ -148,14 +159,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  outline: none;
 }
 .login-form-submit-button button:hover {
   box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.9);
   transform: scale(1.01, 1.01);
   color: white;
-}
-.login-form-submit-button button:focus {
-  outline: none;
+  transition: none;
 }
 /** Right container Css */
 .login-container-right {
@@ -262,9 +272,6 @@
     font-size: 16px;
     justify-content: flex-end;
     padding-right: 20px;
-  }
-  .login-form-submit-button button {
-    width: 150px;
   }
   .login-container-right-container-register-button-card-front,
   .login-container-right-container-register-button-card-back h2 {
@@ -402,13 +409,14 @@
 }
 
 .login-form-submit-button #loading {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border: 3px solid #ffffff;
   border-top: 3px solid #790000;
   border-radius: 100%;
   display: none;
   animation: spin 1s infinite linear;
+  margin: 0;
 }
 .login-as-bg {
   width: 100%;
