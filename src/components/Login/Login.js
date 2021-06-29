@@ -10,9 +10,12 @@ const eye = {
 
 function Login() {
   // login states
-  const [name, setName] = useState(null);
-  const [password, setPassword] = useState(null);
-
+  const [Name, setName] = useState(null);
+  const [Password, setPassword] = useState(null);
+  const [Log, setLog] = useState(false);
+  const [adminRole, setadminRole] = useState(true);
+  const [userRole, setuserRole] = useState(true);
+  const [sellerRole, setsellerRole] = useState(true);
   // other states
   const [show, setshow] = useState(eye.close);
   const [val, setval] = useState("password");
@@ -33,85 +36,141 @@ function Login() {
 
   return (
     <div className="login-bg">
-      <div className="login-container">
-        {/* Left container in login container starts */}
-        <div className="login-container-left">
-          <div className="login-container-left-logo">
-            <img
-              src="./images/logoView[900x240].png"
-              height="50px"
-              alt="Bookshlf.in"
-            />
-          </div>
-          <div className="login-container-left-main">
-            <h2> Login </h2>
-            <div className="login-container-left-main-form">
-              {/* Login form */}
-              <form autoComplete="off">
-                <div className="login-form-email-lable">Email</div>
-                <div className="login-form-email-input">
-                  <input
-                    type="email"
-                    placeholder="yourname@email.com"
-                    autoComplete="off"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div className="login-form-password-lable">Password</div>
-                <div className="login-form-password-input">
-                  <i className={show} onClick={handelClick} />
-                  <input
-                    type={val}
-                    placeholder="Password"
-                    autoComplete="off"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div className="login-form-forgot-password">
-                  <Link to="/ForgotPassword">Forgot Your Password ?</Link>
-                </div>
-                <div className="login-form-submit-button">
-                  <button onClick={handelLogin}>Login</button>
-                </div>
-              </form>
-              {/* Login Form Ends */}
-            </div>
-          </div>
-        </div>
-        {/* Left container ends here */}
-
-        <div
-          className="login-container-right"
-          style={{backgroundImage: `url(/images/login-city.svg)`}}
-        >
-          {/* right container in login container starts */}
-          <div className="login-container-right-container">
-            <div className="login-container-right-container-logo">
+      {Log ? (
+        <div className="login-container">
+          {/* Left container in login container starts */}
+          <div className="login-container-left">
+            <div className="login-container-left-logo">
               <img
-                src="/images/smallLogo.svg"
-                alt="bookshlf.in"
-                height="250px"
-                width="250px"
+                src="./images/logoView[900x240].png"
+                height="50px"
+                alt="Bookshlf.in"
               />
             </div>
-            <div className="login-container-right-container-register">
-              <div className="login-container-right-container-register-button">
-                <div class="login-container-right-container-register-button-card">
-                  <div class="login-container-right-container-register-button-card-front">
-                    Don't Have An Account ?
+            <div className="login-container-left-main">
+              <h2> Login </h2>
+              <div className="login-container-left-main-form">
+                {/* Login form */}
+                <form autoComplete="off">
+                  <div className="login-form-email-lable">Email</div>
+                  <div className="login-form-email-input">
+                    <input
+                      type="email"
+                      placeholder="yourname@email.com"
+                      autoComplete="off"
+                      onChange={(e) => setName(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handelLogin();
+                        }
+                      }}
+                    />
                   </div>
-                  <div class="login-container-right-container-register-button-card-back">
-                    <h2>
-                      <Link to="/UserSignup">Register</Link>
-                    </h2>
+                  <div className="login-form-password-lable">Password</div>
+                  <div className="login-form-password-input">
+                    <i className={show} onClick={handelClick} />
+                    <input
+                      type={val}
+                      placeholder="Password"
+                      autoComplete="off"
+                      onChange={(e) => setPassword(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handelLogin();
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="login-form-forgot-password">
+                    <Link to="/ForgotPassword">Forgot Your Password ?</Link>
+                  </div>
+                  <div className="login-form-submit-button">
+                    <button onClick={handelLogin}>
+                      Login
+                      <div id="loading"></div>
+                    </button>
+                  </div>
+                </form>
+                {/* Login Form Ends */}
+              </div>
+            </div>
+          </div>
+          {/* Left container ends here */}
+
+          <div
+            className="login-container-right"
+            style={{backgroundImage: `url(/images/login-city.svg)`}}
+          >
+            {/* right container in login container starts */}
+            <div className="login-container-right-container">
+              <div className="login-container-right-container-logo">
+                <img
+                  src="/images/smallLogo.svg"
+                  alt="bookshlf.in"
+                  height="250px"
+                  width="250px"
+                />
+              </div>
+              <div className="login-container-right-container-register">
+                <div className="login-container-right-container-register-button">
+                  <div class="login-container-right-container-register-button-card">
+                    <div class="login-container-right-container-register-button-card-front">
+                      Don't Have An Account ?
+                    </div>
+                    <div class="login-container-right-container-register-button-card-back">
+                      <h2>
+                        <Link to="/UserSignup">Register</Link>
+                      </h2>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            {/* Right Container ends here */}
           </div>
-          {/* Right Container ends here */}
         </div>
-      </div>
+      ) : (
+        <div className="login-as-bg">
+          <div className="login-as-loading-bg">
+            <div id="loading"></div>
+          </div>
+          <h1>LOGIN AS</h1>
+          <div className="login-as-container">
+            {userRole ? (
+              <div className="login-as-box">
+                <div className="login-as-box-img">
+                  <i class="fas fa-user-alt"></i>
+                </div>
+                <div className="login-as-box-title">USER</div>
+              </div>
+            ) : (
+              <div> </div>
+            )}
+            {sellerRole ? (
+              <div className="login-as-box">
+                <div className="login-as-box-img">
+                  <i class="fas fa-user-friends"></i>
+                </div>
+                <div className="login-as-box-title">SELLER</div>
+              </div>
+            ) : (
+              <div> </div>
+            )}
+            {adminRole ? (
+              <div className="login-as-box">
+                <div className="login-as-box-img">
+                  <i class="fas fa-user-cog"></i>
+                </div>
+                <div className="login-as-box-title">ADMIN</div>
+              </div>
+            ) : (
+              <div> </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
