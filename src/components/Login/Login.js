@@ -2,12 +2,35 @@ import {React, useState} from "react";
 import "./Login.css";
 import {Link} from "react-router-dom";
 import axios from "../../axios";
+
+const eye = {
+  open: "far fa-eye",
+  close: "fas fa-eye-slash",
+};
+
 function Login() {
+  // login states
   const [name, setName] = useState(null);
   const [password, setPassword] = useState(null);
 
+  // other states
+  const [show, setshow] = useState(eye.close);
+  const [val, setval] = useState("password");
+
+  // showing password and hiding
+  const handelClick = () => {
+    if (show === eye.close) {
+      setshow(eye.open);
+      setval("text");
+    } else {
+      setshow(eye.close);
+      setval("password");
+    }
+  };
+
   // Handeling the Login
-  const handleClick = () => {};
+  const handelLogin = () => {};
+
   return (
     <div className="login-bg">
       <div className="login-container">
@@ -30,17 +53,16 @@ function Login() {
                   <input
                     type="email"
                     placeholder="yourname@email.com"
-                    required
                     autoComplete="off"
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="login-form-password-lable">Password</div>
                 <div className="login-form-password-input">
+                  <i className={show} onClick={handelClick} />
                   <input
-                    type="Password"
+                    type={val}
                     placeholder="Password"
-                    required
                     autoComplete="off"
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -49,7 +71,7 @@ function Login() {
                   <Link to="/ForgotPassword">Forgot Your Password ?</Link>
                 </div>
                 <div className="login-form-submit-button">
-                  <button onClick={handleClick}>Login</button>
+                  <button onClick={handelLogin}>Login</button>
                 </div>
               </form>
               {/* Login Form Ends */}

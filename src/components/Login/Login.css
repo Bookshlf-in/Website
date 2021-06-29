@@ -63,6 +63,7 @@
   font-weight: 800;
   font-size: 20px;
   background-color: transparent;
+  color: white;
 }
 .login-form-password-lable {
   font-family: "Roboto", sans-serif;
@@ -70,6 +71,10 @@
   letter-spacing: 3px;
   margin: 10px 0px;
 }
+.login-form-password-input {
+  position: relative;
+}
+
 .login-form-password-input input {
   width: 400px;
   height: 50px;
@@ -80,13 +85,32 @@
   font-weight: 800;
   font-size: 20px;
   background-color: transparent;
+  color: white;
 }
 .login-form-email-input input:focus,
 .login-form-password-input input:focus {
-  transition: 0.1s;
+  transition: 0.3s;
   outline: none;
   border-bottom: 2px solid rgb(67, 232, 122);
   background-color: white;
+  color: black;
+}
+.login-form-email-input input:focus::placeholder,
+.login-form-password-input input:focus::placeholder {
+  letter-spacing: 2px;
+  transition: 0.3s;
+  color: rgb(67, 232, 122);
+}
+.login-form-password-input i {
+  position: absolute;
+  float: right;
+  right: 300px;
+  top: 15px;
+  font-size: 26px;
+  color: rgb(255, 9, 255);
+}
+.login-form-password-input i:hover {
+  cursor: pointer;
 }
 .login-form-forgot-password a {
   text-decoration: none;
