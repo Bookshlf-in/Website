@@ -6,9 +6,12 @@
   overflow: hidden;
   box-sizing: border-box;
   margin: 0;
-  background-image: linear-gradient(-45deg, #333333, #fdfdfd, #3d3d3d, #ffffff);
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .login-container {
   width: 80%;
@@ -23,7 +26,6 @@
 /* Left container Css */
 .login-container-left {
   display: flex;
-  min-width: 70%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -37,7 +39,6 @@
   align-items: center;
 }
 .login-container-left-main {
-  width: 100%;
   padding: 20px 40px;
   color: aliceblue;
 }
@@ -62,7 +63,8 @@
   font-family: "Roboto", sans-serif;
   font-weight: 800;
   font-size: 20px;
-  background-color: transparent;
+  background-color: white;
+  color: rgb(0, 0, 0);
 }
 .login-form-password-lable {
   font-family: "Roboto", sans-serif;
@@ -70,6 +72,11 @@
   letter-spacing: 3px;
   margin: 10px 0px;
 }
+.login-form-password-input,
+.login-form-email-input {
+  position: relative;
+}
+
 .login-form-password-input input {
   width: 400px;
   height: 50px;
@@ -79,14 +86,47 @@
   font-family: "Roboto", sans-serif;
   font-weight: 800;
   font-size: 20px;
-  background-color: transparent;
+  background-color: white;
+  color: rgb(0, 0, 0);
 }
 .login-form-email-input input:focus,
 .login-form-password-input input:focus {
   transition: 0.1s;
   outline: none;
-  border-bottom: 2px solid rgb(67, 232, 122);
+  border-bottom: 5px solid rgb(67, 232, 122);
   background-color: white;
+  color: black;
+}
+.login-form-email-input span,
+.login-form-password-input span {
+  position: absolute;
+  float: right;
+  top: 0px;
+  right: 10px;
+  font-size: 12px;
+  color: red;
+  display: none;
+}
+.login-form-email-input input:focus::placeholder,
+.login-form-password-input input:focus::placeholder {
+  letter-spacing: 2px;
+  transition: 0.3s;
+  color: rgb(67, 232, 122);
+}
+.login-form-password-input i#eye {
+  position: absolute;
+  float: right;
+  right: 20px;
+  top: 15px;
+  font-size: 26px;
+  color: rgb(0, 0, 0);
+}
+.login-form-password-input i:hover {
+  cursor: pointer;
+}
+.login-form-forgot-password {
+  display: flex;
+  justify-content: flex-end;
 }
 .login-form-forgot-password a {
   text-decoration: none;
@@ -103,9 +143,6 @@
   color: rgb(243, 91, 64);
   font-weight: boldder;
 }
-.login-form-submit-button {
-  padding: 10px 0px;
-}
 .login-form-submit-button button {
   padding: 15px;
   font-size: 24px;
@@ -119,18 +156,21 @@
     rgb(213, 228, 6),
     rgb(6, 226, 24)
   );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
 }
 .login-form-submit-button button:hover {
   box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.9);
   transform: scale(1.01, 1.01);
   color: white;
-}
-.login-form-submit-button button:focus {
-  outline: none;
+  transition: none;
 }
 /** Right container Css */
 .login-container-right {
   height: 100%;
+  width: 260px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -233,9 +273,6 @@
     justify-content: flex-end;
     padding-right: 20px;
   }
-  .login-form-submit-button button {
-    width: 150px;
-  }
   .login-container-right-container-register-button-card-front,
   .login-container-right-container-register-button-card-back h2 {
     font-size: 16px;
@@ -253,7 +290,11 @@
 @media only screen and (max-width: 691px) {
   .login-container {
     flex-direction: column;
-    margin-top: 8%;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-container-right {
+    width: 100%;
   }
   .login-container-right-container {
     padding-top: 20px;
@@ -364,5 +405,98 @@
   .login-form-email-lable,
   .login-form-password-lable {
     margin: 5px 0px;
+  }
+}
+
+.login-form-submit-button #loading {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid #ffffff;
+  border-top: 3px solid #790000;
+  border-radius: 100%;
+  display: none;
+  animation: spin 1s infinite linear;
+  margin: 0;
+}
+.login-as-bg {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.login-as-bg h1 {
+  font-family: "PT sans";
+  color: #ffffff;
+  font-size: 4em;
+  position: relative;
+}
+.login-as-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.login-as-box {
+  width: 300px;
+  height: 300px;
+  border: 5px solid white;
+  background: linear-gradient(to right, #232526, #414345);
+  margin: 20px;
+  border-radius: 30px;
+  padding: 10px;
+  font-family: "PT Sans";
+  color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 2px;
+}
+.login-as-box-img {
+  font-size: 5em;
+  color: orange;
+}
+.login-as-box-title {
+  font-size: 3em;
+}
+.login-as-box:hover {
+  cursor: pointer;
+  background: crimson;
+  color: white;
+}
+.login-as-loading-bg {
+  float: left;
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.94);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.login-as-loading-bg #loading {
+  display: block;
+  width: 10em;
+  height: 10em;
+  border: 10px solid #ffffff;
+  border-top: 10px solid orangered;
+  animation: spin 1s infinite linear;
+}
+@media screen and (max-width: 600px) {
+  .login-as-box {
+    width: 150px;
+    height: 150px;
+  }
+  .login-as-box-img {
+    font-size: 3em;
+    color: orange;
+  }
+  .login-as-box-title {
+    font-size: 2em;
   }
 }

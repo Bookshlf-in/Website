@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import axios from "../../axios";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -35,10 +36,10 @@ const alertMessage = {
 function Contact() {
   const classes = useStyles();
   // form states
-  const [Name, setName] = useState(null);
-  const [Email, setEmail] = useState(null);
-  const [Subject, setSubject] = useState(null);
-  const [Message, setMessage] = useState(null);
+  const [Name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Subject, setSubject] = useState("");
+  const [Message, setMessage] = useState("");
 
   // alert states
   const [Alerttype, setAlerttype] = useState("success");
@@ -68,12 +69,15 @@ function Contact() {
                 message: Message,
               })
               .then(function (response) {
-                console.log(response);
                 setalertColor(alertStyle.color.success);
                 setalertText(alertMessage.success);
                 setAlerttype("success");
                 setshowAlert("block");
                 setloader("none");
+                setName("");
+                setEmail("");
+                setSubject("");
+                setMessage("");
               })
               .catch(function (error) {
                 //   Bad Request or Already subscribed
@@ -150,30 +154,54 @@ function Contact() {
               type="text"
               id="contactName"
               placeholder="Name"
-              required
               onChange={(e) => setName(e.target.value)}
+              value={Name}
+              onKeyPress={(e) => {
+                if(e.key === "Enter"){
+                  e.preventDefault();
+                  handelSubmit();
+                }
+              }}
             />
             <input
               type="mail"
               id="contactEmail"
               placeholder="Email"
-              required
               onChange={(e) => setEmail(e.target.value)}
+              value={Email}
+              onKeyPress={(e) => {
+                if(e.key === "Enter"){
+                  e.preventDefault();
+                  handelSubmit();
+                }
+              }}
             />
             <br />
             <input
               type="text"
               id="contactSubject"
               placeholder="Subject"
-              required
               onChange={(e) => setSubject(e.target.value)}
+              value={Subject}
+              onKeyPress={(e) => {
+                if(e.key === "Enter"){
+                  e.preventDefault();
+                  handelSubmit();
+                }
+              }}
             />
             <br />
             <textarea
               id="contactReview"
               placeholder="Details please! Your review helps other shoppers."
-              required
               onChange={(e) => setMessage(e.target.value)}
+              value={Message}
+              onKeyPress={(e) => {
+                if(e.key === "Enter"){
+                  e.preventDefault();
+                  handelSubmit();
+                }
+              }}
             />
             <br />
             <input

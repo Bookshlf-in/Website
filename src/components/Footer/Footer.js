@@ -115,6 +115,12 @@ function Footer() {
               name="email"
               placeholder="Enter email for weekly newsletter"
               onChange={(e) => changeEmail(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handelSubscription();
+                }
+              }}
             />
             <div className="footer-subscription-button-container">
               <input
