@@ -29,8 +29,8 @@ function BestSelling() {
             </div>
             <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h"></i>
-                  <i class="far fa-heart"></i>
+                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
+                  <i class="far fa-heart hidden-items-like"></i>
               </div>
           </div>
           {/* best Selling Component Ends */}
@@ -49,8 +49,8 @@ function BestSelling() {
             </div>
               <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h"></i>
-                  <i class="far fa-heart"></i>
+                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
+                  <i class="far fa-heart hidden-items-like"></i>
               </div>
           </div>
           {/* =================== */}
@@ -66,8 +66,8 @@ function BestSelling() {
             </div>
               <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h"></i>
-                  <i class="far fa-heart"></i>
+                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
+                  <i class="far fa-heart hidden-items-like"></i>
               </div>
           </div>
           {/* =================== */}
@@ -83,8 +83,8 @@ function BestSelling() {
             </div>
               <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h"></i>
-                  <i class="far fa-heart"></i>
+                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
+                  <i class="far fa-heart hidden-items-like"></i>
               </div>
           </div>
           {/* =================== */}

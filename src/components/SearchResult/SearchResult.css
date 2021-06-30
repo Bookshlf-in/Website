@@ -23,38 +23,8 @@
 .search-results-main a {
   margin: 10px 20px;
 }
-.product-search-result {
-  width: 250px;
-  height: 300px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-  padding: 5px;
-  margin: 10px;
-  border-radius: 10px;
-  border: 1px solid rgb(172, 170, 170);
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.search-result-link{
+  text-decoration: none;
 }
-.product-search-result h3 {
-  color: black;
-  font-family: "Roboto", sans-serif;
-}
-.product-search-result p {
-  color: rgb(241, 73, 109);
-  font-family: "Times New Roman", Times, serif;
-}
-.product-search-result:hover {
-  background-color: rgba(0, 68, 255, 0.2);
-}
-h1.book-price-tag {
-  position: absolute;
-  float: left;
-  top: -35px;
-  left: -35px;
-  font-size: 16px;
-  background-color: rgb(44, 211, 44);
-  padding: 28px 10px;
-  border-radius: 50%;
-  color: white;
-}
+

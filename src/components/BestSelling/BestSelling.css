@@ -3,16 +3,12 @@
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-    /* border: 2px solid red; */
 }
 
 .bs-header{
     margin: 20px 0px;
     display: inline-block;
     width: 100%;
-    /* border: 2px solid green; */
-
-
 }
 .header-heading{
     display: inline-block;
@@ -55,12 +51,13 @@
 .book{
     display: flex;
     flex-direction: column;
-    border: 0.2px solid rgb(216, 216, 216);
+    border: 0.2px solid rgb(226, 226, 226);
     width:290px;
     height: 470px;
 }
 .book:hover{
-    border: 0.2px solid black;
+  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
+  border: none;
 }
 
 .book-pic{
@@ -76,7 +73,6 @@
     flex-direction: column;
     margin: 0px 35px;
     align-items: flex-start;
-    /* border: 2px solid blue; */
     padding: 4px;
 }
 
@@ -104,7 +100,7 @@
     width: 100%;
     justify-content: space-between;
     align-items:flex-start;
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 .cart{
@@ -112,8 +108,39 @@
     font-weight: 490;
     font-size: 18px;
     padding: 4px 15px;
-    margin: 0px 20px;
+    margin: 4px 20px;
 }
+
+.hidden-items-arrow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 27px;
+    width:27px;
+
+}
+
+.hidden-items-like{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    border-radius: 30px;
+    height: 27px;
+    width:27px;
+  }
+
+.hidden-items-like:hover{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.92;
+    background-color: rgb(255, 32, 32);
+    border-radius: 30px;
+    height: 27px;
+    width:27px;
+  }
+
 
 .hidden-items i{
     margin-top: 8px;
@@ -122,7 +149,6 @@
 
 .cart:hover{
     color: rgb(29, 68, 104);
-    /* border: 0.01px solid rgb(218, 218, 218); */
     background-color: rgb(241, 241, 241);
     border-radius: 40px;
 }
