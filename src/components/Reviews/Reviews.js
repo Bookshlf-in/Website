@@ -1,9 +1,8 @@
 import React from "react";
 import "./Reviews.css";
-import ReactPlayer from "react-player";
 import { FaStar } from "react-icons/fa";
 
-export default function Reviews(props) {
+function Reviews() {
   return (
     <div className="container">
       {/* <h3>Ratings</h3>
@@ -20,7 +19,7 @@ export default function Reviews(props) {
         <div className="reviews_wrapper">
           <div className="reviews_item">
             <div className="ratings">
-              {[...Array(5)].map((star) => {
+              {[...Array(5)].map(() => {
                 return <FaStar size={20} color="#FDCC0D"/>;
               })}
             </div>
@@ -35,7 +34,7 @@ export default function Reviews(props) {
           </div>
           <div className="reviews_item">
             <div className="ratings">
-              {[...Array(5)].map((star) => {
+              {[...Array(5)].map(() => {
                 return <FaStar size={20} color="#FDCC0D" />;
               })}
             </div>
@@ -50,7 +49,7 @@ export default function Reviews(props) {
           </div>
           <div className="reviews_item">
             <div className="ratings">
-              {[...Array(5)].map((star) => {
+              {[...Array(5)].map(() => {
                 return <FaStar size={20} color="#FDCC0D" />;
               })}
             </div>
@@ -65,7 +64,7 @@ export default function Reviews(props) {
           </div>
           <div className="reviews_item">
             <div className="ratings">
-              {[...Array(5)].map((star) => {
+              {[...Array(5)].map(() => {
                 return <FaStar size={20} color="#FDCC0D" />;
               })}
             </div>
@@ -80,7 +79,7 @@ export default function Reviews(props) {
           </div>
           <div className="reviews_item">
             <div className="ratings">
-              {[...Array(5)].map((star) => {
+              {[...Array(5)].map(() => {
                 return <FaStar size={20} color="#FDCC0D" />;
               })}
             </div>
@@ -95,7 +94,7 @@ export default function Reviews(props) {
           </div>
           <div className="reviews_item">
             <div className="ratings">
-              {[...Array(5)].map((star) => {
+              {[...Array(5)].map(() => {
                 return <FaStar size={20} color="#FDCC0D" />;
               })}
             </div>
@@ -113,3 +112,4 @@ export default function Reviews(props) {
     </div>
   );
 }
+export default Reviews;

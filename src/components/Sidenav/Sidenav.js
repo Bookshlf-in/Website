@@ -10,38 +10,38 @@ function Sidenav() {
   return (
     <div className="main-sidenav">
       <div id="mySidenav" className="sidenav">
-        <Link className="closebtn" onClick={closeNav}>
+        <Link to="" className="closebtn" onClick={closeNav}>
           &times;
         </Link>
         <Link>
-          <i class="fas fa-home"></i>&nbsp;Home
+          <i className="fas fa-home"></i>&nbsp;Home
         </Link>
         {/* hidden until screen size is smaller than 650px */}
-        <Link className="Profile">
+        <Link to="" className="Profile">
           <input type="text" style={{width: "150px", height: "40px"}} />
-          &nbsp;<i class="fas fa-search"></i>
+          &nbsp;<i className="fas fa-search"></i>
         </Link>
-        <Link className="Profile">
-          Profile&nbsp;<i class="fas fa-user-circle"></i>
+        <Link to="" className="Profile">
+          Profile&nbsp;<i className="fas fa-user-circle"></i>
         </Link>
-        <Link className="Profile" to = "/Cart">
-          Cart&nbsp;<i class="fas fa-shopping-cart"></i>
+        <Link className="Profile" to="/Cart">
+          Cart&nbsp;<i className="fas fa-shopping-cart"></i>
         </Link>
         {/* ends here */}
-        <Link>
-          Categories&nbsp;<i class="fas fa-angle-right"></i>
+        <Link to="">
+          Categories&nbsp;<i className="fas fa-angle-right"></i>
         </Link>
-        <Link>
-          Contribute&nbsp;<i class="fas fa-hands-helping"></i>
+        <Link to="">
+          Contribute&nbsp;<i className="fas fa-hands-helping"></i>
         </Link>
-        <Link>
-          Blog&nbsp;<i class="fab fa-blogger"></i>
+        <Link to="">
+          Blog&nbsp;<i className="fab fa-blogger"></i>
         </Link>
-        <Link to ="/Contact">
-          Contact&nbsp;Us&nbsp;<i class="fas fa-headset"></i>
+        <Link to="/Contact">
+          Contact&nbsp;Us&nbsp;<i className="fas fa-headset"></i>
         </Link>
-        <Link>
-          About&nbsp;Us&nbsp;<i class="fas fa-info-circle"></i>
+        <Link to="">
+          About&nbsp;Us&nbsp;<i className="fas fa-info-circle"></i>
         </Link>
       </div>
     </div>

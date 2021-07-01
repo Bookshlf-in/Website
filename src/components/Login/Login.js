@@ -1,7 +1,8 @@
-import {React, useState} from "react";
+import {React, useState, useContext} from "react";
 import "./Login.css";
-import {Link} from "react-router-dom";
 import axios from "../../axios";
+import {Link, useHistory} from "react-router-dom";
+import {UserContext} from "../../Context/userContext";
 
 const eye = {
   open: "far fa-eye",
@@ -13,13 +14,17 @@ const Errorstyle = {
   color: "red",
 };
 function Login() {
+  // context states
+  const [user, setUser] = useContext(UserContext);
+  const history = useHistory();
+
   // login states
   const [Name, setName] = useState("");
   const [Password, setPassword] = useState("");
   const [Log, setLog] = useState(true);
-  const [adminRole, setadminRole] = useState(true);
-  const [userRole, setuserRole] = useState(true);
-  const [sellerRole, setsellerRole] = useState(true);
+  const [adminRole, setadminRole] = useState(false);
+  const [userRole, setuserRole] = useState(false);
+  const [sellerRole, setsellerRole] = useState(false);
 
   // other states
   const [show, setshow] = useState(eye.close);
@@ -32,6 +37,8 @@ function Login() {
   const [Red2, makeRed2] = useState(false);
   const [loader, setloader] = useState("none");
   const [bigLoader, setBigLoader] = useState("none");
+  const [resp, setresp] = useState(null);
+
   // showing password and hiding
   const handelClick = () => {
     if (show === eye.close) {
@@ -50,6 +57,7 @@ function Login() {
     makeRed2(false);
   };
 
+  // Handeling Default Errors
   const handleDefaultError = () => {
     if (Name === "") {
       setalert1("block");
@@ -75,13 +83,16 @@ function Login() {
           password: Password,
         })
         .then((response) => {
-          localStorage.setItem("Token", response.data.token);
+          setresp(response.data);
+          setadminRole(response.data.roles.includes("admin"));
+          setsellerRole(response.data.roles.includes("seller"));
+          setuserRole(response.data.roles.includes("customer"));
           setLog(false);
           setloader("none");
         })
         .catch((error) => {
           if (error.response) {
-            console.log(error.response.data.error);
+            HandelError(error.response.data.errors[0]);
           }
           setloader("none");
         });
@@ -90,13 +101,34 @@ function Login() {
     }
   };
 
+  // Handeling Error
+  const HandelError = (error) => {
+    if (error.param === "email") {
+      setalert1("block");
+      setalertText1(error.error);
+      makeRed1(true);
+    }
+    if (error.param === "password") {
+      setalert2("block");
+      setalertText2(error.error);
+      makeRed2(true);
+    }
+  };
+
   // Handeling User Role
-  const handleUserRole = () => {
+  const handleUserRole = (curRole) => {
     setBigLoader("flex");
     setTimeout(() => {
       setBigLoader("none");
-    }, 6000);
+      setUser({
+        token: resp.token,
+        roles: resp.roles,
+        currRole: curRole,
+      });
+      history.push("/");
+    }, 3000);
   };
+
   return (
     <div className="login-bg">
       {Log ? (
@@ -132,7 +164,7 @@ function Login() {
                       style={Red1 ? Errorstyle : {}}
                     />
                     <span style={{display: alert1}}>
-                      <i class="fas fa-exclamation-circle"></i> {alertText1}
+                      <i className="fas fa-exclamation-circle"></i> {alertText1}
                     </span>
                   </div>
                   <div className="login-form-password-lable">Password</div>
@@ -153,7 +185,7 @@ function Login() {
                       style={Red2 ? Errorstyle : {}}
                     />
                     <span style={{display: alert2}}>
-                      <i class="fas fa-exclamation-circle"></i> {alertText2}
+                      <i className="fas fa-exclamation-circle"></i> {alertText2}
                     </span>
                   </div>
                   <div className="login-form-forgot-password">
@@ -193,11 +225,11 @@ function Login() {
               </div>
               <div className="login-container-right-container-register">
                 <div className="login-container-right-container-register-button">
-                  <div class="login-container-right-container-register-button-card">
-                    <div class="login-container-right-container-register-button-card-front">
+                  <div className="login-container-right-container-register-button-card">
+                    <div className="login-container-right-container-register-button-card-front">
                       Don't Have An Account ?
                     </div>
-                    <div class="login-container-right-container-register-button-card-back">
+                    <div className="login-container-right-container-register-button-card-back">
                       <h2>
                         <Link to="/UserSignup">Register</Link>
                       </h2>
@@ -217,9 +249,14 @@ function Login() {
           <h1>LOGIN AS</h1>
           <div className="login-as-container">
             {userRole ? (
-              <div className="login-as-box" onClick={handleUserRole}>
+              <div
+                className="login-as-box"
+                onClick={() => {
+                  handleUserRole("user");
+                }}
+              >
                 <div className="login-as-box-img">
-                  <i class="fas fa-user-alt"></i>
+                  <i className="fas fa-user-alt"></i>
                 </div>
                 <div className="login-as-box-title">USER</div>
               </div>
@@ -227,9 +264,14 @@ function Login() {
               <div> </div>
             )}
             {sellerRole ? (
-              <div className="login-as-box" onClick={handleUserRole}>
+              <div
+                className="login-as-box"
+                onClick={() => {
+                  handleUserRole("seller");
+                }}
+              >
                 <div className="login-as-box-img">
-                  <i class="fas fa-user-friends"></i>
+                  <i className="fas fa-user-friends"></i>
                 </div>
                 <div className="login-as-box-title">SELLER</div>
               </div>
@@ -237,9 +279,14 @@ function Login() {
               <div> </div>
             )}
             {adminRole ? (
-              <div className="login-as-box" onClick={handleUserRole}>
+              <div
+                className="login-as-box"
+                onClick={() => {
+                  handleUserRole("admin");
+                }}
+              >
                 <div className="login-as-box-img">
-                  <i class="fas fa-user-cog"></i>
+                  <i className="fas fa-user-cog"></i>
                 </div>
                 <div className="login-as-box-title">ADMIN</div>
               </div>

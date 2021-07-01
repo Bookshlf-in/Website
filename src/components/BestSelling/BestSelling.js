@@ -16,7 +16,7 @@ function BestSelling() {
           {/* best Selling book Component starts*/}
           <div className="book book1">
             <div className="book-pic">
-              <img src="/images/best_selling/bs2.jpg" alt="" srcset="" className="bs-image" />
+              <img src="/images/best_selling/bs2.jpg" alt=""  className="bs-image" />
             </div>
             <div className="book-details">
               <p className="details-para1">PAPERBACK</p>
@@ -29,15 +29,15 @@ function BestSelling() {
             </div>
             <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
-                  <i class="far fa-heart hidden-items-like"></i>
+                  <i className="fas fa-arrows-alt-h"></i>
+                  <i className="far fa-heart"></i>
               </div>
           </div>
           {/* best Selling Component Ends */}
           {/* ===================== */}
           <div className="book book1">
             <div className="book-pic">
-            <img src="/images/best_selling/bs3.jpg" alt="" srcset="" className="bs-image" />
+            <img src="/images/best_selling/bs3.jpg" alt=""  className="bs-image" />
             </div>
             <div className="book-details">
               <p className="details-para1">KINDLE EDITION</p>
@@ -49,14 +49,14 @@ function BestSelling() {
             </div>
               <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
-                  <i class="far fa-heart hidden-items-like"></i>
+                  <i className="fas fa-arrows-alt-h"></i>
+                  <i className="far fa-heart"></i>
               </div>
           </div>
           {/* =================== */}
           <div className="book book1">
             <div className="book-pic">
-            <img src="/images/best_selling/bs1.jpg" alt="" srcset="" className="bs-image" />
+            <img src="/images/best_selling/bs1.jpg" alt=""  className="bs-image" />
             </div>
             <div className="book-details">
               <p className="details-para1">PAPERBACK</p>
@@ -66,14 +66,14 @@ function BestSelling() {
             </div>
               <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
-                  <i class="far fa-heart hidden-items-like"></i>
+                  <i className="fas fa-arrows-alt-h"></i>
+                  <i className="far fa-heart"></i>
               </div>
           </div>
           {/* =================== */}
           <div className="book book1">
             <div className="book-pic">
-            <img src="/images/best_selling/bs4.jpg" alt="" srcset="" className="bs-image" />
+            <img src="/images/best_selling/bs4.jpg" alt="" className="bs-image" />
             </div>
             <div className="book-details">
               <p className="details-para1">KINDLE EDITION</p>
@@ -83,8 +83,8 @@ function BestSelling() {
             </div>
               <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
-                  <i class="far fa-heart hidden-items-like"></i>
+                  <i className="fas fa-arrows-alt-h"></i>
+                  <i className="far fa-heart"></i>
               </div>
           </div>
           {/* =================== */}
