@@ -1,6 +1,7 @@
 import React from "react";
 import "./Cart.css";
 import {Link} from "react-router-dom";
+
 function Cart() {
   return (
     <div className="cart-main">
@@ -153,7 +154,7 @@ function Cart() {
           </h3>
         </div>
         <div className="cart-checkout">
-        <i class="fas fa-money-check-alt"></i>&nbsp;Checkout
+        <Link to="/Checkout"><i class="fas fa-money-check-alt"></i>&nbsp;Checkout</Link>
         </div>
       </div>
     </div>

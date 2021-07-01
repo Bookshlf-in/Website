@@ -103,7 +103,7 @@
 }
 .navbar-items-chip-searchbox input:focus {
   outline: none;
-  width: 300px;
+  width: 240px;
   transition: 0.5s;
   background-color: rgba(255, 255, 255);
   border-bottom: 2px solid rgb(98, 221, 98);
