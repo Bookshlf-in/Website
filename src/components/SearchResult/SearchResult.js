@@ -4,12 +4,6 @@ import {Link} from "react-router-dom";
 
 function SearchResult() {
   var searchnumber = 159;
-  var productWrapper = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  };
   return (
     <div className="search-results-container">
       <div className="search-results-header">
@@ -35,8 +29,8 @@ function SearchResult() {
             </div>
             <div className="hidden-items">
                   <p className="cart">Add To Cart</p>
-                  <i class="fas fa-arrows-alt-h hidden-items-arrow"></i>
-                  <i class="far fa-heart hidden-items-like"></i>
+                  <i className="fas fa-arrows-alt-h hidden-items-arrow"></i>
+                  <i className="far fa-heart hidden-items-like"></i>
               </div>
           </div>
           {/* best Selling Component Ends */}

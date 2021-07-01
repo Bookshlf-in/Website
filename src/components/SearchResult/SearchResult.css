@@ -22,9 +22,5 @@
 }
 .search-results-main a {
   margin: 10px 20px;
+  color: black;
 }
-
-.search-result-link{
-  text-decoration: none;
-}
-
