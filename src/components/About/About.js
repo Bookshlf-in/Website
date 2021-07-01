@@ -4,27 +4,27 @@ import "./About.css";
 function About() {
   return (
     <div className="About-bg">
-      <div class="night">
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
-        <div class="shooting_star"></div>
+      <div className="night">
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
+        <div className="shooting_star"></div>
       </div>
       <div className="About-textbox">
         <p>
