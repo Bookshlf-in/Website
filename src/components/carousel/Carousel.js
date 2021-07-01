@@ -30,7 +30,7 @@ function Carousel() {
   return (
     <div className="carousel">
       <div className="corousel-container">
-        <Slider className="slider-wrapper">
+        <Slider className="slider-wrapper" autoplay="6000">
           {content.map((item, index) => (
             <div
               key={index}
