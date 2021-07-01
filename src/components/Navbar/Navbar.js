@@ -57,7 +57,7 @@ function Navbar() {
                   <div className="dropdown">
                     <button className="dropbtn">
                       Categories&nbsp;
-                      <i class="fas fa-caret-down" />
+                      <i className="fas fa-caret-down" />
                     </button>
                     <div className="dropdown-content">
                       <Link to="">JEE Mains</Link>

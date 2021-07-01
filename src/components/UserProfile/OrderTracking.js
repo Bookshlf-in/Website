@@ -31,16 +31,16 @@ function OrderTracking() {
           <p>
             <ul style={{listStyle: "none"}}>
               <li>
-                <i class="fas fa-circle-notch"></i>&nbsp;Book Name
+                <i className="fas fa-circle-notch"></i>&nbsp;Book Name
               </li>
               <li>
-                <i class="fas fa-circle-notch"></i>&nbsp;Book ISBN
+                <i className="fas fa-circle-notch"></i>&nbsp;Book ISBN
               </li>
               <li>
-                <i class="fas fa-circle-notch"></i>&nbsp;Book Author
+                <i className="fas fa-circle-notch"></i>&nbsp;Book Author
               </li>
               <li>
-                <i class="fas fa-circle-notch"></i>&nbsp;Seller Name
+                <i className="fas fa-circle-notch"></i>&nbsp;Seller Name
               </li>
             </ul>
           </p>
@@ -99,7 +99,7 @@ function OrderTracking() {
         </div>
         <div className="order-status-icons">
           <p>
-            <i class="fas fa-clipboard-check"></i>&nbsp;
+            <i className="fas fa-clipboard-check"></i>&nbsp;
             <b>
               Order
               <br />
@@ -107,7 +107,7 @@ function OrderTracking() {
             </b>
           </p>
           <p>
-            <i class="fas fa-dolly-flatbed"></i>&nbsp;
+            <i className="fas fa-dolly-flatbed"></i>&nbsp;
             <b>
               Order
               <br />
@@ -115,7 +115,7 @@ function OrderTracking() {
             </b>
           </p>
           <p>
-            <i class="fas fa-shipping-fast"></i>&nbsp;
+            <i className="fas fa-shipping-fast"></i>&nbsp;
             <b>
               Order
               <br />
@@ -123,7 +123,7 @@ function OrderTracking() {
             </b>
           </p>
           <p>
-            <i class="fas fa-check-double"></i>&nbsp;
+            <i className="fas fa-check-double"></i>&nbsp;
             <b>
               Order
               <br />
@@ -133,11 +133,11 @@ function OrderTracking() {
         </div>
         <div className="order-tracking-buttons">
           <div className="cancel-order-button">
-            <i class="fas fa-window-close" />
+            <i className="fas fa-window-close" />
             &nbsp;&nbsp;Cancel Order
           </div>
           <div className="download-receipt-button">
-            <i class="fas fa-download" />
+            <i className="fas fa-download" />
             &nbsp;&nbsp;Receipt
           </div>
         </div>
