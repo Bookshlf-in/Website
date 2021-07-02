@@ -12,11 +12,7 @@ export default function Protected() {
   const callApi = () => {
     setLoading(true);
     axios
-      .get("/protected", {
-        headers: {
-          Authorization: user?.authHeader,
-        },
-      })
+      .get("/protected")
       .then(() => {
         console.log("protected route accessed");
         setLoading(false);
@@ -49,6 +45,11 @@ export default function Protected() {
             roles: response.data.roles,
           })
         );
+        if (response.data.token) {
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${response.data.token}`;
+        }
         setUser({
           authHeader: `Bearer ${response.data.token}`,
           roles: response.data.roles,
@@ -66,8 +67,9 @@ export default function Protected() {
     axios
       .get("/signOut")
       .then((response) => {
-        console.log("Signed Out");
         localStorage.removeItem("bookshlf_user");
+        delete axios.defaults.headers.common["Authorization"];
+        console.log("Signed Out");
         setUser(null);
         setLogoutLoading(false);
       })

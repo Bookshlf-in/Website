@@ -5,4 +5,9 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+const obj = JSON.parse(localStorage.getItem("bookshlf_user"));
+if (obj?.authHeader) {
+  instance.defaults.headers.common["Authorization"] = obj.authHeader;
+}
+
 export default instance;
