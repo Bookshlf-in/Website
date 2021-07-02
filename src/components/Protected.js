@@ -1,6 +1,9 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
+import { UserContext } from "../Context/userContext";
+
 import axios from "./../axios";
 export default function Protected() {
+  const [user, setUser] = useContext(UserContext);
   const [accessed, setAccessed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loginLoading, setLoginLoading] = useState(false);
@@ -9,7 +12,11 @@ export default function Protected() {
   const callApi = () => {
     setLoading(true);
     axios
-      .get("/protected")
+      .get("/protected", {
+        headers: {
+          Authorization: user?.authHeader,
+        },
+      })
       .then(() => {
         console.log("protected route accessed");
         setLoading(false);
@@ -24,7 +31,7 @@ export default function Protected() {
 
   useEffect(() => {
     callApi();
-  }, []);
+  }, [user]);
 
   const login = () => {
     setLoginLoading(true);
@@ -35,8 +42,18 @@ export default function Protected() {
       })
       .then((response) => {
         console.log("Logged In", response);
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
+            authHeader: `Bearer ${response.data.token}`,
+            roles: response.data.roles,
+          })
+        );
+        setUser({
+          authHeader: `Bearer ${response.data.token}`,
+          roles: response.data.roles,
+        });
         setLoginLoading(false);
-        callApi();
       })
       .catch((error) => {
         console.log("Login error", error);
@@ -50,8 +67,9 @@ export default function Protected() {
       .get("/signOut")
       .then((response) => {
         console.log("Signed Out");
+        localStorage.removeItem("bookshlf_user");
+        setUser(null);
         setLogoutLoading(false);
-        callApi();
       })
       .catch((error) => {
         console.log("Logout error", error);
@@ -83,6 +101,9 @@ export default function Protected() {
         <button style={{ backgroundColor: "#03203C" }} onClick={logout}>
           {logoutLoading ? "Loading" : "Logout"}
         </button>
+      </div>
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        user = {JSON.stringify(user)}
       </div>
     </>
   );
