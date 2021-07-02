@@ -23,12 +23,14 @@ import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/SearchResult";
 import BookDetails from "../BookDetails/BookDetails";
 
-
+// temporay routes
+import Protected from "../Protected";
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/Protected" component={Protected} />
           <Route path="/Login" component={Login} />
           <Route path="/UserSignup" component={UserSignup} />
           <Route path="/ForgotPassword" component={ForgotPassword} />

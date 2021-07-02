@@ -359,25 +359,3 @@ footer-subscription > p {
     text-align: center;
   }
 }
-
-/* css loader */
-
-#loading {
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 6px solid #ffffff;
-  border-top: 6px solid #790000;
-  border-radius: 100%;
-  margin: auto;
-  display: none;
-  animation: spin 0.5s infinite linear;
-  padding: 0.5rem;
-}
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

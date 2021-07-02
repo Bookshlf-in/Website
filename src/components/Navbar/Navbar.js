@@ -6,7 +6,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SideNav from "./Sidenav.js";
 import {UserContext} from "../../Context/userContext";
-
+import axios from "../../axios.js";
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
   console.log("Clicked");
@@ -23,6 +23,9 @@ function Navbar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    axios.get("/signOut")
+    .then(() => console.log("SignedOut"))
+    .catch(error => console.log(error));
   };
   return (
     <div className="main-navbar" id="main-navbar">
@@ -130,7 +133,7 @@ function Navbar() {
             </li>
             <li>
               <div className="navbar-items-chip">
-                {user.token === undefined ? (
+                {!user ? (
                   <div>
                     <Button
                       variant="contained"
