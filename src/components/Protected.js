@@ -1,15 +1,89 @@
-import {React, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import axios from "./../axios";
 export default function Protected() {
-  useEffect(() => {
+  const [accessed, setAccessed] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
+
+  const callApi = () => {
+    setLoading(true);
     axios
       .get("/protected")
-      .then(() => console.log("protected route accessed"))
-      .catch((error) => console.log(error));
+      .then(() => {
+        console.log("protected route accessed");
+        setLoading(false);
+        setAccessed(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setAccessed(false);
+      });
+  };
+
+  useEffect(() => {
+    callApi();
   }, []);
+
+  const login = () => {
+    setLoginLoading(true);
+    axios
+      .post("/signIn", {
+        email: "rk57382@gmail.com",
+        password: "test1234",
+      })
+      .then((response) => {
+        console.log("Logged In", response);
+        setLoginLoading(false);
+        callApi();
+      })
+      .catch((error) => {
+        console.log("Login error", error);
+        setLoginLoading(false);
+      });
+  };
+
+  const logout = () => {
+    setLogoutLoading(true);
+    axios
+      .get("/signOut")
+      .then((response) => {
+        console.log("Signed Out");
+        setLogoutLoading(false);
+        callApi();
+      })
+      .catch((error) => {
+        console.log("Logout error", error);
+        setLogoutLoading(false);
+      });
+  };
+
   return (
-    <div>
-      <h1>Protected Route Component</h1>
-    </div>
+    <>
+      <div style={{ textAlign: "center" }}>
+        {loading ? (
+          <h1 style={{ color: "#120E43" }}>Loading</h1>
+        ) : accessed ? (
+          <h1 style={{ color: "#4DD637" }}>Protected Route accessed</h1>
+        ) : (
+          <h1 style={{ color: "#FF6263" }}>Protected Route not Accessed</h1>
+        )}
+        <button
+          onClick={callApi}
+          style={{ backgroundColor: "#5DA3FA", marginTop: "20px" }}
+        >
+          {loading ? "Loading" : "Refresh"}
+        </button>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <button style={{ backgroundColor: "#03203C" }} onClick={login}>
+          {loginLoading ? "Loading" : "Login"}
+        </button>
+        <button style={{ backgroundColor: "#03203C" }} onClick={logout}>
+          {logoutLoading ? "Loading" : "Logout"}
+        </button>
+      </div>
+    </>
   );
 }
