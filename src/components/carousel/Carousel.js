@@ -14,9 +14,9 @@ function Carousel() {
       image: "/images/carousel_bg1.jpg",
     },
     {
-      title: "Get 40% off on orders over 999",
-      description: "India's Largest Online Book Store",
-      button: "Explore Now",
+      title: "Sell Your Old Books",
+      description: "Sell your old books with best possible prices",
+      button: "Sell Now",
       image: "/images/carousel_bg2.jpg",
     },
     {
