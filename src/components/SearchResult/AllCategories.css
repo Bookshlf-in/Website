@@ -1,0 +1,65 @@
+.AllCategories-cont{
+
+}
+.AllCategories-search{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.AllCategories-input{
+    padding: 20px;
+    width: 50%;
+}
+
+.Search-button{
+    padding: 20px;
+    width: 20%;
+    background-color: rgb(211, 165, 14);
+    background-color: black;
+    border: 1.5px solid white;
+
+}
+
+.Search-button:hover{
+    background-color: rgb(56, 56, 56);
+        border: 1.5px solid rgb(56, 56, 56);
+        cursor: pointer;
+}
+
+.AllCategories-cont ul{
+    background-color: black;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.AllCategories-cont ul li{
+    margin: 20px;
+}
+
+.filter-result{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.filter{
+    padding: 10px 30px;
+}
+
+.filter select{
+    padding: 10px;
+    border: none;
+    font-size: medium;
+}
+
+.filter select:hover{
+    background-color: rgb(238, 238, 238);
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 10px black;
+}
