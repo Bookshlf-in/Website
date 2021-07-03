@@ -23,6 +23,7 @@
 }
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 .neonText {
   color: #fff;

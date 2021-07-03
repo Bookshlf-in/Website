@@ -1,4 +1,4 @@
-import {React, useState, useContext} from "react";
+import {React, useState, useContext, useEffect} from "react";
 import "./Login.css";
 import axios from "../../axios";
 import {Link, useHistory} from "react-router-dom";
@@ -37,7 +37,6 @@ function Login() {
   const [Red2, makeRed2] = useState(false);
   const [loader, setloader] = useState("none");
   const [bigLoader, setBigLoader] = useState("none");
-  const [resp, setresp] = useState(null);
 
   // showing password and hiding
   const handelClick = () => {
@@ -83,6 +82,7 @@ function Login() {
           password: Password,
         })
         .then((response) => {
+          console.log("Logged In", response);
           localStorage.setItem(
             "bookshlf_user",
             JSON.stringify({
@@ -94,7 +94,6 @@ function Login() {
             authHeader: `Bearer ${response.data.token}`,
             roles: response.data.roles,
           });
-          setresp(response.data);
           setadminRole(response.data.roles.includes("admin"));
           setsellerRole(response.data.roles.includes("seller"));
           setuserRole(response.data.roles.includes("customer"));
@@ -131,12 +130,13 @@ function Login() {
     setBigLoader("flex");
     setTimeout(() => {
       setBigLoader("none");
-      setUser({
-        token: resp.token,
-        roles: resp.roles,
-        currRole: curRole,
-      });
-      history.push("/");
+      if (curRole === "user") {
+        history.push("/");
+      } else if (curRole === "seller") {
+        history.push("/sellerPanel");
+      } else if (curRole === "admin") {
+        history.push("/adminPanel");
+      }
     }, 3000);
   };
 

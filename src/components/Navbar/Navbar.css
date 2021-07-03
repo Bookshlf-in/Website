@@ -22,6 +22,7 @@
   justify-content: center;
   align-items: center;
   min-height: 70px;
+  cursor: pointer;
 }
 .navbar-items ul {
   float: left;
@@ -41,7 +42,8 @@
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 18px;
+  font-size: 14px;
+  cursor: pointer;
 }
 .navbar-items-chip a,
 .navbar-items-chip p {
@@ -103,8 +105,9 @@
 }
 .navbar-items-chip-searchbox input:focus {
   outline: none;
-  width: 240px;
-  transition: 0.5s;
+  width: 200px;
+  font-family: "PT Sans";
+  color: grey;
   background-color: rgba(255, 255, 255);
   border-bottom: 2px solid rgb(98, 221, 98);
 }
@@ -124,10 +127,11 @@
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   padding: 14px 10px;
-  font-size: 18px;
+  font-size: 14px;
   background-color: inherit;
   margin: 0;
   z-index: 100;
+  cursor: pointer;
 }
 .navbar a:hover,
 .dropdown:hover .dropbtn {

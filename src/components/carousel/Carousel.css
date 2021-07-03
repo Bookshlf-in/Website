@@ -40,12 +40,12 @@ button:hover {
 
 .slider-wrapper {
   position: relative;
-  height: 70vh;
+  height: calc(100vh - 90px);
   overflow: hidden;
 }
 
 .slide {
-  height: 70vh;
+  height: calc(100vh - 90px);
   background-size: cover !important;
 }
 
