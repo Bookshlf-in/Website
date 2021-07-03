@@ -329,12 +329,22 @@ footer-subscription > p {
   }
 }
 @media screen and (max-width: 768px) {
+
+  .input-areas form{
+    flex-direction: column;
+  }
+  
   .footer-link-wrapper {
     flex-direction: column;
     justify-content: flex-start;
   }
 }
 @media screen and (max-width: 574px) {
+
+  .input-areas form{
+    flex-direction: column;
+  }
+
   .footer-links {
     padding-top: 2rem;
     flex-direction: column;
@@ -358,4 +368,6 @@ footer-subscription > p {
     margin: 8px 0;
     text-align: center;
   }
+
+  
 }
