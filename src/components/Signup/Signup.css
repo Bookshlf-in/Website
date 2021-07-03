@@ -42,7 +42,7 @@
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   border-top: 1px solid white;
   border-right: 1px solid white;
-  transition: 0.3s;
+  cursor: pointer;
 }
 .floating-login-button a {
   color: rgb(0, 0, 0);
@@ -75,11 +75,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
-
+.signup-name b,
+.signup-email b,
+.signup-password b,
+.signup-confirm-password b {
+  position: absolute;
+  float: right;
+  top: 10px;
+  right: 20px;
+  color: red;
+  font-size: 12px;
+  font-family: "PT Sans";
+}
 .signup-name input[type="text"] {
   height: 50px;
-  width: 200px;
+  width: 300px;
   outline: none;
   font-family: "Roboto", sans-serif;
   font-weight: 900;
@@ -90,7 +102,7 @@
 
 .signup-form input {
   height: 50px;
-  width: 400px;
+  width: 600px;
   outline: none;
   font-family: "Roboto", sans-serif;
   font-weight: 900;
@@ -166,4 +178,57 @@
   right: 20px;
   cursor: pointer;
   font-size: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .signup-box {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .signup-bg {
+    padding: 0px;
+  }
+  .floating-login-button {
+    right: 10px;
+    top: 10px;
+  }
+  .signup-form input {
+    font-size: 18px;
+  }
+  .signup-name input[type="text"] {
+    width: 180px;
+  }
+  .signup-form input {
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .signup-form h1 {
+    font-size: 24px;
+  }
+  .signup-logo img {
+    height: 30px;
+  }
+  .signup-box {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .signup-bg {
+    padding: 0px;
+  }
+  .floating-login-button {
+    right: 10px;
+    top: 10px;
+  }
+  .signup-form input {
+    font-size: 18px;
+  }
+  .signup-name input[type="text"] {
+    width: 150px;
+  }
+  .signup-form input {
+    width: 300px;
+  }
 }
