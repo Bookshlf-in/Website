@@ -83,6 +83,17 @@ function Login() {
           password: Password,
         })
         .then((response) => {
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({
+              authHeader: `Bearer ${response.data.token}`,
+              roles: response.data.roles,
+            })
+          );
+          setUser({
+            authHeader: `Bearer ${response.data.token}`,
+            roles: response.data.roles,
+          });
           setresp(response.data);
           setadminRole(response.data.roles.includes("admin"));
           setsellerRole(response.data.roles.includes("seller"));
@@ -119,12 +130,12 @@ function Login() {
   const handleUserRole = (curRole) => {
     setBigLoader("flex");
     setTimeout(() => {
-      setBigLoader("none");
       setUser({
         token: resp.token,
         roles: resp.roles,
         currRole: curRole,
       });
+      setBigLoader("none");
       history.push("/");
     }, 3000);
   };
