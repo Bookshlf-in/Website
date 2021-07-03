@@ -151,7 +151,7 @@ function Payment() {
             </label>
             <input
               type="submit"
-              value="Continue to checkout"
+              value="Confirm Order"
               className="payment-form-btn"
             />
           </form>

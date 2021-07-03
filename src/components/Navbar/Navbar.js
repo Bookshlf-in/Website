@@ -1,25 +1,31 @@
-import React from "react";
+import {React, useState, useContext} from "react";
 import "./Navbar.css";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import SideNav from "../Sidenav/Sidenav.js";
-
+import SideNav from "./Sidenav.js";
+import {UserContext} from "../../Context/userContext";
+import axios from "../../axios.js";
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
   console.log("Clicked");
 }
 
 function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const history = useHistory();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [user, setUser] = useContext(UserContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    console.log(user.token);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
+    axios.get("/signOut")
+    .then(() => console.log("SignedOut"))
+    .catch(error => console.log(error));
   };
   return (
     <div className="main-navbar" id="main-navbar">
@@ -29,6 +35,7 @@ function Navbar() {
           <i className="fas fa-bars"></i>
         </span>
         <SideNav />
+
         {/* navbar logo */}
         <div className="navbar-logo">
           <img
@@ -126,31 +133,46 @@ function Navbar() {
             </li>
             <li>
               <div className="navbar-items-chip">
-                <div>
-                  <Button
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                  >
-                    <img
-                      src="./images/user.svg"
-                      alt="My Account"
-                      height="30px"
-                      width="30px"
-                    />
-                  </Button>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                  </Menu>
-                </div>
+                {!user ? (
+                  <div>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                      onClick={() => {
+                        history.push("/Login");
+                      }}
+                    >
+                      Login
+                    </Button>
+                  </div>
+                ) : (
+                  <div>
+                    <Button
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                    >
+                      <img
+                        src="./images/user.svg"
+                        alt="My Account"
+                        height="30px"
+                        width="30px"
+                      />
+                    </Button>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    </Menu>
+                  </div>
+                )}
               </div>
             </li>
           </ul>

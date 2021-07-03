@@ -15,6 +15,7 @@ import Verify from "../VerifyAccount/Verify";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
+import Checkout from "../Cart/Payment";
 import AddReviews from "../AddReviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
 import Track from "../UserProfile/OrderTracking";
@@ -22,11 +23,14 @@ import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/SearchResult";
 import BookDetails from "../BookDetails/BookDetails";
 
+// temporay routes
+import Protected from "../Protected";
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/Protected" component={Protected} />
           <Route path="/Login" component={Login} />
           <Route path="/UserSignup" component={UserSignup} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
@@ -69,6 +73,10 @@ function App() {
             <BookDetails />
             <Footer />
           </Route>
+          <Route path="/Checkout">
+            <Navbar/>
+            <Checkout/>
+            </Route>
           <Route path="/">
             <Navbar />
             <Carousel />

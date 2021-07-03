@@ -120,6 +120,9 @@ td .fa-minus-square:hover {
   border-radius: 5px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
+.cart-checkout a {
+  color: white;
+}
 .cart-checkout:hover {
   background-color: rgb(28, 28, 255);
   font-size: 20px;
