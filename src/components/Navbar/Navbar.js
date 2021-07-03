@@ -16,6 +16,7 @@ function Navbar() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
+  const [Logged, setLogged] = useState(user ? true : false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,9 +24,21 @@ function Navbar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
-    axios.get("/signOut")
-    .then(() => console.log("SignedOut"))
-    .catch(error => console.log(error));
+  };
+  const logout = () => {
+    setLogged(false);
+    axios
+      .get("/signOut")
+      .then((response) => {
+        localStorage.removeItem("bookshlf_user");
+        delete axios.defaults.headers.common["Authorization"];
+        console.log("Signed Out");
+        setUser(null);
+        setAnchorEl(null);
+      })
+      .catch((error) => {
+        console.log("Logout error", error);
+      });
   };
   return (
     <div className="main-navbar" id="main-navbar">
@@ -43,6 +56,9 @@ function Navbar() {
             alt="Bookshlf"
             height="50px"
             width="284px"
+            onClick={() => {
+              history.push("/");
+            }}
           />
         </div>
         {/* navbar items */}
@@ -92,6 +108,16 @@ function Navbar() {
                 </div>
               </li>
             </Link>
+            <Link to="/">
+              <li>
+                <div className="navbar-items-chip">
+                  <p>
+                    <i class="fas fa-book" />
+                    &nbsp;Sell Your Books
+                  </p>
+                </div>
+              </li>
+            </Link>
             <Link to="/About">
               <li>
                 <div className="navbar-items-chip">
@@ -133,7 +159,7 @@ function Navbar() {
             </li>
             <li>
               <div className="navbar-items-chip">
-                {!user ? (
+                {user === null ? (
                   <div>
                     <Button
                       variant="contained"
@@ -168,8 +194,19 @@ function Navbar() {
                       onClose={handleClose}
                     >
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                      <MenuItem onClick={handleClose}>My Orders</MenuItem>
+                      <MenuItem onClick={handleClose}>Wishlist</MenuItem>
+                      <MenuItem onClick={handleClose}>Sell Books</MenuItem>
+                      <MenuItem onClick={logout}>
+                        Logout&nbsp;
+                        <i
+                          className="fas fa-circle-notch"
+                          style={{
+                            display: Logged ? "none" : "inline-block",
+                            animation: "spin 2s linear infinite",
+                          }}
+                        />
+                      </MenuItem>
                     </Menu>
                   </div>
                 )}
