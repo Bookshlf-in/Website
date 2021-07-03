@@ -130,12 +130,12 @@ function Login() {
   const handleUserRole = (curRole) => {
     setBigLoader("flex");
     setTimeout(() => {
-      setBigLoader("none");
       setUser({
         token: resp.token,
         roles: resp.roles,
         currRole: curRole,
       });
+      setBigLoader("none");
       history.push("/");
     }, 3000);
   };
