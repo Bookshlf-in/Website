@@ -3,6 +3,7 @@ import "./Verify.css";
 import InputMask from "react-input-mask";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
+import {useHistory} from "react-router-dom";
 
 const lock = {
   open: "fas fa-lock-open",
@@ -18,6 +19,7 @@ const alertStyle = {
 };
 
 function Verify(props) {
+  const history = useHistory();
   const [Alerttype, setAlerttype] = useState("success");
   const [showAlert, setshowAlert] = useState(false);
   const [alertColor, setalertColor] = useState(alertStyle.color.success);
@@ -27,6 +29,8 @@ function Verify(props) {
   const [otpcorrect, setotpcorrect] = useState(false);
   const [Otp, setOtp] = useState(null);
   const [sendOtp, setSendOtp] = useState(false);
+  const [verify, setverify] = useState(false);
+  const [verified, setverified] = useState(false);
 
   // verifying OTP for correctness
   const handelOtp = (e) => {
@@ -55,7 +59,7 @@ function Verify(props) {
     setSendOtp(true);
     axios
       .post("/sendVerifyEmailOtp", {
-        email: "mirah64698@noobf.com",
+        email: props.mail,
       })
       .then((response) => {
         console.log(response.data);
@@ -70,11 +74,50 @@ function Verify(props) {
       .catch((error) => {
         if (error.response) {
           console.log(error.response.data);
+          setAlerttype("error");
+          setalertColor(alertStyle.color.error);
+          setalertText(error.response.data.error);
+          if (error.response.data.error === "Email already verified") {
+            setverified(true);
+          }
+          setshowAlert(true);
         }
         setSendOtp(false);
       });
   };
 
+  // OTP verification handeling
+  const handelVerify = () => {
+    setverify(true);
+    if (otpcorrect) {
+      axios
+        .post("/verifyEmail", {
+          email: props.mail,
+          otp: Otp,
+        })
+        .then((response) => {
+          setverify(false);
+          setAlerttype("success");
+          setalertColor(alertStyle.color.success);
+          setalertText(response.data.msg);
+          setshowAlert(true);
+          setverified(true);
+        })
+        .catch((error) => {
+          setverify(false);
+          setAlerttype("error");
+          setalertColor(alertStyle.color.error);
+          setalertText(error.response.data.errors[0].error);
+          setshowAlert(true);
+        });
+    } else {
+      setverify(false);
+      setAlerttype("error");
+      setalertColor(alertStyle.color.error);
+      setalertText("OTP Incorrect!");
+      setshowAlert(true);
+    }
+  };
   return (
     <div className="forgotmain-container">
       <div className="forgot-container-logo">
@@ -131,19 +174,28 @@ function Verify(props) {
         </div>
       </div>
       <div className="forgot-container-verify">
-        <button>
+        <button onClick={handelVerify}>
           Verify&nbsp;&nbsp;
           <i
             className="fas fa-circle-notch"
             style={{
-              display: !true ? "none" : "inline-block",
+              display: !verify ? "none" : "inline-block",
               animation: "spin 2s linear infinite",
             }}
           />
         </button>
       </div>
       <div className="verification-container-login">
-        <button>Login</button>
+        <button
+          style={{opacity: verified ? "1" : "0.4"}}
+          onClick={() => {
+            if (verified) {
+              history.push("/Login");
+            }
+          }}
+        >
+          Login
+        </button>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ function UserSignup() {
   const [Password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [Step, setStep] = useState(2);
+  const [Step, setStep] = useState(1);
   let [message, setmessage] = useState({
     name: "",
     email: "",
@@ -46,7 +46,8 @@ function UserSignup() {
   // Signup handeling
   const handelSignUp = () => {
     setLoading(true);
-    axios
+    if(!Red.confirm){
+      axios
       .post("/signUp", {
         name: FName + " " + LName,
         email: Email,
@@ -63,6 +64,10 @@ function UserSignup() {
         }
         setLoading(false);
       });
+    }else{
+      setLoading(false);
+    }
+    
   };
   const handelError = (e) => {
     const param = e.param;

@@ -242,7 +242,7 @@ function Login() {
                     </div>
                     <div className="login-container-right-container-register-button-card-back">
                       <h2>
-                        <Link to="/UserSignup">Register</Link>
+                        <Link to="/Signup">Register</Link>
                       </h2>
                     </div>
                   </div>

@@ -1,5 +1,5 @@
 .forgotmain-container {
-  width: 60%;
+  width: 80%;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
   padding: 20px;
   display: flex;
@@ -111,6 +111,6 @@
 #send-otp-again-alert {
   position: absolute;
   float: right;
-  right: -120px;
+  right: -200px;
   top: 10px;
 }
