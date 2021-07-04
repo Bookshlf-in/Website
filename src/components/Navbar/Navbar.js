@@ -73,7 +73,7 @@ function Navbar() {
                 </div>
               </li>
             </Link>
-            <Link to="/">
+            <Link to="/searchresult">
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">

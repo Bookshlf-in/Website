@@ -10,8 +10,6 @@ import BestSelling from "../BestSelling/BestSelling";
 import Review from "../Reviews/Reviews";
 import Login from "../Login/Login";
 import UserSignup from "../Signup/UserSignup";
-import ForgotPassword from "../ForgotPassword/ForgotPassword";
-import Verify from "../VerifyAccount/Verify";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
@@ -23,7 +21,7 @@ import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/AllCategories";
 import BookDetails from "../BookDetails/BookDetails";
 
-// temporay routes
+// Protected Route
 import Protected from "../Protected";
 function App() {
   return (
@@ -32,9 +30,7 @@ function App() {
         <Switch>
           <Route path="/Protected" component={Protected} />
           <Route path="/Login" component={Login} />
-          <Route path="/UserSignup" component={UserSignup} />
-          <Route path="/ForgotPassword" component={ForgotPassword} />
-          <Route path="/Verify" component={Verify} />
+          <Route path="/Signup" component={UserSignup} />
           <Route path="/About">
             <Navbar />
             <About />

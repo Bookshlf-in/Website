@@ -1,10 +1,9 @@
 import React from "react";
-import "./Verify.css";
+import "./ForgotPassword.css";
 import {Link} from "react-router-dom";
-function Verify() {
+function ForgotPassword() {
   return (
-    
-      <div className="login-bg">
+      <div>
         <div className="forgotmain-container">
           {/* Left container in login container starts */}
           <div className="forgot-container">
@@ -15,7 +14,7 @@ function Verify() {
                 alt="Bookshlf.in"
               />
             </div>
-            <div className="forgot-container-main">Verification</div>
+            <div className="forgot-container-main">Password Recovery</div>
             {/* <div className="forgot-container-email-lable"></div> */}
             <div className="forgot-container-email">
               <input type="text" value="pussydestroyer@gmail.com" disabled />
@@ -27,15 +26,25 @@ function Verify() {
             <div className="forgot-container-verify">
               <button>Verify</button>
             </div>
-            <div className="verification-container-login">
+            <div className="forgot-container-password">
+              <input type="password" placeholder="New Password" disabled />
+            </div>
+            <div className="forgot-container-password">
+              <input type="Password" placeholder="Confirm Password" disabled />
+            </div>
+            <div className="forgot-container-update">
+              <button disabled>Update Password</button>
+            </div>
+            <div className="forgot-container-login">
               <Link to="/Login">
-                <button disabled >Login</button>
+                <button>Login</button>
               </Link>
             </div>
           </div>
           {/* Left container ends here */}
         </div>
       </div>
+    
   );
 }
-export default Verify;
+export default ForgotPassword;
