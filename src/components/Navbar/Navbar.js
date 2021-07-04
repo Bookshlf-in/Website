@@ -7,9 +7,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import SideNav from "./Sidenav.js";
 import {UserContext} from "../../Context/userContext";
 import axios from "../../axios.js";
+
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
-  console.log("Clicked");
 }
 
 function Navbar() {
@@ -17,7 +17,6 @@ function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
   const [Logged, setLogged] = useState(user ? true : false);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     console.log(user.token);
@@ -54,8 +53,8 @@ function Navbar() {
           <img
             src="./images/logo[800x150].png"
             alt="Bookshlf"
-            height="50px"
-            width="284px"
+            height="40px"
+            width="210px"
             onClick={() => {
               history.push("/");
             }}
@@ -74,7 +73,7 @@ function Navbar() {
                 </div>
               </li>
             </Link>
-            <Link to="/">
+            <Link to="/searchresult">
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
@@ -193,11 +192,34 @@ function Navbar() {
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My Orders</MenuItem>
-                      <MenuItem onClick={handleClose}>Wishlist</MenuItem>
-                      <MenuItem onClick={handleClose}>Sell Books</MenuItem>
-                      <MenuItem onClick={logout}>
+                      <MenuItem
+                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        onClick={handleClose}
+                      >
+                        Profile
+                      </MenuItem>
+                      <MenuItem
+                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        onClick={handleClose}
+                      >
+                        My Orders
+                      </MenuItem>
+                      <MenuItem
+                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        onClick={handleClose}
+                      >
+                        Wishlist
+                      </MenuItem>
+                      <MenuItem
+                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        onClick={handleClose}
+                      >
+                        Sell Books
+                      </MenuItem>
+                      <MenuItem
+                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        onClick={logout}
+                      >
                         Logout&nbsp;
                         <i
                           className="fas fa-circle-notch"
