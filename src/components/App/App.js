@@ -20,7 +20,7 @@ import AddReviews from "../AddReviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
 import Track from "../UserProfile/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
-import SearchResult from "../SearchResult/SearchResult";
+import SearchResult from "../SearchResult/AllCategories";
 import BookDetails from "../BookDetails/BookDetails";
 
 // temporay routes
