@@ -1,5 +1,6 @@
 import {React, useState} from "react";
 import "./Signup.css";
+import "./Verify.css";
 import {Link} from "react-router-dom";
 import axios from "../../axios";
 import Verify from "./Verify";

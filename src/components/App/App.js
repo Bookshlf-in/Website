@@ -9,6 +9,7 @@ import Categories from "../Categories/Categories";
 import BestSelling from "../BestSelling/BestSelling";
 import Review from "../Reviews/Reviews";
 import Login from "../Login/Login";
+import ForgotPassword from "../Login/ForgotPassword";
 import UserSignup from "../Signup/UserSignup";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/Protected" component={Protected} />
           <Route path="/Login" component={Login} />
           <Route path="/Signup" component={UserSignup} />
+          <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/About">
             <Navbar />
             <About />

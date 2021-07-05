@@ -45,9 +45,8 @@ function Verify(props) {
   const CheckOtp = (otp) => {
     let cnt = 0;
     for (let i = 0; i < otp.length; i++) {
-      if ("1" <= otp[i] && otp[i] <= "9") {
+      if ("0" <= otp[i] && otp[i] <= "9") {
         ++cnt;
-        console.log(cnt);
         if (cnt >= 5) setotpcorrect(true);
         else setotpcorrect(false);
       }
@@ -62,8 +61,10 @@ function Verify(props) {
         email: props.mail,
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setSendOtp(false);
+        setAlerttype("success");
+        setalertColor(alertStyle.color.success);
         setshowAlert(true);
         setalertText(response.data.msg);
         setTimeout(() => {
@@ -73,7 +74,7 @@ function Verify(props) {
       })
       .catch((error) => {
         if (error.response) {
-          console.log(error.response.data);
+          // console.log(error.response.data);
           setAlerttype("error");
           setalertColor(alertStyle.color.error);
           setalertText(error.response.data.error);
@@ -128,10 +129,10 @@ function Verify(props) {
         <span>
           <i className="fas fa-envelope" />
         </span>
-        <input type="text" value="pussydestroyer@gmail.com" disabled />
+        <input type="text" value={props.mail} disabled />
       </div>
       <div className="forgot-container-otp">
-        <span>
+        <span style={{height: "50px", width: "50px"}}>
           <i
             className={locked ? lock.close : lock.open}
             style={{color: locked ? "rgb(8, 194, 8)" : "red"}}

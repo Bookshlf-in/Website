@@ -1,5 +1,5 @@
 .forgotmain-container {
-  width: 80%;
+  width: 80vw;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
   padding: 20px;
   display: flex;
@@ -34,6 +34,7 @@
   text-align: center;
   background-color: rgba(255, 255, 255, 0.87);
   border: none;
+  color: black;
 }
 .forgot-container-email span,
 .forgot-container-otp span {
@@ -70,6 +71,8 @@
   align-items: center;
   transition: 0s;
   cursor: pointer;
+  color: white;
+  border: none;
 }
 .forgot-container-otp button:hover {
   background-color: rgb(8, 194, 8);
@@ -85,6 +88,9 @@
   border-radius: 5px;
   width: 200px;
   height: 50px;
+  text-align: center;
+  background-color: #ff5100;
+  color: white;
 }
 .verification-container-login {
   margin: 20px;
