@@ -1,4 +1,4 @@
-import {React, useState, useContext, useEffect} from "react";
+import {React, useState, useContext} from "react";
 import "./Login.css";
 import axios from "../../axios";
 import {Link, useHistory} from "react-router-dom";
@@ -82,7 +82,12 @@ function Login() {
           password: Password,
         })
         .then((response) => {
-          console.log("Logged In", response);
+          // console.log("Logged In", response);
+          if (response.data.token) {
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${response.data.token}`;
+          }
           localStorage.setItem(
             "bookshlf_user",
             JSON.stringify({

@@ -1,88 +1,98 @@
-import React from "react";
+import {RepeatOneSharp} from "@material-ui/icons";
+import {React, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
+import axios from "../../axios";
+
+const Verified = {
+  user: "verified-user",
+  tag: "Verified",
+};
+const nonVerified = {
+  user: "non-verified-user",
+  tag: "Not Verified",
+};
+const style = {
+  display: "flex",
+  width: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "0px 30px",
+};
 
 function AccountDetails() {
   // all seller profile details here
-  var sellerDetails = {
-    sellerName: "John Smith",
-    verified: true,
-    state: "UttarPradesh",
-    description: "Student at IIT KGP",
-    rating: 4.5,
-    booksold: 11,
-  };
-  var Verified = {
-    user: "verified-user",
-    tag: "Verified",
-  };
-  var nonVerified = {
-    user: "non-verified-user",
-    tag: "Not Verified",
-  };
-  var style = {
-    display: "flex",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "0px 30px",
-  };
+  const [sellerDetails, setsellerDetails] = useState({
+    Name: "",
+    Intro: "",
+    Photo: "https://image.flaticon.com/icons/png/512/2922/2922510.png",
+    NoOfBooksSold: 0,
+    Rating: 0,
+    NoOfRatings: 0,
+    NoOfReviews: 0,
+    IsVerified: false,
+    ID: "",
+    CreatedAt: "",
+    UpdatedAt: "",
+  });
+
+  const [load, setload] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("/getSellerProfile")
+      .then((response) => {
+        setsellerDetails({
+          Name: response.data.name,
+          Intro: response.data.intro,
+          Photo: response.data.photo,
+          NoOfBooksSold: response.data.noOfBooksSold,
+          Rating: response.data.rating,
+          NoOfRatings: response.data.noOfRatings,
+          NoOfReviews: response.data.noOfReviews,
+          IsVerified: response.data.isVerified,
+          ID: response.data._id,
+          CreatedAt: response.data.createdAt,
+          UpdatedAt: response.data.updatedAt,
+        });
+        setload(true);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+        }
+      });
+  }, [load]);
   return (
     <div style={style} id="seller-account-details">
       <div className="card">
-        <img
-          src="https://image.flaticon.com/icons/png/512/2922/2922510.png"
-          alt={sellerDetails.sellerName}
-          width="200px"
-        />
-        <h1>{sellerDetails.sellerName}</h1>
+        <img src={sellerDetails.Photo} alt={sellerDetails.Name} width="200px" />
+        <h1>{sellerDetails.Name}</h1>
         <div className="verify-tag">
-          {/* change className to nonverified.user to make it nonverified */}
           <p
-            className={(function () {
-              if (sellerDetails.verified) return Verified.user;
-              return nonVerified.user;
-            })()}
+            className={
+              sellerDetails.IsVerified ? Verified.user : nonVerified.user
+            }
           >
-            {(function () {
-              if (sellerDetails.verified) return Verified.tag;
-              return nonVerified.tag;
-            })()}
+            {sellerDetails.IsVerified ? Verified.tag : nonVerified.tag}
           </p>
         </div>
-        <p className="title"> {sellerDetails.description} </p>
-        <p>{sellerDetails.state}&nbsp;India</p>
-        <p className="seller-social-links">
-          <Link>
-            <i className="fab fa-facebook-f"></i>
-          </Link>
-          <Link>
-            <i className="fab fa-instagram"></i>
-          </Link>
-          <Link>
-            <i className="fab fa-twitter"></i>
-          </Link>
-          <Link>
-            <i className="fab fa-linkedin"></i>
-          </Link>
-          <Link>
-            <i className="fab fa-youtube"></i>
-          </Link>
-        </p>
+        <p className="title"> {sellerDetails.Intro} </p>
         <p className="seller-rating">
           Rating&nbsp;:&nbsp;
-          {[...Array(parseInt(sellerDetails.rating))].map(() => {
+          {[...Array(parseInt(sellerDetails.Rating))].map(() => {
             return <i className="fas fa-star"></i>;
           })}
           {[...Array(1)].map(() => {
-            if (Number.isInteger(sellerDetails.rating)) {
+            if (Number.isInteger(sellerDetails.Rating)) {
               return <i></i>;
             }
             return <i className="fas fa-star-half-alt"></i>;
           })}
-          ( {sellerDetails.rating} )
+          ( {sellerDetails.Rating} )
         </p>
         <p className="books-sold">
-          Total Books Sold&nbsp;:&nbsp;<b>{sellerDetails.booksold}</b>&nbsp;
+          Total Books Sold&nbsp;:&nbsp;<b>{sellerDetails.NoOfBooksSold}</b>
+          &nbsp;
         </p>
       </div>
     </div>
