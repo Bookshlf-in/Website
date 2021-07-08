@@ -387,3 +387,66 @@
   border: none;
   position: relative;
 } */
+
+.seller-register-btn {
+  padding: 5px 15px;
+  background-color: #ff9b3e;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.seller-register-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid rgb(139, 139, 139);
+  margin: 10px;
+}
+
+.uploaded-images {
+  height: 150px;
+  width: 250px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.uploaded-images img {
+  max-height: 150px;
+  max-width: 250px;
+  min-height: 100px;
+  min-width: 100px;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper button {
+  border: 2px solid #ff9b3e;
+  color: #ff9b3e;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 200px;
+  height: 40px;
+  margin-left: 20px;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 30px;
+  width: 200px;
+  height: 40px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}

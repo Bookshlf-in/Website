@@ -17,13 +17,13 @@ function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
   const [Logged, setLogged] = useState(user ? true : false);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(user.token);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
+  };  
   const logout = () => {
     setLogged(false);
     axios
@@ -34,6 +34,7 @@ function Navbar() {
         console.log("Signed Out");
         setUser(null);
         setAnchorEl(null);
+        history.push('/');
       })
       .catch((error) => {
         console.log("Logout error", error);
@@ -107,7 +108,7 @@ function Navbar() {
                 </div>
               </li>
             </Link>
-            <Link to="/">
+            <Link to="/SellerPanel">
               <li>
                 <div className="navbar-items-chip">
                   <p>
