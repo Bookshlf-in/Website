@@ -2,6 +2,8 @@ import {RepeatOneSharp} from "@material-ui/icons";
 import {React, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import axios from "../../axios";
+import {makeStyles} from "@material-ui/core/styles";
+import Alert from "@material-ui/lab/Alert";
 
 const Verified = {
   user: "verified-user",
@@ -11,6 +13,7 @@ const nonVerified = {
   user: "non-verified-user",
   tag: "Not Verified",
 };
+
 const style = {
   display: "flex",
   width: "100%",
@@ -19,8 +22,40 @@ const style = {
   padding: "0px 30px",
 };
 
+const uploadform = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginLeft: "20px",
+  flexDirection: "column",
+  padding: "20px",
+};
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingTop: "20px",
+  },
+}));
+
 function AccountDetails() {
+  const classes = useStyles();
   // all seller profile details here
+  const [Photo, setPhoto] = useState(null);
+  const [Name, setName] = useState("");
+  const [About, setAbout] = useState("");
+  const [text, settext] = useState("Update");
+
+  const [Image, setImage] = useState(
+    "https://image.flaticon.com/icons/png/512/3135/3135715.png"
+  );
+  const [open, setopen] = useState(false);
   const [sellerDetails, setsellerDetails] = useState({
     Name: "",
     Intro: "",
@@ -35,7 +70,7 @@ function AccountDetails() {
     UpdatedAt: "",
   });
 
-  const [load, setload] = useState(false);
+  const [load, setload] = useState(0);
 
   useEffect(() => {
     axios
@@ -54,7 +89,6 @@ function AccountDetails() {
           CreatedAt: response.data.createdAt,
           UpdatedAt: response.data.updatedAt,
         });
-        setload(true);
       })
       .catch((error) => {
         if (error.response) {
@@ -62,6 +96,12 @@ function AccountDetails() {
         }
       });
   }, [load]);
+
+  const handelUpload = (e) => {
+    setPhoto(URL.createObjectURL(e.target.files[0]));
+    setImage(URL.createObjectURL(e.target.files[0]));
+  };
+
   return (
     <div style={style} id="seller-account-details">
       <div className="card">
@@ -94,6 +134,118 @@ function AccountDetails() {
           Total Books Sold&nbsp;:&nbsp;<b>{sellerDetails.NoOfBooksSold}</b>
           &nbsp;
         </p>
+      </div>
+      <div className="update-seller-profile" style={uploadform}>
+        <button
+          className="update"
+          style={{
+            fontFamily: "PT Sans",
+            fontWeight: "bold",
+            letterSpacing: "2px",
+            width: "324px",
+            borderTop: "2px solid white",
+            borderLeft: "2px solid white",
+            borderRight: "2px solid white",
+            cursor: "pointer",
+          }}
+          onClick={() => setopen(!open)}
+        >
+          Update Profile
+        </button>
+        <form
+          action=""
+          style={{
+            display: open ? "flex" : "none",
+            height: open ? "auto" : "none",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            borderBottom: "2px solid white",
+            borderLeft: "2px solid white",
+            borderRight: "2px solid white",
+            transition: "2s",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "20px",
+              flexDirection: "column",
+            }}
+          >
+            <div className="uploaded-images">
+              <img src={Image} alt="profile" style={{border: "none"}} />
+            </div>
+            <div className="upload-btn-wrapper">
+              <button>Upload Image</button>
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                onChange={(e) => {
+                  handelUpload(e);
+                }}
+              />
+            </div>
+          </div>
+          <div className="signup-name">
+            <input
+              type="text"
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
+              value={Name}
+              // style={Red.name ? Errorstyle : {}}
+            />
+          </div>
+          <div className="signup-name">
+            <input
+              type="text"
+              placeholder="About"
+              onChange={(e) => setAbout(e.target.value)}
+              value={About}
+              // style={Red.name ? Errorstyle : {}}
+            />
+          </div>
+          <button
+            style={{
+              fontFamily: "PT Sans",
+              fontWeight: "bold",
+              letterSpacing: "2px",
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              if (Name.length > 0 && About.length > 0) {
+                settext("Updating...");
+                axios
+                  .post("/updateSellerProfile", {
+                    name: Name,
+                    intro: About,
+                    photo: Photo,
+                  })
+                  .then((response) => {
+                    settext("Successfully Updated!");
+                    setTimeout(() => {
+                      settext("Update");
+                      setName("");
+                      setAbout("");
+                      setload(!load);
+                    }, 3000);
+                  })
+                  .catch((error) => {
+                    console.log(error.message.data);
+                  });
+              } else {
+                settext("Name or About cannot be empty!");
+                setTimeout(() => {
+                  settext("Update");
+                }, 3000);
+              }
+            }}
+          >
+            {text}
+          </button>
+        </form>
       </div>
     </div>
   );

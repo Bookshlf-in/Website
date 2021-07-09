@@ -15,7 +15,7 @@ function SellerPanel() {
   const history = useHistory();
 
   // component states
-  const [panel, setPanel] = useState(3);
+  const [panel, setPanel] = useState(1);
   const [role, setRole] = useState(false);
 
   // loader states
