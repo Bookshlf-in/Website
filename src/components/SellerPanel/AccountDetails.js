@@ -1,9 +1,5 @@
-import {RepeatOneSharp} from "@material-ui/icons";
 import {React, useState, useEffect} from "react";
-import {Link} from "react-router-dom";
 import axios from "../../axios";
-import {makeStyles} from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
 
 const Verified = {
   user: "verified-user",
@@ -30,22 +26,8 @@ const uploadform = {
   flexDirection: "column",
   padding: "20px",
 };
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingTop: "20px",
-  },
-}));
 
 function AccountDetails() {
-  const classes = useStyles();
   // all seller profile details here
   const [Photo, setPhoto] = useState(null);
   const [Name, setName] = useState("");
