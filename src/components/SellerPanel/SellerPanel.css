@@ -215,76 +215,205 @@
 .address-bg {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: top;
-  padding: 20px;
-}
-.address-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-}
-.address-table {
-  width: 100%;
-  color: rgb(255, 255, 255);
-  border-collapse: collapse;
-  font-size: 20px;
-}
-.address-table th,
-.address-table td {
   padding: 20px;
-  text-align: center;
-  vertical-align: middle;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-}
-.close-btn {
-  font-size: 32px;
-  color: rgb(255, 38, 38);
-}
-.close-btn i:hover {
-  cursor: pointer;
-  color: rgb(235, 0, 0);
+  flex-direction: column;
 }
 
-.add-address-table {
+.address-form {
+  display: flex;
+  flex-direction: column;
   width: 80%;
-  margin-top: 20px;
-  color: rgb(255, 255, 255);
-  border-collapse: collapse;
-  font-size: 20px;
+  margin: 10px;
 }
-.add-address-table th,
-.add-address-table td {
+.address-form fieldset {
+  border-radius: 5px 5px 0px 0px;
+  border: 2px solid white;
   padding: 10px;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
+  flex-wrap: wrap;
 }
-.add-btn i {
-  font-size: 32px;
-  color: rgb(38, 255, 103);
+.address-form fieldset legend {
+  padding: 10px;
+  font-family: "PT sans";
+  font-size: 20px;
+  color: white;
 }
-.add-btn i:hover {
-  cursor: pointer;
-  color: rgb(20, 235, 0);
+.address-label {
+  width: 35%;
+  padding: 5px;
 }
-#Newaddress {
+.address-desc {
+  width: 65%;
+  padding: 5px;
+}
+.address-zip {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+}
+.address-form .address-label select {
+  width: 100%;
   height: 50px;
-  width: 400px;
-  outline: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  padding-left: 10px;
-  background-color: rgba(255, 255, 255, 0.87);
+  font-family: "PT sans";
   border: none;
-  font-size: 18px;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+}
+.address-desc input {
+  width: 100%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  padding-left: 10px;
 }
 
+.address-form .address-zip select {
+  width: 35%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+}
+.address-form .address-zip input {
+  width: 35%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  margin-left: 10px;
+}
+.address-zip #state {
+  margin-left: 10px;
+}
+.address-zip #pincode {
+  width: 30%;
+  height: 50px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  letter-spacing: 10px;
+  text-align: center;
+  margin-left: 10px;
+}
+.address-form .address-phoneNo {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+}
+.address-form .address-phoneNo span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: top;
+}
+.address-form .address-phoneNo span label {
+  color: white;
+  font-family: "PT Sans";
+  font-size: 14px;
+}
+#country-code {
+  letter-spacing: 5px;
+  text-decoration: none;
+  height: 50px;
+  width: 100px;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 10px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+}
+#phone-no {
+  letter-spacing: 20px;
+  height: 50px;
+  width: 100%;
+  font-family: "PT sans";
+  border: none;
+  color: #787878;
+  padding-left: 20px;
+  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+}
+.address-form button {
+  border-radius: 0px 0px 5px 5px;
+  margin-top: -2px;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  font-family: "PT sans";
+  font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
+  background-color: rgb(8, 218, 8);
+}
+.address-form button:hover {
+  background-color: #2fbb04;
+  color: #fff;
+}
+.address-lists {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.address-lists table {
+  border-collapse: collapse;
+  color: #fff;
+}
+.address-lists table,
+th,
+td {
+  border: 2px solid white;
+}
+.address-lists th,
+td {
+  padding: 10px;
+}
+.address-lists td {
+  vertical-align: middle;
+  text-align: center;
+}
+.address-lists table th:nth-child(1) {
+  width: 100px;
+}
+.address-lists table th:nth-child(2) {
+  width: 150px;
+}
+.address-lists table th:nth-child(3) {
+  width: 300px;
+}
+.address-lists table th:nth-child(4) {
+  width: 150px;
+}
+.address-lists table th:nth-child(5) {
+  width: 150px;
+}
+.address-lists table th:nth-child(6) {
+  width: 150px;
+}
+.address-lists table th:nth-child(7) {
+  width: 150px;
+}
+.address-lists table th:nth-child(8) {
+  width: 50px;
+}
+
+i.fas.fa-window-close {
+  font-size: 60px;
+  cursor: pointer;
+  color: rgb(255, 93, 93);
+}
+i.fas.fa-window-close:hover {
+  color: rgb(230, 11, 11);
+}
 /* Seller Reviews And Rating Css */
 .seller-reviews {
   padding: 30px;
