@@ -34,6 +34,8 @@ function AddBook() {
   const [Qnty, setQnty] = useState("");
   const [author, setAuthor] = useState("");
   const [pickupId, setPickupId] = useState("");
+  const [tags, setTags] = useState([]);
+  const [Link, setLink] = useState("");
 
   const [checked, setChecked] = useState(false);
   const [Photo, setPhoto] = useState(null);
@@ -92,6 +94,7 @@ function AddBook() {
       .then((response) => {})
       .catch((error) => {});
   };
+
   return (
     <div className="add-book-bg">
       <h1 className="neonText"> ADD NEW BOOK </h1>
@@ -172,7 +175,7 @@ function AddBook() {
           </span>
           <input
             type="text"
-            placeholder="Weight (if possible)"
+            placeholder="Weight in grams(if possible)"
             onChange={(e) => setWeight(e.target.value)}
           />
           <input

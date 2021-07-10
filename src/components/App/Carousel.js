@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import "./Slider-animations.css";

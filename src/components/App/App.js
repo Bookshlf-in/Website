@@ -4,9 +4,9 @@ import "./App.css";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import Carousel from "../carousel/Carousel";
-import Categories from "../Categories/Categories";
-import BestSelling from "../BestSelling/BestSelling";
+import Carousel from "./Carousel";
+import Categories from "./Categories";
+import BestSelling from "./BestSelling";
 import Review from "../Reviews/Reviews";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
