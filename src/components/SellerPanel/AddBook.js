@@ -1,4 +1,5 @@
 import {React, useState, useEffect} from "react";
+import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -24,18 +25,15 @@ function AddBook() {
   const [bookISBN, setbookISBN] = useState("");
   const [SP, setSP] = useState("");
   const [MRP, setMRP] = useState("");
-  const [Email, setEmail] = useState("");
-  const [PhoneNo, setPhoneNo] = useState("");
-  const [AltPhoneNo, setAltPhoneNo] = useState("");
   const [bookDesc, setbookDesc] = useState("");
   const [Weight, setWeight] = useState("");
-  const [Pages, setPages] = useState("");
   const [Edition, setEdition] = useState("");
   const [Qnty, setQnty] = useState("");
   const [author, setAuthor] = useState("");
   const [pickupId, setPickupId] = useState("");
   const [tags, setTags] = useState([]);
-  const [Link, setLink] = useState("");
+  const [tag, settag] = useState("");
+  const [link, setlink] = useState("");
 
   const [checked, setChecked] = useState(false);
   const [Photo, setPhoto] = useState(null);
@@ -55,7 +53,7 @@ function AddBook() {
             : 0;
         });
         setAdr(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         // console.log(error);
@@ -75,29 +73,40 @@ function AddBook() {
   // book adding
   const handelBookAdd = () => {
     setload(true);
+    console.log(typeof Number(bookISBN));
     axios
       .post("/addBook", {
         title: bookName,
-        MRP: MRP,
-        price: SP,
-        editionYear: Edition,
+        MRP: Number(MRP),
+        price: Number(SP),
+        editionYear: Number(Edition),
         author: author,
-        ISBN: bookISBN,
+        ISBN: Number(bookISBN),
         pickupAddressId: pickupId,
         description: bookDesc,
         photos: Photo,
-        weightInGrams: Weight,
-        embedVideo: "",
-        tags: ["", "", ""],
-        qty: Qnty,
+        weightInGrams: Number(Weight),
+        embedVideo: link,
+        tags: tags,
+        qty: Number(Qnty),
       })
-      .then((response) => {})
-      .catch((error) => {});
+      .then((response) => {
+        console.log(response.data);
+        setload(false);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        setload(false);
+      });
+  };
+
+  const handleDelete = (e) => {
+    setTags(tags.filter((tag) => e.target.innerHTML !== tag));
   };
 
   return (
     <div className="add-book-bg">
-      <h1 className="neonText"> ADD NEW BOOK </h1>
+      <h1> ADD NEW BOOK </h1>
       <form action="" className="add-book-form" autoComplete="off">
         <div className="add-book-field1">
           <span>
@@ -124,39 +133,14 @@ function AddBook() {
             <i className="fas fa-rupee-sign"></i>
           </span>
           <input
-            type="text"
+            type="number"
             placeholder="Selling Price"
             onChange={(e) => setSP(e.target.value)}
           />
           <input
-            type="text"
+            type="number"
             placeholder="M.R.P"
             onChange={(e) => setMRP(e.target.value)}
-          />
-        </div>
-        <div className="add-book-field1">
-          <span>
-            <i className="fas fa-envelope" />
-          </span>
-          <input
-            type="mail"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="add-book-field2">
-          <span>
-            <i className="fas fa-mobile-alt"></i>
-          </span>
-          <input
-            type="text"
-            placeholder="Phone Number"
-            onChange={(e) => setPhoneNo(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Alternate Phone Number"
-            onChange={(e) => setAltPhoneNo(e.target.value)}
           />
         </div>
         <div className="add-book-field1">
@@ -169,19 +153,14 @@ function AddBook() {
             onChange={(e) => setbookDesc(e.target.value)}
           />
         </div>
-        <div className="add-book-field2">
+        <div className="add-book-field1">
           <span>
             <i className="fas fa-weight"></i>
           </span>
           <input
-            type="text"
+            type="number"
             placeholder="Weight in grams(if possible)"
             onChange={(e) => setWeight(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Total Pages (if possible)"
-            onChange={(e) => setPages(e.target.value)}
           />
         </div>
         <div className="add-book-field1">
@@ -189,8 +168,8 @@ function AddBook() {
             <i className="fab fa-etsy"></i>
           </span>
           <input
-            type="text"
-            placeholder="Book Edition"
+            type="number"
+            placeholder="Book Edition (Year)"
             onChange={(e) => setEdition(e.target.value)}
           />
         </div>
@@ -209,7 +188,7 @@ function AddBook() {
             <i className="fas fa-archive" />
           </span>
           <input
-            type="text"
+            type="number"
             placeholder="Quantity"
             onChange={(e) => setQnty(e.target.value)}
           />
@@ -246,6 +225,64 @@ function AddBook() {
             )}
           </select>
         </div>
+        <div className="add-book-field1">
+          <span>
+            <i className="fab fa-youtube" />
+          </span>
+          <input
+            type="text"
+            placeholder="Embed Youtube Video Link"
+            onChange={(e) => setlink(e.target.value)}
+          />
+        </div>
+        <div className="add-book-field1" style={{display: "block"}}>
+          <div className="book-tags" id="add-book-tag">
+            {tags.length > 0 ? (
+              <>
+                {tags.map((name) => (
+                  <Link
+                    className="tag"
+                    onClick={(e) => {
+                      handleDelete(e);
+                    }}
+                  >
+                    {name}
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div style={{display: "flex"}}>
+            <input
+              type="text"
+              placeholder="Add Book Tags"
+              onChange={(e) => settag(e.target.value)}
+              value={tag}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  let memo = tags;
+                  memo.push(tag);
+                  setTags(memo);
+                  settag("");
+                }
+              }}
+            />
+            <span
+              style={{cursor: "pointer"}}
+              onClick={() => {
+                let memo = tags;
+                memo.push(tag);
+                setTags(memo);
+                settag("");
+              }}
+            >
+              <i className="fas fa-plus-circle" />
+            </span>
+          </div>
+        </div>
         <div
           style={{
             display: "flex",
@@ -253,12 +290,27 @@ function AddBook() {
             alignItems: "center",
             padding: "10px",
             flexDirection: "column",
+            width: "100%",
           }}
         >
+          <div className="upload-btn-wrapper">
+            <button style={{width: "250px"}}>Upload Images</button>
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+              onChange={(e) => {
+                handelUpload(e);
+              }}
+              style={{width: "250px", left: "20px"}}
+              multiple
+            />
+            <span style={{fontFamily: "PT Sans", fontSize: "12px"}}>
+              At least 3 clear images of book. (Front, Back, Side)
+            </span>
+          </div>
           <div
             className="uploaded-images"
             style={{
-              justifyContent: "flex-start",
               flexWrap: "wrap",
               width: "100%",
             }}
@@ -277,21 +329,6 @@ function AddBook() {
             ) : (
               <></>
             )}
-          </div>
-          <div className="upload-btn-wrapper">
-            <button>Upload Image</button>
-            <input
-              type="file"
-              accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
-              onChange={(e) => {
-                handelUpload(e);
-              }}
-              multiple
-            />
-            <p>
-              At least 3 clear images of book. <br />
-              (Front, Back, Side)
-            </p>
           </div>
         </div>
         <div>

@@ -226,6 +226,7 @@
 .tag:hover::after {
   border-left-color: crimson;
 }
+
 .book-seller {
   padding-left: 20px;
 }

@@ -1,34 +1,28 @@
 .SellerPanel-container {
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-  padding-bottom: 20px;
-  display: flex;
   min-height: calc(100vh - 90px);
 }
 .SellerPanel-navbar {
   display: flex;
-  width: 300px;
-  min-height: 100%;
+  width: 100%;
   justify-content: center;
-  align-items: top;
+  align-items: center;
 }
+
 .panel-nav-bg {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: column;
-  padding: 10px 40px 10px 20px;
+  background-color: #ffffff;
 }
 .panel-item {
   width: 100%;
-  min-width: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 10px 10px 0px;
   height: 60px;
-  padding: 10px;
   background-color: #ffffff;
   position: relative;
   color: rgb(22, 22, 22);
@@ -40,42 +34,18 @@
 .panel-item p {
   padding: 5px;
 }
-.panel-item::before {
-  content: "";
-  position: absolute;
-  right: -30px;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 30px solid #ffffff;
-  border-top: 30px solid transparent;
-  border-bottom: 30px solid transparent;
-}
+
 .panel-item:hover {
   background-color: #444444;
-  box-shadow: 3px 6px 6px white;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
   cursor: pointer;
   color: #ffffff;
 }
-.panel-item:hover::before {
-  content: "";
-  position: absolute;
-  right: -30px;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 30px solid #444444;
-  border-top: 30px solid transparent;
-  border-bottom: 30px solid transparent;
-  cursor: pointer;
-  color: white;
-}
 
 /* Account Details CSS */
+
 .card {
   width: 400px;
+  height: 458px;
   border: 1px solid white;
   border-radius: 15px;
   box-shadow: 3px 4px 5px rgba(255, 255, 255, 0.2);
@@ -85,17 +55,7 @@
   align-items: center;
   color: white;
   padding: 20px;
-}
-.seller-social-links {
-  display: flex;
-  flex-direction: row;
-}
-.seller-social-links a {
-  margin: 5px 10px;
-  color: rgb(241, 42, 42);
-}
-.seller-social-links a:hover {
-  color: white;
+  margin: 10px;
 }
 .seller-rating {
   padding: 10px;
@@ -366,12 +326,14 @@
 }
 .address-lists table {
   border-collapse: collapse;
-  color: #fff;
+  color: rgb(0, 0, 0);
+  background-color: #fff;
+  font-family: "Courier New", Courier, monospace;
 }
 .address-lists table,
 th,
 td {
-  border: 2px solid white;
+  border: 2px solid rgb(0, 0, 0);
 }
 .address-lists th,
 td {
@@ -435,7 +397,7 @@ i.fas.fa-window-close:hover {
 /* Add Book CSS */
 
 .add-book-bg {
-  width: 80%;
+  width: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -451,6 +413,7 @@ i.fas.fa-window-close:hover {
   justify-content: center;
   align-items: center;
   font-family: "Roboto", sans-serif;
+  width: 100%;
 }
 .add-book-field2,
 .add-book-field1 {
@@ -459,9 +422,7 @@ i.fas.fa-window-close:hover {
   justify-content: center;
   align-items: center;
 }
-.add-book-form input[type="text"],
-.add-book-form input[type="mail"],
-.add-book-form input[type="number"] {
+.add-book-form input {
   height: 50px;
   width: 500px;
   outline: none;
@@ -471,7 +432,7 @@ i.fas.fa-window-close:hover {
   background-color: rgba(255, 255, 255, 0.87);
   border: none;
 }
-.add-book-field2 input[type="text"] {
+.add-book-field2 input {
   height: 50px;
   width: 250px;
   outline: none;
@@ -505,18 +466,20 @@ i.fas.fa-window-close:hover {
   color: rgb(241, 58, 58);
   transition: 0.3s;
 }
-/* .add-book-upload input {
-  height: 50px;
-  width: 170px;
-  outline: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  padding-left: 10px;
-  background-color: rgba(255, 255, 255, 0.87);
-  border: none;
-  position: relative;
-} */
-
+.add-book-field1 .tag::after {
+  background: #1b2735;
+}
+.add-book-field1 .tag::before {
+  content: "❎";
+  background: transparent;
+  border-radius: 10px;
+  box-shadow: none;
+  height: 0px;
+  left: 5px;
+  position: absolute;
+  width: 0px;
+  top: 5px;
+}
 .seller-register-btn {
   padding: 5px 15px;
   background-color: #ff9b3e;

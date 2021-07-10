@@ -24,7 +24,6 @@ const uploadform = {
   alignItems: "center",
   marginLeft: "20px",
   flexDirection: "column",
-  padding: "20px",
 };
 
 function AccountDetails() {
@@ -98,7 +97,7 @@ function AccountDetails() {
             {sellerDetails.IsVerified ? Verified.tag : nonVerified.tag}
           </p>
         </div>
-        <p className="title"> {sellerDetails.Intro} </p>
+        <p className="title" style={{marginTop:"10px",}}> {sellerDetails.Intro} </p>
         <p className="seller-rating">
           Rating&nbsp;:&nbsp;
           {[...Array(parseInt(sellerDetails.Rating))].map(() => {
@@ -153,7 +152,7 @@ function AccountDetails() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "20px",
+              padding: "10px",
               flexDirection: "column",
             }}
           >
