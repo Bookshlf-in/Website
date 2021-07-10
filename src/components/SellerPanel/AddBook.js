@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import Icon from "@material-ui/core/Icon";
 import axios from "../../axios";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,11 @@ function AddBook() {
   const [Image, setImage] = useState(null);
   const [load, setload] = useState(false);
   const [Adr, setAdr] = useState(null);
+  const [alert, setalert] = useState({
+    show: false,
+    type: "",
+    msg: "",
+  });
 
   useEffect(() => {
     axios
@@ -73,7 +79,6 @@ function AddBook() {
   // book adding
   const handelBookAdd = () => {
     setload(true);
-    console.log(typeof Number(bookISBN));
     axios
       .post("/addBook", {
         title: bookName,
@@ -81,7 +86,7 @@ function AddBook() {
         price: Number(SP),
         editionYear: Number(Edition),
         author: author,
-        ISBN: Number(bookISBN),
+        ISBN: bookISBN,
         pickupAddressId: pickupId,
         description: bookDesc,
         photos: Photo,
@@ -93,13 +98,51 @@ function AddBook() {
       .then((response) => {
         console.log(response.data);
         setload(false);
+        setalert({
+          show: true,
+          type: "success",
+          msg: response.data.msg,
+        });
+        setTimeout(() => {
+          Initialize();
+        }, 5000);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error.response.data.errors[0].error);
         setload(false);
+        setalert({
+          show: true,
+          type: "error",
+          msg: error.response.data.errors[0].error + " Please Try Again!",
+        });
       });
   };
 
+  const Initialize = () => {
+    setbookName("");
+    setbookISBN("");
+    setSP("");
+    setMRP("");
+    setbookDesc("");
+    setWeight("");
+    setEdition("");
+    setQnty("");
+    setAuthor("");
+    setPickupId("");
+    setTags([]);
+    settag("");
+    setlink("");
+
+    setChecked(false);
+    setPhoto(null);
+    setImage(null);
+    setload(false);
+    setalert({
+      show: false,
+      type: "",
+      msg: "",
+    });
+  };
   const handleDelete = (e) => {
     setTags(tags.filter((tag) => e.target.innerHTML !== tag));
   };
@@ -116,6 +159,7 @@ function AddBook() {
             type="text"
             placeholder="Book Full Name"
             onChange={(e) => setbookName(e.target.value)}
+            value={bookName}
           />
         </div>
         <div className="add-book-field1">
@@ -123,9 +167,10 @@ function AddBook() {
             <i className="fas fa-atlas"></i>
           </span>
           <input
-            type="number"
+            type="text"
             placeholder="Book ISBN Number"
             onChange={(e) => setbookISBN(e.target.value)}
+            value={bookISBN}
           />
         </div>
         <div className="add-book-field2">
@@ -136,11 +181,13 @@ function AddBook() {
             type="number"
             placeholder="Selling Price"
             onChange={(e) => setSP(e.target.value)}
+            value={SP}
           />
           <input
             type="number"
             placeholder="M.R.P"
             onChange={(e) => setMRP(e.target.value)}
+            value={MRP}
           />
         </div>
         <div className="add-book-field1">
@@ -151,6 +198,7 @@ function AddBook() {
             type="text"
             placeholder="Book Details"
             onChange={(e) => setbookDesc(e.target.value)}
+            value={bookDesc}
           />
         </div>
         <div className="add-book-field1">
@@ -161,6 +209,7 @@ function AddBook() {
             type="number"
             placeholder="Weight in grams(if possible)"
             onChange={(e) => setWeight(e.target.value)}
+            value={Weight}
           />
         </div>
         <div className="add-book-field1">
@@ -171,6 +220,7 @@ function AddBook() {
             type="number"
             placeholder="Book Edition (Year)"
             onChange={(e) => setEdition(e.target.value)}
+            value={Edition}
           />
         </div>
         <div className="add-book-field1">
@@ -181,6 +231,7 @@ function AddBook() {
             type="text"
             placeholder="Book Author"
             onChange={(e) => setAuthor(e.target.value)}
+            value={author}
           />
         </div>
         <div className="add-book-field1">
@@ -191,6 +242,7 @@ function AddBook() {
             type="number"
             placeholder="Quantity"
             onChange={(e) => setQnty(e.target.value)}
+            value={Qnty}
           />
         </div>
         <div className="add-book-field1">
@@ -233,6 +285,7 @@ function AddBook() {
             type="text"
             placeholder="Embed Youtube Video Link"
             onChange={(e) => setlink(e.target.value)}
+            value={link}
           />
         </div>
         <div className="add-book-field1" style={{display: "block"}}>
@@ -367,6 +420,23 @@ function AddBook() {
           </Button>
         </div>
       </form>
+      <div
+        className={classes.root}
+        style={{display: alert.show ? "flex" : "none"}}
+      >
+        <Alert
+          variant="outlined"
+          severity={alert.type}
+          style={{
+            fontFamily: "PT Sans",
+            fontWeight: "bold",
+            color: alert.type === "success" ? "yellowgreen" : "red",
+            width: "500px",
+          }}
+        >
+          {alert.msg}
+        </Alert>
+      </div>
     </div>
   );
 }
