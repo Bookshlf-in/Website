@@ -1,9 +1,5 @@
-import {RepeatOneSharp} from "@material-ui/icons";
 import {React, useState, useEffect} from "react";
-import {Link} from "react-router-dom";
 import axios from "../../axios";
-import {makeStyles} from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
 
 const Verified = {
   user: "verified-user",
@@ -28,24 +24,9 @@ const uploadform = {
   alignItems: "center",
   marginLeft: "20px",
   flexDirection: "column",
-  padding: "20px",
 };
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingTop: "20px",
-  },
-}));
 
 function AccountDetails() {
-  const classes = useStyles();
   // all seller profile details here
   const [Photo, setPhoto] = useState(null);
   const [Name, setName] = useState("");
@@ -116,7 +97,7 @@ function AccountDetails() {
             {sellerDetails.IsVerified ? Verified.tag : nonVerified.tag}
           </p>
         </div>
-        <p className="title"> {sellerDetails.Intro} </p>
+        <p className="title" style={{marginTop:"10px",}}> {sellerDetails.Intro} </p>
         <p className="seller-rating">
           Rating&nbsp;:&nbsp;
           {[...Array(parseInt(sellerDetails.Rating))].map(() => {
@@ -171,7 +152,7 @@ function AccountDetails() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "20px",
+              padding: "10px",
               flexDirection: "column",
             }}
           >
