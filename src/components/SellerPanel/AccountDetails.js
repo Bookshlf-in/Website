@@ -1,5 +1,8 @@
 import {React, useState, useEffect} from "react";
 import axios from "../../axios";
+import {storage} from "../../firebase";
+import firebase from "firebase";
+import {nanoid} from "nanoid";
 
 const Verified = {
   user: "verified-user",
@@ -28,19 +31,18 @@ const uploadform = {
 
 function AccountDetails() {
   // all seller profile details here
+  const [load, setload] = useState(0);
   const [Photo, setPhoto] = useState(null);
   const [Name, setName] = useState("");
   const [About, setAbout] = useState("");
   const [text, settext] = useState("Update");
 
-  const [Image, setImage] = useState(
-    "https://image.flaticon.com/icons/png/512/3135/3135715.png"
-  );
+  const [Image, setImage] = useState("images/user.svg");
   const [open, setopen] = useState(false);
   const [sellerDetails, setsellerDetails] = useState({
     Name: "",
     Intro: "",
-    Photo: "https://image.flaticon.com/icons/png/512/2922/2922510.png",
+    Photo: "",
     NoOfBooksSold: 0,
     Rating: 0,
     NoOfRatings: 0,
@@ -50,8 +52,6 @@ function AccountDetails() {
     CreatedAt: "",
     UpdatedAt: "",
   });
-
-  const [load, setload] = useState(0);
 
   useEffect(() => {
     axios
@@ -79,8 +79,10 @@ function AccountDetails() {
   }, [load]);
 
   const handelUpload = (e) => {
-    setPhoto(URL.createObjectURL(e.target.files[0]));
-    setImage(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files[0]) {
+      setPhoto(e.target.files[0]);
+      setImage(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   return (
@@ -97,7 +99,10 @@ function AccountDetails() {
             {sellerDetails.IsVerified ? Verified.tag : nonVerified.tag}
           </p>
         </div>
-        <p className="title" style={{marginTop:"10px",}}> {sellerDetails.Intro} </p>
+        <p className="title" style={{marginTop: "10px"}}>
+          {" "}
+          {sellerDetails.Intro}{" "}
+        </p>
         <p className="seller-rating">
           Rating&nbsp;:&nbsp;
           {[...Array(parseInt(sellerDetails.Rating))].map(() => {
@@ -198,26 +203,51 @@ function AccountDetails() {
               e.preventDefault();
               if (Name.length > 0 && About.length > 0) {
                 settext("Updating...");
-                axios
-                  .post("/updateSellerProfile", {
-                    name: Name,
-                    intro: About,
-                    photo: Photo,
-                  })
-                  .then((response) => {
-                    settext("Successfully Updated!");
-                    setTimeout(() => {
-                      settext("Update");
-                      setName("");
-                      setAbout("");
-                      setload(!load);
-                    }, 3000);
-                  })
-                  .catch((error) => {
-                    console.log(error.message.data);
-                  });
+                const imageName = nanoid() + Photo.name;
+                console.log(imageName);
+
+                // uploading profile photo to firebase server with unique name
+                const uploadTask = storage
+                  .ref(`profile/${imageName}`)
+                  .put(Photo);
+                uploadTask.on("state_changed", () => {
+                  storage
+                    .ref("profile")
+                    .child(imageName)
+                    .getDownloadURL()
+                    .then((imgURL) => {
+                      console.log(imgURL);
+                      axios
+                        .post("/updateSellerProfile", {
+                          name: Name,
+                          intro: About,
+                          photo: imgURL,
+                        })
+                        .then((response) => {
+                          settext("Successfully Updated!");
+                          setTimeout(() => {
+                            settext("Update");
+                            setName("");
+                            setAbout("");
+                            setload(!load);
+                          }, 3000);
+                        })
+                        .catch((error) => {
+                          console.log(error.message.data);
+                        });
+                    })
+                    .catch((error) => {
+                      settext("Failed Try Again!");
+                      setTimeout(() => {
+                        settext("Update");
+                        setName("");
+                        setAbout("");
+                        setload(!load);
+                      }, 3000);
+                    });
+                });
               } else {
-                settext("Name or About cannot be empty!");
+                settext("Name/About cannot be empty!");
                 setTimeout(() => {
                   settext("Update");
                 }, 3000);

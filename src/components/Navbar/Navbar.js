@@ -27,13 +27,20 @@ function Navbar() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (e) => {
+    if (e === "0") {
+      setAnchorEl(null);
+    }
     if (e === "1") {
+      setAnchorEl(null);
       history.push("/UserProfile");
     } else if (e === "2") {
+      setAnchorEl(null);
       history.push("/Cart");
     } else if (e === "3") {
+      setAnchorEl(null);
       history.push("/"); // wishlist to be added soon
     } else if (e === "4") {
+      setAnchorEl(null);
       history.push("/SellerPanel");
     } else if (e === "5") {
       setalert({
@@ -43,7 +50,7 @@ function Navbar() {
       });
       axios
         .post("/newsletterUnsubscribe", {
-          email: "rasal21872@ovooovo.com",
+          email: user.email,
         })
         .then(() => {
           setalert({
@@ -244,10 +251,19 @@ function Navbar() {
                       anchorEl={anchorEl}
                       keepMounted
                       open={Boolean(anchorEl)}
-                      onClick={() => {
-                        handleClose("0");
-                      }}
                     >
+                      <MenuItem
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                        onClick={() => {
+                          handleClose("0");
+                        }}
+                      >
+                        <i className="fas fa-times-circle" />
+                      </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
