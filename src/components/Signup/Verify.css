@@ -1,0 +1,122 @@
+.forgotmain-container {
+  width: 80vw;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  border-radius: 10px;
+}
+.forgot-container-main {
+  color: white;
+  font-size: 2em;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  animation: flicker 1.5s infinite alternate;
+}
+.forgot-container-email,
+.forgot-container-otp {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.forgot-container-email input {
+  height: 50px;
+  width: 400px;
+  font-size: 18px;
+  outline: none;
+  font-family: "PT sans", sans-serif;
+  letter-spacing: 1px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+  color: black;
+}
+.forgot-container-email span,
+.forgot-container-otp span {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: whitesmoke;
+  border: 1px solid white;
+  position: relative;
+}
+.forgot-container-otp #OTP {
+  height: 50px;
+  width: 200px;
+  outline: none;
+  font-family: "PT sans", sans-serif;
+  font-weight: 900;
+  background-color: rgba(255, 255, 255, 0.87);
+  border: none;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 20px;
+}
+.forgot-container-otp button {
+  background-color: rgb(2, 155, 2);
+  width: 200px;
+  height: 50px;
+  display: flex;
+  font-family: "PT sans", sans-serif;
+  letter-spacing: 1px;
+  justify-content: center;
+  align-items: center;
+  transition: 0s;
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+.forgot-container-otp button:hover {
+  background-color: rgb(8, 194, 8);
+}
+.forgot-container-verify {
+  margin: 10px;
+}
+.forgot-container-verify button {
+  font-family: "PT sans", sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  transition: 0s;
+  border-radius: 5px;
+  width: 200px;
+  height: 50px;
+  text-align: center;
+  background-color: #ff5100;
+  color: white;
+}
+.verification-container-login {
+  margin: 20px;
+}
+.verification-container-login button {
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  width: 200px;
+  height: 50px;
+  color: black;
+  font-family: "Staatliches", cursive;
+  background-image: linear-gradient(
+    to right,
+    rgb(213, 228, 6),
+    rgb(6, 226, 24)
+  );
+  opacity: 0.4;
+  outline: none;
+  cursor: pointer;
+}
+
+#send-otp-again-alert {
+  position: absolute;
+  float: right;
+  right: -200px;
+  top: 10px;
+}

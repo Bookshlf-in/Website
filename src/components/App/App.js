@@ -4,14 +4,13 @@ import "./App.css";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import Carousel from "../carousel/Carousel";
-import Categories from "../Categories/Categories";
-import BestSelling from "../BestSelling/BestSelling";
+import Carousel from "./Carousel";
+import Categories from "./Categories";
+import BestSelling from "./BestSelling";
 import Review from "../Reviews/Reviews";
 import Login from "../Login/Login";
+import ForgotPassword from "../Login/ForgotPassword";
 import UserSignup from "../Signup/UserSignup";
-import ForgotPassword from "../ForgotPassword/ForgotPassword";
-import Verify from "../VerifyAccount/Verify";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
@@ -20,10 +19,10 @@ import AddReviews from "../AddReviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
 import Track from "../UserProfile/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
-import SearchResult from "../SearchResult/SearchResult";
+import SearchResult from "../SearchResult/AllCategories";
 import BookDetails from "../BookDetails/BookDetails";
 
-// temporay routes
+// Protected Route
 import Protected from "../Protected";
 function App() {
   return (
@@ -32,9 +31,8 @@ function App() {
         <Switch>
           <Route path="/Protected" component={Protected} />
           <Route path="/Login" component={Login} />
-          <Route path="/UserSignup" component={UserSignup} />
+          <Route path="/Signup" component={UserSignup} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
-          <Route path="/Verify" component={Verify} />
           <Route path="/About">
             <Navbar />
             <About />
