@@ -4,6 +4,8 @@ import Alert from "@material-ui/lab/Alert";
 import axios from "../../axios";
 import {UserContext} from "../../Context/userContext";
 import {useHistory} from "react-router-dom";
+import {storage} from "../../firebase";
+import {nanoid} from "nanoid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,57 +33,71 @@ export default function SellerRegister() {
   const [err, seterr] = useState(false);
   const [msg, setmsg] = useState("");
   const [alert, setalert] = useState(false);
-  const [Image, setImage] = useState(
-    "https://image.flaticon.com/icons/png/512/3135/3135715.png"
-  );
+  const [Image, setImage] = useState("images/user.svg");
 
   const handelUpload = (e) => {
-    setPhoto(URL.createObjectURL(e.target.files[0]));
+    setPhoto(e.target.files[0]);
     setImage(URL.createObjectURL(e.target.files[0]));
   };
 
   const handelRegister = () => {
     setload(true);
-    console.log(user.roles);
-    axios
-      .post("/sellerRegister", {
-        name: Name,
-        intro: Intro,
-        photo: Photo,
-      })
-      .then((response) => {
-        setload(false);
-        seterr(false);
-        setmsg("Successfully registered as Seller!");
-        setalert(true);
-        user.roles.push("seller");
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
-            authHeader: user.authHeader,
-            roles: user.roles,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-        });
-        console.log(user.roles);
-        console.log(response.data);
-        setTimeout(() => {
-          history.push("/SellerPanel");
-        }, 2000);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(user);
-          setload(false);
-          seterr(true);
-          setmsg(`Registration Failed! ${error.response.data.error}`);
-          setalert(true);
-        }
-      });
+    const imageName = nanoid(10) + Photo.name;
+
+    // uploading profile photo to firebase server with unique name
+    const uploadTask = storage.ref(`profile/${imageName}`).put(Photo);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("profile")
+          .child(imageName)
+          .getDownloadURL()
+          .then((imgUrl) => {
+            axios
+              .post("/sellerRegister", {
+                name: Name,
+                intro: Intro,
+                photo: imgUrl,
+              })
+              .then((response) => {
+                setload(false);
+                seterr(false);
+                setmsg("Successfully registered as Seller!");
+                setalert(true);
+                user.roles.push("seller");
+                localStorage.setItem(
+                  "bookshlf_user",
+                  JSON.stringify({
+                    authHeader: user.authHeader,
+                    roles: user.roles,
+                  })
+                );
+                setUser({
+                  authHeader: user.authHeader,
+                  roles: user.roles,
+                });
+                setTimeout(() => {
+                  history.push("/SellerPanel");
+                }, 2000);
+              })
+              .catch((error) => {
+                if (error.response) {
+                  console.log(error.response.data);
+                  console.log(user);
+                  setload(false);
+                  seterr(true);
+                  setmsg(`Registration Failed! ${error.response.data.error}`);
+                  setalert(true);
+                }
+              });
+          });
+      }
+    );
   };
   return (
     <div>

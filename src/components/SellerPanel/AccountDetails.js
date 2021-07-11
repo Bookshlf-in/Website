@@ -1,7 +1,6 @@
 import {React, useState, useEffect} from "react";
 import axios from "../../axios";
 import {storage} from "../../firebase";
-import firebase from "firebase";
 import {nanoid} from "nanoid";
 
 const Verified = {
@@ -88,7 +87,15 @@ function AccountDetails() {
   return (
     <div style={style} id="seller-account-details">
       <div className="card">
-        <img src={sellerDetails.Photo} alt={sellerDetails.Name} width="200px" />
+        <img
+          src={
+            sellerDetails.Photo.search(".") !== -1
+              ? sellerDetails.Photo
+              : "images/user.svg"
+          }
+          alt={sellerDetails.Name}
+          width="200px"
+        />
         <h1>{sellerDetails.Name}</h1>
         <div className="verify-tag">
           <p
@@ -181,7 +188,6 @@ function AccountDetails() {
               placeholder="Name"
               onChange={(e) => setName(e.target.value)}
               value={Name}
-              // style={Red.name ? Errorstyle : {}}
             />
           </div>
           <div className="signup-name">
@@ -190,7 +196,6 @@ function AccountDetails() {
               placeholder="About"
               onChange={(e) => setAbout(e.target.value)}
               value={About}
-              // style={Red.name ? Errorstyle : {}}
             />
           </div>
           <button
@@ -203,49 +208,50 @@ function AccountDetails() {
               e.preventDefault();
               if (Name.length > 0 && About.length > 0) {
                 settext("Updating...");
-                const imageName = nanoid() + Photo.name;
-                console.log(imageName);
+                const imageName = nanoid(10) + Photo.name;
 
                 // uploading profile photo to firebase server with unique name
                 const uploadTask = storage
                   .ref(`profile/${imageName}`)
                   .put(Photo);
-                uploadTask.on("state_changed", () => {
-                  storage
-                    .ref("profile")
-                    .child(imageName)
-                    .getDownloadURL()
-                    .then((imgURL) => {
-                      console.log(imgURL);
-                      axios
-                        .post("/updateSellerProfile", {
-                          name: Name,
-                          intro: About,
-                          photo: imgURL,
-                        })
-                        .then((response) => {
-                          settext("Successfully Updated!");
-                          setTimeout(() => {
-                            settext("Update");
-                            setName("");
-                            setAbout("");
-                            setload(!load);
-                          }, 3000);
-                        })
-                        .catch((error) => {
-                          console.log(error.message.data);
-                        });
-                    })
-                    .catch((error) => {
-                      settext("Failed Try Again!");
-                      setTimeout(() => {
-                        settext("Update");
-                        setName("");
-                        setAbout("");
-                        setload(!load);
-                      }, 3000);
-                    });
-                });
+                uploadTask.on(
+                  "state_changed",
+                  (snapshot) => {},
+                  (error) => {
+                    console.log(error);
+                  },
+                  () => {
+                    storage
+                      .ref("profile")
+                      .child(imageName)
+                      .getDownloadURL()
+                      .then((imgUrl) => {
+                        // console.log("imgURL: " + imgUrl);
+                        axios
+                          .post("/updateSellerProfile", {
+                            name: Name,
+                            intro: About,
+                            photo: imgUrl,
+                          })
+                          .then((response) => {
+                            settext("Successfully Updated!");
+                            setTimeout(() => {
+                              settext("Update");
+                              setName("");
+                              setAbout("");
+                              setload(!load);
+                              setopen(!open);
+                            }, 3000);
+                          })
+                          .catch((error) => {
+                            console.log(error.message.data);
+                          });
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
+                  }
+                );
               } else {
                 settext("Name/About cannot be empty!");
                 setTimeout(() => {
