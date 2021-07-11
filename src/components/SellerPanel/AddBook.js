@@ -35,7 +35,7 @@ function AddBook() {
   const [tags, setTags] = useState([]);
   const [tag, settag] = useState("");
   const [link, setlink] = useState("");
-
+  const [lang, setlang] = useState("English");
   const [checked, setChecked] = useState(false);
   const [Photo, setPhoto] = useState(null);
   const [Image, setImage] = useState(null);
@@ -87,6 +87,7 @@ function AddBook() {
         editionYear: Number(Edition),
         author: author,
         ISBN: bookISBN,
+        language: lang,
         pickupAddressId: pickupId,
         description: bookDesc,
         photos: Photo,
@@ -243,6 +244,17 @@ function AddBook() {
             placeholder="Quantity"
             onChange={(e) => setQnty(e.target.value)}
             value={Qnty}
+          />
+        </div>
+        <div className="add-book-field1">
+          <span>
+            <i className="fas fa-language" />
+          </span>
+          <input
+            type="text"
+            placeholder="Language"
+            onChange={(e) => setlang(e.target.value)}
+            value={lang}
           />
         </div>
         <div className="add-book-field1">
