@@ -17,13 +17,66 @@ function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
   const [Logged, setLogged] = useState(user ? true : false);
+  const [alert, setalert] = useState({
+    show: false,
+    msg: "Unsubscribe",
+    color: "black",
+  });
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };  
+  const handleClose = (e) => {
+    if (e === "1") {
+      history.push("/UserProfile");
+    } else if (e === "2") {
+      history.push("/Cart");
+    } else if (e === "3") {
+      history.push("/"); // wishlist to be added soon
+    } else if (e === "4") {
+      history.push("/SellerPanel");
+    } else if (e === "5") {
+      setalert({
+        show: true,
+        msg: "Unsubscribing...",
+        color: "blue",
+      });
+      axios
+        .post("/newsletterUnsubscribe", {
+          email: "rasal21872@ovooovo.com",
+        })
+        .then(() => {
+          setalert({
+            show: false,
+            msg: "Unsubscribed!",
+            color: "green",
+          });
+          setTimeout(() => {
+            setalert({
+              show: false,
+              msg: "Unsubscribe",
+              color: "black",
+            });
+            setAnchorEl(null);
+          }, 5000);
+        })
+        .catch(() => {
+          setalert({
+            show: false,
+            msg: "Error Not Subscribed!",
+            color: "red",
+          });
+          setTimeout(() => {
+            setalert({
+              show: false,
+              msg: "Unsubscribe",
+              color: "black",
+            });
+            setAnchorEl(null);
+          }, 5000);
+        });
+    }
+  };
   const logout = () => {
     setLogged(false);
     axios
@@ -34,7 +87,7 @@ function Navbar() {
         console.log("Signed Out");
         setUser(null);
         setAnchorEl(null);
-        history.push('/');
+        history.push("/");
       })
       .catch((error) => {
         console.log("Logout error", error);
@@ -191,31 +244,60 @@ function Navbar() {
                       anchorEl={anchorEl}
                       keepMounted
                       open={Boolean(anchorEl)}
-                      onClose={handleClose}
+                      onClick={() => {
+                        handleClose("0");
+                      }}
                     >
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("1");
+                        }}
                       >
                         Profile
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("2");
+                        }}
                       >
-                        My Orders
+                        Cart
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("3");
+                        }}
                       >
                         Wishlist
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("4");
+                        }}
                       >
                         Sell Books
+                      </MenuItem>
+                      <MenuItem
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                          color: alert.color,
+                        }}
+                        onClick={() => {
+                          handleClose("5");
+                        }}
+                      >
+                        {alert.msg}&nbsp;
+                        <i
+                          className="fas fa-circle-notch"
+                          style={{
+                            display: alert.show ? "inline-block" : "none",
+                            animation: "spin 2s linear infinite",
+                          }}
+                        />
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
