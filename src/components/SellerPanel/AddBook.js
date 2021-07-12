@@ -45,7 +45,7 @@ function AddBook() {
   const [Adr, setAdr] = useState(null);
   const [alert, setalert] = useState({
     show: false,
-    type: "",
+    type: "success",
     msg: "",
   });
 

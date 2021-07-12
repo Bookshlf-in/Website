@@ -222,7 +222,9 @@ function Orders() {
                   ))}
                 </>
               ) : (
-                <></>
+                <tr>
+                  <td>loading...</td>
+                </tr>
               )}
             </tbody>
           </table>
