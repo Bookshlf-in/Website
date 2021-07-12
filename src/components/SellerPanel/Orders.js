@@ -22,7 +22,7 @@ function Orders() {
   const [panel, setpanel] = useState("1");
   const [alert, setalert] = useState({
     show: false,
-    type: "",
+    type: "success",
     message: "",
   });
   const [Adr, setAdr] = useState(null);
@@ -37,17 +37,13 @@ function Orders() {
       .get("/getAddressList")
       .then((addresses) => {
         setAdr(addresses.data);
-        console.log(addresses.data);
         axios
           .get("/getBookList")
           .then((response) => {
             setbookDetails(response.data);
-            console.log(response.data);
             bookSorting(response.data, addresses.data);
           })
-          .catch((error) => {
-            console.log(error.response.data);
-          });
+          .catch(() => {});
       })
       .catch((error) => {
         console.log(error);
@@ -81,7 +77,6 @@ function Orders() {
 
   // deleting books
   const handelBookDelete = (e) => {
-    console.log(e.target.id);
     axios
       .delete("/deleteBook", {
         data: {bookId: e.target.id},
@@ -138,62 +133,70 @@ function Orders() {
       <div className="orders-details">
         {panel === "1" ? (
           <table>
-            <tr>
-              <th>Order ID</th>
-              <th>Book ID</th>
-              <th>Dated</th>
-              <th>Details</th>
-              <th>Order Price</th>
-              <th>Buyer</th>
-              <th>Payment Recieved</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Book ID</th>
+                <th>Dated</th>
+                <th>Details</th>
+                <th>Order Price</th>
+                <th>Buyer</th>
+                <th>Payment Recieved</th>
+              </tr>
+            </thead>
           </table>
         ) : panel === "2" ? (
           <table>
-            <tr>
-              <th>Book ID</th>
-              <th>Book Name</th>
-              <th>ISBN Number</th>
-              <th>Details</th>
-              <th>Selling Price</th>
-              <th>Quantity</th>
-              <th>Remove</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>ISBN Number</th>
+                <th>Details</th>
+                <th>Selling Price</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
           </table>
         ) : (
           <table>
-            <tr>
-              <th>Book ID</th>
-              <th>Name</th>
-              <th>Details</th>
-              <th>Price</th>
-              <th>Pickup Address</th>
-              <th>Status</th>
-              <th>Remove</th>
-            </tr>
-            {notsold.length > 0 ? (
-              <>
-                {notsold.map((book) => (
-                  <tr>
-                    <th>{book._id}</th>
-                    <th>{book.title}</th>
-                    <th>{book.description}</th>
-                    <th>{book.price}/-</th>
-                    <th>{book.addressVal}</th>
-                    <th style={{color: "red"}}>APPROVAL PENDING</th>
-                    <th>
-                      <i
-                        className="fas fa-window-close"
-                        id={book._id}
-                        onClick={handelBookDelete}
-                      />
-                    </th>
-                  </tr>
-                ))}
-              </>
-            ) : (
-              <></>
-            )}
+            <thead>
+              <tr>
+                <th>Book ID</th>
+                <th>Name</th>
+                <th>Details</th>
+                <th>Price</th>
+                <th>Pickup Address</th>
+                <th>Status</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              {notsold.length > 0 ? (
+                <>
+                  {notsold.map((book) => (
+                    <tr>
+                      <th>{book._id}</th>
+                      <th>{book.title}</th>
+                      <th>{book.description}</th>
+                      <th>{book.price}/-</th>
+                      <th>{book.addressVal}</th>
+                      <th style={{color: "red"}}>APPROVAL PENDING</th>
+                      <th>
+                        <i
+                          className="fas fa-window-close"
+                          id={book._id}
+                          onClick={handelBookDelete}
+                        />
+                      </th>
+                    </tr>
+                  ))}
+                </>
+              ) : (
+                <></>
+              )}
+            </tbody>
           </table>
         )}
       </div>

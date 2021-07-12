@@ -108,11 +108,9 @@ function Navbar() {
           <i className="fas fa-bars"></i>
         </span>
         <SideNav />
-
-        {/* navbar logo */}
         <div className="navbar-logo">
           <img
-            src="./images/logo[800x150].png"
+            src="./images/logo.png"
             alt="Bookshlf"
             height="40px"
             width="210px"
@@ -121,7 +119,6 @@ function Navbar() {
             }}
           />
         </div>
-        {/* navbar items */}
         <div className="navbar-items">
           <ul>
             <Link to="/">
@@ -138,41 +135,31 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
-                    <button className="dropbtn">
-                      Categories&nbsp;
-                      <i className="fas fa-caret-down" />
-                    </button>
-                    <div className="dropdown-content">
-                      <Link to="">JEE Mains</Link>
-                      <Link to="">JEE Advanced</Link>
-                      <Link to="">NEET</Link>
-                    </div>
+                    <button className="dropbtn">All Categories</button>
                   </div>
                 </div>
               </li>
             </Link>
-            <Link to="/">
-              <li>
-                <div className="navbar-items-chip">
-                  <div className="dropdown">
-                    <button className="dropbtn">
-                      Other&nbsp;
-                      <i className="fas fa-caret-down" />
-                    </button>
-                    <div className="dropdown-content">
-                      <Link to="/Contact">Contact Us</Link>
-                      <Link to="">Sell Old Books</Link>
-                      <Link to="">Blog</Link>
-                    </div>
+            <li>
+              <div className="navbar-items-chip">
+                <div className="dropdown">
+                  <button className="dropbtn">
+                    Other&nbsp;
+                    <i className="fas fa-caret-down" />
+                  </button>
+                  <div className="dropdown-content">
+                    <Link to="/Contact">Contact Us</Link>
+                    <Link to="/SellerPanel">Sell Old Books</Link>
+                    <Link to="/">Blog</Link>
                   </div>
                 </div>
-              </li>
-            </Link>
+              </div>
+            </li>
             <Link to="/SellerPanel">
               <li>
                 <div className="navbar-items-chip">
                   <p>
-                    <i class="fas fa-book" />
+                    <i className="fas fa-book" />
                     &nbsp;Sell Your Books
                   </p>
                 </div>
