@@ -3,8 +3,10 @@ import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import "./Slider-animations.css";
 import "./Carousel.css";
+import {useHistory} from "react-router-dom";
 
 function Carousel() {
+  const history = useHistory();
   const content = [
     {
       title: "Your Online bOOk Store",
@@ -41,7 +43,13 @@ function Carousel() {
               <div className="inner">
                 <h1>{item.title}</h1>
                 <p>{item.description}</p>
-                <button>{item.button}</button>
+                <button onClick={() =>{
+                  if(item.button === "Sell Now"){
+                    history.push("/SellerPanel");
+                  }else{
+                    history.push("/SearchResult")
+                  }
+                }}>{item.button}</button>
               </div>
             </div>
           ))}
