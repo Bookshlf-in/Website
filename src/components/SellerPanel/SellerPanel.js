@@ -11,7 +11,7 @@ import {Link, useHistory} from "react-router-dom";
 
 function SellerPanel() {
   // context states
-  const [user, setUser] = useContext(UserContext);
+  const [user,] = useContext(UserContext);
   const history = useHistory();
 
   // component states
@@ -56,7 +56,7 @@ function SellerPanel() {
               <div className="panel-nav-bg">
                 <div className="panel-item" onClick={() => setPanel(1)}>
                   <span>
-                    <i class="fas fa-user" />
+                    <i className="fas fa-user" />
                   </span>
                   <p>PROFILE</p>
                 </div>
@@ -68,27 +68,27 @@ function SellerPanel() {
                   }}
                 >
                   <span>
-                    <i class="fas fa-clipboard-list" />
+                    <i className="fas fa-clipboard-list" />
                   </span>
                   <p>ORDERS</p>
                 </div>
                 <div className="panel-item" onClick={() => setPanel(3)}>
                   <span>
-                    <i class="fas fa-map-marker" />
+                    <i className="fas fa-map-marker" />
                   </span>
                   <p>ADDRESS</p>
                 </div>
                 <div className="panel-item" onClick={() => setPanel(4)}>
                   <span>
-                    <i class="far fa-comments" />
+                    <i className="far fa-comments" />
                   </span>
                   <p>REVIEWS</p>
                 </div>
                 <div className="panel-item" onClick={() => setPanel(5)}>
                   <span>
-                    <i class="fas fa-book" />
+                    <i className="fas fa-book" />
                     &nbsp;
-                    <i class="fas fa-plus" />
+                    <i className="fas fa-plus" />
                   </span>
                   <p> ADD NEW BOOK</p>
                 </div>

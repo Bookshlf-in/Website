@@ -6,6 +6,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Icon from "@material-ui/core/Icon";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
+import {storage} from "../../firebase";
+import {nanoid} from "nanoid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +37,7 @@ function AddBook() {
   const [tags, setTags] = useState([]);
   const [tag, settag] = useState("");
   const [link, setlink] = useState("");
-
+  const [lang, setlang] = useState("English");
   const [checked, setChecked] = useState(false);
   const [Photo, setPhoto] = useState(null);
   const [Image, setImage] = useState(null);
@@ -59,11 +61,8 @@ function AddBook() {
             : 0;
         });
         setAdr(response.data);
-        // console.log(response.data);
       })
-      .catch((error) => {
-        // console.log(error);
-      });
+      .catch((error) => {});
   }, []);
 
   const handelUpload = (e) => {
@@ -74,48 +73,6 @@ function AddBook() {
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
-  };
-
-  // book adding
-  const handelBookAdd = () => {
-    setload(true);
-    axios
-      .post("/addBook", {
-        title: bookName,
-        MRP: Number(MRP),
-        price: Number(SP),
-        editionYear: Number(Edition),
-        author: author,
-        ISBN: bookISBN,
-        pickupAddressId: pickupId,
-        description: bookDesc,
-        photos: Photo,
-        weightInGrams: Number(Weight),
-        embedVideo: link,
-        tags: tags,
-        qty: Number(Qnty),
-      })
-      .then((response) => {
-        console.log(response.data);
-        setload(false);
-        setalert({
-          show: true,
-          type: "success",
-          msg: response.data.msg,
-        });
-        setTimeout(() => {
-          Initialize();
-        }, 5000);
-      })
-      .catch((error) => {
-        console.log(error.response.data.errors[0].error);
-        setload(false);
-        setalert({
-          show: true,
-          type: "error",
-          msg: error.response.data.errors[0].error + " Please Try Again!",
-        });
-      });
   };
 
   const Initialize = () => {
@@ -132,7 +89,6 @@ function AddBook() {
     setTags([]);
     settag("");
     setlink("");
-
     setChecked(false);
     setPhoto(null);
     setImage(null);
@@ -143,8 +99,88 @@ function AddBook() {
       msg: "",
     });
   };
+
   const handleDelete = (e) => {
     setTags(tags.filter((tag) => e.target.innerHTML !== tag));
+  };
+
+  const handeluploadImages = () => {
+    setload(true);
+    return new Promise((result) => {
+      const imgURL = [];
+      const imageName = [];
+      for (let i = 0; i < Photo.length; i++) {
+        imageName[i] = nanoid(10) + Photo[i].name;
+        const uploadTask = storage.ref(`books/${imageName[i]}`).put(Photo[i]);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {},
+          () => {
+            storage
+              .ref("books")
+              .child(imageName[i])
+              .getDownloadURL()
+              .then((imgUrl) => {
+                imgURL.push(imgUrl);
+                if (imgURL.length === Photo.length) {
+                  result(imgURL);
+                }
+              });
+          }
+        );
+      }
+    });
+  };
+
+  const PushDetails = (imglinks) => {
+    return new Promise(() => {
+      setTimeout(() => {
+        axios
+          .post("/addBook", {
+            title: bookName,
+            MRP: Number(MRP),
+            price: Number(SP),
+            editionYear: Number(Edition),
+            author: author,
+            ISBN: bookISBN,
+            language: lang,
+            pickupAddressId: pickupId,
+            description: bookDesc,
+            photos: imglinks,
+            weightInGrams: Number(Weight),
+            embedVideo: link,
+            tags: tags,
+            qty: Number(Qnty),
+          })
+          .then((response) => {
+            console.log(response.data);
+            setload(false);
+            setalert({
+              show: true,
+              type: "success",
+              msg: response.data.msg,
+            });
+            setTimeout(() => {
+              Initialize();
+            }, 5000);
+          })
+          .catch((error) => {
+            console.log(error.response.data.errors[0].error);
+            setload(false);
+            setalert({
+              show: true,
+              type: "error",
+              msg: error.response.data.errors[0].error + " Please Try Again!",
+            });
+          });
+      }, 2000);
+    });
+  };
+
+  const handelBookAdd = async () => {
+    const imglinks = await handeluploadImages();
+    await PushDetails(imglinks);
   };
 
   return (
@@ -243,6 +279,17 @@ function AddBook() {
             placeholder="Quantity"
             onChange={(e) => setQnty(e.target.value)}
             value={Qnty}
+          />
+        </div>
+        <div className="add-book-field1">
+          <span>
+            <i className="fas fa-language" />
+          </span>
+          <input
+            type="text"
+            placeholder="Language"
+            onChange={(e) => setlang(e.target.value)}
+            value={lang}
           />
         </div>
         <div className="add-book-field1">
@@ -419,24 +466,24 @@ function AddBook() {
             &nbsp;Submit For Review
           </Button>
         </div>
-      </form>
-      <div
-        className={classes.root}
-        style={{display: alert.show ? "flex" : "none"}}
-      >
-        <Alert
-          variant="outlined"
-          severity={alert.type}
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-            color: alert.type === "success" ? "yellowgreen" : "red",
-            width: "500px",
-          }}
+        <div
+          className={classes.root}
+          style={{display: alert.show ? "flex" : "none"}}
         >
-          {alert.msg}
-        </Alert>
-      </div>
+          <Alert
+            variant="outlined"
+            severity={alert.type}
+            style={{
+              fontFamily: "PT Sans",
+              fontWeight: "bold",
+              color: alert.type === "success" ? "yellowgreen" : "red",
+              width: "500px",
+            }}
+          >
+            {alert.msg}
+          </Alert>
+        </div>
+      </form>
     </div>
   );
 }

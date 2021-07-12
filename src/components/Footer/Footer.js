@@ -38,14 +38,14 @@ function Footer() {
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState("success");
   const [alert, setAlert] = useState(messages.Success);
-  const [loading, setLoading] = useState("none");
+  const [loading, setLoading] = useState(false);
 
   // Handeling subscription
   const handelSubscription = () => {
     // console.log(Email);
     if (Email !== null) {
       if ((Email.length > 5) & Email.includes("@") & Email.includes(".")) {
-        setLoading("block");
+        setLoading(true);
         axios
           .post("/newsletterSubscribe", {
             email: Email,
@@ -60,7 +60,7 @@ function Footer() {
               setSeverity("warning");
               setAlert(messages.Warning);
             }
-            setLoading("none");
+            setLoading(false);
           })
           .catch(function (error) {
             //   Bad Request or Already subscribed
@@ -75,7 +75,7 @@ function Footer() {
               setSeverity("warning");
               setAlert(messages.Warning);
             }
-            setLoading("none");
+            setLoading(false);
           });
       } else {
         // Invalid Email
@@ -129,7 +129,14 @@ function Footer() {
                 onClick={handelSubscription}
                 value="Subscribe"
               />
-              <div id="loading" style={{display: loading}}></div>
+              &nbsp;
+              <i
+                className="fas fa-circle-notch"
+                style={{
+                  display: loading ? "inline-block" : "none",
+                  animation: "spin 0.5s linear infinite",
+                }}
+              />
             </div>
           </form>
           {/* !!! do not change !!! */}

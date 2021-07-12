@@ -93,11 +93,13 @@ function Login() {
             JSON.stringify({
               authHeader: `Bearer ${response.data.token}`,
               roles: response.data.roles,
+              email : Name,
             })
           );
           setUser({
             authHeader: `Bearer ${response.data.token}`,
             roles: response.data.roles,
+            email : Name,
           });
           setadminRole(response.data.roles.includes("admin"));
           setsellerRole(response.data.roles.includes("seller"));
