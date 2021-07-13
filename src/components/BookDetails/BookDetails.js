@@ -14,7 +14,7 @@ const BookDetails = (props) => {
   const [loader, setloader] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const url = `/getBookDetails?bookId=${bookId}`;
       axios.get(url).then((response) => {
         setbook(response.data);
@@ -70,15 +70,6 @@ const BookDetails = (props) => {
             </div>
             <div className="recommened-tags">
               <h3>Recommended Tags</h3>
-              <Link to="" className="tag">
-                Physcis
-              </Link>
-              <Link to="" className="tag">
-                JEE Advanced
-              </Link>
-              <Link to="" className="tag">
-                Best Seller
-              </Link>
             </div>
           </div>
         </div>

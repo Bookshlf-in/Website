@@ -62,9 +62,17 @@ function BookDesc(props) {
         <p>{props.bookdetails.description}</p>
       </div>
       <div className="book-tags">
-        <span className="tag">Tag1</span>
-        <span className="tag">Tag2</span>
-        <span className="tag">Tag3</span>
+        {props.bookdetails.tags && props.bookdetails.tags.length > 0 ? (
+          <>
+            {props.bookdetails.tags.map((tagname) => (
+              <span className="tag" key={tagname}>
+                {tagname}
+              </span>
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="book-seller">
         <div className="book-seller-name">

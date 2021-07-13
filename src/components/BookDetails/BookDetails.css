@@ -180,7 +180,7 @@
   align-items: center;
   flex-wrap: wrap;
 }
-.book-tags a {
+.book-tags {
   margin: 10px;
   font: 12px/1.5 "PT Sans", serif;
 }
