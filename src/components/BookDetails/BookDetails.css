@@ -1,9 +1,9 @@
 .book-details-bg {
   color: whitesmoke;
+  display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
-  display: flex;
 }
 .book-main-container {
   display: flex;
@@ -38,6 +38,13 @@
   margin-left: 10px;
   height: 500px;
   width: 400px;
+}
+#video-snap-full {
+  display: none;
+  height: 100%;
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 .book-description {
   /* border: 1px solid rgba(0, 0, 0, 0.5); */
@@ -173,7 +180,7 @@
   align-items: center;
   flex-wrap: wrap;
 }
-.book-tags a {
+.book-tags {
   margin: 10px;
   font: 12px/1.5 "PT Sans", serif;
 }
