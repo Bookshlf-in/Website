@@ -63,14 +63,14 @@ function SellerPanel() {
                 <div
                   className="panel-item"
                   onClick={() => {
-                    console.log(user);
+                    // console.log(user);
                     setPanel(2);
                   }}
                 >
                   <span>
                     <i className="fas fa-clipboard-list" />
                   </span>
-                  <p>ORDERS</p>
+                  <p>YOUR BOOKS</p>
                 </div>
                 <div className="panel-item" onClick={() => setPanel(3)}>
                   <span>

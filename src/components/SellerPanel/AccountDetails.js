@@ -36,7 +36,7 @@ function AccountDetails() {
   const [About, setAbout] = useState("");
   const [text, settext] = useState("Update");
 
-  const [Image, setImage] = useState("images/user.svg");
+  const [Image, setImage] = useState("/images/user.svg");
   const [open, setopen] = useState(false);
   const [sellerDetails, setsellerDetails] = useState({
     Name: "",
@@ -89,7 +89,7 @@ function AccountDetails() {
       <div className="card">
         <img
           src={
-            sellerDetails.Photo.search(".") !== -1
+            sellerDetails.Photo && sellerDetails.Photo.search(".") !== -1
               ? sellerDetails.Photo
               : "images/user.svg"
           }

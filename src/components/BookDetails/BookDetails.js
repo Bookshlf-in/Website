@@ -1,11 +1,14 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import "./BookDetails.css";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
 import BookDesc from "./BookDesc";
 
-function BookDetails() {
+const BookDetails = () => {
+  const params = useParams();
+  const bookId = params.bookId;
+  console.log(bookId);
   return (
     <div className="book-details-bg">
       <div className="book-main-container">
@@ -16,19 +19,19 @@ function BookDetails() {
       <div className="book-purchase-container">
         <div className="wish-list">
           <span>
-            <i class="far fa-heart"></i>
+            <i className="far fa-heart"></i>
           </span>
           <input type="submit" value="Add to Wish List" />
         </div>
         <div className="add-to-cart">
           <span>
-            <i class="fas fa-cart-arrow-down" />
+            <i className="fas fa-cart-arrow-down" />
           </span>
           <input type="submit" value="Add to Cart" />
         </div>
         <div className="buy-now-button">
           <span>
-            <i class="fas fa-shopping-basket" />
+            <i className="fas fa-shopping-basket" />
           </span>
           <input type="submit" value="Buy Now" />
         </div>
@@ -47,5 +50,5 @@ function BookDetails() {
       </div>
     </div>
   );
-}
+};
 export default BookDetails;

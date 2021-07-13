@@ -167,7 +167,7 @@
   padding-top: 20px;
 }
 .book-tags {
-  padding: 20px;
+  padding: 10px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -193,6 +193,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 12px;
+  font-family: "PT sans";
 }
 
 .tag::before {
