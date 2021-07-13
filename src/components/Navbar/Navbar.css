@@ -2,7 +2,7 @@
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1005;
 }
 .navbar-container {
   background: linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%);
@@ -117,7 +117,7 @@
 .navbar-items-chip .dropdown {
   float: left;
   overflow: hidden;
-  z-index: 100;
+  z-index: 1005;
 }
 
 .navbar-items-chip .dropdown .dropbtn {
