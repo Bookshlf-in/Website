@@ -110,7 +110,7 @@ function Navbar() {
         <SideNav />
         <div className="navbar-logo">
           <img
-            src="./images/logo.png"
+            src="/images/logo.png"
             alt="Bookshlf"
             height="40px"
             width="210px"
@@ -186,7 +186,7 @@ function Navbar() {
                   <Link to="/SearchResult">
                     <div className="navbar-searchbox-submit">
                       <img
-                        src="./images/loupe.svg"
+                        src="/images/loupe.svg"
                         alt="search"
                         height="20px"
                         width="20px"
@@ -227,7 +227,7 @@ function Navbar() {
                       onClick={handleClick}
                     >
                       <img
-                        src="./images/user.svg"
+                        src="/images/user.svg"
                         alt="My Account"
                         height="30px"
                         width="30px"

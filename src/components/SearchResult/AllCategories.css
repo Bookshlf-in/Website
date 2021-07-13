@@ -7,6 +7,10 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 90px;
+  z-index: 1000;
 }
 
 .AllCategories-input {
@@ -34,23 +38,16 @@
   transition: 0s;
 }
 
-.AllCategories-cont ul {
-  background-color: black;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.AllCategories-cont ul li {
-  margin: 20px;
-}
-
 .filter-result {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 150px;
+  z-index: 1000;
+  background-color: black;
 }
 
 .filter {
@@ -58,7 +55,7 @@
 }
 
 .filter .select {
-  padding: 10px 20px;
+  padding: 10px;
   background: white;
   border-radius: 10px 10px 0px 0px;
   cursor: pointer;
@@ -67,8 +64,8 @@
   font-family: "PT sans", sans-serif;
   font-weight: bold;
   letter-spacing: 1px;
+  font-size: 12px;
   border: 1px solid rgb(117, 116, 116);
-  text-align: center;
 }
 
 .filter .select:hover {
@@ -90,4 +87,33 @@
   letter-spacing: 2px;
   border-radius: 50px;
   cursor: pointer;
+}
+
+.book-more-details {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-family: "PT Sans";
+  font-weight: bold;
+  background-color: rgb(62, 62, 238);
+  color: white;
+}
+.book-more-details a {
+  color: white;
+}
+.book-more-details:hover {
+  cursor: pointer;
+  background-color: rgb(4, 4, 158);
+  transition: 0.5s;
+}
+.far.fa-heart:hover {
+  color: rgb(255, 97, 97);
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.fas.fa-heart {
+  color: red;
+  font-weight: bolder;
+  transition: 0.2s;
 }

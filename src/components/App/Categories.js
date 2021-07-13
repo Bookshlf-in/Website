@@ -1,6 +1,6 @@
 import React from "react";
 import "./Categories.css";
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 function Categories() {
   return (
@@ -9,20 +9,23 @@ function Categories() {
         <div className="heading-wrapper">
           <h1 className="heading">Featured Categories</h1>
           <p className="heading-para">
-          <Link to='/'>All Categories&nbsp;<i className="fas fa-angle-right"/></Link>
-            </p>
+            <Link to="/SearchResult">
+              All Categories&nbsp;
+              <i className="fas fa-angle-right" />
+            </Link>
+          </p>
         </div>
         <div className="item-wrapper">
           <div className="item i1 ">
-              <img
-                src="/images/categories/jee_logo.png"
-                className="item-image"
-                alt=""
-              />
-              <h6 className="item-h6">JEE MAINS</h6>
-              <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+            <img
+              src="/images/categories/jee_logo.png"
+              className="item-image"
+              alt=""
+            />
+            <h6 className="item-h6">JEE MAINS</h6>
+            <p className="item-p">
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i2">
             <img
@@ -31,9 +34,9 @@ function Categories() {
               alt=""
             />
             <h6 className="item-h6">JEE ADVANCED</h6>
-              <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+            <p className="item-p">
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i3">
             <img
@@ -43,8 +46,8 @@ function Categories() {
             />
             <h6 className="item-h6">CBSE</h6>
             <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i4">
             <img
@@ -54,8 +57,8 @@ function Categories() {
             />
             <h6 className="item-h6">NEET UG</h6>
             <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i5">
             <img
@@ -65,8 +68,8 @@ function Categories() {
             />
             <h6 className="item-h6">NOVELS</h6>
             <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 
 // all book details that will be fetched and stored from api
@@ -15,7 +15,7 @@ var bookdetails = {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, explicabo aliquam. A maiores, dolorem ad provident pariatur quas odio impedit.",
 };
 
-function BookDesc() {
+function BookDesc(props) {
   return (
     <div className="book-description">
       <div className="book-fullname">
@@ -23,7 +23,7 @@ function BookDesc() {
       </div>
       <div className="book-subheading">
         <span className="book-isbn">
-          <i class="fas fa-atlas" />
+          <i className="fas fa-atlas" />
           &nbsp;ISBN&nbsp;:&nbsp;<b>{bookdetails.isbn}</b>
         </span>
         <span className="book-edition">
@@ -68,15 +68,9 @@ function BookDesc() {
         <p>{bookdetails.description}</p>
       </div>
       <div className="book-tags">
-        <Link to="" className="tag">
-          JEE Mains
-        </Link>
-        <Link to="" className="tag">
-          Maths
-        </Link>
-        <Link to="" className="tag">
-          Best Seller
-        </Link>
+        <span className="tag">Tag1</span>
+        <span className="tag">Tag2</span>
+        <span className="tag">Tag3</span>
       </div>
       <div className="book-seller">
         <div className="book-seller-name">

@@ -11,7 +11,7 @@ function Cart() {
         <div className="cart-item">
           <div className="cart-item-img">
             <img
-              src="./images/book-of-black-cover-closed.png"
+              src="/images/book-of-black-cover-closed.png"
               alt="book"
               height="150px"
               width="150px"
@@ -52,7 +52,7 @@ function Cart() {
         <div className="cart-item">
           <div className="cart-item-img">
             <img
-              src="./images/book-of-black-cover-closed.png"
+              src="/images/book-of-black-cover-closed.png"
               alt="book"
               height="150px"
               width="150px"
@@ -92,7 +92,7 @@ function Cart() {
         <div className="cart-item">
           <div className="cart-item-img">
             <img
-              src="./images/book-of-black-cover-closed.png"
+              src="/images/book-of-black-cover-closed.png"
               alt="book"
               height="150px"
               width="150px"

@@ -155,7 +155,7 @@ function Login() {
           <div className="login-container-left">
             <div className="login-container-left-logo">
               <img
-                src="./images/logoView[900x240].png"
+                src="/images/logoView.png"
                 height="50px"
                 alt="Bookshlf.in"
               />
