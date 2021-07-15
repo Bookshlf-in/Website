@@ -1,13 +1,10 @@
 import React from "react";
 import "./Reviews.css";
-import { FaStar } from "react-icons/fa";
+import {FaStar} from "react-icons/fa";
 
 function Reviews() {
   return (
-    <div className="container">
-      {/* <h3>Ratings</h3>
-            <h4>{props.rating}</h4>
-            <p>{props.desc}</p> */}
+    <div>
       <div className="reviews">
         <p className="reviewed_by">Reviews from happy readers</p>
 
@@ -19,8 +16,8 @@ function Reviews() {
         <div className="reviews_wrapper">
           <div className="reviews_item">
             <div className="ratings">
-              {[...Array(5)].map(() => {
-                return <FaStar size={20} color="#FDCC0D"/>;
+              {[...Array(5)].map((e, i) => {
+                return <FaStar size={20} color="#FDCC0D" key={i} />;
               })}
             </div>
 
@@ -31,81 +28,6 @@ function Reviews() {
               odio impedit.
             </p>
             <div className="Customerprofile"> lavda sur </div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map(() => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map(() => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map(() => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map(() => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map(() => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
           </div>
         </div>
       </div>

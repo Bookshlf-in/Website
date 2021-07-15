@@ -1,6 +1,6 @@
 import React from "react";
 import "./Categories.css";
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 function Categories() {
   return (
@@ -9,42 +9,45 @@ function Categories() {
         <div className="heading-wrapper">
           <h1 className="heading">Featured Categories</h1>
           <p className="heading-para">
-          <Link to='/'>All Categories&nbsp;<i className="fas fa-angle-right"/></Link>
-            </p>
+            <Link to="/SearchResult">
+              All Categories&nbsp;
+              <i className="fas fa-angle-right" />
+            </Link>
+          </p>
         </div>
         <div className="item-wrapper">
           <div className="item i1 ">
-              <img
-                src="/images/categories/art.png"
-                className="item-image"
-                alt=""
-              />
-              <h6 className="item-h6">Arts & Photography</h6>
-              <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+            <img
+              src="/images/categories/jee_logo.png"
+              className="item-image"
+              alt=""
+            />
+            <h6 className="item-h6">JEE MAINS</h6>
+            <p className="item-p">
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i2">
             <img
-              src="/images/categories/food.png"
+              src="/images/categories/jee adv.png"
               className="item-image"
               alt=""
             />
-            <h6 className="item-h6">Food & Drink</h6>
-              <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+            <h6 className="item-h6">JEE ADVANCED</h6>
+            <p className="item-p">
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i3">
             <img
-              src="/images/categories/romance.png"
+              src="/images/categories/cbse.png"
               className="item-image"
               alt=""
             />
-            <h6 className="item-h6">Romance</h6>
+            <h6 className="item-h6">CBSE</h6>
             <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i4">
             <img
@@ -52,10 +55,10 @@ function Categories() {
               className="item-image"
               alt=""
             />
-            <h6 className="item-h6">Health</h6>
+            <h6 className="item-h6">NEET UG</h6>
             <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
           <div className="item i5">
             <img
@@ -63,10 +66,10 @@ function Categories() {
               className="item-image"
               alt=""
             />
-            <h6 className="item-h6">Biography</h6>
+            <h6 className="item-h6">NOVELS</h6>
             <p className="item-p">
-              <Link to='/'>Shop Now</Link>
-              </p>
+              <Link to="/SearchResult">Shop Now</Link>
+            </p>
           </div>
         </div>
       </div>

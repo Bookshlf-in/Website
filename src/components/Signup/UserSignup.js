@@ -92,7 +92,7 @@ function UserSignup() {
             <Link to="/Login">Login</Link>
           </div>
           <div className="signup-logo">
-            <img src="./images/logo[800x150].png" alt="" height="50px" />
+            <img src="/images/logo.png" alt="" height="50px" />
           </div>
 
           <form className="signup-form">
@@ -242,3 +242,11 @@ function UserSignup() {
 }
 
 export default UserSignup;
+
+// const handleInputChange = event => {
+//   const { name, value } = event.target;
+//   setState(prevState => ({
+//     ...prevState,
+//     [name]: value
+//   }));
+// };

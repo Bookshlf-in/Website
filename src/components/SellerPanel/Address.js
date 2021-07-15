@@ -52,7 +52,7 @@ function Address() {
             : 0;
         });
         setAdr(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -191,7 +191,7 @@ function Address() {
       <form className="address-form">
         <fieldset>
           <legend>
-            <i class="fas fa-address-book" /> Add New Address :
+            <i className="fas fa-address-book" /> Add New Address :
           </legend>
           <div className="address-label">
             <select name="" id="" onChange={(e) => setLabel(e.target.value)}>
@@ -268,6 +268,7 @@ function Address() {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
             />
+            <label htmlFor="pincode">Pincode</label>
             <InputMask
               mask="999999"
               alwaysShowMask="true"

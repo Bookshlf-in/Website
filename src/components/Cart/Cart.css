@@ -154,3 +154,16 @@ td .fa-minus-square:hover {
     flex-direction: column;
   }
 }
+.wishlist-remove {
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 20px;
+  border-radius: 50px;
+}
+.wishlist-remove:hover {
+  background-color: #fff;
+}

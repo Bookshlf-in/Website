@@ -28,7 +28,7 @@ button {
   padding: 15px 40px;
   font-weight: 400;
   font-size: 13px;
-  cursor: cursor;
+  cursor: pointer;
 }
 
 button:hover {

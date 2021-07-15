@@ -93,11 +93,17 @@ function Login() {
             JSON.stringify({
               authHeader: `Bearer ${response.data.token}`,
               roles: response.data.roles,
+              email: Name,
+              cartitems: 0,
+              wishlist: 0,
             })
           );
           setUser({
             authHeader: `Bearer ${response.data.token}`,
             roles: response.data.roles,
+            email: Name,
+            cartitems: 0,
+            wishlist: 0,
           });
           setadminRole(response.data.roles.includes("admin"));
           setsellerRole(response.data.roles.includes("seller"));
@@ -152,11 +158,7 @@ function Login() {
           {/* Left container in login container starts */}
           <div className="login-container-left">
             <div className="login-container-left-logo">
-              <img
-                src="./images/logoView[900x240].png"
-                height="50px"
-                alt="Bookshlf.in"
-              />
+              <img src="/images/logoView.png" height="50px" alt="Bookshlf.in" />
             </div>
             <div className="login-container-left-main">
               <h2> Login </h2>

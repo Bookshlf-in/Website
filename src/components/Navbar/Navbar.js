@@ -1,4 +1,4 @@
-import {React, useState, useContext} from "react";
+import {React, useState, useContext, useEffect} from "react";
 import "./Navbar.css";
 import {Link, useHistory} from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -17,13 +17,114 @@ function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
   const [Logged, setLogged] = useState(user ? true : false);
+  const [alert, setalert] = useState({
+    show: false,
+    msg: "Unsubscribe",
+    color: "black",
+  });
+  const [wishlist, setwishlist] = useState(0);
+  const [cartitems, setcartitems] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get("/getWishlist")
+      .then((response) => {
+        // console.log(response.data.length);
+        setwishlist(response.data.length);
+        console.log(response.data.length);
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems,
+            wishlist: response.data.length,
+          })
+        );
+        setUser({
+          authHeader: user.authHeader,
+          roles: user.roles,
+          email: user.email,
+          cartitems: user.cartitems,
+          wishlist: response.data.length,
+        });
+        console.log(user);
+      })
+      .catch((error) => {
+        setwishlist(0);
+      });
+    axios
+      .get("/getCartList")
+      .then((response) => {
+        setcartitems(response.data.length);
+      })
+      .catch((error) => {
+        setcartitems(0);
+      });
+  }, [user ? user.wishlist : wishlist, user ? user.cartitems : cartitems]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };  
+  const handleClose = (e) => {
+    if (e === "0") {
+      setAnchorEl(null);
+    }
+    if (e === "1") {
+      setAnchorEl(null);
+      history.push("/UserProfile");
+    } else if (e === "2") {
+      setAnchorEl(null);
+      history.push("/Cart");
+    } else if (e === "3") {
+      setAnchorEl(null);
+      history.push("/"); // wishlist to be added soon
+    } else if (e === "4") {
+      setAnchorEl(null);
+      history.push("/SellerPanel");
+    } else if (e === "5") {
+      setalert({
+        show: true,
+        msg: "Unsubscribing...",
+        color: "blue",
+      });
+      axios
+        .post("/newsletterUnsubscribe", {
+          email: user.email,
+        })
+        .then(() => {
+          setalert({
+            show: false,
+            msg: "Unsubscribed!",
+            color: "green",
+          });
+          setTimeout(() => {
+            setalert({
+              show: false,
+              msg: "Unsubscribe",
+              color: "black",
+            });
+            setAnchorEl(null);
+          }, 5000);
+        })
+        .catch(() => {
+          setalert({
+            show: false,
+            msg: "Error Not Subscribed!",
+            color: "red",
+          });
+          setTimeout(() => {
+            setalert({
+              show: false,
+              msg: "Unsubscribe",
+              color: "black",
+            });
+            setAnchorEl(null);
+          }, 5000);
+        });
+    }
+  };
   const logout = () => {
     setLogged(false);
     axios
@@ -34,7 +135,7 @@ function Navbar() {
         console.log("Signed Out");
         setUser(null);
         setAnchorEl(null);
-        history.push('/');
+        history.push("/");
       })
       .catch((error) => {
         console.log("Logout error", error);
@@ -48,11 +149,9 @@ function Navbar() {
           <i className="fas fa-bars"></i>
         </span>
         <SideNav />
-
-        {/* navbar logo */}
         <div className="navbar-logo">
           <img
-            src="./images/logo[800x150].png"
+            src="/images/logo.png"
             alt="Bookshlf"
             height="40px"
             width="210px"
@@ -61,7 +160,6 @@ function Navbar() {
             }}
           />
         </div>
-        {/* navbar items */}
         <div className="navbar-items">
           <ul>
             <Link to="/">
@@ -78,41 +176,31 @@ function Navbar() {
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
-                    <button className="dropbtn">
-                      Categories&nbsp;
-                      <i className="fas fa-caret-down" />
-                    </button>
-                    <div className="dropdown-content">
-                      <Link to="">JEE Mains</Link>
-                      <Link to="">JEE Advanced</Link>
-                      <Link to="">NEET</Link>
-                    </div>
+                    <button className="dropbtn">All Categories</button>
                   </div>
                 </div>
               </li>
             </Link>
-            <Link to="/">
-              <li>
-                <div className="navbar-items-chip">
-                  <div className="dropdown">
-                    <button className="dropbtn">
-                      Other&nbsp;
-                      <i className="fas fa-caret-down" />
-                    </button>
-                    <div className="dropdown-content">
-                      <Link to="/Contact">Contact Us</Link>
-                      <Link to="">Sell Old Books</Link>
-                      <Link to="">Blog</Link>
-                    </div>
+            <li>
+              <div className="navbar-items-chip">
+                <div className="dropdown">
+                  <button className="dropbtn">
+                    Other&nbsp;
+                    <i className="fas fa-caret-down" />
+                  </button>
+                  <div className="dropdown-content">
+                    <Link to="/Contact">Contact Us</Link>
+                    <Link to="/SellerPanel">Sell Old Books</Link>
+                    <Link to="/">Blog</Link>
                   </div>
                 </div>
-              </li>
-            </Link>
+              </div>
+            </li>
             <Link to="/SellerPanel">
               <li>
                 <div className="navbar-items-chip">
                   <p>
-                    <i class="fas fa-book" />
+                    <i className="fas fa-book" />
                     &nbsp;Sell Your Books
                   </p>
                 </div>
@@ -139,7 +227,7 @@ function Navbar() {
                   <Link to="/SearchResult">
                     <div className="navbar-searchbox-submit">
                       <img
-                        src="./images/loupe.svg"
+                        src="/images/loupe.svg"
                         alt="search"
                         height="20px"
                         width="20px"
@@ -154,7 +242,15 @@ function Navbar() {
                 <Link to="/Cart" className="cart-icon">
                   <i className="fas fa-shopping-cart" />
                 </Link>
-                <p className="Cart-items-notify-bubble">2</p>
+                <p className="Cart-items-notify-bubble">{cartitems}</p>
+              </div>
+            </li>
+            <li>
+              <div className="navbar-items-chip">
+                <Link to="/Wishlist" className="cart-icon">
+                  <i className="fas fa-heart" />
+                </Link>
+                <p className="Cart-items-notify-bubble">{wishlist}</p>
               </div>
             </li>
             <li>
@@ -180,7 +276,7 @@ function Navbar() {
                       onClick={handleClick}
                     >
                       <img
-                        src="./images/user.svg"
+                        src="/images/user.svg"
                         alt="My Account"
                         height="30px"
                         width="30px"
@@ -191,31 +287,69 @@ function Navbar() {
                       anchorEl={anchorEl}
                       keepMounted
                       open={Boolean(anchorEl)}
-                      onClose={handleClose}
                     >
                       <MenuItem
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                        onClick={() => {
+                          handleClose("0");
+                        }}
+                      >
+                        <i className="fas fa-times-circle" />
+                      </MenuItem>
+                      <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("1");
+                        }}
                       >
                         Profile
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("2");
+                        }}
                       >
-                        My Orders
+                        Cart
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("3");
+                        }}
                       >
                         Wishlist
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose("4");
+                        }}
                       >
                         Sell Books
+                      </MenuItem>
+                      <MenuItem
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                          color: alert.color,
+                        }}
+                        onClick={() => {
+                          handleClose("5");
+                        }}
+                      >
+                        {alert.msg}&nbsp;
+                        <i
+                          className="fas fa-circle-notch"
+                          style={{
+                            display: alert.show ? "inline-block" : "none",
+                            animation: "spin 2s linear infinite",
+                          }}
+                        />
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
