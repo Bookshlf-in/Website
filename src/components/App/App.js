@@ -64,12 +64,10 @@ function App() {
           <Route path="/SearchResult">
             <Navbar />
             <SearchResult />
-            <Footer />
           </Route>
-          <Route path="/BookDetails">
+          <Route path="/BookDetails/:bookId">
             <Navbar />
             <BookDetails />
-            <Footer />
           </Route>
           <Route path="/Checkout">
             <Navbar/>

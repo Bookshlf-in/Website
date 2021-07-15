@@ -13,7 +13,7 @@ function Sidenav() {
         <Link to="" className="closebtn" onClick={closeNav}>
           &times;
         </Link>
-        <Link>
+        <Link to="">
           <i className="fas fa-home"></i>&nbsp;Home
         </Link>
         {/* hidden until screen size is smaller than 650px */}

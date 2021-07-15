@@ -1,5 +1,7 @@
 import {React, useState, useEffect} from "react";
 import axios from "../../axios";
+import {storage} from "../../firebase";
+import {nanoid} from "nanoid";
 
 const Verified = {
   user: "verified-user",
@@ -28,19 +30,18 @@ const uploadform = {
 
 function AccountDetails() {
   // all seller profile details here
+  const [load, setload] = useState(0);
   const [Photo, setPhoto] = useState(null);
   const [Name, setName] = useState("");
   const [About, setAbout] = useState("");
   const [text, settext] = useState("Update");
 
-  const [Image, setImage] = useState(
-    "https://image.flaticon.com/icons/png/512/3135/3135715.png"
-  );
+  const [Image, setImage] = useState("/images/user.svg");
   const [open, setopen] = useState(false);
   const [sellerDetails, setsellerDetails] = useState({
     Name: "",
     Intro: "",
-    Photo: "https://image.flaticon.com/icons/png/512/2922/2922510.png",
+    Photo: "",
     NoOfBooksSold: 0,
     Rating: 0,
     NoOfRatings: 0,
@@ -50,8 +51,6 @@ function AccountDetails() {
     CreatedAt: "",
     UpdatedAt: "",
   });
-
-  const [load, setload] = useState(0);
 
   useEffect(() => {
     axios
@@ -79,14 +78,24 @@ function AccountDetails() {
   }, [load]);
 
   const handelUpload = (e) => {
-    setPhoto(URL.createObjectURL(e.target.files[0]));
-    setImage(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files[0]) {
+      setPhoto(e.target.files[0]);
+      setImage(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   return (
     <div style={style} id="seller-account-details">
       <div className="card">
-        <img src={sellerDetails.Photo} alt={sellerDetails.Name} width="200px" />
+        <img
+          src={
+            sellerDetails.Photo && sellerDetails.Photo.search(".") !== -1
+              ? sellerDetails.Photo
+              : "images/user.svg"
+          }
+          alt={sellerDetails.Name}
+          width="200px"
+        />
         <h1>{sellerDetails.Name}</h1>
         <div className="verify-tag">
           <p
@@ -97,7 +106,10 @@ function AccountDetails() {
             {sellerDetails.IsVerified ? Verified.tag : nonVerified.tag}
           </p>
         </div>
-        <p className="title" style={{marginTop:"10px",}}> {sellerDetails.Intro} </p>
+        <p className="title" style={{marginTop: "10px"}}>
+          {" "}
+          {sellerDetails.Intro}{" "}
+        </p>
         <p className="seller-rating">
           Rating&nbsp;:&nbsp;
           {[...Array(parseInt(sellerDetails.Rating))].map(() => {
@@ -176,7 +188,6 @@ function AccountDetails() {
               placeholder="Name"
               onChange={(e) => setName(e.target.value)}
               value={Name}
-              // style={Red.name ? Errorstyle : {}}
             />
           </div>
           <div className="signup-name">
@@ -185,7 +196,6 @@ function AccountDetails() {
               placeholder="About"
               onChange={(e) => setAbout(e.target.value)}
               value={About}
-              // style={Red.name ? Errorstyle : {}}
             />
           </div>
           <button
@@ -198,26 +208,52 @@ function AccountDetails() {
               e.preventDefault();
               if (Name.length > 0 && About.length > 0) {
                 settext("Updating...");
-                axios
-                  .post("/updateSellerProfile", {
-                    name: Name,
-                    intro: About,
-                    photo: Photo,
-                  })
-                  .then((response) => {
-                    settext("Successfully Updated!");
-                    setTimeout(() => {
-                      settext("Update");
-                      setName("");
-                      setAbout("");
-                      setload(!load);
-                    }, 3000);
-                  })
-                  .catch((error) => {
-                    console.log(error.message.data);
-                  });
+                const imageName = nanoid(10) + Photo.name;
+
+                // uploading profile photo to firebase server with unique name
+                const uploadTask = storage
+                  .ref(`profile/${imageName}`)
+                  .put(Photo);
+                uploadTask.on(
+                  "state_changed",
+                  (snapshot) => {},
+                  (error) => {
+                    console.log(error);
+                  },
+                  () => {
+                    storage
+                      .ref("profile")
+                      .child(imageName)
+                      .getDownloadURL()
+                      .then((imgUrl) => {
+                        // console.log("imgURL: " + imgUrl);
+                        axios
+                          .post("/updateSellerProfile", {
+                            name: Name,
+                            intro: About,
+                            photo: imgUrl,
+                          })
+                          .then((response) => {
+                            settext("Successfully Updated!");
+                            setTimeout(() => {
+                              settext("Update");
+                              setName("");
+                              setAbout("");
+                              setload(!load);
+                              setopen(!open);
+                            }, 3000);
+                          })
+                          .catch((error) => {
+                            console.log(error.message.data);
+                          });
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
+                  }
+                );
               } else {
-                settext("Name or About cannot be empty!");
+                settext("Name/About cannot be empty!");
                 setTimeout(() => {
                   settext("Update");
                 }, 3000);

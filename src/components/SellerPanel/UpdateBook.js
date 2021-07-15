@@ -20,32 +20,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddBook() {
+function UpdateBook(props) {
   const classes = useStyles();
 
   // book Details states
-  const [bookName, setbookName] = useState("");
-  const [bookISBN, setbookISBN] = useState("");
-  const [SP, setSP] = useState("");
-  const [MRP, setMRP] = useState("");
-  const [bookDesc, setbookDesc] = useState("");
-  const [Weight, setWeight] = useState("");
-  const [Edition, setEdition] = useState("");
-  const [Qnty, setQnty] = useState("");
-  const [author, setAuthor] = useState("");
+  const [bookName, setbookName] = useState(props.book.title);
+  const [bookISBN, setbookISBN] = useState(props.book.ISBN);
+  const [SP, setSP] = useState(props.book.price);
+  const [MRP, setMRP] = useState(props.book.MRP);
+  const [bookDesc, setbookDesc] = useState(props.book.description);
+  const [Weight, setWeight] = useState(props.book.weightInGrams);
+  const [Edition, setEdition] = useState(props.book.editionYear);
+  const [Qnty, setQnty] = useState(props.book.qty);
+  const [author, setAuthor] = useState(props.book.author);
   const [pickupId, setPickupId] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(props.book.tags);
   const [tag, settag] = useState("");
   const [link, setlink] = useState("");
-  const [lang, setlang] = useState("English");
-  const [checked, setChecked] = useState(false);
+  const [lang, setlang] = useState(props.book.language);
   const [Photo, setPhoto] = useState(null);
   const [Image, setImage] = useState(null);
   const [load, setload] = useState(false);
   const [Adr, setAdr] = useState(null);
+  const [checked, setChecked] = useState(false);
   const [alert, setalert] = useState({
     show: false,
-    type: "success",
+    type: "",
     msg: "",
   });
 
@@ -68,7 +68,7 @@ function AddBook() {
   const handelUpload = (e) => {
     setPhoto(Array.from(e.target.files));
     setImage(Array.from(e.target.files));
-    console.log(Array.from(e.target.files));
+    // console.log(Array.from(e.target.files));
   };
 
   const handleChange = (event) => {
@@ -137,7 +137,8 @@ function AddBook() {
     return new Promise(() => {
       setTimeout(() => {
         axios
-          .post("/addBook", {
+          .post("/updateBook", {
+            bookId: props.book._id,
             title: bookName,
             MRP: Number(MRP),
             price: Number(SP),
@@ -184,9 +185,14 @@ function AddBook() {
   };
 
   return (
-    <div className="add-book-bg">
-      <h1> ADD NEW BOOK </h1>
-      <form action="" className="add-book-form" autoComplete="off">
+    <div className="update-book-bg">
+      <h1> UPDATE BOOK DETAILS</h1>
+      <form
+        action=""
+        className="add-book-form"
+        autoComplete="off"
+        style={{backgroundColor: "rgb(0,0,0)"}}
+      >
         <div className="add-book-field1">
           <span>
             <i className="fas fa-book"></i>
@@ -431,7 +437,7 @@ function AddBook() {
             )}
           </div>
         </div>
-        <div>
+        <div className="update-book-checkbox">
           <Checkbox
             checked={checked}
             onChange={handleChange}
@@ -445,7 +451,7 @@ function AddBook() {
         <div>
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             className={classes.button}
             endIcon={<Icon>send</Icon>}
             style={{fontFamily: "PT Sans", fontWeight: "bold"}}
@@ -487,4 +493,4 @@ function AddBook() {
     </div>
   );
 }
-export default AddBook;
+export default UpdateBook;

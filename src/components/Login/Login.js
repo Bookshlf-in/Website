@@ -93,11 +93,13 @@ function Login() {
             JSON.stringify({
               authHeader: `Bearer ${response.data.token}`,
               roles: response.data.roles,
+              email : Name,
             })
           );
           setUser({
             authHeader: `Bearer ${response.data.token}`,
             roles: response.data.roles,
+            email : Name,
           });
           setadminRole(response.data.roles.includes("admin"));
           setsellerRole(response.data.roles.includes("seller"));
@@ -153,7 +155,7 @@ function Login() {
           <div className="login-container-left">
             <div className="login-container-left-logo">
               <img
-                src="./images/logoView[900x240].png"
+                src="/images/logoView.png"
                 height="50px"
                 alt="Bookshlf.in"
               />
