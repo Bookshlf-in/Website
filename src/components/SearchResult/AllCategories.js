@@ -30,22 +30,74 @@ const AllCategories = () => {
   const [alert, setAlert] = useState("");
   // states
   const [search, setsearch] = useState("");
-  const [wish, setwish] = useState(0);
   const [books, setbooks] = useState([]);
+  const [load, setload] = useState(false);
+
+  // sorting states
+  const [Rating, setRating] = useState("0");
+  const [Price, setPrice] = useState("0");
+  const [Exam, setExam] = useState("0");
+  const [Lang, setLang] = useState("0");
 
   useEffect(() => {
-    axios
-      .get("/search", {
-        params: {
-          q: "hello",
-        },
-      })
-      .then((result) => {
-        console.log(result.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
+    if (Rating !== "0") {
+      if (Rating === "1") {
+        books.sort((a, b) => {
+          return a.rating > b.rating ? 1 : a.rating < b.rating ? -1 : 0;
+        });
+      } else {
+        books.sort((a, b) => {
+          return a.rating < b.rating ? 1 : a.rating > b.rating ? -1 : 0;
+        });
+      }
+    } else {
+      books.sort((a, b) => {
+        return a.updatedAt > b.updatedAt
+          ? 1
+          : a.updatedAt < b.updatedAt
+          ? -1
+          : 0;
       });
+    }
+  }, [Rating, books]);
+
+  useEffect(() => {
+    if (Price === "1") {
+      books.sort((a, b) => {
+        return a.editionYear > b.editionYear
+          ? 1
+          : a.editionYear < b.editionYear
+          ? -1
+          : 0;
+      });
+    } else if (Price === "2") {
+      books.sort((a, b) => {
+        return a.price > b.price ? 1 : a.price < b.price ? -1 : 0;
+      });
+    } else if (Price === "3") {
+      books.sort((a, b) => {
+        return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+      });
+    }
+  }, [Price, books]);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      axios
+        .get("/search", {
+          params: {
+            q: search,
+          },
+        })
+        .then((response) => {
+          setbooks(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    };
+    fetchdata();
   }, []);
 
   // handeling wish list
@@ -115,6 +167,8 @@ const AllCategories = () => {
               });
             })
             .catch((err) => {
+              e.target.className = "far fa-heart";
+              e.target.style.animation = "";
               // console.log(err.response.data);
             });
         });
@@ -124,8 +178,26 @@ const AllCategories = () => {
       setAlert("Please Login!");
     }
   };
-  // temporary state
-  const bookId = "60ec0d3a152ad90022aa3c16";
+
+  const handelSearch = () => {
+    setload(true);
+    axios
+      .get("/search", {
+        params: {
+          q: search,
+        },
+      })
+      .then((response) => {
+        setbooks(response.data);
+        console.log(response.data);
+        setload(false);
+        setsearch("");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        setload(false);
+      });
+  };
 
   // Handeling snackbar closing
   const handleClose = (event, reason) => {
@@ -148,7 +220,8 @@ const AllCategories = () => {
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                console.log("Start Search API");
+                // console.log("Start Search API");
+                handelSearch();
               }
             }}
             placeholder="Search.."
@@ -159,117 +232,125 @@ const AllCategories = () => {
             className="Search-button"
             onClick={(e) => {
               e.preventDefault();
-              console.log("Start Search API");
+              // console.log("Start Search API");
+              handelSearch();
             }}
           >
-            Search
+            {load ? "Searching..." : "Search"}
           </button>
         </div>
         <div className="filter-result">
           <div className="filter-order filter">
-            <select className="select">
-              <option value=""> School</option>
-              <option value="">CBSE</option>
-              <option value="">ICSC</option>
-              <option value="">State Board</option>
-              <option value="">IB</option>
-              <option value="">NCERT</option>
+            <select
+              className="select"
+              onChange={(e) => {
+                setExam(e.target.value);
+              }}
+            >
+              <option value="0"> Competitive Exams</option>
+              <option value="1">JEE Mains</option>
+              <option value="2">JEE Advanced</option>
+              <option value="3">NEET UG</option>
             </select>
           </div>
           <div className="filter-order filter">
-            <select className="select">
-              <option value=""> Competitive Exams</option>
-              <option value="">JEE Mains</option>
-              <option value="">JEE Advanced</option>
-              <option value="">NEET UG</option>
-            </select>
-          </div>
-          <div className="filter-order filter">
-            <select className="select">
-              <option value="">Latest</option>
-              <option value="">High Rating</option>
-              <option value="">Low Rating</option>
+            <select
+              className="select"
+              onChange={(e) => setRating(e.target.value)}
+            >
+              <option value="0">Latest</option>
+              <option value="1">High Rating</option>
+              <option value="2">Low Rating</option>
             </select>
           </div>
           <div className="filter-sort filter">
-            <select className="select">
-              <option value="">Default</option>
-              <option value="">Sort by popularity</option>
-              <option value="">Sort by newness</option>
-              <option value="">Price High to Low</option>
-              <option value="">Price Low to High</option>
+            <select
+              className="select"
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
+            >
+              <option value="0">Default</option>
+              <option value="1">Newness</option>
+              <option value="2">Price High to Low</option>
+              <option value="3">Price Low to High</option>
             </select>
           </div>
-          <div className="filter-language filter">
+          <div
+            className="filter-language filter"
+            onChange={(e) => setLang(e.target.value)}
+          >
             <select className="select">
-              <option value="">English</option>
-              <option value="">Hindi</option>
+              <option value="0">English</option>
+              <option value="1">Hindi</option>
             </select>
           </div>
         </div>
         {/* ================================================================== */}
         <div className="bs-books">
-          {/* =========================== */}
-          <div className="search-result-book">
-            <div className="search-book">
-              <div className="search-book-pic">
-                <img
-                  src="/images/samplebookmock.jpg"
-                  alt=""
-                  height="100%"
-                  width="100%"
-                  className="bs-image"
-                />
-              </div>
-              <div className="search-book-details">
-                <p className="details-para1">Book Name</p>
-                <p className="details-para3">Author Name</p>
-                <p className="details-para4">
-                  <i className="fas fa-rupee-sign" />
-                  &nbsp;Price /-
-                </p>
-                <div className="hidden-items">
-                  <p className="cart" title="Add item to cart">
-                    Add To Cart
-                  </p>
-                  <i className="fas fa-arrows-alt-h" />
-                  <i
-                    className="far fa-heart"
-                    title="Add to Wishlist"
-                    id={bookId}
-                    onClick={(e) => {
-                      handelWishList(e);
-                    }}
-                  />
+          {books ? (
+            <>
+              {books.map((book) => (
+                // ==================================
+                <div className="search-result-book">
+                  <div className="search-book">
+                    <div className="search-book-pic">
+                      <img
+                        src={book.photo}
+                        alt={book.title}
+                        title={book.title}
+                        height="100%"
+                        width="100%"
+                        className="bs-image"
+                      />
+                    </div>
+                    <div className="search-book-details">
+                      <p className="details-para1">{book.title}</p>
+                      <p className="details-para3">
+                        {book.author} Edition : {book.editionYear}
+                      </p>
+                      <p className="details-para4">
+                        <i className="fas fa-rupee-sign" />
+                        &nbsp;{book.price}&nbsp;/-
+                      </p>
+                      <div className="hidden-items">
+                        <p
+                          className="cart"
+                          title="Add item to cart"
+                          id={book._id}
+                        >
+                          {book.cart ? "Added In Cart" : "Add To Cart"}
+                        </p>
+                        <i className="fas fa-arrows-alt-h" />
+                        <i
+                          className={
+                            book.wishlist ? "fas fa-heart" : "far fa-heart"
+                          }
+                          title="Add to Wishlist"
+                          id={book._id}
+                          onClick={(e) => {
+                            handelWishList(e);
+                          }}
+                        />
+                      </div>
+                      <div
+                        title="View Book Details"
+                        className="book-more-details"
+                      >
+                        <Link to={`/BookDetails/${book._id}`}>
+                          More Details&nbsp;
+                          <i className="fas fa-angle-double-right" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div title="View Book Details" className="book-more-details">
-                  <Link to={`/BookDetails/${bookId}`}>
-                    More Details&nbsp;
-                    <i className="fas fa-angle-double-right" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="book-tags">
-              <span className="tag" title="tag1">
-                {"JEE Advanced"}
-              </span>
-              <span className="tag" title="tag2">
-                {"JEE Mains"}
-              </span>
-              <span className="tag" title="tag3">
-                {"Maths"}
-              </span>
-              <span className="tag" title="tag1">
-                {"JEE Advanced"}
-              </span>
-              <span className="tag" title="tag1">
-                {"JEE Advanced"}
-              </span>
-            </div>
-          </div>
-          {/* =========================== */}
+                // ================================
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         {/* ======================================================== */}
 

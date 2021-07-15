@@ -31,7 +31,7 @@ function Navbar() {
       .then((response) => {
         // console.log(response.data.length);
         setwishlist(response.data.length);
-        console.log(response.data.length);
+        // console.log(response.data.length);
         localStorage.setItem(
           "bookshlf_user",
           JSON.stringify({
@@ -49,7 +49,7 @@ function Navbar() {
           cartitems: user.cartitems,
           wishlist: response.data.length,
         });
-        console.log(user);
+        // console.log(user);
       })
       .catch((error) => {
         setwishlist(0);
