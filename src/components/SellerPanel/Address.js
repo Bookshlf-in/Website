@@ -52,7 +52,7 @@ function Address() {
             : 0;
         });
         setAdr(response.data);
-      // console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -268,6 +268,7 @@ function Address() {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
             />
+            <label htmlFor="pincode">Pincode</label>
             <InputMask
               mask="999999"
               alwaysShowMask="true"

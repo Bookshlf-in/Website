@@ -1,4 +1,4 @@
-import {React, useState, useContext} from "react";
+import {React, useState, useContext, useEffect} from "react";
 import "./Navbar.css";
 import {Link, useHistory} from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -22,6 +22,47 @@ function Navbar() {
     msg: "Unsubscribe",
     color: "black",
   });
+  const [wishlist, setwishlist] = useState(0);
+  const [cartitems, setcartitems] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get("/getWishlist")
+      .then((response) => {
+        // console.log(response.data.length);
+        setwishlist(response.data.length);
+        console.log(response.data.length);
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems,
+            wishlist: response.data.length,
+          })
+        );
+        setUser({
+          authHeader: user.authHeader,
+          roles: user.roles,
+          email: user.email,
+          cartitems: user.cartitems,
+          wishlist: response.data.length,
+        });
+        console.log(user);
+      })
+      .catch((error) => {
+        setwishlist(0);
+      });
+    axios
+      .get("/getCartList")
+      .then((response) => {
+        setcartitems(response.data.length);
+      })
+      .catch((error) => {
+        setcartitems(0);
+      });
+  }, [user ? user.wishlist : wishlist, user ? user.cartitems : cartitems]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -201,7 +242,15 @@ function Navbar() {
                 <Link to="/Cart" className="cart-icon">
                   <i className="fas fa-shopping-cart" />
                 </Link>
-                <p className="Cart-items-notify-bubble">2</p>
+                <p className="Cart-items-notify-bubble">{cartitems}</p>
+              </div>
+            </li>
+            <li>
+              <div className="navbar-items-chip">
+                <Link to="/Wishlist" className="cart-icon">
+                  <i className="fas fa-heart" />
+                </Link>
+                <p className="Cart-items-notify-bubble">{wishlist}</p>
               </div>
             </li>
             <li>

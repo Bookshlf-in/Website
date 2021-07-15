@@ -1,15 +1,140 @@
-import {React, useState, useEffect} from "react";
+import {React, useState, useEffect, useContext} from "react";
 import "./AllCategories.css";
 import {Link} from "react-router-dom";
+import {UserContext} from "../../Context/userContext";
 import axios from "../../axios";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import {makeStyles} from "@material-ui/core/styles";
+
+// Alert
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+// Use Styles
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
 const AllCategories = () => {
+  const classes = useStyles();
+  const [user, setUser] = useContext(UserContext);
+  const [open, setOpen] = useState(false);
+  const [severity, setSeverity] = useState("success");
+  const [alert, setAlert] = useState("");
   // states
   const [search, setsearch] = useState("");
-  const [wish, setwish] = useState(false);
+  const [wish, setwish] = useState(0);
+  const [books, setbooks] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("/search", {
+        params: {
+          q: "hello",
+        },
+      })
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }, []);
+
+  // handeling wish list
+  const handelWishList = (e) => {
+    if (user) {
+      e.target.className = "fas fa-circle-notch";
+      e.target.style.animation = "spin 2s linear infinite";
+      axios
+        .post("/addWishlistItem", {
+          bookId: e.target.id,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          setOpen(true);
+          setSeverity("success");
+          setAlert(response.data.msg);
+          e.target.className = "fas fa-heart";
+          e.target.style.animation = "none";
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems,
+              wishlist: user.wishlist + 1,
+            })
+          );
+          setUser({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems,
+            wishlist: user.wishlist + 1,
+          });
+        })
+        .catch((error) => {
+          // console.log(error.response.data);
+
+          axios
+            .delete("/deleteWishlistItem", {
+              data: {bookId: e.target.id},
+            })
+            .then((response) => {
+              // console.log(response.data);
+              e.target.className = "far fa-heart";
+              e.target.style.animation = "";
+              setOpen(true);
+              setSeverity("success");
+              setAlert(response.data.msg);
+              localStorage.setItem(
+                "bookshlf_user",
+                JSON.stringify({
+                  authHeader: user.authHeader,
+                  roles: user.roles,
+                  email: user.email,
+                  cartitems: user.cartitems,
+                  wishlist: user.wishlist - 1,
+                })
+              );
+              setUser({
+                authHeader: user.authHeader,
+                roles: user.roles,
+                email: user.email,
+                cartitems: user.cartitems,
+                wishlist: user.wishlist - 1,
+              });
+            })
+            .catch((err) => {
+              // console.log(err.response.data);
+            });
+        });
+    } else {
+      setOpen(true);
+      setSeverity("error");
+      setAlert("Please Login!");
+    }
+  };
   // temporary state
   const bookId = "60ec0d3a152ad90022aa3c16";
+
+  // Handeling snackbar closing
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <div className="AllCategories">
       <div className="AllCategories-cont">
@@ -84,57 +209,70 @@ const AllCategories = () => {
         </div>
         {/* ================================================================== */}
         <div className="bs-books">
-          <div className="book book1">
-            <div className="book-pic">
-              <img
-                src="/images/best_selling/bs2.jpg"
-                alt=""
-                className="bs-image"
-              />
+          {/* =========================== */}
+          <div className="search-result-book">
+            <div className="search-book">
+              <div className="search-book-pic">
+                <img
+                  src="/images/samplebookmock.jpg"
+                  alt=""
+                  height="100%"
+                  width="100%"
+                  className="bs-image"
+                />
+              </div>
+              <div className="search-book-details">
+                <p className="details-para1">Book Name</p>
+                <p className="details-para3">Author Name</p>
+                <p className="details-para4">
+                  <i className="fas fa-rupee-sign" />
+                  &nbsp;Price /-
+                </p>
+                <div className="hidden-items">
+                  <p className="cart" title="Add item to cart">
+                    Add To Cart
+                  </p>
+                  <i className="fas fa-arrows-alt-h" />
+                  <i
+                    className="far fa-heart"
+                    title="Add to Wishlist"
+                    id={bookId}
+                    onClick={(e) => {
+                      handelWishList(e);
+                    }}
+                  />
+                </div>
+                <div title="View Book Details" className="book-more-details">
+                  <Link to={`/BookDetails/${bookId}`}>
+                    More Details&nbsp;
+                    <i className="fas fa-angle-double-right" />
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className="book-details">
-              <p className="details-para1">Book Name</p>
-              <p className="details-para2">Book Description...</p>
-              <p className="details-para3">Author Name</p>
-              <p className="details-para4">
-                <i className="fas fa-rupee-sign" />
-                &nbsp;Price
-              </p>
-            </div>
+
             <div className="book-tags">
               <span className="tag" title="tag1">
-                Tag1
+                {"JEE Advanced"}
               </span>
               <span className="tag" title="tag2">
-                Tag2
+                {"JEE Mains"}
               </span>
               <span className="tag" title="tag3">
-                Tag3
+                {"Maths"}
+              </span>
+              <span className="tag" title="tag1">
+                {"JEE Advanced"}
+              </span>
+              <span className="tag" title="tag1">
+                {"JEE Advanced"}
               </span>
             </div>
-            <div className="hidden-items">
-              <p className="cart" title="Add item to cart">
-                Add To Cart
-              </p>
-              <i className="fas fa-arrows-alt-h" />
-              <i
-                className={wish ? "fas fa-heart " : "far fa-heart"}
-                title="Add to Wishlist"
-                onClick={(e) => {
-                  setwish(!wish);
-                  console.log(e.target.className);
-                }}
-              />
-            </div>
-            <div title="View Book Details" className="book-more-details">
-              <Link to={`/BookDetails/${bookId}`}>
-                More Details&nbsp;
-                <i className="fas fa-angle-double-right" />
-              </Link>
-            </div>
           </div>
+          {/* =========================== */}
         </div>
         {/* ======================================================== */}
+
         {/* more loading */}
         <div className="loadMore">
           <button className="loadMore-btn">
@@ -151,6 +289,17 @@ const AllCategories = () => {
           </button>
         </div>
       </div>
+      {/* !!! do not change !!! */}
+      {/*  snackbar starts*/}
+      <div className={classes.root}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={severity}>
+            {alert}
+          </Alert>
+        </Snackbar>
+      </div>
+      {/* snackbar ends */}
+      {/* !!! do not change !!! */}
     </div>
   );
 };
