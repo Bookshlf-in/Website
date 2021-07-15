@@ -15,6 +15,7 @@ import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
 import Checkout from "../Cart/Payment";
+import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../AddReviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
 import Track from "../UserProfile/OrderTracking";
@@ -69,10 +70,14 @@ function App() {
             <Navbar />
             <BookDetails />
           </Route>
+          <Route path="/Wishlist">
+            <Navbar />
+            <Wishlist />
+          </Route>
           <Route path="/Checkout">
-            <Navbar/>
-            <Checkout/>
-            </Route>
+            <Navbar />
+            <Checkout />
+          </Route>
           <Route path="/">
             <Navbar />
             <Carousel />
