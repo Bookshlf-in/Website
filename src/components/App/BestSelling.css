@@ -75,7 +75,8 @@
 }
 
 .details-para1 {
-  font-size: 11px;
+  font-size: 16px;
+  padding-top: 10px;
   color: rgb(252, 62, 62);
 }
 
@@ -97,7 +98,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .cart {

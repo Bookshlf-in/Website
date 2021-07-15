@@ -75,11 +75,17 @@ export default function SellerRegister() {
                   JSON.stringify({
                     authHeader: user.authHeader,
                     roles: user.roles,
+                    email: user.email,
+                    wishlist: user.wishlist,
+                    cartitems: user.cartitems,
                   })
                 );
                 setUser({
                   authHeader: user.authHeader,
                   roles: user.roles,
+                  email: user.email,
+                  wishlist: user.wishlist,
+                  cartitems: user.cartitems,
                 });
                 setTimeout(() => {
                   history.push("/SellerPanel");
