@@ -1,7 +1,13 @@
 .cart-main {
   width: 100%;
-  background-color: rgba(79, 79, 79, 0.2);
-  padding: 20px;
+  min-height: calc(100vh - 90px);
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -9,7 +15,7 @@
 }
 .cart-container-left {
   background-color: rgb(255, 253, 253);
-  margin: 0px 20px;
+  margin: 20px;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
@@ -27,16 +33,26 @@
   margin: 20px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  background-color: #faaca8;
+  background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
 }
 .cart-item-img,
 .cart-item-details,
 .cart-item-price {
   float: left;
-  width: 33.33%;
+}
+.cart-item-img {
+  width: 25%;
+}
+.cart-item-price {
+  width: 25%;
+}
+.cart-item-details {
+  width: 50%;
 }
 .cart-item-img img {
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255);
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
 }
@@ -66,6 +82,7 @@ h5 {
 }
 .cart-item-price table {
   border: 1px solid rgba(0, 0, 0, 0.7);
+  border-collapse: collapse;
   padding: 10px;
   font-size: 32px;
   border-radius: 10px;
@@ -88,8 +105,8 @@ td .fa-minus-square:hover {
 .cart-container-right {
   background-color: rgb(255, 253, 253);
   padding: 20px;
-  margin: 0px 20px;
-  max-height: 300px;
+  margin: 20px;
+  max-height: 200px;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   min-width: 400px;
