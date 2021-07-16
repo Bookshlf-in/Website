@@ -33,54 +33,6 @@ const AllCategories = () => {
   const [books, setbooks] = useState([]);
   const [load, setload] = useState(false);
 
-  // sorting states
-  const [Rating, setRating] = useState("0");
-  const [Price, setPrice] = useState("0");
-  const [Exam, setExam] = useState("0");
-  const [Lang, setLang] = useState("0");
-
-  useEffect(() => {
-    if (Rating !== "0") {
-      if (Rating === "1") {
-        books.sort((a, b) => {
-          return a.rating > b.rating ? 1 : a.rating < b.rating ? -1 : 0;
-        });
-      } else {
-        books.sort((a, b) => {
-          return a.rating < b.rating ? 1 : a.rating > b.rating ? -1 : 0;
-        });
-      }
-    } else {
-      books.sort((a, b) => {
-        return a.updatedAt > b.updatedAt
-          ? 1
-          : a.updatedAt < b.updatedAt
-          ? -1
-          : 0;
-      });
-    }
-  }, [Rating, books]);
-
-  useEffect(() => {
-    if (Price === "1") {
-      books.sort((a, b) => {
-        return a.editionYear > b.editionYear
-          ? 1
-          : a.editionYear < b.editionYear
-          ? -1
-          : 0;
-      });
-    } else if (Price === "2") {
-      books.sort((a, b) => {
-        return a.price > b.price ? 1 : a.price < b.price ? -1 : 0;
-      });
-    } else if (Price === "3") {
-      books.sort((a, b) => {
-        return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-      });
-    }
-  }, [Price, books]);
-
   useEffect(() => {
     const fetchdata = async () => {
       axios
@@ -90,15 +42,38 @@ const AllCategories = () => {
           },
         })
         .then((response) => {
+          response.data.sort((a, b) => {
+            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+          });
           setbooks(response.data);
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          // console.log(error.response.data);
         });
     };
     fetchdata();
   }, []);
+
+  const handelSearch = () => {
+    setload(true);
+    axios
+      .get("/search", {
+        params: {
+          q: search,
+        },
+      })
+      .then((response) => {
+        setbooks(response.data);
+        console.log(response.data);
+        setload(false);
+        setsearch("");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        setload(false);
+      });
+  };
 
   // handeling wish list
   const handelWishList = (e) => {
@@ -135,8 +110,6 @@ const AllCategories = () => {
           });
         })
         .catch((error) => {
-          // console.log(error.response.data);
-
           axios
             .delete("/deleteWishlistItem", {
               data: {bookId: e.target.id},
@@ -179,26 +152,88 @@ const AllCategories = () => {
     }
   };
 
-  const handelSearch = () => {
-    setload(true);
-    axios
-      .get("/search", {
-        params: {
-          q: search,
-        },
-      })
-      .then((response) => {
-        setbooks(response.data);
-        console.log(response.data);
-        setload(false);
-        setsearch("");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        setload(false);
-      });
+  const handelCart = (e) => {
+    if (user) {
+      console.log(e.target.title);
+      if (e.target.title === "F") {
+        e.target.innerHTML = "Adding...";
+        axios
+          .post("/addCartItem", {
+            bookId: e.target.id,
+          })
+          .then((response) => {
+            setOpen(true);
+            setSeverity("success");
+            setAlert(response.data.msg);
+            e.target.innerHTML = "Added In Cart";
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({
+                authHeader: user.authHeader,
+                roles: user.roles,
+                email: user.email,
+                cartitems: user.cartitems + 1,
+                wishlist: user.wishlist,
+              })
+            );
+            setUser({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems + 1,
+              wishlist: user.wishlist,
+            });
+            e.target.title = "T";
+          })
+          .catch(() => {
+            e.target.innerHTML = "Failed!";
+            setTimeout(() => {
+              e.target.innerHTML = "Add to Cart";
+            }, 2000);
+          });
+      } else {
+        e.target.innerHTML = "Removing...";
+        axios
+          .delete("/deleteCartItem", {
+            data: {bookId: e.target.id},
+          })
+          .then((response) => {
+            e.target.innerHTML = "Add to Cart";
+            setOpen(true);
+            setSeverity("success");
+            setAlert(response.data.msg);
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({
+                authHeader: user.authHeader,
+                roles: user.roles,
+                email: user.email,
+                cartitems: user.cartitems - 1,
+                wishlist: user.wishlist,
+              })
+            );
+            setUser({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems - 1,
+              wishlist: user.wishlist,
+            });
+            e.target.title = "F";
+          })
+          .catch((err) => {
+            e.target.innerHTML = "Failed!";
+            setTimeout(() => {
+              e.target.innerHTML = "Add to Cart";
+            }, 2000);
+          });
+      }
+    } else {
+      setOpen(true);
+      setSeverity("error");
+      setAlert("Please Login!");
+    }
   };
-
   // Handeling snackbar closing
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -232,67 +267,19 @@ const AllCategories = () => {
             className="Search-button"
             onClick={(e) => {
               e.preventDefault();
-              // console.log("Start Search API");
               handelSearch();
             }}
           >
             {load ? "Searching..." : "Search"}
           </button>
         </div>
-        <div className="filter-result">
-          <div className="filter-order filter">
-            <select
-              className="select"
-              onChange={(e) => {
-                setExam(e.target.value);
-              }}
-            >
-              <option value="0"> Competitive Exams</option>
-              <option value="1">JEE Mains</option>
-              <option value="2">JEE Advanced</option>
-              <option value="3">NEET UG</option>
-            </select>
-          </div>
-          <div className="filter-order filter">
-            <select
-              className="select"
-              onChange={(e) => setRating(e.target.value)}
-            >
-              <option value="0">Latest</option>
-              <option value="1">High Rating</option>
-              <option value="2">Low Rating</option>
-            </select>
-          </div>
-          <div className="filter-sort filter">
-            <select
-              className="select"
-              onChange={(e) => {
-                setPrice(e.target.value);
-              }}
-            >
-              <option value="0">Default</option>
-              <option value="1">Newness</option>
-              <option value="2">Price High to Low</option>
-              <option value="3">Price Low to High</option>
-            </select>
-          </div>
-          <div
-            className="filter-language filter"
-            onChange={(e) => setLang(e.target.value)}
-          >
-            <select className="select">
-              <option value="0">English</option>
-              <option value="1">Hindi</option>
-            </select>
-          </div>
-        </div>
         {/* ================================================================== */}
         <div className="bs-books">
           {books ? (
             <>
-              {books.map((book) => (
+              {books.map((book, idx) => (
                 // ==================================
-                <div className="search-result-book">
+                <div className="search-result-book" key={idx}>
                   <div className="search-book">
                     <div className="search-book-pic">
                       <img
@@ -316,8 +303,11 @@ const AllCategories = () => {
                       <div className="hidden-items">
                         <p
                           className="cart"
-                          title="Add item to cart"
                           id={book._id}
+                          onClick={(e) => {
+                            handelCart(e);
+                          }}
+                          title={book.cart ? "T" : "F"}
                         >
                           {book.cart ? "Added In Cart" : "Add To Cart"}
                         </p>

@@ -45,7 +45,6 @@ const Wishlist = () => {
           data: {bookId: e.target.id},
         })
         .then((response) => {
-          // console.log(response.data);
           setwishlist(wishlist.filter((item) => e.target.id !== item.bookId));
           localStorage.setItem(
             "bookshlf_user",

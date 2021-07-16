@@ -1,8 +1,35 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import "./Payment.css";
-import { BrowserRouter as Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import axios from "../../axios";
 
 function Payment() {
+  const [cart, setcart] = useState([]);
+  const [loader, setloader] = useState(true);
+  const [amount, setamount] = useState(0);
+  var amt = 0;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get("/getCartList")
+        .then((response) => {
+          setcart(response.data);
+          for (let i = 0; i < response.data.length; i++) {
+            amt += response.data[i].price;
+          }
+          setamount(amt);
+          console.log(response.data.length);
+          console.log(response.data);
+          setloader(false);
+        })
+        .catch((error) => {
+          setcart([]);
+          setloader(false);
+        });
+    };
+    fetchData();
+  }, []);
   return (
     <div>
       <div className="payment-cont">
@@ -11,20 +38,32 @@ function Payment() {
             <h4>
               Shopping Cart{" "}
               <span className="price">
-              <i class="fas fa-cart-plus"></i> <b>4</b>
+                <i class="fas fa-cart-plus"></i> <b>4</b>
               </span>
             </h4>
             <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 1</Link> <span className="price">$15</span>
+              <Link href="#" className="cart-item-link">
+                Item 1
+              </Link>{" "}
+              <span className="price">$15</span>
             </p>
             <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 2</Link> <span className="price">$5</span>
+              <Link href="#" className="cart-item-link">
+                Item 2
+              </Link>{" "}
+              <span className="price">$5</span>
             </p>
             <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 3</Link> <span className="price">$8</span>
+              <Link href="#" className="cart-item-link">
+                Item 3
+              </Link>{" "}
+              <span className="price">$8</span>
             </p>
             <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 4</Link> <span className="price">$2</span>
+              <Link href="#" className="cart-item-link">
+                Item 4
+              </Link>{" "}
+              <span className="price">$2</span>
             </p>
             <hr />
             <p>
