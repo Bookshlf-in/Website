@@ -3,10 +3,33 @@ import "./UserProfile.css";
 import Account from "./Account";
 import CurrentOrder from "./CurrentOrders";
 import PreviousOrder from "./PreviousOrders";
+import axios from "../../axios";
 
 const UserProfile = () => {
-  const [userprofile, setuserprofile] = useState({});
+  const [userprofile, setuserprofile] = useState(null);
+  const [orders, setorders] = useState(null);
   const [panel, setpanel] = useState(1);
+  const [load, setload] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("/getUserProfile")
+      .then((response) => {
+        // console.log(response.data);
+        setuserprofile(response.data);
+        axios
+          .get("/getOrderList")
+          .then((response) => {
+            // console.log(response.data);
+            setorders(response.data);
+            setload(false);
+          })
+          .catch((error) => {});
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  }, []);
 
   return (
     <div className="user-profile-main">
@@ -27,13 +50,24 @@ const UserProfile = () => {
           &nbsp;&nbsp;Previous&nbsp;Orders
         </div>
       </div>
-      <div className="Panel">
-        {panel === 1 ? (
-          <Account />
-        ) : panel === 2 ? (
-          <CurrentOrder />
-        ) : (
+      <div
+        className="page-loader"
+        style={{display: load ? "flex" : "none", height: "auto"}}
+      >
+        <div
+          className="page-loading"
+          style={{display: load ? "block" : "none"}}
+        ></div>
+      </div>
+      <div className="Panel" style={{display: load ? "none" : "block"}}>
+        {panel === 1 && userprofile ? (
+          <Account user={userprofile} />
+        ) : panel === 2 && orders ? (
+          <CurrentOrder orders={orders} />
+        ) : panel === 3 && orders ? (
           <PreviousOrder />
+        ) : (
+          <></>
         )}
       </div>
     </div>
