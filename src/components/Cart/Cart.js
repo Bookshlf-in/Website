@@ -18,7 +18,9 @@ function Cart() {
         .then((response) => {
           setcart(response.data);
           for (let i = 0; i < response.data.length; i++) {
-            amt += response.data[i].price * response.data[i].purchaseQty;
+            amt +=
+              response.data[i].price *
+              Math.min(response.data[i].purchaseQty, response.data[i].qty);
           }
           setamount(amt);
           console.log(response.data.length);
@@ -75,16 +77,16 @@ function Cart() {
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
-            cartitems: user.cartitems,
-            wishlist: user.wishlist - 1,
+            cartitems: user.cartitems - 1,
+            wishlist: user.wishlist,
           })
         );
         setUser({
           authHeader: user.authHeader,
           roles: user.roles,
           email: user.email,
-          cartitems: user.cartitems,
-          wishlist: user.wishlist - 1,
+          cartitems: user.cartitems - 1,
+          wishlist: user.wishlist,
         });
       })
       .catch((err) => {
@@ -94,22 +96,32 @@ function Cart() {
 
   const handelUpdateCart = (e) => {
     e.target.innerText = "Checking Out...";
-    for (let i = 0; i < cart.length; i++) {
-      const update = async () => {
-        axios
-          .post("/changeCartItemPurchaseQty", {
-            cartItemId: cart[i]._id,
-            purchaseQty: cart[i].purchaseQty,
-          })
-          .then(() => {
-            console.log(i);
-            if (i === cart.length - 1) {
-              history.push("/Checkout");
-            }
-          })
-          .catch(() => {});
-      };
-      update();
+    if (cart.length > 0) {
+      for (let i = 0; i < cart.length; i++) {
+        const update = async () => {
+          axios
+            .post("/changeCartItemPurchaseQty", {
+              cartItemId: cart[i]._id,
+              purchaseQty: cart[i].purchaseQty,
+            })
+            .then(() => {
+              console.log(i);
+              if (i === cart.length - 1) {
+                history.push("/Checkout");
+              }
+            })
+            .catch(() => {});
+        };
+        update();
+      }
+    } else {
+      e.target.innerHTML = ``;
+      e.target.innerHTML = `<i class="fas fa-exclamation-triangle"/>&nbsp;Checkout Failed!`;
+      e.target.style.backgroundColor = "red";
+      setTimeout(() => {
+        e.target.innerHTML = `<i class="fas fa-money-check-alt"/>&nbsp;Checkout`;
+        e.target.style.backgroundColor = "rgb(90, 90, 255)";
+      }, 3000);
     }
   };
 
@@ -211,7 +223,9 @@ function Cart() {
                               }}
                             />
                           </td>
-                          <td id={idx}>{item.purchaseQty}</td>
+                          <td id={idx}>
+                            {Math.min(item.purchaseQty, item.qty)}
+                          </td>
                           <td>
                             <i
                               className="fas fa-plus-square"
@@ -247,7 +261,7 @@ function Cart() {
                 <i>(Excluding GST and shipping charges)</i>
               </p>
               <h3>
-                <i className="fas fa-rupee-sign"></i>&nbsp;{amount}/-
+                <i className="fas fa-rupee-sign"/>&nbsp;{amount}/-
               </h3>
             </div>
             <div
@@ -257,7 +271,8 @@ function Cart() {
                 handelUpdateCart(e);
               }}
             >
-              <i class="fas fa-money-check-alt"></i>&nbsp;Checkout
+              <i className="fas fa-money-check-alt" />
+              &nbsp;Checkout
             </div>
           </div>
         </>

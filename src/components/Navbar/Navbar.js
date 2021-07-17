@@ -25,7 +25,7 @@ function Navbar() {
 
   useEffect(() => {
     axios
-      .get("/getWishlist")
+      .get("/countWishlistItems")
       .then((response) => {
         // console.log("wishlist: ", response.data.length);
         localStorage.setItem(
@@ -35,7 +35,7 @@ function Navbar() {
             roles: user.roles,
             email: user.email,
             cartitems: user.cartitems,
-            wishlist: response.data.length,
+            wishlist: response.data.count,
           })
         );
         setUser({
@@ -43,12 +43,12 @@ function Navbar() {
           roles: user.roles,
           email: user.email,
           cartitems: user.cartitems,
-          wishlist: response.data.length,
+          wishlist: response.data.count,
         });
       })
       .catch((error) => {});
     axios
-      .get("/getCartList")
+      .get("/countCartItems")
       .then((response) => {
         // console.log(response.data);
         localStorage.setItem(
@@ -57,7 +57,7 @@ function Navbar() {
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
-            cartitems: response.data.length,
+            cartitems: response.data.count,
             wishlist: user.wishlist,
           })
         );
@@ -65,7 +65,7 @@ function Navbar() {
           authHeader: user.authHeader,
           roles: user.roles,
           email: user.email,
-          cartitems: response.data.length,
+          cartitems: response.data.count,
           wishlist: user.wishlist,
         });
       })
