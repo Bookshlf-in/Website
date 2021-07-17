@@ -7,7 +7,11 @@ import {Link} from "react-router-dom";
 const style = {
   backgroundColor: "rgba(0,0,0,0.2)",
   padding: "10px",
+  border: "1px solid black",
   margin: "10px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   textAlign: "center",
 };
 const Wishlist = () => {
@@ -71,6 +75,76 @@ const Wishlist = () => {
     }
   };
 
+  const handelCart = (e) => {
+    if (e.target.title === "F") {
+      e.target.innerHTML = "Adding...";
+      axios
+        .post("/addCartItem", {
+          bookId: e.target.id,
+        })
+        .then((response) => {
+          e.target.innerHTML = "Added In Cart";
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems + 1,
+              wishlist: user.wishlist,
+            })
+          );
+          setUser({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems + 1,
+            wishlist: user.wishlist,
+          });
+          e.target.title = "T";
+        })
+        .catch(() => {
+          e.target.innerHTML = "Failed!";
+          setTimeout(() => {
+            e.target.innerHTML = "Add to Cart";
+          }, 2000);
+        });
+    } else {
+      e.target.innerHTML = "Removing...";
+      axios
+        .delete("/deleteCartItem", {
+          data: {bookId: e.target.id},
+        })
+        .then((response) => {
+          e.target.innerHTML = "Add to Cart";
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems - 1,
+              wishlist: user.wishlist,
+            })
+          );
+          setUser({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems - 1,
+            wishlist: user.wishlist,
+          });
+          e.target.title = "F";
+        })
+        .catch((err) => {
+          e.target.innerHTML = "Failed!";
+          setTimeout(() => {
+            e.target.innerHTML = "Add to Cart";
+          }, 2000);
+        });
+    }
+  };
+
   return (
     <div
       style={{
@@ -121,16 +195,11 @@ const Wishlist = () => {
             ></div>
           </div>
           <div style={{display: loader ? "none" : "block"}}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-            >
+            <Grid container justifyContent="center" alignItems="center">
               {wishlist.length > 0 ? (
                 <>
                   {wishlist.map((item) => (
-                    <Grid style={style} item lg={4} md={6} sm={12} xs={12}>
+                    <Grid style={style} item lg={5} md={5} sm={12} xs={12}>
                       <div className="search-book">
                         <div className="search-book-pic">
                           <img
@@ -149,8 +218,15 @@ const Wishlist = () => {
                             &nbsp;{item.price} /-
                           </p>
                           <div className="hidden-items">
-                            <p className="cart" title="Add item to cart">
-                              Add To Cart
+                            <p
+                              className="cart"
+                              id={item.bookId}
+                              title={item.cart ? "T" : "F"}
+                              onClick={(e) => {
+                                handelCart(e);
+                              }}
+                            >
+                              {item.cart ? "Added In Cart" : "Add to Cart"}
                             </p>
                             <span
                               title="Add to Wishlist"
