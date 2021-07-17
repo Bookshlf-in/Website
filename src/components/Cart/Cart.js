@@ -59,7 +59,8 @@ function Cart() {
   };
 
   const handelRemoveItem = (e) => {
-    e.target.innerHTML = "Removing...";
+    e.target.innerHTML = `<i class="fas fa-spinner"></i>
+    &nbsp;Removing...`;
     amt = 0;
     axios
       .delete("/deleteCartItem", {
@@ -70,6 +71,8 @@ function Cart() {
         for (let i = 0; i < response.data.length; i++) {
           amt += response.data[i].price;
         }
+        e.target.innerHTML = `<i class="fas fa-trash-alt"></i>
+        &nbsp;Remove Item`;
         setamount(amt);
         localStorage.setItem(
           "bookshlf_user",
@@ -91,6 +94,8 @@ function Cart() {
       })
       .catch((err) => {
         // console.log(err.response.data);
+        e.target.innerHTML = `<i class="fas fa-trash-alt"></i>
+        &nbsp;Remove Item`
       });
   };
 

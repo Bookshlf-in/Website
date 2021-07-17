@@ -9,6 +9,7 @@
     #ffcc70 100%
   );
   display: flex;
+
   flex-direction: row;
   justify-content: center;
   font-family: "Roboto", sans-serif;
@@ -17,6 +18,8 @@
   background-color: rgb(255, 253, 253);
   margin: 20px;
   border-radius: 5px;
+  min-width: 600px;
+  height: auto;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
 .cart-container-left h1 {
