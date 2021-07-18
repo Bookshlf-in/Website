@@ -51,7 +51,7 @@ function OrderTracking() {
           Cls: "fas fa-check-circle",
           msg: "Order Cancelled",
         });
-        console.log(response.data);
+        // console.log(response.data);
         setTimeout(() => {
           history.push("/UserProfile");
         }, 5000);

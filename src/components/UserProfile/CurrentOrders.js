@@ -33,7 +33,7 @@ function CurrentOrders(props) {
         data: {orderId: ORDERID},
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setalert({
           Display: true,
           Type: "success",
