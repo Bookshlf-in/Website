@@ -136,11 +136,13 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  flex-direction: column;
 }
 .user-current-orders table {
   width: 100%;
   background-color: white;
   font-family: "Courier New", Courier, monospace;
+  margin-top: 10px;
 }
 .user-current-orders table,
 .user-current-orders table th,

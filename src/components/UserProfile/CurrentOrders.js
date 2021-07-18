@@ -1,19 +1,105 @@
 import {React, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
+import axios from "../../axios";
+import {makeStyles} from "@material-ui/core/styles";
+import Alert from "@material-ui/lab/Alert";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    padding: "20px",
+  },
+}));
+
 function CurrentOrders(props) {
   console.log(props.orders);
-  const [activeOrders, setactiveOrders] = useState([]);
-  if (props.orders && activeOrders.length === 0) {
-    setactiveOrders(
-      props.orders.filter(
-        (status) =>
-          status[status.length - 1] !== "Delivered" ||
-          status[status.length - 1] !== "Cancelled"
-      )
-    );
-  }
+  const classes = useStyles();
+  const [alert, setalert] = useState({
+    Display: false,
+    Type: "",
+    Color: "",
+    msg: "",
+  });
+  const [activeOrders, setactiveOrders] = useState(props.orders);
+  const handelCancelOrder = (ORDERID) => {
+    axios
+      .delete("/cancelOrder", {
+        data: {orderId: ORDERID},
+      })
+      .then((response) => {
+        // console.log(response.data);
+        setalert({
+          Display: true,
+          Type: "success",
+          Color: "yellowgreen",
+          msg: "Order Cancelled Successfully",
+        });
+        axios
+          .get("/getOrderList")
+          .then((response) => {
+            if (response.data) {
+              setactiveOrders(
+                response.data.filter(
+                  (order) =>
+                    order.status[order.status.length - 1] !== "Cancelled" &&
+                    order.status[order.status.length - 1] !== "Delivered"
+                )
+              );
+            }
+          })
+          .catch((error) => {});
+        setTimeout(() => {
+          setalert({
+            Display: false,
+            Type: "",
+            Color: "",
+            msg: "",
+          });
+        }, 3000);
+      })
+      .catch((error) => {
+        setalert({
+          Display: true,
+          Type: "error",
+          Color: "red",
+          msg: "Some Error Occured Try Again!",
+        });
+        setTimeout(() => {
+          setalert({
+            Display: false,
+            Type: "",
+            Color: "",
+            msg: "",
+          });
+        }, 3000);
+      });
+  };
+
   return (
     <div className="user-current-orders" id="user-current-orders">
+      <div
+        className={classes.root}
+        style={{display: alert.Display ? "flex" : "none"}}
+      >
+        <Alert
+          variant="outlined"
+          severity={alert.Type}
+          style={{
+            fontFamily: "PT Sans",
+            fontWeight: "bold",
+            color: alert.Color,
+            width: "500px",
+          }}
+        >
+          {alert.msg}
+        </Alert>
+      </div>
       <table>
         <thead>
           <tr>
@@ -25,9 +111,9 @@ function CurrentOrders(props) {
           </tr>
         </thead>
         {
-          <tbody>
-            {activeOrders ? (
-              <>
+          <>
+            {activeOrders && activeOrders.length ? (
+              <tbody>
                 {activeOrders.map((order, idx) => (
                   <tr key={idx}>
                     <td>{order._id}</td>
@@ -53,15 +139,24 @@ function CurrentOrders(props) {
                         className="fas fa-window-close"
                         id={order._id}
                         title="Remove Address"
+                        onClick={(e) => {
+                          handelCancelOrder(e.target.id);
+                        }}
                       />
                     </td>
                   </tr>
                 ))}
-              </>
+              </tbody>
             ) : (
-              <></>
+              <tr>
+                <td>No Active Orders</td>
+                <td>---</td>
+                <td>---</td>
+                <td>---</td>
+                <td>---</td>
+              </tr>
             )}
-          </tbody>
+          </>
         }
       </table>
     </div>

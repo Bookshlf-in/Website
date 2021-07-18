@@ -22,6 +22,7 @@ import Track from "../UserProfile/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/AllCategories";
 import BookDetails from "../BookDetails/BookDetails";
+import Admin from "../AdminPanel/AdminPanel";
 
 // Protected Route
 import Protected from "../Protected";
@@ -77,6 +78,9 @@ function App() {
           <Route path="/Checkout">
             <Navbar />
             <Checkout />
+          </Route>
+          <Route path="/Admin">
+            <Admin />
           </Route>
           <Route path="/">
             <Navbar />

@@ -1,0 +1,362 @@
+/* Admin-panel-css */
+.adminpanel-container {
+  display: flex;
+  background-color: black;
+  align-items: center;
+  height: 77px;
+}
+
+.adminpanel-bar {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  width: 100%;
+  padding: 0% 10%;
+}
+
+.adminpanel-bar a {
+  color: white;
+  font-size: 21px;
+}
+
+/* orders-css */
+.panel-orders-container {
+  display: flex;
+  height: 90px;
+  background-color: rgba(0, 95, 179, 0.733);
+  align-items: center;
+}
+
+.panel-orders-ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0% 15%;
+}
+
+.panel-orders-ul li {
+  color: white;
+  list-style: none;
+  font-size: 19px;
+}
+
+/* FindProfile css */
+.findprofile-cont {
+  margin: 40px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.findprofile-email-input {
+  width: 400px;
+  height: 55px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 0.1px solid rgb(240, 79, 79);
+  box-sizing: border-box;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+}
+
+.findprofile-email-input::placeholder {
+  color: rgb(240, 79, 79);
+}
+
+.findprofile-email-input:focus {
+  border: 0.5px solid rgb(97, 226, 136);
+  transition: 0.3s ease-in-out;
+}
+
+.findprofile-email-input:focus::placeholder {
+  color: rgb(97, 226, 136);
+}
+
+.findprofile-email-button {
+  padding: 15px 45px;
+  font-size: 20px;
+  margin: 0px 30px;
+  display: inline-block;
+  box-sizing: border-box;
+  outline: none;
+  background-color: black;
+  color: white;
+  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
+  border: none;
+  border-bottom: 1.8px solid whitesmoke;
+  border-right: 1.8px solid whitesmoke;
+  font-family: "Roboto", sans-serif;
+}
+
+.findprofile-email-button:hover {
+  background-color: rgb(240, 79, 79);
+  transition: 0.2s ease-in-out;
+  font-weight: bold;
+}
+
+.findprofile-profile-box{
+    margin: 60px 0px;
+    height: 300px;
+    width:300px;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* Messages css */
+.messages-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.messages-item{
+    background-color: rgb(235, 235, 235);
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+    padding: 0% 5%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 18px;
+    margin: 14px 0px;
+    
+}
+
+.messages-item-top{
+    display: flex;
+    margin-bottom: 21px;
+}
+
+.messages-item-top p{
+    width: 50%;
+}
+
+.messages-item-middle{
+    display: flex;
+    margin-bottom: 21px;
+    height: 50px;
+}
+
+.messages-item-middle p{
+    display: flex;
+    align-items: center;
+}
+
+.messages-middle-sub-containt{
+    width: 50%;
+    background-color: white;
+    margin-left: 20px;
+}
+
+.messages-item-bottom{
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-bottom-message-containt{
+    margin-top: 12px;
+    height: 160px;
+    width: 100%;
+    background-color: white;
+}
+
+
+
+/* GetOrderDeatils css */
+.god-cont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.god-search{
+  margin-bottom: 50px;
+}
+
+.god-search-id{
+  padding: 15px 20px;
+  width: 350px;
+  border: 0.1px solid rgb(240, 79, 79);
+  box-sizing: border-box;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+}
+
+.god-search-id::placeholder {
+  color: rgb(240, 79, 79);
+}
+
+.god-search-id:focus {
+  border: 0.5px solid rgb(97, 226, 136);
+  transition: 0.3s ease-in-out;
+}
+
+.god-search-id:focus::placeholder {
+  color: rgb(97, 226, 136);
+}
+
+.god-search-button{
+  padding: 15px 20px;
+  margin-left: 20px;
+  width: 150px;
+  display: inline-block;
+  box-sizing: border-box;
+  outline: none;
+  background-color: black;
+  color: white;
+  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
+  border: none;
+  border-bottom: 1.8px solid whitesmoke;
+  border-right: 1.8px solid whitesmoke;
+  font-family: "Roboto", sans-serif;
+}
+
+.god-search-button:hover {
+  background-color: rgb(240, 79, 79);
+  transition: 0.2s ease-in-out;
+  font-weight: bold;
+}
+
+.god-table table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.god-table th{
+  padding: 20px 60px;
+  text-align: left;
+  background-color: black;
+  color: white;
+
+}
+
+.god-table td {
+  padding: 55px 20px;
+  text-align: left;
+}
+
+.god-table tr:nth-child(even) {
+  background-color: #eee;
+}
+
+.god-table tr:nth-child(odd) {
+ background-color: #fff;
+}
+
+
+/* Sellers css */
+.sellers-cont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 60px 0px;
+
+}
+
+.sellers-btns{
+  display: flex;
+}
+
+.sellers-btns-button{
+  padding: 14px;
+  width: 250px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+
+}
+
+.sellers-items-outer-cont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sellers-items-cont{
+  background-color: black;
+  color: white;
+  width: 250px;
+  height: 250px;
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sellers-desc{
+  margin-top: 50px;
+}
+
+/* BookVerification css */
+
+.bv-cont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 60px 0px;
+}
+
+.bv-btns{
+  display: flex;
+}
+
+.bv-btns-button{
+  padding: 14px;
+  width: 250px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+}
+
+.bv-items-cont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bv-items-inner-cont{
+  background-color: rgb(241, 68, 68);
+  color: white;
+  width: 250px;
+  height: 250px;
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bv-item1{
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bv-item2{
+ display: flex;
+ position: relative;
+ width:100%;
+ height: 15%;
+ padding: 0px 9px;
+ display: flex;
+ justify-content: space-between;
+}

@@ -103,7 +103,7 @@ function Payment() {
             wishlist: user.wishlist,
           });
           setTimeout(() => {
-            history.push("/Track");
+            history.push("/UserProfile");
           }, 3000);
         })
         .catch((error) => {
