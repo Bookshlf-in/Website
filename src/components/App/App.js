@@ -46,7 +46,7 @@ function App() {
             <Navbar />
             <Cart />
           </Route>
-          <Route path="/Track">
+          <Route path="/Track/:orderId">
             <Navbar />
             <Track />
           </Route>

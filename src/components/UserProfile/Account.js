@@ -1,28 +1,45 @@
-import React from "react";
-
-function Account() {
+import {React, useState} from "react";
+function Account(props) {
   return (
-    <div className="user-profile-container" id ="user-profile-container">
+    <div className="user-profile-container" id="user-profile-container">
       <div className="flip-card">
         <div className="flip-card-inner">
           <div className="flip-card-front">
             <img
-              src="https://image.flaticon.com/icons/png/512/2922/2922510.png"
+              src="/images/user.svg"
               alt="Avatar"
               width="200px"
               height="200px"
             />
-            <div className="verify-tag">
-              {/* change class to verified user to make it verified */}
-              <p className="non-verified-user">Not Verified</p>
-              <h1>Aman Verma</h1>
-            </div>
+            <h1>{props.user.name ? props.user.name : ""}</h1>
+            <p
+              style={{
+                color: "blue",
+                fontFamily: "PT Sans",
+              }}
+            >
+              {props.user.email ? props.user.email : ""}
+            </p>
           </div>
           <div className="flip-card-back">
-            <h1>Aman Verma</h1>
-            <p>Student at IIIT Lucknow</p>
-            <p>Uttar Pradesh, India</p>
-            <p>User Since 2019</p>
+            <h1>{props.user.name ? props.user.name : ""}</h1>
+            <br />
+            <p>{props.user.email ? props.user.email : ""}</p>
+            <br />
+            <p>
+              {" "}
+              Roles :{" "}
+              {props.user.roles ? (
+                props.user.roles.map((role) => <b key={role}>{role + " "}</b>)
+              ) : (
+                <b></b>
+              )}
+            </p>
+            <br />
+            <p>
+              User Since :{" "}
+              {props.user.createdAt ? props.user.createdAt.substr(0, 4) : ""}
+            </p>
           </div>
         </div>
       </div>
