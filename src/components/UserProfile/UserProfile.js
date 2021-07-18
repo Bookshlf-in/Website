@@ -11,6 +11,8 @@ const UserProfile = () => {
   const [panel, setpanel] = useState(1);
   const [load, setload] = useState(true);
 
+  const [activeOrders, setactiveOrders] = useState(null);
+
   useEffect(() => {
     axios
       .get("/getUserProfile")
@@ -23,6 +25,15 @@ const UserProfile = () => {
             // console.log(response.data);
             setorders(response.data);
             setload(false);
+            if (response.data) {
+              setactiveOrders(
+                response.data.filter(
+                  (order) =>
+                    order.status[order.status.length - 1] !== "Cancelled" &&
+                    order.status[order.status.length - 1] !== "Delivered"
+                )
+              );
+            }
           })
           .catch((error) => {});
       })
@@ -62,8 +73,8 @@ const UserProfile = () => {
       <div className="Panel" style={{display: load ? "none" : "block"}}>
         {panel === 1 && userprofile ? (
           <Account user={userprofile} />
-        ) : panel === 2 && orders ? (
-          <CurrentOrder orders={orders} />
+        ) : panel === 2 && activeOrders ? (
+          <CurrentOrder orders={activeOrders} />
         ) : panel === 3 && orders ? (
           <PreviousOrder />
         ) : (
