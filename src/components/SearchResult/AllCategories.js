@@ -30,23 +30,50 @@ const AllCategories = () => {
   const [alert, setAlert] = useState("");
   // states
   const [search, setsearch] = useState("");
-  const [wish, setwish] = useState(0);
   const [books, setbooks] = useState([]);
+  const [load, setload] = useState(false);
 
   useEffect(() => {
+    const fetchdata = async () => {
+      axios
+        .get("/search", {
+          params: {
+            q: search,
+          },
+        })
+        .then((response) => {
+          response.data.sort((a, b) => {
+            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+          });
+          setbooks(response.data);
+          // console.log(response.data);
+        })
+        .catch((error) => {
+          // console.log(error.response.data);
+        });
+    };
+    fetchdata();
+  }, []);
+
+  const handelSearch = () => {
+    setload(true);
     axios
       .get("/search", {
         params: {
-          q: "hello",
+          q: search,
         },
       })
-      .then((result) => {
-        console.log(result.data);
+      .then((response) => {
+        setbooks(response.data);
+        console.log(response.data);
+        setload(false);
+        setsearch("");
       })
-      .catch((err) => {
-        console.log(err.response.data);
+      .catch((error) => {
+        console.log(error.response.data);
+        setload(false);
       });
-  }, []);
+  };
 
   // handeling wish list
   const handelWishList = (e) => {
@@ -83,8 +110,6 @@ const AllCategories = () => {
           });
         })
         .catch((error) => {
-          // console.log(error.response.data);
-
           axios
             .delete("/deleteWishlistItem", {
               data: {bookId: e.target.id},
@@ -115,6 +140,8 @@ const AllCategories = () => {
               });
             })
             .catch((err) => {
+              e.target.className = "far fa-heart";
+              e.target.style.animation = "";
               // console.log(err.response.data);
             });
         });
@@ -124,9 +151,89 @@ const AllCategories = () => {
       setAlert("Please Login!");
     }
   };
-  // temporary state
-  const bookId = "60ec0d3a152ad90022aa3c16";
 
+  const handelCart = (e) => {
+    if (user) {
+      console.log(e.target.title);
+      if (e.target.title === "F") {
+        e.target.innerHTML = "Adding...";
+        axios
+          .post("/addCartItem", {
+            bookId: e.target.id,
+          })
+          .then((response) => {
+            setOpen(true);
+            setSeverity("success");
+            setAlert(response.data.msg);
+            e.target.innerHTML = "Added In Cart";
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({
+                authHeader: user.authHeader,
+                roles: user.roles,
+                email: user.email,
+                cartitems: user.cartitems + 1,
+                wishlist: user.wishlist,
+              })
+            );
+            setUser({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems + 1,
+              wishlist: user.wishlist,
+            });
+            e.target.title = "T";
+          })
+          .catch(() => {
+            e.target.innerHTML = "Failed!";
+            setTimeout(() => {
+              e.target.innerHTML = "Add to Cart";
+            }, 2000);
+          });
+      } else {
+        e.target.innerHTML = "Removing...";
+        axios
+          .delete("/deleteCartItem", {
+            data: {bookId: e.target.id},
+          })
+          .then((response) => {
+            e.target.innerHTML = "Add to Cart";
+            setOpen(true);
+            setSeverity("success");
+            setAlert(response.data.msg);
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({
+                authHeader: user.authHeader,
+                roles: user.roles,
+                email: user.email,
+                cartitems: user.cartitems - 1,
+                wishlist: user.wishlist,
+              })
+            );
+            setUser({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems - 1,
+              wishlist: user.wishlist,
+            });
+            e.target.title = "F";
+          })
+          .catch((err) => {
+            e.target.innerHTML = "Failed!";
+            setTimeout(() => {
+              e.target.innerHTML = "Add to Cart";
+            }, 2000);
+          });
+      }
+    } else {
+      setOpen(true);
+      setSeverity("error");
+      setAlert("Please Login!");
+    }
+  };
   // Handeling snackbar closing
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -148,7 +255,8 @@ const AllCategories = () => {
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                console.log("Start Search API");
+                // console.log("Start Search API");
+                handelSearch();
               }
             }}
             placeholder="Search.."
@@ -159,117 +267,80 @@ const AllCategories = () => {
             className="Search-button"
             onClick={(e) => {
               e.preventDefault();
-              console.log("Start Search API");
+              handelSearch();
             }}
           >
-            Search
+            {load ? "Searching..." : "Search"}
           </button>
-        </div>
-        <div className="filter-result">
-          <div className="filter-order filter">
-            <select className="select">
-              <option value=""> School</option>
-              <option value="">CBSE</option>
-              <option value="">ICSC</option>
-              <option value="">State Board</option>
-              <option value="">IB</option>
-              <option value="">NCERT</option>
-            </select>
-          </div>
-          <div className="filter-order filter">
-            <select className="select">
-              <option value=""> Competitive Exams</option>
-              <option value="">JEE Mains</option>
-              <option value="">JEE Advanced</option>
-              <option value="">NEET UG</option>
-            </select>
-          </div>
-          <div className="filter-order filter">
-            <select className="select">
-              <option value="">Latest</option>
-              <option value="">High Rating</option>
-              <option value="">Low Rating</option>
-            </select>
-          </div>
-          <div className="filter-sort filter">
-            <select className="select">
-              <option value="">Default</option>
-              <option value="">Sort by popularity</option>
-              <option value="">Sort by newness</option>
-              <option value="">Price High to Low</option>
-              <option value="">Price Low to High</option>
-            </select>
-          </div>
-          <div className="filter-language filter">
-            <select className="select">
-              <option value="">English</option>
-              <option value="">Hindi</option>
-            </select>
-          </div>
         </div>
         {/* ================================================================== */}
         <div className="bs-books">
-          {/* =========================== */}
-          <div className="search-result-book">
-            <div className="search-book">
-              <div className="search-book-pic">
-                <img
-                  src="/images/samplebookmock.jpg"
-                  alt=""
-                  height="100%"
-                  width="100%"
-                  className="bs-image"
-                />
-              </div>
-              <div className="search-book-details">
-                <p className="details-para1">Book Name</p>
-                <p className="details-para3">Author Name</p>
-                <p className="details-para4">
-                  <i className="fas fa-rupee-sign" />
-                  &nbsp;Price /-
-                </p>
-                <div className="hidden-items">
-                  <p className="cart" title="Add item to cart">
-                    Add To Cart
-                  </p>
-                  <i className="fas fa-arrows-alt-h" />
-                  <i
-                    className="far fa-heart"
-                    title="Add to Wishlist"
-                    id={bookId}
-                    onClick={(e) => {
-                      handelWishList(e);
-                    }}
-                  />
+          {books ? (
+            <>
+              {books.map((book, idx) => (
+                // ==================================
+                <div className="search-result-book" key={idx}>
+                  <div className="search-book">
+                    <div className="search-book-pic">
+                      <img
+                        src={book.photo}
+                        alt={book.title}
+                        title={book.title}
+                        height="100%"
+                        width="100%"
+                        className="bs-image"
+                      />
+                    </div>
+                    <div className="search-book-details">
+                      <p className="details-para1">{book.title}</p>
+                      <p className="details-para3">
+                        {book.author} Edition : {book.editionYear}
+                      </p>
+                      <p className="details-para4">
+                        <i className="fas fa-rupee-sign" />
+                        &nbsp;{book.price}&nbsp;/-
+                      </p>
+                      <div className="hidden-items">
+                        <p
+                          className="cart"
+                          id={book._id}
+                          onClick={(e) => {
+                            handelCart(e);
+                          }}
+                          title={book.cart ? "T" : "F"}
+                        >
+                          {book.cart ? "Added In Cart" : "Add To Cart"}
+                        </p>
+                        <i className="fas fa-arrows-alt-h" />
+                        <i
+                          className={
+                            book.wishlist ? "fas fa-heart" : "far fa-heart"
+                          }
+                          title="Add to Wishlist"
+                          id={book._id}
+                          onClick={(e) => {
+                            handelWishList(e);
+                          }}
+                        />
+                      </div>
+                      <div
+                        title="View Book Details"
+                        className="book-more-details"
+                      >
+                        <Link to={`/BookDetails/${book._id}`}>
+                          More Details&nbsp;
+                          <i className="fas fa-angle-double-right" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div title="View Book Details" className="book-more-details">
-                  <Link to={`/BookDetails/${bookId}`}>
-                    More Details&nbsp;
-                    <i className="fas fa-angle-double-right" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="book-tags">
-              <span className="tag" title="tag1">
-                {"JEE Advanced"}
-              </span>
-              <span className="tag" title="tag2">
-                {"JEE Mains"}
-              </span>
-              <span className="tag" title="tag3">
-                {"Maths"}
-              </span>
-              <span className="tag" title="tag1">
-                {"JEE Advanced"}
-              </span>
-              <span className="tag" title="tag1">
-                {"JEE Advanced"}
-              </span>
-            </div>
-          </div>
-          {/* =========================== */}
+                // ================================
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         {/* ======================================================== */}
 

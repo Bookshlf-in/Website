@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 10px 0px 10px;
+  padding: 20px;
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 90px;
@@ -88,6 +88,7 @@
   letter-spacing: 2px;
   border-radius: 50px;
   cursor: pointer;
+  margin: 10px;
 }
 
 .book-more-details {
@@ -122,8 +123,8 @@
   display: flex;
   flex-direction: column;
   border: 0.2px solid rgb(226, 226, 226);
-  width: 450px;
-  height: 250px;
+  width: 550px;
+  height: 200px;
   margin: 10px;
 }
 .search-result-book:hover {
@@ -145,8 +146,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  max-height: 226px;
-  max-width: 150px;
+  height: 200px;
+  max-width: 300px;
 }
 .search-result-book .book-tags {
   padding: 0px;

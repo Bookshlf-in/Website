@@ -1,162 +1,259 @@
-import React from "react";
+import {React, useState, useEffect, useContext} from "react";
 import "./Payment.css";
-import { BrowserRouter as Link } from "react-router-dom";
+import {useHistory} from "react-router-dom";
+import axios from "../../axios";
+import {UserContext} from "../../Context/userContext";
 
 function Payment() {
-  return (
-    <div>
-      <div className="payment-cont">
-        <div className="payment-cart">
-          <div className="payment-cart-container">
-            <h4>
-              Shopping Cart{" "}
-              <span className="price">
-              <i class="fas fa-cart-plus"></i> <b>4</b>
-              </span>
-            </h4>
-            <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 1</Link> <span className="price">$15</span>
-            </p>
-            <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 2</Link> <span className="price">$5</span>
-            </p>
-            <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 3</Link> <span className="price">$8</span>
-            </p>
-            <p className="item-para">
-              <Link href="#" className="cart-item-link">Item 4</Link> <span className="price">$2</span>
-            </p>
-            <hr />
-            <p>
-              Total{" "}
-              <span className="price">
-                <b>$30</b>
-              </span>
-            </p>
-          </div>
-        </div>
-        <div className="payment-address-wrapper">
-          <form action="" className="payment-form">
-            <div className="payment-row">
-              <div className="billing-address">
-                <h3>Billing Address</h3>
-                <label for="fname">
-                  <i class="fas fa-user"></i> Full Name
-                </label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="firstname"
-                  placeholder="John M. Doe"
-                />
-                <label for="email">
-                  <i class="fas fa-envelope"></i> Email
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="john@example.com"
-                />
-                <label for="adr">
-                  <i class="far fa-address-card"></i> Address
-                </label>
-                <input
-                  type="text"
-                  id="adr"
-                  name="address"
-                  placeholder="542 W. 15th Street"
-                />
-                <label for="city">
-                  <i class="fas fa-university"></i> City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  placeholder="New York"
-                />
+  const history = useHistory();
+  const [user, setUser] = useContext(UserContext);
 
-                <div className="row">
-                  <div className="col-50">
-                    <label for="state">State</label>
-                    <input
-                      type="text"
-                      id="state"
-                      name="state"
-                      placeholder="NY"
-                    />
-                  </div>
-                  <div className="col-50">
-                    <label for="zip">Zip</label>
-                    <input
-                      type="text"
-                      id="zip"
-                      name="zip"
-                      placeholder="10001"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="payment-payment">
-                <h3>Payment</h3>
-                <label for="fname">Accepted Cards</label>
-                <div className="payment-cards">
-                  <i class="fab fa-cc-visa card-visa"></i>
-                  <i class="fab fa-cc-amex card-amex"></i>
-                  <i class="fab fa-cc-mastercard card-mastercard"></i>
-                  <i class="fab fa-cc-discover card-discover"></i>
-                </div>
-                <label for="cname">Name on Card</label>
-                <input
-                  type="text"
-                  id="cname"
-                  name="cardname"
-                  placeholder="John More Doe"
-                />
-                <label for="ccnum">Credit card number</label>
-                <input
-                  type="text"
-                  id="ccnum"
-                  name="cardnumber"
-                  placeholder="1111-2222-3333-4444"
-                />
-                <label for="expmonth">Exp Month</label>
-                <input
-                  type="text"
-                  id="expmonth"
-                  name="expmonth"
-                  placeholder="September"
-                />
-                <div className="row">
-                  <div className="col-50">
-                    <label for="expyear">Exp Year</label>
-                    <input
-                      type="text"
-                      id="expyear"
-                      name="expyear"
-                      placeholder="2018"
-                    />
-                  </div>
-                  <div className="col-50">
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" name="cvv" placeholder="352" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <label>
-              <input type="checkbox" checked="checked" name="sameadr" />{" "}
-              Shipping address same as billing
-            </label>
-            <input
-              type="submit"
-              value="Confirm Order"
-              className="payment-form-btn"
-            />
-          </form>
+  const [items, setitems] = useState({});
+  const [loader, setloader] = useState(true);
+  const [stop, setstop] = useState(0);
+  const [addressId, setaddressId] = useState("");
+  const [Adr, setAdr] = useState(null);
+
+  const [purchase, setPurchase] = useState({
+    load: false,
+    cls: "fas fa-spinner",
+    msg: "Confirm Order",
+  });
+
+  useEffect(() => {
+    axios
+      .get("/getAddressList")
+      .then((response) => {
+        response.data.sort((a, b) => {
+          return a.updatedAt < b.updatedAt
+            ? 1
+            : a.updatedAt > b.updatedAt
+            ? -1
+            : 0;
+        });
+        setAdr(response.data);
+      })
+      .catch((error) => {});
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get("/checkoutCart")
+        .then((response) => {
+          console.log(response.data);
+          console.log(response.data.items);
+          setitems(response.data);
+          for (let i = 0; i < response.data.items.length; i++) {
+            console.log(response.data.items[i]);
+            if (
+              response.data.items[i].qty < response.data.itmes[i].purchaseQty
+            ) {
+              setstop(1);
+            }
+          }
+          setloader(false);
+        })
+        .catch((error) => {
+          setloader(false);
+        });
+    };
+    fetchData();
+  }, []);
+
+  const handelPurchaseCart = () => {
+    if (stop) {
+      setPurchase({
+        load: true,
+        cls: "fas fa-exclamation-triangle",
+        msg: "Some Items have gone out of Stock Please book again!",
+      });
+    } else {
+      setPurchase({
+        load: true,
+        cls: "fas fa-spinner",
+        msg: "Processing Your Order...",
+      });
+      axios
+        .post("/purchaseCart", {
+          customerAddressId: addressId,
+        })
+        .then((response) => {
+          console.log(response.data);
+          setPurchase({
+            load: true,
+            cls: "fas fa-check-circle",
+            msg: "Order Placed Successfully!",
+          });
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: 0,
+              wishlist: user.wishlist,
+            })
+          );
+          setUser({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: 0,
+            wishlist: user.wishlist,
+          });
+          setTimeout(() => {
+            history.push("/Track");
+          }, 3000);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors[0].error);
+          setPurchase({
+            load: true,
+            cls: "fas fa-exclamation-triangle",
+            msg:
+              "Purchase Unsuccessfull! (" +
+              error.response.data.errors[0].error +
+              ")",
+          });
+        });
+    }
+  };
+
+  return (
+    <div className="payment-cont">
+      {loader ? (
+        <div
+          className="page-loader"
+          style={{display: loader ? "flex" : "none", height: "100%"}}
+        >
+          <div
+            className="page-loading"
+            style={{display: loader ? "block" : "none"}}
+          ></div>
         </div>
-      </div>
+      ) : (
+        <>
+          <div className="payment-cart">
+            <div className="payment-cart-container">
+              <h2>
+                Shopping Cart
+                <span className="price">
+                  <i className="fas fa-cart-plus" /> <b>{items.totalItems}</b>
+                </span>
+              </h2>
+              {items.totalItems ? (
+                <>
+                  {items.items.map((item) => (
+                    <p key={item._id}>
+                      {item.title}
+                      <span className="price">
+                        <b>
+                          <i className="fas fa-rupee-sign" />
+                          &nbsp;{item.price}&nbsp;X&nbsp;{item.purchaseQty}
+                        </b>
+                      </span>
+                    </p>
+                  ))}
+                </>
+              ) : (
+                <></>
+              )}
+              <hr />
+              <p>
+                Items Total
+                <span className="price">
+                  <b>
+                    <i className="fas fa-rupee-sign" />
+                    &nbsp;{items.itemsSubtotal}
+                  </b>
+                </span>
+              </p>
+              <p>
+                Shipping Charges
+                <span className="price">
+                  <b>
+                    <i className="fas fa-rupee-sign" />
+                    &nbsp;{items.shippingCharges}
+                  </b>
+                </span>
+              </p>
+              <p>
+                Payment Mode
+                <span className="price">
+                  <b>Pay On Dilvery</b>
+                </span>
+              </p>
+              <hr />
+              <p>
+                Order Total
+                <span className="price">
+                  <b>
+                    <i className="fas fa-rupee-sign" />
+                    &nbsp;{items.orderTotal}
+                  </b>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="payment-address-wrapper">
+            <form action="" className="payment-form">
+              <div className="payment-row">
+                <div className="billing-address">
+                  <h1>Billing Address</h1>
+                  <div className="add-book-field1">
+                    <select
+                      style={{
+                        height: "50px",
+                        width: "500px",
+                        outline: "none",
+                        fontFamily: "PT Sans",
+                        paddingLeft: "10px",
+                        backgroundColor: "white",
+                        border: "1px solid rgba(0, 0, 0, 0.7)",
+                      }}
+                      onChange={(e) => {
+                        setaddressId(e.target.value);
+                      }}
+                    >
+                      <option> Select Address</option>
+                      {Adr !== null ? (
+                        <>
+                          {Adr.map((adr) => (
+                            <option value={adr._id}>{adr.address}</option>
+                          ))}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <button
+                className="payment-form-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handelPurchaseCart();
+                }}
+              >
+                <i
+                  className={purchase.cls}
+                  style={
+                    purchase.cls === "fas fa-spinner"
+                      ? {
+                          display: purchase.load ? "inline-block" : "none",
+                          animation: "spin 2s linear infinite",
+                        }
+                      : {}
+                  }
+                />
+                &nbsp;{purchase.msg}
+              </button>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   );
 }

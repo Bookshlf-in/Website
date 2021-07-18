@@ -22,16 +22,12 @@ function Navbar() {
     msg: "Unsubscribe",
     color: "black",
   });
-  const [wishlist, setwishlist] = useState(0);
-  const [cartitems, setcartitems] = useState(0);
 
   useEffect(() => {
     axios
-      .get("/getWishlist")
+      .get("/countWishlistItems")
       .then((response) => {
-        // console.log(response.data.length);
-        setwishlist(response.data.length);
-        console.log(response.data.length);
+        // console.log("wishlist: ", response.data.length);
         localStorage.setItem(
           "bookshlf_user",
           JSON.stringify({
@@ -39,7 +35,7 @@ function Navbar() {
             roles: user.roles,
             email: user.email,
             cartitems: user.cartitems,
-            wishlist: response.data.length,
+            wishlist: response.data.count,
           })
         );
         setUser({
@@ -47,22 +43,34 @@ function Navbar() {
           roles: user.roles,
           email: user.email,
           cartitems: user.cartitems,
-          wishlist: response.data.length,
+          wishlist: response.data.count,
         });
-        console.log(user);
       })
-      .catch((error) => {
-        setwishlist(0);
-      });
+      .catch((error) => {});
     axios
-      .get("/getCartList")
+      .get("/countCartItems")
       .then((response) => {
-        setcartitems(response.data.length);
+        // console.log(response.data);
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: response.data.count,
+            wishlist: user.wishlist,
+          })
+        );
+        setUser({
+          authHeader: user.authHeader,
+          roles: user.roles,
+          email: user.email,
+          cartitems: response.data.count,
+          wishlist: user.wishlist,
+        });
       })
-      .catch((error) => {
-        setcartitems(0);
-      });
-  }, [user ? user.wishlist : wishlist, user ? user.cartitems : cartitems]);
+      .catch((error) => {});
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -242,7 +250,9 @@ function Navbar() {
                 <Link to="/Cart" className="cart-icon">
                   <i className="fas fa-shopping-cart" />
                 </Link>
-                <p className="Cart-items-notify-bubble">{cartitems}</p>
+                <p className="Cart-items-notify-bubble">
+                  {user ? user.cartitems : 0}
+                </p>
               </div>
             </li>
             <li>
@@ -250,7 +260,9 @@ function Navbar() {
                 <Link to="/Wishlist" className="cart-icon">
                   <i className="fas fa-heart" />
                 </Link>
-                <p className="Cart-items-notify-bubble">{wishlist}</p>
+                <p className="Cart-items-notify-bubble">
+                  {user ? user.wishlist : 0}
+                </p>
               </div>
             </li>
             <li>

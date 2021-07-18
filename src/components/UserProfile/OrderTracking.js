@@ -1,16 +1,23 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import "./OrderTracking.css";
-import {Link} from "react-router-dom";
+import axios from "../../axios";
+
+var orderID = {
+  color: "rgb(72, 72, 245)",
+  fontWeight: "bold",
+};
+var ArrivalDate = {
+  color: "rgb(45, 223, 45)",
+  fontWeight: "bold",
+};
 
 function OrderTracking() {
-  var orderID = {
-    color: "rgb(72, 72, 245)",
-    fontWeight: "bold",
-  };
-  var ArrivalDate = {
-    color: "rgb(45, 223, 45)",
-    fontWeight: "bold",
-  };
+  const [order, setorder] = useState({});
+
+  useEffect(() => {}, []);
+  const handelCancelOrder = () => {};
+  const handelReceipt = () => {};
+
   return (
     <div className="order-tracking-container-body">
       <div className="order-tracking-container">

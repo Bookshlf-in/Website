@@ -106,7 +106,7 @@
   color: rgb(35, 236, 136);
   -webkit-animation: spin 4s linear infinite;
   -moz-animation: spin 4s linear infinite;
-  animation: spin 4s linear infinite;
+  animation: spin 10s linear infinite;
 }
 @-moz-keyframes spin {
   100% {
