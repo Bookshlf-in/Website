@@ -22,7 +22,7 @@ function CurrentOrders(props) {
   const classes = useStyles();
   const [alert, setalert] = useState({
     Display: false,
-    Type: "",
+    Type: "success",
     Color: "",
     msg: "",
   });
@@ -148,13 +148,15 @@ function CurrentOrders(props) {
                 ))}
               </tbody>
             ) : (
-              <tr>
-                <td>No Active Orders</td>
-                <td>---</td>
-                <td>---</td>
-                <td>---</td>
-                <td>---</td>
-              </tr>
+              <tfoot>
+                <tr>
+                  <td>No Active Orders</td>
+                  <td>---</td>
+                  <td>---</td>
+                  <td>---</td>
+                  <td>---</td>
+                </tr>
+              </tfoot>
             )}
           </>
         }

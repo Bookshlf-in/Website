@@ -131,19 +131,19 @@ function Contact() {
         <br />
         <h2>Social Media</h2>
         <div className="social-icons">
-          <Link>
+          <Link to="">
             <i className="fab fa-facebook-f" />
           </Link>
-          <Link>
+          <Link to="https://www.instagram.com/_bookshlf/">
             <i className="fab fa-instagram" />
           </Link>
-          <Link>
+          <Link to="">
             <i className="fab fa-twitter" />
           </Link>
-          <Link>
+          <Link to="">
             <i className="fab fa-linkedin" />
           </Link>
-          <Link>
+          <Link to="https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ" target="_blank">
             <i className="fab fa-youtube" />
           </Link>
         </div>

@@ -12,6 +12,7 @@ const UserProfile = () => {
   const [load, setload] = useState(true);
 
   const [activeOrders, setactiveOrders] = useState(null);
+  const [pastOrders, setpastOrders] = useState(null);
 
   useEffect(() => {
     axios
@@ -31,6 +32,13 @@ const UserProfile = () => {
                   (order) =>
                     order.status[order.status.length - 1] !== "Cancelled" &&
                     order.status[order.status.length - 1] !== "Delivered"
+                )
+              );
+              setpastOrders(
+                response.data.filter(
+                  (order) =>
+                    order.status[order.status.length - 1] === "Cancelled" ||
+                    order.status[order.status.length - 1] === "Delivered"
                 )
               );
             }
@@ -75,8 +83,8 @@ const UserProfile = () => {
           <Account user={userprofile} />
         ) : panel === 2 && activeOrders ? (
           <CurrentOrder orders={activeOrders} />
-        ) : panel === 3 && orders ? (
-          <PreviousOrder />
+        ) : panel === 3 && pastOrders ? (
+          <PreviousOrder orders={pastOrders} />
         ) : (
           <></>
         )}
