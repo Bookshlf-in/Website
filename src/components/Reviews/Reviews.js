@@ -21,7 +21,7 @@ const Reviews = () => {
       axios
         .get("/getTopWebsiteReviews")
         .then((response) => {
-          console.log("Reviews ", response.data);
+          // console.log("Reviews ", response.data);
           setReviews(response.data);
         })
         .catch((error) => {
@@ -79,21 +79,32 @@ const Reviews = () => {
         <Grid container>
           <Grid item xs={12}>
             <div className="reviews_wrapper">
-              <div className="reviews_item">
-                <div className="ratings">
-                  {[...Array(5)].map((e, i) => {
-                    return <FaStar size={20} color="#FDCC0D" key={i} />;
-                  })}
-                </div>
-
-                <h3 className="rating_value">Very Effective</h3>
-                <p className="rating_desc">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-                  explicabo aliquam. A maiores, dolorem ad provident pariatur
-                  quas odio impedit.
-                </p>
-                <div className="Customerprofile"> lavda sur </div>
-              </div>
+              {Reviews && Reviews.length > 0 ? (
+                <>
+                  {Reviews.map((TopReview) => (
+                    <div className="reviews_item">
+                      <div className="ratings">
+                        {[...Array(TopReview.rating)].map((e, i) => {
+                          return <FaStar size={20} color="#FDCC0D" key={i} />;
+                        })}
+                      </div>
+                      <h3 className="rating_value">
+                        {TopReview.userName}
+                        {TopReview.rating <= 2 && TopReview.rating >= 1 ? (
+                          <>&#128545;</>
+                        ) : TopReview.rating <= 4 ? (
+                          <>&#128522;</>
+                        ) : (
+                          <>&#128525;</>
+                        )}
+                      </h3>
+                      <p className="rating_desc">{TopReview.review}</p>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </Grid>
           <Grid item xs={12}>
