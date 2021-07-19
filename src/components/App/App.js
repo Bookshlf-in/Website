@@ -23,6 +23,7 @@ import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/AllCategories";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
+import Blog from "../Blog/Blog";
 
 // Protected Route
 import Protected from "../Protected";
@@ -81,6 +82,9 @@ function App() {
           </Route>
           <Route path="/Admin">
             <Admin />
+          </Route>
+          <Route path="/Blog">
+            <Blog />
           </Route>
           <Route path="/">
             <Navbar />

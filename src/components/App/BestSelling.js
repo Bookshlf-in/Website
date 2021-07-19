@@ -28,9 +28,9 @@ function BestSelling() {
               
             </div>
             <div className="hidden-items">
-                  <p className="cart">Add To Cart</p>
-                  <i className="fas fa-arrows-alt-h"></i>
-                  <i className="far fa-heart"></i>
+                  {/* <p className="cart">Add To Cart</p> */}
+                  {/* <i className="fas fa-arrows-alt-h"></i> */}
+                  {/* <i className="far fa-heart"></i> */}
               </div>
           </div>
           {/* best Selling Component Ends */}
@@ -48,9 +48,9 @@ function BestSelling() {
               <p className="details-para4">$29</p>
             </div>
               <div className="hidden-items">
-                  <p className="cart">Add To Cart</p>
-                  <i className="fas fa-arrows-alt-h"></i>
-                  <i className="far fa-heart"></i>
+                  {/* <p className="cart">Add To Cart</p> */}
+                  {/* <i className="fas fa-arrows-alt-h"></i> */}
+                  {/* <i className="far fa-heart"></i> */}
               </div>
           </div>
           {/* =================== */}
@@ -65,9 +65,9 @@ function BestSelling() {
               <p className="details-para4">$29</p>
             </div>
               <div className="hidden-items">
-                  <p className="cart">Add To Cart</p>
-                  <i className="fas fa-arrows-alt-h"></i>
-                  <i className="far fa-heart"></i>
+                  {/* <p className="cart">Add To Cart</p> */}
+                  {/* <i className="fas fa-arrows-alt-h"></i> */}
+                  {/* <i className="far fa-heart"></i> */}
               </div>
           </div>
           {/* =================== */}
@@ -82,9 +82,9 @@ function BestSelling() {
               <p className="details-para4">$29</p>
             </div>
               <div className="hidden-items">
-                  <p className="cart">Add To Cart</p>
-                  <i className="fas fa-arrows-alt-h"></i>
-                  <i className="far fa-heart"></i>
+                  {/* <p className="cart">Add To Cart</p> */}
+                  {/* <i className="fas fa-arrows-alt-h"></i> */}
+                  {/* <i className="far fa-heart"></i> */}
               </div>
           </div>
           {/* =================== */}
