@@ -50,6 +50,7 @@
   padding: 20px;
   height: 230px;
   width: 240px;
+  cursor: pointer;
 }
 
 .item-p a {

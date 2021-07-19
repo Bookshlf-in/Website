@@ -199,7 +199,7 @@ function Navbar() {
                   <div className="dropdown-content">
                     <Link to="/Contact">Contact Us</Link>
                     <Link to="/SellerPanel">Sell Old Books</Link>
-                    <Link to="/">Blog</Link>
+                    <Link to="/Blog">Blog (Coming Soon)</Link>
                   </div>
                 </div>
               </div>

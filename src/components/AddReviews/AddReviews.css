@@ -81,13 +81,13 @@
   color: rgb(114, 190, 0);
 }
 .rating {
-  border: 2px solid b;
+  /* border: 2px solid black; */
   display: flex;
   padding: 20px 0px;
 }
 
 .star {
-  padding-left: 25px;
+  padding-right: 25px;
 }
 
 .rating > p {
