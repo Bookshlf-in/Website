@@ -1,8 +1,72 @@
-import React from "react";
+import {React, useState, useEffect, useContext} from "react";
 import "./Reviews.css";
 import {FaStar} from "react-icons/fa";
+import axios from "../../axios";
+import {UserContext} from "../../Context/userContext";
+import Grid from "@material-ui/core/Grid";
+import Collapse from "@material-ui/core/Collapse";
 
-function Reviews() {
+const Reviews = () => {
+  const [user, setUser] = useContext(UserContext);
+  const [Reviews, setReviews] = useState(null);
+
+  const [desc, setdesc] = useState("");
+  const [rating, setrating] = useState(null);
+  const [hover, sethover] = useState(null);
+  const [rate, setrate] = useState("Rating Required");
+  const [showreview, setshowreview] = useState(false);
+  const [load, setload] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get("/getTopWebsiteReviews")
+        .then((response) => {
+          console.log("Reviews ", response.data);
+          setReviews(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+      axios
+        .get("/getWebsiteReview")
+        .then((response) => {
+          setdesc(response.data.review);
+          setrating(response.data.rating);
+          sethover(response.data.rating);
+          setshowreview(true);
+          if (response.data.rating === 1) {
+            setrate("Hated it");
+          }
+          if (response.data.rating === 2) {
+            setrate("Don't like it");
+          }
+          if (response.data.rating === 3) {
+            setrate("Just OK");
+          }
+          if (response.data.rating === 4) {
+            setrate("Liked it");
+          }
+          if (response.data.rating === 5) {
+            setrate("Loved it");
+          }
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    };
+    fetchData();
+  }, []);
+
+  const handelAddReview = () => {
+    setload(true);
+    axios
+      .post("/updateWebsiteReview", {
+        rating: rating,
+        review: desc,
+      })
+      .then((response) => {})
+      .catch((error) => {});
+  };
   return (
     <div>
       <div className="reviews">
@@ -12,26 +76,191 @@ function Reviews() {
           This book is concerned with creating typography and is essential for
           professionals who regularly work for clients.
         </p>
+        <Grid container>
+          <Grid item xs={12}>
+            <div className="reviews_wrapper">
+              <div className="reviews_item">
+                <div className="ratings">
+                  {[...Array(5)].map((e, i) => {
+                    return <FaStar size={20} color="#FDCC0D" key={i} />;
+                  })}
+                </div>
 
-        <div className="reviews_wrapper">
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((e, i) => {
-                return <FaStar size={20} color="#FDCC0D" key={i} />;
-              })}
+                <h3 className="rating_value">Very Effective</h3>
+                <p className="rating_desc">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
+                  explicabo aliquam. A maiores, dolorem ad provident pariatur
+                  quas odio impedit.
+                </p>
+                <div className="Customerprofile"> lavda sur </div>
+              </div>
             </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div
+              className="Add-Rvw-btn"
+              style={{width: "100%", display: "flex", justifyContent: "center"}}
+            >
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (user) {
+                    setshowreview(!showreview);
+                  } else {
+                    e.target.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Please Login<i class="fas fa-exclamation"></i>`;
+                    setTimeout(() => {
+                      e.target.innerHTML = "Add Your Reviews";
+                    }, 3000);
+                  }
+                }}
+              >
+                Add Your Reviews
+              </button>
+            </div>
+            <Collapse
+              in={showreview}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                className="addreview"
+                style={{
+                  width: "600px",
+                  border: "1px solid #fff",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <div className="main-rating">
+                  <div className="desc">
+                    <div className="rating">
+                      {[...Array(5)].map((star, i) => {
+                        const ratingValue = i + 1;
+                        return (
+                          <label key={i}>
+                            <input
+                              type="radio"
+                              name="rating"
+                              value={ratingValue}
+                              id="ratingValue"
+                              onClick={() => {
+                                setrating(ratingValue);
+                                sethover(ratingValue);
+                                // console.log(ratingValue);
+                                if (ratingValue === 1) {
+                                  setrate("Hated it");
+                                }
+                                if (ratingValue === 2) {
+                                  setrate("Don't like it");
+                                }
+                                if (ratingValue === 3) {
+                                  setrate("Just OK");
+                                }
+                                if (ratingValue === 4) {
+                                  setrate("Liked it");
+                                }
+                                if (ratingValue === 5) {
+                                  setrate("Loved it");
+                                }
+                              }}
+                              onChange={(e) => {
+                                setrating(e.target.value);
+                              }}
+                            />
+                            <FaStar
+                              className="star"
+                              size={55}
+                              color={
+                                ratingValue <= (hover || rating)
+                                  ? hover <= 2
+                                    ? "red"
+                                    : hover <= 4
+                                    ? "yellowgreen"
+                                    : "#66ff00"
+                                  : "#ffffff"
+                              }
+                              onMouseEnter={() => sethover(ratingValue)}
+                              onMouseLeave={() => sethover(ratingValue)}
+                            />
+                          </label>
+                        );
+                      })}
+                      <p
+                        style={{
+                          color:
+                            rating <= 2
+                              ? "red"
+                              : rating <= 4
+                              ? "yellowgreen"
+                              : "#66ff00",
+                        }}
+                      >
+                        {rate}&nbsp;
+                        {rating <= 2 && rating >= 1 ? (
+                          <>&#128545;</>
+                        ) : rating <= 4 ? (
+                          <>&#128522;</>
+                        ) : (
+                          <>&#128525;</>
+                        )}
+                      </p>
+                    </div>
+                    <form className="desc-form">
+                      <textarea
+                        type="text"
+                        value={desc}
+                        onChange={(e) => {
+                          setdesc(e.target.value);
+                        }}
+                        className="desc-input"
+                        id="desc"
+                        placeholder="Your Reviews on Website..."
+                      />
+                      <p>
+                        <i className="fas fa-lightbulb"></i> Most helpful
+                        reviews have 100 words or more.
+                      </p>
+                    </form>
+                  </div>
+                </div>
 
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"> lavda sur </div>
-          </div>
-        </div>
+                <div className="btn">
+                  <i
+                    className="fas fa-circle-notch"
+                    style={{
+                      display: load ? "inline-block" : "none",
+                      animation: "spin 2s linear infinite",
+                    }}
+                  />
+                  &nbsp;
+                  <button
+                    type="submit"
+                    className="btn-submit"
+                    style={{
+                      fontSize: "14px",
+                      textAlign: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handelAddReview();
+                    }}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </Collapse>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );
-}
+};
 export default Reviews;

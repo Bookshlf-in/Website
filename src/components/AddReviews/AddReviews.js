@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import {React, useState} from "react";
 import "./AddReviews.css";
-import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
-import { Star } from "@material-ui/icons";
+import {Link} from "react-router-dom";
+import {FaStar} from "react-icons/fa";
+import {Star} from "@material-ui/icons";
 function Reviews(props) {
   const [desc, setdesc] = useState("");
   const [rating, setrating] = useState(null);
@@ -24,29 +24,31 @@ function Reviews(props) {
     rate = "Loved it";
   }
 
-  const submit=(e)=>{
-      e.preventDefault();
-      if(!rating||!desc){
-          alert("Rating and description can not be blanked");
-      }
-      props.addrating(rating,desc);
-      setrating("");
-      setdesc("");
-  }
+  const submit = (e) => {
+    e.preventDefault();
+    if (!rating || !desc) {
+      alert("Rating and description can not be blanked");
+    }
+    props.addrating(rating, desc);
+    setrating("");
+    setdesc("");
+  };
 
   return (
     <div className="addreviews">
-        <div className="review-by">
-              <p><i class="fas fa-comment-dots"></i>&nbsp;Add Your Review</p>
-          </div>
+      <div className="review-by">
+        <p>
+          <i class="fas fa-comment-dots"></i>&nbsp;Add Your Review
+        </p>
+      </div>
       <div className="addreview">
-          
         <div className="review-header">
           <p>
-          <i class="fas fa-info-circle"></i>&nbsp;Reviews are public and editable. Everyone can see your Google
-            Account name and photo. Developers can also see your country and
-            device information (such as language, model and OS version) and may
-            use this information to respond to you.
+            <i class="fas fa-info-circle"></i>&nbsp;Reviews are public and
+            editable. Everyone can see your Google Account name and photo.
+            Developers can also see your country and device information (such as
+            language, model and OS version) and may use this information to
+            respond to you.
           </p>
         </div>
         <div className="review-main">
@@ -60,15 +62,18 @@ function Reviews(props) {
                 <label htmlFor="desc" className="desc-label"></label>
                 <textarea
                   type="text"
-                    value={desc}
-                    onChange={(e) => {
-                      setdesc(e.target.value);
-                    }}
+                  value={desc}
+                  onChange={(e) => {
+                    setdesc(e.target.value);
+                  }}
                   className="desc-input"
                   id="desc"
                   placeholder="Tell others what you think about this book. Would you recommened it, and why?"
                 />
-                <p><i class="fas fa-lightbulb"></i> Most helpful reviews have 100 words or more.</p>
+                <p>
+                  <i class="fas fa-lightbulb"></i> Most helpful reviews have 100
+                  words or more.
+                </p>
               </form>
             </div>
             <div className="rating">
@@ -82,15 +87,15 @@ function Reviews(props) {
                       value={ratingValue}
                       id="ratingValue"
                       onClick={() => setrating(ratingValue)}
-                      onChange={(e)=>{setrating(e.target.value)}}
+                      onChange={(e) => {
+                        setrating(e.target.value);
+                      }}
                     />
                     <FaStar
                       className="star"
                       size={55}
                       color={
-                        ratingValue <= (hover || rating)
-                          ? "#3498db"
-                          : "#e4e5e9"
+                        ratingValue <= (hover || rating) ? "#3498db" : "#e4e5e9"
                       }
                       onMouseEnter={() => sethover(ratingValue)}
                       onMouseLeave={() => sethover(null)}
@@ -104,7 +109,9 @@ function Reviews(props) {
         </div>
         <div className="btn">
           <form onSubmit="">
-            <button type="submit" className="btn-submit">Submit</button>
+            <button type="submit" className="btn-submit">
+              Submit
+            </button>
           </form>
         </div>
       </div>
