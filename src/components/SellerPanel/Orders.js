@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Orders() {
+const Orders = (props) => {
   const classes = useStyles();
   const [panel, setpanel] = useState("1");
   const [alert, setalert] = useState({
@@ -26,57 +26,41 @@ function Orders() {
     type: "success",
     message: "",
   });
-  const [Adr, setAdr] = useState(null);
-  const [bookDetails, setbookDetails] = useState([]);
+  const [Adr, setAdr] = useState(props.address);
+  const [bookDetails, setbookDetails] = useState(props.books);
   const [sold, setsold] = useState([]);
   const [approved, setapproved] = useState([]);
   const [notsold, setnotsold] = useState([]);
   const [update, setupdate] = useState(false);
   const [bookprops, setbookprops] = useState({});
 
-  // fetching adresses and Book Details in sync
   useEffect(() => {
-    axios
-      .get("/getAddressList")
-      .then((addresses) => {
-        setAdr(addresses.data);
-        axios
-          .get("/getBookList")
-          .then((response) => {
-            setbookDetails(response.data);
-            bookSorting(response.data, addresses.data);
-          })
-          .catch(() => {});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  // sorting books on basis of sold, approved, not approved
-  const bookSorting = (books, adr) => {
-    for (let i = 0; i < books.length; i++) {
-      let tmp = books[i].pickupAddressId;
-      for (let j = 0; j < adr.length; j++) {
-        if (adr[j]._id === tmp) {
-          books[i].addressVal = adr[j].address;
-          tmp = -1;
-          break;
+    // sorting books on basis of sold, approved, not approved
+    const bookSorting = async (books, adr) => {
+      for (let i = 0; i < books.length; i++) {
+        let tmp = books[i].pickupAddressId;
+        for (let j = 0; j < adr.length; j++) {
+          if (adr[j]._id === tmp) {
+            books[i].addressVal = adr[j].address;
+            tmp = -1;
+            break;
+          }
+          if (tmp === -1) break;
         }
-        if (tmp === -1) break;
       }
-    }
 
-    for (let i = 0; i < books.length; i++) {
-      if (books[i].isApproved === true) {
-        approved.push(books[i]);
-        setapproved(approved);
-      } else {
-        notsold.push(books[i]);
-        setnotsold(notsold);
+      for (let i = 0; i < books.length; i++) {
+        if (books[i].isApproved === true) {
+          approved.push(books[i]);
+          setapproved(approved);
+        } else {
+          notsold.push(books[i]);
+          setnotsold(notsold);
+        }
       }
-    }
-  };
+    };
+    bookSorting(props.books, props.address);
+  }, []);
 
   // deleting books
   const handelBookDelete = (e) => {
@@ -161,6 +145,31 @@ function Orders() {
                 <th>Remove</th>
               </tr>
             </thead>
+            <tbody>
+              {approved && approved.length ? (
+                <>
+                  {approved.map((book) => (
+                    <tr>
+                      <td>{book._id}</td>
+                      <td>{book.title}</td>
+                      <td>{book.ISBN}</td>
+                      <td>{book.description}</td>
+                      <td>&#8377;{" " + book.price + "/-"}</td>
+                      <td>{book.qty}</td>
+                      <td>
+                        <i
+                          className="fas fa-window-close"
+                          id={book._id}
+                          onClick={handelBookDelete}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              ) : (
+                <></>
+              )}
+            </tbody>
           </table>
         ) : (
           <table>
@@ -177,14 +186,14 @@ function Orders() {
               </tr>
             </thead>
             <tbody>
-              {notsold.length > 0 ? (
+              {notsold && notsold.length > 0 ? (
                 <>
                   {notsold.map((book) => (
                     <tr>
                       <th>{book._id}</th>
                       <th>{book.title}</th>
                       <th>{book.description}</th>
-                      <th>{book.price}/-</th>
+                      <th>&#8377;{" " + book.price + "/-"}</th>
                       <th>{book.addressVal}</th>
                       <th
                         style={{
@@ -223,7 +232,14 @@ function Orders() {
                 </>
               ) : (
                 <tr>
-                  <td>loading...</td>
+                  <td>No Books</td>
+                  <td>---</td>
+                  <td>---</td>
+                  <td>---</td>
+                  <td>---</td>
+                  <td>---</td>
+                  <td>---</td>
+                  <td>---</td>
                 </tr>
               )}
             </tbody>
@@ -249,5 +265,5 @@ function Orders() {
       {update ? <UpdateBook book={bookprops} /> : <></>}
     </div>
   );
-}
+};
 export default Orders;

@@ -30,51 +30,79 @@ const AllCategories = () => {
   const [alert, setAlert] = useState("");
   // states
   const [search, setsearch] = useState("");
-  const [books, setbooks] = useState([]);
+  const [books, setbooks] = useState(null);
   const [load, setload] = useState(false);
+  const [page, setpage] = useState(1);
+  const [totalPages, settotalPages] = useState(null);
+  const [tag, settag] = useState(null);
+  const [Searching, setSearching] = useState(false);
 
   useEffect(() => {
     const fetchdata = async () => {
       axios
-        .get("/search", {
-          params: {
-            q: search,
-          },
-        })
+        .get(`/search?q=tag:ALL&page=1`)
         .then((response) => {
-          response.data.sort((a, b) => {
-            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-          });
-          setbooks(response.data);
-          // console.log(response.data);
+          // console.log(response.data.data);
+          setbooks(
+            response.data.data.sort((a, b) => {
+              return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+            })
+          );
+          settotalPages(response.data.totalPages);
         })
-        .catch((error) => {
-          // console.log(error.response.data);
-        });
+        .catch((error) => {});
     };
     fetchdata();
   }, []);
 
   const handelSearch = () => {
-    setload(true);
+    setpage(1);
+    setSearching(true);
     axios
-      .get("/search", {
-        params: {
-          q: search,
-        },
-      })
+      .get(`/search?q=tag:${search}&page=1`)
       .then((response) => {
-        setbooks(response.data);
         console.log(response.data);
-        setload(false);
+        setbooks(
+          response.data.data.sort((a, b) => {
+            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+          })
+        );
+        settotalPages(response.data.totalPages);
+        setSearching(false);
         setsearch("");
       })
       .catch((error) => {
-        console.log(error.response.data);
-        setload(false);
+        // console.log(error.response.data);
+        // setload(false);
       });
   };
 
+  const LoadMore = () => {
+    setload(true);
+    console.log(totalPages);
+    if (page + 1 <= totalPages) {
+      const fetchdata = async () => {
+        console.log(`/search?q=tag:ALL&page=${page + 1}`);
+        axios
+          .get(`/search?q=tag:ALL&page=${page + 1}`)
+          .then((response) => {
+            setpage(page + 1);
+            console.log(books.concat(response.data.data));
+            setbooks(
+              books.concat(response.data.data).sort((a, b) => {
+                return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+              })
+            );
+            settotalPages(response.data.totalPages);
+            setload(false);
+          })
+          .catch((error) => {});
+      };
+      fetchdata();
+    } else {
+      setload(false);
+    }
+  };
   // handeling wish list
   const handelWishList = (e) => {
     if (user) {
@@ -259,7 +287,7 @@ const AllCategories = () => {
                 handelSearch();
               }
             }}
-            placeholder="Search.."
+            placeholder="Search book by Tags..."
             className="AllCategories-input"
           />
           <button
@@ -270,90 +298,100 @@ const AllCategories = () => {
               handelSearch();
             }}
           >
-            {load ? "Searching..." : "Search"}
+            {Searching ? "Searching..." : "Search"}
           </button>
         </div>
         {/* ================================================================== */}
         <div className="bs-books">
           {books ? (
             <>
-              {books.map((book, idx) => (
-                // ==================================
-                <div className="search-result-book" key={idx}>
-                  <div className="search-book">
-                    <div className="search-book-pic">
-                      <img
-                        src={book.photo}
-                        alt={book.title}
-                        title={book.title}
-                        height="100%"
-                        width="100%"
-                        className="bs-image"
-                      />
-                    </div>
-                    <div className="search-book-details">
-                      <p className="details-para1">{book.title}</p>
-                      <p className="details-para3">
-                        {book.author} Edition : {book.editionYear}
-                      </p>
-                      <p className="details-para4">
-                        <i className="fas fa-rupee-sign" />
-                        &nbsp;{book.price}&nbsp;/-
-                      </p>
-                      <div className="hidden-items">
-                        <p
-                          className="cart"
-                          id={book._id}
-                          onClick={(e) => {
-                            handelCart(e);
-                          }}
-                          title={book.cart ? "T" : "F"}
-                        >
-                          {book.cart ? "Added In Cart" : "Add To Cart"}
-                        </p>
-                        <i className="fas fa-arrows-alt-h" />
-                        <i
-                          className={
-                            book.wishlist ? "fas fa-heart" : "far fa-heart"
-                          }
-                          title="Add to Wishlist"
-                          id={book._id}
-                          onClick={(e) => {
-                            handelWishList(e);
-                          }}
+              {books.length ? (
+                books.map((book, idx) => (
+                  // ==================================
+                  <div className="search-result-book" key={idx}>
+                    <div className="search-book">
+                      <div className="search-book-pic">
+                        <img
+                          src={book.photo}
+                          alt={book.title}
+                          title={book.title}
+                          height="100%"
+                          width="100%"
+                          className="bs-image"
                         />
                       </div>
-                      <div
-                        title="View Book Details"
-                        className="book-more-details"
-                      >
-                        <Link to={`/BookDetails/${book._id}`}>
-                          More Details&nbsp;
-                          <i className="fas fa-angle-double-right" />
-                        </Link>
+                      <div className="search-book-details">
+                        <p className="details-para1">{book.title}</p>
+                        <p className="details-para3">
+                          {book.author} Edition : {book.editionYear}
+                        </p>
+                        <p className="details-para4">
+                          <i className="fas fa-rupee-sign" />
+                          &nbsp;{book.price}&nbsp;/-
+                        </p>
+                        <div className="hidden-items">
+                          <p
+                            className="cart"
+                            id={book._id}
+                            onClick={(e) => {
+                              handelCart(e);
+                            }}
+                            title={book.cart ? "T" : "F"}
+                          >
+                            {book.cart ? "Added In Cart" : "Add To Cart"}
+                          </p>
+                          <i className="fas fa-arrows-alt-h" />
+                          <i
+                            className={
+                              book.wishlist ? "fas fa-heart" : "far fa-heart"
+                            }
+                            title="Add to Wishlist"
+                            id={book._id}
+                            onClick={(e) => {
+                              handelWishList(e);
+                            }}
+                          />
+                        </div>
+                        <div
+                          title="View Book Details"
+                          className="book-more-details"
+                        >
+                          <Link to={`/BookDetails/${book._id}`}>
+                            More Details&nbsp;
+                            <i className="fas fa-angle-double-right" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                // ================================
-              ))}
+                  // ================================
+                ))
+              ) : (
+                <h1>No Results Found</h1>
+              )}
             </>
           ) : (
-            <></>
+            <h1>Loading...</h1>
           )}
         </div>
         {/* ======================================================== */}
 
         {/* more loading */}
         <div className="loadMore">
-          <button className="loadMore-btn">
+          <button
+            className="loadMore-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              LoadMore();
+            }}
+          >
             More&nbsp;
             <i className="fas fa-caret-down" />
             &nbsp;
             <i
               className="fas fa-circle-notch"
               style={{
-                display: true ? "none" : "inline-block",
+                display: load ? "inline-block" : "none",
                 animation: "spin 2s linear infinite",
               }}
             />

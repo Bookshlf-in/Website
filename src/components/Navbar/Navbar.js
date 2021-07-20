@@ -87,7 +87,7 @@ function Navbar() {
       history.push("/Cart");
     } else if (e === "3") {
       setAnchorEl(null);
-      history.push("/"); // wishlist to be added soon
+      history.push("/Wishlist"); 
     } else if (e === "4") {
       setAnchorEl(null);
       history.push("/SellerPanel");

@@ -249,8 +249,9 @@
   color: rgb(16, 106, 250);
 }
 .book-purchase-container input {
-  width: 150px;
+  min-width: 150px;
   height: 50px;
+  padding-right: 20px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   font-size: 18px;
@@ -258,6 +259,7 @@
   border-radius: 0px 15px 15px 0px;
   color: white;
   text-align: center;
+  cursor: pointer;
 }
 .book-purchase-container span {
   height: 50px;
@@ -278,6 +280,7 @@
   justify-content: center;
   align-items: center;
   margin: 10px;
+  cursor: pointer;
 }
 .wish-list input,
 .wish-list span {

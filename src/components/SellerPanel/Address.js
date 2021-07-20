@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Address() {
+const Address = (props) => {
   const classes = useStyles();
 
   // functionality states
@@ -37,31 +37,10 @@ function Address() {
   const [City, setCity] = useState("City");
   const [State, setState] = useState("State");
   const [ZipCode, setZipCode] = useState("");
-  const [Adr, setAdr] = useState(null);
-  const [update, setupdate] = useState(0);
-
-  useEffect(() => {
-    axios
-      .get("/getAddressList")
-      .then((response) => {
-        response.data.sort((a, b) => {
-          return a.updatedAt < b.updatedAt
-            ? 1
-            : a.updatedAt > b.updatedAt
-            ? -1
-            : 0;
-        });
-        setAdr(response.data);
-        // console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [update]);
+  const [Adr, setAdr] = useState(props.address);
 
   // handeling address register request
   const handelRegister = () => {
-    // console.log(Label, Address, City, State, ZipCode, PhoneNo);
     setloading(true);
     if (
       Label !== "Address Type" &&
@@ -96,8 +75,20 @@ function Address() {
               Color: "",
               msg: "",
             });
-            setupdate(!update);
-          }, 5000);
+          }, 3000);
+          axios
+            .get("/getAddressList")
+            .then((response) => {
+              response.data.sort((a, b) => {
+                return a.updatedAt < b.updatedAt
+                  ? 1
+                  : a.updatedAt > b.updatedAt
+                  ? -1
+                  : 0;
+              });
+              setAdr(response.data);
+            })
+            .catch((error) => {});
         })
         .catch((error) => {
           if (error.response) {
@@ -115,7 +106,7 @@ function Address() {
                 Color: "",
                 msg: "",
               });
-            }, 5000);
+            }, 3000);
           }
           setloading(false);
         });
@@ -134,7 +125,7 @@ function Address() {
           Color: "",
           msg: "",
         });
-      }, 5000);
+      }, 3000);
     }
   };
 
@@ -160,8 +151,8 @@ function Address() {
             Color: "",
             msg: "",
           });
-        }, 5000);
-        setupdate(!update);
+        }, 3000);
+        setAdr(Adr.filter((address) => address._id !== e.target.id));
       })
       .catch((error) => {
         console.log(error.response.data.errors);
@@ -374,5 +365,5 @@ function Address() {
       </div>
     </div>
   );
-}
+};
 export default Address;

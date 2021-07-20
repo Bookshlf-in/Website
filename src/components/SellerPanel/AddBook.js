@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddBook() {
+const AddBook = (props) => {
   const classes = useStyles();
 
   // book Details states
@@ -42,28 +42,12 @@ function AddBook() {
   const [Photo, setPhoto] = useState(null);
   const [Image, setImage] = useState(null);
   const [load, setload] = useState(false);
-  const [Adr, setAdr] = useState(null);
+  const [Adr, setAdr] = useState(props.address);
   const [alert, setalert] = useState({
     show: false,
     type: "success",
     msg: "",
   });
-
-  useEffect(() => {
-    axios
-      .get("/getAddressList")
-      .then((response) => {
-        response.data.sort((a, b) => {
-          return a.updatedAt < b.updatedAt
-            ? 1
-            : a.updatedAt > b.updatedAt
-            ? -1
-            : 0;
-        });
-        setAdr(response.data);
-      })
-      .catch((error) => {});
-  }, []);
 
   const handelUpload = (e) => {
     setPhoto(Array.from(e.target.files));
