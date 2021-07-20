@@ -28,7 +28,7 @@ const uploadform = {
   flexDirection: "column",
 };
 
-function AccountDetails() {
+const AccountDetails = (props) => {
   // all seller profile details here
   const [load, setload] = useState(0);
   const [Photo, setPhoto] = useState(null);
@@ -39,43 +39,18 @@ function AccountDetails() {
   const [Image, setImage] = useState("/images/user.svg");
   const [open, setopen] = useState(false);
   const [sellerDetails, setsellerDetails] = useState({
-    Name: "",
-    Intro: "",
-    Photo: "",
-    NoOfBooksSold: 0,
-    Rating: 0,
-    NoOfRatings: 0,
-    NoOfReviews: 0,
-    IsVerified: false,
-    ID: "",
-    CreatedAt: "",
-    UpdatedAt: "",
+    Name: props.seller.name,
+    Intro: props.seller.intro,
+    Photo: props.seller.photo,
+    NoOfBooksSold: props.seller.noOfBooksSold,
+    Rating: props.seller.rating,
+    NoOfRatings: props.seller.noOfRatings,
+    NoOfReviews: props.seller.noOfReviews,
+    IsVerified: props.seller.isVerified,
+    ID: props.seller._id,
+    CreatedAt: props.seller.createdAt,
+    UpdatedAt: props.seller.updatedAt,
   });
-
-  useEffect(() => {
-    axios
-      .get("/getSellerProfile")
-      .then((response) => {
-        setsellerDetails({
-          Name: response.data.name,
-          Intro: response.data.intro,
-          Photo: response.data.photo,
-          NoOfBooksSold: response.data.noOfBooksSold,
-          Rating: response.data.rating,
-          NoOfRatings: response.data.noOfRatings,
-          NoOfReviews: response.data.noOfReviews,
-          IsVerified: response.data.isVerified,
-          ID: response.data._id,
-          CreatedAt: response.data.createdAt,
-          UpdatedAt: response.data.updatedAt,
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
-        }
-      });
-  }, [load]);
 
   const handelUpload = (e) => {
     if (e.target.files[0]) {
@@ -266,5 +241,5 @@ function AccountDetails() {
       </div>
     </div>
   );
-}
+};
 export default AccountDetails;

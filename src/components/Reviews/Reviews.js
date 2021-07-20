@@ -21,7 +21,6 @@ const Reviews = () => {
       axios
         .get("/getTopWebsiteReviews")
         .then((response) => {
-          // console.log("Reviews ", response.data);
           setReviews(response.data);
         })
         .catch((error) => {

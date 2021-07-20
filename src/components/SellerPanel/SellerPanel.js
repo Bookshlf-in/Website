@@ -8,10 +8,11 @@ import AddBook from "./AddBook";
 import Register from "./SellerRegister";
 import {UserContext} from "../../Context/userContext";
 import {Link, useHistory} from "react-router-dom";
+import axios from "../../axios";
 
-function SellerPanel() {
+const SellerPanel = () => {
   // context states
-  const [user,] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const history = useHistory();
 
   // component states
@@ -20,21 +21,45 @@ function SellerPanel() {
 
   // loader states
   const [loader, setloader] = useState(true);
-  const [play, setPlay] = useState(true);
+  const [sellerDetails, setsellerDetails] = useState(null);
+  const [Adr, setAdr] = useState(null);
+  const [bookDetails, setbookDetails] = useState(null);
 
+  // getting sellerDetails
   useEffect(() => {
-    if (user !== null && user !== undefined) {
-      setRole(user.roles.includes("seller"));
+    const fetchData = async () => {
+      axios
+        .get("/getSellerProfile")
+        .then((response) => {
+          setsellerDetails(response.data);
+          if (user.roles.includes("seller")) setRole(true);
+          axios
+            .get("/getAddressList")
+            .then((response) => {
+              response.data.sort((a, b) => {
+                return a.updatedAt < b.updatedAt
+                  ? 1
+                  : a.updatedAt > b.updatedAt
+                  ? -1
+                  : 0;
+              });
+              setAdr(response.data);
+              axios
+                .get("/getBookList")
+                .then((response) => {
+                  setbookDetails(response.data);
+                  setloader(false);
+                })
+                .catch((error) => {});
+            })
+            .catch((error) => {});
+        })
+        .catch((error) => {});
+    };
+    if (user) {
+      fetchData();
     }
-  }, [user, role]);
-
-  // loading Effect for better UI Performance
-  useEffect(() => {
-    setTimeout(() => {
-      setloader(false);
-      setPlay(false);
-    }, 1500);
-  }, [play]);
+  }, []);
 
   return (
     <div>
@@ -48,7 +73,7 @@ function SellerPanel() {
 
       {/* Components */}
       <div style={{display: loader ? "none" : "block"}}>
-        {role === false ? (
+        {role === false || user === null ? (
           <Register />
         ) : (
           <div className="SellerPanel-container">
@@ -94,16 +119,16 @@ function SellerPanel() {
                 </div>
               </div>
             </div>
-            {panel === 1 ? (
-              <AccountDetails />
-            ) : panel === 2 && user !== null ? (
-              <Orders />
-            ) : panel === 3 && user !== null ? (
-              <Address />
-            ) : panel === 4 && user !== null ? (
+            {panel === 1 && sellerDetails ? (
+              <AccountDetails seller={sellerDetails} />
+            ) : panel === 2 && bookDetails && Adr ? (
+              <Orders books={bookDetails} address={Adr} />
+            ) : panel === 3 && Adr ? (
+              <Address address={Adr} />
+            ) : panel === 4 ? (
               <Reviews />
-            ) : user !== null ? (
-              <AddBook />
+            ) : Adr ? (
+              <AddBook address={Adr} />
             ) : (
               <div></div>
             )}
@@ -112,5 +137,5 @@ function SellerPanel() {
       </div>
     </div>
   );
-}
+};
 export default SellerPanel;
