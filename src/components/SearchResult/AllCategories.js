@@ -30,39 +30,32 @@ const AllCategories = () => {
   const [alert, setAlert] = useState("");
   // states
   const [search, setsearch] = useState("");
-  const [books, setbooks] = useState([]);
+  const [books, setbooks] = useState(null);
   const [load, setload] = useState(false);
+  const [page, setpage] = useState(1);
+  const [totalPages, settotalPages] = useState(null);
 
   useEffect(() => {
     const fetchdata = async () => {
       axios
-        .get("/search", {
-          params: {
-            q: search,
-          },
-        })
+        .get(`/search?q=tag:ALL&page=1`)
         .then((response) => {
-          response.data.sort((a, b) => {
-            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-          });
-          setbooks(response.data);
-          // console.log(response.data);
+          // console.log(response.data.data);
+          setbooks(
+            response.data.data.sort((a, b) => {
+              return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+            })
+          );
+          settotalPages(response.data.totalPages);
         })
-        .catch((error) => {
-          // console.log(error.response.data);
-        });
+        .catch((error) => {});
     };
     fetchdata();
   }, []);
 
   const handelSearch = () => {
-    setload(true);
     axios
-      .get("/search", {
-        params: {
-          q: search,
-        },
-      })
+      .get("/search")
       .then((response) => {
         setbooks(response.data);
         console.log(response.data);
@@ -75,6 +68,32 @@ const AllCategories = () => {
       });
   };
 
+  const LoadMore = () => {
+    setload(true);
+    console.log(totalPages);
+    if (page + 1 <= totalPages) {
+      const fetchdata = async () => {
+        console.log(`/search?q=tag:ALL&page=${page + 1}`);
+        axios
+          .get(`/search?q=tag:ALL&page=${page + 1}`)
+          .then((response) => {
+            setpage(page + 1);
+            console.log(books.concat(response.data.data));
+            setbooks(
+              books.concat(response.data.data).sort((a, b) => {
+                return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+              })
+            );
+            settotalPages(response.data.totalPages);
+            setload(false);
+          })
+          .catch((error) => {});
+      };
+      fetchdata();
+    } else {
+      setload(false);
+    }
+  };
   // handeling wish list
   const handelWishList = (e) => {
     if (user) {
@@ -346,14 +365,20 @@ const AllCategories = () => {
 
         {/* more loading */}
         <div className="loadMore">
-          <button className="loadMore-btn">
+          <button
+            className="loadMore-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              LoadMore();
+            }}
+          >
             More&nbsp;
             <i className="fas fa-caret-down" />
             &nbsp;
             <i
               className="fas fa-circle-notch"
               style={{
-                display: true ? "none" : "inline-block",
+                display: load ? "inline-block" : "none",
                 animation: "spin 2s linear infinite",
               }}
             />

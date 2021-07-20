@@ -58,6 +58,8 @@ const SellerPanel = () => {
     };
     if (user) {
       fetchData();
+    }else{
+      setloader(false);
     }
   }, []);
 
