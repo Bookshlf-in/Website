@@ -76,7 +76,7 @@ function App() {
             <Navbar />
             <Wishlist />
           </Route>
-          <Route path="/Checkout">
+          <Route path="/Checkout/:type">
             <Navbar />
             <Checkout />
           </Route>

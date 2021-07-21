@@ -1,6 +1,6 @@
 import {React, useState, useEffect, useContext} from "react";
 import "./BookDetails.css";
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams, useHistory} from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
 import BookDesc from "./BookDesc";
@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BookDetails = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const params = useParams();
   const bookId = params.bookId;
   const [book, setbook] = useState({});
@@ -254,7 +255,12 @@ const BookDetails = (props) => {
                 value={cart ? "Remove from Cart" : "Add to Cart"}
               />
             </div>
-            <div className="buy-now-button">
+            <div
+              className="buy-now-button"
+              onClick={() => {
+                history.push(`/Checkout/${bookId}`);
+              }}
+            >
               <span>
                 <i className="fas fa-shopping-basket" />
               </span>

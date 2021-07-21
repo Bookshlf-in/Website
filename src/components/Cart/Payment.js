@@ -1,11 +1,14 @@
 import {React, useState, useEffect, useContext} from "react";
 import "./Payment.css";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import axios from "../../axios";
 import {UserContext} from "../../Context/userContext";
 
 function Payment() {
   const history = useHistory();
+  const params = useParams();
+  const [type, settype] = useState(params.type);
+  const [book, setbook] = useState({});
   const [user, setUser] = useContext(UserContext);
 
   const [items, setitems] = useState({});
@@ -38,25 +41,43 @@ function Payment() {
 
   useEffect(() => {
     const fetchData = async () => {
-      axios
-        .get("/checkoutCart")
-        .then((response) => {
-          console.log(response.data);
-          console.log(response.data.items);
-          setitems(response.data);
-          for (let i = 0; i < response.data.items.length; i++) {
-            console.log(response.data.items[i]);
-            if (
-              response.data.items[i].qty < response.data.itmes[i].purchaseQty
-            ) {
+      if (type === "cart") {
+        axios
+          .get("/checkoutCart")
+          .then((response) => {
+            console.log(response.data);
+            console.log(response.data.items);
+            setitems(response.data);
+            for (let i = 0; i < response.data.items.length; i++) {
+              console.log(response.data.items[i]);
+              if (
+                response.data.items[i].qty < response.data.items[i].purchaseQty
+              ) {
+                setstop(1);
+              }
+            }
+            setloader(false);
+          })
+          .catch((error) => {
+            setloader(false);
+          });
+      } else {
+        console.log(`/checkoutbook?bookId=${type}&purchaseQty=1`);
+        axios
+          .get(`/checkoutbook?bookId=${type}&purchaseQty=1`)
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.qty < response.data.purchaseQty) {
               setstop(1);
             }
-          }
-          setloader(false);
-        })
-        .catch((error) => {
-          setloader(false);
-        });
+            setitems(response.data);
+
+            setloader(false);
+          })
+          .catch((error) => {
+            setloader(false);
+          });
+      }
     };
     fetchData();
   }, []);
@@ -120,6 +141,47 @@ function Payment() {
     }
   };
 
+  const handelPurchaseBook = () => {
+    if (stop) {
+      setPurchase({
+        load: true,
+        cls: "fas fa-exclamation-triangle",
+        msg: "Some Items have gone out of Stock Please book again!",
+      });
+    } else {
+      setPurchase({
+        load: true,
+        cls: "fas fa-spinner",
+        msg: "Processing Your Order...",
+      });
+      axios
+        .post("/purchaseBook", {
+          bookId: type,
+          customerAddressId: addressId,
+          purchaseQty: 1,
+        })
+        .then((response) => {
+          console.log(response.data);
+          setPurchase({
+            load: true,
+            cls: "fas fa-check-circle",
+            msg: "Order Placed Successfully!",
+          });
+          setTimeout(() => {
+            history.push("/UserProfile");
+          }, 3000);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          setPurchase({
+            load: true,
+            cls: "fas fa-exclamation-triangle",
+            msg: "Purchase Unsuccessfull!",
+          });
+        });
+    }
+  };
+
   return (
     <div className="payment-cont">
       {loader ? (
@@ -144,17 +206,34 @@ function Payment() {
               </h2>
               {items.totalItems ? (
                 <>
-                  {items.items.map((item) => (
-                    <p key={item._id}>
-                      {item.title}
-                      <span className="price">
-                        <b>
-                          <i className="fas fa-rupee-sign" />
-                          &nbsp;{item.price}&nbsp;X&nbsp;{item.purchaseQty}
-                        </b>
-                      </span>
-                    </p>
-                  ))}
+                  {type === "cart" ? (
+                    <>
+                      {items.items.map((item) => (
+                        <p key={item._id}>
+                          {item.title}
+                          <span className="price">
+                            <b>
+                              <i className="fas fa-rupee-sign" />
+                              &nbsp;{item.price}&nbsp;X&nbsp;{item.purchaseQty}
+                            </b>
+                          </span>
+                        </p>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      <p>
+                        {items.item.title}
+                        <span className="price">
+                          <b>
+                            <i className="fas fa-rupee-sign" />
+                            &nbsp;{items.item.price}&nbsp;X&nbsp;
+                            {1}
+                          </b>
+                        </span>
+                      </p>
+                    </>
+                  )}
                 </>
               ) : (
                 <></>
@@ -196,6 +275,7 @@ function Payment() {
               </p>
             </div>
           </div>
+
           <div className="payment-address-wrapper">
             <form action="" className="payment-form">
               <div className="payment-row">
@@ -219,8 +299,10 @@ function Payment() {
                       <option> Select Address</option>
                       {Adr !== null ? (
                         <>
-                          {Adr.map((adr) => (
-                            <option value={adr._id}>{adr.address}</option>
+                          {Adr.map((adr, idx) => (
+                            <option value={adr._id} key={idx}>
+                              {adr.address}
+                            </option>
                           ))}
                         </>
                       ) : (
@@ -234,7 +316,11 @@ function Payment() {
                 className="payment-form-btn"
                 onClick={(e) => {
                   e.preventDefault();
-                  handelPurchaseCart();
+                  if (type === "cart") {
+                    handelPurchaseCart();
+                  } else {
+                    handelPurchaseBook();
+                  }
                 }}
               >
                 <i
