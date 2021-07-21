@@ -24,6 +24,8 @@ const SellerPanel = () => {
   const [sellerDetails, setsellerDetails] = useState(null);
   const [Adr, setAdr] = useState(null);
   const [bookDetails, setbookDetails] = useState(null);
+  const [sellerId, setsellerId] = useState(null);
+  const [sellerReview, setsellerReview] = useState(null);
 
   // getting sellerDetails
   useEffect(() => {
@@ -32,6 +34,7 @@ const SellerPanel = () => {
         .get("/getSellerProfile")
         .then((response) => {
           setsellerDetails(response.data);
+          setsellerId(response.data._id);
           if (user.roles.includes("seller")) setRole(true);
           axios
             .get("/getAddressList")
@@ -48,7 +51,16 @@ const SellerPanel = () => {
                 .get("/getBookList")
                 .then((response) => {
                   setbookDetails(response.data);
-                  setloader(false);
+                  axios
+                    .get("/getSellerReviews", {
+                      params: sellerId,
+                    })
+                    .then((response) => {
+                      console.log(response.data);
+                      setsellerReview(response.data);
+                      setloader(false);
+                    })
+                    .catch((error) => {});
                 })
                 .catch((error) => {});
             })
@@ -58,7 +70,7 @@ const SellerPanel = () => {
     };
     if (user) {
       fetchData();
-    }else{
+    } else {
       setloader(false);
     }
   }, []);
@@ -127,8 +139,8 @@ const SellerPanel = () => {
               <Orders books={bookDetails} address={Adr} />
             ) : panel === 3 && Adr ? (
               <Address address={Adr} />
-            ) : panel === 4 ? (
-              <Reviews />
+            ) : panel === 4 && sellerReview ? (
+              <Reviews reviews={sellerReview} />
             ) : Adr ? (
               <AddBook address={Adr} />
             ) : (

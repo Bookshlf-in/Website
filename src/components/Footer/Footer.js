@@ -221,8 +221,8 @@ function Footer() {
               <h4>Explore</h4>
               <Link to="/About">About Us</Link>
               <Link to="/">Sitemap</Link>
-              <Link to="/">Sign in</Link>
-              <Link to="/">Join Us</Link>
+              <Link to="/Login">Sign in</Link>
+              <Link to="/Signup">Join Us</Link>
             </div>
             <div className="footer-link-items">
               <h4>Customer Service</h4>

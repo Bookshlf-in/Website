@@ -1,121 +1,62 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import {React, useState} from "react";
 import {FaStar} from "react-icons/fa";
-function SellerReviews(props) {
-  var rating = 4.5;
+const SellerReviews = (props) => {
+  console.log(props.reviews);
   return (
-    <div style={{display: props.visible}}>
+    <div>
       <div className="your-rating-as-seller">
         <h1>
+          <br />
           Overall Rating :{" "}
-          {[...Array(parseInt(rating))].map(() => {
-            return <i className="fas fa-star"></i>;
-          })}
+          {props.reviews.rating > 0 ? (
+            [...Array(parseInt(props.reviews.rating))].map(() => {
+              return <i className="fas fa-star"></i>;
+            })
+          ) : (
+            <></>
+          )}
           {[...Array(1)].map(() => {
-            if (Number.isInteger(rating)) {
+            if (Number.isInteger(props.reviews.rating)) {
               return <i></i>;
             }
             return <i className="fas fa-star-half-alt"></i>;
           })}
-          ({rating})
+          ({props.reviews.rating})
         </h1>
+        <h3>Total Ratings : {props.reviews.noOfRatings}</h3>
+        <h3>Total Reviews : {props.reviews.noOfReviews}</h3>
       </div>
       <div className="seller-reviews">
         <p className="reviewed-title">Reviews from Your Customers</p>
         <div className="reviews_wrapper">
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((star) => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
+          {props.reviews.data ? (
+            <>
+              {props.reviews.data.length > 0 ? (
+                <>
+                  {props.reviews.data.map((review) => (
+                    <div className="reviews_item">
+                      <div className="ratings">
+                        {[...Array(parseInt(review.rating))].map(() => {
+                          return <FaStar size={20} color="#FDCC0D" />;
+                        })}
+                      </div>
 
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"> lavda sur </div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((star) => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((star) => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((star) => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((star) => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
-          <div className="reviews_item">
-            <div className="ratings">
-              {[...Array(5)].map((star) => {
-                return <FaStar size={20} color="#FDCC0D" />;
-              })}
-            </div>
-
-            <h3 className="rating_value">Very Effective</h3>
-            <p className="rating_desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-              explicabo aliquam. A maiores, dolorem ad provident pariatur quas
-              odio impedit.
-            </p>
-            <div className="Customerprofile"></div>
-          </div>
+                      <h3 className="rating_value">{review.rating}</h3>
+                      <p className="rating_desc">{review.review}</p>
+                      <div className="Customerprofile"> lavda sur </div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <h3>No Reviews.</h3>
+              )}
+            </>
+          ) : (
+            <h2>Loading...</h2>
+          )}
         </div>
       </div>
     </div>
   );
-}
+};
 export default SellerReviews;
