@@ -100,7 +100,8 @@ function Cart() {
   };
 
   const handelUpdateCart = (e) => {
-    e.target.innerText = "Checking Out...";
+    e.target.innerHTML = "";
+    e.target.innerHTML = "Checking Out...";
     if (cart.length > 0) {
       for (let i = 0; i < cart.length; i++) {
         const update = async () => {
@@ -112,7 +113,7 @@ function Cart() {
             .then(() => {
               console.log(i);
               if (i === cart.length - 1) {
-                history.push("/Checkout");
+                history.push("/Checkout/cart");
               }
             })
             .catch(() => {});

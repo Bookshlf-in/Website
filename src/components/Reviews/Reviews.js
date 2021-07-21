@@ -117,14 +117,19 @@ const Reviews = () => {
                   if (user) {
                     setshowreview(!showreview);
                   } else {
-                    e.target.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Please Login<i class="fas fa-exclamation"></i>`;
+                    e.target.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Please Login <i class="fas fa-exclamation"></i>`;
                     setTimeout(() => {
                       e.target.innerHTML = "Add Your Reviews";
                     }, 3000);
                   }
                 }}
               >
-                Add Your Reviews
+                Add Your Reviews&nbsp;
+                <i
+                  className={
+                    showreview ? "fas fa-chevron-up" : "fas fa-chevron-down"
+                  }
+                />
               </button>
             </div>
             <Collapse
