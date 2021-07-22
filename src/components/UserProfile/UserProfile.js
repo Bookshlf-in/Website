@@ -3,6 +3,7 @@ import "./UserProfile.css";
 import Account from "./Account";
 import CurrentOrder from "./CurrentOrders";
 import PreviousOrder from "./PreviousOrders";
+import Address from "./Address";
 import axios from "../../axios";
 
 const UserProfile = () => {
@@ -13,6 +14,7 @@ const UserProfile = () => {
 
   const [activeOrders, setactiveOrders] = useState(null);
   const [pastOrders, setpastOrders] = useState(null);
+  const [Adr, setAdr] = useState(null);
 
   useEffect(() => {
     axios
@@ -25,7 +27,7 @@ const UserProfile = () => {
           .then((response) => {
             // console.log(response.data);
             setorders(response.data);
-            setload(false);
+
             if (response.data) {
               setactiveOrders(
                 response.data.filter(
@@ -42,6 +44,20 @@ const UserProfile = () => {
                 )
               );
             }
+            axios
+              .get("/getAddressList")
+              .then((response) => {
+                response.data.sort((a, b) => {
+                  return a.updatedAt < b.updatedAt
+                    ? 1
+                    : a.updatedAt > b.updatedAt
+                    ? -1
+                    : 0;
+                });
+                setAdr(response.data);
+                setload(false);
+              })
+              .catch((error) => {});
           })
           .catch((error) => {});
       })
@@ -68,6 +84,10 @@ const UserProfile = () => {
           <i className="fas fa-clipboard-check" />
           &nbsp;&nbsp;Previous&nbsp;Orders
         </div>
+        <div className="Completed-orders" onClick={() => setpanel(4)}>
+          <i className="fas fa-map-marker" />
+          &nbsp;&nbsp;Address
+        </div>
       </div>
       <div
         className="page-loader"
@@ -78,13 +98,22 @@ const UserProfile = () => {
           style={{display: load ? "block" : "none"}}
         ></div>
       </div>
-      <div className="Panel" style={{display: load ? "none" : "block"}}>
+      <div
+        className="Panel"
+        style={{
+          display: load ? "none" : "block",
+          minHeight: "calc(100vh - 139px)",
+          width: "100%",
+        }}
+      >
         {panel === 1 && userprofile ? (
           <Account user={userprofile} />
         ) : panel === 2 && activeOrders ? (
           <CurrentOrder orders={activeOrders} />
         ) : panel === 3 && pastOrders ? (
           <PreviousOrder orders={pastOrders} />
+        ) : panel === 4 && Adr ? (
+          <Address address={Adr} />
         ) : (
           <></>
         )}

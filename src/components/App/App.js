@@ -64,7 +64,7 @@ function App() {
             <Navbar />
             <SellerPanel />
           </Route>
-          <Route path="/SearchResult">
+          <Route path="/SearchResult/:query">
             <Navbar />
             <SearchResult />
           </Route>
