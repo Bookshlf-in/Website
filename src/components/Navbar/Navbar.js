@@ -16,13 +16,13 @@ function Navbar() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
+  const [Search, setSearch] = useState("");
   const [Logged, setLogged] = useState(user ? true : false);
   const [alert, setalert] = useState({
     show: false,
     msg: "Unsubscribe",
     color: "black",
   });
-
   useEffect(() => {
     axios
       .get("/countWishlistItems")
@@ -87,7 +87,7 @@ function Navbar() {
       history.push("/Cart");
     } else if (e === "3") {
       setAnchorEl(null);
-      history.push("/Wishlist"); 
+      history.push("/Wishlist");
     } else if (e === "4") {
       setAnchorEl(null);
       history.push("/SellerPanel");
@@ -231,8 +231,13 @@ function Navbar() {
             <li>
               <div className="navbar-items-chip">
                 <div className="navbar-items-chip-searchbox">
-                  <input type="text" />
-                  <Link to="/SearchResult">
+                  <input
+                    type="text"
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <Link
+                    to={`/SearchResult/${Search === "" ? "books" : Search}`}
+                  >
                     <div className="navbar-searchbox-submit">
                       <img
                         src="/images/loupe.svg"

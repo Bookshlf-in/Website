@@ -1,6 +1,6 @@
 import {React, useState, useEffect, useContext} from "react";
 import "./AllCategories.css";
-import {Link} from "react-router-dom";
+import {Link, useParams, useHistory} from "react-router-dom";
 import {UserContext} from "../../Context/userContext";
 import axios from "../../axios";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 const AllCategories = () => {
   const classes = useStyles();
+  const params = useParams();
+  const history = useHistory();
   const [user, setUser] = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState("success");
@@ -34,15 +36,16 @@ const AllCategories = () => {
   const [load, setload] = useState(false);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(null);
-  const [tag, settag] = useState(null);
-  const [Searching, setSearching] = useState(false);
 
   useEffect(() => {
     const fetchdata = async () => {
+      // console.log(params.query);
+      setsearch(params.query);
+      setbooks(null);
       axios
-        .get(`/search?q=tag:ALL&page=1`)
+        .get(`/search?q=${params.query}`)
         .then((response) => {
-          // console.log(response.data.data);
+          // console.log(response.data);
           setbooks(
             response.data.data.sort((a, b) => {
               return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
@@ -53,28 +56,15 @@ const AllCategories = () => {
         .catch((error) => {});
     };
     fetchdata();
-  }, []);
+  }, [params.query]);
 
   const handelSearch = () => {
     setpage(1);
-    setSearching(true);
-    axios
-      .get(`/search?q=tag:${search}&page=1`)
-      .then((response) => {
-        console.log(response.data);
-        setbooks(
-          response.data.data.sort((a, b) => {
-            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-          })
-        );
-        settotalPages(response.data.totalPages);
-        setSearching(false);
-        setsearch("");
-      })
-      .catch((error) => {
-        // console.log(error.response.data);
-        // setload(false);
-      });
+    if (search === "") {
+    } else {
+      history.push(`/SearchResult/${search}`);
+      setsearch(params.query);
+    }
   };
 
   const LoadMore = () => {
@@ -298,7 +288,7 @@ const AllCategories = () => {
               handelSearch();
             }}
           >
-            {Searching ? "Searching..." : "Search"}
+            Search
           </button>
         </div>
         {/* ================================================================== */}
