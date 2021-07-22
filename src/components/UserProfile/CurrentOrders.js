@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CurrentOrders(props) {
-  console.log(props.orders);
+  // console.log(props.orders);
   const classes = useStyles();
   const [alert, setalert] = useState({
     Display: false,

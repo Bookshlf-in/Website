@@ -323,7 +323,7 @@ function Navbar() {
                           handleClose("1");
                         }}
                       >
-                        Profile
+                        Profile Panel
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}

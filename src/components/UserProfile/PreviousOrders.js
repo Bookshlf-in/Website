@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 
 const PreviousOrders = (props) => {
   const [pastOrders, setpastOrders] = useState(props.orders);
+  // console.log(pastOrders);
   return (
     <div className="user-previous-orders" id="user-previous-orders">
       <table>
@@ -48,16 +49,33 @@ const PreviousOrders = (props) => {
                     backgroundColor:
                       order.status[order.status.length - 1] === "Delivered"
                         ? "yellowgreen"
-                        : "red",
+                        : order.status[order.status.length - 1] === "Cancelled"
+                        ? "red"
+                        : "rgb(255, 176, 48)",
                     color: "white",
                   }}
                 >
-                  {order.status[order.status.length - 1]}
+                  {order.status[order.status.length - 1] === "Delivered" ? (
+                    <>
+                      <i className="fas fa-check-circle" />
+                      {order.status[order.status.length - 1]}
+                    </>
+                  ) : order.status[order.status.length - 1] === "Cancelled" ? (
+                    <>
+                      <i className="fas fa-times-circle" />
+                      {order.status[order.status.length - 1]}
+                    </>
+                  ) : (
+                    order.status[order.status.length - 1]
+                  )}
                 </td>
                 <td>
                   {order.status[order.status.length - 1] === "Delivered" ? (
-                    <Link className="tracking-order-link" to="/AddReview">
-                      Review this Order
+                    <Link
+                      className="tracking-order-link"
+                      to={`/AddReview/${order._id}`}
+                    >
+                      Review&nbsp;this&nbsp;Order
                     </Link>
                   ) : (
                     "---"

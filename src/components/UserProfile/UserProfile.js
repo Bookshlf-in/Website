@@ -30,18 +30,20 @@ const UserProfile = () => {
 
             if (response.data) {
               setactiveOrders(
-                response.data.filter(
-                  (order) =>
+                response.data.filter((order) => {
+                  return (
                     order.status[order.status.length - 1] !== "Cancelled" &&
                     order.status[order.status.length - 1] !== "Delivered"
-                )
+                  );
+                })
               );
               setpastOrders(
-                response.data.filter(
-                  (order) =>
+                response.data.filter((order) => {
+                  return (
                     order.status[order.status.length - 1] === "Cancelled" ||
                     order.status[order.status.length - 1] === "Delivered"
-                )
+                  );
+                })
               );
             }
             axios
