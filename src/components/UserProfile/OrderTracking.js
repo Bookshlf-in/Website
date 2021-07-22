@@ -147,8 +147,14 @@ function OrderTracking() {
               {/* change className to = "far fa-circle for empty circle" */}
               <i className="fas fa-check-circle" />
               {/* add below two lines when checkpoint is reached for sonar effect */}
-              <i className="far fa-circle sonar-wave1 wave" />
-              <i className="far fa-circle sonar-wave2 wave" />
+              {order.progress < 25 ? (
+                <>
+                  <i className="far fa-circle sonar-wave1 wave" />
+                  <i className="far fa-circle sonar-wave2 wave" />
+                </>
+              ) : (
+                <></>
+              )}
               {/* change className to = "fas fa-check-circle" for filled circle */}
             </span>
             <span className="progress-bar">
@@ -160,60 +166,84 @@ function OrderTracking() {
             */}
               <div
                 className={`filled-${
-                  order.progress >= 25 ? 100 : 50
+                  order.progress <= 25 ? 50 : order.progress >= 50 ? 100 : 75
                 } animated-filled`}
               ></div>
             </span>
             <span className="checkpoint">
               {/* change className to = "far fa-circle for empty circle" */}
-              <i className="far fa-circle" />
+              <i
+                className={
+                  order.progress >= 50 ? "fas fa-check-circle" : "far fa-circle"
+                }
+              />
               {/* add below two lines when checkpoint is reached for sonar effect */}
-              {/* 
-                <i className="far fa-circle sonar-wave1 wave" />
-                <i className="far fa-circle sonar-wave2 wave" /> 
-            */}
-            </span>
-            <span className="progress-bar">
-              <div
-                className={`filled-${
-                  order.progress <= 25
-                    ? 0
-                    : order.progress < 50 && order.progress >= 25
-                    ? 50
-                    : 100
-                } animated-filled`}
-              ></div>
-            </span>
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i className="far fa-circle" />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {/* 
-                <i className="far fa-circle sonar-wave1 wave" />
-                <i className="far fa-circle sonar-wave2 wave" /> 
-            */}
+              {order.progress >= 50 && order.progress < 75 ? (
+                <>
+                  <i className="far fa-circle sonar-wave1 wave" />
+                  <i className="far fa-circle sonar-wave2 wave" />
+                </>
+              ) : (
+                <></>
+              )}
             </span>
             <span className="progress-bar">
               <div
                 className={`filled-${
                   order.progress <= 50
                     ? 0
-                    : order.progress < 75 && order.progress >= 50
-                    ? 50
-                    : order.progress === 100
-                    ? 100
-                    : 90
+                    : order.progress >= 50 && order.progress <= 75
+                    ? 75
+                    : 100
                 } animated-filled`}
               ></div>
             </span>
             <span className="checkpoint">
               {/* change className to = "far fa-circle for empty circle" */}
-              <i className="far fa-circle" />
+              <i
+                className={
+                  order.progress >= 75 ? "fas fa-check-circle" : "far fa-circle"
+                }
+              />
               {/* add below two lines when checkpoint is reached for sonar effect */}
-              {/* 
-                <i className="far fa-circle sonar-wave1 wave" />
-                <i className="far fa-circle sonar-wave2 wave" /> 
-            */}
+              {order.progress >= 75 && order.progress < 100 ? (
+                <>
+                  <i className="far fa-circle sonar-wave1 wave" />
+                  <i className="far fa-circle sonar-wave2 wave" />
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+            <span className="progress-bar">
+              <div
+                className={`filled-${
+                  order.progress < 75
+                    ? 0
+                    : order.progress >= 75 && order.progress < 100
+                    ? 75
+                    : 100
+                } animated-filled`}
+              ></div>
+            </span>
+            <span className="checkpoint">
+              {/* change className to = "far fa-circle for empty circle" */}
+              <i
+                className={
+                  order.progress >= 100
+                    ? "fas fa-check-circle"
+                    : "far fa-circle"
+                }
+              />
+              {/* add below two lines when checkpoint is reached for sonar effect */}
+              {order.progress === 100 ? (
+                <>
+                  <i className="far fa-circle sonar-wave1 wave" />
+                  <i className="far fa-circle sonar-wave2 wave" />
+                </>
+              ) : (
+                <></>
+              )}
             </span>
           </div>
           <div className="order-status-icons">
@@ -242,7 +272,7 @@ function OrderTracking() {
             <p
               style={{
                 color:
-                  order.progress >= 25
+                  order.progress >= 50
                     ? "rgb(47, 218, 47)"
                     : "rgb(110,110,110)",
               }}
@@ -251,7 +281,7 @@ function OrderTracking() {
                 className="fas fa-dolly-flatbed"
                 style={{
                   color:
-                    order.progress >= 100
+                    order.progress >= 50
                       ? "rgb(47, 218, 47)"
                       : "rgb(110,110,110)",
                 }}
@@ -266,7 +296,7 @@ function OrderTracking() {
             <p
               style={{
                 color:
-                  order.progress >= 50
+                  order.progress >= 75
                     ? "rgb(47, 218, 47)"
                     : "rgb(110,110,110)",
               }}
@@ -275,7 +305,7 @@ function OrderTracking() {
                 className="fas fa-shipping-fast"
                 style={{
                   color:
-                    order.progress >= 100
+                    order.progress >= 75
                       ? "rgb(47, 218, 47)"
                       : "rgb(110,110,110)",
                 }}
@@ -290,7 +320,7 @@ function OrderTracking() {
             <p
               style={{
                 color:
-                  order.progress >= 100
+                  order.progress === 100
                     ? "rgb(47, 218, 47)"
                     : "rgb(110,110,110)",
               }}
@@ -299,7 +329,7 @@ function OrderTracking() {
                 className="fas fa-check-double"
                 style={{
                   color:
-                    order.progress >= 100
+                    order.progress === 100
                       ? "rgb(47, 218, 47)"
                       : "rgb(110,110,110)",
                 }}

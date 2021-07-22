@@ -18,6 +18,7 @@ import Checkout from "../Cart/Payment";
 import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../AddReviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
+import Receipt from "../UserProfile/Receipt";
 import Track from "../UserProfile/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/AllCategories";
@@ -52,7 +53,7 @@ function App() {
             <Navbar />
             <Track />
           </Route>
-          <Route path="/AddReview">
+          <Route path="/AddReview/:orderId">
             <Navbar />
             <AddReviews />
           </Route>
@@ -85,6 +86,9 @@ function App() {
           </Route>
           <Route path="/Blog">
             <Blog />
+          </Route>
+          <Route path="/Receipt">
+            <Receipt />
           </Route>
           <Route path="/">
             <Navbar />
