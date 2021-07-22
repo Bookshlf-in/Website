@@ -98,7 +98,8 @@
 
 .btn {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-submit {
@@ -110,11 +111,14 @@
   font-size: 18px;
   text-decoration: none;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btn-submit:hover {
   background-color: #258bcf;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-  width: 160px;
+  width: 120px;
   transition: 0.5s;
 }
 
