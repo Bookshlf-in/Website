@@ -72,7 +72,7 @@ To start contributing, follow the below guidelines:
 
 **2.** Follow the Environment setup above.
 
-**3.** Create a branch with `git checkout -b branchname` where the name is something descriptive about the issue your branch will fix.
+**3.** Checkout into the dev branch. Create a branch from the dev branch with `git checkout -b branchname` where the name is something descriptive about the issue your branch will fix.
 
      $ git checkout -b <branch_name>
 
@@ -86,18 +86,18 @@ To start contributing, follow the below guidelines:
 
      $ git push origin <your_branch_name>
 
-**7.** When you're ready to submit your pull request, merge the latest version of main, to make sure your branch is up to date:
+**7.** When you're ready to submit your pull request, merge the latest version of dev, to make sure your branch is up to date:
 
 ```
-git checkout main
-git pull origin main
+git checkout dev
+git pull origin dev
 git checkout <your_branch_name>
-git merge main
+git merge dev
 ```
 
 **8.** Resolve any merge conflicts if they exist, test to make sure your feature branch still works correctly, and then `git push origin <your_branch_name>`
 
-**9.** On Github, create a pull request from your feature branch. Make sure to summarize your changes you made, and if there's anything specific you want reviewed or tested, note that in the PR.
+**9.** On Github, create a pull request from your feature branch. Always make the PR against the dev branch! Make sure to summarize your changes you made, and if there's anything specific you want reviewed or tested, note that in the PR.
 
 **10.** When approved, your branch will be merged into master and you're done! Thanks for contributing! :)
 
