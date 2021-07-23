@@ -1,48 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Sidenav.css";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import SideNavLink from "./SideNavLink";
 
-function closeNav() {
+export function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 
 function Sidenav() {
+  const [Search, setSearch] = useState("");
+
   return (
     <div className="main-sidenav">
       <div id="mySidenav" className="sidenav">
         <Link to="" className="closebtn" onClick={closeNav}>
           &times;
         </Link>
-        <Link to="">
-          <i className="fas fa-home"></i>&nbsp;Home
-        </Link>
         {/* hidden until screen size is smaller than 650px */}
-        <Link to="" className="Profile">
-          <input type="text" style={{width: "150px", height: "40px"}} />
-          &nbsp;<i className="fas fa-search"></i>
-        </Link>
-        <Link to="" className="Profile">
-          Profile&nbsp;<i className="fas fa-user-circle"></i>
-        </Link>
-        <Link className="Profile" to="/Cart">
-          Cart&nbsp;<i className="fas fa-shopping-cart"></i>
-        </Link>
+        <div className="sidenav-searchbar Profile">
+          <input type="text" onChange={(e) => setSearch(e.target.value)} />
+          <SideNavLink
+            to={`/SearchResult/${Search === "" ? "books" : Search}`}
+            iconClass="fas fa-search"
+          />
+        </div>
         {/* ends here */}
-        <Link to="">
-          Categories&nbsp;<i className="fas fa-angle-right"></i>
-        </Link>
-        <Link to="">
-          Contribute&nbsp;<i className="fas fa-hands-helping"></i>
-        </Link>
-        <Link to="">
-          Blog&nbsp;<i className="fab fa-blogger"></i>
-        </Link>
-        <Link to="/Contact">
-          Contact&nbsp;Us&nbsp;<i className="fas fa-headset"></i>
-        </Link>
-        <Link to="">
-          About&nbsp;Us&nbsp;<i className="fas fa-info-circle"></i>
-        </Link>
+        <SideNavLink to="/" label="Home" iconClass="fas fa-home" />
+        {/* hidden until screen size is smaller than 650px */}
+        <SideNavLink
+          to="/UserProfile"
+          label="Profile"
+          iconClass="fas fa-user-circle"
+          isProfile={true}
+        />
+        <SideNavLink
+          to="/Cart"
+          iconClass="fas fa-shopping-cart"
+          isProfile={true}
+        />
+        {/* ends here */}
+        <SideNavLink to="/Categories" iconClass="fas fa-angle-right" />
+        <SideNavLink to="/Contribute" iconClass="fas fa-hands-helping" />
+        <SideNavLink to="/Blog" iconClass="fab fa-blogger" />
+        <SideNavLink to="/Contact" iconClass="fas fa-headset" />
+        <SideNavLink to="/About" iconClass="fas fa-info-circle" />
       </div>
     </div>
   );
