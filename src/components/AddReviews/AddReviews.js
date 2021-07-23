@@ -11,6 +11,8 @@ const Reviews = () => {
   const [hover, sethover] = useState(null);
   const [order, setorder] = useState(null);
   const [rate, setrate] = useState("Rating Required");
+  const [reviewId, setreviewId] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       axios
@@ -18,33 +20,113 @@ const Reviews = () => {
           params: {orderId: params.orderId},
         })
         .then((response) => {
-          // console.log(response.data);
           setorder(response.data);
         })
         .catch((error) => {
           console.log(error.response.data);
         });
+      axios
+        .get("/getReview", {
+          params: {orderId: params.orderId},
+        })
+        .then((response) => {
+          console.log(response.data);
+          setdesc(response.data.review);
+          setrating(response.data.rating);
+          sethover(response.data.rating);
+          setreviewId(response.data._id);
+        })
+        .catch((error) => {});
     };
     fetchData();
   }, []);
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(rating, " ", desc);
-    // axios
-    //   .post("/addReview", {
-    //     orderId: params.orderId,
-    //     review: desc,
-    //     rating: rating,
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response.data);
-    //   });
+    console.log(rating, desc, reviewId);
+    if (rating !== null && desc !== "") {
+      if (reviewId === null) {
+        e.target.innerHTML = "Submitting...";
+        axios
+          .post("/addReview", {
+            orderId: params.orderId,
+            review: desc,
+            rating: rating,
+          })
+          .then((response) => {
+            console.log(response.data);
+            axios
+              .get("/getReview", {
+                params: {orderId: params.orderId},
+              })
+              .then((response) => {
+                console.log(response.data);
+                setdesc(response.data.review);
+                setrating(response.data.rating);
+                sethover(response.data.rating);
+                setreviewId(response.data._id);
+              })
+              .catch((error) => {});
+            e.target.innerHTML = response.data.msg;
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          })
+          .catch((error) => {
+            e.target.innerHTML = "Error Occured!";
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          });
+      } else {
+        e.target.innerHTML = "Updating...";
+        axios
+          .post("/updateReview", {
+            reviewId: reviewId,
+            rating: rating,
+            review: desc,
+          })
+          .then((response) => {
+            console.log(response.data);
+            e.target.innerHTML = response.data.msg;
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          })
+          .catch((error) => {
+            e.target.innerHTML = "Error Occured!";
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          });
+      }
+    } else {
+      e.target.innerHTML = "Error!";
+      setTimeout(() => {
+        e.target.innerHTML = "Submit";
+      }, 2000);
+    }
   };
 
+  const Delete = (e) => {
+    e.preventDefault();
+    if (reviewId != null) {
+      e.target.innerHTML = "Deleting...";
+      axios
+        .delete("/deleteReview", {
+          data: {reviewId: reviewId},
+        })
+        .then((response) => {
+          e.target.innerHTML = "Review Deleted";
+          setdesc("");
+          setrating(null);
+          setreviewId(null);
+          setTimeout(() => {
+            e.target.innerHTML = `<i class="fas fa-trash-alt"></i>`;
+          }, 2000);
+        });
+    }
+  };
   return (
     <div className="addreviews">
       <div className="review-by">
@@ -166,7 +248,7 @@ const Reviews = () => {
           </div>
         </div>
         <div className="btn">
-          <form>
+          <form style={{display: " flex"}}>
             <button
               type="submit"
               className="btn-submit"
@@ -175,6 +257,16 @@ const Reviews = () => {
               }}
             >
               Submit
+            </button>
+            <button
+              type="submit"
+              className="btn-delete"
+              onClick={(e) => {
+                Delete(e);
+              }}
+              title="Delete Review"
+            >
+              <i className="fas fa-trash-alt"></i>
             </button>
           </form>
         </div>

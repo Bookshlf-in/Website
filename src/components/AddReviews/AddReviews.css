@@ -103,7 +103,7 @@
 }
 
 .btn-submit {
-  width: 100px;
+  width: 160px;
   height: 40px;
   background-color: #65b8f0;
   color: white;
@@ -118,7 +118,7 @@
 .btn-submit:hover {
   background-color: #258bcf;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-  width: 120px;
+  width: 180px;
   transition: 0.5s;
 }
 
@@ -129,4 +129,22 @@ input[type="radio"] {
 .star {
   cursor: pointer;
   transition: color 200ms;
+}
+.btn-delete {
+  background-color: #fa2828;
+  color: white;
+  border-radius: 6px;
+  font-size: 18px;
+  text-decoration: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-left: 10px;
+}
+.btn-delete:hover {
+  background-color: #df0000;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
 }
