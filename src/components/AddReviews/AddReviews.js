@@ -1,60 +1,156 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import "./AddReviews.css";
-import {Link} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {FaStar} from "react-icons/fa";
-import {Star} from "@material-ui/icons";
-function Reviews(props) {
+import axios from "../../axios";
+
+const Reviews = () => {
+  const params = useParams();
   const [desc, setdesc] = useState("");
   const [rating, setrating] = useState(null);
   const [hover, sethover] = useState(null);
-  let rate = "Rating Required";
-  if (rating === 1) {
-    rate = "Hated it";
-  }
-  if (rating === 2) {
-    rate = "Don't like it";
-  }
-  if (rating === 3) {
-    rate = "Just OK";
-  }
-  if (rating === 4) {
-    rate = "Liked it";
-  }
-  if (rating === 5) {
-    rate = "Loved it";
-  }
+  const [order, setorder] = useState(null);
+  const [rate, setrate] = useState("Rating Required");
+  const [reviewId, setreviewId] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get("/getOrderDetails", {
+          params: {orderId: params.orderId},
+        })
+        .then((response) => {
+          setorder(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+      axios
+        .get("/getReview", {
+          params: {orderId: params.orderId},
+        })
+        .then((response) => {
+          console.log(response.data);
+          setdesc(response.data.review);
+          setrating(response.data.rating);
+          sethover(response.data.rating);
+          setreviewId(response.data._id);
+        })
+        .catch((error) => {});
+    };
+    fetchData();
+  }, []);
 
   const submit = (e) => {
     e.preventDefault();
-    if (!rating || !desc) {
-      alert("Rating and description can not be blanked");
+    console.log(rating, desc, reviewId);
+    if (rating !== null && desc !== "") {
+      if (reviewId === null) {
+        e.target.innerHTML = "Submitting...";
+        axios
+          .post("/addReview", {
+            orderId: params.orderId,
+            review: desc,
+            rating: rating,
+          })
+          .then((response) => {
+            console.log(response.data);
+            axios
+              .get("/getReview", {
+                params: {orderId: params.orderId},
+              })
+              .then((response) => {
+                console.log(response.data);
+                setdesc(response.data.review);
+                setrating(response.data.rating);
+                sethover(response.data.rating);
+                setreviewId(response.data._id);
+              })
+              .catch((error) => {});
+            e.target.innerHTML = response.data.msg;
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          })
+          .catch((error) => {
+            e.target.innerHTML = "Error Occured!";
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          });
+      } else {
+        e.target.innerHTML = "Updating...";
+        axios
+          .post("/updateReview", {
+            reviewId: reviewId,
+            rating: rating,
+            review: desc,
+          })
+          .then((response) => {
+            console.log(response.data);
+            e.target.innerHTML = response.data.msg;
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          })
+          .catch((error) => {
+            e.target.innerHTML = "Error Occured!";
+            setTimeout(() => {
+              e.target.innerHTML = "Submit";
+            }, 2000);
+          });
+      }
+    } else {
+      e.target.innerHTML = "Error!";
+      setTimeout(() => {
+        e.target.innerHTML = "Submit";
+      }, 2000);
     }
-    props.addrating(rating, desc);
-    setrating("");
-    setdesc("");
   };
 
+  const Delete = (e) => {
+    e.preventDefault();
+    if (reviewId != null) {
+      e.target.innerHTML = "Deleting...";
+      axios
+        .delete("/deleteReview", {
+          data: {reviewId: reviewId},
+        })
+        .then((response) => {
+          e.target.innerHTML = "Review Deleted";
+          setdesc("");
+          setrating(null);
+          setreviewId(null);
+          setTimeout(() => {
+            e.target.innerHTML = `<i class="fas fa-trash-alt"></i>`;
+          }, 2000);
+        });
+    }
+  };
   return (
     <div className="addreviews">
       <div className="review-by">
         <p>
-          <i class="fas fa-comment-dots"></i>&nbsp;Add Your Review
+          <i className="fas fa-comment-dots"></i>&nbsp;Add Your Review
         </p>
       </div>
       <div className="addreview">
         <div className="review-header">
           <p>
-            <i class="fas fa-info-circle"></i>&nbsp;Reviews are public and
-            editable. Everyone can see your Google Account name and photo.
-            Developers can also see your country and device information (such as
-            language, model and OS version) and may use this information to
-            respond to you.
+            <i className="fas fa-info-circle"></i>&nbsp;Reviews are Public and
+            Editable. Everyone can see your Account name.
           </p>
         </div>
         <div className="review-main">
           <div className="main-book">
-            <img src="/images/book1.jpg" alt="" />
-            <p>Easy Learning English Vocabulary</p>
+            <img
+              src={
+                order ? order.photo : "/images/book-of-black-cover-closed.png"
+              }
+              alt={order ? order.title : "book-name"}
+            />
+            <p>{order ? order.title : "..."}</p>
+            <p>{order ? order.price + "/-" : "..."}</p>
           </div>
           <div className="main-rating">
             <div className="desc">
@@ -71,8 +167,8 @@ function Reviews(props) {
                   placeholder="Tell others what you think about this book. Would you recommened it, and why?"
                 />
                 <p>
-                  <i class="fas fa-lightbulb"></i> Most helpful reviews have 100
-                  words or more.
+                  <i className="fas fa-lightbulb"></i> Most helpful reviews have
+                  100 words or more.
                 </p>
               </form>
             </div>
@@ -80,13 +176,32 @@ function Reviews(props) {
               {[...Array(5)].map((star, i) => {
                 const ratingValue = i + 1;
                 return (
-                  <label>
+                  <label key={i}>
                     <input
                       type="radio"
                       name="rating"
                       value={ratingValue}
                       id="ratingValue"
-                      onClick={() => setrating(ratingValue)}
+                      onClick={() => {
+                        setrating(ratingValue);
+                        sethover(ratingValue);
+                        // console.log(ratingValue);
+                        if (ratingValue === 1) {
+                          setrate("Hated it");
+                        }
+                        if (ratingValue === 2) {
+                          setrate("Don't like it");
+                        }
+                        if (ratingValue === 3) {
+                          setrate("Just OK");
+                        }
+                        if (ratingValue === 4) {
+                          setrate("Liked it");
+                        }
+                        if (ratingValue === 5) {
+                          setrate("Loved it");
+                        }
+                      }}
                       onChange={(e) => {
                         setrating(e.target.value);
                       }}
@@ -95,27 +210,68 @@ function Reviews(props) {
                       className="star"
                       size={55}
                       color={
-                        ratingValue <= (hover || rating) ? "#3498db" : "#e4e5e9"
+                        ratingValue <= (hover || rating)
+                          ? hover <= 2
+                            ? "red"
+                            : hover <= 4
+                            ? "yellowgreen"
+                            : "#66ff00"
+                          : "#eee"
                       }
+                      style={{padding: "0px", paddingLeft: "25px"}}
                       onMouseEnter={() => sethover(ratingValue)}
-                      onMouseLeave={() => sethover(null)}
+                      onMouseLeave={() => sethover(ratingValue)}
                     />
                   </label>
                 );
               })}
-              <p>{rate}</p>
+              <p
+                style={{
+                  color:
+                    rating <= 2
+                      ? "red"
+                      : rating <= 4
+                      ? "yellowgreen"
+                      : "#66ff00",
+                }}
+              >
+                {rate}&nbsp;
+                {rating <= 2 && rating >= 1 ? (
+                  <>&#128545;</>
+                ) : rating <= 4 ? (
+                  <>&#128522;</>
+                ) : (
+                  <>&#128525;</>
+                )}
+              </p>
             </div>
           </div>
         </div>
         <div className="btn">
-          <form onSubmit="">
-            <button type="submit" className="btn-submit">
+          <form style={{display: " flex"}}>
+            <button
+              type="submit"
+              className="btn-submit"
+              onClick={(e) => {
+                submit(e);
+              }}
+            >
               Submit
+            </button>
+            <button
+              type="submit"
+              className="btn-delete"
+              onClick={(e) => {
+                Delete(e);
+              }}
+              title="Delete Review"
+            >
+              <i className="fas fa-trash-alt"></i>
             </button>
           </form>
         </div>
       </div>
     </div>
   );
-}
+};
 export default Reviews;
