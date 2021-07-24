@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "./Sidenav.css";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import SideNavLink from "./SideNavLink";
 
 export function closeNav() {
@@ -36,14 +36,23 @@ function Sidenav() {
         <SideNavLink
           to="/Cart"
           iconClass="fas fa-shopping-cart"
+          label="Cart"
           isProfile={true}
         />
         {/* ends here */}
-        <SideNavLink to="/Categories" iconClass="fas fa-angle-right" />
-        <SideNavLink to="/Contribute" iconClass="fas fa-hands-helping" />
-        <SideNavLink to="/Blog" iconClass="fab fa-blogger" />
-        <SideNavLink to="/Contact" iconClass="fas fa-headset" />
-        <SideNavLink to="/About" iconClass="fas fa-info-circle" />
+        <SideNavLink
+          to="/SearchResult/books"
+          label="All Categories"
+          iconClass="fas fa-angle-right"
+        />
+        <SideNavLink
+          to="/Contribute"
+          iconClass="fas fa-hands-helping"
+          label="Contribute"
+        />
+        <SideNavLink to="/Blog" iconClass="fab fa-blogger" label="Blog" />
+        <SideNavLink to="/Contact" iconClass="fas fa-headset" label="Contact" />
+        <SideNavLink to="/About" iconClass="fas fa-info-circle" label="About" />
       </div>
     </div>
   );
