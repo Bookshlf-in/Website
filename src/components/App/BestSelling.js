@@ -23,7 +23,7 @@ function BestSelling() {
         <div className="bs-header">
           <h1 className="header-heading">Best Selling Books</h1>
           <p className="header-viewall">
-            <Link to="/">
+            <Link to="/SearchResult/books">
               View All&nbsp;
               <i className="fas fa-angle-right" />
             </Link>

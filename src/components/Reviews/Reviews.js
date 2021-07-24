@@ -32,7 +32,6 @@ const Reviews = () => {
           setdesc(response.data.review);
           setrating(response.data.rating);
           sethover(response.data.rating);
-          setshowreview(true);
           if (response.data.rating === 1) {
             setrate("Hated it");
           }

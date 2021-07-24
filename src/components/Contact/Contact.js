@@ -143,7 +143,10 @@ function Contact() {
           <Link to="">
             <i className="fab fa-linkedin" />
           </Link>
-          <Link to="https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ" target="_blank">
+          <Link
+            to="https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ"
+            target="_blank"
+          >
             <i className="fab fa-youtube" />
           </Link>
         </div>
@@ -157,7 +160,7 @@ function Contact() {
               onChange={(e) => setName(e.target.value)}
               value={Name}
               onKeyPress={(e) => {
-                if(e.key === "Enter"){
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handelSubmit();
                 }
@@ -170,7 +173,7 @@ function Contact() {
               onChange={(e) => setEmail(e.target.value)}
               value={Email}
               onKeyPress={(e) => {
-                if(e.key === "Enter"){
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handelSubmit();
                 }
@@ -184,7 +187,7 @@ function Contact() {
               onChange={(e) => setSubject(e.target.value)}
               value={Subject}
               onKeyPress={(e) => {
-                if(e.key === "Enter"){
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handelSubmit();
                 }
@@ -197,7 +200,7 @@ function Contact() {
               onChange={(e) => setMessage(e.target.value)}
               value={Message}
               onKeyPress={(e) => {
-                if(e.key === "Enter"){
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handelSubmit();
                 }

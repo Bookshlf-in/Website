@@ -170,7 +170,7 @@ function Footer() {
               <br />
               <Link to="/">+91 97926 66122</Link>
             </div>
-            {/* <small className="website-rights">MyYoutube &copy; 2021</small> */}
+
             <div className="social-icons">
               <Link
                 className="social-icon-link facebook"
@@ -227,7 +227,7 @@ function Footer() {
             <div className="footer-link-items">
               <h4>Customer Service</h4>
               <Link to="/">Returns</Link>
-              <Link to="/">Report Product</Link>
+              <Link to="/Contact">Report Product</Link>
               <Link to="/">Accessibility</Link>
               <Link to="/Contact">Contact Us</Link>
             </div>
@@ -242,12 +242,12 @@ function Footer() {
             </div>
             <div className="footer-link-items">
               <h4>Categories</h4>
-              <Link to="/">JEE Mains</Link>
-              <Link to="/">NEET PG</Link>
-              <Link to="/">JEE Advanced</Link>
-              <Link to="/">High School</Link>
-              <Link to="/">Programming</Link>
-              <Link to="/">Novels</Link>
+              <Link to="/SearchResult/Jee">JEE Mains</Link>
+              <Link to="/SearchResult/Neet">NEET PG</Link>
+              <Link to="/SearchResult/Jee">JEE Advanced</Link>
+              <Link to="/SearchResult/School">High School</Link>
+              <Link to="/SearchResult/Programming">Programming</Link>
+              <Link to="/SearchResult/Novels">Novels</Link>
             </div>
           </div>
         </div>
