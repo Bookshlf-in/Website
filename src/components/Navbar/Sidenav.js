@@ -28,7 +28,7 @@ function Sidenav() {
         <SideNavLink to="/" label="Home" iconClass="fas fa-home" />
         {/* hidden until screen size is smaller than 650px */}
         <SideNavLink
-          to="/UserProfile"
+          to="/UserProfile/1"
           label="Profile"
           iconClass="fas fa-user-circle"
           isProfile={true}

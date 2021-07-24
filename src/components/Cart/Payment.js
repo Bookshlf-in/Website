@@ -168,7 +168,7 @@ function Payment() {
             msg: "Order Placed Successfully!",
           });
           setTimeout(() => {
-            history.push("/UserProfile");
+            history.push("/UserProfile/2");
           }, 3000);
         })
         .catch((error) => {

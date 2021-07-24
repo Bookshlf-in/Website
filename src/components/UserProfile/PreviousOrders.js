@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const PreviousOrders = (props) => {
   const [pastOrders, setpastOrders] = useState(props.orders);
-  console.log(pastOrders);
+  // console.log(pastOrders);
   return (
     <div className="user-previous-orders" id="user-previous-orders">
       <table>

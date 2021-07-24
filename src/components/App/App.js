@@ -57,7 +57,7 @@ function App() {
             <Navbar />
             <AddReviews />
           </Route>
-          <Route path="/UserProfile">
+          <Route path="/UserProfile/:panel">
             <Navbar />
             <UserProfile />
           </Route>

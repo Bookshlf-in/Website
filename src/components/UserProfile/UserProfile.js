@@ -1,5 +1,6 @@
 import {React, useState, useEffect} from "react";
 import "./UserProfile.css";
+import {useParams, useHistory} from "react-router-dom";
 import Account from "./Account";
 import CurrentOrder from "./CurrentOrders";
 import PreviousOrder from "./PreviousOrders";
@@ -7,11 +8,12 @@ import Address from "./Address";
 import axios from "../../axios";
 
 const UserProfile = () => {
-  const [userprofile, setuserprofile] = useState(null);
-  const [orders, setorders] = useState(null);
-  const [panel, setpanel] = useState(1);
-  const [load, setload] = useState(true);
+  const params = useParams();
+  const history = useHistory();
 
+  const [userprofile, setuserprofile] = useState(null);
+  const [panel, setpanel] = useState(params.panel);
+  const [load, setload] = useState(true);
   const [activeOrders, setactiveOrders] = useState(null);
   const [pastOrders, setpastOrders] = useState(null);
   const [Adr, setAdr] = useState(null);
@@ -20,14 +22,10 @@ const UserProfile = () => {
     axios
       .get("/getUserProfile")
       .then((response) => {
-        // console.log(response.data);
         setuserprofile(response.data);
         axios
           .get("/getOrderList")
           .then((response) => {
-            // console.log(response.data);
-            setorders(response.data);
-
             if (response.data) {
               setactiveOrders(
                 response.data.filter((order) => {
@@ -38,12 +36,14 @@ const UserProfile = () => {
                 })
               );
               setpastOrders(
-                response.data.filter((order) => {
-                  return (
-                    order.status[order.status.length - 1] === "Cancelled" ||
-                    order.status[order.status.length - 1] === "Delivered"
-                  );
-                })
+                response.data
+                  .filter((order) => {
+                    return (
+                      order.status[order.status.length - 1] === "Cancelled" ||
+                      order.status[order.status.length - 1] === "Delivered"
+                    );
+                  })
+                  .reverse()
               );
             }
             axios
@@ -59,41 +59,60 @@ const UserProfile = () => {
                 setAdr(response.data);
                 setload(false);
               })
-              .catch((error) => {});
+              .catch(() => {});
           })
-          .catch((error) => {});
+          .catch(() => {});
       })
-      .catch((error) => {
-        // console.log(error.response.data);
-      });
+      .catch(() => {});
   }, []);
 
   return (
     <div className="user-profile-main">
-      {/* Hide this navbar when someone without login views this prfile */}
       <div className="user-profile-navbar">
-        <div className="Account-details" onClick={() => setpanel(1)}>
+        <div
+          className="Account-details"
+          onClick={() => {
+            setpanel("1");
+            history.push("/UserProfile/1");
+          }}
+        >
           <i className="fas fa-info-circle" />
           &nbsp;&nbsp;Account Details
         </div>
-        <br />
-        <div className="Pending-orders" onClick={() => setpanel(2)}>
+        <div
+          className="Pending-orders"
+          onClick={() => {
+            setpanel("2");
+            history.push("/UserProfile/2");
+          }}
+        >
           <i className="fas fa-clipboard-list" />
           &nbsp;&nbsp;Active&nbsp;Orders
         </div>
-        <br />
-        <div className="Completed-orders" onClick={() => setpanel(3)}>
+        <div
+          className="Completed-orders"
+          onClick={() => {
+            setpanel("3");
+            history.push("/UserProfile/3");
+          }}
+        >
           <i className="fas fa-clipboard-check" />
           &nbsp;&nbsp;Previous&nbsp;Orders
         </div>
-        <div className="Completed-orders" onClick={() => setpanel(4)}>
+        <div
+          className="Completed-orders"
+          onClick={() => {
+            setpanel("4");
+            history.push("/UserProfile/4");
+          }}
+        >
           <i className="fas fa-map-marker" />
           &nbsp;&nbsp;Address
         </div>
       </div>
       <div
         className="page-loader"
-        style={{display: load ? "flex" : "none", height: "auto"}}
+        style={{display: load ? "flex" : "none", height: "400px"}}
       >
         <div
           className="page-loading"
@@ -108,13 +127,13 @@ const UserProfile = () => {
           width: "100%",
         }}
       >
-        {panel === 1 && userprofile ? (
+        {panel === "1" && userprofile ? (
           <Account user={userprofile} />
-        ) : panel === 2 && activeOrders ? (
+        ) : panel === "2" && activeOrders ? (
           <CurrentOrder orders={activeOrders} />
-        ) : panel === 3 && pastOrders ? (
+        ) : panel === "3" && pastOrders ? (
           <PreviousOrder orders={pastOrders} />
-        ) : panel === 4 && Adr ? (
+        ) : panel === "4" && Adr ? (
           <Address address={Adr} />
         ) : (
           <></>

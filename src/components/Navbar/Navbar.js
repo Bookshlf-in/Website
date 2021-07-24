@@ -81,7 +81,7 @@ function Navbar() {
     }
     if (e === "1") {
       setAnchorEl(null);
-      history.push("/UserProfile");
+      history.push("/UserProfile/1");
     } else if (e === "2") {
       setAnchorEl(null);
       history.push("/Cart");
@@ -180,7 +180,7 @@ function Navbar() {
                 </div>
               </li>
             </Link>
-            <Link to="/searchresult">
+            <Link to="/SearchResult/books">
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
@@ -309,7 +309,6 @@ function Navbar() {
                         style={{
                           fontFamily: "PT Sans",
                           fontWeight: "bold",
-                          textAlign: "center",
                         }}
                         onClick={() => {
                           handleClose("0");
