@@ -101,11 +101,6 @@ git merge dev
 
 **10.** When approved, your branch will be merged into master and you're done! Thanks for contributing! :)
 
-# Screenshots
-
-<img src = "public/images/Readme/header-bookshlf.png" width="800"/>
-<img src = "public/images/Readme/footer-bookshlf.png" width="800"/>
-
 # Contributors
 
 <a href="https://github.com/Bookshlf-in/Website/graphs/contributors">
@@ -113,3 +108,24 @@ git merge dev
 </a>
 
 Made with [contributors-img](https://contrib.rocks).
+
+# Screenshots
+
+<img src = "public/images/Readme/header-bookshlf.png" width="800"/>
+<img src = "public/images/Readme/footer-bookshlf.png" width="800"/>
+<img src = "public/images/Readme/about.png" width="800"/>
+<img src = "public/images/Readme/wishlist.png" width="800"/>
+<img src = "public/images/Readme/cart.png" width="800"/>
+<img src = "public/images/Readme/website_reviews.png" width="800"/>
+<img src = "public/images/Readme/user.png" width="800"/>
+<img src = "public/images/Readme/track.png" width="800"/>
+<img src = "public/images/Readme/seller_profile.png" width="800"/>
+<img src = "public/images/Readme/search.png" width="800"/>
+<img src = "public/images/Readme/previous_orders.png" width="800"/>
+<img src = "public/images/Readme/contact us.png" width="800"/>
+<img src = "public/images/Readme/categories.png" width="800"/>
+<img src = "public/images/Readme/add_book.png" width="800"/>
+<img src = "public/images/Readme/address.png" width="800"/>
+<img src = "public/images/Readme/ative_orders.png" width="800"/>
+<img src = "public/images/Readme/book_approved.png" width="800"/>
+
