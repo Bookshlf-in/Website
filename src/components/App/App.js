@@ -81,7 +81,7 @@ function App() {
             <Navbar />
             <Checkout />
           </Route>
-          <Route path="/Admin">
+          <Route path="/Admin/:panel">
             <Admin />
           </Route>
           <Route path="/Blog">

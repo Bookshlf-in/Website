@@ -1,30 +1,47 @@
 /* Admin-panel-css */
 .adminpanel-container {
   display: flex;
-  background-color: black;
+  background-color: rgb(231, 231, 231);
   align-items: center;
-  height: 77px;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: "PT sans";
 }
 
 .adminpanel-bar {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1005;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  align-items: center;
   list-style: none;
   width: 100%;
-  padding: 0% 10%;
+  background-color: black;
 }
 
 .adminpanel-bar a {
+  height: 60px;
   color: white;
   font-size: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  letter-spacing: 2px;
 }
-
+.adminpanel-bar a:hover {
+  color: black;
+  background-color: rgb(233, 232, 232);
+  transition: 0.3s;
+  cursor: pointer;
+}
 /* orders-css */
 .panel-orders-container {
-  display: flex;
-  height: 90px;
-  background-color: rgba(0, 95, 179, 0.733);
-  align-items: center;
+  background-color: rgb(0, 95, 179);
+  width: 100%;
 }
 
 .panel-orders-ul {
@@ -32,22 +49,33 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0% 15%;
 }
 
 .panel-orders-ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
   color: white;
   list-style: none;
-  font-size: 19px;
+  letter-spacing: 2px;
+}
+.panel-orders-ul li:hover {
+  background-color: rgb(23, 145, 251);
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 /* FindProfile css */
 .findprofile-cont {
-  margin: 40px 0px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .findprofile-email-input {
@@ -80,16 +108,12 @@
   padding: 15px 45px;
   font-size: 20px;
   margin: 0px 30px;
-  display: inline-block;
-  box-sizing: border-box;
   outline: none;
   background-color: black;
   color: white;
-  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
   border: none;
-  border-bottom: 1.8px solid whitesmoke;
-  border-right: 1.8px solid whitesmoke;
-  font-family: "Roboto", sans-serif;
+  font-family: "PT sans";
+  letter-spacing: 2px;
 }
 
 .findprofile-email-button:hover {
@@ -98,94 +122,128 @@
   font-weight: bold;
 }
 
-.findprofile-profile-box{
-    margin: 60px 0px;
-    height: 300px;
-    width:300px;
-    background-color: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.findprofile-profile-box {
+  margin: 60px 0px;
+  height: 300px;
+  width: 300px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-
 
 /* Messages css */
-.messages-cont{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.messages-item{
-    background-color: rgb(235, 235, 235);
-    display: flex;
-    width: 70%;
-    flex-direction: column;
-    padding: 0% 5%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-size: 18px;
-    margin: 14px 0px;
-    
-}
-
-.messages-item-top{
-    display: flex;
-    margin-bottom: 21px;
-}
-
-.messages-item-top p{
-    width: 50%;
-}
-
-.messages-item-middle{
-    display: flex;
-    margin-bottom: 21px;
-    height: 50px;
-}
-
-.messages-item-middle p{
-    display: flex;
-    align-items: center;
-}
-
-.messages-middle-sub-containt{
-    width: 50%;
-    background-color: white;
-    margin-left: 20px;
-}
-
-.messages-item-bottom{
-    display: flex;
-    flex-direction: column;
-}
-
-.messages-bottom-message-containt{
-    margin-top: 12px;
-    height: 160px;
-    width: 100%;
-    background-color: white;
-}
-
-
-
-/* GetOrderDeatils css */
-.god-cont{
+.messages-cont {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 50px;
+  width: 100%;
+  padding-top: 30px;
+  font-family: "PT sans";
 }
 
-.god-search{
+.messages-item {
+  background-color: rgb(123, 189, 219);
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  margin: 14px 0px;
+  position: relative;
+}
+
+.messages-item-top {
+  display: flex;
+  margin-bottom: 21px;
+}
+
+.messages-item-top p {
+  width: 50%;
+}
+
+.messages-item-middle {
+  display: flex;
+  margin-bottom: 21px;
+  height: 50px;
+}
+
+.messages-item-middle p {
+  display: flex;
+  align-items: center;
+}
+
+.messages-middle-sub-containt {
+  width: 50%;
+  background-color: white;
+  margin-left: 20px;
+}
+
+.messages-item-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-bottom-message-containt {
+  margin-top: 12px;
+  height: 150px;
+  width: 100%;
+  background-color: white;
+}
+.delete-message,
+.markasread-message {
+  position: absolute;
+  float: right;
+  font-size: 30px;
+  cursor: pointer;
+}
+.delete-message {
+  top: 15px;
+  right: 30px;
+  color: rgb(192, 3, 3);
+}
+.markasread-message {
+  top: 60px;
+  right: 30px;
+  color: rgb(0, 151, 45);
+}
+.messages-subject {
+  width: 100%;
+  font-family: "Courier New", Courier, monospace;
+  height: auto;
+  padding: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+.messages-desc {
+  width: 100%;
+  height: 150px;
+  font-family: "Courier New", Courier, monospace;
+  padding: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+/* GetOrderDeatils css */
+.god-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 50px;
+  background-color: rgb(231, 231, 231);
+}
+
+.god-search {
   margin-bottom: 50px;
 }
 
-.god-search-id{
+.god-search-id {
   padding: 15px 20px;
   width: 350px;
   border: 0.1px solid rgb(240, 79, 79);
@@ -208,20 +266,17 @@
   color: rgb(97, 226, 136);
 }
 
-.god-search-button{
+.god-search-button {
   padding: 15px 20px;
   margin-left: 20px;
   width: 150px;
   display: inline-block;
-  box-sizing: border-box;
   outline: none;
   background-color: black;
   color: white;
-  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
   border: none;
-  border-bottom: 1.8px solid whitesmoke;
-  border-right: 1.8px solid whitesmoke;
-  font-family: "Roboto", sans-serif;
+  font-family: "PT sans", sans-serif;
+  letter-spacing: 2px;
 }
 
 .god-search-button:hover {
@@ -230,17 +285,18 @@
   font-weight: bold;
 }
 
-.god-table table, th, td {
+.god-table table,
+th,
+td {
   border: 1px solid black;
   border-collapse: collapse;
 }
 
-.god-table th{
+.god-table th {
   padding: 20px 60px;
   text-align: left;
-  background-color: black;
+  background-color: rgb(65, 64, 64);
   color: white;
-
 }
 
 .god-table td {
@@ -253,40 +309,37 @@
 }
 
 .god-table tr:nth-child(odd) {
- background-color: #fff;
+  background-color: #fff;
 }
 
-
 /* Sellers css */
-.sellers-cont{
+.sellers-cont {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 60px 0px;
-
 }
 
-.sellers-btns{
+.sellers-btns {
   display: flex;
 }
 
-.sellers-btns-button{
+.sellers-btns-button {
   padding: 14px;
   width: 250px;
   outline: none;
   font-family: "Roboto", sans-serif;
   font-weight: 900;
-
 }
 
-.sellers-items-outer-cont{
+.sellers-items-outer-cont {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.sellers-items-cont{
+.sellers-items-cont {
   background-color: black;
   color: white;
   width: 250px;
@@ -298,40 +351,41 @@
   align-items: center;
 }
 
-.sellers-desc{
+.sellers-desc {
   margin-top: 50px;
 }
 
 /* BookVerification css */
 
-.bv-cont{
+.bv-cont {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 60px 0px;
+  background-color: rgb(231, 231, 231);
 }
 
-.bv-btns{
+.bv-btns {
   display: flex;
-}
-
-.bv-btns-button{
   padding: 14px;
   width: 250px;
   outline: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
+  font-family: "PT sans", sans-serif;
+  border: none;
+  outline: none;
+  letter-spacing: 2px;
+  font-size: 18px;
 }
 
-.bv-items-cont{
+.bv-items-cont {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.bv-items-inner-cont{
+.bv-items-inner-cont {
   background-color: rgb(241, 68, 68);
   color: white;
   width: 250px;
@@ -344,19 +398,19 @@
   flex-wrap: wrap;
 }
 
-.bv-item1{
+.bv-item1 {
   height: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.bv-item2{
- display: flex;
- position: relative;
- width:100%;
- height: 15%;
- padding: 0px 9px;
- display: flex;
- justify-content: space-between;
+.bv-item2 {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 15%;
+  padding: 0px 9px;
+  display: flex;
+  justify-content: space-between;
 }

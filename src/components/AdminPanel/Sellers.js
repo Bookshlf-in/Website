@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import {React, useState} from "react";
 
-function Sellers() {
+const Sellers = () => {
   const list = [
     {
       value: 1,
@@ -27,43 +27,35 @@ function Sellers() {
   return (
     <div>
       <div className="sellers-cont">
-        <div className="sellers-btns">
-        <button
-            className="sellers-btns-button"
-            onClick={() => setitems(list)}
-          >
-            All
-          </button>
-          <button
-            className="sellers-btns-button"
-            onClick={() => filterItem("Verified")}
-          >
-            Verified
-          </button>
-          <button
-            className="sellers-btns-button"
-            onClick={() => filterItem("Unverified")}
-          >
-            Unverified
-          </button>
-          
-        </div>
-        <div className="sellers-items-outer-cont">
-        {items.map((elem) => {
-            const { category, desc } = elem;
-            return (
-                <div className="sellers-items-cont">
+        <select
+          className="bv-btns"
+          onChange={(e) => {
+            if (e.target.value !== "All") {
+              filterItem(e.target.value);
+            } else {
+              setitems(list);
+            }
+          }}
+        >
+          <option value="All">ALL</option>
+          <option value="Unverified">Not Verified</option>
+          <option value="Verified">Verified</option>
+        </select>
 
+        <div className="sellers-items-outer-cont">
+          {items.map((elem) => {
+            const {category, desc} = elem;
+            return (
+              <div className="sellers-items-cont">
                 <div className="sellers-details">Seller Details</div>
                 <div className="sellers-desc">{desc}</div>
-
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Sellers;

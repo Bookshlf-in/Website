@@ -146,7 +146,7 @@ function Login() {
       } else if (curRole === "seller") {
         history.push("/sellerPanel");
       } else if (curRole === "admin") {
-        history.push("/adminPanel");
+        history.push("/Admin/1");
       }
     }, 3000);
   };
