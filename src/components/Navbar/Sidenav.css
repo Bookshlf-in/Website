@@ -11,16 +11,28 @@
   transition: 0.5s;
 }
 
-.sidenav a {
+.sidenav-link {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
-  display: block;
   transition: 0.3s;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  align-self: center;
 }
 
-.sidenav a:hover {
+.sidenav-link i {
+  align-self: center;
+  justify-self: center;
+}
+.sidenav-link span {
+  grid-column: span 3;
+}
+
+.sidenav a:hover,
+.sidenav .closebtn:hover {
   color: #f1f1f1;
 }
 
@@ -30,18 +42,44 @@
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+  display: block !important;
+  color: #818181;
 }
-a.Profile {
+.sidenav-searchbar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.sidenav-searchbar input {
+  width: 90%;
+  height: 40px;
+  padding: 0 0.5rem;
+  font-size: 1rem;
+}
+.sidenav-searchbar a {
+  display: block !important;
+  position: absolute;
+  right: 0.75rem;
+  top: 0;
+}
+.sidenav .closebtn:hover {
+  color: #818181;
+}
+
+.Profile {
   display: none;
 }
 @media screen and (max-width: 660px) {
-  a.Profile {
-    display: block;
+  .Profile {
+    display: grid;
+  }
+  .sidenav-searchbar {
+    display: flex;
   }
 }
 @media screen and (max-height: 450px) {
   .sidenav {
-    padding-top: 15px;
+    padding-top: 45px;
   }
   .sidenav a {
     font-size: 18px;
