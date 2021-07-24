@@ -44,11 +44,10 @@ const Sellers = () => {
 
         <div className="sellers-items-outer-cont">
           {items.map((elem) => {
-            const {category, desc} = elem;
             return (
               <div className="sellers-items-cont">
                 <div className="sellers-details">Seller Details</div>
-                <div className="sellers-desc">{desc}</div>
+                <div className="sellers-desc">{elem.desc}</div>
               </div>
             );
           })}
