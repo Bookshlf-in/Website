@@ -124,13 +124,15 @@
 
 .findprofile-profile-box {
   margin: 60px 0px;
-  height: 300px;
-  width: 300px;
-  background-color: black;
+  min-height: 400px;
+  min-width: 400px;
+  background-color: rgb(63, 63, 63);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  padding: 10px;
 }
 
 /* Messages css */

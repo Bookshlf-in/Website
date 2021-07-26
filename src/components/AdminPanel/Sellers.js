@@ -27,6 +27,16 @@ const Sellers = () => {
   return (
     <div>
       <div className="sellers-cont">
+        <button
+          type="submit"
+          className="findprofile-email-button"
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          Fetch Sellers / Update
+        </button>
+        <br />
         <select
           className="bv-btns"
           onChange={(e) => {
