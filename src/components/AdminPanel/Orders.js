@@ -41,7 +41,7 @@ const Orders = () => {
           }}
           style={panel === "3" ? active : {}}
         >
-          Get Order Details
+          Get Orders List
         </li>
         <li
           className="panel-orders-get-order-details"

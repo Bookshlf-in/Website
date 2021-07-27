@@ -149,7 +149,27 @@ const Messages = (props) => {
                   <div className="messages-item-top">
                     <p className="messages-top-name">Name : {message.name}</p>
                     <p className="messages-top-email">
-                      Email : {message.email}
+                      Email :{" "}
+                      <input
+                        id={message._id}
+                        type="text"
+                        value={message.email}
+                        contentEditable="false"
+                      />{" "}
+                      &nbsp;&nbsp;
+                      <i
+                        className="far fa-copy"
+                        title="Copy to Clipboard"
+                        onClick={(e) => {
+                          const mail = document.getElementById(message._id);
+                          mail.select();
+                          document.execCommand("copy");
+                          e.target.innerHTML = "copied!";
+                          setTimeout(() => {
+                            e.target.innerHTML = "";
+                          }, 3000);
+                        }}
+                      ></i>
                     </p>
                   </div>
                   <div className="messages-item-middle">
