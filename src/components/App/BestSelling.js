@@ -12,7 +12,7 @@ function BestSelling() {
           response.data.data.pop();
         }
         setbestbooks(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       });
     };
     fetch();

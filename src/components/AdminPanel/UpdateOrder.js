@@ -2,18 +2,6 @@ import {React, useState} from "react";
 const GetOrderDetails = (props) => {
   return (
     <div className="god-cont">
-      <button
-        type="submit"
-        className="findprofile-email-button"
-        onClick={(e) => {
-          e.preventDefault();
-        }}
-      >
-        Fetch Orders List / Update
-      </button>
-      <br />
-      <h1>Or</h1>
-      <br />
       <div className="god-search">
         <form action="">
           <input

@@ -124,13 +124,15 @@
 
 .findprofile-profile-box {
   margin: 60px 0px;
-  height: 300px;
-  width: 300px;
-  background-color: black;
+  min-height: 400px;
+  min-width: 400px;
+  background-color: rgb(63, 63, 63);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  padding: 10px;
 }
 
 /* Messages css */
@@ -342,17 +344,25 @@ td {
 .sellers-items-cont {
   background-color: black;
   color: white;
-  width: 250px;
-  height: 250px;
+  min-width: 250px;
+  max-width: 500px;
+  min-height: 250px;
   margin: 30px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
+.sellers-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .sellers-desc {
-  margin-top: 50px;
+  margin-top: 30px;
+  cursor: pointer;
 }
 
 /* BookVerification css */
@@ -386,16 +396,16 @@ td {
 }
 
 .bv-items-inner-cont {
-  background-color: rgb(241, 68, 68);
-  color: white;
-  width: 250px;
-  height: 250px;
   margin: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  width: 400px;
+  border: 2px solid grey;
+  padding: 15px;
+  position: relative;
 }
 
 .bv-item1 {
@@ -410,7 +420,48 @@ td {
   position: relative;
   width: 100%;
   height: 15%;
+  margin-top: 20px;
   padding: 0px 9px;
   display: flex;
   justify-content: space-between;
+}
+.bv-verify {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reject-book {
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  background-color: red;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  padding: 0px 5px;
+}
+.Reject-msg {
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.reject-btn {
+  margin: 5px;
+  font-size: 14px;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.Delete-book {
+  position: absolute;
+  float: right;
+  top: 0px;
+  right: 0px;
+  font-size: 14px;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
 }

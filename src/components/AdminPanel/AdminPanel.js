@@ -6,12 +6,14 @@ import Seller from "./Sellers";
 import Orders from "./Orders";
 import Messages from "./Messages";
 import Profile from "./FindProfile";
+import axios from "../../axios";
 
 const active = {
   color: " black",
   backgroundColor: "rgb(233, 232, 232)",
   borderTop: "5px solid green",
 };
+
 const AdminPanel = () => {
   const [user, setUser] = useContext(UserContext);
   const [Admin, setAdmin] = useState(
@@ -34,7 +36,7 @@ const AdminPanel = () => {
               style={panel === "1" ? active : {}}
             >
               <li className="adminpanel-orders">
-                <i class="fas fa-truck" />
+                <i className="fas fa-truck" />
                 &nbsp;Orders
               </li>
             </Link>
@@ -46,7 +48,7 @@ const AdminPanel = () => {
               style={panel === "2" ? active : {}}
             >
               <li className="adminpanel-messages">
-                <i class="fas fa-comments" />
+                <i className="fas fa-comments" />
                 &nbsp;Messages
               </li>
             </Link>
@@ -58,7 +60,7 @@ const AdminPanel = () => {
               style={panel === "3" ? active : {}}
             >
               <li className="adminpanel-find-profile">
-                <i class="fas fa-user-circle" />
+                <i className="fas fa-user-circle" />
                 &nbsp;Find Profile
               </li>
             </Link>
@@ -70,7 +72,7 @@ const AdminPanel = () => {
               style={panel === "4" ? active : {}}
             >
               <li className="adminpanel-sellers">
-                <i class="fas fa-user-tie" />
+                <i className="fas fa-user-tie" />
                 &nbsp;Sellers
               </li>
             </Link>
@@ -107,29 +109,3 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
-
-// - Admin-Panel Navbar : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=0%3A1
-
-// - Orders Component Navbar : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=104%3A23
-
-// - Orders Component Order Details :
-// https:www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A29
-// - Orders Component Seller Books : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A127https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A29
-
-// - Orders Component Book Verification : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A72
-
-// Find Profile Component : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A176
-
-// Messages Component : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A193
-
-// Sellers Component : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A216
-
-// Add new Book Component : https://www.figma.com/file/GVgrZJhl1QPOV4Esa4HacC/Admin-Panel?node-id=105%3A247
-
-// Admin Panel
-// 	AdminPanel.js
-// 	AdminPanel.css (all CSS here only)
-// 	Orders.js
-// 	Sellers.js
-// 	FindProfile.js
-// 	Messages.js

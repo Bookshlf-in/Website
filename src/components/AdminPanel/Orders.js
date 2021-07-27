@@ -3,6 +3,8 @@ import "./AdminPanel.css";
 import BookVerification from "./BookVerification";
 import OrderDetails from "./OrderDetails";
 import SellerBooks from "./SellerBooks";
+import UpdateOrder from "./UpdateOrder";
+
 const active = {
   color: " black",
   backgroundColor: "rgb(233, 232, 232)",
@@ -39,6 +41,15 @@ const Orders = () => {
           }}
           style={panel === "3" ? active : {}}
         >
+          Get Orders List
+        </li>
+        <li
+          className="panel-orders-get-order-details"
+          onClick={() => {
+            setpanel("4");
+          }}
+          style={panel === "4" ? active : {}}
+        >
           Get Order Details
         </li>
       </ul>
@@ -48,6 +59,8 @@ const Orders = () => {
         <SellerBooks />
       ) : panel === "3" ? (
         <OrderDetails />
+      ) : panel === "4" ? (
+        <UpdateOrder />
       ) : (
         <></>
       )}
