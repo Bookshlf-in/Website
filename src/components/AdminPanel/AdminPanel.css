@@ -465,3 +465,6 @@ td {
   cursor: pointer;
   padding: 5px;
 }
+.admin-bookdetails-btn {
+  margin: 10px;
+}

@@ -25,6 +25,7 @@ import SearchResult from "../SearchResult/AllCategories";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
+import AdminBook from "../AdminPanel/BookDetails";
 
 // Protected Route
 import Protected from "../Protected";
@@ -81,9 +82,13 @@ function App() {
             <Navbar />
             <Checkout />
           </Route>
+          <Route path="/AdminBook/:bookId">
+            <AdminBook />
+          </Route>
           <Route path="/Admin/:panel">
             <Admin />
           </Route>
+          
           <Route path="/Blog">
             <Blog />
           </Route>

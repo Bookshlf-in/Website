@@ -322,15 +322,35 @@ function Navbar() {
                           handleClose("1");
                         }}
                       >
-                        Profile Panel
+                        <i className="fas fa-user-alt" />
+                        &nbsp;Profile Panel
                       </MenuItem>
+                      {user ? (
+                        user.roles.includes("admin") ? (
+                          <MenuItem
+                            style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                            onClick={() => {
+                              setAnchorEl(null);
+                              history.push("/Admin/1");
+                            }}
+                          >
+                            <i className="fas fa-user-cog" />
+                            &nbsp;Admin Panel
+                          </MenuItem>
+                        ) : (
+                          <></>
+                        )
+                      ) : (
+                        <></>
+                      )}
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
                           handleClose("2");
                         }}
                       >
-                        Cart
+                        <i className="fas fa-cart-arrow-down" />
+                        &nbsp;Cart
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
@@ -338,7 +358,8 @@ function Navbar() {
                           handleClose("3");
                         }}
                       >
-                        Wishlist
+                        <i className="fas fa-heart" />
+                        &nbsp;Wishlist
                       </MenuItem>
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
@@ -346,7 +367,8 @@ function Navbar() {
                           handleClose("4");
                         }}
                       >
-                        Sell Books
+                        <i className="fas fa-book" />
+                        &nbsp;Sell Books
                       </MenuItem>
                       <MenuItem
                         style={{
@@ -358,6 +380,8 @@ function Navbar() {
                           handleClose("5");
                         }}
                       >
+                        <i className="fas fa-minus-circle" />
+                        &nbsp;
                         {alert.msg}&nbsp;
                         <i
                           className="fas fa-circle-notch"
@@ -372,6 +396,7 @@ function Navbar() {
                         onClick={logout}
                       >
                         Logout&nbsp;
+                        <i className="fas fa-sign-out-alt" />
                         <i
                           className="fas fa-circle-notch"
                           style={{

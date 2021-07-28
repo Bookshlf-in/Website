@@ -41,6 +41,29 @@ function BookVerification() {
         setload(false);
       });
   };
+  const ApproveBook = (e, id) => {
+    e.target.innerHTML = "Approving...";
+    axios
+      .post("/admin-approveBook", {
+        bookId: id,
+      })
+      .then((response) => {
+        console.log(response.data.msg);
+        setfilteredbooks(
+          filteredbooks.filter(
+            (book) => book._id !== id && book.status !== "Approval rejected"
+          )
+        );
+        e.target.innerHTML = "Approved";
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        e.target.innerHTML = "Error Occured!";
+        setTimeout(() => {
+          e.target.innerHTML = "Not Approved";
+        }, 3000);
+      });
+  };
   const RejectBook = (e, id) => {
     if (rejectmsg.length > 10) {
       e.target.innerHTML = "Rejecting...";
@@ -61,6 +84,54 @@ function BookVerification() {
         .catch((error) => {
           console.log(error.response.data);
         });
+    }
+  };
+  const deleteBook = (e, id) => {
+    e.target.innerHTML = "Deleting...";
+    axios
+      .delete("/admin-deleteBook", {
+        data: {bookId: id, message: "Book is not Appropriate"},
+      })
+      .then((response) => {
+        console.log(response.data.msg);
+        books.filter((book) => book._id !== id);
+        setfilteredbooks(
+          filteredbooks.filter(
+            (book) => book._id !== id && book.status !== "Approval rejected"
+          )
+        );
+        e.target.innerHTML = "Delete";
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        e.target.innerHTML = "Error Occured!";
+        setTimeout(() => {
+          e.target.innerHTML = "Delete";
+        }, 3000);
+      });
+  };
+  const LoadMore = () => {
+    if (page + 1 <= totalPages) {
+      axios
+        .get("/admin-getBookList", {
+          params: {page: page + 1, noOfBooksInOnePage: 10},
+        })
+        .then((response) => {
+          setbooks(books.concat(response.data.data));
+          console.log(response.data.data);
+          setpage(page + 1);
+          settotalPages(response.data.totalPages);
+          setfilteredbooks(
+            books
+              .concat(response.data.data)
+              .filter(
+                (book) =>
+                  book.isApproved === false &&
+                  book.status !== "Approval rejected"
+              )
+          );
+        })
+        .catch((error) => {});
     }
   };
   return (
@@ -121,7 +192,12 @@ function BookVerification() {
               <>
                 {filteredbooks.map((book, i) => (
                   <div className="bv-items-inner-cont" key={i}>
-                    <div className="Delete-book" onClick={(e) => {}}>
+                    <div
+                      className="Delete-book"
+                      onClick={(e) => {
+                        deleteBook(e, book._id);
+                      }}
+                    >
                       Delete
                     </div>
                     <div className="bv-item1">
@@ -149,7 +225,7 @@ function BookVerification() {
                             title="View Book Details"
                             className="book-more-details"
                           >
-                            <Link to="#">
+                            <Link to={`/AdminBook/${book._id}`}>
                               More Details&nbsp;
                               <i className="fas fa-angle-double-right" />
                             </Link>
@@ -164,6 +240,10 @@ function BookVerification() {
                             ? "verified-user"
                             : "non-verified-user"
                         }`}
+                        title="Click to Approve the book"
+                        onClick={(e) => {
+                          ApproveBook(e, book._id);
+                        }}
                       >
                         {book.isApproved ? "Approved" : "Not Approved"}
                       </div>
@@ -238,6 +318,11 @@ function BookVerification() {
           </>
         )}
       </div>
+      {page + 1 <= totalPages ? (
+        <button onClick={() => LoadMore()}>More</button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

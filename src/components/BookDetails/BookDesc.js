@@ -28,9 +28,9 @@ function BookDesc(props) {
             return <i className="fas fa-star-half-alt"></i>;
           })} */}
         </span>
-        <span className="book-cutomer-reviews">
+        {/* <span className="book-cutomer-reviews">
           <Link to="#">Customer Reviews</Link>
-        </span>
+        </span> */}
       </div>
       <div className="book-selling">
         <div className="book-mrp">
@@ -78,7 +78,7 @@ function BookDesc(props) {
         <div className="book-seller-name">
           <b style={{fontFamily: "PT Sans"}}>Seller</b>
           <br />
-          <Link to="/SellerProfile">AKD Verma</Link>
+          <Link to="/SellerProfile">{props.bookdetails.seller.name}</Link>
         </div>
         <div className="book-seller-rating" id="book-seller-rating">
           {/* {[...Array(parseInt(0))].map(() => {
