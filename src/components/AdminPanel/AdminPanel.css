@@ -286,7 +286,9 @@
   transition: 0.2s ease-in-out;
   font-weight: bold;
 }
-
+.god-table {
+  margin: 20px;
+}
 .god-table table,
 th,
 td {
@@ -295,15 +297,16 @@ td {
 }
 
 .god-table th {
-  padding: 20px 60px;
+  padding: 20px;
   text-align: left;
   background-color: rgb(65, 64, 64);
   color: white;
 }
 
 .god-table td {
-  padding: 55px 20px;
+  padding: 20px;
   text-align: left;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .god-table tr:nth-child(even) {
@@ -464,4 +467,7 @@ td {
   color: white;
   cursor: pointer;
   padding: 5px;
+}
+.admin-bookdetails-btn {
+  margin: 10px;
 }
