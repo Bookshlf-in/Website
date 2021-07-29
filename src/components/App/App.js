@@ -26,6 +26,7 @@ import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
 import AdminBook from "../AdminPanel/BookDetails";
+import AdminTrack from "../AdminPanel/OrderTracking";
 
 // Protected Route
 import Protected from "../Protected";
@@ -85,10 +86,12 @@ function App() {
           <Route path="/AdminBook/:bookId">
             <AdminBook />
           </Route>
+          <Route path="/AdminTrack/:orderId">
+            <AdminTrack />
+          </Route>
           <Route path="/Admin/:panel">
             <Admin />
           </Route>
-          
           <Route path="/Blog">
             <Blog />
           </Route>
