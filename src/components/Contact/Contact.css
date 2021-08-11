@@ -126,11 +126,17 @@
   }
   .contact-form {
     max-width: 600px;
+    text-align: center;
   }
   #contactName,
   #contactEmail,
   #contactSubject,
-  #contactReview {
+  #contactReview,
+  #contactSubmit {
     width: 100%;
+    margin: 20px 0;
+  }
+  .contact-main h1 {
+    margin: 0;
   }
 }

@@ -542,3 +542,28 @@ i.fas.fa-window-close:hover {
 .update-book-checkbox .MuiCheckbox-root {
   color: #f50057;
 }
+@media screen and (max-width: 450px) {
+  .address-form fieldset {
+    flex-direction: column;
+  }
+  .address-form fieldset div {
+    width: 100%;
+  }
+  .address-zip {
+    flex-direction: column;
+    align-items: center;
+  }
+  .address-form .address-zip select,
+  .address-form .address-zip input {
+    width: 100%;
+  }
+  .address-zip #state,
+  .address-zip #country,
+  .address-form .address-zip input {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+  .address-lists {
+    overflow-y: scroll;
+  }
+}

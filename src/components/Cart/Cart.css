@@ -153,8 +153,12 @@ td .fa-minus-square:hover {
   .cart-main {
     flex-direction: column;
   }
+  .cart-container-left {
+    min-width: unset;
+  }
   .cart-container-right {
     margin-top: 20px;
+    min-width: unset;
   }
 }
 @media only screen and (max-width: 600px) {

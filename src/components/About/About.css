@@ -11,6 +11,7 @@
   float: left;
   position: absolute;
   padding: 50px;
+  margin: 1rem;
   max-width: 800px;
   background-color: rgba(0, 0, 0, 0.75);
   font-size: 20px;
@@ -373,5 +374,11 @@
   }
   100% {
     transform: rotate(405deg);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .About-textbox {
+    padding: 25px;
   }
 }

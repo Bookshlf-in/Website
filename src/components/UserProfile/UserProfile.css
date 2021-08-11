@@ -172,3 +172,32 @@
   transition: 0.5s;
   border: 1px solid white;
 }
+@media screen and (max-width: 900px) {
+  .user-profile-navbar .Account-details,
+  .user-profile-navbar .Pending-orders,
+  .user-profile-navbar .Completed-orders {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 760px) {
+  .user-profile-navbar .Account-details,
+  .user-profile-navbar .Pending-orders,
+  .user-profile-navbar .Completed-orders {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 650px) {
+  .user-profile-navbar {
+    flex-wrap: wrap;
+  }
+  .user-previous-orders,
+  .user-current-orders {
+    overflow-y: scroll;
+    padding: 1rem;
+  }
+  .user-profile-navbar .Account-details,
+  .user-profile-navbar .Pending-orders,
+  .user-profile-navbar .Completed-orders {
+    font-size: 14px;
+  }
+}

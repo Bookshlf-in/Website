@@ -154,6 +154,16 @@
   justify-content: space-evenly;
 }
 @media screen and (max-width: 450px) {
+  .Search-button {
+    width: 30%;
+  }
+  .search-book {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 450px) {
   .search-result-book .book-tags {
     display: none;
   }
