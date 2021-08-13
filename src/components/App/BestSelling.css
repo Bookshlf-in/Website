@@ -122,6 +122,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .bs-books {
+    padding: 0;
+  }
   .header-heading {
     font-size: 25px;
     align-content: center;

@@ -18,6 +18,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .book-snaps .snapshot,
 .book-snaps .video-snapshot {
   margin-top: 10px;
@@ -39,6 +40,7 @@
   height: 500px;
   width: 400px;
 }
+
 #video-snap-full {
   display: none;
   height: 100%;
@@ -300,4 +302,32 @@
   opacity: 0.9;
   border-radius: 15px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+}
+@media screen and (max-width: 800px) {
+  .book-details-bg {
+    flex-direction: column;
+  }
+  .book-snaps-full {
+    height: 200px;
+    width: 225px;
+  }
+  .book-description {
+    width: unset;
+    padding: 20px 10px;
+    margin: 0;
+  }
+}
+@media screen and (max-width: 450px) {
+  .book-subheading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .book-subheading span {
+    margin: 0.5rem 0;
+  }
+  .book-selling,
+  .book-other-details,
+  .book-seller {
+    padding-left: 0;
+  }
 }

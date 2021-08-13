@@ -1,12 +1,7 @@
 import React from "react";
 function Bookfullsnap(props) {
   return (
-    <div
-      style={{
-        height: "500px",
-        width: "400px",
-      }}
-    >
+    <div>
       <div className="book-snaps-full" id="book-snaps">
         <img
           src={props.url}
@@ -26,8 +21,7 @@ function Bookfullsnap(props) {
           title="Book Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+          allowFullScreen></iframe>
       </div>
     </div>
   );
