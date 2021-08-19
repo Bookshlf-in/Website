@@ -79,19 +79,7 @@ function Navbar() {
     if (e === "0") {
       setAnchorEl(null);
     }
-    if (e === "1") {
-      setAnchorEl(null);
-      history.push("/UserProfile/1");
-    } else if (e === "2") {
-      setAnchorEl(null);
-      history.push("/Cart");
-    } else if (e === "3") {
-      setAnchorEl(null);
-      history.push("/Wishlist");
-    } else if (e === "4") {
-      setAnchorEl(null);
-      history.push("/SellerPanel");
-    } else if (e === "5") {
+    if (e === "5") {
       setalert({
         show: true,
         msg: "Unsubscribing...",
@@ -304,14 +292,14 @@ function Navbar() {
                       anchorEl={anchorEl}
                       keepMounted
                       open={Boolean(anchorEl)}
+                      onClick={() => {
+                        handleClose("0");
+                      }}
                     >
                       <MenuItem
                         style={{
                           fontFamily: "PT Sans",
                           fontWeight: "bold",
-                        }}
-                        onClick={() => {
-                          handleClose("0");
                         }}
                       >
                         <i className="fas fa-times-circle" />
@@ -319,7 +307,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("1");
+                          history.push("/UserProfile/1");
                         }}
                       >
                         <i className="fas fa-user-alt" />
@@ -346,7 +334,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("2");
+                          history.push("/Cart");
                         }}
                       >
                         <i className="fas fa-cart-arrow-down" />
@@ -355,7 +343,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("3");
+                          history.push("/Wishlist");
                         }}
                       >
                         <i className="fas fa-heart" />
@@ -364,7 +352,7 @@ function Navbar() {
                       <MenuItem
                         style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                         onClick={() => {
-                          handleClose("4");
+                          history.push("/SellerPanel");
                         }}
                       >
                         <i className="fas fa-book" />
