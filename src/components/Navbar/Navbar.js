@@ -149,8 +149,7 @@ function Navbar() {
           <img
             src="/images/logo.png"
             alt="Bookshlf"
-            height="40px"
-            width="210px"
+            height="25px"
             onClick={() => {
               history.push("/");
             }}
@@ -264,7 +263,6 @@ function Navbar() {
                   <div>
                     <Button
                       variant="contained"
-                      color="secondary"
                       style={{fontFamily: "PT Sans", fontWeight: "bold"}}
                       onClick={() => {
                         history.push("/Login");

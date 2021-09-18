@@ -134,6 +134,15 @@ function Login() {
     <div className="login-bg">
       <div className="login-container">
         {/* Left container in login container starts */}
+        <div className="login-floating-nav">
+          <span
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            <i class="fas fa-home"></i>&nbsp;HOME
+          </span>
+        </div>
         <div className="login-container-left">
           <div className="login-container-left-logo">
             <img src="/images/favicon.ico" height="70px" alt="Bookshlf.in" />

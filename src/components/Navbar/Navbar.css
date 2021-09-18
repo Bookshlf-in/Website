@@ -8,26 +8,30 @@
   background: linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%);
   width: 100%;
   overflow: hidden;
-  padding: 10px;
+  padding: 0px 10px;
   font-family: "Roboto", sans-serif;
   font-weight: 900;
-  font-size: 18px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 56px;
 }
 .Sidenav-open {
   display: none;
 }
 .navbar-logo {
-  float: left;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70px;
-  cursor: pointer;
 }
+
 .navbar-items ul {
-  float: left;
-  margin-left: 30px;
-  min-height: 50px;
+  margin-left: 150px;
+  height: 30px;
   list-style: none;
   display: flex;
   justify-content: space-between;
@@ -42,12 +46,12 @@
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
 }
 .navbar-items-chip a,
 .navbar-items-chip p {
-  padding: 14px 10px;
+  padding: 10px;
   color: white;
 }
 .navbar-items-chip a:hover,
@@ -93,8 +97,10 @@
   border: none;
   background-color: rgba(255, 255, 255, 0.4);
   font-family: "Roboto", sans-serif;
-  font-size: 16px;
+  font-size: 12px;
+  width: 200px;
   padding-left: 2px;
+  outline: none;
 }
 .navbar-items-chip-searchbox a {
   padding: 3.5px 10px;
@@ -104,8 +110,6 @@
   background-color: rgb(246, 218, 56);
 }
 .navbar-items-chip-searchbox input:focus {
-  outline: none;
-  width: 200px;
   font-family: "PT Sans";
   color: grey;
   background-color: rgba(255, 255, 255);
@@ -126,8 +130,8 @@
   color: rgb(255, 255, 255);
   font-family: "Roboto", sans-serif;
   font-weight: 900;
-  padding: 14px 10px;
-  font-size: 14px;
+  padding: 10px;
+  font-size: 12px;
   background-color: inherit;
   margin: 0;
   z-index: 100;
@@ -154,21 +158,34 @@
   text-decoration: none;
   display: block;
   text-align: left;
-  z-index: 10;
+  z-index: 1010;
 }
 
 .dropdown-content a:hover {
   background-color: #ddd;
-  z-index: 10;
+  z-index: 1010;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 1200px) {
   .navbar-right {
     display: none;
+  }
+  .Sidenav-open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    float: left;
+    margin: 10px;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+  }
+  .navbar-logo {
+    left: 66px;
   }
 }
 @media screen and (max-width: 800px) {
@@ -180,11 +197,7 @@
     float: left;
     margin: 10px;
     font-size: 30px;
-    color: rgb(235, 95, 95);
-  }
-  .navbar-logo img {
-    height: 40px;
-    width: 210px;
+    color: rgb(255, 255, 255);
   }
   .navbar-items {
     display: none;

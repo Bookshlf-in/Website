@@ -19,6 +19,22 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
+}
+
+.login-floating-nav {
+  position: absolute;
+  float: left;
+  left: 0px;
+  top: 10px;
+  color: aliceblue;
+  font-family: "PT Sans";
+  cursor: pointer;
+}
+.login-floating-nav span:hover {
+  color: orange;
+  border-bottom: 1px solid orange;
+  transition: 0.3s;
 }
 /* Left container Css */
 .login-container-left {
