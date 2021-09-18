@@ -6,19 +6,16 @@
   overflow: hidden;
   box-sizing: border-box;
   margin: 0;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
+  background-color: rgb(35, 47, 62);
   animation: gradient 15s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .login-container {
-  width: 80%;
-  height: 80%;
+  width: 50%;
   margin: 10vh auto;
   background-color: rgb(35, 47, 62);
-  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,6 +26,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 .login-container-left-logo {
   margin: 10px;
@@ -39,44 +37,25 @@
   align-items: center;
 }
 .login-container-left-main {
-  padding: 20px 40px;
   color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .login-container-left-main h2 {
-  font-size: 4em;
+  font-size: 3em;
   margin-bottom: 20px;
   font-family: "Staatliches", cursive;
   letter-spacing: 5px;
 }
 .login-form-email-lable {
   font-family: "Roboto", sans-serif;
-  font-size: 2em;
+  font-size: 1.5em;
   letter-spacing: 3px;
   margin-bottom: 10px;
 }
-.login-form-email-input input {
-  width: 400px;
-  height: 50px;
-  border: none;
-  border-bottom: 2px solid rgb(67, 184, 232);
-  padding-left: 10px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 800;
-  font-size: 20px;
-  background-color: white;
-  color: rgb(0, 0, 0);
-}
-.login-form-password-lable {
-  font-family: "Roboto", sans-serif;
-  font-size: 2em;
-  letter-spacing: 3px;
-  margin: 10px 0px;
-}
-.login-form-password-input,
-.login-form-email-input {
-  position: relative;
-}
-
+.login-form-email-input input,
 .login-form-password-input input {
   width: 400px;
   height: 50px;
@@ -85,15 +64,26 @@
   padding-left: 10px;
   font-family: "Roboto", sans-serif;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 14px;
   background-color: white;
   color: rgb(0, 0, 0);
 }
+.login-form-password-lable {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5em;
+  letter-spacing: 3px;
+  margin: 10px 0px;
+}
+.login-form-password-input,
+.login-form-email-input {
+  position: relative;
+}
+
 .login-form-email-input input:focus,
 .login-form-password-input input:focus {
   transition: 0.1s;
   outline: none;
-  border-bottom: 5px solid rgb(67, 232, 122);
+  border-bottom: 3px solid rgb(67, 232, 122);
   background-color: white;
   color: black;
 }
@@ -101,11 +91,17 @@
 .login-form-password-input span {
   position: absolute;
   float: right;
-  top: 0px;
-  right: 10px;
+  top: -15px;
+  right: 0px;
   font-size: 12px;
   color: red;
   display: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+.login-form-email-input input::placeholder,
+.login-form-password-input input::placeholder {
+  font-size: 14px;
 }
 .login-form-email-input input:focus::placeholder,
 .login-form-password-input input:focus::placeholder {
@@ -118,8 +114,8 @@
   float: right;
   right: 20px;
   top: 15px;
-  font-size: 26px;
-  color: rgb(0, 0, 0);
+  font-size: 20px;
+  color: rgb(53, 53, 53);
 }
 .login-form-password-input i:hover {
   cursor: pointer;
@@ -134,10 +130,11 @@
 .login-form-forgot-password a {
   display: flex;
   justify-content: center;
-  color: blueviolet;
+  color: rgb(59, 150, 235);
   font-family: "Roboto", sans-serif;
-  padding-top: 5px;
+  padding-top: 10px;
   font-weight: 900;
+  font-size: 14px;
 }
 .login-form-forgot-password a:hover {
   color: rgb(243, 91, 64);
@@ -160,6 +157,7 @@
   justify-content: center;
   align-items: center;
   outline: none;
+  margin-top: 10px;
 }
 .login-form-submit-button button:hover {
   box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.9);
@@ -167,95 +165,25 @@
   color: white;
   transition: none;
 }
-/** Right container Css */
-.login-container-right {
-  height: 100%;
-  width: 260px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  font-family: "Roboto", sans-serif;
+.login-form-submit-button {
+  position: relative;
 }
-.login-container-right-container {
-  height: 100%;
-  width: 100%;
-  background-color: rgba(27, 0, 39, 0.8);
-}
-.login-container-right-container-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75%;
-}
-.login-container-right-container-register {
-  width: 100%;
-  height: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.login-container-right-container-register-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-}
-.login-container-right-container-register-button-card {
-  height: 50px;
-  width: 100%;
-  transform-style: preserve-3d;
-  perspective: 600px;
-  transition: 0.5s;
-}
-.login-container-right-container-register-button-card:hover
-  .login-container-right-container-register-button-card-front {
-  transform: rotateX(-180deg);
-}
-.login-container-right-container-register-button-card:hover
-  .login-container-right-container-register-button-card-back {
-  transform: rotateX(0deg);
-  cursor: pointer;
-}
-.login-container-right-container-register-button-card-back a {
-  text-decoration: none;
-  color: antiquewhite;
-}
-.login-container-right-container-register-button-card-front {
-  height: 100%;
-  width: 100%;
-  color: whitesmoke;
-  font-size: 16px;
-  text-align: center;
-  backface-visibility: hidden;
-  transform: rotateX(0deg);
-  transition: 0.5s;
+.register {
+  float: left;
+  position: absolute;
+  top: 70px;
+  left: 15px;
+  font-family: "Staatliches", cursive;
   letter-spacing: 2px;
 }
-
-.login-container-right-container-register-button-card-back {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(253, 83, 53, 0.9);
-  backface-visibility: hidden;
-  transform: rotateX(180deg);
-  transition: 0.5s;
-  color: #ffffff;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 3px;
-  letter-spacing: 5px;
-  border-radius: 10px;
-  box-shadow: 1px 3px 5px rgba(255, 255, 255, 0.8);
+.register a {
+  color: rgb(59, 150, 235);
 }
-.login-container-right-container-register-button-card-back h2 {
-  font-size: 26px;
+.register a:hover {
+  color: rgb(59, 150, 235);
+  color: rgb(243, 91, 64);
+  letter-spacing: 3px;
+  transition: 0.3s;
 }
 /* for medium screen size devices eg : tablets, ipads , small laptops */
 @media only screen and (max-width: 996px) {
@@ -271,7 +199,6 @@
   .login-form-forgot-password {
     font-size: 16px;
     justify-content: flex-end;
-    padding-right: 20px;
   }
   .login-container-right-container-register-button-card-front,
   .login-container-right-container-register-button-card-back h2 {
@@ -335,17 +262,12 @@
 
 /* for extra-smaller display devices */
 @media only screen and (max-width: 441px) {
-  .login-form-email-input input,
-  .login-form-password-input input {
-    width: 200px;
-    font-size: 16px;
-  }
   .login-form-email-lable,
   .login-form-password-lable {
     font-size: 20px;
   }
-  .login-form-forgot-password {
-    padding-right: 0px;
+  .login-bg {
+    overflow: auto;
   }
 }
 
@@ -408,16 +330,14 @@
   }
 }
 
-.login-form-submit-button #loading {
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 3px solid #ffffff;
-  border-top: 3px solid #790000;
-  border-radius: 100%;
+.login-load {
   display: none;
-  animation: spin 1s infinite linear;
-  margin: 0;
+  position: absolute;
+  float: left;
+  left: 150px;
+  top: 20px;
 }
+
 .login-as-bg {
   width: 100%;
   display: flex;

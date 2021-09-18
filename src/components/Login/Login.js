@@ -3,15 +3,15 @@ import "./Login.css";
 import axios from "../../axios";
 import {Link, useHistory} from "react-router-dom";
 import {UserContext} from "../../Context/userContext";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 const eye = {
   open: "far fa-eye",
   close: "fas fa-eye-slash",
 };
 
 const Errorstyle = {
-  border: "2px solid red",
-  color: "red",
+  borderBottom: "3px solid rgb(240, 39, 39)",
+  color: "rgb(240, 39, 39)",
 };
 function Login() {
   // context states
@@ -39,13 +39,15 @@ function Login() {
   const [bigLoader, setBigLoader] = useState("none");
 
   // showing password and hiding
-  const handelClick = () => {
+  const handelClick = (e) => {
     if (show === eye.close) {
       setshow(eye.open);
       setval("text");
+      document.getElementById(e.target.id).style.color = "rgb(240, 39, 39)";
     } else {
       setshow(eye.close);
       setval("password");
+      document.getElementById(e.target.id).style.color = "rgb(53, 53, 53)";
     }
   };
 
@@ -60,12 +62,12 @@ function Login() {
   const handleDefaultError = () => {
     if (Name === "") {
       setalert1("block");
-      setalertText1("Please Fill Your Email.");
+      setalertText1("Please Fill Your Email");
       makeRed1(true);
     }
     if (Password === "") {
       setalert2("block");
-      setalertText2("Please Fill Your Password.");
+      setalertText2("Please Fill Your Password");
       makeRed2(true);
     }
   };
@@ -158,7 +160,7 @@ function Login() {
           {/* Left container in login container starts */}
           <div className="login-container-left">
             <div className="login-container-left-logo">
-              <img src="/images/logoView.png" height="50px" alt="Bookshlf.in" />
+              <img src="/images/favicon.ico" height="70px" alt="Bookshlf.in" />
             </div>
             <div className="login-container-left-main">
               <h2> Login </h2>
@@ -172,7 +174,12 @@ function Login() {
                       value={Name}
                       placeholder="yourname@email.com"
                       autoComplete="off"
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        makeRed1(false);
+                        setalert1("none");
+                        setalertText1("");
+                      }}
                       onKeyPress={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault();
@@ -181,19 +188,32 @@ function Login() {
                       }}
                       style={Red1 ? Errorstyle : {}}
                     />
-                    <span style={{display: alert1}}>
+                    <span
+                      style={{
+                        display: alert1,
+                      }}
+                    >
                       <i className="fas fa-exclamation-circle"></i> {alertText1}
                     </span>
                   </div>
                   <div className="login-form-password-lable">Password</div>
                   <div className="login-form-password-input">
-                    <i className={show} id="eye" onClick={handelClick} />
+                    <i
+                      className={show}
+                      id="eye"
+                      onClick={(e) => handelClick(e)}
+                    />
                     <input
                       type={val}
                       value={Password}
                       placeholder="Password"
                       autoComplete="off"
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        makeRed2(false);
+                        setalert2("none");
+                        setalertText2("");
+                      }}
                       onKeyPress={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault();
@@ -202,7 +222,11 @@ function Login() {
                       }}
                       style={Red2 ? Errorstyle : {}}
                     />
-                    <span style={{display: alert2}}>
+                    <span
+                      style={{
+                        display: alert2,
+                      }}
+                    >
                       <i className="fas fa-exclamation-circle"></i> {alertText2}
                     </span>
                   </div>
@@ -217,8 +241,15 @@ function Login() {
                       }}
                     >
                       Login
-                      <div id="loading" style={{display: loader}}></div>
                     </button>
+                    <div className="login-load" style={{display: loader}}>
+                      <CircularProgress
+                        style={{height: "20px", width: "20px"}}
+                      />
+                    </div>
+                    <span className="register">
+                      <Link to="/Signup">Create Account</Link>&nbsp; instead ?
+                    </span>
                   </div>
                 </form>
                 {/* Login Form Ends */}
@@ -226,38 +257,6 @@ function Login() {
             </div>
           </div>
           {/* Left container ends here */}
-
-          <div
-            className="login-container-right"
-            style={{backgroundImage: `url(/images/login-city.svg)`}}
-          >
-            {/* right container in login container starts */}
-            <div className="login-container-right-container">
-              <div className="login-container-right-container-logo">
-                <img
-                  src="/images/smallLogo.svg"
-                  alt="bookshlf.in"
-                  height="250px"
-                  width="250px"
-                />
-              </div>
-              <div className="login-container-right-container-register">
-                <div className="login-container-right-container-register-button">
-                  <div className="login-container-right-container-register-button-card">
-                    <div className="login-container-right-container-register-button-card-front">
-                      Don't Have An Account ?
-                    </div>
-                    <div className="login-container-right-container-register-button-card-back">
-                      <h2>
-                        <Link to="/Signup">Register</Link>
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Right Container ends here */}
-          </div>
         </div>
       ) : (
         <div className="login-as-bg">
