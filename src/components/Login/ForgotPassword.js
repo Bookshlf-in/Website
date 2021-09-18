@@ -29,6 +29,7 @@ function ForgotPassword() {
   const [showAlert, setshowAlert] = useState(false);
   const [alertColor, setalertColor] = useState(alertStyle.color.success);
   const [alertText, setalertText] = useState(null);
+  const [firstUse, setFirstUse] = useState(true);
 
   const [Email, setEmail] = useState("");
   const [locked, setlocked] = useState(false);
@@ -77,6 +78,7 @@ function ForgotPassword() {
       })
       .then((response) => {
         setSendOtp(false);
+        setFirstUse(false);
         setAlerttype("success");
         setalertColor(alertStyle.color.success);
         setshowAlert(true);
@@ -96,6 +98,9 @@ function ForgotPassword() {
             setalertText(error.response.data.errors[0].error);
           }
           setshowAlert(true);
+          setTimeout(() => {
+            setshowAlert(false);
+          }, 5000);
         }
         setSendOtp(false);
       });
@@ -140,11 +145,7 @@ function ForgotPassword() {
     <div className="forgotpass-container">
       <div className="forgot-containerpass">
         <div className="forgot-container-logo">
-          <img
-            src="./images/logo[800x150].png"
-            height="50px"
-            alt="Bookshlf.in"
-          />
+          <img src="/images/favicon.ico" height="50px" alt="Bookshlf.in" />
         </div>
         <div className="forgot-container-main">Password Recovery</div>
         <form className="signup-form">
@@ -178,7 +179,7 @@ function ForgotPassword() {
             style={{color: locked ? "rgb(8, 194, 8)" : "blue"}}
           />
           <button onClick={handelSendOtp}>
-            Send Again&nbsp;&nbsp;
+            {firstUse ? "Send OTP" : "Send Again"}&nbsp;&nbsp;
             <i
               className="fas fa-circle-notch"
               style={{
@@ -204,7 +205,7 @@ function ForgotPassword() {
             </Alert>
           </div>
         </div>
-        <form className="signup-form">
+        <form className="signup-form alert-space">
           <div className="signup-password">
             <span>
               <i className="fas fa-key" />
