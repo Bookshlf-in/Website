@@ -144,6 +144,23 @@ function ForgotPassword() {
   return (
     <div className="forgotpass-container">
       <div className="forgot-containerpass">
+        <div className="forgot-small-nav">
+          <span
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            <i class="fas fa-home"></i>&nbsp;HOME
+          </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span
+            onClick={() => {
+              history.push("/Login");
+            }}
+          >
+            <i class="fas fa-sign-in-alt"></i>&nbsp;LOGIN
+          </span>
+        </div>
         <div className="forgot-container-logo">
           <img src="/images/favicon.ico" height="50px" alt="Bookshlf.in" />
         </div>
