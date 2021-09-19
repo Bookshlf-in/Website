@@ -125,6 +125,7 @@ footer-subscription > p {
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
+  max-width: 150px;
 }
 .social-icons a:hover {
   color: orangered;
@@ -263,22 +264,22 @@ footer-subscription > p {
     align-items: center;
   }
 
-  .footer-logo {
-    width: 100%;
-  }
-
-  .social-logo {
-    width: 60%;
-  }
-
-  .footer-address {
-    width: 70%;
-  }
-
+  .footer-logo,
+  .footer-address-para,
   .footer-contact {
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
+  .social-icons {
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .social-icon-link {
+    margin: 0px 10px;
+  }
   .footer-container2 {
     flex-direction: column;
     justify-content: center;
@@ -305,13 +306,11 @@ footer-subscription > p {
   }
 
   .social-media-wrap {
-    margin: 0px;
-    padding: 0px;
+    margin: 10px;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-left: 7rem;
   }
 }
 @media screen and (max-width: 768px) {
@@ -330,13 +329,11 @@ footer-subscription > p {
   }
 
   .footer-links {
-    padding-top: 2rem;
-    flex-direction: column;
+    flex-wrap: wrap;
   }
 
   .social-media-wrap {
     width: 100%;
-    padding-left: 2rem;
   }
 
   .footer-subscription-button {
