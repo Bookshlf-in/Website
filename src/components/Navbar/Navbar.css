@@ -180,8 +180,7 @@
     align-items: center;
     min-height: 50px;
     float: left;
-    margin: 10px;
-    font-size: 30px;
+    font-size: 20px;
     color: rgb(255, 255, 255);
   }
   .navbar-logo {
@@ -195,8 +194,7 @@
     align-items: center;
     min-height: 50px;
     float: left;
-    margin: 10px;
-    font-size: 30px;
+    font-size: 20px;
     color: rgb(255, 255, 255);
   }
   .navbar-items {
