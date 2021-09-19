@@ -10,7 +10,7 @@
 .contact-main h1 {
   font-family: "Poiret", sans-serif;
   margin: 5px;
-  font-size: 3em;
+  font-size: 2em;
 }
 .contact-map iframe {
   width: 1366px;
@@ -29,6 +29,11 @@
   margin-top: -100px;
   z-index: 40;
   padding: 20px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.contact-form .social-icons i {
+  color: rgb(26, 26, 26);
+  padding: 10px;
 }
 .contact-form .social-icons i:hover {
   color: rgb(246, 77, 77);
@@ -43,11 +48,11 @@
 }
 #contactName,
 #contactEmail {
-  width: 300px;
+  width: 200px;
   font-weight: bold;
-  height: 50px;
+  height: 30px;
   margin: 20px;
-  font-size: 18px;
+  font-size: 12px;
   border: 1px solid black;
   padding: 0px 10px;
   outline: none;
@@ -56,10 +61,10 @@
 
 #contactSubject {
   font-weight: bold;
-  width: 640px;
+  width: 440px;
   margin: 20px;
-  height: 50px;
-  font-size: 18px;
+  height: 30px;
+  font-size: 12px;
   border: 1px solid black;
   padding: 0px 10px;
   outline: none;
@@ -67,10 +72,10 @@
 }
 #contactReview {
   font-weight: bold;
-  width: 640px;
+  width: 440px;
   margin: 20px;
-  height: 150px;
-  font-size: 18px;
+  height: 100px;
+  font-size: 12px;
   border: 1px solid black;
   padding: 10px;
   outline: none;
@@ -96,10 +101,10 @@
 }
 
 #contactSubmit {
-  width: 200px;
+  width: 150px;
   margin: 20px;
-  height: 60px;
-  font-size: 18px;
+  height: 40px;
+  font-size: 14px;
   font-weight: bold;
   background-color: rgb(26, 26, 26);
   color: white;
