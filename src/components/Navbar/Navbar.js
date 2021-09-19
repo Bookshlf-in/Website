@@ -8,9 +8,9 @@ import SideNav from "./Sidenav.js";
 import {UserContext} from "../../Context/userContext";
 import axios from "../../axios.js";
 
-function openNav() {
+const openNav = (e) => {
   document.getElementById("mySidenav").style.width = "250px";
-}
+};
 
 function Navbar() {
   const history = useHistory();
@@ -23,58 +23,62 @@ function Navbar() {
     msg: "Unsubscribe",
     color: "black",
   });
+
   useEffect(() => {
-    axios
-      .get("/countWishlistItems")
-      .then((response) => {
-        // console.log("wishlist: ", response.data.length);
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
+    if (user) {
+      axios
+        .get("/countWishlistItems")
+        .then((response) => {
+          // console.log("wishlist: ", response.data.length);
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems,
+              wishlist: response.data.count,
+            })
+          );
+          setUser({
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
             cartitems: user.cartitems,
             wishlist: response.data.count,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: user.cartitems,
-          wishlist: response.data.count,
-        });
-      })
-      .catch((error) => {});
-    axios
-      .get("/countCartItems")
-      .then((response) => {
-        // console.log(response.data);
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
+          });
+        })
+        .catch((error) => {});
+      axios
+        .get("/countCartItems")
+        .then((response) => {
+          // console.log(response.data);
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: response.data.count,
+              wishlist: user.wishlist,
+            })
+          );
+          setUser({
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
             cartitems: response.data.count,
             wishlist: user.wishlist,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: response.data.count,
-          wishlist: user.wishlist,
-        });
-      })
-      .catch((error) => {});
+          });
+        })
+        .catch((error) => {});
+    }
   }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = (e) => {
     if (e === "0") {
       setAnchorEl(null);
@@ -121,6 +125,7 @@ function Navbar() {
         });
     }
   };
+
   const logout = () => {
     setLogged(false);
     axios
@@ -137,11 +142,12 @@ function Navbar() {
         console.log("Logout error", error);
       });
   };
+
   return (
     <div className="main-navbar" id="main-navbar">
       {/* navbar container starts */}
       <div className="navbar-container">
-        <span onClick={openNav} className="Sidenav-open">
+        <span onClick={(e) => openNav(e)} className="Sidenav-open">
           <i className="fas fa-bars"></i>
         </span>
         <SideNav />
