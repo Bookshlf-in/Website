@@ -1,8 +1,5 @@
 .footer-container {
-  /* background-color: #242424; */
   background: linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%);
-  /* background-color: #161619; */
-  padding: 4 rem 0 3 rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,14 +28,14 @@ footer-subscription > p {
 }
 
 .footer-subscription-heading {
-  margin-bottom: 24px;
-  font-size: 35px;
+  font-size: 24px;
 }
 
 .footer-subscription-text {
-  margin-bottom: 24px;
-  font-size: 20px;
+  font-size: 12px;
   color: #5e5e5e;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
 }
 .input-areas form {
   width: 100%;
@@ -48,7 +45,7 @@ footer-subscription > p {
 }
 .footer-subscription-input {
   width: 400px;
-  height: 55px;
+  height: 40px;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -57,7 +54,7 @@ footer-subscription > p {
   outline: none;
   font-family: "Roboto", sans-serif;
   font-weight: 900;
-  margin-right: 20px;
+  font-size: 12px;
 }
 .footer-subscription-input::placeholder {
   color: rgb(240, 79, 79);
@@ -73,27 +70,27 @@ footer-subscription > p {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
-  margin: 0px 30px;
-  background-color: black;
+  font-size: 14px;
+  margin: 0px 10px;
   color: white;
-  box-shadow: 3px 5px 9px rgba(8, 1, 1, 0.9);
   border: none;
   border-bottom: 1.8px solid whitesmoke;
   border-right: 1.8px solid whitesmoke;
   font-family: "Roboto", sans-serif;
 }
 .footer-subscription-button {
-  padding: 10px 0px 10px 10px;
+  padding: 10px;
   border: none;
-  height: 52px;
+  height: 40px;
   outline: none;
-  font-size: 20px;
+  font-size: 14px;
   background-color: black;
   color: white;
   font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.footer-subscription-button-container:hover,
 .footer-subscription-button:hover {
   background-color: rgb(240, 79, 79);
   font-weight: bold;
@@ -104,7 +101,7 @@ footer-subscription > p {
   margin-right: 10px;
   outline: none;
   border: none;
-  font-size: 18px;
+  font-size: 14px;
   margin-bottom: 16px;
   border: 1px solid #fff;
 }
@@ -123,41 +120,32 @@ footer-subscription > p {
 }
 
 .social-icons {
-  padding: 30px 0px;
-  margin: 0px 20px;
+  margin: 10px;
   display: flex;
   justify-content: space-between;
-  padding-left: 1.8rem;
   align-items: center;
-  width: 240px;
+  font-size: 14px;
 }
 .social-icons a:hover {
-  opacity: 0.7;
+  color: orangered;
 }
 .footer-logo {
-  margin: 0px 20px;
-  padding: 15px 0px;
+  margin: 10px 0px 10px 0px;
 }
 
 .social-logo {
   color: #b1b1b1;
   justify-self: start;
-  padding-left: 1.8rem;
+  padding-left: 10px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 2rem;
+  font-size: 14px;
   display: flex;
   align-self: center;
-  margin-bottom: 16px;
-}
-.social-logo img {
-  width: 50%;
 }
 
 .footer-address {
-  padding: 15px 0px;
-  margin: 0px 20px;
-  width: 70%;
+  margin: 10px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
 }
@@ -165,14 +153,13 @@ footer-subscription > p {
 .footer-contact {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  padding: 15px 0px;
-  margin: 0px 20px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   color: #fff;
-  padding-left: 1.8rem;
   text-align: left;
+  font-size: 12px;
 }
 
 .footer-contact a {
@@ -186,9 +173,8 @@ footer-subscription > p {
 }
 
 .footer-address-para {
-  padding-left: 1.8rem;
   color: rgb(158, 158, 158);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .footer-links {
@@ -206,7 +192,7 @@ footer-subscription > p {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 16px 10px;
+  margin: 10px;
   text-align: left;
   width: 160px;
   box-sizing: border-box;
@@ -215,8 +201,9 @@ footer-subscription > p {
 }
 
 .footer-link-items h4 {
-  margin-bottom: 30px;
-  font-size: 19px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  padding: 0px;
 }
 
 .footer-link-items > h4 {
@@ -226,7 +213,8 @@ footer-subscription > p {
 .footer-link-items a {
   color: #b1b1b1;
   text-decoration: none;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  font-size: 12px;
 }
 
 .footer-link-items a:hover {
@@ -248,7 +236,7 @@ footer-subscription > p {
 
 .social-icon-link {
   color: #fff;
-  font-size: 24px;
+  font-size: 14px;
 }
 
 .website-rights {
@@ -263,8 +251,9 @@ footer-subscription > p {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  height: 40px;
   font-family: "Roboto", sans-serif;
+  font-size: 14px;
 }
 
 @media screen and (max-width: 992px) {

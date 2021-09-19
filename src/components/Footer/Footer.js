@@ -157,7 +157,12 @@ function Footer() {
           <div className="social-media-wrap">
             <div className="footer-logo">
               <Link to="/" className="social-logo">
-                <img src="/images/logo.png" alt="" />
+                <img
+                  src="/images/logo.png"
+                  alt="bookhlf.in"
+                  height="25px"
+                  width="135px"
+                />
               </Link>
             </div>
             <div className="footer-address">
