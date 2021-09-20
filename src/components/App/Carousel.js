@@ -31,7 +31,7 @@ function Carousel() {
   return (
     <div className="carousel">
       <div className="corousel-container">
-        <Slider className="slider-wrapper" autoplay="6000">
+        <Slider className="slider-wrapper" autoplay="5000">
           {content.map((item, index) => (
             <div
               key={index}
@@ -43,13 +43,17 @@ function Carousel() {
               <div className="inner">
                 <h1>{item.title}</h1>
                 <p>{item.description}</p>
-                <button onClick={() =>{
-                  if(item.button === "Sell Now"){
-                    history.push("/SellerPanel");
-                  }else{
-                    history.push("/SearchResult")
-                  }
-                }}>{item.button}</button>
+                <button
+                  onClick={() => {
+                    if (item.button === "Sell Now") {
+                      history.push("/SellerPanel");
+                    } else {
+                      history.push("/SearchResult");
+                    }
+                  }}
+                >
+                  {item.button}
+                </button>
               </div>
             </div>
           ))}

@@ -37,15 +37,19 @@ button:hover {
   -webkit-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
 }
-
+/* .corousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
 .slider-wrapper {
   position: relative;
-  height: calc(100vh - 90px);
+  height: 65vh;
   overflow: hidden;
 }
 
 .slide {
-  height: calc(100vh - 90px);
+  height: 100%;
   background-size: cover !important;
 }
 
@@ -83,13 +87,13 @@ button:hover {
 }
 
 .previousButton {
-  left: 0;
+  left: 10px;
   -webkit-transform: rotate(180deg) translateY(calc(50% + 0px));
   transform: rotate(180deg) translateY(calc(50% + 0px));
 }
 
 .nextButton {
-  right: 0;
+  right: 10px;
 }
 
 .slider-content {
@@ -164,16 +168,14 @@ button:hover {
 }
 
 @media (max-height: 500px) {
-  .slider-wrapper,
-  .slide {
-    height: calc(100vh - 75px);
+  .slider-wrapper {
+    height: 50vh;
   }
 }
 
 @media (max-width: 640px) {
-  .slider-wrapper,
-  .slide {
-    height: calc(80vh - 75px);
+  .slider-wrapper {
+    height: 50vh;
   }
 }
 
