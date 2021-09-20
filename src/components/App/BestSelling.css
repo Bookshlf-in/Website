@@ -7,20 +7,19 @@
 }
 
 .bs-header {
-  margin: 20px 0px;
-  display: inline-block;
   width: 100%;
+  padding: 10px;
 }
 .header-heading {
-  display: inline-block;
   width: 100%;
-  padding: 0px 30px;
+  display: inline-block;
+  font-size: 20px;
 }
 
 .header-viewall {
   display: inline-block;
   position: absolute;
-  right: 40px;
+  right: 20px;
 }
 
 .header-viewall a {
@@ -52,7 +51,7 @@
   flex-direction: column;
   border: 0.2px solid rgb(226, 226, 226);
   width: 290px;
-  min-height: 470px;
+  height: 350px;
 }
 .book:hover {
   transition: 0.5s;
@@ -64,7 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0px;
+  padding: 10px 0px;
 }
 
 .book-details {
@@ -76,8 +75,7 @@
 }
 
 .details-para1 {
-  font-size: 16px;
-  padding-top: 10px;
+  font-size: 14px;
   color: rgb(252, 62, 62);
 }
 
@@ -89,10 +87,14 @@
 .details-para3 {
   color: rgb(99, 99, 99);
   padding: 6px 0px;
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
 }
 
 .details-para4 {
   font-weight: 500;
+  color: rgb(81, 205, 50);
 }
 
 .hidden-items {
@@ -137,5 +139,11 @@
     position: static;
     justify-content: center;
     align-items: center;
+  }
+  .book {
+    height: 300px;
+  }
+  .book img {
+    height: 150px !important;
   }
 }

@@ -1,5 +1,4 @@
 .cont {
-  padding-top: 40px;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -8,15 +7,16 @@
 .heading-wrapper {
   display: inline-block;
   width: 100%;
-  padding: 0px 30px;
+  padding: 10px;
 }
 .heading {
   display: inline-block;
+  font-size: 20px;
 }
 .heading-para {
   display: inline-block;
   position: absolute;
-  right: 40px;
+  right: 10px;
 }
 
 .heading-para a {
@@ -36,10 +36,9 @@
 .item-wrapper {
   color: black;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
   align-items: center;
-  margin: 30px 0px;
 }
 .item {
   margin: 10px;
@@ -68,18 +67,28 @@
 
 .i1 {
   background-color: rgb(238, 255, 238);
+  border-radius: 15px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 .i2 {
   background-color: rgb(255, 255, 233);
+  border-radius: 15px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 .i3 {
   background-color: rgb(255, 241, 241);
+  border-radius: 15px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 .i4 {
   background-color: rgb(255, 251, 238);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }
 .i5 {
   background-color: rgb(241, 248, 255);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }
 
 .i1:hover {
@@ -136,5 +145,15 @@
     position: static;
     justify-content: center;
     align-items: center;
+  }
+  .item-wrapper {
+    justify-content: center;
+  }
+  .item {
+    height: 150px;
+    width: 150px;
+  }
+  .item-h6 {
+    font-size: 14px;
   }
 }
