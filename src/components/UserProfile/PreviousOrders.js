@@ -6,7 +6,7 @@ const PreviousOrders = (props) => {
   // console.log(pastOrders);
   return (
     <div className="user-previous-orders" id="user-previous-orders">
-      <table>
+      <table className="active-orders-table">
         <thead>
           <tr>
             <th> Order ID </th>
@@ -42,7 +42,7 @@ const PreviousOrders = (props) => {
                 </td>
                 <td>
                   <i className="fas fa-rupee-sign" />
-                  {" " + order.orderTotal + " /-"}
+                  {" " + order.orderTotal}&nbsp;/-
                 </td>
                 <td
                   style={{
@@ -58,11 +58,13 @@ const PreviousOrders = (props) => {
                   {order.status[order.status.length - 1] === "Delivered" ? (
                     <>
                       <i className="fas fa-check-circle" />
+                      &nbsp;&nbsp;
                       {order.status[order.status.length - 1]}
                     </>
                   ) : order.status[order.status.length - 1] === "Cancelled" ? (
                     <>
                       <i className="fas fa-times-circle" />
+                      &nbsp;&nbsp;
                       {order.status[order.status.length - 1]}
                     </>
                   ) : (

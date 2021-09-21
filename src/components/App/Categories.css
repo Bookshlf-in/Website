@@ -36,7 +36,7 @@
 .item-wrapper {
   color: black;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   align-items: center;
 }

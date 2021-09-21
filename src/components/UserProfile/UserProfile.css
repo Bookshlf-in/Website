@@ -53,57 +53,16 @@
   font-weight: bold;
   text-align: center;
 }
-.user-previous-orders {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-.user-previous-orders table {
-  width: 100%;
-  background-color: white;
-  font-family: "Courier New", Courier, monospace;
-}
-.user-previous-orders table,
-.user-previous-orders table th,
-.user-previous-orders table td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-.user-previous-orders table th,
-.user-previous-orders table td {
-  padding: 10px;
-}
-.user-previous-orders table td {
-  text-align: center;
-}
-
+.user-previous-orders,
 .user-current-orders {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  width: 100%;
   flex-direction: column;
 }
-.user-current-orders table {
-  width: 100%;
-  background-color: white;
-  font-family: "Courier New", Courier, monospace;
-  margin-top: 10px;
-}
-.user-current-orders table,
-.user-current-orders table th,
-.user-current-orders table td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-.user-current-orders table th,
-.user-current-orders table td {
-  padding: 10px;
-}
-.user-current-orders table td {
-  text-align: center;
-}
+
 .tracking-order-link {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
@@ -139,7 +98,8 @@
   .user-previous-orders,
   .user-current-orders {
     overflow-y: scroll;
-    padding: 1rem;
+    padding: 1rem 0px;
+    display: block;
   }
   .user-profile-navbar .Account-details,
   .user-profile-navbar .Pending-orders,

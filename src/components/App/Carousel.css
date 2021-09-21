@@ -29,6 +29,8 @@ button {
   font-weight: 400;
   font-size: 13px;
   cursor: pointer;
+  font-family: "PT Sans";
+  letter-spacing: 1px;
 }
 
 button:hover {
@@ -123,6 +125,7 @@ button:hover {
   color: #ffffff;
   font-size: 64px;
   line-height: 1;
+  font-family: "PT sans";
 }
 
 .slider-content .inner p {
@@ -131,6 +134,8 @@ button:hover {
   line-height: 1.5;
   margin: 20px auto 30px;
   max-width: 640px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
 }
 
 .slider-content section {
@@ -165,6 +170,7 @@ button:hover {
   color: #ffffff;
   font-size: 14px;
   display: block;
+  /* font-family: "Roboto", sans-serif; */
 }
 
 @media (max-height: 500px) {
