@@ -19,7 +19,13 @@ const Sidenav = () => {
           &times;
         </Link>
         <div className="sidenav-searchbar Profile">
-          <input type="text" onChange={(e) => setSearch(e.target.value)} />
+          <input type="text" onKeyPress ={ (event) => {
+              if (event.key === "{Enter}")  // Name of the key that is required to be triggered eg : Enter
+              {
+                event.preventDefault(`/SearchResult/${Search === "" ? "books" : Search}`);     // to prevent any default action that is performed by that keyPress
+               // Functions() to be performed 
+              }
+    }} onChange={(e) => setSearch(e.target.value)} />
           <SideNavLink
             to={`/SearchResult/${Search === "" ? "books" : Search}`}
             iconClass="fas fa-search"
