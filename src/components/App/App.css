@@ -2,6 +2,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
+html,
+body {
+  box-sizing: border-box;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 5px;

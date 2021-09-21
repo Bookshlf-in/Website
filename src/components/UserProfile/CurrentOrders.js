@@ -1,8 +1,9 @@
-import {React, useState, useEffect} from "react";
+import {React, useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "../../axios";
 import {makeStyles} from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
+import "./CurrentOrders.css";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -100,7 +101,7 @@ function CurrentOrders(props) {
           {alert.msg}
         </Alert>
       </div>
-      <table>
+      <table className="active-orders-table">
         <thead>
           <tr>
             <th> Order ID </th>
@@ -130,15 +131,16 @@ function CurrentOrders(props) {
                       <Link
                         className="tracking-order-link"
                         to={`/Track/${order._id}`}
+                        title="Track Order"
                       >
-                        Track&nbpsp;You&nbsp;Order
+                        Track&nbsp;You&nbsp;Order
                       </Link>
                     </td>
                     <td>
                       <i
                         className="fas fa-window-close"
                         id={order._id}
-                        title="Remove Address"
+                        title="Cancel Order"
                         onClick={(e) => {
                           handelCancelOrder(e.target.id);
                         }}
