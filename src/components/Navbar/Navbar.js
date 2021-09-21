@@ -9,7 +9,7 @@ import {UserContext} from "../../Context/userContext";
 import axios from "../../axios.js";
 
 const openNav = (e) => {
-  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("mySidenav").style.width = "300px";
 };
 
 function Navbar() {
@@ -285,7 +285,7 @@ function Navbar() {
                       onClick={handleClick}
                     >
                       <img
-                        src="/images/user.svg"
+                        src="/images/user.png"
                         alt="My Account"
                         height="30px"
                         width="30px"

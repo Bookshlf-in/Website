@@ -1,0 +1,51 @@
+.user-profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  height: 100%;
+}
+.user-profile-container-top {
+  height: 35vh;
+  width: 100%;
+  background: #6441a5; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2a0845,
+    #6441a5
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2a0845,
+    #6441a5
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding: 10px;
+  position: relative;
+}
+.user-profile-details {
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  color: aliceblue;
+  font-family: "PT sans", sans-serif;
+
+  height: 100%;
+}
+.user-profile-details span {
+  margin: 10px 0px;
+}
+.user-profile-details span i {
+  margin-right: 40px;
+}
+.user-profile-img {
+  position: absolute;
+  left: 50%;
+  margin-left: -75px;
+  bottom: -75px;
+}
+@media screen and (max-width: 650px) {
+  .user-profile-details span {
+    font-size: 14px;
+  }
+}

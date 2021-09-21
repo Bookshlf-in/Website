@@ -15,9 +15,9 @@ const Sidenav = () => {
   return (
     <div className="main-sidenav">
       <div id="mySidenav" className="sidenav">
-        <Link to="" className="closebtn" onClick={closeNav}>
+        <span className="closebtn" onClick={closeNav}>
           &times;
-        </Link>
+        </span>
         <div className="sidenav-searchbar Profile">
           <input type="text" onChange={(e) => setSearch(e.target.value)} />
           <SideNavLink

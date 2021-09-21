@@ -1,49 +1,46 @@
-import {React, useState} from "react";
+import {React} from "react";
+import "./Account.css";
+import Avatar from "@material-ui/core/Avatar";
+
 function Account(props) {
+  console.log(props);
   return (
     <div className="user-profile-container" id="user-profile-container">
-      <div className="flip-card">
-        <div className="flip-card-inner">
-          <div className="flip-card-front">
-            <img
-              src="/images/user.svg"
-              alt="Avatar"
-              width="200px"
-              height="200px"
-            />
-            <h1>{props.user.name ? props.user.name : ""}</h1>
-            <p
-              style={{
-                color: "blue",
-                fontFamily: "PT Sans",
-              }}
-            >
-              {props.user.email ? props.user.email : ""}
-            </p>
-          </div>
-          <div className="flip-card-back">
-            <h1>{props.user.name ? props.user.name : ""}</h1>
-            <br />
-            <p>{props.user.email ? props.user.email : ""}</p>
-            <br />
-            <p>
-              {" "}
-              Roles :{" "}
-              {props.user.roles ? (
-                props.user.roles.map((role) => <b key={role}>{role + " "}</b>)
-              ) : (
-                <b></b>
-              )}
-            </p>
-            <br />
-            <p>
-              User Since :{" "}
-              {props.user.createdAt ? props.user.createdAt.substr(0, 4) : ""}
-            </p>
-          </div>
+      <div className="user-profile-container-top">
+        <div className="user-profile-details">
+          <span>
+            <i className="fas fa-user"></i>
+            {props.user.name}
+          </span>
+          <span>
+            <i className="fas fa-envelope"></i>
+            {props.user.email}
+          </span>
+          <span>
+            <i className="fas fa-universal-access"></i>Customer Since :{" "}
+            {props.user.createdAt.substr(0, 4)}
+          </span>
+          <span>
+            <i className="fas fa-hat-cowboy"></i>Roles :{" "}
+            {props.user.roles.map((role, i) => (
+              <b key={i}>
+                {role.charAt(0).toUpperCase() + role.slice(1)}
+                {i === props.user.roles.length - 1 ? "" : " , "}
+              </b>
+            ))}
+          </span>
+        </div>
+        <div className="user-profile-img">
+          <Avatar
+            alt={props.user.name}
+            src="/images/user.png"
+            style={{height: "150px", width: "150px"}}
+          />
         </div>
       </div>
     </div>
   );
 }
 export default Account;
+
+//
