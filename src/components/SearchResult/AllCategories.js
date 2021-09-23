@@ -211,6 +211,9 @@ const AllCategories = () => {
       setOpen(true);
       setSeverity("error");
       setAlert("Please Login!");
+      setTimeout(() => {
+        setOpen(false);
+      }, 3000);
     }
   };
 
@@ -294,6 +297,9 @@ const AllCategories = () => {
       setOpen(true);
       setSeverity("error");
       setAlert("Please Login!");
+      setTimeout(() => {
+        setOpen(false);
+      }, 3000);
     }
   };
   // Handeling snackbar closing
