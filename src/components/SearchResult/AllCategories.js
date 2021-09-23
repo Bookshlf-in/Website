@@ -96,73 +96,117 @@ const AllCategories = () => {
   // handeling wish list
   const handelWishList = (e) => {
     if (user) {
-      e.target.className = "fas fa-circle-notch";
-      e.target.style.animation = "spin 2s linear infinite";
-      axios
-        .post("/addWishlistItem", {
-          bookId: e.target.id,
-        })
-        .then((response) => {
-          // console.log(response.data);
-          setOpen(true);
-          setSeverity("success");
-          setAlert(response.data.msg);
-          e.target.className = "fas fa-heart";
-          e.target.style.animation = "none";
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({
+      if (e.target.presentinwishlist === "T") {
+        e.target.className = "fas fa-circle-notch";
+        e.target.style.animation = "spin 2s linear infinite";
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems,
+            wishlist: user.wishlist - 1,
+          })
+        );
+        setUser({
+          authHeader: user.authHeader,
+          roles: user.roles,
+          email: user.email,
+          cartitems: user.cartitems,
+          wishlist: user.wishlist - 1,
+        });
+
+        axios
+          .delete("/deleteWishlistItem", {
+            data: {bookId: e.target.id},
+          })
+          .then((response) => {
+            // console.log(response.data);
+            e.target.className = "far fa-heart";
+            e.target.style.animation = "";
+            setOpen(true);
+            setSeverity("success");
+            setAlert(response.data.msg);
+            e.target.presentinwishlist = "F";
+          })
+          .catch((err) => {
+            e.target.className = "far fa-heart";
+            e.target.style.animation = "";
+            // console.log(err.response.data);
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({
+                authHeader: user.authHeader,
+                roles: user.roles,
+                email: user.email,
+                cartitems: user.cartitems,
+                wishlist: user.wishlist + 1,
+              })
+            );
+            setUser({
               authHeader: user.authHeader,
               roles: user.roles,
               email: user.email,
               cartitems: user.cartitems,
               wishlist: user.wishlist + 1,
-            })
-          );
-          setUser({
+            });
+          });
+      } else {
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
             cartitems: user.cartitems,
             wishlist: user.wishlist + 1,
-          });
-        })
-        .catch((error) => {
-          axios
-            .delete("/deleteWishlistItem", {
-              data: {bookId: e.target.id},
-            })
-            .then((response) => {
-              // console.log(response.data);
-              e.target.className = "far fa-heart";
-              e.target.style.animation = "";
-              setOpen(true);
-              setSeverity("success");
-              setAlert(response.data.msg);
-              localStorage.setItem(
-                "bookshlf_user",
-                JSON.stringify({
-                  authHeader: user.authHeader,
-                  roles: user.roles,
-                  email: user.email,
-                  cartitems: user.cartitems,
-                  wishlist: user.wishlist - 1,
-                })
-              );
-              setUser({
+          })
+        );
+        setUser({
+          authHeader: user.authHeader,
+          roles: user.roles,
+          email: user.email,
+          cartitems: user.cartitems,
+          wishlist: user.wishlist + 1,
+        });
+        e.target.className = "fas fa-circle-notch";
+        e.target.style.animation = "spin 2s linear infinite";
+        axios
+          .post("/addWishlistItem", {
+            bookId: e.target.id,
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setOpen(true);
+            setSeverity("success");
+            setAlert(response.data.msg);
+            e.target.className = "fas fa-heart";
+            e.target.style.animation = "";
+            e.target.presentinwishlist = "T";
+          })
+          .catch((error) => {
+            e.target.className = "fas fa-heart";
+            e.target.style.animation = "";
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({
                 authHeader: user.authHeader,
                 roles: user.roles,
                 email: user.email,
                 cartitems: user.cartitems,
                 wishlist: user.wishlist - 1,
-              });
-            })
-            .catch((err) => {
-              e.target.className = "far fa-heart";
-              e.target.style.animation = "";
-              // console.log(err.response.data);
+              })
+            );
+            setUser({
+              authHeader: user.authHeader,
+              roles: user.roles,
+              email: user.email,
+              cartitems: user.cartitems,
+              wishlist: user.wishlist - 1,
             });
-        });
+          });
+      }
     } else {
       setOpen(true);
       setSeverity("error");
@@ -172,9 +216,25 @@ const AllCategories = () => {
 
   const handelCart = (e) => {
     if (user) {
-      console.log(e.target.title);
       if (e.target.title === "F") {
         e.target.innerHTML = "Adding...";
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems + 1,
+            wishlist: user.wishlist,
+          })
+        );
+        setUser({
+          authHeader: user.authHeader,
+          roles: user.roles,
+          email: user.email,
+          cartitems: user.cartitems + 1,
+          wishlist: user.wishlist,
+        });
         axios
           .post("/addCartItem", {
             bookId: e.target.id,
@@ -184,23 +244,6 @@ const AllCategories = () => {
             setSeverity("success");
             setAlert(response.data.msg);
             e.target.innerHTML = "Added In Cart";
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({
-                authHeader: user.authHeader,
-                roles: user.roles,
-                email: user.email,
-                cartitems: user.cartitems + 1,
-                wishlist: user.wishlist,
-              })
-            );
-            setUser({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: user.cartitems + 1,
-              wishlist: user.wishlist,
-            });
             e.target.title = "T";
           })
           .catch(() => {
@@ -211,6 +254,23 @@ const AllCategories = () => {
           });
       } else {
         e.target.innerHTML = "Removing...";
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({
+            authHeader: user.authHeader,
+            roles: user.roles,
+            email: user.email,
+            cartitems: user.cartitems - 1,
+            wishlist: user.wishlist,
+          })
+        );
+        setUser({
+          authHeader: user.authHeader,
+          roles: user.roles,
+          email: user.email,
+          cartitems: user.cartitems - 1,
+          wishlist: user.wishlist,
+        });
         axios
           .delete("/deleteCartItem", {
             data: {bookId: e.target.id},
@@ -220,23 +280,7 @@ const AllCategories = () => {
             setOpen(true);
             setSeverity("success");
             setAlert(response.data.msg);
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({
-                authHeader: user.authHeader,
-                roles: user.roles,
-                email: user.email,
-                cartitems: user.cartitems - 1,
-                wishlist: user.wishlist,
-              })
-            );
-            setUser({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: user.cartitems - 1,
-              wishlist: user.wishlist,
-            });
+
             e.target.title = "F";
           })
           .catch((err) => {
@@ -340,6 +384,7 @@ const AllCategories = () => {
                             onClick={(e) => {
                               handelWishList(e);
                             }}
+                            presentinwishlist={book.wishlist ? "T" : "F"}
                           />
                         </div>
                         <div

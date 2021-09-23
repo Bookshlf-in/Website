@@ -9,7 +9,7 @@
   padding: 5px;
   position: -webkit-sticky; /* Safari */
   position: sticky;
-  top: 62px;
+  top: 56px;
   z-index: 1000;
   border: none;
 }
@@ -115,11 +115,13 @@
   color: rgb(255, 97, 97);
   font-weight: bold;
   transition: 0.2s;
+  cursor: pointer;
 }
 .fas.fa-heart {
   color: red;
   font-weight: bolder;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .search-result-book {

@@ -287,8 +287,8 @@ function Navbar() {
                       <img
                         src="/images/user.png"
                         alt="My Account"
-                        height="30px"
-                        width="30px"
+                        height="25px"
+                        width="25px"
                       />
                     </Button>
                     <Menu
