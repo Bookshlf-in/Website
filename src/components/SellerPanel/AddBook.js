@@ -314,7 +314,7 @@ const AddBook = (props) => {
           </span>
           <input
             type="text"
-            placeholder="Embed Youtube Video Link"
+            placeholder="Embed Youtube Video Link(Optional)"
             onChange={(e) => setlink(e.target.value)}
             value={link}
           />
@@ -470,5 +470,5 @@ const AddBook = (props) => {
       </form>
     </div>
   );
-}
+};
 export default AddBook;
