@@ -25,11 +25,12 @@ function Navbar() {
   });
 
   useEffect(() => {
+    // console.log(user);
     if (user) {
       axios
         .get("/countWishlistItems")
         .then((response) => {
-          // console.log("wishlist: ", response.data.length);
+          // console.log(response);
           localStorage.setItem(
             "bookshlf_user",
             JSON.stringify({
@@ -73,6 +74,7 @@ function Navbar() {
         })
         .catch((error) => {});
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = (event) => {

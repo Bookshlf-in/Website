@@ -102,8 +102,10 @@ function Login() {
             cartitems: 0,
             wishlist: 0,
           });
-          setloader("none");
-          history.push("/");
+          setTimeout(() => {
+            setloader("none");
+            history.push("/");
+          }, 5000);
         })
         .catch((error) => {
           if (error.response) {
@@ -140,7 +142,7 @@ function Login() {
               history.push("/");
             }}
           >
-            <i class="fas fa-home"></i>&nbsp;HOME
+            <i className="fas fa-home"></i>&nbsp;HOME
           </span>
         </div>
         <div className="login-container-left">

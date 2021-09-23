@@ -6,6 +6,7 @@ import axios from "../../axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import {makeStyles} from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Alert
 function Alert(props) {
@@ -96,7 +97,8 @@ const AllCategories = () => {
   // handeling wish list
   const handelWishList = (e) => {
     if (user) {
-      if (e.target.presentinwishlist === "T") {
+      console.log(e.target.getAttribute("presentinwishlist"));
+      if (e.target.getAttribute("presentinwishlist") === "T") {
         e.target.className = "fas fa-circle-notch";
         e.target.style.animation = "spin 2s linear infinite";
         localStorage.setItem(
@@ -412,7 +414,7 @@ const AllCategories = () => {
               )}
             </>
           ) : (
-            <h1>Loading...</h1>
+            <CircularProgress style={{height: "50px", width: "50px"}} />
           )}
         </div>
         {/* ======================================================== */}
