@@ -11,6 +11,7 @@ function Cart() {
   const [loader, setloader] = useState(true);
   const [amount, setamount] = useState(0);
   const [removingId, setremovingId] = useState("");
+  const [checkout, setcheckout] = useState(false);
   var amt = 0;
   useEffect(() => {
     const fetchData = async () => {
@@ -94,10 +95,9 @@ function Cart() {
       .catch((err) => {});
   };
 
-  const handelUpdateCart = (e) => {
-    e.target.innerHTML = "";
-    e.target.innerHTML = "Checking Out...";
+  const handelUpdateCart = () => {
     if (cart.length > 0) {
+      setcheckout(true);
       for (let i = 0; i < cart.length; i++) {
         const update = async () => {
           axios
@@ -106,7 +106,7 @@ function Cart() {
               purchaseQty: cart[i].purchaseQty,
             })
             .then(() => {
-              console.log(i);
+              // console.log(i);
               if (i === cart.length - 1) {
                 history.push("/Checkout/cart");
               }
@@ -115,14 +115,6 @@ function Cart() {
         };
         update();
       }
-    } else {
-      e.target.innerHTML = ``;
-      e.target.innerHTML = `<i class="fas fa-exclamation-triangle"/>&nbsp;Checkout Failed!`;
-      e.target.style.backgroundColor = "red";
-      setTimeout(() => {
-        e.target.innerHTML = `<i class="fas fa-money-check-alt"/>&nbsp;Checkout`;
-        e.target.style.backgroundColor = "rgb(90, 90, 255)";
-      }, 3000);
     }
   };
 
@@ -296,12 +288,23 @@ function Cart() {
             <div
               className="cart-checkout"
               onClick={(e) => {
-                console.log(cart);
+                // console.log(cart);
                 handelUpdateCart(e);
               }}
             >
-              <i className="fas fa-money-check-alt" />
-              &nbsp;Checkout
+              {checkout ? (
+                <>
+                  <CircularProgress
+                    style={{height: "25px", width: "25px", color: "white"}}
+                  />
+                  &nbsp;Checking Out...
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-money-check-alt" />
+                  &nbsp;Checkout
+                </>
+              )}
             </div>
           </div>
         </>
