@@ -109,10 +109,13 @@ h5 {
   align-items: flex-start;
   flex-direction: column;
 }
-.cart-item-price .price-tag {
+.price-tag {
   background-color: greenyellow;
   padding: 10px;
   border-radius: 30px;
+  color: black;
+  font-family: "PT Sans";
+  font-size: 14px;
 }
 .cart-item-price .avl-qty {
   color: rgb(27, 155, 206);
@@ -209,16 +212,20 @@ td .fa-minus-square:hover {
 }
 .wishlist-remove {
   font-size: 16px;
-  color: red;
+  background-color: rgb(255, 113, 70);
+  color: white;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px 20px;
   border-radius: 50px;
+  font-family: "PT sans";
+  letter-spacing: 2px;
 }
 .wishlist-remove:hover {
-  background-color: #fff;
+  background-color: red;
+  transition: 0.3s;
 }
 @media only screen and (max-width: 600px) {
   .cart-item {

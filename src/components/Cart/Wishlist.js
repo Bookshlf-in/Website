@@ -3,9 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import axios from "../../axios";
 import {UserContext} from "../../Context/userContext";
 import {Link} from "react-router-dom";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 const style = {
-  backgroundColor: "rgba(0,0,0,0.2)",
   padding: "10px",
   border: "1px solid black",
   margin: "10px",
@@ -19,6 +18,7 @@ const Wishlist = () => {
   const [wishlist, setwishlist] = useState([]);
   // loader states
   const [loader, setloader] = useState(true);
+  const [removeId, setremoveId] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       const url = "/getWishlist";
@@ -27,8 +27,8 @@ const Wishlist = () => {
         .then((response) => {
           // console.log(response.data.length);
           setwishlist(response.data);
-          console.log(response.data.length);
-          console.log(response.data);
+          // console.log(response.data.length);
+          // console.log(response.data);
           setloader(false);
         })
         .catch(() => {
@@ -40,10 +40,9 @@ const Wishlist = () => {
   }, []);
 
   // handeling wish list
-  const handelWishList = (e) => {
+  const handelWishList = (e, ID) => {
     if (user) {
-      e.target.innerHTML = "Removing...";
-      e.target.style.color = "red";
+      setremoveId(ID);
       axios
         .delete("/deleteWishlistItem", {
           data: {bookId: e.target.id},
@@ -67,81 +66,12 @@ const Wishlist = () => {
             cartitems: user.cartitems,
             wishlist: user.wishlist - 1,
           });
+          setremoveId("");
         })
         .catch((err) => {
           // console.log(err.response.data);
         });
     } else {
-    }
-  };
-
-  const handelCart = (e) => {
-    if (e.target.title === "F") {
-      e.target.innerHTML = "Adding...";
-      axios
-        .post("/addCartItem", {
-          bookId: e.target.id,
-        })
-        .then((response) => {
-          e.target.innerHTML = "Added In Cart";
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: user.cartitems + 1,
-              wishlist: user.wishlist,
-            })
-          );
-          setUser({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems + 1,
-            wishlist: user.wishlist,
-          });
-          e.target.title = "T";
-        })
-        .catch(() => {
-          e.target.innerHTML = "Failed!";
-          setTimeout(() => {
-            e.target.innerHTML = "Add to Cart";
-          }, 2000);
-        });
-    } else {
-      e.target.innerHTML = "Removing...";
-      axios
-        .delete("/deleteCartItem", {
-          data: {bookId: e.target.id},
-        })
-        .then((response) => {
-          e.target.innerHTML = "Add to Cart";
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: user.cartitems - 1,
-              wishlist: user.wishlist,
-            })
-          );
-          setUser({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems - 1,
-            wishlist: user.wishlist,
-          });
-          e.target.title = "F";
-        })
-        .catch((err) => {
-          e.target.innerHTML = "Failed!";
-          setTimeout(() => {
-            e.target.innerHTML = "Add to Cart";
-          }, 2000);
-        });
     }
   };
 
@@ -167,7 +97,7 @@ const Wishlist = () => {
             <i
               className="far fa-frown"
               style={{
-                fontSize: "20em",
+                fontSize: "10em",
                 color: "rgba(255,0,0,0.4)",
               }}
             />
@@ -189,13 +119,14 @@ const Wishlist = () => {
             className="page-loader"
             style={{display: loader ? "flex" : "none"}}
           >
-            <div
-              className="page-loading"
-              style={{display: loader ? "block" : "none"}}
-            ></div>
+            <CircularProgress style={{height: "50px", width: "50px"}} />
           </div>
           <div style={{display: loader ? "none" : "block"}}>
-            <Grid container justifyContent="center" alignItems="center">
+            <Grid
+              container
+              alignItems="center"
+              style={{justifyContent: "center"}}
+            >
               {wishlist.length > 0 ? (
                 <>
                   {wishlist.map((item) => (
@@ -211,32 +142,33 @@ const Wishlist = () => {
                           />
                         </div>
                         <div className="search-book-details">
-                          <p className="details-para1">{item.title}</p>
+                          <p className="details-para1">
+                            <b>{item.title}</b>
+                          </p>
                           <p className="details-para3">{item.author}</p>
-                          <p className="details-para4">
+                          <p className="details-para4 price-tag">
                             <i className="fas fa-rupee-sign" />
                             &nbsp;{item.price} /-
                           </p>
-                          <div className="hidden-items">
-                            <p
-                              className="cart"
-                              id={item.bookId}
-                              title={item.cart ? "T" : "F"}
-                              onClick={(e) => {
-                                handelCart(e);
-                              }}
-                            >
-                              {item.cart ? "Added In Cart" : "Add to Cart"}
-                            </p>
+                          <div
+                            className="hidden-items"
+                            style={{justifyContent: "center"}}
+                          >
                             <span
                               title="Add to Wishlist"
                               id={item.bookId}
                               onClick={(e) => {
-                                handelWishList(e);
+                                handelWishList(e, item.bookId);
                               }}
                               className="wishlist-remove"
                             >
-                              Remove
+                              {removeId === item.bookId ? (
+                                <CircularProgress
+                                  style={{height: "15px", width: "15px"}}
+                                />
+                              ) : (
+                                <>Remove</>
+                              )}
                             </span>
                           </div>
                           <div
