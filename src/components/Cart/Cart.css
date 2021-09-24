@@ -1,43 +1,43 @@
 .cart-main {
   width: 100%;
-  min-height: calc(100vh - 90px);
-  background-color: #4158d0;
-  background-image: linear-gradient(
-    43deg,
-    #4158d0 0%,
-    #c850c0 46%,
-    #ffcc70 100%
-  );
+  min-height: calc(100vh - 56px);
+  background-color: aliceblue;
   display: flex;
-
   flex-direction: row;
   justify-content: center;
   font-family: "Roboto", sans-serif;
 }
 .cart-container-left {
-  background-color: rgb(255, 253, 253);
   margin: 20px;
   border-radius: 5px;
   min-width: 600px;
   height: auto;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
 .cart-container-left h1 {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background-color: rgb(158, 158, 251);
   padding: 10px;
-  color: aliceblue;
+  color: black;
+  font-family: "PT Sans", sans-serif;
+}
+.cart-title {
+  position: relative;
+}
+.cart-item-count {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  font-size: 20px;
+  background-color: rgb(192, 139, 15);
+  color: yellow;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 .cart-item {
   padding: 10px;
-  margin: 20px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  background-color: #faaca8;
-  background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
+  margin: 20px 0px;
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .cart-item-img,
 .cart-item-details,
@@ -54,16 +54,15 @@
   width: 50%;
 }
 .cart-item-img img {
-  padding: 10px;
   background-color: rgba(255, 255, 255);
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  border-radius: 15px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
 }
 .cart-item-details {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 .cart-item-details h2,
 h3,
@@ -71,39 +70,81 @@ h4,
 h5 {
   padding: 5px;
 }
-.cart-item-details h4:hover {
+.cart-item-details h2,
+.cart-item-price h2 {
+  font-size: 18px;
+  font-family: "PT Sans";
+}
+.cart-item-details h3,
+.cart-item-price h3 {
+  font-size: 14px;
+  font-family: "PT Sans";
+}
+.cart-More {
+  font-size: 12px;
+  background-color: blue;
+  color: aliceblue;
+  padding: 10px;
+  font-family: "PT Sans";
+  cursor: pointer;
+  margin-left: 5px;
+}
+.cart-More:hover {
+  background-color: rgb(15, 184, 240);
+}
+.remove-item {
+  position: absolute;
+  right: 0;
+  top: 0;
   color: rgb(255, 255, 255);
   background-color: rgb(255, 60, 60);
   cursor: pointer;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
+
 .cart-item-price {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
 }
-.cart-item-price table {
-  border: 1px solid rgba(0, 0, 0, 0.7);
-  border-collapse: collapse;
+.cart-item-price .price-tag {
+  background-color: greenyellow;
   padding: 10px;
-  font-size: 32px;
-  border-radius: 10px;
+  border-radius: 30px;
+}
+.cart-item-price .avl-qty {
+  color: rgb(27, 155, 206);
+  letter-spacing: 1px;
+}
+.cart-item-price .avl-qty span {
+  padding: 5px;
+  background-color: rgb(27, 155, 206);
+  color: black;
+  font-family: "Courier New", Courier, monospace;
+}
+.cart-item-price table {
+  font-size: 20px;
+}
+.cart-item-price table td {
+  border: none;
 }
 td .fa-plus-square:hover {
   color: rgb(42, 216, 42);
+  cursor: pointer;
 }
 td .fa-minus-square:hover {
   color: rgb(216, 42, 42);
+  cursor: pointer;
 }
 .cart-item-price td {
-  padding: 0px 10px;
+  padding: 0px 10px 10px 5px;
 }
 .cart-item p {
   clear: both;
-  color: blue;
+  color: rgba(255, 0, 13);
   font-weight: bold;
-  padding: 10px 0px;
+  padding: 10px;
 }
 .cart-container-right {
   background-color: rgb(255, 253, 253);
@@ -148,6 +189,10 @@ td .fa-minus-square:hover {
   font-size: 20px;
   transition: 0.3s ease-in-out;
   cursor: pointer;
+}
+.alert-cart-item {
+  font-size: 12px;
+  text-align: center;
 }
 @media only screen and (max-width: 800px) {
   .cart-main {

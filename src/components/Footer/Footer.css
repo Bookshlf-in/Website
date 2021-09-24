@@ -74,8 +74,6 @@ footer-subscription > p {
   margin: 0px 10px;
   color: white;
   border: none;
-  border-bottom: 1.8px solid whitesmoke;
-  border-right: 1.8px solid whitesmoke;
   font-family: "Roboto", sans-serif;
 }
 .footer-subscription-button {
@@ -328,10 +326,9 @@ footer-subscription > p {
     flex-direction: column;
   }
 
-  .footer-links {
-    flex-wrap: wrap;
+  .footer-link-items {
+    width: 110px;
   }
-
   .social-media-wrap {
     width: 100%;
   }

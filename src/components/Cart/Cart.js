@@ -1,9 +1,9 @@
 import {React, useState, useEffect, useContext} from "react";
 import "./Cart.css";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from "../../axios";
 import {UserContext} from "../../Context/userContext";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 function Cart() {
   const history = useHistory();
   const [user, setUser] = useContext(UserContext);
@@ -95,7 +95,7 @@ function Cart() {
       .catch((err) => {
         // console.log(err.response.data);
         e.target.innerHTML = `<i class="fas fa-trash-alt"></i>
-        &nbsp;Remove Item`
+        &nbsp;Remove Item`;
       });
   };
 
@@ -170,19 +170,18 @@ function Cart() {
             className="page-loader"
             style={{display: loader ? "flex" : "none"}}
           >
-            <div
-              className="page-loading"
-              style={{display: loader ? "block" : "none"}}
-            ></div>
+            <CircularProgress style={{height: "50px", width: "50px"}} />
           </div>
 
           <div
             className="cart-container-left"
             style={{display: loader ? "none" : "block"}}
           >
-            <h1>
-              <i class="fas fa-cart-arrow-down"></i>&nbsp;Cart&nbsp;(
-              {user.cartitems}&nbsp;item)
+            <h1 className="cart-title">
+              <i class="fas fa-cart-arrow-down"></i>&nbsp;Cart
+              <span className="cart-item-count">
+                {user.cartitems}&nbsp;Items
+              </span>
             </h1>
 
             {cart && cart.length ? (
@@ -207,18 +206,30 @@ function Cart() {
                         onClick={(e) => {
                           handelRemoveItem(e);
                         }}
+                        className="remove-item"
                       >
                         <i className="fas fa-trash-alt" />
                         &nbsp;Remove Item
                       </h4>
+                      <h4
+                        className="cart-More"
+                        onClick={() => {
+                          history.push(`/BookDetails/${item.bookId}`);
+                        }}
+                      >
+                        More Details&nbsp;
+                        <i className="fas fa-angle-right" />
+                      </h4>
                     </div>
                     <div className="cart-item-price">
-                      <h3>
+                      <h3 className="price-tag">
                         <i className="fas fa-rupee-sign" />
                         &nbsp;{item.price}&nbsp;/-
                       </h3>
-                      <h3>Available Quantity : {item.qty}</h3>
-                      <h3>Purchasing Quantity</h3>
+                      <h3 className="avl-qty">
+                        Available Quantity : <span>{item.qty}</span>
+                      </h3>
+                      <h3 style={{color: "green"}}>Purchasing Quantity</h3>
                       <table className="book-quantity">
                         <tr>
                           <td>
@@ -229,7 +240,10 @@ function Cart() {
                               }}
                             />
                           </td>
-                          <td id={idx}>
+                          <td
+                            id={idx}
+                            style={{color: "green", fontFamily: "PT Sans"}}
+                          >
                             {Math.min(item.purchaseQty, item.qty)}
                           </td>
                           <td>
@@ -267,7 +281,8 @@ function Cart() {
                 <i>(Excluding GST and shipping charges)</i>
               </p>
               <h3>
-                <i className="fas fa-rupee-sign"/>&nbsp;{amount}/-
+                <i className="fas fa-rupee-sign" />
+                &nbsp;{amount}/-
               </h3>
             </div>
             <div
