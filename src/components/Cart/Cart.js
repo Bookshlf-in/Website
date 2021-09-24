@@ -10,6 +10,7 @@ function Cart() {
   const [cart, setcart] = useState([]);
   const [loader, setloader] = useState(true);
   const [amount, setamount] = useState(0);
+  const [removingId, setremovingId] = useState("");
   var amt = 0;
   useEffect(() => {
     const fetchData = async () => {
@@ -58,21 +59,19 @@ function Cart() {
     }
   };
 
-  const handelRemoveItem = (e) => {
-    e.target.innerHTML = `<i class="fas fa-spinner"></i>
-    &nbsp;Removing...`;
+  const handelRemoveItem = (ID) => {
+    setremovingId(ID);
     amt = 0;
     axios
       .delete("/deleteCartItem", {
-        data: {bookId: e.target.id},
+        data: {bookId: ID},
       })
       .then((response) => {
-        setcart(cart.filter((item) => e.target.id !== item.bookId));
-        for (let i = 0; i < response.data.length; i++) {
-          amt += response.data[i].price;
+        let memo = cart.filter((item) => ID !== item.bookId);
+        setcart(memo);
+        for (let i = 0; i < memo.length; i++) {
+          amt += memo[i].price;
         }
-        e.target.innerHTML = `<i class="fas fa-trash-alt"></i>
-        &nbsp;Remove Item`;
         setamount(amt);
         localStorage.setItem(
           "bookshlf_user",
@@ -92,11 +91,7 @@ function Cart() {
           wishlist: user.wishlist,
         });
       })
-      .catch((err) => {
-        // console.log(err.response.data);
-        e.target.innerHTML = `<i class="fas fa-trash-alt"></i>
-        &nbsp;Remove Item`;
-      });
+      .catch((err) => {});
   };
 
   const handelUpdateCart = (e) => {
@@ -178,7 +173,7 @@ function Cart() {
             style={{display: loader ? "none" : "block"}}
           >
             <h1 className="cart-title">
-              <i class="fas fa-cart-arrow-down"></i>&nbsp;Cart
+              <i className="fas fa-cart-arrow-down"></i>&nbsp;Cart
               <span className="cart-item-count">
                 {user.cartitems}&nbsp;Items
               </span>
@@ -188,7 +183,7 @@ function Cart() {
               <>
                 {cart.map((item, idx) => (
                   // Cart item starts
-                  <div className="cart-item">
+                  <div className="cart-item" key={idx}>
                     <div className="cart-item-img">
                       <img
                         src={item.photo}
@@ -202,14 +197,25 @@ function Cart() {
                       <h3>Edition : {item.editionYear}</h3>
                       <h3>Author : {item.author}</h3>
                       <h4
-                        id={item.bookId}
-                        onClick={(e) => {
-                          handelRemoveItem(e);
+                        onClick={() => {
+                          handelRemoveItem(item.bookId);
                         }}
                         className="remove-item"
                       >
-                        <i className="fas fa-trash-alt" />
-                        &nbsp;Remove Item
+                        {removingId === item.bookId ? (
+                          <CircularProgress
+                            style={{
+                              height: "20px",
+                              width: "20px",
+                              color: "white",
+                            }}
+                          />
+                        ) : (
+                          <>
+                            <i className="fas fa-trash-alt" />{" "}
+                            <span>Remove Item</span>
+                          </>
+                        )}
                       </h4>
                       <h4
                         className="cart-More"
@@ -231,30 +237,32 @@ function Cart() {
                       </h3>
                       <h3 style={{color: "green"}}>Purchasing Quantity</h3>
                       <table className="book-quantity">
-                        <tr>
-                          <td>
-                            <i
-                              className="fas fa-minus-square"
-                              onClick={() => {
-                                DeleteItem(idx, item.price);
-                              }}
-                            />
-                          </td>
-                          <td
-                            id={idx}
-                            style={{color: "green", fontFamily: "PT Sans"}}
-                          >
-                            {Math.min(item.purchaseQty, item.qty)}
-                          </td>
-                          <td>
-                            <i
-                              className="fas fa-plus-square"
-                              onClick={() => {
-                                addItem(idx, item.qty, item.price);
-                              }}
-                            />
-                          </td>
-                        </tr>
+                        <thead>
+                          <tr>
+                            <td>
+                              <i
+                                className="fas fa-minus-square"
+                                onClick={() => {
+                                  DeleteItem(idx, item.price);
+                                }}
+                              />
+                            </td>
+                            <td
+                              id={idx}
+                              style={{color: "green", fontFamily: "PT Sans"}}
+                            >
+                              {Math.min(item.purchaseQty, item.qty)}
+                            </td>
+                            <td>
+                              <i
+                                className="fas fa-plus-square"
+                                onClick={() => {
+                                  addItem(idx, item.qty, item.price);
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        </thead>
                       </table>
                     </div>
                     <p className="alert-cart-item">
