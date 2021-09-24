@@ -146,13 +146,19 @@ const Wishlist = () => {
                             <b>{item.title}</b>
                           </p>
                           <p className="details-para3">{item.author}</p>
-                          <p className="details-para4 price-tag">
+                          <p
+                            className="details-para4 price-tag"
+                            style={{marginTop: "10px"}}
+                          >
                             <i className="fas fa-rupee-sign" />
                             &nbsp;{item.price} /-
                           </p>
                           <div
                             className="hidden-items"
-                            style={{justifyContent: "center"}}
+                            style={{
+                              justifyContent: "center",
+                              marginTop: "10px",
+                            }}
                           >
                             <span
                               title="Add to Wishlist"
@@ -174,6 +180,7 @@ const Wishlist = () => {
                           <div
                             title="View Book Details"
                             className="book-more-details"
+                            style={{marginTop: "10px"}}
                           >
                             <Link to={`/BookDetails/${item.bookId}`}>
                               More Details&nbsp;
