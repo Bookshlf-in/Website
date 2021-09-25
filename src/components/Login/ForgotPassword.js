@@ -1,9 +1,14 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "./ForgotPassword.css";
 import InputMask from "react-input-mask";
 import Alert from "@material-ui/lab/Alert";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "../../axios";
+
+const eye = {
+  open: "far fa-eye",
+  close: "fas fa-eye-slash",
+};
 
 const lock = {
   open: "fas fa-lock-open",
@@ -25,6 +30,10 @@ const Errorstyle = {
 
 function ForgotPassword() {
   const history = useHistory();
+  const [show, setshow] = useState(eye.close);
+  const [show2, setshow2] = useState(eye.close);
+  const [val, setval] = useState("password");
+  const [val2, setval2] = useState("password");
   const [Alerttype, setAlerttype] = useState("success");
   const [showAlert, setshowAlert] = useState(false);
   const [alertColor, setalertColor] = useState(alertStyle.color.success);
@@ -175,16 +184,16 @@ function ForgotPassword() {
               placeholder="Enter Registered Account Email"
               onChange={(e) => setEmail(e.target.value)}
               value={Email}
-              style={{width: "400px"}}
+              style={{ width: "400px" }}
             />
           </div>
         </form>
 
         <div className="forgot-container-otp">
-          <span style={{height: "50px", width: "50px"}}>
+          <span style={{ height: "50px", width: "50px" }}>
             <i
               className={locked ? lock.close : lock.open}
-              style={{color: locked ? "rgb(8, 194, 8)" : "red"}}
+              style={{ color: locked ? "rgb(8, 194, 8)" : "red" }}
             />
           </span>
           <InputMask
@@ -193,7 +202,7 @@ function ForgotPassword() {
             alwaysShowMask="true"
             value={Otp}
             onChange={(e) => handelOtp(e)}
-            style={{color: locked ? "rgb(8, 194, 8)" : "blue"}}
+            style={{ color: locked ? "rgb(8, 194, 8)" : "blue" }}
           />
           <button onClick={handelSendOtp}>
             {firstUse ? "Send OTP" : "Send Again"}&nbsp;&nbsp;
@@ -207,7 +216,7 @@ function ForgotPassword() {
           </button>
           <div
             id="send-otp-again-alert-2"
-            style={{display: showAlert ? "inline-block" : "none"}}
+            style={{ display: showAlert ? "inline-block" : "none" }}
           >
             <Alert
               variant="outlined"
@@ -228,11 +237,23 @@ function ForgotPassword() {
               <i className="fas fa-key" />
             </span>
             <input
-              type="password"
+              type={val}
               placeholder="New Password"
-              style={{width: "400px"}}
+              style={{ width: "400px" }}
               onChange={(e) => setPassword(e.target.value)}
               value={Password}
+            />
+            <i
+              className={show}
+              onClick={() => {
+                if (show === eye.close) {
+                  setshow(eye.open);
+                  setval("text");
+                } else {
+                  setshow(eye.close);
+                  setval("password");
+                }
+              }}
             />
           </div>
           <div className="signup-confirm-password">
@@ -240,7 +261,7 @@ function ForgotPassword() {
               <i className="fas fa-lock" />
             </span>
             <input
-              type="password"
+              type={val2}
               placeholder="Confirm New Password"
               onChange={(e) => {
                 setConfPassword(e.target.value);
@@ -250,7 +271,19 @@ function ForgotPassword() {
                   setconfirm(false);
                 }
               }}
-              style={confirm ? Errorstyle : {width: "400px"}}
+              style={confirm ? Errorstyle : { width: "400px" }}
+            />
+            <i
+              className={show2}
+              onClick={() => {
+                if (show2 === eye.close) {
+                  setshow2(eye.open);
+                  setval2("text");
+                } else {
+                  setshow2(eye.close);
+                  setval2("password");
+                }
+              }}
             />
           </div>
           <div className="forgot-container-update">
