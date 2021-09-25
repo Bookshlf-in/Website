@@ -121,7 +121,10 @@ const Wishlist = () => {
           >
             <CircularProgress style={{height: "50px", width: "50px"}} />
           </div>
-          <div style={{display: loader ? "none" : "block"}}>
+          <div
+            style={{display: loader ? "none" : "block", textAlign: "center"}}
+          >
+            <h1>Your Wishlist</h1>
             <Grid
               container
               alignItems="center"
