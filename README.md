@@ -111,16 +111,17 @@ Made with [contributors-img](https://contrib.rocks).
 
 # Screenshots
 
-<img src = "public/images/Readme/header-bookshlf.png" width="800"/>
-<img src = "public/images/Readme/footer-bookshlf.png" width="800"/>
+<img src = "public/images/Readme/1.png" width="800"/>
+<img src = "public/images/Readme/2.png" width="800"/>
+<img src = "public/images/Readme/3.png" width="800"/>
 <img src = "public/images/Readme/about.png" width="800"/>
-<img src = "public/images/Readme/wishlist.png" width="800"/>
-<img src = "public/images/Readme/cart.png" width="800"/>
+<img src = "public/images/Readme/6.png" width="800"/>
+<img src = "public/images/Readme/5.png" width="800"/>
 <img src = "public/images/Readme/website_reviews.png" width="800"/>
 <img src = "public/images/Readme/user.png" width="800"/>
 <img src = "public/images/Readme/track.png" width="800"/>
 <img src = "public/images/Readme/seller_profile.png" width="800"/>
-<img src = "public/images/Readme/search.png" width="800"/>
+<img src = "public/images/Readme/5.png" width="800"/>
 <img src = "public/images/Readme/previous_orders.png" width="800"/>
 <img src = "public/images/Readme/contact us.png" width="800"/>
 <img src = "public/images/Readme/categories.png" width="800"/>
@@ -128,4 +129,6 @@ Made with [contributors-img](https://contrib.rocks).
 <img src = "public/images/Readme/address.png" width="800"/>
 <img src = "public/images/Readme/ative_orders.png" width="800"/>
 <img src = "public/images/Readme/book_approved.png" width="800"/>
+<img src = "public/images/Readme/7.png">
+<img src = "public/images/Readme/sidenav.png" />
 
