@@ -124,7 +124,7 @@ function Payment() {
             wishlist: user.wishlist,
           });
           setTimeout(() => {
-            history.push("/UserProfile");
+            history.push("/UserProfile/2");
           }, 3000);
         })
         .catch((error) => {
@@ -210,7 +210,9 @@ function Payment() {
                     <>
                       {items.items.map((item) => (
                         <p key={item._id}>
-                          {item.title}
+                          <span className="checkout-book-title">
+                            {item.title}
+                          </span>
                           <span className="price">
                             <b>
                               <i className="fas fa-rupee-sign" />
@@ -260,7 +262,7 @@ function Payment() {
               <p>
                 Payment Mode
                 <span className="price">
-                  <b>Pay On Dilvery</b>
+                  <b>Pay On Delivery</b>
                 </span>
               </p>
               <hr />

@@ -23,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const inCart = {
+  backgroundColor: "green",
+  color: "white",
+  borderRadius: "40px",
+};
+
 const AllCategories = () => {
   const classes = useStyles();
   const params = useParams();
@@ -223,6 +229,9 @@ const AllCategories = () => {
     if (user) {
       if (e.target.title === "F") {
         e.target.innerHTML = "Adding...";
+        e.target.style.backgroundColor = "green";
+        e.target.style.color = "white";
+        e.target.style.borderRadius = "40px";
         localStorage.setItem(
           "bookshlf_user",
           JSON.stringify({
@@ -259,6 +268,7 @@ const AllCategories = () => {
           });
       } else {
         e.target.innerHTML = "Removing...";
+        e.target.style = {};
         localStorage.setItem(
           "bookshlf_user",
           JSON.stringify({
@@ -379,6 +389,7 @@ const AllCategories = () => {
                               handelCart(e);
                             }}
                             title={book.cart ? "T" : "F"}
+                            style={book.cart ? inCart : {}}
                           >
                             {book.cart ? "Added In Cart" : "Add To Cart"}
                           </p>
