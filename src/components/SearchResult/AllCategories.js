@@ -23,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const inCart = {
+  backgroundColor: "green",
+  color: "white",
+  borderRadius: "40px",
+};
+
 const AllCategories = () => {
   const classes = useStyles();
   const params = useParams();
@@ -97,8 +103,7 @@ const AllCategories = () => {
   // handeling wish list
   const handelWishList = (e) => {
     if (user) {
-      console.log(e.target.getAttribute("presentinwishlist"));
-      if (e.target.getAttribute("presentinwishlist") === "T") {
+      if (e.target.title === "Added to Wishlist") {
         e.target.className = "fas fa-circle-notch";
         e.target.style.animation = "spin 2s linear infinite";
         localStorage.setItem(
@@ -130,7 +135,7 @@ const AllCategories = () => {
             setOpen(true);
             setSeverity("success");
             setAlert(response.data.msg);
-            e.target.presentinwishlist = "F";
+            e.target.title = "Add to Wishlist";
           })
           .catch((err) => {
             e.target.className = "far fa-heart";
@@ -185,7 +190,7 @@ const AllCategories = () => {
             setAlert(response.data.msg);
             e.target.className = "fas fa-heart";
             e.target.style.animation = "";
-            e.target.presentinwishlist = "T";
+            e.target.title = "Added to Wishlist";
           })
           .catch((error) => {
             e.target.className = "fas fa-heart";
@@ -223,6 +228,9 @@ const AllCategories = () => {
     if (user) {
       if (e.target.title === "F") {
         e.target.innerHTML = "Adding...";
+        e.target.style.backgroundColor = "green";
+        e.target.style.color = "white";
+        e.target.style.borderRadius = "40px";
         localStorage.setItem(
           "bookshlf_user",
           JSON.stringify({
@@ -259,6 +267,7 @@ const AllCategories = () => {
           });
       } else {
         e.target.innerHTML = "Removing...";
+        e.target.style = {};
         localStorage.setItem(
           "bookshlf_user",
           JSON.stringify({
@@ -379,6 +388,7 @@ const AllCategories = () => {
                               handelCart(e);
                             }}
                             title={book.cart ? "T" : "F"}
+                            style={book.cart ? inCart : {}}
                           >
                             {book.cart ? "Added In Cart" : "Add To Cart"}
                           </p>
@@ -392,7 +402,6 @@ const AllCategories = () => {
                             onClick={(e) => {
                               handelWishList(e);
                             }}
-                            presentinwishlist={book.wishlist ? "T" : "F"}
                           />
                         </div>
                         <div
