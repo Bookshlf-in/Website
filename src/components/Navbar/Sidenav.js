@@ -60,6 +60,16 @@ const Sidenav = () => {
         ) : (
           <></>
         )}
+        {user ? (
+          <SideNavLink
+            to="/Wishlist"
+            iconClass="far fa-heart"
+            label="Wishlist"
+            isProfile={true}
+          />
+        ) : (
+          <></>
+        )}
         <SideNavLink
           to="/SearchResult/books"
           label="All Categories"

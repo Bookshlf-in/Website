@@ -7,8 +7,9 @@ import Reviews from "./SellerReviews";
 import AddBook from "./AddBook";
 import Register from "./SellerRegister";
 import {UserContext} from "../../Context/userContext";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from "../../axios";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SellerPanel = () => {
   // context states
@@ -79,10 +80,7 @@ const SellerPanel = () => {
     <div>
       {/* Loader */}
       <div className="page-loader" style={{display: loader ? "flex" : "none"}}>
-        <div
-          className="page-loading"
-          style={{display: loader ? "block" : "none"}}
-        ></div>
+        <CircularProgress style={{height: "80px", width: "80px"}} />
       </div>
 
       {/* Components */}

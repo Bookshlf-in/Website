@@ -1,9 +1,9 @@
 .active-orders-table {
   border-collapse: collapse;
-  margin: 25px 0;
+  margin: 25px 10px;
   font-size: 0.9em;
   font-family: sans-serif;
-  min-width: 400px;
+  min-width: 320px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   border: none;
   width: 100%;
@@ -41,4 +41,19 @@
 .active-orders-table tbody tr.active-row {
   font-weight: bold;
   color: #009879;
+}
+
+@media screen and (max-width: 600px) {
+  .active-orders-table {
+    margin: 10px 0px;
+  }
+  .active-orders-table thead tr th {
+    letter-spacing: 1px;
+  }
+  .active-orders-table th,
+  .active-orders-table td {
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+  }
 }

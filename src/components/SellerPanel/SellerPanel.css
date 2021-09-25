@@ -1,6 +1,6 @@
 .SellerPanel-container {
-  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-  min-height: calc(100vh - 90px);
+  background: whitesmoke;
+  min-height: calc(100vh - 60px);
 }
 .SellerPanel-navbar {
   display: flex;
@@ -22,13 +22,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px;
-  background-color: #ffffff;
+  background-color: aliceblue;
   position: relative;
   color: rgb(22, 22, 22);
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 14px;
+  padding: 5px;
+  border-bottom: 2px solid aliceblue;
 }
 .panel-item span,
 .panel-item p {
@@ -36,9 +37,8 @@
 }
 
 .panel-item:hover {
-  background-color: #444444;
+  border-bottom: 2px solid rgb(22, 22, 22);
   cursor: pointer;
-  color: #ffffff;
 }
 
 /* Account Details CSS */
