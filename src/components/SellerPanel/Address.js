@@ -175,7 +175,7 @@ const Address = (props) => {
 
   return (
     <div className="address-bg">
-      <h1 style={{color: "whitesmoke", letterSpacing: "2px"}}>
+      <h1 style={{fontFamily: "PT sans", letterSpacing: "2px"}}>
         Your Addresses
       </h1>
 
@@ -259,14 +259,18 @@ const Address = (props) => {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
             />
-            <label htmlFor="pincode">Pincode</label>
-            <InputMask
-              mask="999999"
-              alwaysShowMask="true"
-              id="pincode"
-              title="Pincode"
-              onChange={(e) => setZipCode(e.target.value)}
-            />
+            <span style={{position: "relative"}}>
+              <label htmlFor="pincode" className="pincode">
+                Pincode
+              </label>
+              <InputMask
+                mask="999999"
+                alwaysShowMask="true"
+                id="pincode"
+                title="Pincode"
+                onChange={(e) => setZipCode(e.target.value)}
+              />
+            </span>
           </div>
           <div className="address-phoneNo">
             <span style={{width: "100px"}}>
@@ -278,7 +282,7 @@ const Address = (props) => {
                 defaultValue="91"
               />
             </span>
-            <span style={{width: "calc(100% - 100px)"}}>
+            <span style={{width: "calc(100% - 110px)"}}>
               <label htmlFor="phone-no">Mobile Phone</label>
               <InputMask
                 id="phone-no"

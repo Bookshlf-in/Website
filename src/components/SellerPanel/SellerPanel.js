@@ -57,7 +57,6 @@ const SellerPanel = () => {
                       params: sellerId,
                     })
                     .then((response) => {
-                      console.log(response.data);
                       setsellerReview(response.data);
                       setloader(false);
                     })

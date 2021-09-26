@@ -153,7 +153,7 @@
 }
 .address-form fieldset {
   border-radius: 5px 5px 0px 0px;
-  border: 2px solid white;
+  border: 2px solid rgb(0, 0, 0);
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -162,7 +162,6 @@
   padding: 10px;
   font-family: "PT sans";
   font-size: 20px;
-  color: white;
 }
 .address-label {
   width: 35%;
@@ -211,22 +210,32 @@
   color: #787878;
   padding-left: 10px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
-  margin-left: 10px;
+  margin: 0px 10px;
 }
 .address-zip #state {
   margin-left: 10px;
 }
-.address-zip #pincode {
+label.pincode {
+  font-family: "PT sans";
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -20px;
+  font-size: 14px;
+}
+.address-zip span {
   width: 30%;
+}
+.address-zip #pincode {
+  width: 100%;
   height: 50px;
   font-family: "PT sans";
   border: none;
   color: #787878;
-  padding-left: 10px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
   letter-spacing: 10px;
   text-align: center;
-  margin-left: 10px;
+  margin: 0px;
 }
 .address-form .address-phoneNo {
   width: 100%;
@@ -240,9 +249,9 @@
   align-items: top;
 }
 .address-form .address-phoneNo span label {
-  color: white;
   font-family: "PT Sans";
   font-size: 14px;
+  padding-left: 10px;
 }
 #country-code {
   letter-spacing: 5px;
@@ -264,13 +273,14 @@
   color: #787878;
   padding-left: 20px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  margin-left: 10px;
 }
 .address-form button {
   border-radius: 0px 0px 5px 5px;
   margin-top: -2px;
-  border-left: 2px solid white;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
+  border-left: 2px solid rgb(0, 0, 0);
+  border-right: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
   font-family: "PT sans";
   font-weight: bold;
   letter-spacing: 2px;
@@ -292,7 +302,8 @@
   border-collapse: collapse;
   color: rgb(0, 0, 0);
   background-color: #fff;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "PT sans";
+  font-size: 14px;
 }
 .address-lists table,
 th,
@@ -345,7 +356,6 @@ i.fas.fa-window-close:hover {
   padding: 30px;
 }
 .reviewed-title {
-  color: white;
   font-family: "Roboto", sans-serif;
   font-size: 32px;
   text-align: center;
@@ -354,7 +364,6 @@ i.fas.fa-window-close:hover {
 .your-rating-as-seller {
   width: 100%;
   text-align: center;
-  color: white;
   letter-spacing: 2px;
 }
 
@@ -539,6 +548,12 @@ i.fas.fa-window-close:hover {
   color: #f50057;
 }
 @media screen and (max-width: 450px) {
+  .address-bg {
+    padding: 10px;
+  }
+  .address-form {
+    width: 100%;
+  }
   .address-form fieldset {
     flex-direction: column;
   }
@@ -553,14 +568,31 @@ i.fas.fa-window-close:hover {
   .address-form .address-zip input {
     width: 100%;
   }
+  .address-zip #state {
+    margin-left: 0px;
+  }
   .address-zip #state,
   .address-zip #country,
   .address-form .address-zip input {
-    margin-left: 0;
+    margin-left: 0px;
     margin-bottom: 10px;
   }
+  .address-form .address-zip input {
+    margin: 0px;
+  }
+  .address-zip span {
+    width: 100%;
+    margin-top: 10px;
+  }
+  #phone-no {
+    padding-left: 10px;
+    letter-spacing: 5px;
+    color: blue;
+  }
   .address-lists {
-    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 5px;
+    justify-content: flex-start;
   }
   .orders-details {
     padding: 10px 0px;
