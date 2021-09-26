@@ -119,7 +119,7 @@ const Orders = (props) => {
       </div>
       <div className="orders-details">
         {panel === "1" ? (
-          <table>
+          <table className="active-orders-table">
             <thead>
               <tr>
                 <th>Order ID</th>
@@ -133,7 +133,7 @@ const Orders = (props) => {
             </thead>
           </table>
         ) : panel === "2" ? (
-          <table>
+          <table className="active-orders-table">
             <thead>
               <tr>
                 <th>Book ID</th>
@@ -172,7 +172,7 @@ const Orders = (props) => {
             </tbody>
           </table>
         ) : (
-          <table>
+          <table className="active-orders-table">
             <thead>
               <tr>
                 <th>Book ID</th>

@@ -55,7 +55,6 @@ const Sidenav = () => {
             to="/Cart"
             iconClass="fas fa-shopping-cart"
             label="Cart"
-            isProfile={true}
           />
         ) : (
           <></>
@@ -65,7 +64,6 @@ const Sidenav = () => {
             to="/Wishlist"
             iconClass="far fa-heart"
             label="Wishlist"
-            isProfile={true}
           />
         ) : (
           <></>
@@ -75,6 +73,15 @@ const Sidenav = () => {
           label="All Categories"
           iconClass="fas fa-angle-right"
         />
+        {user ? (
+          <SideNavLink
+            to="/SellerPanel"
+            iconClass="fas fa-book"
+            label="Sell Your Books"
+          />
+        ) : (
+          <></>
+        )}
         <SideNavLink
           to="/Contribute"
           iconClass="fas fa-hands-helping"
