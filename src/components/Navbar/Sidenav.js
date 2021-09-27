@@ -75,7 +75,7 @@ const Sidenav = () => {
         />
         {user ? (
           <SideNavLink
-            to="/SellerPanel"
+            to="/SellerPanel/5"
             iconClass="fas fa-book"
             label="Sell Your Books"
           />

@@ -7,7 +7,7 @@ import Reviews from "./SellerReviews";
 import AddBook from "./AddBook";
 import Register from "./SellerRegister";
 import {UserContext} from "../../Context/userContext";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import axios from "../../axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -15,9 +15,9 @@ const SellerPanel = () => {
   // context states
   const [user, setUser] = useContext(UserContext);
   const history = useHistory();
-
+  const params = useParams();
   // component states
-  const [panel, setPanel] = useState(2);
+  const [panel, setPanel] = useState(params.panel);
   const [role, setRole] = useState(false);
 
   // loader states
@@ -27,7 +27,6 @@ const SellerPanel = () => {
   const [bookDetails, setbookDetails] = useState(null);
   const [sellerId, setsellerId] = useState(null);
   const [sellerReview, setsellerReview] = useState(null);
-
   // getting sellerDetails
   useEffect(() => {
     const fetchData = async () => {
@@ -90,7 +89,13 @@ const SellerPanel = () => {
           <div className="SellerPanel-container">
             <div className="SellerPanel-navbar">
               <div className="panel-nav-bg">
-                <div className="panel-item" onClick={() => setPanel(1)}>
+                <div
+                  className="panel-item"
+                  onClick={() => {
+                    setPanel("1");
+                    history.push("/SellerPanel/1");
+                  }}
+                >
                   <span>
                     <i className="fas fa-user" />
                   </span>
@@ -99,8 +104,8 @@ const SellerPanel = () => {
                 <div
                   className="panel-item"
                   onClick={() => {
-                    // console.log(user);
-                    setPanel(2);
+                    setPanel("2");
+                    history.push("/SellerPanel/2");
                   }}
                 >
                   <span>
@@ -108,19 +113,37 @@ const SellerPanel = () => {
                   </span>
                   <p>YOUR BOOKS</p>
                 </div>
-                <div className="panel-item" onClick={() => setPanel(3)}>
+                <div
+                  className="panel-item"
+                  onClick={() => {
+                    setPanel("3");
+                    history.push("/SellerPanel/3");
+                  }}
+                >
                   <span>
                     <i className="fas fa-map-marker" />
                   </span>
                   <p>ADDRESS</p>
                 </div>
-                <div className="panel-item" onClick={() => setPanel(4)}>
+                <div
+                  className="panel-item"
+                  onClick={() => {
+                    setPanel("4");
+                    history.push("/SellerPanel/4");
+                  }}
+                >
                   <span>
                     <i className="far fa-comments" />
                   </span>
                   <p>REVIEWS</p>
                 </div>
-                <div className="panel-item" onClick={() => setPanel(5)}>
+                <div
+                  className="panel-item"
+                  onClick={() => {
+                    setPanel("5");
+                    history.push("/SellerPanel/5");
+                  }}
+                >
                   <span>
                     <i className="fas fa-book" />
                     &nbsp;
@@ -130,15 +153,15 @@ const SellerPanel = () => {
                 </div>
               </div>
             </div>
-            {panel === 1 && sellerDetails ? (
+            {params.panel === "1" && sellerDetails ? (
               <AccountDetails seller={sellerDetails} />
-            ) : panel === 2 && bookDetails && Adr ? (
+            ) : params.panel === "2" && bookDetails && Adr ? (
               <Orders books={bookDetails} address={Adr} />
-            ) : panel === 3 && Adr ? (
+            ) : params.panel === "3" && Adr ? (
               <Address address={Adr} />
-            ) : panel === 4 && sellerReview ? (
+            ) : params.panel === "4" && sellerReview ? (
               <Reviews reviews={sellerReview} />
-            ) : Adr ? (
+            ) : params.panel === "5" && Adr ? (
               <AddBook address={Adr} />
             ) : (
               <div></div>

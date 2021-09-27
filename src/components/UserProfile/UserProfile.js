@@ -7,6 +7,7 @@ import PreviousOrder from "./PreviousOrders";
 import Address from "./Address";
 import axios from "../../axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 const UserProfile = () => {
   const params = useParams();
   const history = useHistory();
