@@ -1,7 +1,6 @@
-import {React, useState} from "react";
+import {React} from "react";
 import {FaStar} from "react-icons/fa";
 const SellerReviews = (props) => {
-  console.log(props.reviews);
   return (
     <div>
       <div className="your-rating-as-seller">
@@ -9,8 +8,8 @@ const SellerReviews = (props) => {
           <br />
           Overall Rating :{" "}
           {props.reviews.rating > 0 ? (
-            [...Array(parseInt(props.reviews.rating))].map(() => {
-              return <i className="fas fa-star"></i>;
+            [...Array(parseInt(props.reviews.rating))].map((e, i) => {
+              return <i className="fas fa-star" key={i}></i>;
             })
           ) : (
             <></>
@@ -33,8 +32,8 @@ const SellerReviews = (props) => {
             <>
               {props.reviews.data.length > 0 ? (
                 <>
-                  {props.reviews.data.map((review) => (
-                    <div className="reviews_item">
+                  {props.reviews.data.map((review, i) => (
+                    <div className="reviews_item" key={i}>
                       <div className="ratings">
                         {[...Array(parseInt(review.rating))].map(() => {
                           return <FaStar size={20} color="#FDCC0D" />;

@@ -63,7 +63,7 @@ function App() {
             <Navbar />
             <UserProfile />
           </Route>
-          <Route path="/SellerPanel">
+          <Route path="/SellerPanel/:panel">
             <Navbar />
             <SellerPanel />
           </Route>

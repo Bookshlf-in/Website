@@ -37,11 +37,13 @@
   border-radius: 30px;
   width: 100px;
   padding: 5px;
-  color: rgb(36, 228, 36);
-  border: 1px solid rgb(36, 228, 36);
+  background-color: rgb(10, 250, 10);
+  border: 2px solid white;
+  color: white;
   font-family: "Roboto", sans-serif;
-  font-weight: bold;
   text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 .non-verified-user {
   border-radius: 30px;

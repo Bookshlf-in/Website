@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import {React, useState} from "react";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
@@ -8,6 +8,7 @@ import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
 import {storage} from "../../firebase";
 import {nanoid} from "nanoid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,79 +90,126 @@ const AddBook = (props) => {
   };
 
   const handeluploadImages = () => {
-    setload(true);
-    return new Promise((result) => {
-      const imgURL = [];
-      const imageName = [];
-      for (let i = 0; i < Photo.length; i++) {
-        imageName[i] = nanoid(10) + Photo[i].name;
-        const uploadTask = storage.ref(`books/${imageName[i]}`).put(Photo[i]);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {},
-          (error) => {},
-          () => {
-            storage
-              .ref("books")
-              .child(imageName[i])
-              .getDownloadURL()
-              .then((imgUrl) => {
-                imgURL.push(imgUrl);
-                if (imgURL.length === Photo.length) {
-                  result(imgURL);
-                }
-              });
-          }
-        );
-      }
-    });
+    if (Photo != null && Photo !== undefined && Photo.length >= 3) {
+      setload(true);
+      return new Promise((result) => {
+        const imgURL = [];
+        const imageName = [];
+        for (let i = 0; i < Photo.length; i++) {
+          imageName[i] = nanoid(10) + Photo[i].name;
+          const uploadTask = storage.ref(`books/${imageName[i]}`).put(Photo[i]);
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {},
+            (error) => {},
+            () => {
+              storage
+                .ref("books")
+                .child(imageName[i])
+                .getDownloadURL()
+                .then((imgUrl) => {
+                  imgURL.push(imgUrl);
+                  if (imgURL.length === Photo.length) {
+                    result(imgURL);
+                  }
+                });
+            }
+          );
+        }
+      });
+    } else {
+      setalert({
+        show: true,
+        type: "error",
+        msg: "Please Fill All Fields",
+      });
+      setTimeout(() => {
+        setalert({
+          show: false,
+          type: "error",
+          msg: "Please Fill All Fields",
+        });
+      }, 3000);
+    }
   };
 
   const PushDetails = (imglinks) => {
-    return new Promise(() => {
+    if (precheck(imglinks)) {
+      return new Promise(() => {
+        setTimeout(() => {
+          axios
+            .post("/addBook", {
+              title: bookName,
+              MRP: Number(MRP),
+              price: Number(SP),
+              editionYear: Number(Edition),
+              author: author,
+              ISBN: bookISBN,
+              language: lang,
+              pickupAddressId: pickupId,
+              description: bookDesc,
+              photos: imglinks,
+              weightInGrams: Number(Weight),
+              embedVideo: link,
+              tags: tags,
+              qty: Number(Qnty),
+            })
+            .then((response) => {
+              console.log(response.data);
+              setload(false);
+              setalert({
+                show: true,
+                type: "success",
+                msg: response.data.msg,
+              });
+              setTimeout(() => {
+                Initialize();
+              }, 3000);
+            })
+            .catch((error) => {
+              console.log(error.response.data.errors[0].error);
+              setload(false);
+              setalert({
+                show: true,
+                type: "error",
+                msg: error.response.data.errors[0].error + " Please Try Again!",
+              });
+            });
+        }, 2000);
+      });
+    } else {
+      setload(false);
+      setalert({
+        show: true,
+        type: "error",
+        msg: "Please Fill All Fields",
+      });
       setTimeout(() => {
-        axios
-          .post("/addBook", {
-            title: bookName,
-            MRP: Number(MRP),
-            price: Number(SP),
-            editionYear: Number(Edition),
-            author: author,
-            ISBN: bookISBN,
-            language: lang,
-            pickupAddressId: pickupId,
-            description: bookDesc,
-            photos: imglinks,
-            weightInGrams: Number(Weight),
-            embedVideo: link,
-            tags: tags,
-            qty: Number(Qnty),
-          })
-          .then((response) => {
-            console.log(response.data);
-            setload(false);
-            setalert({
-              show: true,
-              type: "success",
-              msg: response.data.msg,
-            });
-            setTimeout(() => {
-              Initialize();
-            }, 5000);
-          })
-          .catch((error) => {
-            console.log(error.response.data.errors[0].error);
-            setload(false);
-            setalert({
-              show: true,
-              type: "error",
-              msg: error.response.data.errors[0].error + " Please Try Again!",
-            });
-          });
-      }, 2000);
-    });
+        setalert({
+          show: false,
+          type: "",
+          msg: "",
+        });
+      }, 3000);
+    }
   };
 
+  function precheck(imglinks) {
+    return (
+      bookName !== "" &&
+      MRP !== "" &&
+      SP !== "" &&
+      Edition !== "" &&
+      author !== "" &&
+      bookISBN !== "" &&
+      lang !== "" &&
+      pickupId !== "" &&
+      bookDesc !== "" &&
+      imglinks !== undefined &&
+      imglinks !== null &&
+      imglinks.length >= 3
+    );
+  }
   const handelBookAdd = async () => {
     const imglinks = await handeluploadImages();
     await PushDetails(imglinks);
@@ -285,7 +333,6 @@ const AddBook = (props) => {
             id=""
             style={{
               height: "50px",
-              width: "500px",
               outline: "none",
               fontFamily: "PT Sans",
               paddingLeft: "10px",
@@ -299,8 +346,10 @@ const AddBook = (props) => {
             <option> Select Address</option>
             {Adr !== null ? (
               <>
-                {Adr.map((adr) => (
-                  <option value={adr._id}>{adr.address}</option>
+                {Adr.map((adr, idx) => (
+                  <option value={adr._id} key={idx}>
+                    {adr.address}
+                  </option>
                 ))}
               </>
             ) : (
@@ -388,9 +437,7 @@ const AddBook = (props) => {
               style={{width: "250px", left: "20px"}}
               multiple
             />
-            <span style={{fontFamily: "PT Sans", fontSize: "12px"}}>
-              At least 3 clear images of book. (Front, Back, Side)
-            </span>
+            <span>At least 3 clear images of book. (Front, Back, Side)</span>
           </div>
           <div
             className="uploaded-images"
@@ -426,6 +473,23 @@ const AddBook = (props) => {
             I agree to Terms and Conditions
           </span>
         </div>
+        <div
+          className={classes.root}
+          style={{display: alert.show ? "flex" : "none"}}
+        >
+          <Alert
+            variant="outlined"
+            severity={alert.type}
+            style={{
+              fontFamily: "PT Sans",
+              fontWeight: "bold",
+              color: alert.type === "success" ? "yellowgreen" : "red",
+              width: "250px",
+            }}
+          >
+            {alert.msg}
+          </Alert>
+        </div>
         <div>
           <Button
             variant="contained"
@@ -440,32 +504,16 @@ const AddBook = (props) => {
               }
             }}
           >
-            <i
-              className="fas fa-circle-notch"
+            <CircularProgress
               style={{
                 display: load ? "inline-block" : "none",
-                animation: "spin 2s linear infinite",
+                height: "15px",
+                width: "15px",
+                color: "white",
               }}
             />
             &nbsp;Submit For Review
           </Button>
-        </div>
-        <div
-          className={classes.root}
-          style={{display: alert.show ? "flex" : "none"}}
-        >
-          <Alert
-            variant="outlined"
-            severity={alert.type}
-            style={{
-              fontFamily: "PT Sans",
-              fontWeight: "bold",
-              color: alert.type === "success" ? "yellowgreen" : "red",
-              width: "500px",
-            }}
-          >
-            {alert.msg}
-          </Alert>
         </div>
       </form>
     </div>

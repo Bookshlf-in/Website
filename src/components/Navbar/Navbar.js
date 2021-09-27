@@ -199,7 +199,7 @@ function Navbar() {
                 </div>
               </div>
             </li>
-            <Link to="/SellerPanel">
+            <Link to="/SellerPanel/5">
               <li>
                 <div className="navbar-items-chip">
                   <p>

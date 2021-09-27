@@ -1,6 +1,6 @@
 .SellerPanel-container {
-  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-  min-height: calc(100vh - 90px);
+  background: whitesmoke;
+  min-height: calc(100vh - 60px);
 }
 .SellerPanel-navbar {
   display: flex;
@@ -22,13 +22,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px;
-  background-color: #ffffff;
+  background-color: aliceblue;
   position: relative;
   color: rgb(22, 22, 22);
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 14px;
+  padding: 5px;
+  border-bottom: 2px solid aliceblue;
 }
 .panel-item span,
 .panel-item p {
@@ -36,29 +37,57 @@
 }
 
 .panel-item:hover {
-  background-color: #444444;
+  border-bottom: 2px solid rgb(22, 22, 22);
   cursor: pointer;
-  color: #ffffff;
 }
 
 /* Account Details CSS */
-
-.card {
-  width: 400px;
-  height: 458px;
-  border: 1px solid white;
-  border-radius: 15px;
-  box-shadow: 3px 4px 5px rgba(255, 255, 255, 0.2);
+.seller-profile-cont {
+  position: relative;
+  width: 100%;
+  height: 35vh;
+  background: linear-gradient(to right, #2a0845, #6441a5);
+  display: flex;
+  justify-content: flex-start;
+  align-items: top;
+  flex-direction: column;
+}
+.seller-profile-details {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+.seller-profile-details span {
+  padding-top: 10px;
+}
+.seller-profile-details span i {
+  margin-right: 40px;
+}
+.seller-profile-details span b {
+  margin-left: 40px;
+}
+.seller-profile-img {
+  position: absolute;
+  left: 50%;
+  margin-left: -75px;
+  bottom: -75px;
+}
+.update-seller-profile {
   justify-content: center;
   align-items: center;
-  color: white;
-  padding: 20px;
-  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
 }
-.seller-rating {
-  padding: 10px;
+.verify-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 .seller-rating i {
   letter-spacing: 5px;
@@ -80,35 +109,14 @@
   position: relative;
 }
 .orders-details {
-  padding: 10px 10px 10px 30px;
   width: 100%;
-}
-.orders-details table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: whitesmoke;
-  overflow-x: auto;
-  font-family: "Courier New", Courier, monospace;
-}
-.orders-details table,
-.orders-details th,
-.orders-details td {
-  border: 2px solid rgb(0, 0, 0);
   padding: 10px;
+  overflow-x: auto;
 }
-.orders-details th {
-  height: 70px;
-  text-align: center;
-  vertical-align: middle;
-  color: rgb(0, 0, 0);
-  letter-spacing: 2px;
+.orders-details .active-orders-table {
+  overflow-x: auto;
+  margin: 0px;
 }
-.orders-details td {
-  text-align: center;
-  vertical-align: middle;
-  color: rgb(0, 0, 0);
-}
-
 .orders-filter form {
   display: flex;
   flex-direction: column;
@@ -117,7 +125,7 @@
 }
 .orders-filter .select-wrapper {
   position: relative;
-  width: 650px;
+  width: 250px;
 }
 .orders-filter .select-wrapper::after {
   color: black;
@@ -138,7 +146,7 @@
   cursor: pointer;
   padding: 12px;
   width: 100%;
-  font-size: 18px;
+  font-size: 16px;
   outline: none;
   border: 1px solid white;
   font-family: "Roboto", sans-serif;
@@ -174,7 +182,7 @@
 }
 .address-form fieldset {
   border-radius: 5px 5px 0px 0px;
-  border: 2px solid white;
+  border: 2px solid rgb(0, 0, 0);
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -183,7 +191,6 @@
   padding: 10px;
   font-family: "PT sans";
   font-size: 20px;
-  color: white;
 }
 .address-label {
   width: 35%;
@@ -232,22 +239,32 @@
   color: #787878;
   padding-left: 10px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
-  margin-left: 10px;
+  margin: 0px 10px;
 }
 .address-zip #state {
   margin-left: 10px;
 }
-.address-zip #pincode {
+label.pincode {
+  font-family: "PT sans";
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -20px;
+  font-size: 14px;
+}
+.address-zip span {
   width: 30%;
+}
+.address-zip #pincode {
+  width: 100%;
   height: 50px;
   font-family: "PT sans";
   border: none;
   color: #787878;
-  padding-left: 10px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
   letter-spacing: 10px;
   text-align: center;
-  margin-left: 10px;
+  margin: 0px;
 }
 .address-form .address-phoneNo {
   width: 100%;
@@ -261,9 +278,9 @@
   align-items: top;
 }
 .address-form .address-phoneNo span label {
-  color: white;
   font-family: "PT Sans";
   font-size: 14px;
+  padding-left: 10px;
 }
 #country-code {
   letter-spacing: 5px;
@@ -285,13 +302,14 @@
   color: #787878;
   padding-left: 20px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  margin-left: 10px;
 }
 .address-form button {
   border-radius: 0px 0px 5px 5px;
   margin-top: -2px;
-  border-left: 2px solid white;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
+  border-left: 2px solid rgb(0, 0, 0);
+  border-right: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
   font-family: "PT sans";
   font-weight: bold;
   letter-spacing: 2px;
@@ -313,7 +331,8 @@
   border-collapse: collapse;
   color: rgb(0, 0, 0);
   background-color: #fff;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "PT sans";
+  font-size: 14px;
 }
 .address-lists table,
 th,
@@ -366,7 +385,6 @@ i.fas.fa-window-close:hover {
   padding: 30px;
 }
 .reviewed-title {
-  color: white;
   font-family: "Roboto", sans-serif;
   font-size: 32px;
   text-align: center;
@@ -375,7 +393,6 @@ i.fas.fa-window-close:hover {
 .your-rating-as-seller {
   width: 100%;
   text-align: center;
-  color: white;
   letter-spacing: 2px;
 }
 
@@ -388,9 +405,10 @@ i.fas.fa-window-close:hover {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  color: white;
 }
-
+.add-book-bg h1 {
+  font-family: "PT sans";
+}
 .add-book-form {
   padding: 10px;
   display: flex;
@@ -399,6 +417,7 @@ i.fas.fa-window-close:hover {
   align-items: center;
   font-family: "Roboto", sans-serif;
   width: 100%;
+  color: #1b2735;
 }
 .add-book-field2,
 .add-book-field1 {
@@ -427,7 +446,9 @@ i.fas.fa-window-close:hover {
   background-color: rgba(255, 255, 255, 0.87);
   border: none;
 }
-
+.add-book-field1 select {
+  width: 500px;
+}
 .add-book-form .add-book-field1 span,
 .add-book-form .add-book-field2 span {
   height: 50px;
@@ -436,7 +457,7 @@ i.fas.fa-window-close:hover {
   justify-content: center;
   align-items: center;
   font-size: 20px;
-  color: whitesmoke;
+  color: #1b2735;
   border: 1px solid white;
 }
 .add-book-field2 input:focus,
@@ -482,8 +503,7 @@ i.fas.fa-window-close:hover {
 }
 
 .uploaded-images {
-  height: 150px;
-  width: 250px;
+  padding: 10px;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -512,19 +532,31 @@ i.fas.fa-window-close:hover {
   border-radius: 8px;
   font-size: 20px;
   font-weight: bold;
-  width: 200px;
-  height: 40px;
+  width: 280px;
+  height: 60px;
   margin-left: 20px;
+  cursor: pointer;
 }
 
 .upload-btn-wrapper input[type="file"] {
   font-size: 30px;
   width: 200px;
-  height: 40px;
+  height: 60px;
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
+  cursor: pointer;
+}
+.upload-btn-wrapper span {
+  position: absolute;
+  top: 3px;
+  left: 40px;
+  color: red;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+  cursor: pointer;
 }
 .update-book-bg {
   float: left;
@@ -543,6 +575,12 @@ i.fas.fa-window-close:hover {
   color: #f50057;
 }
 @media screen and (max-width: 450px) {
+  .address-bg {
+    padding: 10px;
+  }
+  .address-form {
+    width: 100%;
+  }
   .address-form fieldset {
     flex-direction: column;
   }
@@ -557,13 +595,52 @@ i.fas.fa-window-close:hover {
   .address-form .address-zip input {
     width: 100%;
   }
+  .address-zip #state {
+    margin-left: 0px;
+  }
   .address-zip #state,
   .address-zip #country,
   .address-form .address-zip input {
-    margin-left: 0;
+    margin-left: 0px;
     margin-bottom: 10px;
   }
+  .address-form .address-zip input {
+    margin: 0px;
+  }
+  .address-zip span {
+    width: 100%;
+    margin-top: 10px;
+  }
+  #phone-no {
+    padding-left: 10px;
+    letter-spacing: 5px;
+    color: blue;
+  }
   .address-lists {
-    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 5px;
+    justify-content: flex-start;
+  }
+  .orders-details {
+    padding: 10px 0px;
+    overflow-x: auto;
+  }
+  .panel-nav-bg {
+    flex-direction: column;
+  }
+  .panel-item {
+    justify-content: flex-start;
+  }
+  .add-book-form {
+    padding: 0px;
+  }
+  .add-book-form input {
+    width: 250px;
+  }
+  .add-book-field2 input {
+    width: 125px;
+  }
+  .add-book-field1 select {
+    width: 250px;
   }
 }
