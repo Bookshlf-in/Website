@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import {React, useState} from "react";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
@@ -8,6 +8,7 @@ import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
 import {storage} from "../../firebase";
 import {nanoid} from "nanoid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -177,24 +178,37 @@ const AddBook = (props) => {
         }, 2000);
       });
     } else {
+      setload(false);
+      setalert({
+        show: true,
+        type: "error",
+        msg: "Please Fill All Fields",
+      });
+      setTimeout(() => {
+        setalert({
+          show: false,
+          type: "",
+          msg: "",
+        });
+      }, 3000);
     }
   };
 
   function precheck(imglinks) {
-    if (imglinks !== undefined && imglinks !== null && imglinks.length >= 3) {
-      return (
-        bookName !== "" &&
-        MRP !== "" &&
-        SP !== "" &&
-        Edition !== "" &&
-        author !== "" &&
-        bookISBN !== "" &&
-        lang !== "" &&
-        pickupId !== "" &&
-        bookDesc !== ""
-      );
-    }
-    return false;
+    return (
+      bookName !== "" &&
+      MRP !== "" &&
+      SP !== "" &&
+      Edition !== "" &&
+      author !== "" &&
+      bookISBN !== "" &&
+      lang !== "" &&
+      pickupId !== "" &&
+      bookDesc !== "" &&
+      imglinks !== undefined &&
+      imglinks !== null &&
+      imglinks.length >= 3
+    );
   }
   const handelBookAdd = async () => {
     const imglinks = await handeluploadImages();
@@ -490,11 +504,12 @@ const AddBook = (props) => {
               }
             }}
           >
-            <i
-              className="fas fa-circle-notch"
+            <CircularProgress
               style={{
                 display: load ? "inline-block" : "none",
-                animation: "spin 2s linear infinite",
+                height: "15px",
+                width: "15px",
+                color: "white",
               }}
             />
             &nbsp;Submit For Review

@@ -474,8 +474,6 @@ i.fas.fa-window-close:hover {
 }
 
 .uploaded-images {
-  max-height: 150px;
-  width: 250px;
   padding: 10px;
   margin: auto;
   display: flex;

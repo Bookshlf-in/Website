@@ -1,8 +1,9 @@
-import {React, useState, useEffect} from "react";
+import {React, useState} from "react";
 import axios from "../../axios";
 import InputMask from "react-input-mask";
 import {makeStyles} from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,7 @@ const Address = (props) => {
     Color: "",
     msg: "",
   });
-
+  const [deleteAdr, setdeleteAdr] = useState("");
   // add address state object
   const [Label, setLabel] = useState("");
   const [Address, setAddress] = useState("");
@@ -131,7 +132,7 @@ const Address = (props) => {
 
   // const deleting the address
   const handelDeleteAddress = (e) => {
-    console.log(e.target.id);
+    setdeleteAdr(e.target.id);
     axios
       .delete("/deleteAddress", {
         data: {addressId: e.target.id},
@@ -300,11 +301,12 @@ const Address = (props) => {
           }}
         >
           + Add Address&nbsp;
-          <i
-            className="fas fa-circle-notch"
+          <CircularProgress
             style={{
               display: !loading ? "none" : "inline-block",
-              animation: "spin 1s linear infinite",
+              height: "15px",
+              width: "15px",
+              color: "white",
             }}
           />
         </button>
@@ -320,7 +322,7 @@ const Address = (props) => {
             fontFamily: "PT Sans",
             fontWeight: "bold",
             color: alert.Color,
-            width: "500px",
+            width: "250px",
           }}
         >
           {alert.msg}
@@ -356,6 +358,17 @@ const Address = (props) => {
                       title="Remove Address"
                       onClick={(e) => {
                         handelDeleteAddress(e);
+                      }}
+                      style={{
+                        display: deleteAdr !== adr._id ? "block" : "none",
+                      }}
+                    />
+                    <CircularProgress
+                      style={{
+                        display: deleteAdr === adr._id ? "block" : "none",
+                        height: "25px",
+                        width: "25px",
+                        color: "red",
                       }}
                     />
                   </td>
