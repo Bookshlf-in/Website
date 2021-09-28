@@ -1,8 +1,6 @@
 .order-tracking-container-body {
-  background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+  background: aliceblue;
   width: 100%;
-  min-height: 100%;
-  padding: 20px 80px;
 }
 .order-tracking-container {
   display: flex;
@@ -11,104 +9,48 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: whitesmoke;
-  border-radius: 20px;
+  font-family: "PT sans";
 }
 .order-description {
-  font-size: 24px;
+  font-size: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 0px;
   width: 100%;
-}
-.order-status {
-  padding: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.order-status .checkpoint {
-  font-size: 40px;
-  color: rgb(243, 72, 72);
-  z-index: 5;
-  position: relative;
-}
-.order-status .progress-bar {
-  width: 25%;
-  margin-left: -3px;
-  margin-right: -3px;
-  z-index: 4;
-  height: 12px;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
-}
-.order-status .checkpoint .fas.fa-check-circle {
-  color: rgb(47, 218, 47);
-}
-.filled-25 {
-  width: 25%;
-  height: 10px;
-  background-color: rgb(47, 218, 47);
-}
-.filled-50 {
-  width: 50%;
-  height: 10px;
-  background-color: rgb(47, 218, 47);
-}
-.filled-75 {
-  width: 75%;
-  height: 10px;
-  /* background-color: rgb(47, 218, 47); */
-}
-.filled-100 {
-  width: 100%;
-  height: 10px;
-  background-color: rgb(47, 218, 47);
-}
-.order-status-icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0px;
-}
-.order-status-icons p {
-  width: 25%;
-  text-align: center;
-  font-size: 18px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgb(110, 110, 110);
-}
-.order-status-icons i {
-  font-size: 40px;
-  color: rgb(110, 110, 110);
+  flex-wrap: wrap;
 }
 .order-details {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   padding: 20px;
   width: 100%;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(255, 255, 255);
+}
+.order-details h1 {
+  font-size: 16px;
 }
 .order-details li {
-  font-size: 18px;
-  margin: 5px;
+  font-size: 14px;
+  margin: 10px 5px;
   color: rgb(42, 42, 42);
 }
 .order-details i {
-  font-size: 20px;
-  color: rgb(35, 236, 136);
-  -webkit-animation: spin 4s linear infinite;
-  -moz-animation: spin 4s linear infinite;
-  animation: spin 10s linear infinite;
+  font-size: 14px;
+}
+.order-details li span {
+  width: 100px;
+  margin-right: 40px;
+  color: blue;
+}
+.order-progress {
+  width: 100%;
+  font-family: "PT sans";
+}
+.order-progress .MuiTypography-body2 {
+  font-family: "PT sans";
 }
 @-moz-keyframes spin {
   100% {
@@ -127,64 +69,19 @@
   }
 }
 
-.wave {
-  position: absolute;
-  float: left;
-  color: rgb(47, 218, 47);
-  top: 0px;
-  left: 0px;
-  font-size: 40px;
-}
-.sonar-wave1 {
-  animation: sonarWave 1s linear infinite;
-}
-.sonar-wave2 {
-  animation: sonarWave 2s linear infinite;
-}
-@keyframes sonarWave {
-  from {
-    opacity: 1;
-  }
-  to {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-.animated-filled {
-  background: linear-gradient(
-    90deg,
-    rgb(47, 218, 47),
-    #02ff39,
-    #7bff00,
-    #bbff00
-  );
-  background-size: 400% 400%;
-  animation: gradient 5s ease infinite;
-}
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 .order-tracking-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 20px;
   width: 100%;
 }
 .download-receipt-button {
-  width: 300px;
+  width: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 32px;
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   padding: 10px;
@@ -194,11 +91,11 @@
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 .cancel-order-button {
-  width: 300px;
+  width: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 32px;
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   padding: 10px;
@@ -211,7 +108,21 @@
   cursor: pointer;
   background-color: rgb(250, 0, 0);
 }
+
 .download-receipt-button:hover {
   cursor: pointer;
   background-color: rgb(0, 44, 240);
+}
+
+@media screen and (max-width: 450px) {
+  .order-description {
+    font-size: 12px;
+  }
+  .order-tracking-buttons {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .download-receipt-button {
+    margin-top: 10px;
+  }
 }
