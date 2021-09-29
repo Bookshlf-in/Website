@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from "react";
 import "./OrderTracking.css";
-import {Link, useParams, useHistory} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 import axios from "../../axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Stepper from "@material-ui/core/Stepper";
@@ -92,12 +92,12 @@ function OrderTracking() {
             <div>
               ORDER ID : <span style={orderID}>{order._id}</span>
             </div>
-            <div>
+            {/* <div>
               Expected Arrival :{" "}
               <span style={ArrivalDate}>
                 {order.expectedDeliveryDate.substr(0, 10)}
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="order-details">
             <img src={order.photo} alt="" height="250px" />

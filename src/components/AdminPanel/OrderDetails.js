@@ -4,19 +4,34 @@ import axios from "../../axios";
 const GetOrderDetails = (props) => {
   const [orderlist, setorderlist] = useState([]);
   const [page, setpage] = useState(1);
-  const [totalpages, settotalpages] = useState(0);
+  const [totalPages, settotalPages] = useState(0);
   const [load, setload] = useState(false);
   const GetOrderList = () => {
     setload(true);
     axios
       .get("/admin-getOrderList")
       .then((response) => {
-        // console.log(response.data);
         setorderlist(response.data.data);
-        settotalpages(response.data.totalPages);
+        settotalPages(response.data.totalPages);
+        // console.log(response.data);
         setload(false);
       })
       .catch((error) => {});
+  };
+  const LoadMore = () => {
+    if (page + 1 <= totalPages) {
+      axios
+        .get("/admin-getOrderList", {
+          params: {page: page + 1, noOfBooksInOnePage: 10},
+        })
+        .then((response) => {
+          console.log(response.data.data);
+          setpage(page + 1);
+          settotalPages(response.data.totalPages);
+          setorderlist(orderlist.concat(response.data.data));
+        })
+        .catch((error) => {});
+    }
   };
   return (
     <div className="god-cont">
@@ -183,6 +198,13 @@ const GetOrderDetails = (props) => {
           </tfoot>
         </table>
       </div>
+      {page + 1 <= totalPages ? (
+        <button onClick={() => LoadMore()} style={{marginTop: "20px"}}>
+          More
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

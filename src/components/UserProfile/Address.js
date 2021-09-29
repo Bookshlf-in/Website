@@ -3,6 +3,7 @@ import axios from "../../axios";
 import InputMask from "react-input-mask";
 import {makeStyles} from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,7 @@ const Address = (props) => {
     Color: "",
     msg: "",
   });
-
+  const [deleteAdr, setdeleteAdr] = useState("");
   // add address state object
   const [Label, setLabel] = useState("");
   const [Address, setAddress] = useState("");
@@ -177,13 +178,10 @@ const Address = (props) => {
     <div
       className="address-bg"
       style={{
-        background:
-          "linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%)",
+        background: "aliceblue",
       }}
     >
-      <h1 style={{color: "whitesmoke", letterSpacing: "2px"}}>
-        Your Addresses
-      </h1>
+      <h1 style={{color: "black", letterSpacing: "2px"}}>Your Addresses</h1>
 
       <form className="address-form">
         <fieldset>
@@ -265,14 +263,18 @@ const Address = (props) => {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
             />
-            <label htmlFor="pincode">Pincode</label>
-            <InputMask
-              mask="999999"
-              alwaysShowMask="true"
-              id="pincode"
-              title="Pincode"
-              onChange={(e) => setZipCode(e.target.value)}
-            />
+            <span style={{position: "relative"}}>
+              <label htmlFor="pincode" className="pincode">
+                Pincode
+              </label>
+              <InputMask
+                mask="999999"
+                alwaysShowMask="true"
+                id="pincode"
+                title="Pincode"
+                onChange={(e) => setZipCode(e.target.value)}
+              />
+            </span>
           </div>
           <div className="address-phoneNo">
             <span style={{width: "100px"}}>
@@ -284,7 +286,7 @@ const Address = (props) => {
                 defaultValue="91"
               />
             </span>
-            <span style={{width: "calc(100% - 100px)"}}>
+            <span style={{width: "calc(100% - 110px)"}}>
               <label htmlFor="phone-no">Mobile Phone</label>
               <InputMask
                 id="phone-no"
@@ -302,11 +304,12 @@ const Address = (props) => {
           }}
         >
           + Add Address&nbsp;
-          <i
-            className="fas fa-circle-notch"
+          <CircularProgress
             style={{
               display: !loading ? "none" : "inline-block",
-              animation: "spin 1s linear infinite",
+              height: "15px",
+              width: "15px",
+              color: "white",
             }}
           />
         </button>
@@ -322,7 +325,7 @@ const Address = (props) => {
             fontFamily: "PT Sans",
             fontWeight: "bold",
             color: alert.Color,
-            width: "500px",
+            width: "250px",
           }}
         >
           {alert.msg}
@@ -358,6 +361,17 @@ const Address = (props) => {
                       title="Remove Address"
                       onClick={(e) => {
                         handelDeleteAddress(e);
+                      }}
+                      style={{
+                        display: deleteAdr !== adr._id ? "block" : "none",
+                      }}
+                    />
+                    <CircularProgress
+                      style={{
+                        display: deleteAdr === adr._id ? "block" : "none",
+                        height: "25px",
+                        width: "25px",
+                        color: "red",
                       }}
                     />
                   </td>
