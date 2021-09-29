@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import axios from "../../axios";
 import {Link} from "react-router-dom";
-import BookDetails from "./BookDetails";
 import Fade from "@material-ui/core/Fade";
 
 function BookVerification() {
@@ -118,7 +117,7 @@ function BookVerification() {
         })
         .then((response) => {
           setbooks(books.concat(response.data.data));
-          console.log(response.data.data);
+          // console.log(response.data.data);
           setpage(page + 1);
           settotalPages(response.data.totalPages);
           setfilteredbooks(
@@ -319,7 +318,9 @@ function BookVerification() {
         )}
       </div>
       {page + 1 <= totalPages ? (
-        <button onClick={() => LoadMore()}>More</button>
+        <button onClick={() => LoadMore()} style={{marginTop: "20px"}}>
+          More
+        </button>
       ) : (
         <></>
       )}

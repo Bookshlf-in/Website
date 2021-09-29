@@ -46,9 +46,9 @@ function Carousel() {
                 <button
                   onClick={() => {
                     if (item.button === "Sell Now") {
-                      history.push("/SellerPanel");
+                      history.push("/SellerPanel/5");
                     } else {
-                      history.push("/SearchResult");
+                      history.push("/SearchResult/books");
                     }
                   }}
                 >

@@ -1,7 +1,11 @@
 import {React, useState, useEffect} from "react";
 import "./OrderTracking.css";
-import {Link, useParams, useHistory} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 import axios from "../../axios";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
 
 var orderID = {
   color: "rgb(72, 72, 245)",
@@ -12,6 +16,24 @@ var ArrivalDate = {
   fontWeight: "bold",
 };
 
+function getSteps() {
+  return ["Order Placed", "Order Shipped", "Order En Route", "Order Delivered"];
+}
+
+function getStepContent(stepIndex) {
+  switch (stepIndex) {
+    case 0:
+      return "Your Order Has Been Received and is Currently Being Processed";
+    case 1:
+      return "Your Order Has been Packed and Ready for Shipment";
+    case 2:
+      return "Your Order Has Been Shipped and Order is Currently on the Way";
+    case 3:
+      return "Your Order Has Been Delivered";
+    default:
+      return "Unknown stepIndex";
+  }
+}
 function OrderTracking() {
   const params = useParams();
   const orderId = params.orderId;
@@ -23,13 +45,16 @@ function OrderTracking() {
     msg: "Cancel Order",
   });
 
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = getSteps();
   useEffect(() => {
     const fetchdata = async () => {
       axios
         .get(`/getOrderDetails?orderId=${orderId}`)
         .then((response) => {
           setorder(response.data);
-          console.log(response.data);
+          // console.log(response.data);
+          setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
         })
         .catch((error) => {});
@@ -40,7 +65,7 @@ function OrderTracking() {
   const handelCancelOrder = (ORDERID) => {
     setcls({
       Cls: "fas fa-spinner",
-      msg: "Cancelling Order...",
+      msg: "Cancelling...",
     });
     axios
       .delete("/cancelOrder", {
@@ -49,12 +74,12 @@ function OrderTracking() {
       .then((response) => {
         setcls({
           Cls: "fas fa-check-circle",
-          msg: "Order Cancelled",
+          msg: "Cancelled",
         });
         // console.log(response.data);
         setTimeout(() => {
-          history.push("/UserProfile");
-        }, 5000);
+          history.push("/UserProfile/2");
+        }, 3000);
       });
   };
   const handelReceipt = () => {};
@@ -65,32 +90,38 @@ function OrderTracking() {
         <div className="order-tracking-container">
           <div className="order-description">
             <div>
-              ORDER ID : <span style={orderID}>#{order._id}</span>
+              ORDER ID : <span style={orderID}>{order._id}</span>
             </div>
-            <div>
+            {/* <div>
               Expected Arrival :{" "}
               <span style={ArrivalDate}>
                 {order.expectedDeliveryDate.substr(0, 10)}
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="order-details">
-            <img src={order.photo} alt="" height="250" />
+            <img src={order.photo} alt="" height="250px" />
           </div>
           <div className="order-details">
             <h1>Book Details</h1>
             <ul style={{listStyle: "none"}}>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Book Name</b> :{" "}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;<b>Book Name</b>
+                </span>
                 {order.title}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Book Author</b>{" "}
-                : {order.author}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;<b>Book Author</b>
+                </span>
+                {order.author}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Seller Name</b>{" "}
-                : {order.sellerName}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;<b>Seller Name</b>
+                </span>
+                {order.sellerName}
               </li>
             </ul>
           </div>
@@ -98,12 +129,17 @@ function OrderTracking() {
             <h1>Customer Details</h1>
             <ul style={{listStyle: "none"}}>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;
-                <b>Customer Name</b> : {order.customerName}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Customer Name</b>
+                </span>
+                {order.customerName}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;
-                <b>Delivery Address</b> :{" "}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Delivery Address</b>
+                </span>
                 {order.customerAddress.address +
                   ", " +
                   order.customerAddress.city +
@@ -113,8 +149,11 @@ function OrderTracking() {
                   order.customerAddress.zipCode}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;
-                <b>Contact Number</b> : {order.customerAddress.phoneNo}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Contact Number</b>
+                </span>
+                {order.customerAddress.phoneNo}
               </li>
             </ul>
           </div>
@@ -122,225 +161,69 @@ function OrderTracking() {
             <h1>Order Details</h1>
             <ul style={{listStyle: "none"}}>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Item Price</b> :
-                &#8377;
-                {order.price + " /-"}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;<b>Item Price</b>
+                </span>
+                <span className="price-tag">
+                  <i className="fas fa-rupee-sign" />
+                  &nbsp;{order.price + " /-"}
+                </span>
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;
-                <b>Item Quantity</b> : {order.purchaseQty + ".0"}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Item Quantity</b>
+                </span>
+                {order.purchaseQty + ".0"}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;
-                <b>Shipping Charges</b> : &#8377;
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Shipping Charges</b>
+                </span>
+                <i className="fas fa-rupee-sign" />
                 {order.shippingCharges + " /-"}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Order Total</b>{" "}
-                : &#8377;
-                {order.orderTotal + " /-"}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;<b>Order Total</b>
+                </span>
+                <span className="price-tag">
+                  <i className="fas fa-rupee-sign" />
+                  {order.orderTotal + " /-"}
+                </span>
               </li>
             </ul>
           </div>
-          <div className="order-status">
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i className="fas fa-check-circle" />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress < 25 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
-              ) : (
-                <></>
-              )}
-              {/* change className to = "fas fa-check-circle" for filled circle */}
-            </span>
-            <span className="progress-bar">
-              {/* className = "filled-0" for 0% filled bar
-                className = "filled-25" for 25% filled bar
-                className = "filled-50" for 50% filled bar
-                className = "filled-75" for 75% filled bar
-                className = "filled-100" for 100% filled bar
-            */}
-              <div
-                className={`filled-${
-                  order.progress <= 25 ? 50 : order.progress >= 50 ? 100 : 75
-                } animated-filled`}
-              ></div>
-            </span>
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i
-                className={
-                  order.progress >= 50 ? "fas fa-check-circle" : "far fa-circle"
-                }
-              />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress >= 50 && order.progress < 75 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
-            <span className="progress-bar">
-              <div
-                className={`filled-${
-                  order.progress <= 50
-                    ? 0
-                    : order.progress >= 50 && order.progress <= 75
-                    ? 75
-                    : 100
-                } animated-filled`}
-              ></div>
-            </span>
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i
-                className={
-                  order.progress >= 75 ? "fas fa-check-circle" : "far fa-circle"
-                }
-              />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress >= 75 && order.progress < 100 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
-            <span className="progress-bar">
-              <div
-                className={`filled-${
-                  order.progress < 75
-                    ? 0
-                    : order.progress >= 75 && order.progress < 100
-                    ? 75
-                    : 100
-                } animated-filled`}
-              ></div>
-            </span>
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i
-                className={
-                  order.progress >= 100
-                    ? "fas fa-check-circle"
-                    : "far fa-circle"
-                }
-              />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress === 100 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
-          </div>
-          <div className="order-status-icons">
-            <p
-              style={{
-                color:
-                  order.progress >= 0 ? "rgb(47, 218, 47)" : "rgb(110,110,110)",
-              }}
+          <div className="order-progress">
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              style={{backgroundColor: "aliceblue", width: "100%"}}
             >
-              <i
-                className="fas fa-clipboard-check"
-                style={{
-                  color:
-                    order.progress >= 0
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                Confirmed
-              </b>
-            </p>
-            <p
-              style={{
-                color:
-                  order.progress >= 50
-                    ? "rgb(47, 218, 47)"
-                    : "rgb(110,110,110)",
-              }}
-            >
-              <i
-                className="fas fa-dolly-flatbed"
-                style={{
-                  color:
-                    order.progress >= 50
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                Shipped
-              </b>
-            </p>
-            <p
-              style={{
-                color:
-                  order.progress >= 75
-                    ? "rgb(47, 218, 47)"
-                    : "rgb(110,110,110)",
-              }}
-            >
-              <i
-                className="fas fa-shipping-fast"
-                style={{
-                  color:
-                    order.progress >= 75
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                En&nbsp;Route
-              </b>
-            </p>
-            <p
-              style={{
-                color:
-                  order.progress === 100
-                    ? "rgb(47, 218, 47)"
-                    : "rgb(110,110,110)",
-              }}
-            >
-              <i
-                className="fas fa-check-double"
-                style={{
-                  color:
-                    order.progress === 100
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                Delivered
-              </b>
-            </p>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <div>
+              {activeStep === steps.length ? (
+                <div></div>
+              ) : (
+                <div
+                  style={{
+                    padding: "10px",
+                    textAlign: "center",
+                    color: "#1dff02",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {getStepContent(activeStep)}
+                </div>
+              )}
+            </div>
           </div>
           <div className="order-tracking-buttons">
             <div
@@ -350,7 +233,10 @@ function OrderTracking() {
                 handelCancelOrder(e.target.id);
               }}
             >
-              <i className={cls.Cls} />
+              <i
+                className={cls.Cls}
+                style={{fontSize: "16px", color: "white"}}
+              />
               &nbsp;&nbsp;{cls.msg}
             </div>
             <div className="download-receipt-button">
@@ -362,9 +248,11 @@ function OrderTracking() {
       ) : (
         <div
           className="page-loader"
-          style={{display: "flex", width: "80%", height: "calc(100% - 200px)"}}
+          style={{display: "flex", width: "calc(100% - 40px)"}}
         >
-          <div className="page-loading" style={{display: "block"}}></div>
+          <CircularProgress
+            style={{height: "50px", width: "50px", color: "rgb(47, 218, 47)"}}
+          />
         </div>
       )}
     </div>

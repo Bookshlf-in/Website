@@ -1,7 +1,11 @@
 import {React, useState, useEffect} from "react";
-import {Link, useParams, useHistory} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import axios from "../../axios";
-
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
 var orderID = {
   color: "rgb(72, 72, 245)",
   fontWeight: "bold",
@@ -11,9 +15,27 @@ var ArrivalDate = {
   fontWeight: "bold",
 };
 
+function getSteps() {
+  return ["Order Placed", "Order Shipped", "Order En Route", "Order Delivered"];
+}
+
+function getStepContent(stepIndex) {
+  switch (stepIndex) {
+    case 0:
+      return "Your Order Has Been Received and is Currently Being Processed";
+    case 1:
+      return "Your Order Has been Packed and Ready for Shipment";
+    case 2:
+      return "Your Order Has Been Shipped and Order is Currently on the Way";
+    case 3:
+      return "Your Order Has Been Delivered";
+    default:
+      return "Unknown stepIndex";
+  }
+}
+
 function OrderTracking() {
   const params = useParams();
-  const history = useHistory();
   const [order, setorder] = useState({});
   const [load, setload] = useState(false);
   const [cls, setcls] = useState({
@@ -21,6 +43,10 @@ function OrderTracking() {
     msg: "Cancel Order",
   });
 
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = getSteps();
+  const [next, setnext] = useState(false);
+  const [back, setback] = useState(false);
   useEffect(() => {
     const fetchdata = async () => {
       axios
@@ -28,6 +54,7 @@ function OrderTracking() {
         .then((response) => {
           setorder(response.data);
           console.log(response.data);
+          setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
         })
         .catch((error) => {});
@@ -41,7 +68,7 @@ function OrderTracking() {
       msg: "Cancelling Order...",
     });
     axios
-      .delete("/cancelOrder", {
+      .delete("/admin-markOrderAsCancelled", {
         data: {orderId: ORDERID},
       })
       .then((response) => {
@@ -49,14 +76,152 @@ function OrderTracking() {
           Cls: "fas fa-check-circle",
           msg: "Order Cancelled",
         });
-        // console.log(response.data);
-        setTimeout(() => {
-          history.push("/UserProfile");
-        }, 5000);
       });
   };
-  const handelReceipt = () => {};
 
+  const handleNextStep = (OrderId) => {
+    setnext(true);
+    if (activeStep === 0) {
+      axios
+        .post("/admin-markOrderAsPacked", {orderId: OrderId})
+        .then((response) => {
+          axios
+            .post("/admin-changeOrderProgress", {
+              orderId: OrderId,
+              progress: 25,
+            })
+            .then(() => {
+              setActiveStep(1);
+              setnext(false);
+            })
+            .catch(() => {
+              setnext(false);
+            });
+        })
+        .catch((error) => {
+          // console.log(error.response.data);
+          if (error.response.data.error === "Order already marked as packed") {
+            setActiveStep(1);
+            setnext(false);
+          }
+        });
+    } else if (activeStep === 1) {
+      axios
+        .post("/admin-markOrderAsShipped", {orderId: OrderId})
+        .then((response) => {
+          axios
+            .post("/admin-changeOrderProgress", {
+              orderId: OrderId,
+              progress: 50,
+            })
+            .then(() => {
+              setActiveStep(2);
+              setnext(false);
+            })
+            .catch(() => {
+              setnext(false);
+            });
+        })
+        .catch();
+    } else if (activeStep === 2) {
+      axios
+        .post("/admin-changeOrderProgress", {
+          orderId: OrderId,
+          progress: 75,
+        })
+        .then(() => {
+          setActiveStep(3);
+          setnext(false);
+        })
+        .catch(() => {
+          setnext(false);
+        });
+    } else if (activeStep === 3) {
+      axios
+        .post("/admin-markOrderAsCompleted", {orderId: OrderId})
+        .then((response) => {
+          axios
+            .post("/admin-changeOrderProgress", {
+              orderId: OrderId,
+              progress: 100,
+            })
+            .then(() => {
+              setActiveStep(4);
+              setnext(false);
+            })
+            .catch(() => {
+              setnext(false);
+            });
+        })
+        .catch();
+    }
+  };
+  const handlePrevStep = (OrderId) => {
+    setback(true);
+    if (activeStep === 4) {
+      axios
+        .post("/admin-changeOrderProgress", {
+          orderId: OrderId,
+          progress: 75,
+        })
+        .then(() => {
+          setActiveStep(3);
+          setback(false);
+        })
+        .catch(() => {
+          setback(false);
+        });
+    } else if (activeStep === 3) {
+      axios
+        .post("/admin-markOrderAsShipped", {orderId: OrderId})
+        .then((response) => {
+          axios
+            .post("/admin-changeOrderProgress", {
+              orderId: OrderId,
+              progress: 50,
+            })
+            .then(() => {
+              setActiveStep(2);
+              setback(false);
+            })
+            .catch(() => {
+              setback(false);
+            });
+        })
+        .catch();
+    } else if (activeStep === 2) {
+      axios
+        .post("/admin-markOrderAsPacked", {orderId: OrderId})
+        .then((response) => {
+          axios
+            .post("/admin-changeOrderProgress", {
+              orderId: OrderId,
+              progress: 25,
+            })
+            .then(() => {
+              setActiveStep(1);
+              setback(false);
+            })
+            .catch(() => {
+              setback(false);
+            });
+        })
+        .catch();
+    } else if (activeStep === 1) {
+      axios
+        .post("/admin-changeOrderProgress", {
+          orderId: OrderId,
+          progress: 0,
+        })
+        .then(() => {
+          setActiveStep(0);
+          setback(false);
+        })
+        .catch(() => {
+          setback(false);
+        });
+    }
+  };
   return (
     <div className="order-tracking-container-body">
       {load ? (
@@ -65,12 +230,12 @@ function OrderTracking() {
             <div>
               ORDER ID : <span style={orderID}>#{order._id}</span>
             </div>
-            <div>
+            {/* <div>
               Expected Arrival :{" "}
               <span style={ArrivalDate}>
                 {order.expectedDeliveryDate.substr(0, 10)}
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="order-details">
             <img src={order.photo} alt="" height="250" />
@@ -120,225 +285,125 @@ function OrderTracking() {
             <h1>Order Details</h1>
             <ul style={{listStyle: "none"}}>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Item Price</b> :
-                &#8377;
-                {order.price + " /-"}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;<b>Item Price</b>
+                </span>
+                <span className="price-tag">
+                  <i className="fas fa-rupee-sign" />
+                  &nbsp;{order.price + " /-"}
+                </span>
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;
-                <b>Item Quantity</b> : {order.purchaseQty + ".0"}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Item Quantity</b>
+                </span>
+                {order.purchaseQty + ".0"}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;
-                <b>Shipping Charges</b> : &#8377;
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Shipping Charges</b>
+                </span>
+                <i className="fas fa-rupee-sign" />
                 {order.shippingCharges + " /-"}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Order Total</b>{" "}
-                : &#8377;
-                {order.orderTotal + " /-"}
+                <span>
+                  <i className="fas fa-circle"></i>&nbsp;<b>Order Total</b>
+                </span>
+                <span className="price-tag">
+                  <i className="fas fa-rupee-sign" />
+                  {order.orderTotal + " /-"}
+                </span>
               </li>
             </ul>
           </div>
-          <div className="order-status">
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i className="fas fa-check-circle" />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress < 25 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
+          <div className="order-progress">
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              style={{backgroundColor: "aliceblue", width: "100%"}}
+            >
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <div>
+              {activeStep === steps.length ? (
+                <div></div>
               ) : (
-                <></>
+                <div
+                  style={{
+                    padding: "10px",
+                    textAlign: "center",
+                    color: "#1dff02",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {getStepContent(activeStep)}
+                </div>
               )}
-              {/* change className to = "fas fa-check-circle" for filled circle */}
-            </span>
-            <span className="progress-bar">
-              {/* className = "filled-0" for 0% filled bar
-                className = "filled-25" for 25% filled bar
-                className = "filled-50" for 50% filled bar
-                className = "filled-75" for 75% filled bar
-                className = "filled-100" for 100% filled bar
-            */}
-              <div
-                className={`filled-${
-                  order.progress <= 25 ? 50 : order.progress >= 50 ? 100 : 75
-                } animated-filled`}
-              ></div>
-            </span>
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i
-                className={
-                  order.progress >= 50 ? "fas fa-check-circle" : "far fa-circle"
-                }
-              />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress >= 50 && order.progress < 75 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
-            <span className="progress-bar">
-              <div
-                className={`filled-${
-                  order.progress <= 50
-                    ? 0
-                    : order.progress >= 50 && order.progress <= 75
-                    ? 75
-                    : 100
-                } animated-filled`}
-              ></div>
-            </span>
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i
-                className={
-                  order.progress >= 75 ? "fas fa-check-circle" : "far fa-circle"
-                }
-              />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress >= 75 && order.progress < 100 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
-            <span className="progress-bar">
-              <div
-                className={`filled-${
-                  order.progress < 75
-                    ? 0
-                    : order.progress >= 75 && order.progress < 100
-                    ? 75
-                    : 100
-                } animated-filled`}
-              ></div>
-            </span>
-            <span className="checkpoint">
-              {/* change className to = "far fa-circle for empty circle" */}
-              <i
-                className={
-                  order.progress >= 100
-                    ? "fas fa-check-circle"
-                    : "far fa-circle"
-                }
-              />
-              {/* add below two lines when checkpoint is reached for sonar effect */}
-              {order.progress === 100 ? (
-                <>
-                  <i className="far fa-circle sonar-wave1 wave" />
-                  <i className="far fa-circle sonar-wave2 wave" />
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
-          </div>
-          <div className="order-status-icons">
-            <p
+            </div>
+            <div
               style={{
-                color:
-                  order.progress >= 0 ? "rgb(47, 218, 47)" : "rgb(110,110,110)",
+                width: "100%",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                display: "flex",
               }}
             >
-              <i
-                className="fas fa-clipboard-check"
-                style={{
-                  color:
-                    order.progress >= 0
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                Confirmed
-              </b>
-            </p>
-            <p
-              style={{
-                color:
-                  order.progress >= 50
-                    ? "rgb(47, 218, 47)"
-                    : "rgb(110,110,110)",
-              }}
-            >
-              <i
-                className="fas fa-dolly-flatbed"
-                style={{
-                  color:
-                    order.progress >= 50
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                Shipped
-              </b>
-            </p>
-            <p
-              style={{
-                color:
-                  order.progress >= 75
-                    ? "rgb(47, 218, 47)"
-                    : "rgb(110,110,110)",
-              }}
-            >
-              <i
-                className="fas fa-shipping-fast"
-                style={{
-                  color:
-                    order.progress >= 75
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                En&nbsp;Route
-              </b>
-            </p>
-            <p
-              style={{
-                color:
-                  order.progress === 100
-                    ? "rgb(47, 218, 47)"
-                    : "rgb(110,110,110)",
-              }}
-            >
-              <i
-                className="fas fa-check-double"
-                style={{
-                  color:
-                    order.progress === 100
-                      ? "rgb(47, 218, 47)"
-                      : "rgb(110,110,110)",
-                }}
-              />
-              &nbsp;
-              <b>
-                Order
-                <br />
-                Delivered
-              </b>
-            </p>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handlePrevStep(order._id)}
+                disabled={activeStep === 0}
+              >
+                {back ? (
+                  <>
+                    <CircularProgress
+                      style={{
+                        color: "white",
+                        height: "15px",
+                        width: "15px",
+                        fontWeight: "bold",
+                      }}
+                    />
+                    &nbsp;&nbsp;
+                  </>
+                ) : (
+                  <></>
+                )}
+                Back
+              </Button>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleNextStep(order._id)}
+                disabled={activeStep === 4}
+              >
+                {next ? (
+                  <>
+                    <CircularProgress
+                      style={{
+                        color: "white",
+                        height: "15px",
+                        width: "15px",
+                        fontWeight: "bold",
+                      }}
+                    />
+                    &nbsp;&nbsp;
+                  </>
+                ) : (
+                  <></>
+                )}
+                {activeStep === steps.length - 1 ? "Finish" : "Next Step"}
+              </Button>
+            </div>
           </div>
           <div className="order-tracking-buttons">
             <div
@@ -348,7 +413,10 @@ function OrderTracking() {
                 handelCancelOrder(e.target.id);
               }}
             >
-              <i className={cls.Cls} />
+              <i
+                className={cls.Cls}
+                style={{fontSize: "16px", color: "white"}}
+              />
               &nbsp;&nbsp;{cls.msg}
             </div>
             <div className="download-receipt-button">
@@ -360,9 +428,11 @@ function OrderTracking() {
       ) : (
         <div
           className="page-loader"
-          style={{display: "flex", width: "80%", height: "calc(100% - 200px)"}}
+          style={{display: "flex", width: "100%", height: "calc(100% - 200px)"}}
         >
-          <div className="page-loading" style={{display: "block"}}></div>
+          <CircularProgress
+            style={{height: "100px", width: "100px", color: "green"}}
+          />
         </div>
       )}
     </div>

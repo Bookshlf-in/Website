@@ -78,7 +78,11 @@ function BookDesc(props) {
         <div className="book-seller-name">
           <b style={{fontFamily: "PT Sans"}}>Seller</b>
           <br />
-          <Link to="/SellerProfile">{props.bookdetails.seller.name}</Link>
+          <Link to="/SellerProfile">
+            {props.bookdetails.seller
+              ? props.bookdetails.seller.name
+              : props.bookdetails.sellerName}
+          </Link>
         </div>
         <div className="book-seller-rating" id="book-seller-rating">
           {/* {[...Array(parseInt(0))].map(() => {
