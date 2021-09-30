@@ -169,7 +169,9 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
+.mobile-cart {
+  display: none;
+}
 @media screen and (max-width: 1200px) {
   .navbar-right {
     display: none;
@@ -199,5 +201,10 @@
   }
   .navbar-items {
     display: none;
+  }
+}
+@media screen and (max-width: 450px) {
+  .mobile-cart {
+    display: flex;
   }
 }

@@ -230,7 +230,7 @@ function OrderTracking() {
               className="cancel-order-button"
               id={order._id}
               onClick={(e) => {
-                handelCancelOrder(e.target.id);
+                if (order.progress < 100) handelCancelOrder(e.target.id);
               }}
             >
               <i

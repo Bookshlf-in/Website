@@ -3,6 +3,12 @@ import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
 import {makeStyles} from "@material-ui/core/styles";
 import UpdateBook from "./UpdateBook";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +54,7 @@ const Orders = (props) => {
           if (tmp === -1) break;
         }
       }
-
+      console.log(books);
       for (let i = 0; i < books.length; i++) {
         if (books[i].isApproved === true) {
           approved.push(books[i]);
@@ -75,12 +81,28 @@ const Orders = (props) => {
           msg: response.data.msg,
         });
         setnotsold(notsold.filter((book) => e.target.id !== book._id));
+        setTimeout(() => {
+          setalert({
+            show: false,
+            type: "",
+            msg: "",
+          });
+        }, 4000);
       })
       .catch((error) => {
         console.log(error.response.data);
       });
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className="orders-bg">
       <div className="orders-filter">
@@ -111,7 +133,7 @@ const Orders = (props) => {
             fontFamily: "PT Sans",
             fontWeight: "bold",
             color: alert.type === "success" ? "yellowgreen" : "red",
-            width: "500px",
+            width: "250px",
           }}
         >
           {alert.msg}
@@ -203,7 +225,53 @@ const Orders = (props) => {
                           backgroundColor: "red",
                         }}
                       >
-                        APPROVAL PENDING
+                        {book.status === "Approval rejected" ? (
+                          <>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={handleClickOpen}
+                            >
+                              <i className="far fa-comments" />
+                            </Button>
+                            <br />
+                            <br />
+                            <Dialog
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle
+                                id="alert-dialog-title"
+                                style={{fontFamily: "PT Sans"}}
+                              >
+                                {"Admin Message"}
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  {book.adminMessage}
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button
+                                  onClick={handleClose}
+                                  color="primary"
+                                  style={{fontWeight: "bold"}}
+                                >
+                                  OK
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                            <i className="fas fa-times-circle" /> <br />
+                            Approval Rejected
+                          </>
+                        ) : (
+                          <>
+                            <i className="fas fa-info-circle" /> <br />
+                            Approval Pending
+                          </>
+                        )}
                       </th>
                       <th
                         style={{
@@ -214,11 +282,15 @@ const Orders = (props) => {
                           backgroundColor: "yellowgreen",
                         }}
                         onClick={() => {
-                          setbookprops(book);
-                          setupdate(true);
+                          if (book.status !== "Approval rejected") {
+                            setbookprops(book);
+                            setupdate(true);
+                          }
                         }}
                       >
-                        Update Details
+                        {book.status !== "Approval rejected"
+                          ? "Update Details"
+                          : "---"}
                       </th>
                       <th>
                         <i
