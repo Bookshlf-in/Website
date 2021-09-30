@@ -162,7 +162,12 @@
 .orders-filter .select-wrapper .select option {
   font-weight: bold;
 }
-
+p#alert-dialog-description {
+  font-weight: bold;
+}
+#alert-dialog-title h2.MuiTypography-h6 {
+  font-weight: bold;
+}
 /* Address CSS*/
 
 .address-bg {
@@ -473,7 +478,7 @@ i.fas.fa-window-close:hover {
   transition: 0.3s;
 }
 .add-book-field1 .tag::after {
-  background: #1b2735;
+  background: whitesmoke;
 }
 .add-book-field1 .tag::before {
   content: "❎";
@@ -569,7 +574,7 @@ i.fas.fa-window-close:hover {
   align-items: center;
   color: white;
   z-index: 100;
-  background-color: rgb(0, 0, 0);
+  background-color: whitesmoke;
 }
 .update-book-checkbox .MuiCheckbox-root {
   color: #f50057;

@@ -105,80 +105,125 @@ function UpdateBook(props) {
   };
 
   const handeluploadImages = () => {
-    setload(true);
-    return new Promise((result) => {
-      const imgURL = [];
-      const imageName = [];
-      for (let i = 0; i < Photo.length; i++) {
-        imageName[i] = nanoid(10) + Photo[i].name;
-        const uploadTask = storage.ref(`books/${imageName[i]}`).put(Photo[i]);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {},
-          (error) => {},
-          () => {
-            storage
-              .ref("books")
-              .child(imageName[i])
-              .getDownloadURL()
-              .then((imgUrl) => {
-                imgURL.push(imgUrl);
-                if (imgURL.length === Photo.length) {
-                  result(imgURL);
-                }
-              });
-          }
-        );
-      }
-    });
+    if (Photo != null && Photo !== undefined && Photo.length >= 3) {
+      setload(true);
+      return new Promise((result) => {
+        const imgURL = [];
+        const imageName = [];
+        for (let i = 0; i < Photo.length; i++) {
+          imageName[i] = nanoid(10) + Photo[i].name;
+          const uploadTask = storage.ref(`books/${imageName[i]}`).put(Photo[i]);
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {},
+            (error) => {},
+            () => {
+              storage
+                .ref("books")
+                .child(imageName[i])
+                .getDownloadURL()
+                .then((imgUrl) => {
+                  imgURL.push(imgUrl);
+                  if (imgURL.length === Photo.length) {
+                    result(imgURL);
+                  }
+                });
+            }
+          );
+        }
+      });
+    } else {
+      setalert({
+        show: true,
+        type: "error",
+        msg: "Please Fill All Fields",
+      });
+      setTimeout(() => {
+        setalert({
+          show: false,
+          type: "error",
+          msg: "Please Fill All Fields",
+        });
+      }, 3000);
+    }
   };
 
   const PushDetails = (imglinks) => {
-    return new Promise(() => {
+    if (precheck(imglinks)) {
+      return new Promise(() => {
+        setTimeout(() => {
+          axios
+            .post("/addBook", {
+              title: bookName,
+              MRP: Number(MRP),
+              price: Number(SP),
+              editionYear: Number(Edition),
+              author: author,
+              ISBN: bookISBN,
+              language: lang,
+              pickupAddressId: pickupId,
+              description: bookDesc,
+              photos: imglinks,
+              weightInGrams: Number(Weight),
+              embedVideo: link,
+              tags: tags,
+              qty: Number(Qnty),
+            })
+            .then((response) => {
+              console.log(response.data);
+              setload(false);
+              setalert({
+                show: true,
+                type: "success",
+                msg: response.data.msg,
+              });
+              setTimeout(() => {
+                Initialize();
+              }, 3000);
+            })
+            .catch((error) => {
+              console.log(error.response.data.errors[0].error);
+              setload(false);
+              setalert({
+                show: true,
+                type: "error",
+                msg: error.response.data.errors[0].error + " Please Try Again!",
+              });
+            });
+        }, 2000);
+      });
+    } else {
+      setload(false);
+      setalert({
+        show: true,
+        type: "error",
+        msg: "Please Fill All Fields",
+      });
       setTimeout(() => {
-        axios
-          .post("/updateBook", {
-            bookId: props.book._id,
-            title: bookName,
-            MRP: Number(MRP),
-            price: Number(SP),
-            editionYear: Number(Edition),
-            author: author,
-            ISBN: bookISBN,
-            language: lang,
-            pickupAddressId: pickupId,
-            description: bookDesc,
-            photos: imglinks,
-            weightInGrams: Number(Weight),
-            embedVideo: link,
-            tags: tags,
-            qty: Number(Qnty),
-          })
-          .then((response) => {
-            console.log(response.data);
-            setload(false);
-            setalert({
-              show: true,
-              type: "success",
-              msg: response.data.msg,
-            });
-            setTimeout(() => {
-              Initialize();
-            }, 5000);
-          })
-          .catch((error) => {
-            console.log(error.response.data.errors[0].error);
-            setload(false);
-            setalert({
-              show: true,
-              type: "error",
-              msg: error.response.data.errors[0].error + " Please Try Again!",
-            });
-          });
-      }, 2000);
-    });
+        setalert({
+          show: false,
+          type: "",
+          msg: "",
+        });
+      }, 3000);
+    }
   };
-
+  function precheck(imglinks) {
+    return (
+      bookName !== "" &&
+      MRP !== "" &&
+      SP !== "" &&
+      Edition !== "" &&
+      author !== "" &&
+      bookISBN !== "" &&
+      lang !== "" &&
+      pickupId !== "" &&
+      bookDesc !== "" &&
+      imglinks !== undefined &&
+      imglinks !== null &&
+      imglinks.length >= 3
+    );
+  }
   const handelBookAdd = async () => {
     const imglinks = await handeluploadImages();
     await PushDetails(imglinks);
@@ -187,12 +232,7 @@ function UpdateBook(props) {
   return (
     <div className="update-book-bg">
       <h1> UPDATE BOOK DETAILS</h1>
-      <form
-        action=""
-        className="add-book-form"
-        autoComplete="off"
-        style={{backgroundColor: "rgb(0,0,0)"}}
-      >
+      <form action="" className="add-book-form" autoComplete="off">
         <div className="add-book-field1">
           <span>
             <i className="fas fa-book"></i>
@@ -307,7 +347,6 @@ function UpdateBook(props) {
             id=""
             style={{
               height: "50px",
-              width: "500px",
               outline: "none",
               fontFamily: "PT Sans",
               paddingLeft: "10px",
@@ -453,7 +492,6 @@ function UpdateBook(props) {
             variant="contained"
             color="primary"
             className={classes.button}
-            endIcon={<Icon>send</Icon>}
             style={{fontFamily: "PT Sans", fontWeight: "bold"}}
             onClick={(e) => {
               e.preventDefault();
@@ -483,7 +521,7 @@ function UpdateBook(props) {
               fontFamily: "PT Sans",
               fontWeight: "bold",
               color: alert.type === "success" ? "yellowgreen" : "red",
-              width: "500px",
+              width: "250px",
             }}
           >
             {alert.msg}

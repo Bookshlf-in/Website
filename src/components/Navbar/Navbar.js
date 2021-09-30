@@ -406,6 +406,16 @@ function Navbar() {
             </li>
           </ul>
         </div>
+        <div className="mobile-cart">
+          <div className="navbar-items-chip">
+            <Link to="/Cart" className="cart-icon">
+              <i className="fas fa-shopping-cart" />
+            </Link>
+            <p className="Cart-items-notify-bubble">
+              {user ? user.cartitems : 0}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ const AddBook = (props) => {
   const handelUpload = (e) => {
     setPhoto(Array.from(e.target.files));
     setImage(Array.from(e.target.files));
-    console.log(Array.from(e.target.files));
+    // console.log(Array.from(e.target.files));
   };
 
   const handleChange = (event) => {
@@ -495,7 +495,6 @@ const AddBook = (props) => {
             variant="contained"
             color="secondary"
             className={classes.button}
-            endIcon={<Icon>send</Icon>}
             style={{fontFamily: "PT Sans", fontWeight: "bold"}}
             onClick={(e) => {
               e.preventDefault();
