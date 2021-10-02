@@ -2,17 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
   min-height: 100vh;
   width: 100vw;
-  padding-top: 50px;
   overflow: hidden;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 }
 .signup-box {
   width: 80%;
-  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -24,32 +20,27 @@
 .floating-login-button {
   float: left;
   position: absolute;
-  right: -50px;
-  top: -50px;
-  width: 100px;
-  height: 100px;
-  background-color: whitesmoke;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Roboto", sans-serif;
+  left: 10px;
+  top: 10px;
+  font-family: "Staatliches", sans-serif;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
   border-radius: 50%;
-}
-.floating-login-button:hover {
-  background-color: rgb(253, 143, 70);
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-  border-top: 1px solid white;
-  border-right: 1px solid white;
-  cursor: pointer;
+  color: white;
 }
 .floating-login-button a {
-  color: rgb(0, 0, 0);
-  letter-spacing: 2px;
+  color: white;
+  letter-spacing: 3px;
+}
+.floating-login-button a:hover {
+  color: orange;
+  border-bottom: 1px solid rgb(253, 143, 70);
 }
 .signup-logo {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .signup-form {
   padding: 10px;
@@ -60,11 +51,12 @@
   font-family: "Roboto", sans-serif;
 }
 .signup-form h1 {
-  color: white;
-  font-size: 4em;
+  color: rgb(241, 96, 0);
+  font-size: 3em;
   margin-bottom: 20px;
   letter-spacing: 2px;
-  animation: flicker 1.5s infinite alternate;
+  font-family: "PT sans";
+  animation: flicker 5s infinite alternate;
 }
 .signup-name,
 .signup-email,
@@ -182,19 +174,18 @@
 
 @media screen and (max-width: 600px) {
   .signup-box {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
+    padding: 0px;
   }
   .signup-bg {
     padding: 0px;
+    width: 100%;
   }
   .floating-login-button {
     right: 10px;
     top: 10px;
   }
   .signup-form input {
-    font-size: 18px;
+    font-size: 14px;
   }
   .signup-name input[type="text"] {
     width: 180px;
@@ -204,17 +195,6 @@
   }
 }
 @media screen and (max-width: 400px) {
-  .signup-form h1 {
-    font-size: 24px;
-  }
-  .signup-logo img {
-    height: 30px;
-  }
-  .signup-box {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
-  }
   .signup-bg {
     padding: 0px;
   }
@@ -223,7 +203,7 @@
     top: 10px;
   }
   .signup-form input {
-    font-size: 18px;
+    font-size: 14px;
   }
   .signup-name input[type="text"] {
     width: 150px;

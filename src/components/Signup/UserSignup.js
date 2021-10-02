@@ -4,7 +4,7 @@ import "./Verify.css";
 import {Link} from "react-router-dom";
 import axios from "../../axios";
 import Verify from "./Verify";
-
+import * as EmailValidator from "email-validator";
 const eye = {
   open: "far fa-eye",
   close: "fas fa-eye-slash",
@@ -19,9 +19,7 @@ const Msg = {
   Match: "Password Matches",
 };
 
-
 function UserSignup() {
-
   // signup states
   const [show, setshow] = useState(eye.close);
   const [val, setval] = useState("password");
@@ -46,29 +44,30 @@ function UserSignup() {
 
   // Signup handeling
   const handelSignUp = () => {
-    setLoading(true);
-    if(!Red.confirm){
-      axios
-      .post("/signUp", {
-        name: FName + " " + LName,
-        email: Email,
-        password: Password,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setStep(2);
+    if (EmailValidator.validate(Email)) {
+      setLoading(true);
+      if (!Red.confirm) {
+        axios
+          .post("/signUp", {
+            name: FName + " " + LName,
+            email: Email,
+            password: Password,
+          })
+          .then((response) => {
+            console.log(response.data);
+            setStep(2);
+            setLoading(false);
+          })
+          .catch((error) => {
+            if (error.response) {
+              handelError(error.response.data.errors[0]);
+            }
+            setLoading(false);
+          });
+      } else {
         setLoading(false);
-      })
-      .catch((error) => {
-        if (error.response) {
-          handelError(error.response.data.errors[0]);
-        }
-        setLoading(false);
-      });
-    }else{
-      setLoading(false);
+      }
     }
-    
   };
   const handelError = (e) => {
     const param = e.param;
@@ -89,10 +88,16 @@ function UserSignup() {
       {Step === 1 ? (
         <div className="signup-box">
           <div className="floating-login-button">
-            <Link to="/Login">Login</Link>
+            <Link to="/">
+              <i className="fas fa-home"></i>&nbsp;Home
+            </Link>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link to="/Login">
+              <i class="fas fa-sign-in-alt"></i>&nbsp;Login
+            </Link>
           </div>
           <div className="signup-logo">
-            <img src="/images/logo.png" alt="" height="50px" />
+            <img src="/images/favicon.ico" alt="" height="50px" />
           </div>
 
           <form className="signup-form">
@@ -235,7 +240,7 @@ function UserSignup() {
           </form>
         </div>
       ) : (
-        <Verify mail={Email} otpsent={true}/>
+        <Verify mail={Email} otpsent={true} />
       )}
     </div>
   );

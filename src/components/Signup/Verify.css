@@ -50,19 +50,19 @@
 }
 .forgot-container-otp #OTP {
   height: 50px;
-  width: 200px;
+  width: 170px;
   outline: none;
   font-family: "PT sans", sans-serif;
   font-weight: 900;
   background-color: rgba(255, 255, 255, 0.87);
   border: none;
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
-  letter-spacing: 20px;
+  letter-spacing: 15px;
 }
 .forgot-container-otp button {
   background-color: rgb(2, 155, 2);
-  width: 200px;
+  width: 150px;
   height: 50px;
   display: flex;
   font-family: "PT sans", sans-serif;
@@ -73,6 +73,7 @@
   cursor: pointer;
   color: white;
   border: none;
+  padding: 0px;
 }
 .forgot-container-otp button:hover {
   background-color: rgb(8, 194, 8);
