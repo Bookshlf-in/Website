@@ -7,7 +7,7 @@ import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
 import {storage} from "../../firebase";
 import {nanoid} from "nanoid";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -149,6 +149,7 @@ function UpdateBook(props) {
 
   const PushDetails = (imglinks) => {
     if (precheck(imglinks)) {
+      setload(true);
       return new Promise(() => {
         setTimeout(() => {
           axios
@@ -486,13 +487,13 @@ function UpdateBook(props) {
               width: "100%",
             }}
           >
-            {Photo === null ? (
+            {Photo === null && Image !== null ? (
               <>
                 {Image.map((url) => (
                   <img src={url} alt="book" height="60px" width="60px" />
                 ))}
               </>
-            ) : (
+            ) : Photo !== null ? (
               <>
                 {Photo.map((file) => (
                   <img
@@ -503,6 +504,8 @@ function UpdateBook(props) {
                   />
                 ))}
               </>
+            ) : (
+              <></>
             )}
           </div>
         </div>
@@ -516,29 +519,6 @@ function UpdateBook(props) {
             {" "}
             I agree to Terms and Conditions
           </span>
-        </div>
-        <div>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            style={{fontFamily: "PT Sans", fontWeight: "bold"}}
-            onClick={(e) => {
-              e.preventDefault();
-              if (checked) {
-                handelBookAdd();
-              }
-            }}
-          >
-            <i
-              className="fas fa-circle-notch"
-              style={{
-                display: load ? "inline-block" : "none",
-                animation: "spin 2s linear infinite",
-              }}
-            />
-            &nbsp;Submit For Review
-          </Button>
         </div>
         <div
           className={classes.root}
@@ -556,6 +536,30 @@ function UpdateBook(props) {
           >
             {alert.msg}
           </Alert>
+        </div>
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+            onClick={(e) => {
+              e.preventDefault();
+              if (checked) {
+                handelBookAdd();
+              }
+            }}
+          >
+            <CircularProgress
+              style={{
+                display: load ? "inline-block" : "none",
+                height: "15px",
+                width: "15px",
+                color: "white",
+              }}
+            />
+            &nbsp;Submit For Review
+          </Button>
         </div>
       </form>
     </div>
