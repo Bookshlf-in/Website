@@ -329,6 +329,7 @@ const Orders = (props) => {
             float: "left",
             zIndex: "102",
             right: "20px",
+            fontSize: "20px",
           }}
         />
       ) : (

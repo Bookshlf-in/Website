@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
-import Icon from "@material-ui/core/Icon";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
 import {storage} from "../../firebase";
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 function UpdateBook(props) {
   const classes = useStyles();
-
+  console.log(props.book.photos);
   // book Details states
   const [bookName, setbookName] = useState(props.book.title);
   const [bookISBN, setbookISBN] = useState(props.book.ISBN);
@@ -33,13 +32,13 @@ function UpdateBook(props) {
   const [Edition, setEdition] = useState(props.book.editionYear);
   const [Qnty, setQnty] = useState(props.book.qty);
   const [author, setAuthor] = useState(props.book.author);
-  const [pickupId, setPickupId] = useState("");
+  const [pickupId, setPickupId] = useState(props.book.pickupAddressId);
   const [tags, setTags] = useState(props.book.tags);
   const [tag, settag] = useState("");
   const [link, setlink] = useState("");
   const [lang, setlang] = useState(props.book.language);
   const [Photo, setPhoto] = useState(null);
-  const [Image, setImage] = useState(null);
+  const [Image, setImage] = useState(props.book.photos);
   const [load, setload] = useState(false);
   const [Adr, setAdr] = useState(null);
   const [checked, setChecked] = useState(false);
@@ -224,8 +223,12 @@ function UpdateBook(props) {
     );
   }
   const handelBookAdd = async () => {
-    const imglinks = await handeluploadImages();
-    await PushDetails(imglinks);
+    if (Photo.length > 0) {
+      const imglinks = await handeluploadImages();
+      await PushDetails(imglinks);
+    } else {
+      PushDetails(Image);
+    }
   };
 
   const FindEarnings = (sp) => {
@@ -473,9 +476,7 @@ function UpdateBook(props) {
               style={{width: "250px", left: "20px"}}
               multiple
             />
-            <span style={{fontFamily: "PT Sans", fontSize: "12px"}}>
-              At least 3 clear images of book. (Front, Back, Side)
-            </span>
+            <span>At least 3 clear images of book. (Front, Back, Side)</span>
           </div>
           <div
             className="uploaded-images"
@@ -484,9 +485,15 @@ function UpdateBook(props) {
               width: "100%",
             }}
           >
-            {Image !== null ? (
+            {Photo === null ? (
               <>
-                {Image.map((file) => (
+                {Image.map((url) => (
+                  <img src={url} alt="book" height="60px" width="60px" />
+                ))}
+              </>
+            ) : (
+              <>
+                {Photo.map((file) => (
                   <img
                     src={URL.createObjectURL(file)}
                     alt="book"
@@ -495,8 +502,6 @@ function UpdateBook(props) {
                   />
                 ))}
               </>
-            ) : (
-              <></>
             )}
           </div>
         </div>

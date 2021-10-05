@@ -38,7 +38,7 @@ const AddBook = (props) => {
     addForm.weightInGrams ? addForm.weightInGrams : ""
   );
   const [Edition, setEdition] = useState(
-    addForm.editionYear ? addForm.editionYear : ""
+    addForm.editionYear ? addForm.editionYear : "2021"
   );
   const [Qnty, setQnty] = useState(addForm.qty ? addForm.qty : "");
   const [author, setAuthor] = useState(addForm.author ? addForm.author : "");
@@ -78,17 +78,6 @@ const AddBook = (props) => {
   };
 
   const Initialize = () => {
-    setbookName("");
-    setbookISBN("9782724088526");
-    setSP("");
-    setEarn("");
-    setbookDesc("");
-    setWeight("");
-    setEdition("");
-    setQnty("");
-    setAuthor("");
-    setPickupId("");
-    setTags([]);
     settag("");
     setlink("");
     setChecked(false);
@@ -99,6 +88,41 @@ const AddBook = (props) => {
       show: false,
       type: "",
       msg: "",
+    });
+    localStorage.setItem(
+      "bookshlf_user_AddBook",
+      JSON.stringify({
+        title: "",
+        MRP: "",
+        price: "",
+        editionYear: "2021",
+        author: "",
+        ISBN: "9782724088526",
+        language: "",
+        pickupAddressId: "",
+        description: "",
+        photos: [],
+        weightInGrams: "",
+        embedVideo: "",
+        tags: [],
+        qty: 1,
+      })
+    );
+    setAddForm({
+      title: "",
+      MRP: "",
+      price: "",
+      editionYear: "2021",
+      author: "",
+      ISBN: "9782724088526",
+      language: "",
+      pickupAddressId: "",
+      description: "",
+      photos: [],
+      weightInGrams: "",
+      embedVideo: "",
+      tags: [],
+      qty: 1,
     });
   };
 
@@ -129,9 +153,8 @@ const AddBook = (props) => {
                 .ref("books")
                 .child(imageName[i])
                 .getDownloadURL()
-                .then((imgUrl) => {
-                  imgURL.push(imgUrl);
-
+                .then((Url) => {
+                  imgURL.push(Url);
                   if (imgURL.length === Photo.length) {
                     result(imgURL);
                     setAddForm({...addForm, photos: imgURL});
@@ -220,6 +243,13 @@ const AddBook = (props) => {
   };
 
   function precheck(imglinks) {
+    console.log(SP);
+    console.log(Edition);
+    console.log(author);
+    console.log(lang);
+    console.log(pickupId);
+    console.log(bookDesc);
+    console.log(imglinks);
     return (
       bookName !== "" &&
       SP !== "" &&
@@ -258,6 +288,7 @@ const AddBook = (props) => {
     else if (price > 5000) earnings = 1500 + (price * 3) / 100;
     else earnings = price;
     setEarn(Math.round(price - earnings));
+    setAddForm({...addForm, MRP: Math.round(price - earnings)});
     // console.log("Your Earnings : ", earnings);
   };
   return (
@@ -315,9 +346,6 @@ const AddBook = (props) => {
             onChange={(e) => {
               setSP(e.target.value);
               FindEarnings(e.target.value);
-              setAddForm({...addForm, price: e.target.value});
-              setAddForm({...addForm, MRP: Earn});
-              HandelFormChange();
             }}
             value={SP}
           />
