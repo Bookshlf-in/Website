@@ -3,19 +3,21 @@ import {Link} from "react-router-dom";
 import {closeNav} from "./Sidenav";
 import axios from "../../axios.js";
 import {UserContext} from "../../Context/userContext";
-
+import {AddFormContext} from "../../Context/formContext";
 const SideNavLink = ({to, label, iconClass, isProfile}) => {
   const [user, setUser] = useContext(UserContext);
-
+  const [addForm, setAddForm] = useContext(AddFormContext);
   const logout = () => {
     label = "Logging Out...";
     axios
       .get("/signOut")
       .then((response) => {
         localStorage.removeItem("bookshlf_user");
+        localStorage.removeItem("bookshlf_user_AddBook");
         delete axios.defaults.headers.common["Authorization"];
-        console.log("Signed Out");
+        // console.log("Signed Out");
         setUser(null);
+        setAddForm(null);
         label = "Logout";
         closeNav();
       })
