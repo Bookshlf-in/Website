@@ -1,5 +1,6 @@
-import {React, useState} from "react";
-import {Link, useParams, useHistory} from "react-router-dom";
+import {React, useState, useContext} from "react";
+import {Link, useHistory} from "react-router-dom";
+import {UserContext} from "../../Context/userContext";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -23,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 const AddBook = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const [user, setUser] = useContext(UserContext);
+  console.log(user);
   // book Details states
   const [bookName, setbookName] = useState("");
   const [bookISBN, setbookISBN] = useState("9782724088526");
@@ -154,7 +157,7 @@ const AddBook = (props) => {
               qty: Number(Qnty),
             })
             .then((response) => {
-              console.log(response.data);
+              // console.log(response.data);
               setload(false);
               setalert({
                 show: true,
@@ -245,7 +248,11 @@ const AddBook = (props) => {
           <input
             type="text"
             placeholder="Book Full Name"
-            onChange={(e) => setbookName(e.target.value)}
+            onChange={(e) => {
+              setbookName(e.target.value);
+              // const Form = {...user.BookForm, title: e.target.value};
+              // console.log(Form);
+            }}
             value={bookName}
           />
         </div>

@@ -27,7 +27,7 @@ function UpdateBook(props) {
   const [bookName, setbookName] = useState(props.book.title);
   const [bookISBN, setbookISBN] = useState(props.book.ISBN);
   const [SP, setSP] = useState(props.book.price);
-  const [MRP, setMRP] = useState(props.book.MRP);
+  const [Earn, setEarn] = useState(props.book.MRP);
   const [bookDesc, setbookDesc] = useState(props.book.description);
   const [Weight, setWeight] = useState(props.book.weightInGrams);
   const [Edition, setEdition] = useState(props.book.editionYear);
@@ -79,7 +79,7 @@ function UpdateBook(props) {
     setbookName("");
     setbookISBN("");
     setSP("");
-    setMRP("");
+    setEarn("");
     setbookDesc("");
     setWeight("");
     setEdition("");
@@ -155,7 +155,7 @@ function UpdateBook(props) {
           axios
             .post("/addBook", {
               title: bookName,
-              MRP: Number(MRP),
+              MRP: Number(Earn),
               price: Number(SP),
               editionYear: Number(Edition),
               author: author,
@@ -211,7 +211,6 @@ function UpdateBook(props) {
   function precheck(imglinks) {
     return (
       bookName !== "" &&
-      MRP !== "" &&
       SP !== "" &&
       Edition !== "" &&
       author !== "" &&
@@ -229,6 +228,27 @@ function UpdateBook(props) {
     await PushDetails(imglinks);
   };
 
+  const FindEarnings = (sp) => {
+    let price = Number(sp);
+    let earnings = 0;
+
+    if (price > 50 && price <= 100) earnings = 50 + (price * 3) / 100;
+    else if (price > 100 && price <= 500) earnings = 100 + (price * 3) / 100;
+    else if (price > 500 && price <= 1000) earnings = 200 + (price * 3) / 100;
+    else if (price > 1000 && price <= 1500) earnings = 300 + (price * 3) / 100;
+    else if (price > 1500 && price <= 2000) earnings = 400 + (price * 3) / 100;
+    else if (price > 2000 && price <= 2500) earnings = 500 + (price * 3) / 100;
+    else if (price > 2500 && price <= 3000) earnings = 600 + (price * 3) / 100;
+    else if (price > 3000 && price <= 3500) earnings = 700 + (price * 3) / 100;
+    else if (price > 3500 && price <= 4000) earnings = 800 + (price * 3) / 100;
+    else if (price > 4000 && price <= 4500) earnings = 900 + (price * 3) / 100;
+    else if (price > 4500 && price <= 5000) earnings = 1000 + (price * 3) / 100;
+    else if (price > 5000) earnings = 1500 + (price * 3) / 100;
+    else earnings = price;
+    setEarn(Math.round(price - earnings));
+    // console.log("Your Earnings : ", earnings);
+  };
+
   return (
     <div className="update-book-bg">
       <h1> UPDATE BOOK DETAILS</h1>
@@ -244,7 +264,7 @@ function UpdateBook(props) {
             value={bookName}
           />
         </div>
-        <div className="add-book-field1">
+        {/* <div className="add-book-field1">
           <span>
             <i className="fas fa-atlas"></i>
           </span>
@@ -254,7 +274,7 @@ function UpdateBook(props) {
             onChange={(e) => setbookISBN(e.target.value)}
             value={bookISBN}
           />
-        </div>
+        </div> */}
         <div className="add-book-field2">
           <span>
             <i className="fas fa-rupee-sign"></i>
@@ -262,80 +282,17 @@ function UpdateBook(props) {
           <input
             type="number"
             placeholder="Selling Price"
-            onChange={(e) => setSP(e.target.value)}
+            onChange={(e) => {
+              setSP(e.target.value);
+              FindEarnings(e.target.value);
+            }}
             value={SP}
           />
           <input
-            type="number"
-            placeholder="M.R.P"
-            onChange={(e) => setMRP(e.target.value)}
-            value={MRP}
-          />
-        </div>
-        <div className="add-book-field1">
-          <span>
-            <i className="fas fa-info"></i>
-          </span>
-          <input
-            type="text"
-            placeholder="Book Details"
-            onChange={(e) => setbookDesc(e.target.value)}
-            value={bookDesc}
-          />
-        </div>
-        <div className="add-book-field1">
-          <span>
-            <i className="fas fa-weight"></i>
-          </span>
-          <input
-            type="number"
-            placeholder="Weight in grams(if possible)"
-            onChange={(e) => setWeight(e.target.value)}
-            value={Weight}
-          />
-        </div>
-        <div className="add-book-field1">
-          <span>
-            <i className="fab fa-etsy"></i>
-          </span>
-          <input
-            type="number"
-            placeholder="Book Edition (Year)"
-            onChange={(e) => setEdition(e.target.value)}
-            value={Edition}
-          />
-        </div>
-        <div className="add-book-field1">
-          <span>
-            <i className="fas fa-user-edit" />
-          </span>
-          <input
-            type="text"
-            placeholder="Book Author"
-            onChange={(e) => setAuthor(e.target.value)}
-            value={author}
-          />
-        </div>
-        <div className="add-book-field1">
-          <span>
-            <i className="fas fa-archive" />
-          </span>
-          <input
-            type="number"
-            placeholder="Quantity"
-            onChange={(e) => setQnty(e.target.value)}
-            value={Qnty}
-          />
-        </div>
-        <div className="add-book-field1">
-          <span>
-            <i className="fas fa-language" />
-          </span>
-          <input
-            type="text"
-            placeholder="Language"
-            onChange={(e) => setlang(e.target.value)}
-            value={lang}
+            type="Text"
+            placeholder="Your Earnings (₹)"
+            value={Earn}
+            readOnly
           />
         </div>
         <div className="add-book-field1">
@@ -369,6 +326,73 @@ function UpdateBook(props) {
             )}
           </select>
         </div>
+        <div className="add-book-field1">
+          <span>
+            <i className="fas fa-info"></i>
+          </span>
+          <input
+            type="text"
+            placeholder="Book Details"
+            onChange={(e) => setbookDesc(e.target.value)}
+            value={bookDesc}
+          />
+        </div>
+        <div className="add-book-field1">
+          <span>
+            <i className="fas fa-weight"></i>
+          </span>
+          <input
+            type="number"
+            placeholder="Weight in grams(if possible)"
+            onChange={(e) => setWeight(e.target.value)}
+            value={Weight}
+          />
+        </div>
+        {/* <div className="add-book-field1">
+          <span>
+            <i className="fab fa-etsy"></i>
+          </span>
+          <input
+            type="number"
+            placeholder="Book Edition (Year)"
+            onChange={(e) => setEdition(e.target.value)}
+            value={Edition}
+          />
+        </div> */}
+        <div className="add-book-field1">
+          <span>
+            <i className="fas fa-user-edit" />
+          </span>
+          <input
+            type="text"
+            placeholder="Book Author"
+            onChange={(e) => setAuthor(e.target.value)}
+            value={author}
+          />
+        </div>
+        <div className="add-book-field1">
+          <span>
+            <i className="fas fa-archive" />
+          </span>
+          <input
+            type="number"
+            placeholder="Quantity"
+            onChange={(e) => setQnty(e.target.value)}
+            value={Qnty}
+          />
+        </div>
+        <div className="add-book-field1">
+          <span>
+            <i className="fas fa-language" />
+          </span>
+          <input
+            type="text"
+            placeholder="Language"
+            onChange={(e) => setlang(e.target.value)}
+            value={lang}
+          />
+        </div>
+
         <div className="add-book-field1">
           <span>
             <i className="fab fa-youtube" />

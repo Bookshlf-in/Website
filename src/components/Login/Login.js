@@ -16,6 +16,7 @@ const Errorstyle = {
 function Login() {
   // context states
   const [user, setUser] = useContext(UserContext);
+  const [addForm, setAddForm] = useState();
   const history = useHistory();
 
   // login states
@@ -95,12 +96,47 @@ function Login() {
               wishlist: 0,
             })
           );
+          localStorage.setItem(
+            "bookshlf_user_AddBook",
+            JSON.stringify({
+              title: "",
+              MRP: 0,
+              price: 0,
+              editionYear: 0,
+              author: "",
+              ISBN: "",
+              language: "",
+              pickupAddressId: "",
+              description: "",
+              photos: "",
+              weightInGrams: 0,
+              embedVideo: "",
+              tags: [],
+              qty: 1,
+            })
+          );
           setUser({
             authHeader: `Bearer ${response.data.token}`,
             roles: response.data.roles,
             email: Name,
             cartitems: 0,
             wishlist: 0,
+          });
+          setAddForm({
+            title: "",
+            MRP: 0,
+            price: 0,
+            editionYear: 0,
+            author: "",
+            ISBN: "",
+            language: "",
+            pickupAddressId: "",
+            description: "",
+            photos: "",
+            weightInGrams: 0,
+            embedVideo: "",
+            tags: [],
+            qty: 1,
           });
           setTimeout(() => {
             setloader("none");
