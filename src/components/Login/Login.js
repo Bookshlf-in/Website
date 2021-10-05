@@ -3,6 +3,7 @@ import "./Login.css";
 import axios from "../../axios";
 import {Link, useHistory} from "react-router-dom";
 import {UserContext} from "../../Context/userContext";
+import {AddFormContext} from "../../Context/formContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const eye = {
   open: "far fa-eye",
@@ -15,8 +16,8 @@ const Errorstyle = {
 };
 function Login() {
   // context states
-  const [user, setUser] = useContext(UserContext);
-  const [addForm, setAddForm] = useState();
+  const [, setUser] = useContext(UserContext);
+  const [, setAddForm] = useContext(AddFormContext);
   const history = useHistory();
 
   // login states
