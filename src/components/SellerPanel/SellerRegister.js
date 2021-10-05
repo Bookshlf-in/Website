@@ -108,116 +108,136 @@ export default function SellerRegister() {
   };
   return (
     <div>
-      <div className={classes.root}>
-        <Alert
-          variant="outlined"
-          severity="error"
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-            color: "red",
-            width: "250px",
-          }}
-        >
-          Oops You are not Registered. <br />
-          Please Register as Seller to avail all seller Benifits.
-        </Alert>
-        <div className="seller-register-btn">Register Now as Seller</div>
-        <form action="" className="seller-register-form">
-          <div>
-            <div className="uploaded-images">
-              <Avatar
-                alt="Profile"
-                src={Image}
-                style={{height: "100px", width: "100px"}}
-              />
-            </div>
-            <div className="upload-btn-wrapper">
-              <button
-                style={{
-                  width: "200px",
-                  marginLeft: "0px",
-                  fontSize: "16px",
-                  height: "40px",
-                }}
-              >
-                Upload Image
-              </button>
-              <input
-                type="file"
-                accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
-                onChange={(e) => {
-                  handelUpload(e);
-                }}
-                style={{
-                  width: "200px",
-                  height: "40px",
-                }}
-              />
-            </div>
-          </div>
-          <input
-            type="text"
-            id="contactName"
-            placeholder="Name"
-            onChange={(e) => setName(e.target.value)}
-            value={Name}
-            style={{
-              width: "200px",
-            }}
-          />
-          <textarea
-            id="contactReview"
-            placeholder="About Yourself"
-            onChange={(e) => setIntro(e.target.value)}
-            value={Intro}
-            style={{
-              width: "200px",
-            }}
-          />
-          <button
-            style={{
-              fontFamily: "PT Sans",
-              fontWeight: "bold",
-              letterSpacing: "2px",
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              if (user !== null && user !== undefined) {
-                handelRegister();
-              } else {
-                setload(false);
-                seterr(true);
-                setmsg(`Registration Failed! Please Login!`);
-                setalert(true);
-              }
-            }}
-          >
-            Register&nbsp;
-            <i
-              className="fas fa-circle-notch"
-              style={{
-                display: load ? "inline-block" : "none",
-                animation: "spin 2s linear infinite",
-              }}
-            />
-          </button>
+      {user ? (
+        <div className={classes.root}>
           <Alert
             variant="outlined"
-            severity={err ? "error" : "success"}
+            severity="error"
             style={{
-              fontFamily: "PT Sans",
+              fontFamily: "Roboto",
               fontWeight: "bold",
-              color: err ? "red" : "green",
-              width: "300px",
-              marginTop: "10px",
-              display: alert ? "" : "none",
+              fontSize: "12px",
+              color: "red",
+              width: "250px",
             }}
           >
-            {msg}
+            Oops you are not registered. Please Register As Seller.
           </Alert>
-        </form>
-      </div>
+          <div className="seller-register-btn">Register Now as Seller</div>
+          <form action="" className="seller-register-form">
+            <div>
+              <div className="uploaded-images">
+                <Avatar
+                  alt="Profile"
+                  src={Image}
+                  style={{height: "100px", width: "100px"}}
+                />
+              </div>
+              <div className="upload-btn-wrapper">
+                <button
+                  style={{
+                    width: "200px",
+                    marginLeft: "0px",
+                    fontSize: "16px",
+                    height: "40px",
+                  }}
+                >
+                  Upload Image
+                </button>
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                  onChange={(e) => {
+                    handelUpload(e);
+                  }}
+                  style={{
+                    width: "200px",
+                    height: "40px",
+                  }}
+                />
+              </div>
+            </div>
+            <input
+              type="text"
+              id="contactName"
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
+              value={Name}
+              style={{
+                width: "200px",
+                marginTop: "10px",
+              }}
+            />
+            <textarea
+              id="contactReview"
+              placeholder="About Yourself"
+              onChange={(e) => setIntro(e.target.value)}
+              value={Intro}
+              style={{
+                width: "200px",
+                marginTop: "0px",
+              }}
+            />
+            <button
+              style={{
+                fontFamily: "PT Sans",
+                fontWeight: "bold",
+                letterSpacing: "2px",
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                if (user !== null && user !== undefined) {
+                  handelRegister();
+                } else {
+                  setload(false);
+                  seterr(true);
+                  setmsg(`Registration Failed! Please Login!`);
+                  setalert(true);
+                }
+              }}
+            >
+              Register&nbsp;
+              <i
+                className="fas fa-circle-notch"
+                style={{
+                  display: load ? "inline-block" : "none",
+                  animation: "spin 2s linear infinite",
+                }}
+              />
+            </button>
+            <Alert
+              variant="outlined"
+              severity={err ? "error" : "success"}
+              style={{
+                fontFamily: "PT Sans",
+                fontWeight: "bold",
+                color: err ? "red" : "green",
+                width: "250px",
+                marginTop: "10px",
+                display: alert ? "" : "none",
+              }}
+            >
+              {msg}
+            </Alert>
+          </form>
+        </div>
+      ) : (
+        <div className={classes.root}>
+          <Alert
+            variant="outlined"
+            severity="error"
+            style={{
+              fontFamily: "Roboto",
+              fontWeight: "bold",
+              fontSize: "16px",
+              color: "red",
+              width: "250px",
+            }}
+          >
+            Please Login <i className="far fa-frown" />
+          </Alert>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import {React, useState, useContext} from "react";
 import {Link, useHistory} from "react-router-dom";
-import {UserContext} from "../../Context/userContext";
+import {AddFormContext} from "../../Context/formContext";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -24,26 +24,26 @@ const useStyles = makeStyles((theme) => ({
 const AddBook = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [user, setUser] = useContext(UserContext);
-  console.log(user);
+  const [addForm, setAddForm] = useContext(AddFormContext);
+
   // book Details states
-  const [bookName, setbookName] = useState("");
+  const [bookName, setbookName] = useState(addForm.title);
   const [bookISBN, setbookISBN] = useState("9782724088526");
-  const [SP, setSP] = useState("");
-  const [Earn, setEarn] = useState("");
-  const [bookDesc, setbookDesc] = useState("");
-  const [Weight, setWeight] = useState("");
-  const [Edition, setEdition] = useState("");
-  const [Qnty, setQnty] = useState("");
-  const [author, setAuthor] = useState("");
-  const [pickupId, setPickupId] = useState("");
-  const [tags, setTags] = useState([]);
+  const [SP, setSP] = useState(addForm.price);
+  const [Earn, setEarn] = useState(addForm.MRP);
+  const [bookDesc, setbookDesc] = useState(addForm.description);
+  const [Weight, setWeight] = useState(addForm.weightInGrams);
+  const [Edition, setEdition] = useState(addForm.editionYear);
+  const [Qnty, setQnty] = useState(addForm.qty);
+  const [author, setAuthor] = useState(addForm.author);
+  const [pickupId, setPickupId] = useState(addForm.pickupAddressId);
+  const [tags, setTags] = useState(addForm.tags);
   const [tag, settag] = useState("");
-  const [link, setlink] = useState("");
-  const [lang, setlang] = useState("English");
+  const [link, setlink] = useState(addForm.embedVideo);
+  const [lang, setlang] = useState(addForm.language);
   const [checked, setChecked] = useState(false);
-  const [Photo, setPhoto] = useState(null);
-  const [Image, setImage] = useState(null);
+  const [Photo, setPhoto] = useState(addForm.photos);
+  const [Image, setImage] = useState(addForm.photos);
   const [load, setload] = useState(false);
   const [Adr, setAdr] = useState(props.address);
   const [alert, setalert] = useState({
@@ -62,6 +62,11 @@ const AddBook = (props) => {
     setChecked(event.target.checked);
   };
 
+  const HandelFormChange = () => {
+    localStorage.setItem("bookshlf_user_AddBook", JSON.stringify(addForm));
+    console.log(addForm);
+  };
+
   const Initialize = () => {
     setbookName("");
     setbookISBN("9782724088526");
@@ -77,8 +82,8 @@ const AddBook = (props) => {
     settag("");
     setlink("");
     setChecked(false);
-    setPhoto(null);
-    setImage(null);
+    setPhoto([]);
+    setImage([]);
     setload(false);
     setalert({
       show: false,
@@ -89,6 +94,11 @@ const AddBook = (props) => {
 
   const handleDelete = (e) => {
     setTags(tags.filter((tag) => e.target.innerHTML !== tag));
+    setAddForm({
+      ...addForm,
+      tags: tags.filter((tag) => e.target.innerHTML !== tag),
+    });
+    HandelFormChange();
   };
 
   const handeluploadImages = () => {
@@ -111,8 +121,11 @@ const AddBook = (props) => {
                 .getDownloadURL()
                 .then((imgUrl) => {
                   imgURL.push(imgUrl);
+
                   if (imgURL.length === Photo.length) {
                     result(imgURL);
+                    setAddForm({...addForm, photos: imgURL});
+                    HandelFormChange();
                   }
                 });
             }
@@ -250,8 +263,8 @@ const AddBook = (props) => {
             placeholder="Book Full Name"
             onChange={(e) => {
               setbookName(e.target.value);
-              // const Form = {...user.BookForm, title: e.target.value};
-              // console.log(Form);
+              setAddForm({...addForm, title: e.target.value});
+              HandelFormChange();
             }}
             value={bookName}
           />
@@ -263,7 +276,11 @@ const AddBook = (props) => {
           <input
             type="text"
             placeholder="Book Details"
-            onChange={(e) => setbookDesc(e.target.value)}
+            onChange={(e) => {
+              setbookDesc(e.target.value);
+              setAddForm({...addForm, description: e.target.value});
+              HandelFormChange();
+            }}
             value={bookDesc}
           />
         </div>
@@ -288,6 +305,9 @@ const AddBook = (props) => {
             onChange={(e) => {
               setSP(e.target.value);
               FindEarnings(e.target.value);
+              setAddForm({...addForm, price: e.target.value});
+              setAddForm({...addForm, MRP: Earn});
+              HandelFormChange();
             }}
             value={SP}
           />
@@ -317,6 +337,9 @@ const AddBook = (props) => {
               setPickupId(e.target.value);
               if (e.target.value === "addNew") {
                 history.push("/SellerPanel/3");
+              } else {
+                setAddForm({...addForm, pickupAddressId: e.target.value});
+                HandelFormChange();
               }
             }}
           >
@@ -342,7 +365,11 @@ const AddBook = (props) => {
           <input
             type="number"
             placeholder="Weight in grams (if possible)"
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={(e) => {
+              setWeight(e.target.value);
+              setAddForm({...addForm, weightInGrams: e.target.value});
+              HandelFormChange();
+            }}
             value={Weight}
           />
         </div>
@@ -364,7 +391,11 @@ const AddBook = (props) => {
           <input
             type="text"
             placeholder="Book Author"
-            onChange={(e) => setAuthor(e.target.value)}
+            onChange={(e) => {
+              setAuthor(e.target.value);
+              setAddForm({...addForm, author: e.target.value});
+              HandelFormChange();
+            }}
             value={author}
           />
         </div>
@@ -375,7 +406,11 @@ const AddBook = (props) => {
           <input
             type="number"
             placeholder="Quantity"
-            onChange={(e) => setQnty(e.target.value)}
+            onChange={(e) => {
+              setQnty(e.target.value);
+              setAddForm({...addForm, qty: e.target.value});
+              HandelFormChange();
+            }}
             value={Qnty}
           />
         </div>
@@ -386,7 +421,11 @@ const AddBook = (props) => {
           <input
             type="text"
             placeholder="Language"
-            onChange={(e) => setlang(e.target.value)}
+            onChange={(e) => {
+              setlang(e.target.value);
+              setAddForm({...addForm, language: e.target.value});
+              HandelFormChange();
+            }}
             value={lang}
           />
         </div>
@@ -398,7 +437,11 @@ const AddBook = (props) => {
           <input
             type="text"
             placeholder="Embed Youtube Video Link(Optional)"
-            onChange={(e) => setlink(e.target.value)}
+            onChange={(e) => {
+              setlink(e.target.value);
+              setAddForm({...addForm, embedVideo: e.target.value});
+              HandelFormChange();
+            }}
             value={link}
           />
         </div>
@@ -430,9 +473,9 @@ const AddBook = (props) => {
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  let memo = tags;
-                  memo.push(tag);
-                  setTags(memo);
+                  setTags(tags.concat(tag));
+                  setAddForm({...addForm, tags: tags});
+                  HandelFormChange();
                   settag("");
                 }
               }}
@@ -440,9 +483,9 @@ const AddBook = (props) => {
             <span
               style={{cursor: "pointer"}}
               onClick={() => {
-                let memo = tags;
-                memo.push(tag);
-                setTags(memo);
+                setTags(tags.concat(tag));
+                setAddForm({...addForm, tags: tags});
+                HandelFormChange();
                 settag("");
               }}
             >
