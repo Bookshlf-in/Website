@@ -6,6 +6,7 @@ import {UserContext} from "../../Context/userContext";
 import {useHistory} from "react-router-dom";
 import {storage} from "../../firebase";
 import {nanoid} from "nanoid";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,7 @@ export default function SellerRegister() {
   const [err, seterr] = useState(false);
   const [msg, setmsg] = useState("");
   const [alert, setalert] = useState(false);
-  const [Image, setImage] = useState("images/user.svg");
+  const [Image, setImage] = useState("/images/user.png");
 
   const handelUpload = (e) => {
     setPhoto(e.target.files[0]);
@@ -50,7 +51,7 @@ export default function SellerRegister() {
       "state_changed",
       (snapshot) => {},
       (error) => {
-        console.log(error);
+        // console.log(error);
       },
       () => {
         storage
@@ -88,7 +89,7 @@ export default function SellerRegister() {
                   cartitems: user.cartitems,
                 });
                 setTimeout(() => {
-                  history.push("/SellerPanel");
+                  history.push("/SellerPanel/1");
                 }, 2000);
               })
               .catch((error) => {
@@ -115,7 +116,7 @@ export default function SellerRegister() {
             fontFamily: "PT Sans",
             fontWeight: "bold",
             color: "red",
-            width: "500px",
+            width: "250px",
           }}
         >
           Oops You are not Registered. <br />
@@ -125,15 +126,32 @@ export default function SellerRegister() {
         <form action="" className="seller-register-form">
           <div>
             <div className="uploaded-images">
-              <img src={Image} alt="profile" />
+              <Avatar
+                alt="Profile"
+                src={Image}
+                style={{height: "100px", width: "100px"}}
+              />
             </div>
             <div className="upload-btn-wrapper">
-              <button>Upload Image</button>
+              <button
+                style={{
+                  width: "200px",
+                  marginLeft: "0px",
+                  fontSize: "16px",
+                  height: "40px",
+                }}
+              >
+                Upload Image
+              </button>
               <input
                 type="file"
                 accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
                 onChange={(e) => {
                   handelUpload(e);
+                }}
+                style={{
+                  width: "200px",
+                  height: "40px",
                 }}
               />
             </div>
@@ -145,7 +163,7 @@ export default function SellerRegister() {
             onChange={(e) => setName(e.target.value)}
             value={Name}
             style={{
-              width: "400px",
+              width: "200px",
             }}
           />
           <textarea
@@ -154,7 +172,7 @@ export default function SellerRegister() {
             onChange={(e) => setIntro(e.target.value)}
             value={Intro}
             style={{
-              width: "400px",
+              width: "200px",
             }}
           />
           <button
