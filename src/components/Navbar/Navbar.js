@@ -6,6 +6,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SideNav from "./Sidenav.js";
 import {UserContext} from "../../Context/userContext";
+import {AddFormContext} from "../../Context/formContext";
 import axios from "../../axios.js";
 
 const openNav = (e) => {
@@ -16,6 +17,7 @@ function Navbar() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
+  const [addForm, setAddForm] = useContext(AddFormContext);
   const [Search, setSearch] = useState("");
   const [Logged, setLogged] = useState(user ? true : false);
   const [alert, setalert] = useState({
@@ -134,9 +136,11 @@ function Navbar() {
       .get("/signOut")
       .then((response) => {
         localStorage.removeItem("bookshlf_user");
+        localStorage.removeItem("bookshlf_user_AddBook");
         delete axios.defaults.headers.common["Authorization"];
-        console.log("Signed Out");
+        // console.log("Signed Out");
         setUser(null);
+        setAddForm(null);
         setAnchorEl(null);
         history.push("/");
       })

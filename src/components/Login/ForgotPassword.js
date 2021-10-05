@@ -1,9 +1,10 @@
-import { React, useState } from "react";
+import {React, useState} from "react";
 import "./ForgotPassword.css";
 import InputMask from "react-input-mask";
 import Alert from "@material-ui/lab/Alert";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from "../../axios";
+import * as EmailValidator from "email-validator";
 
 const eye = {
   open: "far fa-eye",
@@ -81,38 +82,49 @@ function ForgotPassword() {
   // email Verify Otp send again handeling
   const handelSendOtp = () => {
     setSendOtp(true);
-    axios
-      .post("/sendResetPasswordOtp", {
-        email: Email,
-      })
-      .then((response) => {
-        setSendOtp(false);
-        setFirstUse(false);
-        setAlerttype("success");
-        setalertColor(alertStyle.color.success);
-        setshowAlert(true);
-        setalertText(response.data.msg);
-        setTimeout(() => {
-          setshowAlert(false);
-          setalertText(null);
-        }, 10000);
-      })
-      .catch((error) => {
-        if (error.response) {
-          setAlerttype("error");
-          setalertColor(alertStyle.color.error);
-          if (error.response.data.hasOwnProperty("error")) {
-            setalertText(error.response.data.error);
-          } else {
-            setalertText(error.response.data.errors[0].error);
-          }
+    if (EmailValidator.validate(Email)) {
+      axios
+        .post("/sendResetPasswordOtp", {
+          email: Email,
+        })
+        .then((response) => {
+          setSendOtp(false);
+          setFirstUse(false);
+          setAlerttype("success");
+          setalertColor(alertStyle.color.success);
           setshowAlert(true);
+          setalertText(response.data.msg);
           setTimeout(() => {
             setshowAlert(false);
-          }, 5000);
-        }
-        setSendOtp(false);
-      });
+            setalertText(null);
+          }, 10000);
+        })
+        .catch((error) => {
+          if (error.response) {
+            setAlerttype("error");
+            setalertColor(alertStyle.color.error);
+            if (error.response.data.hasOwnProperty("error")) {
+              setalertText(error.response.data.error);
+            } else {
+              setalertText(error.response.data.errors[0].error);
+            }
+            setshowAlert(true);
+            setTimeout(() => {
+              setshowAlert(false);
+            }, 5000);
+          }
+          setSendOtp(false);
+        });
+    } else {
+      setSendOtp(false);
+      setshowAlert(true);
+      setAlerttype("error");
+      setalertColor(alertStyle.color.error);
+      setalertText("Invalid Email!");
+      setTimeout(() => {
+        setshowAlert(false);
+      }, 3000);
+    }
   };
 
   // OTP verification handeling
@@ -182,18 +194,20 @@ function ForgotPassword() {
             <input
               type="text"
               placeholder="Enter Registered Account Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               value={Email}
-              style={{ width: "400px" }}
+              style={{width: "320px"}}
             />
           </div>
         </form>
 
         <div className="forgot-container-otp">
-          <span style={{ height: "50px", width: "50px" }}>
+          <span style={{height: "50px", width: "50px"}}>
             <i
               className={locked ? lock.close : lock.open}
-              style={{ color: locked ? "rgb(8, 194, 8)" : "red" }}
+              style={{color: locked ? "rgb(8, 194, 8)" : "red"}}
             />
           </span>
           <InputMask
@@ -202,7 +216,7 @@ function ForgotPassword() {
             alwaysShowMask="true"
             value={Otp}
             onChange={(e) => handelOtp(e)}
-            style={{ color: locked ? "rgb(8, 194, 8)" : "blue" }}
+            style={{color: locked ? "rgb(8, 194, 8)" : "blue"}}
           />
           <button onClick={handelSendOtp}>
             {firstUse ? "Send OTP" : "Send Again"}&nbsp;&nbsp;
@@ -216,7 +230,7 @@ function ForgotPassword() {
           </button>
           <div
             id="send-otp-again-alert-2"
-            style={{ display: showAlert ? "inline-block" : "none" }}
+            style={{display: showAlert ? "inline-block" : "none"}}
           >
             <Alert
               variant="outlined"
@@ -239,7 +253,7 @@ function ForgotPassword() {
             <input
               type={val}
               placeholder="New Password"
-              style={{ width: "400px" }}
+              style={{width: "320px"}}
               onChange={(e) => setPassword(e.target.value)}
               value={Password}
             />
@@ -271,7 +285,7 @@ function ForgotPassword() {
                   setconfirm(false);
                 }
               }}
-              style={confirm ? Errorstyle : { width: "400px" }}
+              style={confirm ? Errorstyle : {width: "320px"}}
             />
             <i
               className={show2}

@@ -8,10 +8,10 @@ function BookDesc(props) {
         <h1>{props.bookdetails.title}</h1>
       </div>
       <div className="book-subheading">
-        <span className="book-isbn">
+        {/* <span className="book-isbn">
           <i className="fas fa-atlas" />
           &nbsp;ISBN&nbsp;:&nbsp;<b>{props.bookdetails.ISBN}</b>
-        </span>
+        </span> */}
         <span className="book-edition">
           Edition&nbsp;:&nbsp;<b>{props.bookdetails.editionYear}</b>
         </span>

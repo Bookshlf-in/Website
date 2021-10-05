@@ -3,6 +3,7 @@ import "./Login.css";
 import axios from "../../axios";
 import {Link, useHistory} from "react-router-dom";
 import {UserContext} from "../../Context/userContext";
+import {AddFormContext} from "../../Context/formContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const eye = {
   open: "far fa-eye",
@@ -15,7 +16,8 @@ const Errorstyle = {
 };
 function Login() {
   // context states
-  const [user, setUser] = useContext(UserContext);
+  const [, setUser] = useContext(UserContext);
+  const [, setAddForm] = useContext(AddFormContext);
   const history = useHistory();
 
   // login states
@@ -93,6 +95,25 @@ function Login() {
               email: Name,
               cartitems: 0,
               wishlist: 0,
+            })
+          );
+          localStorage.setItem(
+            "bookshlf_user_AddBook",
+            JSON.stringify({
+              title: "",
+              MRP: "",
+              price: "",
+              editionYear: "2021",
+              author: "",
+              ISBN: "9782724088526",
+              language: "",
+              pickupAddressId: "",
+              description: "",
+              photos: [],
+              weightInGrams: "",
+              embedVideo: "",
+              tags: [],
+              qty: 1,
             })
           );
           setUser({

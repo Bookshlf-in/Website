@@ -288,9 +288,14 @@ const Orders = (props) => {
                           }
                         }}
                       >
-                        {book.status !== "Approval rejected"
-                          ? "Update Details"
-                          : "---"}
+                        {book.status !== "Approval rejected" ? (
+                          <>
+                            <i class="fas fa-pen-alt"></i> <br />
+                            Update Details
+                          </>
+                        ) : (
+                          "---"
+                        )}
                       </th>
                       <th>
                         <i
@@ -329,6 +334,7 @@ const Orders = (props) => {
             float: "left",
             zIndex: "102",
             right: "20px",
+            fontSize: "20px",
           }}
         />
       ) : (

@@ -1,16 +1,23 @@
-import {React, useState, useContext} from "react";
+import { React, useState, useContext } from "react";
 import "./Sidenav.css";
-import {Link} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import SideNavLink from "./SideNavLink";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 
 export function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 
 const Sidenav = () => {
+  const history = useHistory();
   const [Search, setSearch] = useState("");
   const [user] = useContext(UserContext);
+
+  const _handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      history.push(`/SearchResult/${Search === "" ? "books" : Search}`);
+    }
+  };
 
   return (
     <div className="main-sidenav">
@@ -19,7 +26,11 @@ const Sidenav = () => {
           &times;
         </span>
         <div className="sidenav-searchbar Profile">
-          <input type="text" onChange={(e) => setSearch(e.target.value)} />
+          <input
+            type="text"
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={_handleKeyDown}
+          />
           <SideNavLink
             to={`/SearchResult/${Search === "" ? "books" : Search}`}
             iconClass="fas fa-search"
