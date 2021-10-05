@@ -27,25 +27,35 @@ const AddBook = (props) => {
   const [addForm, setAddForm] = useContext(AddFormContext);
 
   // book Details states
-  const [bookName, setbookName] = useState(addForm.title);
+  const [bookName, setbookName] = useState(addForm.title ? addForm.title : "");
   const [bookISBN, setbookISBN] = useState("9782724088526");
-  const [SP, setSP] = useState(addForm.price);
-  const [Earn, setEarn] = useState(addForm.MRP);
-  const [bookDesc, setbookDesc] = useState(addForm.description);
-  const [Weight, setWeight] = useState(addForm.weightInGrams);
-  const [Edition, setEdition] = useState(addForm.editionYear);
-  const [Qnty, setQnty] = useState(addForm.qty);
-  const [author, setAuthor] = useState(addForm.author);
-  const [pickupId, setPickupId] = useState(addForm.pickupAddressId);
-  const [tags, setTags] = useState(addForm.tags);
+  const [SP, setSP] = useState(addForm.price ? addForm.price : "");
+  const [Earn, setEarn] = useState(addForm.MRP ? addForm.MRP : "");
+  const [bookDesc, setbookDesc] = useState(
+    addForm.description ? addForm.description : ""
+  );
+  const [Weight, setWeight] = useState(
+    addForm.weightInGrams ? addForm.weightInGrams : ""
+  );
+  const [Edition, setEdition] = useState(
+    addForm.editionYear ? addForm.editionYear : ""
+  );
+  const [Qnty, setQnty] = useState(addForm.qty ? addForm.qty : "");
+  const [author, setAuthor] = useState(addForm.author ? addForm.author : "");
+  const [pickupId, setPickupId] = useState(
+    addForm.pickupAddressId ? addForm.pickupAddressId : ""
+  );
+  const [tags, setTags] = useState(addForm.tags ? addForm.tags : []);
   const [tag, settag] = useState("");
-  const [link, setlink] = useState(addForm.embedVideo);
-  const [lang, setlang] = useState(addForm.language);
+  const [link, setlink] = useState(
+    addForm.embedVideo ? addForm.embedVideo : ""
+  );
+  const [lang, setlang] = useState(addForm.language ? addForm.language : "");
   const [checked, setChecked] = useState(false);
-  const [Photo, setPhoto] = useState(addForm.photos);
-  const [Image, setImage] = useState(addForm.photos);
+  const [Photo, setPhoto] = useState(addForm.photos ? addForm.photos : "");
+  const [Image, setImage] = useState(addForm.photos ? addForm.photos : "");
   const [load, setload] = useState(false);
-  const [Adr, setAdr] = useState(props.address);
+  const [Adr] = useState(props.address);
   const [alert, setalert] = useState({
     show: false,
     type: "success",
