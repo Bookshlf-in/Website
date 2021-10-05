@@ -503,7 +503,8 @@ i.fas.fa-window-close:hover {
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  border: 1px solid rgb(139, 139, 139);
+  box-shadow: 2px 3px 5px rgb(139, 139, 139);
+  border-radius: 10px;
   margin: 10px;
 }
 
