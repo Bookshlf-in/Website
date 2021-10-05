@@ -152,7 +152,8 @@ function UpdateBook(props) {
       return new Promise(() => {
         setTimeout(() => {
           axios
-            .post("/addBook", {
+            .post("/updateBook", {
+              bookId: props.book._id,
               title: bookName,
               MRP: Number(Earn),
               price: Number(SP),
@@ -223,7 +224,7 @@ function UpdateBook(props) {
     );
   }
   const handelBookAdd = async () => {
-    if (Photo.length > 0) {
+    if (Photo && Photo.length > 0) {
       const imglinks = await handeluploadImages();
       await PushDetails(imglinks);
     } else {
