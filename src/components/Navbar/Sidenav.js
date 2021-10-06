@@ -37,12 +37,17 @@ const Sidenav = () => {
           />
         </div>
         <SideNavLink to="/" label="Home" iconClass="fas fa-home" />
+        
+        {user ? ( 
         <SideNavLink
           to="/UserProfile/1"
           label="Profile"
           iconClass="fas fa-user-circle"
           isProfile={true}
-        />
+        /> ):(
+        <></>
+        )}
+
         {user ? (
           <SideNavLink to="/" iconClass="fas fa-sign-out-alt" label="Logout" />
         ) : (
