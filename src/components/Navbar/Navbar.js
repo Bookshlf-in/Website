@@ -130,6 +130,13 @@ function Navbar() {
     }
   };
 
+  const handleKeyPress=(e)=>{
+    if(e.key === 'Enter'){
+      console.log("enter pressed");
+      history.push(`/SearchResult/${Search === "" ? "books" : Search}`);
+    }
+  }
+
   const logout = () => {
     setLogged(false);
     axios
@@ -233,7 +240,8 @@ function Navbar() {
                   <input
                     type="text"
                     onChange={(e) => setSearch(e.target.value)}
-                  />
+                    onKeyUp={handleKeyPress}
+                  />  
                   <Link
                     to={`/SearchResult/${Search === "" ? "books" : Search}`}
                   >
