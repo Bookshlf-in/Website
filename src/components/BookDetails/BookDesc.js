@@ -1,7 +1,9 @@
-import {React, useState, useEffect} from "react";
+import {React} from "react";
 import {Link} from "react-router-dom";
+import Rating from "@material-ui/lab/Rating";
 
 function BookDesc(props) {
+  // console.log(props);
   return (
     <div className="book-description">
       <div className="book-fullname">
@@ -12,40 +14,32 @@ function BookDesc(props) {
           <i className="fas fa-atlas" />
           &nbsp;ISBN&nbsp;:&nbsp;<b>{props.bookdetails.ISBN}</b>
         </span> */}
-        <span className="book-edition">
+        {/* <span className="book-edition">
           Edition&nbsp;:&nbsp;<b>{props.bookdetails.editionYear}</b>
-        </span>
+        </span> */}
       </div>
       <div className="about-book">
         <span className="book-rating" id="book-rating">
-          {/* {[...Array(parseInt(5))].map(() => {
-            return <i className="fas fa-star"></i>;
-          })}
-          {[...Array(1)].map(() => {
-            if (Number.isInteger(1)) {
-              return <i></i>;
-            }
-            return <i className="fas fa-star-half-alt"></i>;
-          })} */}
+          {/* <Rating name="read-only" value={5} readOnly /> */}
         </span>
         {/* <span className="book-cutomer-reviews">
           <Link to="#">Customer Reviews</Link>
         </span> */}
       </div>
       <div className="book-selling">
-        <div className="book-mrp">
+        {/* <div className="book-mrp">
           MRP :{" "}
           <b>
             <i className="fas fa-rupee-sign" /> {props.bookdetails.MRP}/-
           </b>
-        </div>
+        </div> */}
         <div className="book-selling-price">
           Selling price :{" "}
           <b>
             <i className="fas fa-rupee-sign" /> {props.bookdetails.price}/-
           </b>
         </div>
-        <div className="book-savings">
+        {/* <div className="book-savings">
           Total Discount :{" "}
           <b>
             {Math.round(
@@ -55,7 +49,7 @@ function BookDesc(props) {
             )}
             &nbsp;%
           </b>
-        </div>
+        </div> */}
       </div>
       <div className="book-other-details">
         <h2> Book Description</h2>
@@ -85,15 +79,13 @@ function BookDesc(props) {
           </Link>
         </div>
         <div className="book-seller-rating" id="book-seller-rating">
-          {/* {[...Array(parseInt(0))].map(() => {
-            return <i className="fas fa-star"></i>;
-          })}
-          {[...Array(1)].map(() => {
-            if (Number.isInteger(1)) {
-              return <i></i>;
-            }
-            return <i className="fas fa-star-half-alt"></i>;
-          })} */}
+          <Rating
+            name="read-only"
+            value={props.bookdetails.seller.rating}
+            readOnly
+          />
+          <br />
+          Number of Ratings : {props.bookdetails.seller.noOfRatings}
         </div>
       </div>
     </div>
