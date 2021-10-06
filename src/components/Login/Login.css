@@ -25,8 +25,8 @@
 .login-floating-nav {
   position: absolute;
   float: left;
-  left: 10px;
-  top: 10px;
+  left: -40px;
+  top: -40px;
   color: aliceblue;
   font-family: "PT Sans";
   cursor: pointer;
