@@ -1,7 +1,7 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import "./AddReviews.css";
-import {useParams} from "react-router-dom";
-import {FaStar} from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 import axios from "../../axios";
 
 const Reviews = () => {
@@ -17,7 +17,7 @@ const Reviews = () => {
     const fetchData = async () => {
       axios
         .get("/getOrderDetails", {
-          params: {orderId: params.orderId},
+          params: { orderId: params.orderId },
         })
         .then((response) => {
           setorder(response.data);
@@ -27,7 +27,7 @@ const Reviews = () => {
         });
       axios
         .get("/getReview", {
-          params: {orderId: params.orderId},
+          params: { orderId: params.orderId },
         })
         .then((response) => {
           console.log(response.data);
@@ -57,7 +57,7 @@ const Reviews = () => {
             console.log(response.data);
             axios
               .get("/getReview", {
-                params: {orderId: params.orderId},
+                params: { orderId: params.orderId },
               })
               .then((response) => {
                 console.log(response.data);
@@ -114,7 +114,7 @@ const Reviews = () => {
       e.target.innerHTML = "Deleting...";
       axios
         .delete("/deleteReview", {
-          data: {reviewId: reviewId},
+          data: { reviewId: reviewId },
         })
         .then((response) => {
           e.target.innerHTML = "Review Deleted";
@@ -173,58 +173,59 @@ const Reviews = () => {
               </form>
             </div>
             <div className="rating">
-              {[...Array(5)].map((star, i) => {
-                const ratingValue = i + 1;
-                return (
-                  <label key={i}>
-                    <input
-                      type="radio"
-                      name="rating"
-                      value={ratingValue}
-                      id="ratingValue"
-                      onClick={() => {
-                        setrating(ratingValue);
-                        sethover(ratingValue);
-                        // console.log(ratingValue);
-                        if (ratingValue === 1) {
-                          setrate("Hated it");
+              <div className="stars">
+                {[...Array(5)].map((star, i) => {
+                  const ratingValue = i + 1;
+                  return (
+                    <label key={i}>
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={ratingValue}
+                        id="ratingValue"
+                        onClick={() => {
+                          setrating(ratingValue);
+                          sethover(ratingValue);
+                          // console.log(ratingValue);
+                          if (ratingValue === 1) {
+                            setrate("Hated it");
+                          }
+                          if (ratingValue === 2) {
+                            setrate("Don't like it");
+                          }
+                          if (ratingValue === 3) {
+                            setrate("Just OK");
+                          }
+                          if (ratingValue === 4) {
+                            setrate("Liked it");
+                          }
+                          if (ratingValue === 5) {
+                            setrate("Loved it");
+                          }
+                        }}
+                        onChange={(e) => {
+                          setrating(e.target.value);
+                        }}
+                      />
+                      <FaStar
+                        className="star"
+                        color={
+                          ratingValue <= (hover || rating)
+                            ? hover <= 2
+                              ? "red"
+                              : hover <= 4
+                              ? "yellowgreen"
+                              : "#66ff00"
+                            : "#eee"
                         }
-                        if (ratingValue === 2) {
-                          setrate("Don't like it");
-                        }
-                        if (ratingValue === 3) {
-                          setrate("Just OK");
-                        }
-                        if (ratingValue === 4) {
-                          setrate("Liked it");
-                        }
-                        if (ratingValue === 5) {
-                          setrate("Loved it");
-                        }
-                      }}
-                      onChange={(e) => {
-                        setrating(e.target.value);
-                      }}
-                    />
-                    <FaStar
-                      className="star"
-                      size={55}
-                      color={
-                        ratingValue <= (hover || rating)
-                          ? hover <= 2
-                            ? "red"
-                            : hover <= 4
-                            ? "yellowgreen"
-                            : "#66ff00"
-                          : "#eee"
-                      }
-                      style={{padding: "0px", paddingLeft: "25px"}}
-                      onMouseEnter={() => sethover(ratingValue)}
-                      onMouseLeave={() => sethover(ratingValue)}
-                    />
-                  </label>
-                );
-              })}
+                        style={{ padding: "0px", paddingLeft: "25px" }}
+                        onMouseEnter={() => sethover(ratingValue)}
+                        onMouseLeave={() => sethover(ratingValue)}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
               <p
                 style={{
                   color:
@@ -248,7 +249,7 @@ const Reviews = () => {
           </div>
         </div>
         <div className="btn">
-          <form style={{display: " flex"}}>
+          <form style={{ display: " flex" }}>
             <button
               type="submit"
               className="btn-submit"
