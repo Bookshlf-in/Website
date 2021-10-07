@@ -1,7 +1,7 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "./Signup.css";
 import "./Verify.css";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "../../axios";
 import Verify from "./Verify";
 import * as EmailValidator from "email-validator";
@@ -75,14 +75,14 @@ function UserSignup() {
     const param = e.param;
     const msg = e.error;
     if (param === "name") {
-      makeRed({name: true});
-      setmessage({name: msg});
+      makeRed({ name: true });
+      setmessage({ name: msg });
     } else if (param === "email") {
-      makeRed({email: true});
-      setmessage({email: msg});
+      makeRed({ email: true });
+      setmessage({ email: msg });
     } else if (param === "password") {
-      makeRed({password: true});
-      setmessage({password: msg});
+      makeRed({ password: true });
+      setmessage({ password: msg });
     }
   };
   return (
@@ -95,7 +95,7 @@ function UserSignup() {
             </Link>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/Login">
-              <i class="fas fa-sign-in-alt"></i>&nbsp;Login
+              <i className="fas fa-sign-in-alt"></i>&nbsp;Login
             </Link>
           </div>
           <div className="signup-logo">
@@ -121,7 +121,7 @@ function UserSignup() {
                 onChange={(e) => setLName(e.target.value)}
                 value={LName}
               />
-              <b style={{display: Red.name ? "inline-block" : "none"}}>
+              <b style={{ display: Red.name ? "inline-block" : "none" }}>
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.name}
               </b>
@@ -137,7 +137,7 @@ function UserSignup() {
                 value={Email}
                 style={Red.email ? Errorstyle : {}}
               />
-              <b style={{display: Red.email ? "inline-block" : "none"}}>
+              <b style={{ display: Red.email ? "inline-block" : "none" }}>
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.email}
               </b>
@@ -166,7 +166,7 @@ function UserSignup() {
                   }
                 }}
               />
-              <b style={{display: Red.password ? "inline-block" : "none"}}>
+              <b style={{ display: Red.password ? "inline-block" : "none" }}>
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.password}
               </b>
