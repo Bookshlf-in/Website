@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import Navbar from "../Navbar/Navbar";
@@ -27,6 +27,7 @@ import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
 import AdminBook from "../AdminPanel/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
+import * as ROUTES from "../../constants/routes";
 
 // Protected Route
 import Protected from "../Protected";
@@ -35,19 +36,19 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/Protected" component={Protected} />
-          <Route path="/Login" component={Login} />
-          <Route path="/Signup" component={UserSignup} />
-          <Route path="/ForgotPassword" component={ForgotPassword} />
-          <Route path="/About">
+          <Route path={ROUTES.PROTECTED} component={Protected} />
+          <Route path={ROUTES.LOGIN} component={Login} />
+          <Route path={ROUTES.SIGN_UP} component={UserSignup} />
+          <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
+          <Route path={ROUTES.ABOUT}>
             <Navbar />
             <About />
           </Route>
-          <Route path="/Contact">
+          <Route path={ROUTES.CONTACT}>
             <Navbar />
             <Contact />
           </Route>
-          <Route path="/Cart">
+          <Route path={ROUTES.CART}>
             <Navbar />
             <Cart />
           </Route>
@@ -92,13 +93,13 @@ function App() {
           <Route path="/Admin/:panel">
             <Admin />
           </Route>
-          <Route path="/Blog">
+          <Route path={ROUTES.BLOG}>
             <Blog />
           </Route>
-          <Route path="/Receipt">
+          <Route path={ROUTES.RECEIPT}>
             <Receipt />
           </Route>
-          <Route path="/">
+          <Route path={ROUTES.HOME}>
             <Navbar />
             <Carousel />
             <Categories />
