@@ -116,7 +116,8 @@ span.price {
 
 @media (max-width: 800px) {
   .payment-cart-container {
-    margin: 30px 10%;
+    margin: 10px;
+    padding: 10px;
   }
   .payment-row {
     flex-direction: column-reverse;

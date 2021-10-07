@@ -20,7 +20,7 @@
 .floating-login-button {
   float: left;
   position: absolute;
-  left: 10px;
+  left: -40px;
   top: 10px;
   font-family: "Staatliches", sans-serif;
   font-weight: bold;
@@ -128,14 +128,14 @@
   color: rgb(241, 58, 58);
   transition: 0.3s;
 }
-.signup-button input {
+.signup-button button {
   height: 50px;
-  width: 150px;
+  width: 250px;
   border: none;
   background-color: rgb(253, 143, 70);
   color: whitesmoke;
   font-family: "Roboto", sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
 .signup-button span {
@@ -145,7 +145,7 @@
   border-right: none;
   color: rgb(253, 143, 70);
 }
-.signup-button input:hover {
+.signup-button button:hover {
   box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.8);
   background-color: rgb(248, 119, 34);
 }
@@ -198,9 +198,12 @@
   .signup-bg {
     padding: 0px;
   }
+  .signup-box {
+    width: 100%;
+  }
   .floating-login-button {
-    right: 10px;
-    top: 10px;
+    left: 10px;
+    top: -30px;
   }
   .signup-form input {
     font-size: 14px;

@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import axios from "../../axios";
 import Verify from "./Verify";
 import * as EmailValidator from "email-validator";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 const eye = {
   open: "far fa-eye",
   close: "fas fa-eye-slash",
@@ -218,24 +220,22 @@ function UserSignup() {
               <span>
                 <i className="fas fa-user-plus" />
               </span>
-              <input
-                type="submit"
-                value="Sign Up"
+              <button
                 onClick={(e) => {
                   e.preventDefault();
                   handelSignUp();
                 }}
-              />
-              &nbsp;&nbsp;
-              <i
-                className="fas fa-circle-notch"
-                style={{
-                  display: !loading ? "none" : "inline-block",
-                  animation: "spin 2s linear infinite",
-                  color: "white",
-                  fontSize: "20px",
-                }}
-              />
+              >
+                SignUp&nbsp;&nbsp;&nbsp;
+                <CircularProgress
+                  style={{
+                    height: "15px",
+                    width: "15px",
+                    color: "white",
+                    display: loading ? "inline-block" : "none",
+                  }}
+                />
+              </button>
             </div>
           </form>
         </div>

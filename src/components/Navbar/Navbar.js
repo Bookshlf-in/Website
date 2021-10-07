@@ -1,12 +1,12 @@
-import {React, useState, useContext, useEffect} from "react";
+import { React, useState, useContext, useEffect } from "react";
 import "./Navbar.css";
-import {Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SideNav from "./Sidenav.js";
-import {UserContext} from "../../Context/userContext";
-import {AddFormContext} from "../../Context/formContext";
+import { UserContext } from "../../Context/userContext";
+import { AddFormContext } from "../../Context/formContext";
 import axios from "../../axios.js";
 
 const openNav = (e) => {
@@ -130,6 +130,12 @@ function Navbar() {
     }
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      history.push(`/SearchResult/${Search === "" ? "books" : Search}`);
+    }
+  };
+
   const logout = () => {
     setLogged(false);
     axios
@@ -233,6 +239,7 @@ function Navbar() {
                   <input
                     type="text"
                     onChange={(e) => setSearch(e.target.value)}
+                    onKeyPress={handleKeyPress}
                   />
                   <Link
                     to={`/SearchResult/${Search === "" ? "books" : Search}`}
@@ -275,7 +282,7 @@ function Navbar() {
                   <div>
                     <Button
                       variant="contained"
-                      style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                      style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
                       onClick={() => {
                         history.push("/Login");
                       }}
@@ -315,7 +322,7 @@ function Navbar() {
                         <i className="fas fa-times-circle" />
                       </MenuItem>
                       <MenuItem
-                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
                         onClick={() => {
                           history.push("/UserProfile/1");
                         }}
@@ -326,7 +333,10 @@ function Navbar() {
                       {user ? (
                         user.roles.includes("admin") ? (
                           <MenuItem
-                            style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                            style={{
+                              fontFamily: "PT Sans",
+                              fontWeight: "bold",
+                            }}
                             onClick={() => {
                               setAnchorEl(null);
                               history.push("/Admin/1");
@@ -342,7 +352,7 @@ function Navbar() {
                         <></>
                       )}
                       <MenuItem
-                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
                         onClick={() => {
                           history.push("/Cart");
                         }}
@@ -351,7 +361,7 @@ function Navbar() {
                         &nbsp;Cart
                       </MenuItem>
                       <MenuItem
-                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
                         onClick={() => {
                           history.push("/Wishlist");
                         }}
@@ -360,7 +370,7 @@ function Navbar() {
                         &nbsp;Wishlist
                       </MenuItem>
                       <MenuItem
-                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
                         onClick={() => {
                           history.push("/SellerPanel");
                         }}
@@ -390,7 +400,7 @@ function Navbar() {
                         />
                       </MenuItem>
                       <MenuItem
-                        style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
                         onClick={logout}
                       >
                         Logout&nbsp;

@@ -4,6 +4,7 @@ import InputMask from "react-input-mask";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
 import {useHistory} from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const lock = {
   open: "fas fa-lock-open",
@@ -122,7 +123,7 @@ function Verify(props) {
   return (
     <div className="forgotmain-container">
       <div className="forgot-container-logo">
-        <img src="./images/logo[800x150].png" height="50px" alt="Bookshlf.in" />
+        <img src="/images/favicon.ico" height="80px" alt="Bookshlf.in" />
       </div>
       <div className="forgot-container-main">Verify Your Account</div>
       <div className="forgot-container-email">
@@ -147,41 +148,35 @@ function Verify(props) {
           style={{color: locked ? "rgb(8, 194, 8)" : "blue"}}
         />
         <button onClick={handelSendOtp}>
-          Send Again&nbsp;&nbsp;
-          <i
-            className="fas fa-circle-notch"
-            style={{
-              display: sendOtp ? "inline-block" : "none",
-              animation: "spin 2s linear infinite",
-            }}
-          />
+          {sendOtp ? "Sending..." : "Send OTP"}
         </button>
-        <div
-          id="send-otp-again-alert"
-          style={{display: showAlert ? "inline-block" : "none"}}
+      </div>
+      <div
+        id="send-otp-again-alert"
+        style={{display: showAlert ? "inline-block" : "none"}}
+      >
+        <Alert
+          variant="outlined"
+          severity={Alerttype}
+          style={{
+            fontFamily: "PT Sans",
+            fontWeight: "bold",
+            color: alertColor,
+            fontSize: "12px",
+          }}
         >
-          <Alert
-            variant="outlined"
-            severity={Alerttype}
-            style={{
-              fontFamily: "PT Sans",
-              fontWeight: "bold",
-              color: alertColor,
-              fontSize: "12px",
-            }}
-          >
-            {alertText}
-          </Alert>
-        </div>
+          {alertText}
+        </Alert>
       </div>
       <div className="forgot-container-verify">
         <button onClick={handelVerify}>
           Verify&nbsp;&nbsp;
-          <i
-            className="fas fa-circle-notch"
+          <CircularProgress
             style={{
-              display: !verify ? "none" : "inline-block",
-              animation: "spin 2s linear infinite",
+              height: "15px",
+              width: "15px",
+              color: "white",
+              display: verify ? "inline-block" : "none",
             }}
           />
         </button>

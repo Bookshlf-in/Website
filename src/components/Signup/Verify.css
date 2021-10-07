@@ -1,6 +1,5 @@
 .forgotmain-container {
   width: 80vw;
-  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -11,10 +10,12 @@
 }
 .forgot-container-main {
   color: rgb(245, 123, 23);
-  font-size: 2em;
+  font-size: 2.5em;
   margin-bottom: 20px;
   letter-spacing: 2px;
-  animation: flicker 1.5s infinite alternate;
+  animation: flicker 5s infinite alternate;
+  text-align: center;
+  font-family: "Staatliches", sans-serif;
 }
 .forgot-container-email,
 .forgot-container-otp {
@@ -26,8 +27,8 @@
 }
 .forgot-container-email input {
   height: 50px;
-  width: 400px;
-  font-size: 18px;
+  width: 250px;
+  font-size: 14px;
   outline: none;
   font-family: "PT sans", sans-serif;
   letter-spacing: 1px;
@@ -50,19 +51,20 @@
 }
 .forgot-container-otp #OTP {
   height: 50px;
-  width: 170px;
+  width: 150px;
   outline: none;
-  font-family: "PT sans", sans-serif;
-  font-weight: 900;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
   background-color: rgba(255, 255, 255, 0.87);
   border: none;
   font-size: 16px;
   text-align: center;
-  letter-spacing: 15px;
+  letter-spacing: 10px;
+  padding: 10px;
 }
 .forgot-container-otp button {
   background-color: rgb(2, 155, 2);
-  width: 150px;
+  width: 100px;
   height: 50px;
   display: flex;
   font-family: "PT sans", sans-serif;
@@ -116,8 +118,10 @@
 }
 
 #send-otp-again-alert {
-  position: absolute;
-  float: right;
-  right: -200px;
-  top: 10px;
+}
+@media screen and (max-width: 400px) {
+  .forgotmain-container {
+    width: 100%;
+    padding: 0px;
+  }
 }

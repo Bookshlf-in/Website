@@ -3,7 +3,7 @@ import "./Payment.css";
 import {useHistory, useParams} from "react-router-dom";
 import axios from "../../axios";
 import {UserContext} from "../../Context/userContext";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 function Payment() {
   const history = useHistory();
   const params = useParams();
@@ -189,10 +189,7 @@ function Payment() {
           className="page-loader"
           style={{display: loader ? "flex" : "none", height: "100%"}}
         >
-          <div
-            className="page-loading"
-            style={{display: loader ? "block" : "none"}}
-          ></div>
+          <CircularProgress style={{height: "80px", width: "80px"}} />
         </div>
       ) : (
         <>
@@ -310,6 +307,7 @@ function Payment() {
                       ) : (
                         <></>
                       )}
+                      <option value="addNew"> Add Address</option>
                     </select>
                   </div>
                 </div>
