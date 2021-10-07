@@ -1,9 +1,10 @@
 import {React} from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 
 function BookDesc(props) {
   // console.log(props);
+  const history = useHistory();
   return (
     <div className="book-description">
       <div className="book-fullname">
@@ -59,7 +60,14 @@ function BookDesc(props) {
         {props.bookdetails.tags && props.bookdetails.tags.length > 0 ? (
           <>
             {props.bookdetails.tags.map((tagname) => (
-              <span className="tag" key={tagname}>
+              <span
+                className="tag"
+                key={tagname}
+                onClick={() => {
+                  history.push(`/SearchResult/tag:${tagname}`);
+                }}
+                title={`Search ${tagname}`}
+              >
                 {tagname}
               </span>
             ))}
@@ -84,8 +92,13 @@ function BookDesc(props) {
             value={props.bookdetails.seller.rating}
             readOnly
           />
+          (
+          {props.bookdetails.seller.rating > 5
+            ? 5
+            : props.bookdetails.seller.rating}
+          )
           <br />
-          Number of Ratings : {props.bookdetails.seller.noOfRatings}
+          Total Reviews : {props.bookdetails.seller.noOfRatings}
         </div>
       </div>
     </div>

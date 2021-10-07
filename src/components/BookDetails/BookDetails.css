@@ -206,6 +206,7 @@
   align-items: center;
   font-size: 12px;
   font-family: "PT sans";
+  cursor: pointer;
 }
 
 .tag::before {

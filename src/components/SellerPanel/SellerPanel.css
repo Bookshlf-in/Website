@@ -538,15 +538,15 @@ i.fas.fa-window-close:hover {
   border-radius: 8px;
   font-size: 20px;
   font-weight: bold;
-  width: 280px;
+  width: 250px;
   height: 60px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   cursor: pointer;
 }
 
 .upload-btn-wrapper input[type="file"] {
   font-size: 30px;
-  width: 200px;
+  width: 250px;
   height: 60px;
   position: absolute;
   left: 0;
