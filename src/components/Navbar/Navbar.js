@@ -346,10 +346,10 @@ function Navbar() {
                             &nbsp;Admin Panel
                           </MenuItem>
                         ) : (
-                          <></>
+                          <div></div>
                         )
                       ) : (
-                        <></>
+                        <div></div>
                       )}
                       <MenuItem
                         style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
