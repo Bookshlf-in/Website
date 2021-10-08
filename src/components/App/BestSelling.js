@@ -1,6 +1,6 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import "./BestSelling.css";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "../../axios";
 
 function BestSelling() {
@@ -32,8 +32,8 @@ function BestSelling() {
         <div className="bs-books">
           {bestbooks ? (
             <>
-              {bestbooks.map((book) => (
-                <div className="book book1">
+              {bestbooks.map((book, i) => (
+                <div className="book book1" key={i}>
                   <div className="book-pic">
                     <img
                       src={book.photo}
