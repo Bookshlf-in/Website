@@ -282,9 +282,11 @@
 
 .deleted-book-content {
   font-size: 40px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
   padding: 16px;
-  color: red;
-  border: 2px solid red;
+  color: #e40a0a;
+  border: 3px solid #e40a0a;
   margin-bottom: 58px;
 }
 
