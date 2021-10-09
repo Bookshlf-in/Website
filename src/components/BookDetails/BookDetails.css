@@ -267,6 +267,27 @@
     margin: 0;
   }
 }
+
+.deleted-book-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff8f;
+  z-index: 10;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleted-book-content {
+  font-size: 40px;
+  padding: 16px;
+  color: red;
+  border: 2px solid red;
+  margin-bottom: 58px;
+}
+
 @media screen and (max-width: 450px) {
   .book-subheading {
     flex-direction: column;
