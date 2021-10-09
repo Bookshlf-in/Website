@@ -54,6 +54,7 @@ const AddBook = (props) => {
   const [checked, setChecked] = useState(false);
   const [Photo, setPhoto] = useState(addForm.photos ? addForm.photos : "");
   const [Image, setImage] = useState(addForm.photos ? addForm.photos : "");
+  const [uploadedBooks, setUploadedBooks] = useState([]);
   const [load, setload] = useState(false);
   const [Adr] = useState(props.address);
   const [alert, setalert] = useState({
@@ -62,10 +63,16 @@ const AddBook = (props) => {
     msg: "",
   });
 
-  const handelUpload = (e) => {
-    setPhoto(Array.from(e.target.files));
-    setImage(Array.from(e.target.files));
-    // console.log(Array.from(e.target.files));
+  const handelUpload = (e, uploadMultiple) => {
+    var fileList = Array.from(e.target.files);
+
+    if(Photo.length > 0 && uploadMultiple){
+      fileList = [...Array.from(e.target.files), ...Photo];
+    }
+
+    setPhoto(fileList);
+    setImage(fileList);
+    setUploadedBooks(fileList);
   };
 
   const handleChange = (event) => {
@@ -547,7 +554,7 @@ const AddBook = (props) => {
               type="file"
               accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
               onChange={(e) => {
-                handelUpload(e);
+                handelUpload(e, false);
               }}
               style={{width: "250px", left: "20px"}}
               multiple
@@ -576,6 +583,24 @@ const AddBook = (props) => {
               <></>
             )}
           </div>
+          {
+            uploadedBooks.length ? (
+              <div className="upload-btn-wrapper">
+                <button style={{width: "250px"}}>Add more</button>
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                onChange={(e) => {
+                  handelUpload(e, true);
+                }}
+                style={{width: "250px", left: "20px"}}
+                multiple
+              />
+              <span>Add another image to the existing set</span>
+            </div>
+            )
+            :null
+          }
         </div>
         <div>
           <Checkbox
