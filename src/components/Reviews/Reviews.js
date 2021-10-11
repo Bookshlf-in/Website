@@ -79,8 +79,8 @@ const Reviews = () => {
             <div className="reviews_wrapper">
               {Reviews && Reviews.length > 0 ? (
                 <>
-                  {Reviews.map((TopReview) => (
-                    <div className="reviews_item">
+                  {Reviews.map((TopReview,i) => (
+                    <div className="reviews_item" key={i}>
                       <div className="ratings">
                         {[...Array(TopReview.rating)].map((e, i) => {
                           return <FaStar size={20} color="#FDCC0D" key={i} />;
