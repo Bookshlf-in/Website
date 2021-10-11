@@ -17,7 +17,7 @@ const Errorstyle = {
 function Login() {
   // context states
   const [, setUser] = useContext(UserContext);
-  const [, setAddForm] = useContext(AddFormContext);
+  const [addForm, setAddForm] = useContext(AddFormContext);
   const history = useHistory();
 
   // login states
@@ -122,6 +122,22 @@ function Login() {
             email: Name,
             cartitems: 0,
             wishlist: 0,
+          });
+          setAddForm({
+            title: "",
+            MRP: "",
+            price: "",
+            editionYear: "2021",
+            author: "",
+            ISBN: "9782724088526",
+            language: "",
+            pickupAddressId: "",
+            description: "",
+            photos: [],
+            weightInGrams: "",
+            embedVideo: "",
+            tags: [],
+            qty: 1,
           });
           setTimeout(() => {
             setloader("none");
