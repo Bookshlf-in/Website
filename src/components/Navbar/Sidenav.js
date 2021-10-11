@@ -12,6 +12,8 @@ const Sidenav = () => {
   const history = useHistory();
   const [Search, setSearch] = useState("");
   const [user] = useContext(UserContext);
+  const CartItems = "Cart(" + JSON.stringify(user.cartitems) + ")";
+  
 
   const _handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -70,7 +72,7 @@ const Sidenav = () => {
           <SideNavLink
             to="/Cart"
             iconClass="fas fa-shopping-cart"
-            label="Cart"
+            label={CartItems}
           />
         ) : (
           <></>

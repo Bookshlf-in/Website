@@ -13,11 +13,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SellerPanel = () => {
   // context states
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const history = useHistory();
   const params = useParams();
+
   // component states
-  const [panel, setPanel] = useState(params.panel);
+  const [, setPanel] = useState(params.panel);
   const [role, setRole] = useState(false);
 
   // loader states
@@ -27,6 +28,7 @@ const SellerPanel = () => {
   const [bookDetails, setbookDetails] = useState(null);
   const [sellerId, setsellerId] = useState(null);
   const [sellerReview, setsellerReview] = useState(null);
+
   // getting sellerDetails
   useEffect(() => {
     const fetchData = async () => {
@@ -69,8 +71,6 @@ const SellerPanel = () => {
     };
     if (user) {
       fetchData();
-    } else {
-      setloader(false);
     }
   }, []);
 

@@ -1,8 +1,8 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./Reviews.css";
-import {FaStar} from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 import Grid from "@material-ui/core/Grid";
 import Collapse from "@material-ui/core/Collapse";
 
@@ -79,8 +79,8 @@ const Reviews = () => {
             <div className="reviews_wrapper">
               {Reviews && Reviews.length > 0 ? (
                 <>
-                  {Reviews.map((TopReview) => (
-                    <div className="reviews_item">
+                  {Reviews.map((TopReview,i) => (
+                    <div className="reviews_item" key={i}>
                       <div className="ratings">
                         {[...Array(TopReview.rating)].map((e, i) => {
                           return <FaStar size={20} color="#FDCC0D" key={i} />;
@@ -108,7 +108,11 @@ const Reviews = () => {
           <Grid item xs={12}>
             <div
               className="Add-Rvw-btn"
-              style={{width: "100%", display: "flex", justifyContent: "center"}}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
               <button
                 onClick={(e) => {
@@ -142,7 +146,7 @@ const Reviews = () => {
               <div
                 className="addreview"
                 style={{
-                  width: "600px",
+                  maxWidth: "600px",
                   border: "1px solid #fff",
                   display: "flex",
                   justifyContent: "center",
@@ -152,57 +156,58 @@ const Reviews = () => {
                 <div className="main-rating">
                   <div className="desc">
                     <div className="rating">
-                      {[...Array(5)].map((star, i) => {
-                        const ratingValue = i + 1;
-                        return (
-                          <label key={i}>
-                            <input
-                              type="radio"
-                              name="rating"
-                              value={ratingValue}
-                              id="ratingValue"
-                              onClick={() => {
-                                setrating(ratingValue);
-                                sethover(ratingValue);
-                                // console.log(ratingValue);
-                                if (ratingValue === 1) {
-                                  setrate("Hated it");
+                      <div className="stars">
+                        {[...Array(5)].map((star, i) => {
+                          const ratingValue = i + 1;
+                          return (
+                            <label key={i}>
+                              <input
+                                type="radio"
+                                name="rating"
+                                value={ratingValue}
+                                id="ratingValue"
+                                onClick={() => {
+                                  setrating(ratingValue);
+                                  sethover(ratingValue);
+                                  // console.log(ratingValue);
+                                  if (ratingValue === 1) {
+                                    setrate("Hated it");
+                                  }
+                                  if (ratingValue === 2) {
+                                    setrate("Don't like it");
+                                  }
+                                  if (ratingValue === 3) {
+                                    setrate("Just OK");
+                                  }
+                                  if (ratingValue === 4) {
+                                    setrate("Liked it");
+                                  }
+                                  if (ratingValue === 5) {
+                                    setrate("Loved it");
+                                  }
+                                }}
+                                onChange={(e) => {
+                                  setrating(e.target.value);
+                                }}
+                              />
+                              <FaStar
+                                className="star"
+                                color={
+                                  ratingValue <= (hover || rating)
+                                    ? hover <= 2
+                                      ? "red"
+                                      : hover <= 4
+                                      ? "yellowgreen"
+                                      : "#66ff00"
+                                    : "#ffffff"
                                 }
-                                if (ratingValue === 2) {
-                                  setrate("Don't like it");
-                                }
-                                if (ratingValue === 3) {
-                                  setrate("Just OK");
-                                }
-                                if (ratingValue === 4) {
-                                  setrate("Liked it");
-                                }
-                                if (ratingValue === 5) {
-                                  setrate("Loved it");
-                                }
-                              }}
-                              onChange={(e) => {
-                                setrating(e.target.value);
-                              }}
-                            />
-                            <FaStar
-                              className="star"
-                              size={55}
-                              color={
-                                ratingValue <= (hover || rating)
-                                  ? hover <= 2
-                                    ? "red"
-                                    : hover <= 4
-                                    ? "yellowgreen"
-                                    : "#66ff00"
-                                  : "#ffffff"
-                              }
-                              onMouseEnter={() => sethover(ratingValue)}
-                              onMouseLeave={() => sethover(ratingValue)}
-                            />
-                          </label>
-                        );
-                      })}
+                                onMouseEnter={() => sethover(ratingValue)}
+                                onMouseLeave={() => sethover(ratingValue)}
+                              />
+                            </label>
+                          );
+                        })}
+                      </div>
                       <p
                         style={{
                           color:

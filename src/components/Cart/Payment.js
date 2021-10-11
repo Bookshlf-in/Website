@@ -7,8 +7,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 function Payment() {
   const history = useHistory();
   const params = useParams();
-  const [type, settype] = useState(params.type);
-  const [book, setbook] = useState({});
+  const [type] = useState(params.type);
+  // const [book, setbook] = useState({});
   const [user, setUser] = useContext(UserContext);
 
   const [items, setitems] = useState({});
