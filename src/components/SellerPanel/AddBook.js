@@ -568,25 +568,28 @@ const AddBook = (props) => {
               width: "100%",
             }}
           >
-            {Image !== null ? (
-              <>
-                {Image.map((file) => (
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt="book"
-                    height="60px"
-                    width="60px"
-                  />
-                ))}
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-          {
+            {          
+              Image !== null ? (
+                <>
+                  {
+                  Image.map((file) => (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt="book"
+                      height="60px"
+                      width="60px"
+                    />
+                  ))
+                  }
+                </>
+              ) : (
+                <></>
+              )      
+            }
+            {
             uploadedBooks.length ? (
               <div className="upload-btn-wrapper">
-                <button style={{width: "250px"}}>Add more</button>
+                <button style={{width: "50px", marginLeft: "10px"}}>+</button>
               <input
                 type="file"
                 accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
@@ -596,11 +599,11 @@ const AddBook = (props) => {
                 style={{width: "250px", left: "20px"}}
                 multiple
               />
-              <span>Add another image to the existing set</span>
             </div>
             )
             :null
           }
+          </div>
         </div>
         <div>
           <Checkbox
