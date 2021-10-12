@@ -12,7 +12,7 @@ const Sidenav = () => {
   const history = useHistory();
   const [Search, setSearch] = useState("");
   const [user] = useContext(UserContext);
- const CartItems = "Cart(" + JSON.stringify(user?.cartitems) + ")";
+  const CartItems = "Cart(" + JSON.stringify(user?.cartitems) + ")";
 
   const _handleKeyDown = (e) => {
     if (e.key === "Enter") {
