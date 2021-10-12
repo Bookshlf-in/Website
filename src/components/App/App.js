@@ -98,6 +98,7 @@ function App() {
           <Route path="/Receipt">
             <Receipt />
           </Route>
+
           <Route path="/">
             <Navbar />
             <Carousel />
