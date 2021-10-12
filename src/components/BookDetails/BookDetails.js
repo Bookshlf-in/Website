@@ -1,14 +1,14 @@
-import { React, useState, useEffect, useContext } from "react";
+import {React, useState, useEffect, useContext} from "react";
 import "./BookDetails.css";
-import { useParams, useHistory, Link } from "react-router-dom";
+import {useParams, useHistory, Link} from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
 import BookDesc from "./BookDesc";
 import axios from "../../axios";
-import { UserContext } from "../../Context/userContext";
+import {UserContext} from "../../Context/userContext";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 // Alert
@@ -102,7 +102,7 @@ const BookDetails = (props) => {
         setloadWishlist(true);
         axios
           .delete("/deleteWishlistItem", {
-            data: { bookId: id },
+            data: {bookId: id},
           })
           .then((response) => {
             setOpen(true);
@@ -178,7 +178,7 @@ const BookDetails = (props) => {
         setloadCart(true);
         axios
           .delete("/deleteCartItem", {
-            data: { bookId: id },
+            data: {bookId: id},
           })
           .then((response) => {
             setOpen(true);
@@ -226,27 +226,9 @@ const BookDetails = (props) => {
   return (
     <div>
       {/* Loader */}
-      <div
-        className="page-loader"
-        style={{ display: loader ? "flex" : "none" }}
-      >
-        <CircularProgress style={{ height: "80px", width: "80px" }} />
+      <div className="page-loader" style={{display: loader ? "flex" : "none"}}>
+        <CircularProgress style={{height: "80px", width: "80px"}} />
       </div>
-
-      {showLoginAlert ? (
-        <Alert
-          onClose={() => {
-            setShowLoginAlert(false);
-          }}
-          severity="error"
-        >
-          Please{" "}
-          <Link style={{ color: "#fff", fontWeight: 700 }} to="/Login">
-            <u>Login</u>
-          </Link>{" "}
-          to purchase <b>{book.title}</b>
-        </Alert>
-      ) : null}
 
       {/* Component */}
       {!loader ? (
@@ -317,6 +299,29 @@ const BookDetails = (props) => {
                 <i className="fas fa-shopping-basket" />
                 &nbsp;Buy Now
               </Button>
+              {showLoginAlert ? (
+                <Alert
+                  onClose={() => {
+                    setShowLoginAlert(false);
+                  }}
+                  severity="error"
+                  style={{fontSize: "12px"}}
+                >
+                  Please{" "}
+                  <Link
+                    style={{
+                      color: "#fff",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      letterSpacing: "1px",
+                    }}
+                    to="/Login"
+                  >
+                    <u>Login</u>
+                  </Link>{" "}
+                  to purchase <b>{book.title}</b>
+                </Alert>
+              ) : null}
               {/* <div className="recommened-tags">
               <h3>Recommended Tags</h3>
             </div> */}
