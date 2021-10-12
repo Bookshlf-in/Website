@@ -1,6 +1,6 @@
 import {React, useState, useEffect, useContext} from "react";
 import "./BookDetails.css";
-import {useParams, useHistory} from "react-router-dom";
+import {useParams, useHistory, Link} from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
 import BookDesc from "./BookDesc";
@@ -43,6 +43,9 @@ const BookDetails = (props) => {
   const [loader, setloader] = useState(true);
   const [loadWishlist, setloadWishlist] = useState(false);
   const [loadCart, setloadCart] = useState(false);
+
+  // maintain visibility state for showing alert when user is not logged in
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -223,11 +226,8 @@ const BookDetails = (props) => {
   return (
     <div>
       {/* Loader */}
-      <div
-        className="page-loader"
-        style={{ display: loader ? "flex" : "none" }}
-      >
-        <CircularProgress style={{ height: "80px", width: "80px" }} />
+      <div className="page-loader" style={{display: loader ? "flex" : "none"}}>
+        <CircularProgress style={{height: "80px", width: "80px"}} />
       </div>
 
       {/* Component */}
@@ -288,13 +288,40 @@ const BookDetails = (props) => {
               <Button
                 variant="contained"
                 onClick={() => {
-                  history.push(`/Checkout/${bookId}`);
+                  if (!user) {
+                    setShowLoginAlert(true);
+                  } else {
+                    history.push(`/Checkout/${bookId}`);
+                  }
                 }}
                 className="buynow-btn"
               >
                 <i className="fas fa-shopping-basket" />
                 &nbsp;Buy Now
               </Button>
+              {showLoginAlert ? (
+                <Alert
+                  onClose={() => {
+                    setShowLoginAlert(false);
+                  }}
+                  severity="error"
+                  style={{fontSize: "12px"}}
+                >
+                  Please{" "}
+                  <Link
+                    style={{
+                      color: "#fff",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      letterSpacing: "1px",
+                    }}
+                    to="/Login"
+                  >
+                    <u>Login</u>
+                  </Link>{" "}
+                  to purchase <b>{book.title}</b>
+                </Alert>
+              ) : null}
               {/* <div className="recommened-tags">
               <h3>Recommended Tags</h3>
             </div> */}

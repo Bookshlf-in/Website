@@ -61,16 +61,26 @@ const SellerPanel = () => {
                       setsellerReview(response.data);
                       setloader(false);
                     })
-                    .catch((error) => {});
+                    .catch((error) => {
+                      setloader(false);
+                    });
                 })
-                .catch((error) => {});
+                .catch((error) => {
+                  setloader(false);
+                });
             })
-            .catch((error) => {});
+            .catch((error) => {
+              setloader(false);
+            });
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setloader(false);
+        });
     };
     if (user) {
       fetchData();
+    } else {
+      setloader(false);
     }
   }, []);
 
