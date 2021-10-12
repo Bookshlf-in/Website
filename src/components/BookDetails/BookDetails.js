@@ -1,14 +1,14 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./BookDetails.css";
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
 import BookDesc from "./BookDesc";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 // Alert
@@ -43,6 +43,9 @@ const BookDetails = (props) => {
   const [loader, setloader] = useState(true);
   const [loadWishlist, setloadWishlist] = useState(false);
   const [loadCart, setloadCart] = useState(false);
+
+  // maintain visibility state for showing alert when user is not logged in
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,7 +102,7 @@ const BookDetails = (props) => {
         setloadWishlist(true);
         axios
           .delete("/deleteWishlistItem", {
-            data: {bookId: id},
+            data: { bookId: id },
           })
           .then((response) => {
             setOpen(true);
@@ -175,7 +178,7 @@ const BookDetails = (props) => {
         setloadCart(true);
         axios
           .delete("/deleteCartItem", {
-            data: {bookId: id},
+            data: { bookId: id },
           })
           .then((response) => {
             setOpen(true);
@@ -229,6 +232,21 @@ const BookDetails = (props) => {
       >
         <CircularProgress style={{ height: "80px", width: "80px" }} />
       </div>
+
+      {showLoginAlert ? (
+        <Alert
+          onClose={() => {
+            setShowLoginAlert(false);
+          }}
+          severity="error"
+        >
+          Please{" "}
+          <Link style={{ color: "#fff", fontWeight: 700 }} to="/Login">
+            <u>Login</u>
+          </Link>{" "}
+          to purchase <b>{book.title}</b>
+        </Alert>
+      ) : null}
 
       {/* Component */}
       {!loader ? (
@@ -288,7 +306,11 @@ const BookDetails = (props) => {
               <Button
                 variant="contained"
                 onClick={() => {
-                  history.push(`/Checkout/${bookId}`);
+                  if (!user) {
+                    setShowLoginAlert(true);
+                  } else {
+                    history.push(`/Checkout/${bookId}`);
+                  }
                 }}
                 className="buynow-btn"
               >
