@@ -60,7 +60,7 @@
   border: none;
   text-decoration: none;
   height: 160px;
-  width: 511px;
+  width: 100%;
   padding: 20px;
   outline: none;
   font-size: 18px;
@@ -147,4 +147,100 @@ input[type="radio"] {
   background-color: #df0000;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
   transition: 0.5s;
+}
+.star {
+  font-size: 55px;
+}
+
+@media (max-width: 710px) {
+  .addreview {
+    width: 550px;
+  }
+}
+@media (max-width: 650px) {
+  .addreview {
+    width: 500px;
+  }
+  .rating > p {
+    margin-left: 0px;
+  }
+  .star {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 600px) {
+  .addreview {
+    width: 450px;
+  }
+  .desc {
+    margin-left: 20px;
+  }
+  .star {
+    font-size: 45px;
+    padding-right: 20px;
+  }
+  .desc-input {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 520px) {
+  .addreview {
+    width: 400px;
+  }
+  .desc {
+    margin-left: 5px;
+  }
+  .rating {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+  }
+  .rating > p {
+    margin-top: 0px;
+  }
+
+  .star {
+    font-size: 45px;
+  }
+}
+
+@media (max-width: 410px) {
+  .addreview {
+    width: 350px;
+    padding: 10px;
+    margin: 5px;
+  }
+  .desc-input {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 350px) {
+  .addreview {
+    width: 300px;
+  }
+
+  .desc {
+    margin-left: 0px;
+  }
+  .desc-input {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 300px) {
+  .addreview {
+    width: 250px;
+  }
+}
+@media (max-width: 250px) {
+  .addreview {
+    width: 200px;
+  }
+  .star {
+    font-size: 35px;
+    padding-right: 10px;
+  }
 }

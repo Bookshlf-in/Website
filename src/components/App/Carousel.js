@@ -48,7 +48,7 @@ function Carousel() {
                     if (item.button === "Sell Now") {
                       history.push("/SellerPanel/5");
                     } else {
-                      history.push("/SearchResult/books");
+                      history.push("/SearchResult/tag:ALL");
                     }
                   }}
                 >

@@ -7,8 +7,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 function Payment() {
   const history = useHistory();
   const params = useParams();
-  const [type, settype] = useState(params.type);
-  const [book, setbook] = useState({});
+  const [type] = useState(params.type);
+  // const [book, setbook] = useState({});
   const [user, setUser] = useContext(UserContext);
 
   const [items, setitems] = useState({});
@@ -292,6 +292,12 @@ function Payment() {
                         border: "1px solid rgba(0, 0, 0, 0.7)",
                       }}
                       onChange={(e) => {
+                        // Check if selected add new address
+                        // then navigate to page to add new address
+                        if (e.target.value === "addNew") {
+                          history.push("/UserProfile/4");
+                          return;
+                        }
                         setaddressId(e.target.value);
                       }}
                     >

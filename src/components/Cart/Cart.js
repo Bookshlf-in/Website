@@ -123,7 +123,7 @@ function Cart() {
       {user === null ? (
         <div
           style={{
-            height: "100%",
+            minHeight: "100%",
             width: "100%",
             display: "flex",
             justifyContent: "center",
@@ -135,7 +135,7 @@ function Cart() {
             <i
               className="far fa-frown"
               style={{
-                fontSize: "20em",
+                fontSize: "10em",
                 color: "rgba(255,0,0,0.4)",
               }}
             />
