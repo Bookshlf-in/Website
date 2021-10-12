@@ -25,7 +25,7 @@
   background-color: aliceblue;
   position: relative;
   color: rgb(22, 22, 22);
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   font-size: 14px;
   padding: 5px;
@@ -58,7 +58,7 @@
   justify-content: flex-start;
   padding: 10px;
   color: white;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   font-size: 14px;
 }
@@ -129,7 +129,7 @@
 }
 .orders-filter .select-wrapper::after {
   color: black;
-  content: "▾";
+  content: '▾';
   margin-right: 10px;
   pointer-events: none;
   position: absolute;
@@ -149,7 +149,7 @@
   font-size: 16px;
   outline: none;
   border: 1px solid white;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
 }
 .orders-filter .select:focus {
@@ -194,7 +194,7 @@ p#alert-dialog-description {
 }
 .address-form fieldset legend {
   padding: 10px;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   font-size: 20px;
 }
 .address-label {
@@ -213,7 +213,7 @@ p#alert-dialog-description {
 .address-form .address-label select {
   width: 100%;
   height: 50px;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   border: none;
   color: #787878;
   padding-left: 10px;
@@ -222,7 +222,7 @@ p#alert-dialog-description {
 .address-desc input {
   width: 100%;
   height: 50px;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   border: none;
   padding-left: 10px;
 }
@@ -230,7 +230,7 @@ p#alert-dialog-description {
 .address-form .address-zip select {
   width: 35%;
   height: 50px;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   border: none;
   color: #787878;
   padding-left: 10px;
@@ -239,7 +239,7 @@ p#alert-dialog-description {
 .address-form .address-zip input {
   width: 35%;
   height: 50px;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   border: none;
   color: #787878;
   padding-left: 10px;
@@ -250,7 +250,7 @@ p#alert-dialog-description {
   margin-left: 10px;
 }
 label.pincode {
-  font-family: "PT sans";
+  font-family: 'PT sans';
   position: absolute;
   top: 0px;
   left: 50%;
@@ -263,7 +263,7 @@ label.pincode {
 .address-zip #pincode {
   width: 100%;
   height: 50px;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   border: none;
   color: #787878;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
@@ -283,7 +283,7 @@ label.pincode {
   align-items: top;
 }
 .address-form .address-phoneNo span label {
-  font-family: "PT Sans";
+  font-family: 'PT Sans';
   font-size: 14px;
   padding-left: 10px;
 }
@@ -292,7 +292,7 @@ label.pincode {
   text-decoration: none;
   height: 50px;
   width: 100px;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   border: none;
   color: #787878;
   padding-left: 10px;
@@ -302,7 +302,7 @@ label.pincode {
   letter-spacing: 20px;
   height: 50px;
   width: 100%;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   border: none;
   color: #787878;
   padding-left: 20px;
@@ -315,7 +315,7 @@ label.pincode {
   border-left: 2px solid rgb(0, 0, 0);
   border-right: 2px solid rgb(0, 0, 0);
   border-bottom: 2px solid rgb(0, 0, 0);
-  font-family: "PT sans";
+  font-family: 'PT sans';
   font-weight: bold;
   letter-spacing: 2px;
   cursor: pointer;
@@ -336,7 +336,7 @@ label.pincode {
   border-collapse: collapse;
   color: rgb(0, 0, 0);
   background-color: #fff;
-  font-family: "PT sans";
+  font-family: 'PT sans';
   font-size: 14px;
 }
 .address-lists table,
@@ -390,7 +390,7 @@ i.fas.fa-window-close:hover {
   padding: 30px;
 }
 .reviewed-title {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 32px;
   text-align: center;
 }
@@ -412,7 +412,7 @@ i.fas.fa-window-close:hover {
   align-items: center;
 }
 .add-book-bg h1 {
-  font-family: "PT sans";
+  font-family: 'PT sans';
 }
 .add-book-form {
   padding: 10px;
@@ -420,7 +420,7 @@ i.fas.fa-window-close:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   width: 100%;
   color: #1b2735;
 }
@@ -435,7 +435,7 @@ i.fas.fa-window-close:hover {
   height: 50px;
   width: 500px;
   outline: none;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 900;
   padding-left: 10px;
   background-color: rgba(255, 255, 255, 0.87);
@@ -445,7 +445,7 @@ i.fas.fa-window-close:hover {
   height: 50px;
   width: 250px;
   outline: none;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 900;
   padding-left: 10px;
   background-color: rgba(255, 255, 255, 0.87);
@@ -481,7 +481,7 @@ i.fas.fa-window-close:hover {
   background: whitesmoke;
 }
 .add-book-field1 .tag::before {
-  content: "❎";
+  content: '❎';
   background: transparent;
   border-radius: 10px;
   box-shadow: none;
@@ -494,7 +494,7 @@ i.fas.fa-window-close:hover {
 .seller-register-btn {
   padding: 5px 15px;
   background-color: #ff9b3e;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
 }
 .seller-register-form {
@@ -508,18 +508,44 @@ i.fas.fa-window-close:hover {
   margin: 10px;
 }
 
-.uploaded-images {
+.uploaded-images-container {
   padding: 10px;
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.uploaded-images img {
+.uploaded-images-container img {
+  margin: 7px;
+  /* padding: 7px; */
   max-height: 150px;
   max-width: 250px;
   min-height: 100px;
   min-width: 100px;
+}
+
+.uploaded-image button {
+  padding: 0;
+  position: relative;
+  display: block;
+  visibility: hidden;
+  border-radius: 50%;
+  top: 20px;
+  left: 90px;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.uploaded-image:hover button {
+  visibility: visible;
+  border: 2px solid;
+  border-color: #ff9b3e;
+}
+
+.uploaded-image:hover img {
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: #ff9b3e;
 }
 
 .upload-btn-wrapper {
@@ -544,7 +570,7 @@ i.fas.fa-window-close:hover {
   cursor: pointer;
 }
 
-.upload-btn-wrapper input[type="file"] {
+.upload-btn-wrapper input[type='file'] {
   font-size: 30px;
   width: 250px;
   height: 60px;
@@ -559,7 +585,7 @@ i.fas.fa-window-close:hover {
   top: 3px;
   left: 40px;
   color: red;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   font-size: 10px;
   cursor: pointer;
@@ -650,6 +676,6 @@ i.fas.fa-window-close:hover {
   }
   .update-book-bg h1 {
     font-size: 20px;
-    font-family: "PT Sans";
+    font-family: 'PT Sans';
   }
 }
