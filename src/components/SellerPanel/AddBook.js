@@ -81,7 +81,7 @@ const AddBook = (props) => {
 
   const HandleFormChange = () => {
     localStorage.setItem("bookshlf_user_AddBook", JSON.stringify(addForm));
-    console.log(addForm);
+    // console.log(addForm);
   };
 
   const Initialize = () => {
