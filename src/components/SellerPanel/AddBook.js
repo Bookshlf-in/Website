@@ -54,7 +54,6 @@ const AddBook = (props) => {
   const [checked, setChecked] = useState(false);
   const [Photo, setPhoto] = useState(addForm.photos ? addForm.photos : "");
   const [Image, setImage] = useState(addForm.photos ? addForm.photos : "");
-  const [uploadedBooks, setUploadedBooks] = useState([]);
   const [load, setload] = useState(false);
   const [Adr] = useState(props.address);
   const [alert, setalert] = useState({
@@ -63,16 +62,17 @@ const AddBook = (props) => {
     msg: "",
   });
 
-  const handelUpload = (e, uploadMultiple) => {
-    var fileList = Array.from(e.target.files);
+  const handleUpload = (e) => {
+    setPhoto(Array.from(e.target.files));
+    setImage(Array.from(e.target.files));
+    console.log(Array.from(e.target.files));
+  };
 
-    if (Photo.length > 0 && uploadMultiple) {
-      fileList = [...Array.from(e.target.files), ...Photo];
-    }
+  const handleImageDelete = (e) => {
+    e.preventDefault();
 
-    setPhoto(fileList);
-    setImage(fileList);
-    setUploadedBooks(fileList);
+    setImage(Image.filter((file) => file.name !== e.target.name));
+    setPhoto(Image.filter((file) => file.name !== e.target.name));
   };
 
   const handleChange = (event) => {
@@ -554,7 +554,7 @@ const AddBook = (props) => {
               type="file"
               accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
               onChange={(e) => {
-                handelUpload(e, false);
+                handleUpload(e);
               }}
               style={{width: "250px", left: "20px"}}
               multiple
@@ -571,31 +571,25 @@ const AddBook = (props) => {
             {Image !== null ? (
               <>
                 {Image.map((file) => (
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt="book"
-                    height="60px"
-                    width="60px"
-                  />
+                  <div className="uploaded-image">
+                    <button
+                      name={file.name}
+                      onClick={(e) => handleImageDelete(e)}
+                    >
+                      X
+                    </button>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt="book"
+                      height="60px"
+                      width="60px"
+                    />
+                  </div>
                 ))}
               </>
             ) : (
               <></>
             )}
-            {uploadedBooks.length ? (
-              <div className="upload-btn-wrapper">
-                <button style={{width: "50px", marginLeft: "10px"}}>+</button>
-                <input
-                  type="file"
-                  accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
-                  onChange={(e) => {
-                    handelUpload(e, true);
-                  }}
-                  style={{width: "250px", left: "20px"}}
-                  multiple
-                />
-              </div>
-            ) : null}
           </div>
         </div>
         <div>

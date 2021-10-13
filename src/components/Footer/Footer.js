@@ -179,7 +179,7 @@ function Footer() {
             <div className="social-icons">
               <Link
                 className="social-icon-link facebook"
-                to={{ pathname:"https://www.facebook.com/Bookshlf-109479771200918" }}
+                to="/"
                 target="_blank"
                 aria-label="Facebook"
               >
@@ -187,7 +187,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link instagram"
-                to={{ pathname:"https://instagram.com/_bookshlf" }}
+                to="/"
                 target="_blank"
                 aria-label="Instagram"
               >
@@ -195,7 +195,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link twitter"
-                to={{ pathname:"https://twitter.com/BookshlfA" }}
+                to="/"
                 target="_blank"
                 aria-label="Twitter"
               >
@@ -203,7 +203,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link linkedin"
-                to={{ pathname:"https://www.linkedin.com/in/bookshlf-by-aman-861073223/" }}
+                to="/"
                 target="_blank"
                 aria-label="Linkedin"
               >
@@ -211,7 +211,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link youtube"
-                to={{ pathname:"https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ" }}
+                to="/"
                 target="_blank"
                 aria-label="Youtube"
               >
