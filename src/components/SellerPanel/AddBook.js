@@ -54,6 +54,7 @@ const AddBook = (props) => {
   const [checked, setChecked] = useState(false);
   const [Photo, setPhoto] = useState(addForm.photos ? addForm.photos : "");
   const [Image, setImage] = useState(addForm.photos ? addForm.photos : "");
+  const [uploadedBooks, setUploadedBooks] = useState([]);
   const [load, setload] = useState(false);
   const [Adr] = useState(props.address);
   const [alert, setalert] = useState({
@@ -62,12 +63,10 @@ const AddBook = (props) => {
     msg: "",
   });
 
-  const handleUpload = (e) => {
-    setPhoto(Array.from(e.target.files));
-    setImage(Array.from(e.target.files));
-    console.log(Array.from(e.target.files));
-  };
+  const handelUpload = (e, uploadMultiple) => {
+    var fileList = Array.from(e.target.files);
 
+<<<<<<< Updated upstream
     if (Photo.length > 0 && uploadMultiple) {
       fileList = [...Array.from(e.target.files), ...Photo];
     }
@@ -78,9 +77,20 @@ const AddBook = (props) => {
 
   const handleImageDelete = (e) => {
     e.preventDefault();
+=======
+    const handleImageDelete = (e) => {
+      e.preventDefault();
+      if (Photo.length > 0 && uploadMultiple) {
+        fileList = [...Array.from(e.target.files), ...Photo];
+      }
+>>>>>>> Stashed changes
 
-    setImage(Image.filter((file) => file.name !== e.target.name));
-    setPhoto(Image.filter((file) => file.name !== e.target.name));
+      setImage(Image.filter((file) => file.name !== e.target.name));
+      setPhoto(Image.filter((file) => file.name !== e.target.name));
+      setPhoto(fileList);
+      setImage(fileList);
+      setUploadedBooks(fileList);
+    };
   };
 
   const handleChange = (event) => {
