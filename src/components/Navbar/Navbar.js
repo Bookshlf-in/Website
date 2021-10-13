@@ -185,7 +185,7 @@ function Navbar() {
                 </div>
               </li>
             </Link>
-            <Link to="/SearchResult/books">
+            <Link to="/SearchResult/tag:ALL">
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
