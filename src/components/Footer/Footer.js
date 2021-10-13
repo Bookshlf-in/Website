@@ -203,7 +203,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link linkedin"
-                to="/"
+                to={{ pathname:"https://www.linkedin.com/in/bookshlf-by-aman-861073223/" }}
                 target="_blank"
                 aria-label="Linkedin"
               >
