@@ -68,14 +68,6 @@ const AddBook = (props) => {
     console.log(Array.from(e.target.files));
   };
 
-    if (Photo.length > 0 && uploadMultiple) {
-      fileList = [...Array.from(e.target.files), ...Photo];
-    }
-
-    setImage(Image.filter((file) => file.name !== e.target.name));
-    setPhoto(Image.filter((file) => file.name !== e.target.name));
-  };
-
   const handleImageDelete = (e) => {
     e.preventDefault();
 
