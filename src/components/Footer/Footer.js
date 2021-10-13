@@ -187,7 +187,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link instagram"
-                to="/"
+                to={{ pathname:"https://www.facebook.com/Bookshlf-109479771200918" }}
                 target="_blank"
                 aria-label="Instagram"
               >
