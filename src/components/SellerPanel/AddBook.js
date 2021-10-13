@@ -602,9 +602,9 @@ const AddBook = (props) => {
                   </button>
                   <img
                     src={URL.createObjectURL(file)}
-                    alt='book'
-                    height='60px'
-                    width='60px'
+                    alt="book"
+                    height="60px"
+                    width="60px"
                   />
                 </div>
                 ))}
