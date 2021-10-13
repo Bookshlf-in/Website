@@ -1,23 +1,23 @@
-import { React, useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { AddFormContext } from '../../Context/formContext';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Checkbox from '@material-ui/core/Checkbox';
-import axios from '../../axios';
-import Alert from '@material-ui/lab/Alert';
-import { storage } from '../../firebase';
-import { nanoid } from 'nanoid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import {React, useState, useContext} from "react";
+import {Link, useHistory} from "react-router-dom";
+import {AddFormContext} from "../../Context/formContext";
+import Button from "@material-ui/core/Button";
+import {makeStyles} from "@material-ui/core/styles";
+import Checkbox from "@material-ui/core/Checkbox";
+import axios from "../../axios";
+import Alert from "@material-ui/lab/Alert";
+import {storage} from "../../firebase";
+import {nanoid} from "nanoid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
   input: {
-    display: 'none',
+    display: "none",
   },
 }));
 
@@ -27,52 +27,52 @@ const AddBook = (props) => {
   const [addForm, setAddForm] = useContext(AddFormContext);
 
   // book Details states
-  const [bookName, setbookName] = useState(addForm.title ? addForm.title : '');
-  const [bookISBN, setbookISBN] = useState('9782724088526');
-  const [SP, setSP] = useState(addForm.price ? addForm.price : '');
-  const [Earn, setEarn] = useState(addForm.MRP ? addForm.MRP : '');
+  const [bookName, setbookName] = useState(addForm.title ? addForm.title : "");
+  const [bookISBN, setbookISBN] = useState("9782724088526");
+  const [SP, setSP] = useState(addForm.price ? addForm.price : "");
+  const [Earn, setEarn] = useState(addForm.MRP ? addForm.MRP : "");
   const [bookDesc, setbookDesc] = useState(
-    addForm.description ? addForm.description : ''
+    addForm.description ? addForm.description : ""
   );
   const [Weight, setWeight] = useState(
-    addForm.weightInGrams ? addForm.weightInGrams : ''
+    addForm.weightInGrams ? addForm.weightInGrams : ""
   );
   const [Edition, setEdition] = useState(
-    addForm.editionYear ? addForm.editionYear : '2021'
+    addForm.editionYear ? addForm.editionYear : "2021"
   );
-  const [Qnty, setQnty] = useState(addForm.qty ? addForm.qty : '');
-  const [author, setAuthor] = useState(addForm.author ? addForm.author : '');
+  const [Qnty, setQnty] = useState(addForm.qty ? addForm.qty : "");
+  const [author, setAuthor] = useState(addForm.author ? addForm.author : "");
   const [pickupId, setPickupId] = useState(
-    addForm.pickupAddressId ? addForm.pickupAddressId : ''
+    addForm.pickupAddressId ? addForm.pickupAddressId : ""
   );
   const [tags, setTags] = useState(addForm.tags ? addForm.tags : []);
-  const [tag, settag] = useState('');
+  const [tag, settag] = useState("");
   const [link, setlink] = useState(
-    addForm.embedVideo ? addForm.embedVideo : ''
+    addForm.embedVideo ? addForm.embedVideo : ""
   );
-  const [lang, setlang] = useState(addForm.language ? addForm.language : '');
+  const [lang, setlang] = useState(addForm.language ? addForm.language : "");
   const [checked, setChecked] = useState(false);
-  const [Photo, setPhoto] = useState(addForm.photos ? addForm.photos : '');
-  const [Image, setImage] = useState(addForm.photos ? addForm.photos : '');
+  const [Photo, setPhoto] = useState(addForm.photos ? addForm.photos : "");
+  const [Image, setImage] = useState(addForm.photos ? addForm.photos : "");
+  const [uploadedBooks, setUploadedBooks] = useState([]);
   const [load, setload] = useState(false);
   const [Adr] = useState(props.address);
   const [alert, setalert] = useState({
     show: false,
-    type: 'success',
-    msg: '',
+    type: "success",
+    msg: "",
   });
 
-  const handleUpload = (e) => {
-    setPhoto(Array.from(e.target.files));
-    setImage(Array.from(e.target.files));
-    console.log(Array.from(e.target.files));
-  };
+  const handelUpload = (e, uploadMultiple) => {
+    var fileList = Array.from(e.target.files);
 
-  const handleImageDelete = (e) => {
-    e.preventDefault();
+    if (Photo.length > 0 && uploadMultiple) {
+      fileList = [...Array.from(e.target.files), ...Photo];
+    }
 
-    setImage(Image.filter((file) => file.name !== e.target.name));
-    setPhoto(Image.filter((file) => file.name !== e.target.name));
+    setPhoto(fileList);
+    setImage(fileList);
+    setUploadedBooks(fileList);
   };
 
   const handleChange = (event) => {
@@ -80,54 +80,54 @@ const AddBook = (props) => {
   };
 
   const HandleFormChange = () => {
-    localStorage.setItem('bookshlf_user_AddBook', JSON.stringify(addForm));
+    localStorage.setItem("bookshlf_user_AddBook", JSON.stringify(addForm));
     console.log(addForm);
   };
 
   const Initialize = () => {
-    settag('');
-    setlink('');
+    settag("");
+    setlink("");
     setChecked(false);
     setPhoto([]);
     setImage([]);
     setload(false);
     setalert({
       show: false,
-      type: '',
-      msg: '',
+      type: "",
+      msg: "",
     });
     localStorage.setItem(
-      'bookshlf_user_AddBook',
+      "bookshlf_user_AddBook",
       JSON.stringify({
-        title: '',
-        MRP: '',
-        price: '',
-        editionYear: '2021',
-        author: '',
-        ISBN: '9782724088526',
-        language: '',
-        pickupAddressId: '',
-        description: '',
+        title: "",
+        MRP: "",
+        price: "",
+        editionYear: "2021",
+        author: "",
+        ISBN: "9782724088526",
+        language: "",
+        pickupAddressId: "",
+        description: "",
         photos: [],
-        weightInGrams: '',
-        embedVideo: '',
+        weightInGrams: "",
+        embedVideo: "",
         tags: [],
         qty: 1,
       })
     );
     setAddForm({
-      title: '',
-      MRP: '',
-      price: '',
-      editionYear: '2021',
-      author: '',
-      ISBN: '9782724088526',
-      language: '',
-      pickupAddressId: '',
-      description: '',
+      title: "",
+      MRP: "",
+      price: "",
+      editionYear: "2021",
+      author: "",
+      ISBN: "9782724088526",
+      language: "",
+      pickupAddressId: "",
+      description: "",
       photos: [],
-      weightInGrams: '',
-      embedVideo: '',
+      weightInGrams: "",
+      embedVideo: "",
       tags: [],
       qty: 1,
     });
@@ -152,19 +152,19 @@ const AddBook = (props) => {
           imageName[i] = nanoid(10) + Photo[i].name;
           const uploadTask = storage.ref(`books/${imageName[i]}`).put(Photo[i]);
           uploadTask.on(
-            'state_changed',
+            "state_changed",
             (snapshot) => {},
             (error) => {},
             () => {
               storage
-                .ref('books')
+                .ref("books")
                 .child(imageName[i])
                 .getDownloadURL()
                 .then((Url) => {
                   imgURL.push(Url);
                   if (imgURL.length === Photo.length) {
                     result(imgURL);
-                    setAddForm({ ...addForm, photos: imgURL });
+                    setAddForm({...addForm, photos: imgURL});
                     HandleFormChange();
                   }
                 });
@@ -175,14 +175,14 @@ const AddBook = (props) => {
     } else {
       setalert({
         show: true,
-        type: 'error',
-        msg: 'Please Fill All Fields',
+        type: "error",
+        msg: "Please Fill All Fields",
       });
       setTimeout(() => {
         setalert({
           show: false,
-          type: 'error',
-          msg: 'Please Fill All Fields',
+          type: "error",
+          msg: "Please Fill All Fields",
         });
       }, 3000);
     }
@@ -193,7 +193,7 @@ const AddBook = (props) => {
       return new Promise(() => {
         setTimeout(() => {
           axios
-            .post('/addBook', {
+            .post("/addBook", {
               title: bookName,
               MRP: Number(Earn),
               price: Number(SP),
@@ -214,7 +214,7 @@ const AddBook = (props) => {
               setload(false);
               setalert({
                 show: true,
-                type: 'success',
+                type: "success",
                 msg: response.data.msg,
               });
               setTimeout(() => {
@@ -226,8 +226,8 @@ const AddBook = (props) => {
               setload(false);
               setalert({
                 show: true,
-                type: 'error',
-                msg: error.response.data.errors[0].error + ' Please Try Again!',
+                type: "error",
+                msg: error.response.data.errors[0].error + " Please Try Again!",
               });
             });
         }, 2000);
@@ -236,14 +236,14 @@ const AddBook = (props) => {
       setload(false);
       setalert({
         show: true,
-        type: 'error',
-        msg: 'Please Fill All Fields',
+        type: "error",
+        msg: "Please Fill All Fields",
       });
       setTimeout(() => {
         setalert({
           show: false,
-          type: '',
-          msg: '',
+          type: "",
+          msg: "",
         });
       }, 3000);
     }
@@ -258,18 +258,18 @@ const AddBook = (props) => {
     console.log(bookDesc);
     console.log(imglinks);
     return (
-      bookName !== '' &&
-      SP !== '' &&
-      Edition !== '' &&
-      author !== '' &&
-      bookISBN !== '' &&
-      lang !== '' &&
-      pickupId !== '' &&
-      bookDesc !== '' &&
+      bookName !== "" &&
+      SP !== "" &&
+      Edition !== "" &&
+      author !== "" &&
+      bookISBN !== "" &&
+      lang !== "" &&
+      pickupId !== "" &&
+      bookDesc !== "" &&
       imglinks !== undefined &&
       imglinks !== null &&
       imglinks.length >= 3 &&
-      Qnty > '0'
+      Qnty > "0"
     );
   }
   const handleBookAdd = async () => {
@@ -295,38 +295,38 @@ const AddBook = (props) => {
     else if (price > 5000) earnings = 1500 + (price * 3) / 100;
     else earnings = price;
     setEarn(Math.round(price - earnings));
-    setAddForm({ ...addForm, MRP: Math.round(price - earnings) });
+    setAddForm({...addForm, MRP: Math.round(price - earnings)});
     // console.log("Your Earnings : ", earnings);
   };
   return (
-    <div className='add-book-bg'>
+    <div className="add-book-bg">
       <h1> ADD NEW BOOK </h1>
-      <form action='' className='add-book-form' autoComplete='off'>
-        <div className='add-book-field1'>
+      <form action="" className="add-book-form" autoComplete="off">
+        <div className="add-book-field1">
           <span>
-            <i className='fas fa-book'></i>
+            <i className="fas fa-book"></i>
           </span>
           <input
-            type='text'
-            placeholder='Book Full Name'
+            type="text"
+            placeholder="Book Full Name"
             onChange={(e) => {
               setbookName(e.target.value);
-              setAddForm({ ...addForm, title: e.target.value });
+              setAddForm({...addForm, title: e.target.value});
               HandleFormChange();
             }}
             value={bookName}
           />
         </div>
-        <div className='add-book-field1'>
+        <div className="add-book-field1">
           <span>
-            <i className='fas fa-info'></i>
+            <i className="fas fa-info"></i>
           </span>
           <input
-            type='text'
-            placeholder='Book Details'
+            type="text"
+            placeholder="Book Details"
             onChange={(e) => {
               setbookDesc(e.target.value);
-              setAddForm({ ...addForm, description: e.target.value });
+              setAddForm({...addForm, description: e.target.value});
               HandleFormChange();
             }}
             value={bookDesc}
@@ -343,13 +343,13 @@ const AddBook = (props) => {
           value={bookISBN}
         />
         </div> */}
-        <div className='add-book-field2'>
+        <div className="add-book-field2">
           <span>
-            <i className='fas fa-rupee-sign'></i>
+            <i className="fas fa-rupee-sign"></i>
           </span>
           <input
-            type='number'
-            placeholder='Selling Price'
+            type="number"
+            placeholder="Selling Price"
             onChange={(e) => {
               setSP(e.target.value);
               FindEarnings(e.target.value);
@@ -357,33 +357,33 @@ const AddBook = (props) => {
             value={SP}
           />
           <input
-            type='Text'
-            placeholder='Your Earnings (₹)'
+            type="Text"
+            placeholder="Your Earnings (₹)"
             value={Earn}
             readOnly
           />
         </div>
-        <div className='add-book-field1'>
+        <div className="add-book-field1">
           <span>
-            <i className='fas fa-address-book' />
+            <i className="fas fa-address-book" />
           </span>
           <select
-            name=''
-            id=''
+            name=""
+            id=""
             style={{
-              height: '50px',
-              outline: 'none',
-              fontFamily: 'PT Sans',
-              paddingLeft: '10px',
-              backgroundColor: 'rgba(255, 255, 255, 0.87)',
-              border: 'none',
+              height: "50px",
+              outline: "none",
+              fontFamily: "PT Sans",
+              paddingLeft: "10px",
+              backgroundColor: "rgba(255, 255, 255, 0.87)",
+              border: "none",
             }}
             onChange={(e) => {
               setPickupId(e.target.value);
-              if (e.target.value === 'addNew') {
-                history.push('/SellerPanel/3');
+              if (e.target.value === "addNew") {
+                history.push("/SellerPanel/3");
               } else {
-                setAddForm({ ...addForm, pickupAddressId: e.target.value });
+                setAddForm({...addForm, pickupAddressId: e.target.value});
                 HandleFormChange();
               }
             }}
@@ -400,19 +400,19 @@ const AddBook = (props) => {
             ) : (
               <></>
             )}
-            <option value='addNew'>Add New Address</option>
+            <option value="addNew">Add New Address</option>
           </select>
         </div>
-        <div className='add-book-field1'>
+        <div className="add-book-field1">
           <span>
-            <i className='fas fa-weight'></i>
+            <i className="fas fa-weight"></i>
           </span>
           <input
-            type='number'
-            placeholder='Weight in grams (if possible)'
+            type="number"
+            placeholder="Weight in grams (if possible)"
             onChange={(e) => {
               setWeight(e.target.value);
-              setAddForm({ ...addForm, weightInGrams: e.target.value });
+              setAddForm({...addForm, weightInGrams: e.target.value});
               HandleFormChange();
             }}
             value={Weight}
@@ -429,74 +429,74 @@ const AddBook = (props) => {
             value={Edition}
           />
         </div> */}
-        <div className='add-book-field1'>
+        <div className="add-book-field1">
           <span>
-            <i className='fas fa-user-edit' />
+            <i className="fas fa-user-edit" />
           </span>
           <input
-            type='text'
-            placeholder='Book Author'
+            type="text"
+            placeholder="Book Author"
             onChange={(e) => {
               setAuthor(e.target.value);
-              setAddForm({ ...addForm, author: e.target.value });
+              setAddForm({...addForm, author: e.target.value});
               HandleFormChange();
             }}
             value={author}
           />
         </div>
-        <div className='add-book-field1'>
+        <div className="add-book-field1">
           <span>
-            <i className='fas fa-archive' />
+            <i className="fas fa-archive" />
           </span>
           <input
-            type='number'
-            placeholder='Quantity'
+            type="number"
+            placeholder="Quantity"
             onChange={(e) => {
               setQnty(e.target.value);
-              setAddForm({ ...addForm, qty: e.target.value });
+              setAddForm({...addForm, qty: e.target.value});
               HandleFormChange();
             }}
             value={Qnty}
           />
         </div>
-        <div className='add-book-field1'>
+        <div className="add-book-field1">
           <span>
-            <i className='fas fa-language' />
+            <i className="fas fa-language" />
           </span>
           <input
-            type='text'
-            placeholder='Language'
+            type="text"
+            placeholder="Language"
             onChange={(e) => {
               setlang(e.target.value);
-              setAddForm({ ...addForm, language: e.target.value });
+              setAddForm({...addForm, language: e.target.value});
               HandleFormChange();
             }}
             value={lang}
           />
         </div>
 
-        <div className='add-book-field1'>
+        <div className="add-book-field1">
           <span>
-            <i className='fab fa-youtube' />
+            <i className="fab fa-youtube" />
           </span>
           <input
-            type='text'
-            placeholder='Embed Youtube Video Link(Optional)'
+            type="text"
+            placeholder="Embed Youtube Video Link(Optional)"
             onChange={(e) => {
               setlink(e.target.value);
-              setAddForm({ ...addForm, embedVideo: e.target.value });
+              setAddForm({...addForm, embedVideo: e.target.value});
               HandleFormChange();
             }}
             value={link}
           />
         </div>
-        <div className='add-book-field1' style={{ display: 'block' }}>
-          <div className='book-tags' id='add-book-tag'>
+        <div className="add-book-field1" style={{display: "block"}}>
+          <div className="book-tags" id="add-book-tag">
             {tags.length > 0 ? (
               <>
                 {tags.map((name) => (
                   <Link
-                    className='tag'
+                    className="tag"
                     onClick={(e) => {
                       handleDelete(e);
                     }}
@@ -509,112 +509,118 @@ const AddBook = (props) => {
               <></>
             )}
           </div>
-          <div style={{ display: 'flex' }}>
+          <div style={{display: "flex"}}>
             <input
-              type='text'
-              placeholder='Add Book Tags'
+              type="text"
+              placeholder="Add Book Tags"
               onChange={(e) => settag(e.target.value)}
               value={tag}
               onKeyPress={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   setTags(tags.concat(tag));
-                  setAddForm({ ...addForm, tags: tags });
+                  setAddForm({...addForm, tags: tags});
                   HandleFormChange();
-                  settag('');
+                  settag("");
                 }
               }}
             />
             <span
-              style={{ cursor: 'pointer' }}
+              style={{cursor: "pointer"}}
               onClick={() => {
                 setTags(tags.concat(tag));
-                setAddForm({ ...addForm, tags: tags });
+                setAddForm({...addForm, tags: tags});
                 HandleFormChange();
-                settag('');
+                settag("");
               }}
             >
-              <i className='fas fa-plus-circle' />
+              <i className="fas fa-plus-circle" />
             </span>
           </div>
         </div>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '10px',
-            flexDirection: 'column',
-            width: '100%',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "10px",
+            flexDirection: "column",
+            width: "100%",
           }}
         >
-          <div className='upload-btn-wrapper'>
-            <button style={{ width: '250px' }}>Upload Images</button>
+          <div className="upload-btn-wrapper">
+            <button style={{width: "250px"}}>Upload Images</button>
             <input
-              type='file'
-              accept='image/png, image/jpeg, image/jpg, image/ico, image/svg'
+              type="file"
+              accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
               onChange={(e) => {
-                handleUpload(e);
+                handelUpload(e, false);
               }}
-              style={{ width: '250px', left: '20px' }}
+              style={{width: "250px", left: "20px"}}
               multiple
             />
             <span>At least 3 clear images of book. (Front, Back, Side)</span>
           </div>
           <div
-            className='uploaded-images-container'
+            className="uploaded-images-container"
             style={{
-              flexWrap: 'wrap',
-              width: 'auto',
+              flexWrap: "wrap",
+              width: "auto",
             }}
           >
             {Image !== null ? (
               <>
                 {Image.map((file) => (
-                  <div className='uploaded-image'>
-                    <button
-                      name={file.name}
-                      onClick={(e) => handleImageDelete(e)}
-                    >
-                      X
-                    </button>
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt='book'
-                      height='60px'
-                      width='60px'
-                    />
-                  </div>
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="book"
+                    height="60px"
+                    width="60px"
+                  />
                 ))}
               </>
             ) : (
               <></>
             )}
+            {uploadedBooks.length ? (
+              <div className="upload-btn-wrapper">
+                <button style={{width: "50px", marginLeft: "10px"}}>+</button>
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                  onChange={(e) => {
+                    handelUpload(e, true);
+                  }}
+                  style={{width: "250px", left: "20px"}}
+                  multiple
+                />
+              </div>
+            ) : null}
           </div>
         </div>
         <div>
           <Checkbox
             checked={checked}
             onChange={handleChange}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
+            inputProps={{"aria-label": "primary checkbox"}}
           />
-          <span style={{ fontFamily: 'PT Sans', fontWeight: 'bold' }}>
-            {' '}
+          <span style={{fontFamily: "PT Sans", fontWeight: "bold"}}>
+            {" "}
             I agree to Terms and Conditions
           </span>
         </div>
         <div
           className={classes.root}
-          style={{ display: alert.show ? 'flex' : 'none' }}
+          style={{display: alert.show ? "flex" : "none"}}
         >
           <Alert
-            variant='outlined'
+            variant="outlined"
             severity={alert.type}
             style={{
-              fontFamily: 'PT Sans',
-              fontWeight: 'bold',
-              color: alert.type === 'success' ? 'yellowgreen' : 'red',
-              width: '250px',
+              fontFamily: "PT Sans",
+              fontWeight: "bold",
+              color: alert.type === "success" ? "yellowgreen" : "red",
+              width: "250px",
             }}
           >
             {alert.msg}
@@ -622,10 +628,10 @@ const AddBook = (props) => {
         </div>
         <div>
           <Button
-            variant='contained'
-            color='secondary'
+            variant="contained"
+            color="secondary"
             className={classes.button}
-            style={{ fontFamily: 'PT Sans', fontWeight: 'bold' }}
+            style={{fontFamily: "PT Sans", fontWeight: "bold"}}
             onClick={(e) => {
               e.preventDefault();
               if (checked) {
@@ -635,10 +641,10 @@ const AddBook = (props) => {
           >
             <CircularProgress
               style={{
-                display: load ? 'inline-block' : 'none',
-                height: '15px',
-                width: '15px',
-                color: 'white',
+                display: load ? "inline-block" : "none",
+                height: "15px",
+                width: "15px",
+                color: "white",
               }}
             />
             &nbsp;Submit For Review
