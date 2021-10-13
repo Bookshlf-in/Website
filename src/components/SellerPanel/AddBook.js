@@ -75,6 +75,13 @@ const AddBook = (props) => {
     setUploadedBooks(fileList);
   };
 
+  const handleImageDelete = (e) => {
+    e.preventDefault();
+
+    setImage(Image.filter((file) => file.name !== e.target.name));
+    setPhoto(Image.filter((file) => file.name !== e.target.name));
+  };
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -577,7 +584,7 @@ const AddBook = (props) => {
             <span>At least 3 clear images of book. (Front, Back, Side)</span>
           </div>
           <div
-            className="uploaded-images"
+            className="uploaded-images-container"
             style={{
               flexWrap: "wrap",
               width: "100%",
@@ -586,12 +593,20 @@ const AddBook = (props) => {
             {Image !== null ? (
               <>
                 {Image.map((file) => (
+                  <div className='uploaded-image'>
+                  <button
+                    name={file.name}
+                    onClick={(e) => handleImageDelete(e)}
+                  >
+                    X
+                  </button>
                   <img
                     src={URL.createObjectURL(file)}
-                    alt="book"
-                    height="60px"
-                    width="60px"
+                    alt='book'
+                    height='60px'
+                    width='60px'
                   />
+                </div>
                 ))}
               </>
             ) : (
