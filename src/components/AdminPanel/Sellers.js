@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import axios from "../../axios";
 
 const Sellers = () => {
@@ -107,7 +107,11 @@ const Sellers = () => {
                           height="100px"
                           width="100px"
                         />
-                        <ul style={{listStyle: "none"}}>
+                        <ul
+                          style={{
+                            listStyle: "none",
+                          }}
+                        >
                           <li>{"Name : " + elm.name}</li>
                           <li>{"About : " + elm.intro}</li>
                           <li>{"ID : " + elm._id}</li>
@@ -148,7 +152,11 @@ const Sellers = () => {
                           height="100px"
                           width="100px"
                         />
-                        <ul style={{listStyle: "none"}}>
+                        <ul
+                          style={{
+                            listStyle: "none",
+                          }}
+                        >
                           <li>{"Name : " + elm.name}</li>
                           <li>{"About : " + elm.intro}</li>
                           <li>{"ID : " + elm._id}</li>
@@ -183,7 +191,11 @@ const Sellers = () => {
                           height="100px"
                           width="100px"
                         />
-                        <ul style={{listStyle: "none"}}>
+                        <ul
+                          style={{
+                            listStyle: "none",
+                          }}
+                        >
                           <li>{"Name : " + elm.name}</li>
                           <li>{"About : " + elm.intro}</li>
                           <li>{"ID : " + elm._id}</li>

@@ -218,7 +218,10 @@ const Reviews = () => {
                               : "#66ff00"
                             : "#eee"
                         }
-                        style={{ padding: "0px", paddingLeft: "25px" }}
+                        style={{
+                          padding: "0px",
+                          paddingLeft: "25px",
+                        }}
                         onMouseEnter={() => sethover(ratingValue)}
                         onMouseLeave={() => sethover(ratingValue)}
                       />

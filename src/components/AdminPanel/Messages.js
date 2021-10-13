@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import axios from "../../axios";
 
 const Messages = (props) => {
@@ -20,7 +20,7 @@ const Messages = (props) => {
   const getMessages = () => {
     setload(true);
     axios
-      .get("/admin-getMessageList", {params: {page: 1}})
+      .get("/admin-getMessageList", { params: { page: 1 } })
       .then((response) => {
         setmessages(response.data.data);
         setTotalPages(response.data.totalPages);
@@ -39,7 +39,7 @@ const Messages = (props) => {
   const LoadMore = () => {
     if (page + 1 <= totalPages) {
       axios
-        .get("/admin-getMessageList", {params: {page: page + 1}})
+        .get("/admin-getMessageList", { params: { page: page + 1 } })
         .then((response) => {
           setmessages(messages.concat(response.data.data));
           setTotalPages(response.data.totalPages);
@@ -93,7 +93,7 @@ const Messages = (props) => {
     e.target.style.animation = "spin 2s linear infinite";
     axios
       .delete("/admin-deleteMessage", {
-        data: {messageId: id},
+        data: { messageId: id },
       })
       .then((response) => {
         setfilteredMessages(
@@ -222,7 +222,9 @@ const Messages = (props) => {
                   e.preventDefault();
                   LoadMore();
                 }}
-                style={{display: page + 1 <= totalPages ? "block" : "none"}}
+                style={{
+                  display: page + 1 <= totalPages ? "block" : "none",
+                }}
               >
                 More&nbsp;
                 <i className="fas fa-caret-down" />

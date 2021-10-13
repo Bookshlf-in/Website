@@ -79,7 +79,7 @@ const Reviews = () => {
             <div className="reviews_wrapper">
               {Reviews && Reviews.length > 0 ? (
                 <>
-                  {Reviews.map((TopReview,i) => (
+                  {Reviews.map((TopReview, i) => (
                     <div className="reviews_item" key={i}>
                       <div className="ratings">
                         {[...Array(TopReview.rating)].map((e, i) => {

@@ -121,7 +121,11 @@ function UserSignup() {
                 onChange={(e) => setLName(e.target.value)}
                 value={LName}
               />
-              <b style={{ display: Red.name ? "inline-block" : "none" }}>
+              <b
+                style={{
+                  display: Red.name ? "inline-block" : "none",
+                }}
+              >
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.name}
               </b>
@@ -137,7 +141,11 @@ function UserSignup() {
                 value={Email}
                 style={Red.email ? Errorstyle : {}}
               />
-              <b style={{ display: Red.email ? "inline-block" : "none" }}>
+              <b
+                style={{
+                  display: Red.email ? "inline-block" : "none",
+                }}
+              >
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.email}
               </b>
@@ -166,7 +174,11 @@ function UserSignup() {
                   }
                 }}
               />
-              <b style={{ display: Red.password ? "inline-block" : "none" }}>
+              <b
+                style={{
+                  display: Red.password ? "inline-block" : "none",
+                }}
+              >
                 <i className="fas fa-exclamation-circle" />
                 &nbsp;{message.password}
               </b>

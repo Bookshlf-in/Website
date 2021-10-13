@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import axios from "../../axios";
 const FindProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -12,7 +12,7 @@ const FindProfile = () => {
     const fetch = async () => {
       axios
         .get("/admin-getUserProfile", {
-          params: {email: email},
+          params: { email: email },
         })
         .then((response) => {
           console.log(response.data);
@@ -36,7 +36,7 @@ const FindProfile = () => {
     const fetch = async () => {
       axios
         .get("/admin-getSellerProfile", {
-          params: {email: email},
+          params: { email: email },
         })
         .then((response) => {
           console.log(response.data);
@@ -113,7 +113,11 @@ const FindProfile = () => {
                           : "Not Verified"
                         : ""}
                     </h2>
-                    <p style={{display: userProfile ? "block" : "none"}}>
+                    <p
+                      style={{
+                        display: userProfile ? "block" : "none",
+                      }}
+                    >
                       <b>Roles</b> :{" "}
                       {userProfile
                         ? userProfile.roles.map((role) => <i>{role + " "}</i>)
