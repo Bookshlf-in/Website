@@ -319,7 +319,7 @@ const BookDetails = (props) => {
                   >
                     <u>Login</u>
                   </Link>{" "}
-                  to purchase <b>{book.title}</b>
+                  to purchase <b>"{book.title}"</b> book
                 </Alert>
               ) : null}
               {/* <div className="recommened-tags">
