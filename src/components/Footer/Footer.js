@@ -195,7 +195,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link twitter"
-                to="/"
+                to={{ pathname:"https://twitter.com/BookshlfA" }}
                 target="_blank"
                 aria-label="Twitter"
               >
