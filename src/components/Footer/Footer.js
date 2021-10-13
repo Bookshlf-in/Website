@@ -211,7 +211,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link youtube"
-                to="/"
+                to={{ pathname:"https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ" }}
                 target="_blank"
                 aria-label="Youtube"
               >
