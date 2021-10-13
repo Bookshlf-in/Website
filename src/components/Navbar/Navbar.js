@@ -372,7 +372,7 @@ function Navbar() {
                       <MenuItem
                         style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
                         onClick={() => {
-                          history.push("/SellerPanel");
+                          history.push("/SellerPanel/4");
                         }}
                       >
                         <i className="fas fa-book" />
