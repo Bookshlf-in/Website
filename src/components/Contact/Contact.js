@@ -1,7 +1,7 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "./Contact.css";
-import {Link} from "react-router-dom";
-import {makeStyles} from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import axios from "../../axios";
 
@@ -125,7 +125,7 @@ function Contact() {
       </div>
       <div className="contact-form">
         <h1>Contact Information</h1>
-        <h3 style={{fontSize: "12px"}}>
+        <h3 style={{ fontSize: "12px" }}>
           We will try our best to answer your questions as soon as possible.
         </h3>
         <br />
@@ -227,7 +227,7 @@ function Contact() {
             {/* Loader ends */}
           </form>
         </div>
-        <div className={classes.root} style={{display: showAlert}}>
+        <div className={classes.root} style={{ display: showAlert }}>
           <Alert
             variant="outlined"
             severity={Alerttype}

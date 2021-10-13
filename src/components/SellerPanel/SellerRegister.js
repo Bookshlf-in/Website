@@ -1,11 +1,11 @@
-import {React, useState, useContext} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { React, useState, useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
-import {useHistory} from "react-router-dom";
-import {storage} from "../../firebase";
-import {nanoid} from "nanoid";
+import { UserContext } from "../../Context/userContext";
+import { useHistory } from "react-router-dom";
+import { storage } from "../../firebase";
+import { nanoid } from "nanoid";
 import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
@@ -130,7 +130,7 @@ export default function SellerRegister() {
                 <Avatar
                   alt="Profile"
                   src={Image}
-                  style={{height: "100px", width: "100px"}}
+                  style={{ height: "100px", width: "100px" }}
                 />
               </div>
               <div className="upload-btn-wrapper">

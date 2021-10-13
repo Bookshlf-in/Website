@@ -1,8 +1,8 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./Cart.css";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
 function Cart() {
   const history = useHistory();
@@ -65,7 +65,7 @@ function Cart() {
     amt = 0;
     axios
       .delete("/deleteCartItem", {
-        data: {bookId: ID},
+        data: { bookId: ID },
       })
       .then((response) => {
         let memo = cart.filter((item) => ID !== item.bookId);
@@ -155,14 +155,14 @@ function Cart() {
           {/* Loader */}
           <div
             className="page-loader"
-            style={{display: loader ? "flex" : "none"}}
+            style={{ display: loader ? "flex" : "none" }}
           >
-            <CircularProgress style={{height: "50px", width: "50px"}} />
+            <CircularProgress style={{ height: "50px", width: "50px" }} />
           </div>
 
           <div
             className="cart-container-left"
-            style={{display: loader ? "none" : "block"}}
+            style={{ display: loader ? "none" : "block" }}
           >
             <h1 className="cart-title">
               <i className="fas fa-cart-arrow-down"></i>&nbsp;Cart
@@ -227,7 +227,7 @@ function Cart() {
                       <h3 className="avl-qty">
                         Available Quantity : <span>{item.qty}</span>
                       </h3>
-                      <h3 style={{color: "green"}}>Purchasing Quantity</h3>
+                      <h3 style={{ color: "green" }}>Purchasing Quantity</h3>
                       <table className="book-quantity">
                         <thead>
                           <tr>
@@ -241,7 +241,10 @@ function Cart() {
                             </td>
                             <td
                               id={idx}
-                              style={{color: "green", fontFamily: "PT Sans"}}
+                              style={{
+                                color: "green",
+                                fontFamily: "PT Sans",
+                              }}
                             >
                               {Math.min(item.purchaseQty, item.qty)}
                             </td>
@@ -272,7 +275,7 @@ function Cart() {
           </div>
           <div
             className="cart-container-right"
-            style={{display: loader ? "none" : "block"}}
+            style={{ display: loader ? "none" : "block" }}
           >
             <h2>Total Amount Payable</h2>
             <div className="cart-total">
@@ -295,7 +298,11 @@ function Cart() {
               {checkout ? (
                 <>
                   <CircularProgress
-                    style={{height: "25px", width: "25px", color: "white"}}
+                    style={{
+                      height: "25px",
+                      width: "25px",
+                      color: "white",
+                    }}
                   />
                   &nbsp;Checking Out...
                 </>

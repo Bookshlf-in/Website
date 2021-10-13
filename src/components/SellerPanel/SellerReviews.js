@@ -1,5 +1,5 @@
-import {React} from "react";
-import {FaStar} from "react-icons/fa";
+import { React } from "react";
+import { FaStar } from "react-icons/fa";
 const SellerReviews = (props) => {
   return (
     <div>

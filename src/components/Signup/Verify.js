@@ -1,9 +1,9 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "./Verify.css";
 import InputMask from "react-input-mask";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const lock = {
@@ -133,10 +133,10 @@ function Verify(props) {
         <input type="text" value={props.mail} disabled />
       </div>
       <div className="forgot-container-otp">
-        <span style={{height: "50px", width: "50px"}}>
+        <span style={{ height: "50px", width: "50px" }}>
           <i
             className={locked ? lock.close : lock.open}
-            style={{color: locked ? "rgb(8, 194, 8)" : "red"}}
+            style={{ color: locked ? "rgb(8, 194, 8)" : "red" }}
           />
         </span>
         <InputMask
@@ -145,7 +145,7 @@ function Verify(props) {
           alwaysShowMask="true"
           value={Otp}
           onChange={(e) => handelOtp(e)}
-          style={{color: locked ? "rgb(8, 194, 8)" : "blue"}}
+          style={{ color: locked ? "rgb(8, 194, 8)" : "blue" }}
         />
         <button onClick={handelSendOtp}>
           {sendOtp ? "Sending..." : "Send OTP"}
@@ -153,7 +153,7 @@ function Verify(props) {
       </div>
       <div
         id="send-otp-again-alert"
-        style={{display: showAlert ? "inline-block" : "none"}}
+        style={{ display: showAlert ? "inline-block" : "none" }}
       >
         <Alert
           variant="outlined"
@@ -183,7 +183,7 @@ function Verify(props) {
       </div>
       <div className="verification-container-login">
         <button
-          style={{opacity: verified ? "1" : "0.4"}}
+          style={{ opacity: verified ? "1" : "0.4" }}
           onClick={() => {
             if (verified) {
               history.push("/Login");

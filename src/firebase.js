@@ -12,4 +12,4 @@ const firebaseApp = firebase.initializeApp({
 
 const storage = firebase.storage();
 
-export {storage};
+export { storage };

@@ -1,7 +1,7 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import UpdateBook from "./UpdateBook";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -72,7 +72,7 @@ const Orders = (props) => {
   const handelBookDelete = (e) => {
     axios
       .delete("/deleteBook", {
-        data: {bookId: e.target.id},
+        data: { bookId: e.target.id },
       })
       .then((response) => {
         setalert({
@@ -124,7 +124,7 @@ const Orders = (props) => {
       </div>
       <div
         className={classes.root}
-        style={{display: alert.show ? "flex" : "none"}}
+        style={{ display: alert.show ? "flex" : "none" }}
       >
         <Alert
           variant="outlined"
@@ -244,7 +244,9 @@ const Orders = (props) => {
                             >
                               <DialogTitle
                                 id="alert-dialog-title"
-                                style={{fontFamily: "PT Sans"}}
+                                style={{
+                                  fontFamily: "PT Sans",
+                                }}
                               >
                                 {"Admin Message"}
                               </DialogTitle>
@@ -257,7 +259,9 @@ const Orders = (props) => {
                                 <Button
                                   onClick={handleClose}
                                   color="primary"
-                                  style={{fontWeight: "bold"}}
+                                  style={{
+                                    fontWeight: "bold",
+                                  }}
                                 >
                                   OK
                                 </Button>

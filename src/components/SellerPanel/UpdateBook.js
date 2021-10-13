@@ -1,12 +1,12 @@
-import {React, useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
-import {storage} from "../../firebase";
-import {nanoid} from "nanoid";
+import { storage } from "../../firebase";
+import { nanoid } from "nanoid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -409,7 +409,7 @@ function UpdateBook(props) {
             value={link}
           />
         </div>
-        <div className="add-book-field1" style={{display: "block"}}>
+        <div className="add-book-field1" style={{ display: "block" }}>
           <div className="book-tags" id="add-book-tag">
             {tags.length > 0 ? (
               <>
@@ -428,7 +428,7 @@ function UpdateBook(props) {
               <></>
             )}
           </div>
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             <input
               type="text"
               placeholder="Add Book Tags"
@@ -445,7 +445,7 @@ function UpdateBook(props) {
               }}
             />
             <span
-              style={{cursor: "pointer"}}
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 let memo = tags;
                 memo.push(tag);
@@ -468,14 +468,14 @@ function UpdateBook(props) {
           }}
         >
           <div className="upload-btn-wrapper">
-            <button style={{width: "250px"}}>Upload Images</button>
+            <button style={{ width: "250px" }}>Upload Images</button>
             <input
               type="file"
               accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
               onChange={(e) => {
                 handelUpload(e);
               }}
-              style={{width: "250px", left: "20px"}}
+              style={{ width: "250px", left: "20px" }}
               multiple
             />
             <span>At least 3 clear images of book. (Front, Back, Side)</span>
@@ -513,16 +513,16 @@ function UpdateBook(props) {
           <Checkbox
             checked={checked}
             onChange={handleChange}
-            inputProps={{"aria-label": "primary checkbox"}}
+            inputProps={{ "aria-label": "primary checkbox" }}
           />
-          <span style={{fontFamily: "PT Sans", fontWeight: "bold"}}>
+          <span style={{ fontFamily: "PT Sans", fontWeight: "bold" }}>
             {" "}
             I agree to Terms and Conditions
           </span>
         </div>
         <div
           className={classes.root}
-          style={{display: alert.show ? "flex" : "none"}}
+          style={{ display: alert.show ? "flex" : "none" }}
         >
           <Alert
             variant="outlined"
@@ -542,7 +542,7 @@ function UpdateBook(props) {
             variant="contained"
             color="primary"
             className={classes.button}
-            style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+            style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
             onClick={(e) => {
               e.preventDefault();
               if (checked) {

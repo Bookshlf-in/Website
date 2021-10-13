@@ -1,5 +1,5 @@
-import {React, useState} from "react";
-import {Link} from "react-router-dom";
+import { React, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "../../axios";
 const GetOrderDetails = (props) => {
   const [orderlist, setorderlist] = useState([]);
@@ -22,7 +22,7 @@ const GetOrderDetails = (props) => {
     if (page + 1 <= totalPages) {
       axios
         .get("/admin-getOrderList", {
-          params: {page: page + 1, noOfBooksInOnePage: 10},
+          params: { page: page + 1, noOfBooksInOnePage: 10 },
         })
         .then((response) => {
           console.log(response.data.data);
@@ -199,7 +199,7 @@ const GetOrderDetails = (props) => {
         </table>
       </div>
       {page + 1 <= totalPages ? (
-        <button onClick={() => LoadMore()} style={{marginTop: "20px"}}>
+        <button onClick={() => LoadMore()} style={{ marginTop: "20px" }}>
           More
         </button>
       ) : (

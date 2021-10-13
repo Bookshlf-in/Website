@@ -1,14 +1,14 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./BookDetails.css";
-import {useParams, useHistory, Link} from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import Booksnaps from "./Booksnaps";
 import Bookfullsnap from "./Bookfullsnap";
 import BookDesc from "./BookDesc";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 // Alert
@@ -102,7 +102,7 @@ const BookDetails = (props) => {
         setloadWishlist(true);
         axios
           .delete("/deleteWishlistItem", {
-            data: {bookId: id},
+            data: { bookId: id },
           })
           .then((response) => {
             setOpen(true);
@@ -178,7 +178,7 @@ const BookDetails = (props) => {
         setloadCart(true);
         axios
           .delete("/deleteCartItem", {
-            data: {bookId: id},
+            data: { bookId: id },
           })
           .then((response) => {
             setOpen(true);
@@ -226,8 +226,11 @@ const BookDetails = (props) => {
   return (
     <div>
       {/* Loader */}
-      <div className="page-loader" style={{display: loader ? "flex" : "none"}}>
-        <CircularProgress style={{height: "80px", width: "80px"}} />
+      <div
+        className="page-loader"
+        style={{ display: loader ? "flex" : "none" }}
+      >
+        <CircularProgress style={{ height: "80px", width: "80px" }} />
       </div>
 
       {/* Component */}
@@ -253,7 +256,8 @@ const BookDetails = (props) => {
                 className="wishlist-btn"
               >
                 <i className={wishlist ? "fas fa-heart" : "far fa-heart"} />
-                &nbsp;{wishlist ? "Remove From Wishlist" : "Add To Wishlist"}
+                &nbsp;
+                {wishlist ? "Remove From Wishlist" : "Add To Wishlist"}
                 &nbsp;
                 <CircularProgress
                   style={{
@@ -273,7 +277,8 @@ const BookDetails = (props) => {
                 className="addtocart-btn"
               >
                 <i className="fas fa-cart-arrow-down" />
-                &nbsp;{cart ? "Remove from Cart" : "Add to Cart"}
+                &nbsp;
+                {cart ? "Remove from Cart" : "Add to Cart"}
                 &nbsp;
                 <CircularProgress
                   style={{
@@ -305,7 +310,7 @@ const BookDetails = (props) => {
                     setShowLoginAlert(false);
                   }}
                   severity="error"
-                  style={{fontSize: "12px"}}
+                  style={{ fontSize: "12px" }}
                 >
                   Please{" "}
                   <Link
