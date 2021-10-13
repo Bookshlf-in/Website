@@ -179,7 +179,7 @@ function Footer() {
             <div className="social-icons">
               <Link
                 className="social-icon-link facebook"
-                to="/"
+                to={{ pathname:"https://www.facebook.com/Bookshlf-109479771200918" }}
                 target="_blank"
                 aria-label="Facebook"
               >
@@ -187,7 +187,7 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link instagram"
-                to={{ pathname:"https://www.facebook.com/Bookshlf-109479771200918" }}
+                to={{ pathname:"https://instagram.com/_bookshlf" }}
                 target="_blank"
                 aria-label="Instagram"
               >
