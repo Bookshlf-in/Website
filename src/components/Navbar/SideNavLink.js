@@ -1,10 +1,10 @@
-import {React, useState, useContext} from "react";
-import {Link} from "react-router-dom";
-import {closeNav} from "./Sidenav";
+import { React, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { closeNav } from "./Sidenav";
 import axios from "../../axios.js";
-import {UserContext} from "../../Context/userContext";
-import {AddFormContext} from "../../Context/formContext";
-const SideNavLink = ({to, label, iconClass, isProfile}) => {
+import { UserContext } from "../../Context/userContext";
+import { AddFormContext } from "../../Context/formContext";
+const SideNavLink = ({ to, label, iconClass, isProfile }) => {
   const [user, setUser] = useContext(UserContext);
   const [addForm, setAddForm] = useContext(AddFormContext);
   const logout = () => {

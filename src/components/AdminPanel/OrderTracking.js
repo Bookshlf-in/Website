@@ -1,5 +1,5 @@
-import {React, useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "../../axios";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -50,7 +50,9 @@ function OrderTracking() {
   useEffect(() => {
     const fetchdata = async () => {
       axios
-        .get("/admin-getOrderDetails", {params: {orderId: params.orderId}})
+        .get("/admin-getOrderDetails", {
+          params: { orderId: params.orderId },
+        })
         .then((response) => {
           setorder(response.data);
           console.log(response.data);
@@ -69,7 +71,7 @@ function OrderTracking() {
     });
     axios
       .delete("/admin-markOrderAsCancelled", {
-        data: {orderId: ORDERID},
+        data: { orderId: ORDERID },
       })
       .then((response) => {
         setcls({
@@ -83,7 +85,7 @@ function OrderTracking() {
     setnext(true);
     if (activeStep === 0) {
       axios
-        .post("/admin-markOrderAsPacked", {orderId: OrderId})
+        .post("/admin-markOrderAsPacked", { orderId: OrderId })
         .then((response) => {
           axios
             .post("/admin-changeOrderProgress", {
@@ -107,7 +109,7 @@ function OrderTracking() {
         });
     } else if (activeStep === 1) {
       axios
-        .post("/admin-markOrderAsShipped", {orderId: OrderId})
+        .post("/admin-markOrderAsShipped", { orderId: OrderId })
         .then((response) => {
           axios
             .post("/admin-changeOrderProgress", {
@@ -138,7 +140,7 @@ function OrderTracking() {
         });
     } else if (activeStep === 3) {
       axios
-        .post("/admin-markOrderAsCompleted", {orderId: OrderId})
+        .post("/admin-markOrderAsCompleted", { orderId: OrderId })
         .then((response) => {
           axios
             .post("/admin-changeOrderProgress", {
@@ -173,7 +175,7 @@ function OrderTracking() {
         });
     } else if (activeStep === 3) {
       axios
-        .post("/admin-markOrderAsShipped", {orderId: OrderId})
+        .post("/admin-markOrderAsShipped", { orderId: OrderId })
         .then((response) => {
           axios
             .post("/admin-changeOrderProgress", {
@@ -191,7 +193,7 @@ function OrderTracking() {
         .catch();
     } else if (activeStep === 2) {
       axios
-        .post("/admin-markOrderAsPacked", {orderId: OrderId})
+        .post("/admin-markOrderAsPacked", { orderId: OrderId })
         .then((response) => {
           axios
             .post("/admin-changeOrderProgress", {
@@ -242,24 +244,24 @@ function OrderTracking() {
           </div>
           <div className="order-details">
             <h1>Book Details</h1>
-            <ul style={{listStyle: "none"}}>
+            <ul style={{ listStyle: "none" }}>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Book Name</b> :{" "}
-                {order.title}
+                <i className="fas fa-circle-notch"></i>&nbsp;
+                <b>Book Name</b> : {order.title}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Book Author</b>{" "}
-                : {order.author}
+                <i className="fas fa-circle-notch"></i>&nbsp;
+                <b>Book Author</b> : {order.author}
               </li>
               <li>
-                <i className="fas fa-circle-notch"></i>&nbsp;<b>Seller Name</b>{" "}
-                : {order.sellerName}
+                <i className="fas fa-circle-notch"></i>&nbsp;
+                <b>Seller Name</b> : {order.sellerName}
               </li>
             </ul>
           </div>
           <div className="order-details">
             <h1>Customer Details</h1>
-            <ul style={{listStyle: "none"}}>
+            <ul style={{ listStyle: "none" }}>
               <li>
                 <i className="fas fa-circle-notch"></i>&nbsp;
                 <b>Customer Name</b> : {order.customerName}
@@ -283,10 +285,11 @@ function OrderTracking() {
           </div>
           <div className="order-details">
             <h1>Order Details</h1>
-            <ul style={{listStyle: "none"}}>
+            <ul style={{ listStyle: "none" }}>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Item Price</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Item Price</b>
                 </span>
                 <span className="price-tag">
                   <i className="fas fa-rupee-sign" />
@@ -310,7 +313,8 @@ function OrderTracking() {
               </li>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Order Total</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Order Total</b>
                 </span>
                 <span className="price-tag">
                   <i className="fas fa-rupee-sign" />
@@ -323,7 +327,10 @@ function OrderTracking() {
             <Stepper
               activeStep={activeStep}
               alternativeLabel
-              style={{backgroundColor: "aliceblue", width: "100%"}}
+              style={{
+                backgroundColor: "aliceblue",
+                width: "100%",
+              }}
             >
               {steps.map((label) => (
                 <Step key={label}>
@@ -415,7 +422,7 @@ function OrderTracking() {
             >
               <i
                 className={cls.Cls}
-                style={{fontSize: "16px", color: "white"}}
+                style={{ fontSize: "16px", color: "white" }}
               />
               &nbsp;&nbsp;{cls.msg}
             </div>
@@ -428,10 +435,18 @@ function OrderTracking() {
       ) : (
         <div
           className="page-loader"
-          style={{display: "flex", width: "100%", height: "calc(100% - 200px)"}}
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "calc(100% - 200px)",
+          }}
         >
           <CircularProgress
-            style={{height: "100px", width: "100px", color: "green"}}
+            style={{
+              height: "100px",
+              width: "100px",
+              color: "green",
+            }}
           />
         </div>
       )}

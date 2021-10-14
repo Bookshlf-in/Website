@@ -1,4 +1,4 @@
-import {React} from "react";
+import { React } from "react";
 import "./Account.css";
 import Avatar from "@material-ui/core/Avatar";
 
@@ -34,7 +34,7 @@ function Account(props) {
           <Avatar
             alt={props.user.name}
             src="/images/user.png"
-            style={{height: "150px", width: "150px"}}
+            style={{ height: "150px", width: "150px" }}
           />
         </div>
       </div>

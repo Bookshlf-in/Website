@@ -1,7 +1,7 @@
-import {React, useState} from "react";
-import {Link} from "react-router-dom";
+import { React, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "../../axios";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import "./CurrentOrders.css";
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ function CurrentOrders(props) {
   const handelCancelOrder = (ORDERID) => {
     axios
       .delete("/cancelOrder", {
-        data: {orderId: ORDERID},
+        data: { orderId: ORDERID },
       })
       .then((response) => {
         // console.log(response.data);
@@ -86,7 +86,7 @@ function CurrentOrders(props) {
     <div className="user-current-orders" id="user-current-orders">
       <div
         className={classes.root}
-        style={{display: alert.Display ? "flex" : "none"}}
+        style={{ display: alert.Display ? "flex" : "none" }}
       >
         <Alert
           variant="outlined"
@@ -119,7 +119,7 @@ function CurrentOrders(props) {
                   <tr key={idx}>
                     <td>{order._id}</td>
                     <td>
-                      <ul style={{listStyle: "none"}}>
+                      <ul style={{ listStyle: "none" }}>
                         <li>Book : {order.title}</li>
                       </ul>
                     </td>
