@@ -20,6 +20,7 @@ function Login() {
   const [addForm, setAddForm] = useContext(AddFormContext);
   const history = useHistory();
 
+
   // login states
   const [Name, setName] = useState("");
   const [Password, setPassword] = useState("");
@@ -34,7 +35,6 @@ function Login() {
   const [Red1, makeRed1] = useState(false);
   const [Red2, makeRed2] = useState(false);
   const [loader, setloader] = useState("none");
-
   // showing password and hiding
   const handelClick = (e) => {
     if (show === eye.close) {
@@ -141,7 +141,7 @@ function Login() {
           });
           setTimeout(() => {
             setloader("none");
-            history.push("/");
+            history.goBack();
           }, 5000);
         })
         .catch((error) => {
