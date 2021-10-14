@@ -1,6 +1,6 @@
-import {React, useState, useEffect, useContext} from "react";
-import {Link, useParams, useHistory} from "react-router-dom";
-import {UserContext} from "../../Context/userContext";
+import { React, useState, useEffect, useContext } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
 import "./AdminPanel.css";
 import Seller from "./Sellers";
 import Orders from "./Orders";

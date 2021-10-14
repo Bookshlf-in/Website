@@ -1,7 +1,7 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import axios from "../../axios";
-import {storage} from "../../firebase";
-import {nanoid} from "nanoid";
+import { storage } from "../../firebase";
+import { nanoid } from "nanoid";
 import Avatar from "@material-ui/core/Avatar";
 import Collapse from "@material-ui/core/Collapse";
 const Verified = {
@@ -81,7 +81,7 @@ const AccountDetails = (props) => {
                 ? sellerDetails.Photo
                 : "images/user.ico"
             }
-            style={{height: "150px", width: "150px"}}
+            style={{ height: "150px", width: "150px" }}
           />
         </div>
 
@@ -142,7 +142,10 @@ const AccountDetails = (props) => {
                 <img
                   src={Image}
                   alt="profile"
-                  style={{border: "none", borderRadius: "50%"}}
+                  style={{
+                    border: "none",
+                    borderRadius: "50%",
+                  }}
                 />
               </div>
               <div className="upload-btn-wrapper">

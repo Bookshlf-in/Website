@@ -1,11 +1,11 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./AllCategories.css";
-import {Link, useParams, useHistory} from "react-router-dom";
-import {UserContext} from "../../Context/userContext";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
 import axios from "../../axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Alert
@@ -126,7 +126,7 @@ const AllCategories = () => {
 
         axios
           .delete("/deleteWishlistItem", {
-            data: {bookId: e.target.id},
+            data: { bookId: e.target.id },
           })
           .then((response) => {
             // console.log(response.data);
@@ -287,7 +287,7 @@ const AllCategories = () => {
         });
         axios
           .delete("/deleteCartItem", {
-            data: {bookId: e.target.id},
+            data: { bookId: e.target.id },
           })
           .then((response) => {
             e.target.innerHTML = "Add to Cart";
@@ -423,7 +423,7 @@ const AllCategories = () => {
               )}
             </>
           ) : (
-            <CircularProgress style={{height: "50px", width: "50px"}} />
+            <CircularProgress style={{ height: "50px", width: "50px" }} />
           )}
         </div>
         {/* ======================================================== */}
