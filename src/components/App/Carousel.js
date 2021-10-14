@@ -3,7 +3,7 @@ import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import "./Slider-animations.css";
 import "./Carousel.css";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Carousel() {
   const history = useHistory();

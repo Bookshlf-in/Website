@@ -1,8 +1,8 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
-import {Link} from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
+import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const style = {
   padding: "10px",
@@ -45,7 +45,7 @@ const Wishlist = () => {
       setremoveId(ID);
       axios
         .delete("/deleteWishlistItem", {
-          data: {bookId: e.target.id},
+          data: { bookId: e.target.id },
         })
         .then((response) => {
           setwishlist(wishlist.filter((item) => e.target.id !== item.bookId));
@@ -117,18 +117,21 @@ const Wishlist = () => {
           {/* Loader */}
           <div
             className="page-loader"
-            style={{display: loader ? "flex" : "none"}}
+            style={{ display: loader ? "flex" : "none" }}
           >
-            <CircularProgress style={{height: "50px", width: "50px"}} />
+            <CircularProgress style={{ height: "50px", width: "50px" }} />
           </div>
           <div
-            style={{display: loader ? "none" : "block", textAlign: "center"}}
+            style={{
+              display: loader ? "none" : "block",
+              textAlign: "center",
+            }}
           >
             <h1>Your Wishlist</h1>
             <Grid
               container
               alignItems="center"
-              style={{justifyContent: "center"}}
+              style={{ justifyContent: "center" }}
             >
               {wishlist.length > 0 ? (
                 <>
@@ -151,7 +154,9 @@ const Wishlist = () => {
                           <p className="details-para3">{item.author}</p>
                           <p
                             className="details-para4 price-tag"
-                            style={{marginTop: "10px"}}
+                            style={{
+                              marginTop: "10px",
+                            }}
                           >
                             <i className="fas fa-rupee-sign" />
                             &nbsp;{item.price} /-
@@ -173,7 +178,10 @@ const Wishlist = () => {
                             >
                               {removeId === item.bookId ? (
                                 <CircularProgress
-                                  style={{height: "15px", width: "15px"}}
+                                  style={{
+                                    height: "15px",
+                                    width: "15px",
+                                  }}
                                 />
                               ) : (
                                 <>Remove</>
@@ -183,7 +191,9 @@ const Wishlist = () => {
                           <div
                             title="View Book Details"
                             className="book-more-details"
-                            style={{marginTop: "10px"}}
+                            style={{
+                              marginTop: "10px",
+                            }}
                           >
                             <Link to={`/BookDetails/${item.bookId}`}>
                               More Details&nbsp;

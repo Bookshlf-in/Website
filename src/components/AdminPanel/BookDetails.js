@@ -1,9 +1,9 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import "../BookDetails/BookDetails.css";
 import Booksnaps from "../BookDetails/Booksnaps";
 import Bookfullsnap from "../BookDetails/Bookfullsnap";
 import BookDesc from "../BookDetails/BookDesc";
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "../../axios";
 import UpdateBook from "./UpdateBook";
 import Fade from "@material-ui/core/Fade";
@@ -23,7 +23,9 @@ const BookDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get("/admin-getBookDetails", {params: {bookId: params.bookId}})
+        .get("/admin-getBookDetails", {
+          params: { bookId: params.bookId },
+        })
         .then((response) => {
           setbook(response.data);
           console.log(response.data);
@@ -75,7 +77,7 @@ const BookDetails = () => {
     e.target.innerHTML = "Deleting...";
     axios
       .delete("/admin-deleteBook", {
-        data: {bookId: id, message: "Book is not Appropriate"},
+        data: { bookId: id, message: "Book is not Appropriate" },
       })
       .then((response) => {
         console.log(response.data.msg);
