@@ -68,7 +68,7 @@ const Reviews = () => {
   return (
     <div>
       <div className="reviews">
-        <p className="reviewed_by">Reviews from happy readers</p>
+        <p className="reviewed_by">What readers say about us?</p>
 
         <p className="book_desc">
           This book is concerned with creating typography and is essential for
@@ -81,13 +81,10 @@ const Reviews = () => {
                 <>
                   {Reviews.map((TopReview, i) => (
                     <div className="reviews_item" key={i}>
-                      <div className="ratings">
-                        {[...Array(TopReview.rating)].map((e, i) => {
-                          return <FaStar size={20} color="#FDCC0D" key={i} />;
-                        })}
-                      </div>
+                      <p className="rating_desc">{TopReview.review}</p>
+
                       <h3 className="rating_value">
-                        {TopReview.userName}
+                        - {TopReview.userName}
                         {TopReview.rating <= 2 && TopReview.rating >= 1 ? (
                           <>&#128545;</>
                         ) : TopReview.rating <= 4 ? (
@@ -96,7 +93,12 @@ const Reviews = () => {
                           <>&#128525;</>
                         )}
                       </h3>
-                      <p className="rating_desc">{TopReview.review}</p>
+
+                      <div className="ratings">
+                        {[...Array(TopReview.rating)].map((e, i) => {
+                          return <FaStar size={20} color="#FDCC0D" key={i} />;
+                        })}
+                      </div>
                     </div>
                   ))}
                 </>
@@ -105,6 +107,7 @@ const Reviews = () => {
               )}
             </div>
           </Grid>
+
           <Grid item xs={12}>
             <div
               className="Add-Rvw-btn"
