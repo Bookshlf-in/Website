@@ -37,6 +37,9 @@ const SellerProfile = (props) => {
   return (
     <div className="seller">
       <h2 className="seller-name">{sellerName}</h2>
+      <div className="seller-verified">
+        {isVerified ? "✅ verified" : "not verified"}
+      </div>
       <div className="seller-info">
         <div className="seller-info-left">
           <Avatar
