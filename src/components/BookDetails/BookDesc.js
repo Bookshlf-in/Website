@@ -80,7 +80,7 @@ function BookDesc(props) {
         <div className="book-seller-name">
           <b style={{ fontFamily: "PT Sans" }}>Seller</b>
           <br />
-          <Link to="/SellerProfile">
+          <Link to={`/SellerProfile/${props.bookdetails.seller._id}`}>
             {props.bookdetails.seller
               ? props.bookdetails.seller.name
               : props.bookdetails.sellerName}
