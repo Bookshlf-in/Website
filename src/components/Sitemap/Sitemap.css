@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+
+  margin: 0px auto;
+  max-width: 600px;
+}
+
+@media (min-width: 600px) {
+  .content {
+    min-width: 560px;
+  }
+}
+
+.links {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.links a {
+  color: #06c;
+}
