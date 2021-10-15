@@ -3,8 +3,8 @@ import React from "react";
 import "./Sitemap.css";
 
 const routes = [
-  { name: "Sell Old Books", path: "/" },
-  { name: "Search for books", path: "/SearchResult/books" },
+  { name: "Sell Old Books", path: "/SellerPanel/5" },
+  { name: "Search for books", path: "/SearchResult/tag:ALL" },
 
   { name: "About", path: "/About" },
   { name: "Contact", path: "/Contact" },
