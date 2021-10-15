@@ -1,9 +1,9 @@
-import {React, useState, useContext} from "react";
+import { React, useState, useContext } from "react";
 import "./Login.css";
 import axios from "../../axios";
-import {Link, useHistory} from "react-router-dom";
-import {UserContext} from "../../Context/userContext";
-import {AddFormContext} from "../../Context/formContext";
+import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
+import { AddFormContext } from "../../Context/formContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const eye = {
   open: "far fa-eye",
@@ -141,7 +141,7 @@ function Login() {
           });
           setTimeout(() => {
             setloader("none");
-            history.push("/");
+            history.goBack();
           }, 5000);
         })
         .catch((error) => {
@@ -266,11 +266,17 @@ function Login() {
                   >
                     Login
                   </button>
-                  <div className="login-load" style={{display: loader}}>
-                    <CircularProgress style={{height: "20px", width: "20px"}} />
+                  <div className="login-load" style={{ display: loader }}>
+                    <CircularProgress
+                      style={{
+                        height: "20px",
+                        width: "20px",
+                      }}
+                    />
                   </div>
                   <span className="register">
-                    <Link to="/Signup">Create Account</Link>&nbsp; instead ?
+                    <Link to="/Signup">Create Account</Link>
+                    &nbsp; instead ?
                   </span>
                 </div>
               </form>

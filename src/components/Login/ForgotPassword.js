@@ -1,8 +1,8 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "./ForgotPassword.css";
 import InputMask from "react-input-mask";
 import Alert from "@material-ui/lab/Alert";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "../../axios";
 import * as EmailValidator from "email-validator";
 
@@ -198,16 +198,16 @@ function ForgotPassword() {
                 setEmail(e.target.value);
               }}
               value={Email}
-              style={{width: "320px"}}
+              style={{ width: "320px" }}
             />
           </div>
         </form>
 
         <div className="forgot-container-otp">
-          <span style={{height: "50px", width: "50px"}}>
+          <span style={{ height: "50px", width: "50px" }}>
             <i
               className={locked ? lock.close : lock.open}
-              style={{color: locked ? "rgb(8, 194, 8)" : "red"}}
+              style={{ color: locked ? "rgb(8, 194, 8)" : "red" }}
             />
           </span>
           <InputMask
@@ -216,7 +216,7 @@ function ForgotPassword() {
             alwaysShowMask="true"
             value={Otp}
             onChange={(e) => handelOtp(e)}
-            style={{color: locked ? "rgb(8, 194, 8)" : "blue"}}
+            style={{ color: locked ? "rgb(8, 194, 8)" : "blue" }}
           />
           <button onClick={handelSendOtp}>
             {firstUse ? "Send OTP" : "Send Again"}&nbsp;&nbsp;
@@ -230,7 +230,7 @@ function ForgotPassword() {
           </button>
           <div
             id="send-otp-again-alert-2"
-            style={{display: showAlert ? "inline-block" : "none"}}
+            style={{ display: showAlert ? "inline-block" : "none" }}
           >
             <Alert
               variant="outlined"
@@ -253,7 +253,7 @@ function ForgotPassword() {
             <input
               type={val}
               placeholder="New Password"
-              style={{width: "320px"}}
+              style={{ width: "320px" }}
               onChange={(e) => setPassword(e.target.value)}
               value={Password}
             />
@@ -285,7 +285,7 @@ function ForgotPassword() {
                   setconfirm(false);
                 }
               }}
-              style={confirm ? Errorstyle : {width: "320px"}}
+              style={confirm ? Errorstyle : { width: "320px" }}
             />
             <i
               className={show2}

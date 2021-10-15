@@ -1,8 +1,8 @@
-import {React, useState, useContext} from "react";
+import { React, useState, useContext } from "react";
 import "./Sidenav.css";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import SideNavLink from "./SideNavLink";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 
 export function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
@@ -12,7 +12,7 @@ const Sidenav = () => {
   const history = useHistory();
   const [Search, setSearch] = useState("");
   const [user] = useContext(UserContext);
- const CartItems = "Cart(" + JSON.stringify(user?.cartitems) + ")";
+  const CartItems = "Cart(" + JSON.stringify(user?.cartitems) + ")";
 
   const _handleKeyDown = (e) => {
     if (e.key === "Enter") {

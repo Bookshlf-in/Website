@@ -233,21 +233,6 @@ const BookDetails = (props) => {
         <CircularProgress style={{ height: "80px", width: "80px" }} />
       </div>
 
-      {showLoginAlert ? (
-        <Alert
-          onClose={() => {
-            setShowLoginAlert(false);
-          }}
-          severity="error"
-        >
-          Please{" "}
-          <Link style={{ color: "#fff", fontWeight: 700 }} to="/Login">
-            <u>Login</u>
-          </Link>{" "}
-          to purchase <b>{book.title}</b>
-        </Alert>
-      ) : null}
-
       {/* Component */}
       {!loader ? (
         <>
@@ -271,7 +256,8 @@ const BookDetails = (props) => {
                 className="wishlist-btn"
               >
                 <i className={wishlist ? "fas fa-heart" : "far fa-heart"} />
-                &nbsp;{wishlist ? "Remove From Wishlist" : "Add To Wishlist"}
+                &nbsp;
+                {wishlist ? "Remove From Wishlist" : "Add To Wishlist"}
                 &nbsp;
                 <CircularProgress
                   style={{
@@ -291,7 +277,8 @@ const BookDetails = (props) => {
                 className="addtocart-btn"
               >
                 <i className="fas fa-cart-arrow-down" />
-                &nbsp;{cart ? "Remove from Cart" : "Add to Cart"}
+                &nbsp;
+                {cart ? "Remove from Cart" : "Add to Cart"}
                 &nbsp;
                 <CircularProgress
                   style={{
@@ -317,6 +304,29 @@ const BookDetails = (props) => {
                 <i className="fas fa-shopping-basket" />
                 &nbsp;Buy Now
               </Button>
+              {showLoginAlert ? (
+                <Alert
+                  onClose={() => {
+                    setShowLoginAlert(false);
+                  }}
+                  severity="error"
+                  style={{ fontSize: "12px" }}
+                >
+                  Please{" "}
+                  <Link
+                    style={{
+                      color: "#fff",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      letterSpacing: "1px",
+                    }}
+                    to="/Login"
+                  >
+                    <u>Login</u>
+                  </Link>{" "}
+                  to purchase <b>"{book.title}"</b> book
+                </Alert>
+              ) : null}
               {/* <div className="recommened-tags">
               <h3>Recommended Tags</h3>
             </div> */}

@@ -1,10 +1,10 @@
-import {React, useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 import axios from "../../axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 // Alert
 function Alert(props) {
@@ -179,7 +179,9 @@ function Footer() {
             <div className="social-icons">
               <Link
                 className="social-icon-link facebook"
-                to="/"
+                to={{
+                  pathname: "https://www.facebook.com/Bookshlf-109479771200918",
+                }}
                 target="_blank"
                 aria-label="Facebook"
               >
@@ -187,7 +189,9 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link instagram"
-                to="/"
+                to={{
+                  pathname: "https://instagram.com/_bookshlf",
+                }}
                 target="_blank"
                 aria-label="Instagram"
               >
@@ -195,7 +199,9 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link twitter"
-                to="/"
+                to={{
+                  pathname: "https://twitter.com/BookshlfA",
+                }}
                 target="_blank"
                 aria-label="Twitter"
               >
@@ -203,7 +209,10 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link linkedin"
-                to="/"
+                to={{
+                  pathname:
+                    "https://www.linkedin.com/in/bookshlf-by-aman-861073223/",
+                }}
                 target="_blank"
                 aria-label="Linkedin"
               >
@@ -211,7 +220,10 @@ function Footer() {
               </Link>
               <Link
                 className="social-icon-link youtube"
-                to="/"
+                to={{
+                  pathname:
+                    "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ",
+                }}
                 target="_blank"
                 aria-label="Youtube"
               >
