@@ -243,12 +243,15 @@ function OrderTracking() {
               />
               &nbsp;&nbsp;{cls.msg}
             </div>
-            <div className="download-receipt-button" onClick={handleReceipt}>
+            {/* <div className="download-receipt-button" onClick={handleReceipt}>
               <i className="fas fa-download" />
               &nbsp;&nbsp;Receipt
-            </div>
+            </div> */}
             {
-              downloadpdf ? <DownloadReciept orderDetails={order} /> : <> </>
+              downloadpdf ?  <DownloadReciept orderDetails={order} /> :  <div className="download-receipt-button" onClick={handleReceipt}>
+              <i className="fas fa-download" />
+              &nbsp;&nbsp;Generate Invoice
+            </div>
             }
           </div>
         </div>
