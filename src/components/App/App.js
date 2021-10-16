@@ -28,6 +28,7 @@ import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
 import AdminBook from "../AdminPanel/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
+import SellerProfile from "../SellerPanel/SellerProfile";
 
 // Protected Route
 import Protected from "../Protected";
@@ -92,6 +93,10 @@ function App() {
           </Route>
           <Route path="/Admin/:panel">
             <Admin />
+          </Route>
+          <Route path="/SellerProfile/:sellerId">
+            <Navbar />
+            <SellerProfile />
           </Route>
           <Route path="/Blog">
             <Blog />

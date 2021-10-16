@@ -680,3 +680,49 @@ i.fas.fa-window-close:hover {
     font-family: "PT Sans";
   }
 }
+
+/* .seller {
+  
+} */
+.seller-name {
+  font-family: "PT sans";
+}
+.seller-intro {
+  margin-bottom: 20px;
+  font-family: "Roboto", sans-serif;
+  color: black;
+}
+.seller-info {
+  margin-top: 20px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: row;
+}
+
+.seller-info-left {
+  min-width: 150px;
+}
+
+.seller-info-right {
+  padding-left: 30px;
+  color: #ffb400;
+  font-style: inherit;
+  font-family: "PT sans";
+}
+
+@media (max-width: 560px) {
+  .seller-info-right {
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .seller-info-right {
+    margin-top: 10px;
+    padding-left: 0;
+  }
+  .seller-info {
+    display: flex;
+    flex-direction: column;
+  }
+}

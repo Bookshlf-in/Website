@@ -33,7 +33,7 @@
 
 .reviews_item {
   background-color: #2d5a87;
-  width: 300px;
+  width: 33%;
   height: 260px;
   padding: 2rem;
   display: flex;
@@ -49,4 +49,22 @@
   font-size: 0.8rem;
   font-weight: 100;
   margin-top: 1rem;
+}
+
+.Login{
+  display: none;
+}
+
+
+@media(max-width:768px){
+  .reviews_item {
+    background-color: #2d5a87;
+    width: 300px;
+    height: 260px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 1rem;
+  }
 }
