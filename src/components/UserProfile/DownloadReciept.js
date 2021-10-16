@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Font, Image, PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
-import './Downloadreciept.css'
 
 
 const styles = StyleSheet.create({
