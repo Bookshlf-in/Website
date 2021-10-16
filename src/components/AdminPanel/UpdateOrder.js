@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 const GetOrderDetails = (props) => {
   return (
     <div className="god-cont">

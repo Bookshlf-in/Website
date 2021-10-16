@@ -111,19 +111,22 @@ function OrderTracking() {
             <ul style={{ listStyle: "none" }}>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Book Name</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Book Name</b>
                 </span>
                 {order.title}
               </li>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Book Author</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Book Author</b>
                 </span>
                 {order.author}
               </li>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Seller Name</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Seller Name</b>
                 </span>
                 {order.sellerName}
               </li>
@@ -166,7 +169,8 @@ function OrderTracking() {
             <ul style={{ listStyle: "none" }}>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Item Price</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Item Price</b>
                 </span>
                 <span className="price-tag">
                   <i className="fas fa-rupee-sign" />
@@ -190,7 +194,8 @@ function OrderTracking() {
               </li>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Order Total</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Order Total</b>
                 </span>
                 <span className="price-tag">
                   <i className="fas fa-rupee-sign" />
@@ -203,7 +208,12 @@ function OrderTracking() {
             <Stepper
               activeStep={activeStep}
               alternativeLabel
-              style={{ backgroundColor: "aliceblue", width: "100%" }}
+
+              style={{
+                backgroundColor: "aliceblue",
+                width: "100%",
+              }}
+
             >
               {steps.map((label) => (
                 <Step key={label}>
@@ -261,7 +271,13 @@ function OrderTracking() {
           style={{ display: "flex", width: "calc(100% - 40px)" }}
         >
           <CircularProgress
-            style={{ height: "50px", width: "50px", color: "rgb(47, 218, 47)" }}
+
+            style={{
+              height: "50px",
+              width: "50px",
+              color: "rgb(47, 218, 47)",
+            }}
+
           />
         </div>
       )}

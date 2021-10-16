@@ -1,7 +1,7 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import axios from "../../axios";
 import InputMask from "react-input-mask";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -135,7 +135,7 @@ const Address = (props) => {
     console.log(e.target.id);
     axios
       .delete("/deleteAddress", {
-        data: {addressId: e.target.id},
+        data: { addressId: e.target.id },
       })
       .then((response) => {
         console.log(response.data);
@@ -181,7 +181,7 @@ const Address = (props) => {
         background: "aliceblue",
       }}
     >
-      <h1 style={{color: "black", letterSpacing: "2px"}}>Your Addresses</h1>
+      <h1 style={{ color: "black", letterSpacing: "2px" }}>Your Addresses</h1>
 
       <form className="address-form">
         <fieldset>
@@ -263,7 +263,7 @@ const Address = (props) => {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
             />
-            <span style={{position: "relative"}}>
+            <span style={{ position: "relative" }}>
               <label htmlFor="pincode" className="pincode">
                 Pincode
               </label>
@@ -277,7 +277,7 @@ const Address = (props) => {
             </span>
           </div>
           <div className="address-phoneNo">
-            <span style={{width: "100px"}}>
+            <span style={{ width: "100px" }}>
               <label htmlFor="country-code">Country Code</label>
               <InputMask
                 mask="99"
@@ -286,7 +286,7 @@ const Address = (props) => {
                 defaultValue="91"
               />
             </span>
-            <span style={{width: "calc(100% - 110px)"}}>
+            <span style={{ width: "calc(100% - 110px)" }}>
               <label htmlFor="phone-no">Mobile Phone</label>
               <InputMask
                 id="phone-no"
@@ -316,7 +316,7 @@ const Address = (props) => {
       </form>
       <div
         className={classes.root}
-        style={{display: alert.Display ? "flex" : "none"}}
+        style={{ display: alert.Display ? "flex" : "none" }}
       >
         <Alert
           variant="outlined"
