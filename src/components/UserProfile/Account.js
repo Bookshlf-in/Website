@@ -34,7 +34,7 @@ function Account(props) {
           <Avatar
             alt={props.user.name}
             src="/images/user.png"
-            style={{height: "150px", width: "150px"}}
+            style={{height: "35%", width: "35%"}}
           />
         </div>
       </div>
