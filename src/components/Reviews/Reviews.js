@@ -117,16 +117,16 @@ const Reviews = () => {
                 justifyContent: "center",
               }}
             >
+              <button className="Login"> <a href="/Login"> <i class="fas fa-exclamation-triangle"></i> Please Login First </a></button>
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   if (user) {
                     setshowreview(!showreview);
                   } else {
-                    e.target.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Please Login <i class="fas fa-exclamation"></i>`;
-                    setTimeout(() => {
-                      e.target.innerHTML = "Add Your Reviews";
-                    }, 3000);
+                    e.target.style.display = "none";
+                   const Login = document.querySelector('.Login');
+                   Login.style.display = "block";
                   }
                 }}
               >
