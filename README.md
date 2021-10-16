@@ -109,6 +109,8 @@ git merge dev
 
 Made with [contributors-img](https://contrib.rocks).
 
+> Don't forget to ⭐ this repository !!
+
 # Screenshots
 
 <img src = "public/images/Readme/1.png" width="800"/>
@@ -131,4 +133,3 @@ Made with [contributors-img](https://contrib.rocks).
 <img src = "public/images/Readme/book_approved.png" width="800"/>
 <img src = "public/images/Readme/7.png">
 <img src = "public/images/Readme/sidenav.png" />
-

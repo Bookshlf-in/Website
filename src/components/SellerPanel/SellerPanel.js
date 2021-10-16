@@ -1,4 +1,4 @@
-import {React, useState, useContext, useEffect} from "react";
+import { React, useState, useContext, useEffect } from "react";
 import "./SellerPanel.css";
 import AccountDetails from "./AccountDetails";
 import Orders from "./Orders";
@@ -6,8 +6,8 @@ import Address from "./Address";
 import Reviews from "./SellerReviews";
 import AddBook from "./AddBook";
 import Register from "./SellerRegister";
-import {UserContext} from "../../Context/userContext";
-import {useHistory, useParams} from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "../../axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -61,28 +61,41 @@ const SellerPanel = () => {
                       setsellerReview(response.data);
                       setloader(false);
                     })
-                    .catch((error) => {});
+                    .catch((error) => {
+                      setloader(false);
+                    });
                 })
-                .catch((error) => {});
+                .catch((error) => {
+                  setloader(false);
+                });
             })
-            .catch((error) => {});
+            .catch((error) => {
+              setloader(false);
+            });
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setloader(false);
+        });
     };
     if (user) {
       fetchData();
+    } else {
+      setloader(false);
     }
   }, []);
 
   return (
     <div>
       {/* Loader */}
-      <div className="page-loader" style={{display: loader ? "flex" : "none"}}>
-        <CircularProgress style={{height: "80px", width: "80px"}} />
+      <div
+        className="page-loader"
+        style={{ display: loader ? "flex" : "none" }}
+      >
+        <CircularProgress style={{ height: "80px", width: "80px" }} />
       </div>
 
       {/* Components */}
-      <div style={{display: loader ? "none" : "block"}}>
+      <div style={{ display: loader ? "none" : "block" }}>
         {role === false || user === null ? (
           <Register />
         ) : (

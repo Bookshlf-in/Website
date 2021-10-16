@@ -185,7 +185,7 @@ function Navbar() {
                 </div>
               </li>
             </Link>
-            <Link to="/SearchResult/books">
+            <Link to="/SearchResult/tag:ALL">
               <li>
                 <div className="navbar-items-chip">
                   <div className="dropdown">
@@ -282,7 +282,10 @@ function Navbar() {
                   <div>
                     <Button
                       variant="contained"
-                      style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
+                      style={{
+                        fontFamily: "PT Sans",
+                        fontWeight: "bold",
+                      }}
                       onClick={() => {
                         history.push("/Login");
                       }}
@@ -322,7 +325,10 @@ function Navbar() {
                         <i className="fas fa-times-circle" />
                       </MenuItem>
                       <MenuItem
-                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                        }}
                         onClick={() => {
                           history.push("/UserProfile/1");
                         }}
@@ -352,7 +358,10 @@ function Navbar() {
                         <div></div>
                       )}
                       <MenuItem
-                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                        }}
                         onClick={() => {
                           history.push("/Cart");
                         }}
@@ -361,7 +370,10 @@ function Navbar() {
                         &nbsp;Cart
                       </MenuItem>
                       <MenuItem
-                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                        }}
                         onClick={() => {
                           history.push("/Wishlist");
                         }}
@@ -370,9 +382,12 @@ function Navbar() {
                         &nbsp;Wishlist
                       </MenuItem>
                       <MenuItem
-                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                        }}
                         onClick={() => {
-                          history.push("/SellerPanel");
+                          history.push("/SellerPanel/4");
                         }}
                       >
                         <i className="fas fa-book" />
@@ -400,7 +415,10 @@ function Navbar() {
                         />
                       </MenuItem>
                       <MenuItem
-                        style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
+                        style={{
+                          fontFamily: "PT Sans",
+                          fontWeight: "bold",
+                        }}
                         onClick={logout}
                       >
                         Logout&nbsp;

@@ -5,9 +5,17 @@ import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
 import Grid from "@material-ui/core/Grid";
 import Collapse from "@material-ui/core/Collapse";
+import { Link } from "react-router-dom";
 
+const responses = [
+  "Hated it",
+  "Don't like it",
+  "Just OK",
+  "Liked it",
+  "Loved It"
+];
 const Reviews = () => {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const [Reviews, setReviews] = useState(null);
 
   const [desc, setdesc] = useState("");
@@ -33,19 +41,19 @@ const Reviews = () => {
           setrating(response.data.rating);
           sethover(response.data.rating);
           if (response.data.rating === 1) {
-            setrate("Hated it");
+            setrate(responses[0]);
           }
           if (response.data.rating === 2) {
-            setrate("Don't like it");
+            setrate(responses[1]);
           }
           if (response.data.rating === 3) {
-            setrate("Just OK");
+            setrate(responses[2]);
           }
           if (response.data.rating === 4) {
-            setrate("Liked it");
+            setrate(responses[3]);
           }
           if (response.data.rating === 5) {
-            setrate("Loved it");
+            setrate(responses[4]);
           }
         })
         .catch((error) => {
@@ -62,13 +70,13 @@ const Reviews = () => {
         rating: rating,
         review: desc,
       })
-      .then((response) => {})
-      .catch((error) => {});
+      .then((response) => { })
+      .catch((error) => { });
   };
   return (
     <div>
       <div className="reviews">
-        <p className="reviewed_by">Reviews from happy readers</p>
+        <p className="reviewed_by">What readers say about us?</p>
 
         <p className="book_desc">
           This book is concerned with creating typography and is essential for
@@ -79,15 +87,12 @@ const Reviews = () => {
             <div className="reviews_wrapper">
               {Reviews && Reviews.length > 0 ? (
                 <>
-                  {Reviews.map((TopReview,i) => (
+                  {Reviews.map((TopReview, i) => (
                     <div className="reviews_item" key={i}>
-                      <div className="ratings">
-                        {[...Array(TopReview.rating)].map((e, i) => {
-                          return <FaStar size={20} color="#FDCC0D" key={i} />;
-                        })}
-                      </div>
+                      <p className="rating_desc">{TopReview.review}</p>
+
                       <h3 className="rating_value">
-                        {TopReview.userName}
+                        - {TopReview.userName}
                         {TopReview.rating <= 2 && TopReview.rating >= 1 ? (
                           <>&#128545;</>
                         ) : TopReview.rating <= 4 ? (
@@ -96,7 +101,12 @@ const Reviews = () => {
                           <>&#128525;</>
                         )}
                       </h3>
-                      <p className="rating_desc">{TopReview.review}</p>
+
+                      <div className="ratings">
+                        {[...Array(TopReview.rating)].map((e, i) => {
+                          return <FaStar size={20} color="#FDCC0D" key={i} style={{ margin: "0px 5px" }} />;
+                        })}
+                      </div>
                     </div>
                   ))}
                 </>
@@ -105,6 +115,7 @@ const Reviews = () => {
               )}
             </div>
           </Grid>
+
           <Grid item xs={12}>
             <div
               className="Add-Rvw-btn"
@@ -114,16 +125,20 @@ const Reviews = () => {
                 justifyContent: "center",
               }}
             >
+              <button className="Login">
+                <Link to="/Login">
+                  <i class="fas fa-exclamation-triangle" /> Please Login First
+                </Link>
+              </button>
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   if (user) {
                     setshowreview(!showreview);
                   } else {
-                    e.target.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Please Login <i class="fas fa-exclamation"></i>`;
-                    setTimeout(() => {
-                      e.target.innerHTML = "Add Your Reviews";
-                    }, 3000);
+                    e.target.style.display = "none";
+                    const Login = document.querySelector('.Login');
+                    Login.style.display = "block";
                   }
                 }}
               >
@@ -197,8 +212,8 @@ const Reviews = () => {
                                     ? hover <= 2
                                       ? "red"
                                       : hover <= 4
-                                      ? "yellowgreen"
-                                      : "#66ff00"
+                                        ? "yellowgreen"
+                                        : "#66ff00"
                                     : "#ffffff"
                                 }
                                 onMouseEnter={() => sethover(ratingValue)}
@@ -214,8 +229,8 @@ const Reviews = () => {
                             rating <= 2
                               ? "red"
                               : rating <= 4
-                              ? "yellowgreen"
-                              : "#66ff00",
+                                ? "yellowgreen"
+                                : "#66ff00",
                         }}
                       >
                         {rate}&nbsp;

@@ -1,8 +1,8 @@
-import {React, useState, useEffect, useContext} from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./Payment.css";
-import {useHistory, useParams} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "../../axios";
-import {UserContext} from "../../Context/userContext";
+import { UserContext } from "../../Context/userContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
 function Payment() {
   const history = useHistory();
@@ -187,9 +187,12 @@ function Payment() {
       {loader ? (
         <div
           className="page-loader"
-          style={{display: loader ? "flex" : "none", height: "100%"}}
+          style={{
+            display: loader ? "flex" : "none",
+            height: "100%",
+          }}
         >
-          <CircularProgress style={{height: "80px", width: "80px"}} />
+          <CircularProgress style={{ height: "80px", width: "80px" }} />
         </div>
       ) : (
         <>
@@ -213,7 +216,9 @@ function Payment() {
                           <span className="price">
                             <b>
                               <i className="fas fa-rupee-sign" />
-                              &nbsp;{item.price}&nbsp;X&nbsp;{item.purchaseQty}
+                              &nbsp;{item.price}
+                              &nbsp;X&nbsp;
+                              {item.purchaseQty}
                             </b>
                           </span>
                         </p>
@@ -226,7 +231,8 @@ function Payment() {
                         <span className="price">
                           <b>
                             <i className="fas fa-rupee-sign" />
-                            &nbsp;{items.item.price}&nbsp;X&nbsp;
+                            &nbsp;{items.item.price}
+                            &nbsp;X&nbsp;
                             {1}
                           </b>
                         </span>
@@ -292,6 +298,12 @@ function Payment() {
                         border: "1px solid rgba(0, 0, 0, 0.7)",
                       }}
                       onChange={(e) => {
+                        // Check if selected add new address
+                        // then navigate to page to add new address
+                        if (e.target.value === "addNew") {
+                          history.push("/UserProfile/4");
+                          return;
+                        }
                         setaddressId(e.target.value);
                       }}
                     >

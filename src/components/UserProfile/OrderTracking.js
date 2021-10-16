@@ -1,18 +1,16 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import "./OrderTracking.css";
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "../../axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
+import DownloadReciept from "./DownloadReciept";
+import Button from "@material-ui/core/Button";
 
 var orderID = {
   color: "rgb(72, 72, 245)",
-  fontWeight: "bold",
-};
-var ArrivalDate = {
-  color: "rgb(45, 223, 45)",
   fontWeight: "bold",
 };
 
@@ -34,6 +32,7 @@ function getStepContent(stepIndex) {
       return "Unknown stepIndex";
   }
 }
+
 function OrderTracking() {
   const params = useParams();
   const orderId = params.orderId;
@@ -45,6 +44,7 @@ function OrderTracking() {
     msg: "Cancel Order",
   });
 
+  const [downloadpdf, setDownloadpdf] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   useEffect(() => {
@@ -60,6 +60,7 @@ function OrderTracking() {
         .catch((error) => {});
     };
     fetchdata();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handelCancelOrder = (ORDERID) => {
@@ -69,7 +70,7 @@ function OrderTracking() {
     });
     axios
       .delete("/cancelOrder", {
-        data: {orderId: ORDERID},
+        data: { orderId: ORDERID },
       })
       .then((response) => {
         setcls({
@@ -82,7 +83,13 @@ function OrderTracking() {
         }, 3000);
       });
   };
-  const handelReceipt = () => {};
+  const handleReceipt = () => {
+    setDownloadpdf(true);
+    setTimeout(() => {
+      document.getElementById("invoice-btn").click();
+      document.getElementById("invoice-btn").innerHTML = "Click Again To Download Invoice";
+    }, 3000);
+  };
 
   return (
     <div className="order-tracking-container-body">
@@ -104,22 +111,25 @@ function OrderTracking() {
           </div>
           <div className="order-details">
             <h1>Book Details</h1>
-            <ul style={{listStyle: "none"}}>
+            <ul style={{ listStyle: "none" }}>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Book Name</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Book Name</b>
                 </span>
                 {order.title}
               </li>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Book Author</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Book Author</b>
                 </span>
                 {order.author}
               </li>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Seller Name</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Seller Name</b>
                 </span>
                 {order.sellerName}
               </li>
@@ -127,7 +137,7 @@ function OrderTracking() {
           </div>
           <div className="order-details">
             <h1>Customer Details</h1>
-            <ul style={{listStyle: "none"}}>
+            <ul style={{ listStyle: "none" }}>
               <li>
                 <span>
                   <i className="fas fa-circle"></i>&nbsp;
@@ -159,10 +169,11 @@ function OrderTracking() {
           </div>
           <div className="order-details">
             <h1>Order Details</h1>
-            <ul style={{listStyle: "none"}}>
+            <ul style={{ listStyle: "none" }}>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Item Price</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Item Price</b>
                 </span>
                 <span className="price-tag">
                   <i className="fas fa-rupee-sign" />
@@ -186,7 +197,8 @@ function OrderTracking() {
               </li>
               <li>
                 <span>
-                  <i className="fas fa-circle"></i>&nbsp;<b>Order Total</b>
+                  <i className="fas fa-circle"></i>&nbsp;
+                  <b>Order Total</b>
                 </span>
                 <span className="price-tag">
                   <i className="fas fa-rupee-sign" />
@@ -199,7 +211,10 @@ function OrderTracking() {
             <Stepper
               activeStep={activeStep}
               alternativeLabel
-              style={{backgroundColor: "aliceblue", width: "100%"}}
+              style={{
+                backgroundColor: "aliceblue",
+                width: "100%",
+              }}
             >
               {steps.map((label) => (
                 <Step key={label}>
@@ -235,23 +250,33 @@ function OrderTracking() {
             >
               <i
                 className={cls.Cls}
-                style={{fontSize: "16px", color: "white"}}
+                style={{ fontSize: "16px", color: "white" }}
               />
               &nbsp;&nbsp;{cls.msg}
             </div>
-            <div className="download-receipt-button">
+            {/* <div className="download-receipt-button" onClick={handleReceipt}>
               <i className="fas fa-download" />
               &nbsp;&nbsp;Receipt
-            </div>
+            </div> */}
+            {
+              downloadpdf ?  <DownloadReciept orderDetails={order} /> :  <Button className="download-receipt-button" onClick={handleReceipt} variant="contained" color="primary">
+              <i className="fas fa-download" />
+              &nbsp;&nbsp;Generate Invoice
+            </Button>
+            }
           </div>
         </div>
       ) : (
         <div
           className="page-loader"
-          style={{display: "flex", width: "calc(100% - 40px)"}}
+          style={{ display: "flex", width: "calc(100% - 40px)" }}
         >
           <CircularProgress
-            style={{height: "50px", width: "50px", color: "rgb(47, 218, 47)"}}
+            style={{
+              height: "50px",
+              width: "50px",
+              color: "rgb(47, 218, 47)",
+            }}
           />
         </div>
       )}

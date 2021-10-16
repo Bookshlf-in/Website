@@ -1,5 +1,5 @@
 .order-tracking-container-body {
-  background: aliceblue;
+  background: rgb(246, 251, 255);
   width: 100%;
 }
 .order-tracking-container {
@@ -77,7 +77,7 @@
   width: 100%;
 }
 .download-receipt-button {
-  width: 150px;
+  width: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,7 +91,7 @@
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 .cancel-order-button {
-  width: 150px;
+  width: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
