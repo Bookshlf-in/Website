@@ -46,7 +46,7 @@ function OrderTracking() {
     msg: "Cancel Order",
   });
 
-  const [downloadpdf, setDownloadpdf] = useState(false)
+  const [downloadpdf, setDownloadpdf] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   useEffect(() => {
@@ -59,7 +59,7 @@ function OrderTracking() {
           setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
         })
-        .catch((error) => { });
+        .catch((error) => {});
     };
     fetchdata();
   }, []);
@@ -85,7 +85,7 @@ function OrderTracking() {
       });
   };
   const handleReceipt = () => {
-    setDownloadpdf(true)
+    setDownloadpdf(true);
   };
 
   return (
@@ -208,12 +208,10 @@ function OrderTracking() {
             <Stepper
               activeStep={activeStep}
               alternativeLabel
-
               style={{
                 backgroundColor: "aliceblue",
                 width: "100%",
               }}
-
             >
               {steps.map((label) => (
                 <Step key={label}>
@@ -257,12 +255,14 @@ function OrderTracking() {
               <i className="fas fa-download" />
               &nbsp;&nbsp;Receipt
             </div> */}
-            {
-              downloadpdf ?  <DownloadReciept orderDetails={order} /> :  <div className="download-receipt-button" onClick={handleReceipt}>
-              <i className="fas fa-download" />
-              &nbsp;&nbsp;Generate Invoice
-            </div>
-            }
+            {downloadpdf ? (
+              <DownloadReciept orderDetails={order} />
+            ) : (
+              <div className="download-receipt-button" onClick={handleReceipt}>
+                <i className="fas fa-download" />
+                &nbsp;&nbsp;Generate Invoice
+              </div>
+            )}
           </div>
         </div>
       ) : (
@@ -271,13 +271,11 @@ function OrderTracking() {
           style={{ display: "flex", width: "calc(100% - 40px)" }}
         >
           <CircularProgress
-
             style={{
               height: "50px",
               width: "50px",
               color: "rgb(47, 218, 47)",
             }}
-
           />
         </div>
       )}
