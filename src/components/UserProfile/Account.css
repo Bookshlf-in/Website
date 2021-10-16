@@ -49,3 +49,9 @@
     font-size: 14px;
   }
 }
+
+@media screen and (max-width: 600px)  and (max-height: 660px) {
+  .user-profile-container-top {
+    height: 50vh;
+  }
+}
