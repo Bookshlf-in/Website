@@ -3,6 +3,16 @@ import { useParams } from "react-router-dom";
 import axios from "../../axios";
 import Rating from "@material-ui/lab/Rating";
 import Avatar from "@material-ui/core/Avatar";
+import "./SellerProfile.css";
+
+const Verified = {
+  user: "verified-user",
+  tag: "Verified",
+};
+const nonVerified = {
+  user: "non-verified-user",
+  tag: "Not Verified",
+};
 
 const SellerProfile = (props) => {
   const params = useParams();
@@ -35,47 +45,43 @@ const SellerProfile = (props) => {
   }, []);
 
   return (
-    <div className="seller">
-      <h2 className="seller-name">{sellerName}</h2>
-      <div className="seller-verified">
-        {isVerified ? "✅ verified" : "not verified"}
+    <div className="sellerContainer">
+      <div className="verify-tag">
+        <p className={isVerified ? Verified.user : nonVerified.user}>
+          <b>{isVerified ? Verified.tag : nonVerified.tag}</b>
+        </p>
       </div>
-      <div className="seller-info">
-        <div className="seller-info-left">
-          <Avatar
-            alt="Profile"
-            src={sellerPhoto}
-            style={{ height: "100px", width: "100px" }}
-          />
 
-          <div className="book-seller-rating" id="book-seller-rating">
-            <Rating name="read-only" value={sellerRating} readOnly />(
-            {sellerRating > 5 ? 5 : sellerRating}
-            )
-            <br />
-            Total Reviews : {noOfRatings}
-          </div>
-        </div>
-        <div className="seller-info-right">
-          <div className="seller-intro">
-            <p>
-              <b>
-                <i>{sellerIntro}</i>
-              </b>
-            </p>
-          </div>
-          <div>
-            <p>
-              Sold {noOfBooksSold}
-              <span> {`${noOfBooksSold === 1 ? "book" : "books"}`}</span>
-            </p>
-            <p>
-              {`Wrote ${noOfReviews} ${
-                noOfReviews === 1 ? "review" : "reviews"
-              }`}
-            </p>
-          </div>
-        </div>
+      <div className="seller">
+        <span>
+          <i className="fas fa-user"></i>
+          {sellerName}
+        </span>
+
+        <span>
+          <i className="fas fa-info-circle" />
+          {sellerIntro}
+        </span>
+        <span className="rating-span">
+          <Rating name="read-only" value={sellerRating} readOnly />(
+          {sellerRating > 5 ? 5 : sellerRating})
+        </span>
+        <span>
+          <span className="books-sold">
+            {`${noOfBooksSold === 1 ? "Book" : "Books"}`}
+            Sold -
+          </span>
+          <span style={{ color: "rgb(44, 185, 25)", fontWeight: "600" }}>
+            {noOfBooksSold}
+          </span>
+        </span>
+      </div>
+      <div className="avatar-style">
+        <Avatar
+          alt="Profile"
+          src={sellerPhoto}
+          style={{ height: "150px", width: "150px" }}
+        />
       </div>
     </div>
   );
