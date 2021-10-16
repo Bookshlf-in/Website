@@ -4,7 +4,15 @@ import axios from "../../axios";
 import Rating from "@material-ui/lab/Rating";
 import Avatar from "@material-ui/core/Avatar";
 import "./SellerProfile.css";
-import { green } from "@material-ui/core/colors";
+
+const Verified = {
+  user: "verified-user",
+  tag: "Verified",
+};
+const nonVerified = {
+  user: "non-verified-user",
+  tag: "Not Verified",
+};
 
 const SellerProfile = (props) => {
   const params = useParams();
@@ -38,7 +46,11 @@ const SellerProfile = (props) => {
 
   return (
     <div className="sellerContainer">
-      <button className="verified-btn">Verified</button>
+      <div className="verify-tag">
+        <p className={isVerified ? Verified.user : nonVerified.user}>
+          <b>{isVerified ? Verified.tag : nonVerified.tag}</b>
+        </p>
+      </div>
 
       <div className="seller">
         <span>
