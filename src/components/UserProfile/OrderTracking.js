@@ -44,7 +44,7 @@ function OrderTracking() {
     msg: "Cancel Order",
   });
 
-  const [downloadpdf, setDownloadpdf] = useState(false)
+  const [downloadpdf, setDownloadpdf] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   useEffect(() => {
@@ -57,9 +57,10 @@ function OrderTracking() {
           setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
         })
-        .catch((error) => { });
+        .catch((error) => {});
     };
     fetchdata();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handelCancelOrder = (ORDERID) => {
@@ -210,12 +211,10 @@ function OrderTracking() {
             <Stepper
               activeStep={activeStep}
               alternativeLabel
-
               style={{
                 backgroundColor: "aliceblue",
                 width: "100%",
               }}
-
             >
               {steps.map((label) => (
                 <Step key={label}>
@@ -273,13 +272,11 @@ function OrderTracking() {
           style={{ display: "flex", width: "calc(100% - 40px)" }}
         >
           <CircularProgress
-
             style={{
               height: "50px",
               width: "50px",
               color: "rgb(47, 218, 47)",
             }}
-
           />
         </div>
       )}
