@@ -1,0 +1,56 @@
+.sellerContainer {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  background: linear-gradient(to right, #2a0845, #6441a5);
+  position: relative;
+}
+.verified-btn {
+  position: absolute;
+  border: none;
+  background-color: rgb(44, 185, 25);
+  padding: 10px 20px;
+  border-radius: 50%;
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  right: 5%;
+  top: 5%;
+}
+.seller {
+  padding: 20px;
+  display: flex;
+  min-width: 300px;
+  flex-direction: column;
+  padding-bottom: 100px;
+}
+.seller span {
+  margin: 10px 0px;
+  font-size: 20px;
+}
+.seller span i {
+  margin-right: 40px;
+}
+span.rating-span {
+  margin: 0px;
+}
+.MuiRating-root .MuiRating-icon {
+  margin: 0 !important;
+}
+.MuiRating-root .MuiRating-icon .MuiSvgIcon-root {
+  margin-right: 40px;
+}
+
+.books-sold {
+  margin-right: 40px !important;
+}
+
+.avatar-style {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -50%);
+
+  border: 5px solid rgb(247, 0, 255);
+  border-radius: 50%;
+}
