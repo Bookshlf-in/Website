@@ -7,13 +7,10 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import DownloadReciept from "./DownloadReciept";
+import Button from "@material-ui/core/Button";
 
 var orderID = {
   color: "rgb(72, 72, 245)",
-  fontWeight: "bold",
-};
-var ArrivalDate = {
-  color: "rgb(45, 223, 45)",
   fontWeight: "bold",
 };
 
@@ -35,6 +32,7 @@ function getStepContent(stepIndex) {
       return "Unknown stepIndex";
   }
 }
+
 function OrderTracking() {
   const params = useParams();
   const orderId = params.orderId;
@@ -85,7 +83,11 @@ function OrderTracking() {
       });
   };
   const handleReceipt = () => {
-    setDownloadpdf(true)
+    setDownloadpdf(true);
+    setTimeout(() => {
+      document.getElementById("invoice-btn").click();
+      document.getElementById("invoice-btn").innerHTML = "Click Again To Download Invoice";
+    }, 3000);
   };
 
   return (
@@ -258,10 +260,10 @@ function OrderTracking() {
               &nbsp;&nbsp;Receipt
             </div> */}
             {
-              downloadpdf ?  <DownloadReciept orderDetails={order} /> :  <div className="download-receipt-button" onClick={handleReceipt}>
+              downloadpdf ?  <DownloadReciept orderDetails={order} /> :  <Button className="download-receipt-button" onClick={handleReceipt} variant="contained" color="primary">
               <i className="fas fa-download" />
               &nbsp;&nbsp;Generate Invoice
-            </div>
+            </Button>
             }
           </div>
         </div>

@@ -194,7 +194,10 @@ function DownloadReciept(props) {
                 console.log(props.orderDetails.photo)
             }
             <PDFDownloadLink document={<MyDoc orderDetails={props.orderDetails} />} fileName="BookShlf_Invoice.pdf">
-                {({ blob, url, loading, error }) => (loading ? <CircularProgress style={{ color: "blue", height: "25px", width: "25px" }} /> : <Button className="download-receipt-button" color="primary" variant="contained">Download Invoice</Button>)}
+                {({ blob, url, loading, error }) => (loading ?<Button className="download-receipt-button" variant="contained" color="primary">
+                <CircularProgress style={{ color: "white", height: "25px", width: "25px" }} />
+              &nbsp;&nbsp;Generating...
+            </Button>  : <Button className="download-receipt-button" color="primary" variant="contained" id="invoice-btn">Downloading Invoice...</Button>)}
             </PDFDownloadLink>
         </div>
     );
