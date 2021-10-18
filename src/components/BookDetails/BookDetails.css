@@ -40,7 +40,15 @@
   height: 500px;
   width: 400px;
 }
+.img-magnifier-glass{
+ position: absolute;
+border: 3px solid #000;
+border-radius: 50%;
+cursor: none;
 
+ width: 100px;
+ height: 100px;
+}
 #video-snap-full {
   display: none;
   height: 100%;
