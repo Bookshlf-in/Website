@@ -7,19 +7,100 @@
   overflow: hidden;
   flex-direction: column;
 }
+.About-button{
+  z-index: 0;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  border-radius: 0px;
+  max-width: 600px;
+  width: 80%;
+  height: 60px;
+}
+
+.About-button:hover{
+  background-color: white;
+  color: #1b2735;
+}
+
+.About-button-link{
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  white-space: normal;
+  background: none;
+  color: inherit;
+  transition: box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s;
+}
+
+.About-title {
+  font-size: 16px;
+  text-align: center;
+  margin: 3rem 0 1rem;
+  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI", sans-serif;;
+  color: white;
+  font-weight: bold;
+}
+.About-description {
+  font-size: 12px;
+  text-align: center;
+  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI", sans-serif;;
+  color: white;
+  font-weight: bold;
+}
 .About-textbox {
   float: left;
-  position: absolute;
-  padding: 50px;
+  text-align: center;
+  padding: 20px 50px 50px 50px;
   margin: 1rem;
-  max-width: 800px;
-  background-color: rgba(0, 0, 0, 0.75);
-  font-size: 20px;
-  font-family: "Roboto", sans-serif;
+  margin-top: 0px;
+  max-width: 950px;
+  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI", sans-serif;;
   color: white;
-  border: 1px solid white;
-  box-shadow: 6px 4px 3px rgba(105, 155, 255, 0.5);
   font-weight: bold;
+}
+
+.social-media-wrap {
+  display: flex;
+  max-width: 1024px;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  max-width: 600px;
+  width: 30%;
+  padding:10px;
+  height: 50px;
+}
+.social-icons a:hover {
+  font-size: 30px;
+  color: white;
+}
+
+.social-logo {
+  color: #b1b1b1;
+  justify-self: start;
+  padding-left: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  display: flex;
+  align-self: center;
+}
+
+.social-icon-link {
+  color: #fff;
+  font-size: 24px;
 }
 
 /* Animated Background CSS */
@@ -380,5 +461,11 @@
 @media screen and (max-width: 450px) {
   .About-textbox {
     padding: 25px;
+  }
+  .social-icons{
+    width: 100%;
+  }
+  .social-media-wrap {
+    width: 70%;
   }
 }
