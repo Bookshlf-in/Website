@@ -130,21 +130,41 @@ function Contact() {
         </h3>
         <br />
         <div className="social-icons">
-          <Link to="">
+          <Link
+            target="_blank"
+            to={{
+              pathname: "https://www.facebook.com/Bookshlf-109479771200918",
+            }}
+          >
             <i className="fab fa-facebook-f" />
           </Link>
-          <Link to="https://www.instagram.com/_bookshlf/">
+          <Link
+            target="_blank"
+            to={{ pathname: "https://www.instagram.com/_bookshlf/" }}
+          >
             <i className="fab fa-instagram" />
           </Link>
-          <Link to="">
+          <Link
+            target="_blank"
+            to={{ pathname: "https://twitter.com/BookshlfA" }}
+          >
             <i className="fab fa-twitter" />
           </Link>
-          <Link to="">
+          <Link
+            target="_blank"
+            to={{
+              pathname:
+                "https://www.linkedin.com/in/bookshlf-by-aman-861073223/",
+            }}
+          >
             <i className="fab fa-linkedin" />
           </Link>
           <Link
-            to="https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ"
             target="_blank"
+            to={{
+              pathname:
+                "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ",
+            }}
           >
             <i className="fab fa-youtube" />
           </Link>
