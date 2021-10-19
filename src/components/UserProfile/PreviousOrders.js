@@ -1,5 +1,5 @@
-import {React, useState} from "react";
-import {Link} from "react-router-dom";
+import { React, useState } from "react";
+import { Link } from "react-router-dom";
 
 const PreviousOrders = (props) => {
   const [pastOrders, setpastOrders] = useState(props.orders);
@@ -24,7 +24,7 @@ const PreviousOrders = (props) => {
                 <td> {order._id} </td>
                 <td>{order.sellerName}</td>
                 <td>
-                  <ul style={{listStyle: "none"}}>
+                  <ul style={{ listStyle: "none" }}>
                     <li>
                       <b>Book</b> : {order.title}
                     </li>
@@ -57,9 +57,19 @@ const PreviousOrders = (props) => {
                 >
                   {order.status[order.status.length - 1] === "Delivered" ? (
                     <>
-                      <i className="fas fa-check-circle" />
-                      &nbsp;&nbsp;
-                      {order.status[order.status.length - 1]}
+                      <div style={{ marginBottom: "40px" }}>
+                        <i className="fas fa-check-circle" />
+                        &nbsp;&nbsp;
+                        {order.status[order.status.length - 1]}
+                      </div>
+
+                      <Link
+                        className="completed-order-details"
+                        to={`/Track/${order._id}`}
+                        title="Track Order"
+                      >
+                        View&nbsp;Details
+                      </Link>
                     </>
                   ) : order.status[order.status.length - 1] === "Cancelled" ? (
                     <>
