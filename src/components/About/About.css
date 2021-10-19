@@ -7,11 +7,15 @@
   overflow: hidden;
   flex-direction: column;
 }
-.About-button{
+.About-button {
   z-index: 0;
   overflow: hidden;
   margin-bottom: 16px;
-  transition: box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s;
+  transition: box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s,
+    color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s,
+    border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s,
+    transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s,
+    background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s;
   border: 2px solid rgb(255, 255, 255);
   background-color: transparent;
   color: rgb(255, 255, 255);
@@ -21,33 +25,38 @@
   height: 60px;
 }
 
-.About-button:hover{
+.About-button:hover {
   background-color: white;
   color: #1b2735;
 }
 
-.About-button-link{
+.About-button-link {
   overflow-wrap: break-word;
   word-break: break-word;
   hyphens: auto;
   white-space: normal;
   background: none;
   color: inherit;
-  transition: box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s;
+  transition: box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s,
+    border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s,
+    transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s,
+    background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s;
 }
 
 .About-title {
   font-size: 16px;
   text-align: center;
   margin: 3rem 0 1rem;
-  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI", sans-serif;;
+  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI",
+    sans-serif;
   color: white;
   font-weight: bold;
 }
 .About-description {
   font-size: 12px;
   text-align: center;
-  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI", sans-serif;;
+  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI",
+    sans-serif;
   color: white;
   font-weight: bold;
 }
@@ -58,12 +67,13 @@
   margin: 1rem;
   margin-top: 0px;
   max-width: 950px;
-  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI", sans-serif;;
+  font-family: "circular, -apple-system, BlinkMacSystemFont, Segoe UI",
+    sans-serif;
   color: white;
   font-weight: bold;
 }
 
-.social-media-wrap {
+.about-social-media .social-media-wrap {
   display: flex;
   max-width: 1024px;
   height: 100%;
@@ -72,22 +82,22 @@
   align-items: center;
 }
 
-.social-icons {
+.about-social-media .social-icons {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 24px;
   max-width: 600px;
   width: 30%;
-  padding:10px;
+  padding: 10px;
   height: 50px;
 }
-.social-icons a:hover {
+.about-social-media .social-icons a:hover {
   font-size: 30px;
   color: white;
 }
 
-.social-logo {
+.about-social-media .social-logo {
   color: #b1b1b1;
   justify-self: start;
   padding-left: 10px;
@@ -98,7 +108,7 @@
   align-self: center;
 }
 
-.social-icon-link {
+.about-social-media .social-icon-link {
   color: #fff;
   font-size: 24px;
 }
@@ -462,7 +472,7 @@
   .About-textbox {
     padding: 25px;
   }
-  .social-icons{
+  .social-icons {
     width: 100%;
   }
   .social-media-wrap {

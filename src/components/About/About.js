@@ -1,14 +1,14 @@
 import React from "react";
 import "./About.css";
 import { Helmet } from "react-helmet";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const GITHUB_URL = 'https://github.com/Bookshlf-in';
-const WEBSITE_URL = 'https://bookshlf.in';
+const GITHUB_URL = "https://github.com/Bookshlf-in";
+const WEBSITE_URL = "https://bookshlf.in";
 
 function About() {
-  const openWebsite =() => window.open(WEBSITE_URL, '_blank').focus();
-  const openGithub =() => window.open(GITHUB_URL, '_blank').focus();
+  const openWebsite = () => window.open(WEBSITE_URL, "_blank").focus();
+  const openGithub = () => window.open(GITHUB_URL, "_blank").focus();
 
   return (
     <>
@@ -43,12 +43,14 @@ function About() {
           <div className="shooting_star"></div>
           <div className="shooting_star"></div>
         </div>
-        <div style={{position: 'absolute', display:'flex', flexDirection: 'column'}}>
-          <img
-            src="/images/smallLogo.svg"
-            alt="bookhlf.in"
-            height="60px"
-          />
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <img src="/images/smallLogo.svg" alt="bookhlf.in" height="60px" />
 
           <div className="About-title">
             <p>Bookshlf</p>
@@ -60,27 +62,40 @@ function About() {
 
           <div className="About-textbox">
             <p>
-              We are a small team of students who are enthusiastic developers. We
-              are trying to create a better viable platform for students who want
-              to learn but due to financial issues can't afford new books. We also
-              want to help those who want to sell thier books which they don't
-              need. We hope that you will find this platform usefull. We are
-              always trying to make this platform better and better.
+              We are a small team of students who are enthusiastic developers.
+              We are trying to create a better viable platform for students who
+              want to learn but due to financial issues can't afford new books.
+              We also want to help those who want to sell thier books which they
+              don't need. We hope that you will find this platform usefull. We
+              are always trying to make this platform better and better.
             </p>
           </div>
 
-          <div style={{display:'flex', flexDirection: 'column', justifyContent: 'space-between', height: '150px', alignItems:'center'}}>
-            <button className="About-button" onClick={openWebsite}><p>Website</p></button>
-            <button  className="About-button" onClick={openGithub}>Github</button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "150px",
+              alignItems: "center",
+            }}
+          >
+            <button className="About-button" onClick={openWebsite}>
+              <p>Website</p>
+            </button>
+            <button className="About-button" onClick={openGithub}>
+              Github
+            </button>
           </div>
 
-          <section className="social-media">
+          <section className="about-social-media">
             <div className="social-media-wrap">
               <div className="social-icons">
                 <Link
                   className="social-icon-link facebook"
                   to={{
-                    pathname: "https://www.facebook.com/Bookshlf-109479771200918",
+                    pathname:
+                      "https://www.facebook.com/Bookshlf-109479771200918",
                   }}
                   target="_blank"
                   aria-label="Facebook"
