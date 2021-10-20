@@ -1,6 +1,6 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import "./UserProfile.css";
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Account from "./Account";
 import CurrentOrder from "./CurrentOrders";
 import PreviousOrder from "./PreviousOrders";
@@ -78,8 +78,8 @@ const UserProfile = () => {
           }}
           style={
             panel === "1"
-              ? {borderBottom: "2px solid black"}
-              : {borderBottom: "2px solid aliceblue"}
+              ? { borderBottom: "2px solid black" }
+              : { borderBottom: "2px solid aliceblue" }
           }
         >
           <i className="fas fa-info-circle" />
@@ -93,8 +93,8 @@ const UserProfile = () => {
           }}
           style={
             panel === "2"
-              ? {borderBottom: "2px solid black"}
-              : {borderBottom: "2px solid aliceblue"}
+              ? { borderBottom: "2px solid black" }
+              : { borderBottom: "2px solid aliceblue" }
           }
         >
           <i className="fas fa-clipboard-list" />
@@ -108,8 +108,8 @@ const UserProfile = () => {
           }}
           style={
             panel === "3"
-              ? {borderBottom: "2px solid black"}
-              : {borderBottom: "2px solid aliceblue"}
+              ? { borderBottom: "2px solid black" }
+              : { borderBottom: "2px solid aliceblue" }
           }
         >
           <i className="fas fa-clipboard-check" />
@@ -123,8 +123,8 @@ const UserProfile = () => {
           }}
           style={
             panel === "4"
-              ? {borderBottom: "2px solid black"}
-              : {borderBottom: "2px solid aliceblue"}
+              ? { borderBottom: "2px solid black" }
+              : { borderBottom: "2px solid aliceblue" }
           }
         >
           <i className="fas fa-map-marker" />
@@ -133,9 +133,9 @@ const UserProfile = () => {
       </div>
       <div
         className="page-loader"
-        style={{display: load ? "flex" : "none", height: "400px"}}
+        style={{ display: load ? "flex" : "none", height: "400px" }}
       >
-        <CircularProgress style={{height: "80px", width: "80px"}} />
+        <CircularProgress style={{ height: "80px", width: "80px" }} />
       </div>
       <div
         className="Panel"

@@ -1,5 +1,5 @@
-import {React} from "react";
-import {Link, useHistory} from "react-router-dom";
+import { React } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 
 function BookDesc(props) {
@@ -78,9 +78,9 @@ function BookDesc(props) {
       </div>
       <div className="book-seller">
         <div className="book-seller-name">
-          <b style={{fontFamily: "PT Sans"}}>Seller</b>
+          <b style={{ fontFamily: "PT Sans" }}>Seller</b>
           <br />
-          <Link to="/SellerProfile">
+          <Link to={`/SellerProfile/${props.bookdetails.seller._id}`}>
             {props.bookdetails.seller
               ? props.bookdetails.seller.name
               : props.bookdetails.sellerName}

@@ -508,19 +508,46 @@ i.fas.fa-window-close:hover {
   margin: 10px;
 }
 
-.uploaded-images {
+.uploaded-images-container {
   padding: 10px;
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.uploaded-images img {
+.uploaded-images-container img {
+  margin: 7px;
+  /* padding: 7px; */
   max-height: 150px;
   max-width: 250px;
   min-height: 100px;
   min-width: 100px;
 }
+
+.uploaded-image button {
+  padding: 0;
+  position: relative;
+  display: block;
+  visibility: hidden;
+  border-radius: 50%;
+  top: 20px;
+  left: 90px;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.uploaded-image:hover button {
+  visibility: visible;
+  border: 2px solid;
+  border-color: #ff9b3e;
+}
+
+.uploaded-image:hover img {
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: #ff9b3e;
+}
+
 
 .upload-btn-wrapper {
   position: relative;
@@ -561,7 +588,7 @@ i.fas.fa-window-close:hover {
   color: red;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 9px;
   cursor: pointer;
 }
 .update-book-bg {
@@ -651,5 +678,51 @@ i.fas.fa-window-close:hover {
   .update-book-bg h1 {
     font-size: 20px;
     font-family: "PT Sans";
+  }
+}
+
+/* .seller {
+  
+} */
+.seller-name {
+  font-family: "PT sans";
+}
+.seller-intro {
+  margin-bottom: 20px;
+  font-family: "Roboto", sans-serif;
+  color: black;
+}
+.seller-info {
+  margin-top: 20px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: row;
+}
+
+.seller-info-left {
+  min-width: 150px;
+}
+
+.seller-info-right {
+  padding-left: 30px;
+  color: #ffb400;
+  font-style: inherit;
+  font-family: "PT sans";
+}
+
+@media (max-width: 560px) {
+  .seller-info-right {
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .seller-info-right {
+    margin-top: 10px;
+    padding-left: 0;
+  }
+  .seller-info {
+    display: flex;
+    flex-direction: column;
   }
 }

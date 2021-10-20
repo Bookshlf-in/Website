@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "../../axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Fade from "@material-ui/core/Fade";
 
 function BookVerification() {
@@ -22,7 +22,7 @@ function BookVerification() {
     setload(true);
     axios
       .get("/admin-getBookList", {
-        params: {page: 1, noOfBooksInOnePage: 10},
+        params: { page: 1, noOfBooksInOnePage: 10 },
       })
       .then((response) => {
         setbooks(response.data.data);
@@ -89,7 +89,7 @@ function BookVerification() {
     e.target.innerHTML = "Deleting...";
     axios
       .delete("/admin-deleteBook", {
-        data: {bookId: id, message: "Book is not Appropriate"},
+        data: { bookId: id, message: "Book is not Appropriate" },
       })
       .then((response) => {
         console.log(response.data.msg);
@@ -113,7 +113,7 @@ function BookVerification() {
     if (page + 1 <= totalPages) {
       axios
         .get("/admin-getBookList", {
-          params: {page: page + 1, noOfBooksInOnePage: 10},
+          params: { page: page + 1, noOfBooksInOnePage: 10 },
         })
         .then((response) => {
           setbooks(books.concat(response.data.data));
@@ -218,7 +218,8 @@ function BookVerification() {
                           </p>
                           <p className="details-para4">
                             <i className="fas fa-rupee-sign" />
-                            &nbsp;{book.price}&nbsp;/-
+                            &nbsp;{book.price}
+                            &nbsp;/-
                           </p>
                           <div
                             title="View Book Details"
@@ -318,7 +319,7 @@ function BookVerification() {
         )}
       </div>
       {page + 1 <= totalPages ? (
-        <button onClick={() => LoadMore()} style={{marginTop: "20px"}}>
+        <button onClick={() => LoadMore()} style={{ marginTop: "20px" }}>
           More
         </button>
       ) : (

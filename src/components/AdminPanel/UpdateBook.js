@@ -1,7 +1,7 @@
-import {React, useState} from "react";
-import {Link} from "react-router-dom";
+import { React, useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
@@ -109,7 +109,7 @@ function UpdateBook(props) {
         action=""
         className="add-book-form"
         autoComplete="off"
-        style={{backgroundColor: "rgb(0,0,0)"}}
+        style={{ backgroundColor: "rgb(0,0,0)" }}
       >
         <div className="add-book-field1">
           <span>
@@ -206,7 +206,7 @@ function UpdateBook(props) {
             value={lang}
           />
         </div>
-        <div className="add-book-field1" style={{display: "block"}}>
+        <div className="add-book-field1" style={{ display: "block" }}>
           <div className="book-tags" id="add-book-tag">
             {tags.length > 0 ? (
               <>
@@ -225,7 +225,7 @@ function UpdateBook(props) {
               <></>
             )}
           </div>
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             <input
               type="text"
               placeholder="Add Book Tags"
@@ -242,7 +242,7 @@ function UpdateBook(props) {
               }}
             />
             <span
-              style={{cursor: "pointer"}}
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 let memo = tags;
                 memo.push(tag);
@@ -261,7 +261,7 @@ function UpdateBook(props) {
             color="primary"
             className={classes.button}
             endIcon={<Icon>send</Icon>}
-            style={{fontFamily: "PT Sans", fontWeight: "bold"}}
+            style={{ fontFamily: "PT Sans", fontWeight: "bold" }}
             onClick={(e) => {
               e.preventDefault();
               PushDetails();
@@ -279,7 +279,7 @@ function UpdateBook(props) {
         </div>
         <div
           className={classes.root}
-          style={{display: alert.show ? "flex" : "none"}}
+          style={{ display: alert.show ? "flex" : "none" }}
         >
           <Alert
             variant="outlined"

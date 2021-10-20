@@ -1,6 +1,7 @@
 import React from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import { Helmet } from "react-helmet";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -19,6 +20,7 @@ import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../AddReviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
 import Receipt from "../UserProfile/Receipt";
+import Sitemap from "../Sitemap/Sitemap";
 import Track from "../UserProfile/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
 import SearchResult from "../SearchResult/AllCategories";
@@ -27,6 +29,7 @@ import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
 import AdminBook from "../AdminPanel/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
+import SellerProfile from "../SellerPanel/SellerProfile";
 
 // Protected Route
 import Protected from "../Protected";
@@ -92,13 +95,28 @@ function App() {
           <Route path="/Admin/:panel">
             <Admin />
           </Route>
+          <Route path="/SellerProfile/:sellerId">
+            <Navbar />
+            <SellerProfile />
+          </Route>
           <Route path="/Blog">
             <Blog />
           </Route>
           <Route path="/Receipt">
             <Receipt />
           </Route>
+          <Route path="/Sitemap">
+            <Sitemap />
+          </Route>
+
           <Route path="/">
+            <Helmet>
+              <title>Home | Bookshlf</title>
+              <meta
+                name="description"
+                content="Bookshlf is a platform for students where you can buy secondhand books at low prices and sell books."
+              />
+            </Helmet>
             <Navbar />
             <Carousel />
             <Categories />

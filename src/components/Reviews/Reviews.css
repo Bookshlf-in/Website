@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;700&display=swap");
 .reviews {
   padding: 30px;
   /* border: 2px solid green; */
@@ -7,40 +8,63 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: "Poppins", sans-serif;
 }
 
 .reviewed_by {
   text-align: center;
   font-size: 30px;
+  font-weight: 600;
 }
 
 .book_desc {
-  margin: 20px 0px;
+  margin: 15px 0px;
   margin-bottom: 40px;
-  font-style: italic;
   text-align: center;
+  font-size: 0.8rem;
 }
 
 .reviews_wrapper {
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+  margin-bottom: 1.5rem;
 }
 
 .reviews_item {
-  background-color: rgb(238, 238, 238);
-  border-radius: 10px;
-  color: black;
-  margin: 10px;
-  font-size: 12px;
-  border: 4px solid rgb(148, 148, 148);
-  height: 200px;
-  width: 230px;
+  background-color: #2d5a87;
+  width: 33%;
+  height: 260px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  font-family: "PT Sans";
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.rating_value {
+  margin: 0 I !important;
+  padding: 0 !important;
+  align-self: flex-end;
+  font-size: 0.8rem;
+  font-weight: 100;
+  margin-top: 1rem;
+}
+
+.Login{
+  display: none;
+}
+
+
+@media(max-width:768px){
+  .reviews_item {
+    background-color: #2d5a87;
+    width: 300px;
+    height: 260px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 1rem;
+  }
 }
