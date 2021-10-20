@@ -16,6 +16,7 @@ function Categories() {
           </p>
         </div>
         <div className="item-wrapper">
+        <Link to="/SearchResult/tag:JEE Mains">
           <div className="item i1 ">
             <img
               src="/images/categories/jee_logo.png"
@@ -27,6 +28,8 @@ function Categories() {
               <Link to="/SearchResult/tag:JEE Mains">Shop Now</Link>
             </p>
           </div>
+          </Link>
+          <Link to="/SearchResult/tag:JEE Advanced">
           <div className="item i2">
             <img
               src="/images/categories/jee adv.png"
@@ -38,6 +41,8 @@ function Categories() {
               <Link to="/SearchResult/tag:JEE Advanced">Shop Now</Link>
             </p>
           </div>
+          </Link>
+          <Link to="/SearchResult/tag:CSBE">
           <div className="item i3">
             <img
               src="/images/categories/cbse.png"
@@ -49,6 +54,8 @@ function Categories() {
               <Link to="/SearchResult/tag:CBSE">Shop Now</Link>
             </p>
           </div>
+          </Link>
+          <Link to="/SearchResult/tag:NEET">
           <div className="item i4">
             <img
               src="/images/categories/health.png"
@@ -60,6 +67,8 @@ function Categories() {
               <Link to="/SearchResult/tag:NEET">Shop Now</Link>
             </p>
           </div>
+          </Link>
+          <Link to="/SearchResult/tag:NOVELS">
           <div className="item i5">
             <img
               src="/images/categories/biography.png"
@@ -71,6 +80,7 @@ function Categories() {
               <Link to="/SearchResult/tag:Novels">Shop Now</Link>
             </p>
           </div>
+          </Link>
         </div>
       </div>
     </div>
