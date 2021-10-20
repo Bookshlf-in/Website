@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import { Helmet } from "react-helmet";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -109,6 +110,13 @@ function App() {
           </Route>
 
           <Route path="/">
+            <Helmet>
+              <title>Home | Bookshlf</title>
+              <meta
+                name="description"
+                content="Bookshlf is a platform for students where you can buy secondhand books at low prices and sell books."
+              />
+            </Helmet>
             <Navbar />
             <Carousel />
             <Categories />

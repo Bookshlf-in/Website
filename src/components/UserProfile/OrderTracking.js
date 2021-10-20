@@ -60,7 +60,7 @@ function OrderTracking() {
         .catch((error) => {});
     };
     fetchdata();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handelCancelOrder = (ORDERID) => {
@@ -85,10 +85,6 @@ function OrderTracking() {
   };
   const handleReceipt = () => {
     setDownloadpdf(true);
-    setTimeout(() => {
-      document.getElementById("invoice-btn").click();
-      document.getElementById("invoice-btn").innerHTML = "Click Again To Download Invoice";
-    }, 3000);
   };
 
   return (
@@ -258,12 +254,19 @@ function OrderTracking() {
               <i className="fas fa-download" />
               &nbsp;&nbsp;Receipt
             </div> */}
-            {
-              downloadpdf ?  <DownloadReciept orderDetails={order} /> :  <Button className="download-receipt-button" onClick={handleReceipt} variant="contained" color="primary">
-              <i className="fas fa-download" />
-              &nbsp;&nbsp;Generate Invoice
-            </Button>
-            }
+            {downloadpdf ? (
+              <DownloadReciept orderDetails={order} />
+            ) : (
+              <Button
+                className="download-receipt-button"
+                onClick={handleReceipt}
+                variant="contained"
+                color="primary"
+              >
+                <i className="fas fa-download" />
+                &nbsp;&nbsp;Generate Invoice
+              </Button>
+            )}
           </div>
         </div>
       ) : (

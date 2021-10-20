@@ -57,9 +57,19 @@ const PreviousOrders = (props) => {
                 >
                   {order.status[order.status.length - 1] === "Delivered" ? (
                     <>
-                      <i className="fas fa-check-circle" />
-                      &nbsp;&nbsp;
-                      {order.status[order.status.length - 1]}
+                      <div style={{ marginBottom: "40px" }}>
+                        <i className="fas fa-check-circle" />
+                        &nbsp;&nbsp;
+                        {order.status[order.status.length - 1]}
+                      </div>
+
+                      <Link
+                        className="completed-order-details"
+                        to={`/Track/${order._id}`}
+                        title="Track Order"
+                      >
+                        View&nbsp;Details
+                      </Link>
                     </>
                   ) : order.status[order.status.length - 1] === "Cancelled" ? (
                     <>

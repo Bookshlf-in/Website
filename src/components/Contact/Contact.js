@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import axios from "../../axios";
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,133 +116,163 @@ function Contact() {
 
   // default export component
   return (
-    <div className="contact-main">
-      <h1> Contact Us</h1>
-      <div className="contact-map">
-        <iframe
-          title="google-map"
-          src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.227819806201!2d81.02184131441342!3d26.800873671349063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be37eb0826741%3A0x34d9dd79cdeac7d8!2sIIIT%20Lucknow%20(Indian%20Institute%20of%20Information%20Technology)!5e0!3m2!1sen!2sin!4v1623751175733!5m2!1sen!2sin`}
+    <>
+      <Helmet>
+        <title>Contact | Bookshlf</title>
+        <meta
+          name="description"
+          content="To contact us, fill out and submit the form. We will try our best to answer your questions as soon as possible."
         />
-      </div>
-      <div className="contact-form">
-        <h1>Contact Information</h1>
-        <h3 style={{ fontSize: "12px" }}>
-          We will try our best to answer your questions as soon as possible.
-        </h3>
-        <br />
-        <div className="social-icons">
-          <Link to="">
-            <i className="fab fa-facebook-f" />
-          </Link>
-          <Link to="https://www.instagram.com/_bookshlf/">
-            <i className="fab fa-instagram" />
-          </Link>
-          <Link to="">
-            <i className="fab fa-twitter" />
-          </Link>
-          <Link to="">
-            <i className="fab fa-linkedin" />
-          </Link>
-          <Link
-            to="https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ"
-            target="_blank"
-          >
-            <i className="fab fa-youtube" />
-          </Link>
+      </Helmet>
+
+      <div className="contact-main">
+        <h1> Contact Us</h1>
+        <div className="contact-map">
+          <iframe
+            title="google-map"
+            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.227819806201!2d81.02184131441342!3d26.800873671349063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be37eb0826741%3A0x34d9dd79cdeac7d8!2sIIIT%20Lucknow%20(Indian%20Institute%20of%20Information%20Technology)!5e0!3m2!1sen!2sin!4v1623751175733!5m2!1sen!2sin`}
+          />
         </div>
-        <h1> Get In Touch</h1>
-        <div className="contactForm">
-          <form action="">
-            <input
-              type="text"
-              id="contactName"
-              placeholder="Name"
-              onChange={(e) => setName(e.target.value)}
-              value={Name}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handelSubmit();
-                }
+        <div className="contact-form">
+          <h1>Contact Information</h1>
+          <h3 style={{ fontSize: "12px" }}>
+            We will try our best to answer your questions as soon as possible.
+          </h3>
+          <br />
+          <div className="social-icons">
+            <Link
+              to={{
+                pathname: "https://www.facebook.com/Bookshlf-109479771200918",
               }}
-            />
-            <input
-              type="mail"
-              id="contactEmail"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={Email}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handelSubmit();
-                }
+              target="_blank"
+            >
+              <i className="fab fa-facebook-f" />
+            </Link>
+            <Link
+              to={{ pathname: "https://www.instagram.com/_bookshlf/" }}
+              target="_blank"
+            >
+              <i className="fab fa-instagram" />
+            </Link>
+            <Link
+              to={{ pathname: "https://twitter.com/BookshlfA" }}
+              target="_blank"
+            >
+              <i className="fab fa-twitter" />
+            </Link>
+            <Link
+              to={{
+                pathname:
+                  "https://www.linkedin.com/in/bookshlf-by-aman-861073223/",
               }}
-            />
-            <br />
-            <input
-              type="text"
-              id="contactSubject"
-              placeholder="Subject"
-              onChange={(e) => setSubject(e.target.value)}
-              value={Subject}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handelSubmit();
-                }
+              target="_blank"
+            >
+              <i className="fab fa-linkedin" />
+            </Link>
+            <Link
+              to={{
+                pathname:
+                  "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ",
               }}
-            />
-            <br />
-            <textarea
-              id="contactReview"
-              placeholder="Details please! Your review helps other shoppers."
-              onChange={(e) => setMessage(e.target.value)}
-              value={Message}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handelSubmit();
-                }
-              }}
-            />
-            <br />
-            <input
-              type="button"
-              id="contactSubmit"
-              value="Submit Message"
-              onClick={handelSubmit}
-            />
-            {/* Loader starts*/}
-            <div
-              id="loading"
+              target="_blank"
+            >
+              <i className="fab fa-youtube" />
+            </Link>
+          </div>
+          <h1> Get In Touch</h1>
+          <div className="contactForm">
+            <form action="">
+              <input
+                type="text"
+                id="contactName"
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+                value={Name}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handelSubmit();
+                  }
+                }}
+              />
+              <input
+                type="mail"
+                id="contactEmail"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={Email}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handelSubmit();
+                  }
+                }}
+              />
+              <br />
+              <input
+                type="text"
+                id="contactSubject"
+                placeholder="Subject"
+                onChange={(e) => setSubject(e.target.value)}
+                value={Subject}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handelSubmit();
+                  }
+                }}
+              />
+              <br />
+              <textarea
+                id="contactReview"
+                placeholder="Details please! Your review helps other shoppers."
+                onChange={(e) => setMessage(e.target.value)}
+                value={Message}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handelSubmit();
+                  }
+                }}
+              />
+              <br />
+              <input
+                type="button"
+                id="contactSubmit"
+                value="Submit Message"
+                onClick={handelSubmit}
+              />
+              {/* Loader starts*/}
+              <div
+                id="loading"
+                style={{
+                  display: loader,
+                  width: "8rem",
+                  height: "8rem",
+                  animation: "spin 1s infinite linear",
+                  border: "6px solid transparent",
+                  borderTop: "6px solid #3ab800",
+                }}
+              ></div>
+              {/* Loader ends */}
+            </form>
+          </div>
+          <div className={classes.root} style={{ display: showAlert }}>
+            <Alert
+              variant="outlined"
+              severity={Alerttype}
               style={{
-                display: loader,
-                width: "8rem",
-                height: "8rem",
-                animation: "spin 1s infinite linear",
-                border: "6px solid transparent",
-                borderTop: "6px solid #3ab800",
+                fontFamily: "PT Sans",
+                fontWeight: "bold",
+                color: alertColor,
               }}
-            ></div>
-            {/* Loader ends */}
-          </form>
-        </div>
-        <div className={classes.root} style={{ display: showAlert }}>
-          <Alert
-            variant="outlined"
-            severity={Alerttype}
-            style={{
-              fontFamily: "PT Sans",
-              fontWeight: "bold",
-              color: alertColor,
-            }}
-          >
-            {alertText}
-          </Alert>
+            >
+              {alertText}
+            </Alert>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 export default Contact;
