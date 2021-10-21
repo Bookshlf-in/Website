@@ -33,6 +33,7 @@ function BestSelling() {
           {bestbooks ? (
             <>
               {bestbooks.map((book, i) => (
+                <Link to={`/BookDetails/${book._id}`}>
                 <div className="book book1" key={i}>
                   <div className="book-pic">
                     <img
@@ -52,6 +53,7 @@ function BestSelling() {
                     </p>
                   </div>
                 </div>
+                </Link>
               ))}
             </>
           ) : (
