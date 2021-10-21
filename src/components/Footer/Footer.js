@@ -264,7 +264,7 @@ function Footer() {
               <Link to="/SearchResult/tag:Jee Advanced">JEE Advanced</Link>
               <Link to="/SearchResult/School">High School</Link>
               <Link to="/SearchResult/Programming">Programming</Link>
-              <Link to="/SearchResult/Novels">Novels</Link>
+              <Link to="/SearchResult/tag:Novel">Novels</Link>
             </div>
           </div>
         </div>
