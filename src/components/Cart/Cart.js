@@ -43,14 +43,14 @@ function Cart() {
     if (qty < maxx) {
       qty += 1;
       cart[id].purchaseQty = qty;
-      
-      currentPurchaseQty +=1;
-      user.cartitems=currentPurchaseQty;
-      
+
+      currentPurchaseQty += 1;
+      user.cartitems = currentPurchaseQty;
+
       amt = amount + price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
-      
+
       for (let i = 0; i < cart.length; i++) {
         const update = async () => {
           axios
@@ -61,7 +61,7 @@ function Cart() {
             .catch(() => {});
         };
         update();
-      } 
+      }
     } else {
     }
   };
@@ -71,14 +71,14 @@ function Cart() {
     if (qty > 1) {
       qty -= 1;
       cart[id].purchaseQty = qty;
-      
-      currentPurchaseQty -=1;
-      user.cartitems=currentPurchaseQty;
-      
+
+      currentPurchaseQty -= 1;
+      user.cartitems = currentPurchaseQty;
+
       amt = amount - price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
-      
+
       for (let i = 0; i < cart.length; i++) {
         const update = async () => {
           axios
@@ -104,10 +104,10 @@ function Cart() {
       .then((response) => {
         let memo = cart.filter((item) => ID !== item.bookId);
         setcart(memo);
-      
-      let removeQtyGet = cart.filter((item) => ID == item.bookId);
+
+        let removeQtyGet = cart.filter((item) => ID === item.bookId);
         let removeQty = removeQtyGet[0].purchaseQty;
-      
+
         for (let i = 0; i < memo.length; i++) {
           amt += memo[i].price;
         }
