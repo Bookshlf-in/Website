@@ -16,6 +16,17 @@ We are a small team of students who are enthusiastic developers. We are trying t
 
 Love the project and want to get involved? You’re in the right place!
 
+# Contributors
+
+<a href="https://github.com/Bookshlf-in/Website/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Bookshlf-in/Website" />
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
+
+> Don't forget to ⭐ this repository !!
+
+
 ## Requirements
 
 You will need `node` and `npm` installed globally on your machine.
@@ -100,17 +111,6 @@ git merge dev
 **9.** On Github, create a pull request from your feature branch. Always make the PR against the dev branch! Make sure to summarize your changes you made, and if there's anything specific you want reviewed or tested, note that in the PR.
 
 **10.** When approved, your branch will be merged into master and you're done! Thanks for contributing! :)
-
-# Contributors
-
-<a href="https://github.com/Bookshlf-in/Website/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Bookshlf-in/Website" />
-</a>
-
-Made with [contributors-img](https://contrib.rocks).
-
-> Don't forget to ⭐ this repository !!
-
 # Screenshots
 
 <img src = "public/images/Readme/1.png" width="800"/>

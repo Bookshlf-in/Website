@@ -170,8 +170,8 @@ const Orders = (props) => {
             <tbody>
               {approved && approved.length ? (
                 <>
-                  {approved.map((book) => (
-                    <tr>
+                  {approved.map((book, key) => (
+                    <tr key={{ key }}>
                       <td>{book._id}</td>
                       <td>{book.title}</td>
                       <td>{book.ISBN}</td>
@@ -210,8 +210,8 @@ const Orders = (props) => {
             <tbody>
               {notsold && notsold.length > 0 ? (
                 <>
-                  {notsold.map((book) => (
-                    <tr>
+                  {notsold.map((book, key) => (
+                    <tr key={{ key }}>
                       <th>{book._id}</th>
                       <th>{book.title}</th>
                       <th>{book.description}</th>
@@ -294,7 +294,7 @@ const Orders = (props) => {
                       >
                         {book.status !== "Approval rejected" ? (
                           <>
-                            <i class="fas fa-pen-alt"></i> <br />
+                            <i className="fas fa-pen-alt"></i> <br />
                             Update Details
                           </>
                         ) : (

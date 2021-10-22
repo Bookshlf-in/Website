@@ -79,6 +79,22 @@
   transition: 0.5s;
   border: 1px solid white;
 }
+.completed-order-details {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid white;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.completed-order-details:hover {
+  background-color: white;
+  transition: 0.5s;
+  color: black;
+  border: 1px solid black;
+}
 @media screen and (max-width: 900px) {
   .user-profile-navbar .Account-details,
   .user-profile-navbar .Pending-orders,
