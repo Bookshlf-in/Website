@@ -105,8 +105,8 @@ function Cart() {
         let memo = cart.filter((item) => ID !== item.bookId);
         setcart(memo);
 
-        let removeQtyGet = cart.filter((item) => ID === item.bookId);
-        let removeQty = removeQtyGet[0].purchaseQty;
+        // let removeQtyGet = cart.filter((item) => ID === item.bookId);
+        // let removeQty = removeQtyGet[0].purchaseQty;
 
         for (let i = 0; i < memo.length; i++) {
           amt += memo[i].price;
@@ -118,7 +118,7 @@ function Cart() {
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
-            cartitems: user.cartitems - removeQty,
+            cartitems: user.cartitems - 1,
             wishlist: user.wishlist,
           })
         );
@@ -126,7 +126,7 @@ function Cart() {
           authHeader: user.authHeader,
           roles: user.roles,
           email: user.email,
-          cartitems: user.cartitems - removeQty,
+          cartitems: user.cartitems - 1,
           wishlist: user.wishlist,
         });
       })
