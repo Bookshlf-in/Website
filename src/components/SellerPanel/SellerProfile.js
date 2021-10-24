@@ -4,6 +4,7 @@ import axios from "../../axios";
 import Rating from "@material-ui/lab/Rating";
 import Avatar from "@material-ui/core/Avatar";
 import "./SellerProfile.css";
+import { Helmet } from "react-helmet";
 
 const Verified = {
   user: "verified-user",
@@ -45,45 +46,52 @@ const SellerProfile = (props) => {
   }, []);
 
   return (
-    <div className="sellerContainer">
-      <div className="verify-tag">
-        <p className={isVerified ? Verified.user : nonVerified.user}>
-          <b>{isVerified ? Verified.tag : nonVerified.tag}</b>
-        </p>
-      </div>
+    <>
+      <Helmet>
+        <title>{sellerName} | Bookshlf</title>
+        <meta name="description" content={sellerIntro} />
+      </Helmet>
 
-      <div className="seller">
-        <span>
-          <i className="fas fa-user"></i>
-          {sellerName}
-        </span>
+      <div className="sellerContainer">
+        <div className="verify-tag">
+          <p className={isVerified ? Verified.user : nonVerified.user}>
+            <b>{isVerified ? Verified.tag : nonVerified.tag}</b>
+          </p>
+        </div>
 
-        <span>
-          <i className="fas fa-info-circle" />
-          {sellerIntro}
-        </span>
-        <span className="rating-span">
-          <Rating name="read-only" value={sellerRating} readOnly />(
-          {sellerRating > 5 ? 5 : sellerRating})
-        </span>
-        <span>
-          <span className="books-sold">
-            {`${noOfBooksSold === 1 ? "Book" : "Books"}`}
-            Sold -
+        <div className="seller">
+          <span>
+            <i className="fas fa-user"></i>
+            {sellerName}
           </span>
-          <span style={{ color: "rgb(44, 185, 25)", fontWeight: "600" }}>
-            {noOfBooksSold}
+
+          <span>
+            <i className="fas fa-info-circle" />
+            {sellerIntro}
           </span>
-        </span>
+          <span className="rating-span">
+            <Rating name="read-only" value={sellerRating} readOnly />(
+            {sellerRating > 5 ? 5 : sellerRating})
+          </span>
+          <span>
+            <span className="books-sold">
+              {`${noOfBooksSold === 1 ? "Book" : "Books"}`}
+              Sold -
+            </span>
+            <span style={{ color: "rgb(44, 185, 25)", fontWeight: "600" }}>
+              {noOfBooksSold}
+            </span>
+          </span>
+        </div>
+        <div className="avatar-style">
+          <Avatar
+            alt="Profile"
+            src={sellerPhoto}
+            style={{ height: "150px", width: "150px" }}
+          />
+        </div>
       </div>
-      <div className="avatar-style">
-        <Avatar
-          alt="Profile"
-          src={sellerPhoto}
-          style={{ height: "150px", width: "150px" }}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

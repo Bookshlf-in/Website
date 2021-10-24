@@ -13,6 +13,7 @@ function Cart() {
   const [removingId, setremovingId] = useState("");
   const [checkout, setcheckout] = useState(false);
   var amt = 0;
+
   useEffect(() => {
     const fetchData = async () => {
       axios
@@ -25,8 +26,8 @@ function Cart() {
               Math.min(response.data[i].purchaseQty, response.data[i].qty);
           }
           setamount(amt);
-          console.log(response.data.length);
-          console.log(response.data);
+          // console.log(response.data.length);
+          // console.log(response.data);
           setloader(false);
         })
         .catch((error) => {
@@ -45,7 +46,18 @@ function Cart() {
       amt = amount + price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
-    } else {
+
+      for (let i = 0; i < cart.length; i++) {
+        const update = async () => {
+          axios
+            .post("/changeCartItemPurchaseQty", {
+              cartItemId: cart[i]._id,
+              purchaseQty: cart[i].purchaseQty,
+            })
+            .catch(() => {});
+        };
+        update();
+      }
     }
   };
   const DeleteItem = (id, price) => {
@@ -56,6 +68,18 @@ function Cart() {
       amt = amount - price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
+
+      for (let i = 0; i < cart.length; i++) {
+        const update = async () => {
+          axios
+            .post("/changeCartItemPurchaseQty", {
+              cartItemId: cart[i]._id,
+              purchaseQty: cart[i].purchaseQty,
+            })
+            .catch(() => {});
+        };
+        update();
+      }
     } else {
     }
   };
@@ -70,6 +94,7 @@ function Cart() {
       .then((response) => {
         let memo = cart.filter((item) => ID !== item.bookId);
         setcart(memo);
+
         for (let i = 0; i < memo.length; i++) {
           amt += memo[i].price;
         }
