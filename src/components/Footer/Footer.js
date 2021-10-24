@@ -259,12 +259,12 @@ function Footer() {
             </div>
             <div className="footer-link-items">
               <h4>Categories</h4>
-              <Link to="/SearchResult/Jee">JEE Mains</Link>
-              <Link to="/SearchResult/Neet">NEET PG</Link>
-              <Link to="/SearchResult/Jee">JEE Advanced</Link>
+              <Link to="/SearchResult/tag:Jee">JEE Mains</Link>
+              <Link to="/SearchResult/tag:Neet">NEET PG</Link>
+              <Link to="/SearchResult/tag:Jee Advanced">JEE Advanced</Link>
               <Link to="/SearchResult/School">High School</Link>
               <Link to="/SearchResult/Programming">Programming</Link>
-              <Link to="/SearchResult/Novels">Novels</Link>
+              <Link to="/SearchResult/tag:Novel">Novels</Link>
             </div>
           </div>
         </div>

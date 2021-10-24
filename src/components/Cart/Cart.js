@@ -39,23 +39,57 @@ function Cart() {
 
   const addItem = (id, maxx, price) => {
     var qty = Number.parseInt(document.getElementById(id).innerHTML);
+    var currentPurchaseQty = Number.parseInt(user.cartitems);
     if (qty < maxx) {
       qty += 1;
       cart[id].purchaseQty = qty;
+
+      currentPurchaseQty += 1;
+      user.cartitems = currentPurchaseQty;
+
       amt = amount + price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
+
+      for (let i = 0; i < cart.length; i++) {
+        const update = async () => {
+          axios
+            .post("/changeCartItemPurchaseQty", {
+              cartItemId: cart[i]._id,
+              purchaseQty: cart[i].purchaseQty,
+            })
+            .catch(() => {});
+        };
+        update();
+      }
     } else {
     }
   };
   const DeleteItem = (id, price) => {
     var qty = Number.parseInt(document.getElementById(id).innerHTML);
+    var currentPurchaseQty = Number.parseInt(user.cartitems);
     if (qty > 1) {
       qty -= 1;
       cart[id].purchaseQty = qty;
+
+      currentPurchaseQty -= 1;
+      user.cartitems = currentPurchaseQty;
+
       amt = amount - price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
+
+      for (let i = 0; i < cart.length; i++) {
+        const update = async () => {
+          axios
+            .post("/changeCartItemPurchaseQty", {
+              cartItemId: cart[i]._id,
+              purchaseQty: cart[i].purchaseQty,
+            })
+            .catch(() => {});
+        };
+        update();
+      }
     } else {
     }
   };
@@ -70,6 +104,10 @@ function Cart() {
       .then((response) => {
         let memo = cart.filter((item) => ID !== item.bookId);
         setcart(memo);
+
+        let removeQtyGet = cart.filter((item) => ID === item.bookId);
+        let removeQty = removeQtyGet[0].purchaseQty;
+
         for (let i = 0; i < memo.length; i++) {
           amt += memo[i].price;
         }
@@ -80,7 +118,7 @@ function Cart() {
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
-            cartitems: user.cartitems - 1,
+            cartitems: user.cartitems - removeQty,
             wishlist: user.wishlist,
           })
         );
@@ -88,7 +126,7 @@ function Cart() {
           authHeader: user.authHeader,
           roles: user.roles,
           email: user.email,
-          cartitems: user.cartitems - 1,
+          cartitems: user.cartitems - removeQty,
           wishlist: user.wishlist,
         });
       })
