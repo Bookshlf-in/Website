@@ -13,6 +13,7 @@ function Cart() {
   const [removingId, setremovingId] = useState("");
   const [checkout, setcheckout] = useState(false);
   var amt = 0;
+
   useEffect(() => {
     const fetchData = async () => {
       axios
@@ -25,8 +26,8 @@ function Cart() {
               Math.min(response.data[i].purchaseQty, response.data[i].qty);
           }
           setamount(amt);
-          console.log(response.data.length);
-          console.log(response.data);
+          // console.log(response.data.length);
+          // console.log(response.data);
           setloader(false);
         })
         .catch((error) => {
@@ -39,14 +40,9 @@ function Cart() {
 
   const addItem = (id, maxx, price) => {
     var qty = Number.parseInt(document.getElementById(id).innerHTML);
-    var currentPurchaseQty = Number.parseInt(user.cartitems);
     if (qty < maxx) {
       qty += 1;
       cart[id].purchaseQty = qty;
-
-      currentPurchaseQty += 1;
-      user.cartitems = currentPurchaseQty;
-
       amt = amount + price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
@@ -62,19 +58,13 @@ function Cart() {
         };
         update();
       }
-    } else {
     }
   };
   const DeleteItem = (id, price) => {
     var qty = Number.parseInt(document.getElementById(id).innerHTML);
-    var currentPurchaseQty = Number.parseInt(user.cartitems);
     if (qty > 1) {
       qty -= 1;
       cart[id].purchaseQty = qty;
-
-      currentPurchaseQty -= 1;
-      user.cartitems = currentPurchaseQty;
-
       amt = amount - price;
       setamount(amt);
       document.getElementById(id).innerHTML = qty;
@@ -105,9 +95,6 @@ function Cart() {
         let memo = cart.filter((item) => ID !== item.bookId);
         setcart(memo);
 
-        let removeQtyGet = cart.filter((item) => ID === item.bookId);
-        let removeQty = removeQtyGet[0].purchaseQty;
-
         for (let i = 0; i < memo.length; i++) {
           amt += memo[i].price;
         }
@@ -118,7 +105,7 @@ function Cart() {
             authHeader: user.authHeader,
             roles: user.roles,
             email: user.email,
-            cartitems: user.cartitems - removeQty,
+            cartitems: user.cartitems - 1,
             wishlist: user.wishlist,
           })
         );
@@ -126,7 +113,7 @@ function Cart() {
           authHeader: user.authHeader,
           roles: user.roles,
           email: user.email,
-          cartitems: user.cartitems - removeQty,
+          cartitems: user.cartitems - 1,
           wishlist: user.wishlist,
         });
       })
