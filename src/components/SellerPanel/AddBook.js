@@ -9,6 +9,7 @@ import Alert from "@material-ui/lab/Alert";
 import { storage } from "../../firebase";
 import { nanoid } from "nanoid";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Chip from "@material-ui/core/Chip"; // for book-tag
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -593,20 +594,20 @@ const AddBook = (props) => {
             {Image !== null ? (
               <>
                 {Image.map((file) => (
-                  <div className='uploaded-image'>
-                  <button
-                    name={file.name}
-                    onClick={(e) => handleImageDelete(e)}
-                  >
-                    X
-                  </button>
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt="book"
-                    height="60px"
-                    width="60px"
-                  />
-                </div>
+                  <div className="uploaded-image">
+                    <button
+                      name={file.name}
+                      onClick={(e) => handleImageDelete(e)}
+                    >
+                      X
+                    </button>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt="book"
+                      height="60px"
+                      width="60px"
+                    />
+                  </div>
                 ))}
               </>
             ) : (

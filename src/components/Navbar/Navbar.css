@@ -58,22 +58,20 @@
 .navbar-items-chip p:hover {
   background-color: rgba(207, 199, 199, 0.452);
 }
-.navbar-items-chip .Cart-items-notify-bubble {
-  float: right;
-  font-size: 12px;
-  font-weight: bold;
-  background-color: rgb(233, 159, 61);
-  padding: 2px 5px;
-  border-radius: 10px;
-  margin-top: -25px;
-}
+
 .navbar-items-chip a.cart-icon {
   padding: 0;
   font-size: 20px;
 }
 .navbar-items-chip a.cart-icon:hover {
-  color: rgb(240, 240, 63);
   background-color: transparent;
+}
+.cart-icon .MuiButtonBase-root.MuiIconButton-root {
+  color: rgb(202, 200, 200);
+}
+.cart-icon .MuiButtonBase-root.MuiIconButton-root:hover {
+  background-color: white;
+  color: grey;
 }
 .navbar-right ul {
   float: right;

@@ -5,9 +5,9 @@ import { Helmet } from "react-helmet";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import Carousel from "./Carousel";
-import Categories from "./Categories";
-import BestSelling from "./BestSelling";
+import Carousel from "../Home/Carousel";
+import Categories from "../Home/Categories";
+import BestSelling from "../Home/BestSelling";
 import Review from "../Reviews/Reviews";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
