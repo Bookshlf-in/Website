@@ -293,11 +293,12 @@ function Navbar() {
         <div className="mobile-cart">
           <div className="navbar-items-chip">
             <Link to="/Cart" className="cart-icon">
-              <i className="fas fa-shopping-cart" />
+              <IconButton aria-label="cart">
+                <StyledBadge badgeContent={user?.cartitems} color="secondary">
+                  <ShoppingCartIcon />
+                </StyledBadge>
+              </IconButton>
             </Link>
-            <p className="Cart-items-notify-bubble">
-              {user ? user.cartitems : 0}
-            </p>
           </div>
         </div>
       </div>

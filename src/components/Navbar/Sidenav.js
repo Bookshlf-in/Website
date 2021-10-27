@@ -16,7 +16,7 @@ const Sidenav = () => {
 
   const _handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      history.push(`/SearchResult/${Search === "" ? "books" : Search}`);
+      history.push(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
     }
   };
 

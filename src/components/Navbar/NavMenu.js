@@ -18,7 +18,7 @@ const NavbarMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
   const [, setAddForm] = useContext(AddFormContext);
-  const [Logged, setLogged] = useState(user ? true : false);
+  const [, setLogged] = useState(user ? true : false);
   const [alert, setalert] = useState({
     show: false,
     msg: "Unsubscribe",
