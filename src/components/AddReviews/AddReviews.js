@@ -3,6 +3,10 @@ import "./AddReviews.css";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import axios from "../../axios";
+import Skeleton from "@material-ui/lab/Skeleton";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
+import Alert from "@material-ui/lab/Alert";
 
 const Reviews = () => {
   const params = useParams();
@@ -12,6 +16,10 @@ const Reviews = () => {
   const [order, setorder] = useState(null);
   const [rate, setrate] = useState("Rating Required");
   const [reviewId, setreviewId] = useState(null);
+  const [deleting, setdeleting] = useState(false);
+  const [alert, setalert] = useState(false);
+  const [alertText, setalertText] = useState("");
+  const [alertType, setalertType] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +31,7 @@ const Reviews = () => {
           setorder(response.data);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          // console.log(error.response.data);
         });
       axios
         .get("/getReview", {
@@ -43,7 +51,7 @@ const Reviews = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(rating, desc, reviewId);
+    // console.log(rating, desc, reviewId);
     if (rating !== null && desc !== "") {
       if (reviewId === null) {
         e.target.innerHTML = "Submitting...";
@@ -54,32 +62,52 @@ const Reviews = () => {
             rating: rating,
           })
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             axios
               .get("/getReview", {
                 params: { orderId: params.orderId },
               })
               .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 setdesc(response.data.review);
                 setrating(response.data.rating);
                 sethover(response.data.rating);
                 setreviewId(response.data._id);
+                setalertType("success");
+                setalert(true);
+                setalertText("Review Added!");
+                setTimeout(() => {
+                  e.target.innerHTML = "Submit";
+                  setalert(false);
+                  setalertText("");
+                  setalertType("");
+                }, 4000);
               })
               .catch((error) => {});
-            e.target.innerHTML = response.data.msg;
+            setalert(true);
+            setalertText(response.data.msg);
+            setalertType("error");
+
             setTimeout(() => {
               e.target.innerHTML = "Submit";
-            }, 2000);
+              setalert(false);
+              setalertText("");
+              setalertType("");
+            }, 4000);
           })
           .catch((error) => {
-            e.target.innerHTML = "Error Occured!";
+            setalertType("error");
+            setalert(true);
+            setalertText("error occured!");
             setTimeout(() => {
               e.target.innerHTML = "Submit";
-            }, 2000);
+              setalert(false);
+              setalertText("");
+              setalertType("");
+            }, 4000);
           });
       } else {
-        e.target.innerHTML = "Updating...";
+        // e.target.innerHTML = "Updating...";
         axios
           .post("/updateReview", {
             reviewId: reviewId,
@@ -87,43 +115,75 @@ const Reviews = () => {
             review: desc,
           })
           .then((response) => {
-            console.log(response.data);
-            e.target.innerHTML = response.data.msg;
+            // console.log(response.data);
+            setalertType("success");
+            setalert(true);
+            setalertText("Review Updated!");
             setTimeout(() => {
               e.target.innerHTML = "Submit";
-            }, 2000);
+              setalert(false);
+              setalertText("");
+              setalertType("");
+            }, 4000);
           })
           .catch((error) => {
-            e.target.innerHTML = "Error Occured!";
+            setalertType("error");
+            setalert(true);
+            setalertText("error occured!");
             setTimeout(() => {
               e.target.innerHTML = "Submit";
-            }, 2000);
+              setalert(false);
+              setalertText("");
+              setalertType("");
+            }, 4000);
           });
       }
     } else {
-      e.target.innerHTML = "Error!";
+      setalertType("error");
+      setalert(true);
+      setalertText("error occured!");
       setTimeout(() => {
         e.target.innerHTML = "Submit";
-      }, 2000);
+        setalert(false);
+        setalertText("");
+        setalertType("");
+      }, 4000);
     }
   };
 
   const Delete = (e) => {
     e.preventDefault();
+    setdeleting(true);
     if (reviewId != null) {
-      e.target.innerHTML = "Deleting...";
       axios
         .delete("/deleteReview", {
           data: { reviewId: reviewId },
         })
         .then((response) => {
-          e.target.innerHTML = "Review Deleted";
           setdesc("");
           setrating(null);
           setreviewId(null);
+          setdeleting(false);
+          setalert(true);
+          setalertType("success");
+          setalertText("Review Deleted!");
           setTimeout(() => {
-            e.target.innerHTML = `<i class="fas fa-trash-alt"></i>`;
-          }, 2000);
+            setalert(false);
+            setalertType("");
+            setalertText("");
+          }, 4000);
+        })
+        .catch((error) => {
+          setdeleting(false);
+          console.log(error.response.data);
+          setalert(true);
+          setalertType("error");
+          setalertText("Error Occured!");
+          setTimeout(() => {
+            setalert(false);
+            setalertType("");
+            setalertText("");
+          }, 4000);
         });
     }
   };
@@ -143,14 +203,15 @@ const Reviews = () => {
         </div>
         <div className="review-main">
           <div className="main-book">
-            <img
-              src={
-                order ? order.photo : "/images/book-of-black-cover-closed.png"
-              }
-              alt={order ? order.title : "book-name"}
-            />
+            {order ? (
+              <img src={order.photo} alt={order.title} />
+            ) : (
+              <Skeleton variant="rect" width={180} height={180} />
+            )}
+
             <p>{order ? order.title : "..."}</p>
-            <p>{order ? order.price + "/-" : "..."}</p>
+            <br />
+            <p className="price-tag">{order ? order.price + "/-" : "..."}</p>
           </div>
           <div className="main-rating">
             <div className="desc">
@@ -262,18 +323,36 @@ const Reviews = () => {
             >
               Submit
             </button>
-            <button
+            <Button
+              variant="contained"
               type="submit"
               className="btn-delete"
               onClick={(e) => {
                 Delete(e);
               }}
               title="Delete Review"
+              style={{
+                backgroundColor: "#fa2828",
+                marginLeft: "20px",
+                padding: "15px",
+                borderRadius: "50%",
+                width: "45px",
+                height: "45px",
+                minWidth: "0px",
+              }}
             >
-              <i className="fas fa-trash-alt"></i>
-            </button>
+              {deleting ? (
+                <CircularProgress
+                  style={{ height: "15px", width: "15px", color: "whitesmoke" }}
+                />
+              ) : (
+                <i className="fas fa-trash-alt"></i>
+              )}
+            </Button>
           </form>
         </div>
+        <br />
+        {alert ? <Alert severity={alertType}>{alertText}</Alert> : <></>}
       </div>
     </div>
   );
