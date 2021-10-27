@@ -73,6 +73,11 @@
   background-color: rgba(207, 199, 199, 0.452);
   color: whitesmoke;
 }
+.navbar-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .navbar-right ul {
   float: right;
   list-style: none;
@@ -81,7 +86,7 @@
   align-items: center;
 }
 .navbar-right li {
-  margin: 10px;
+  margin: 0px 10px;
 }
 .navbar-items-chip-searchbox {
   height: 32px;
