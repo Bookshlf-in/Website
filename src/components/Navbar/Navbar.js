@@ -13,7 +13,6 @@ import InputBase from "@material-ui/core/InputBase";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import SideNav from "./Sidenav.js";
 import { UserContext } from "../../Context/userContext";
-import { AddFormContext } from "../../Context/formContext";
 import axios from "../../axios.js";
 
 const openNav = (e) => {
@@ -82,7 +81,6 @@ function Navbar() {
   const [Search, setSearch] = useState("");
 
   useEffect(() => {
-    // console.log(user);
     if (user) {
       axios
         .get("/countWishlistItems")
@@ -242,7 +240,7 @@ function Navbar() {
                 <Link to="/Cart" className="cart-icon">
                   <IconButton aria-label="cart">
                     <StyledBadge
-                      badgeContent={user.cartitems}
+                      badgeContent={user?.cartitems}
                       color="secondary"
                     >
                       <ShoppingCartIcon />
@@ -255,7 +253,10 @@ function Navbar() {
               <div className="navbar-items-chip">
                 <Link to="/Wishlist" className="cart-icon">
                   <IconButton aria-label="cart">
-                    <StyledBadge badgeContent={user.wishlist} color="secondary">
+                    <StyledBadge
+                      badgeContent={user?.wishlist}
+                      color="secondary"
+                    >
                       <FavoriteIcon color="error" />
                     </StyledBadge>
                   </IconButton>

@@ -1,28 +1,23 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React, useState, useContext } from "react";
 import "./Navbar.css";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Badge from "@material-ui/core/Badge";
-import { withStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
-import { alpha, makeStyles } from "@material-ui/core/styles";
-import SideNav from "./Sidenav.js";
 import { UserContext } from "../../Context/userContext";
 import { AddFormContext } from "../../Context/formContext";
 import axios from "../../axios.js";
 
+const MenuItemStyle = {
+  fontFamily: "Roboto",
+  fontWeight: "bold",
+  fontSize: "12px",
+};
 const NavbarMenu = () => {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useContext(UserContext);
-  const [addForm, setAddForm] = useContext(AddFormContext);
-  const [Search, setSearch] = useState("");
+  const [, setAddForm] = useContext(AddFormContext);
   const [Logged, setLogged] = useState(user ? true : false);
   const [alert, setalert] = useState({
     show: false,
@@ -88,11 +83,10 @@ const NavbarMenu = () => {
         localStorage.removeItem("bookshlf_user");
         localStorage.removeItem("bookshlf_user_AddBook");
         delete axios.defaults.headers.common["Authorization"];
-        // console.log("Signed Out");
         setUser(null);
         setAddForm(null);
         setAnchorEl(null);
-        history.push("/");
+        history.go(0);
       })
       .catch((error) => {
         console.log("Logout error", error);
@@ -123,18 +117,7 @@ const NavbarMenu = () => {
         }}
       >
         <MenuItem
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-          }}
-        >
-          <i className="fas fa-times-circle" />
-        </MenuItem>
-        <MenuItem
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-          }}
+          style={MenuItemStyle}
           onClick={() => {
             history.push("/UserProfile/1");
           }}
@@ -145,10 +128,7 @@ const NavbarMenu = () => {
         {user ? (
           user.roles.includes("admin") ? (
             <MenuItem
-              style={{
-                fontFamily: "PT Sans",
-                fontWeight: "bold",
-              }}
+              style={MenuItemStyle}
               onClick={() => {
                 setAnchorEl(null);
                 history.push("/Admin/1");
@@ -158,16 +138,13 @@ const NavbarMenu = () => {
               &nbsp;Admin Panel
             </MenuItem>
           ) : (
-            <div></div>
+            <></>
           )
         ) : (
-          <div></div>
+          <></>
         )}
         <MenuItem
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-          }}
+          style={MenuItemStyle}
           onClick={() => {
             history.push("/Cart");
           }}
@@ -176,10 +153,7 @@ const NavbarMenu = () => {
           &nbsp;Cart
         </MenuItem>
         <MenuItem
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-          }}
+          style={MenuItemStyle}
           onClick={() => {
             history.push("/Wishlist");
           }}
@@ -188,10 +162,7 @@ const NavbarMenu = () => {
           &nbsp;Wishlist
         </MenuItem>
         <MenuItem
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-          }}
+          style={MenuItemStyle}
           onClick={() => {
             history.push("/SellerPanel/4");
           }}
@@ -201,8 +172,9 @@ const NavbarMenu = () => {
         </MenuItem>
         <MenuItem
           style={{
-            fontFamily: "PT Sans",
+            fontFamily: "Roboto",
             fontWeight: "bold",
+            fontSize: "12px",
             color: alert.color,
           }}
           onClick={() => {
@@ -220,22 +192,9 @@ const NavbarMenu = () => {
             }}
           />
         </MenuItem>
-        <MenuItem
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-          }}
-          onClick={logout}
-        >
-          Logout&nbsp;
+        <MenuItem style={MenuItemStyle} onClick={logout}>
           <i className="fas fa-sign-out-alt" />
-          <i
-            className="fas fa-circle-notch"
-            style={{
-              display: Logged ? "none" : "inline-block",
-              animation: "spin 2s linear infinite",
-            }}
-          />
+          &nbsp;Logout
         </MenuItem>
       </Menu>
     </div>
