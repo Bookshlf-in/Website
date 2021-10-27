@@ -215,6 +215,7 @@ input[type="radio"] {
   .desc-input {
     font-size: 16px;
   }
+  
 }
 
 @media (max-width: 350px) {
@@ -227,6 +228,16 @@ input[type="radio"] {
   }
   .desc-input {
     padding: 10px;
+  }
+  .review-main {
+    flex-direction: column;
+  }
+  .main-book {
+    margin: 15px auto;
+  }
+  .main-book p {
+    text-align: center;
+    margin: 5px 0;
   }
 }
 
