@@ -67,11 +67,11 @@
   background-color: transparent;
 }
 .cart-icon .MuiButtonBase-root.MuiIconButton-root {
-  color: rgb(202, 200, 200);
+  color: whitesmoke;
 }
 .cart-icon .MuiButtonBase-root.MuiIconButton-root:hover {
-  background-color: white;
-  color: grey;
+  background-color: rgba(207, 199, 199, 0.452);
+  color: whitesmoke;
 }
 .navbar-right ul {
   float: right;

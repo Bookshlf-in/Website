@@ -99,6 +99,7 @@ const NavbarMenu = () => {
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
+        style={{ padding: "0px", borderRadius: "50%", minWidth: "0px" }}
       >
         <img
           src="/images/user.png"

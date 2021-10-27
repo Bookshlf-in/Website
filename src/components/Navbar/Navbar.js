@@ -270,8 +270,11 @@ function Navbar() {
                     <Button
                       variant="contained"
                       style={{
-                        fontFamily: "PT Sans",
+                        fontFamily: "Roboto",
                         fontWeight: "bold",
+                        fontSize: "12px",
+                        backgroundColor: "rgb(21, 168, 5)",
+                        color: "whitesmoke",
                       }}
                       onClick={() => {
                         history.push("/Login");
