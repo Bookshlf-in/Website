@@ -1,8 +1,8 @@
 import { React, useState, useContext } from "react";
 import "./Sidenav.css";
 import { useHistory } from "react-router-dom";
-import SideNavLink from "./SideNavLink";
 import { UserContext } from "../../Context/userContext";
+import SideNavLink from "./SideNavLink";
 
 export function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
@@ -12,11 +12,11 @@ const Sidenav = () => {
   const history = useHistory();
   const [Search, setSearch] = useState("");
   const [user] = useContext(UserContext);
-  const CartItems = "Cart(" + JSON.stringify(user?.cartitems) + ")";
+  const CartItems = "Cart(" + user?.cartitems + ")";
 
   const _handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      history.push(`/SearchResult/${Search === "" ? "books" : Search}`);
+      history.push(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
     }
   };
 
@@ -101,7 +101,7 @@ const Sidenav = () => {
           <></>
         )}
         <SideNavLink
-          to="/Contribute"
+          to="https://github.com/Bookshlf-in/Website"
           iconClass="fas fa-hands-helping"
           label="Contribute"
         />

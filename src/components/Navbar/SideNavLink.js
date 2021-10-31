@@ -1,12 +1,14 @@
-import { React, useState, useContext } from "react";
+import { React, useContext } from "react";
 import { Link } from "react-router-dom";
 import { closeNav } from "./Sidenav";
-import axios from "../../axios.js";
 import { UserContext } from "../../Context/userContext";
 import { AddFormContext } from "../../Context/formContext";
+import axios from "../../axios.js";
+
 const SideNavLink = ({ to, label, iconClass, isProfile }) => {
-  const [user, setUser] = useContext(UserContext);
-  const [addForm, setAddForm] = useContext(AddFormContext);
+  const [, setUser] = useContext(UserContext);
+  const [, setAddForm] = useContext(AddFormContext);
+
   const logout = () => {
     label = "Logging Out...";
     axios
@@ -15,7 +17,6 @@ const SideNavLink = ({ to, label, iconClass, isProfile }) => {
         localStorage.removeItem("bookshlf_user");
         localStorage.removeItem("bookshlf_user_AddBook");
         delete axios.defaults.headers.common["Authorization"];
-        // console.log("Signed Out");
         setUser(null);
         setAddForm(null);
         label = "Logout";
@@ -29,10 +30,16 @@ const SideNavLink = ({ to, label, iconClass, isProfile }) => {
         }, 2000);
       });
   };
+
   return (
     <Link
       className={isProfile ? "sidenav-link Profile" : "sidenav-link"}
-      to={to}
+      to={
+        label === "Contribute"
+          ? { pathname: "https://github.com/Bookshlf-in/Website" }
+          : to
+      }
+      target={label === "Contribute" ? "_blank" : ""}
       onClick={label === "Logout" ? logout : closeNav}
     >
       <i className={iconClass} />

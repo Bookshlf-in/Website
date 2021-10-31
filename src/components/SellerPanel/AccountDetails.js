@@ -145,6 +145,7 @@ const AccountDetails = (props) => {
                   style={{
                     border: "none",
                     borderRadius: "50%",
+                    height: "150px",
                   }}
                 />
               </div>

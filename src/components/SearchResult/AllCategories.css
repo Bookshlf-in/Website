@@ -82,7 +82,7 @@
   display: flex;
 }
 .loadMore-btn {
-  width: 200px;
+  width: 150px;
   height: 50px;
   background-color: transparent;
   border: 1px solid #ff5100;
@@ -92,6 +92,9 @@
   border-radius: 50px;
   cursor: pointer;
   margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .book-more-details {

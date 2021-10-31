@@ -7,7 +7,8 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 // Alert
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -79,14 +80,14 @@ const AllCategories = () => {
     console.log(totalPages);
     if (page + 1 <= totalPages) {
       const fetchdata = async () => {
-        console.log(`/search?q=tag:ALL&page=${page + 1}`);
+        // console.log(`/search?q=tag:ALL&page=${page + 1}`);
         axios
           .get(`/search?q=tag:ALL&page=${page + 1}`)
           .then((response) => {
             setpage(page + 1);
             console.log(books.concat(response.data.data));
             setbooks(
-              books.concat(response.data.data).sort((a, b) => {
+              response.data.data.sort((a, b) => {
                 return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
               })
             );
@@ -434,17 +435,35 @@ const AllCategories = () => {
             className="loadMore-btn"
             onClick={(e) => {
               e.preventDefault();
+              // LoadMore();
+            }}
+          >
+            <NavigateBeforeIcon />
+            &nbsp;Prev
+            <CircularProgress
+              style={{
+                color: "black",
+                height: "15px",
+                width: "15px",
+                display: load ? "flex" : "none",
+              }}
+            />
+          </button>
+          <button
+            className="loadMore-btn"
+            onClick={(e) => {
+              e.preventDefault();
               LoadMore();
             }}
           >
-            More&nbsp;
-            <i className="fas fa-caret-down" />
-            &nbsp;
-            <i
-              className="fas fa-circle-notch"
+            Next&nbsp;
+            <NavigateNextIcon />
+            <CircularProgress
               style={{
-                display: load ? "inline-block" : "none",
-                animation: "spin 2s linear infinite",
+                color: "black",
+                height: "15px",
+                width: "15px",
+                display: load ? "flex" : "none",
               }}
             />
           </button>
