@@ -1,10 +1,11 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 import axios from "../../axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Alert
 function Alert(props) {
@@ -130,11 +131,12 @@ function Footer() {
                 value="Subscribe"
               />
               &nbsp;
-              <i
-                className="fas fa-circle-notch"
+              <CircularProgress
                 style={{
+                  height: "15px",
+                  width: "15px",
+                  color: "black",
                   display: loading ? "inline-block" : "none",
-                  animation: "spin 0.5s linear infinite",
                 }}
               />
             </div>
