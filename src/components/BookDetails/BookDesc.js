@@ -1,10 +1,20 @@
 import { React } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
+import Chip from "@material-ui/core/Chip";
+import DoneIcon from "@material-ui/icons/Done";
+import FaceIcon from "@material-ui/icons/Face";
 
 function BookDesc(props) {
-  // console.log(props);
+  console.log(props);
   const history = useHistory();
+  const handleClick = () => {
+    history.push(`/SellerProfile/${props.bookdetails.seller._id}`);
+  };
+  const handleDelete = () => {
+    history.push(`/SellerProfile/${props.bookdetails.seller._id}`);
+  };
+
   return (
     <div className="book-description">
       <div className="book-fullname">
@@ -80,17 +90,27 @@ function BookDesc(props) {
         <div className="book-seller-name">
           <b style={{ fontFamily: "PT Sans" }}>Seller</b>
           <br />
-          <Link to={`/SellerProfile/${props.bookdetails.seller._id}`}>
-            {props.bookdetails.seller
-              ? props.bookdetails.seller.name
-              : props.bookdetails.sellerName}
-          </Link>
+          <Chip
+            icon={<FaceIcon />}
+            label={
+              props.bookdetails.seller
+                ? props.bookdetails.seller.name
+                : props.bookdetails.sellerName
+            }
+            onClick={handleClick}
+            onDelete={handleDelete}
+            deleteIcon={
+              props.bookdetails.seller.isVerified ? <DoneIcon /> : <></>
+            }
+            style={{ backgroundColor: "rgb(10,250,10)", color: "black" }}
+          />
         </div>
         <div className="book-seller-rating" id="book-seller-rating">
           <Rating
             name="read-only"
             value={props.bookdetails.seller.rating}
             readOnly
+            style={{ fontSize: "0.8em" }}
           />
           (
           {props.bookdetails.seller.rating > 5

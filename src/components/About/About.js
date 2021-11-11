@@ -45,7 +45,6 @@ function About() {
         </div>
         <div
           style={{
-            position: "absolute",
             display: "flex",
             flexDirection: "column",
           }}

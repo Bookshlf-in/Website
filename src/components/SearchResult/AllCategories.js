@@ -9,6 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import Fab from "@material-ui/core/Fab";
+
 // Alert
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -42,6 +44,7 @@ const AllCategories = () => {
   const [search, setsearch] = useState("");
   const [books, setbooks] = useState(null);
   const [load, setload] = useState(false);
+  const [backload, setbackload] = useState(false);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(null);
 
@@ -77,15 +80,20 @@ const AllCategories = () => {
 
   const LoadMore = () => {
     setload(true);
-    console.log(totalPages);
+    // console.log(totalPages);
     if (page + 1 <= totalPages) {
       const fetchdata = async () => {
         // console.log(`/search?q=tag:ALL&page=${page + 1}`);
         axios
-          .get(`/search?q=tag:ALL&page=${page + 1}`)
+          .get(`/search`, {
+            params: {
+              q: params.query,
+              page: page + 1,
+            },
+          })
           .then((response) => {
             setpage(page + 1);
-            console.log(books.concat(response.data.data));
+            // console.log(books.concat(response.data.data));
             setbooks(
               response.data.data.sort((a, b) => {
                 return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
@@ -99,6 +107,38 @@ const AllCategories = () => {
       fetchdata();
     } else {
       setload(false);
+    }
+  };
+
+  const GoBack = () => {
+    setbackload(true);
+    // console.log(totalPages);
+    if (page - 1 > 0) {
+      const fetchdata = async () => {
+        // console.log(`/search?q=tag:ALL&page=${page + 1}`);
+        axios
+          .get(`/search`, {
+            params: {
+              q: params.query,
+              page: page - 1,
+            },
+          })
+          .then((response) => {
+            setpage(page - 1);
+            // console.log(books.concat(response.data.data));
+            setbooks(
+              response.data.data.sort((a, b) => {
+                return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+              })
+            );
+            settotalPages(response.data.totalPages);
+            setbackload(false);
+          })
+          .catch((error) => {});
+      };
+      fetchdata();
+    } else {
+      setbackload(false);
     }
   };
   // handeling wish list
@@ -435,7 +475,7 @@ const AllCategories = () => {
             className="loadMore-btn"
             onClick={(e) => {
               e.preventDefault();
-              // LoadMore();
+              GoBack();
             }}
           >
             <NavigateBeforeIcon />
@@ -445,10 +485,18 @@ const AllCategories = () => {
                 color: "black",
                 height: "15px",
                 width: "15px",
-                display: load ? "flex" : "none",
+                display: backload ? "flex" : "none",
               }}
             />
           </button>
+          <Fab
+            color="primary"
+            aria-label="current-page"
+            size="small"
+            style={{ backgroundColor: "orangered", fontFamily: "PT sans" }}
+          >
+            {page}
+          </Fab>
           <button
             className="loadMore-btn"
             onClick={(e) => {

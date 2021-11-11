@@ -12,7 +12,7 @@ const responses = [
   "Don't like it",
   "Just OK",
   "Liked it",
-  "Loved It"
+  "Loved It",
 ];
 const Reviews = () => {
   const [user] = useContext(UserContext);
@@ -70,8 +70,8 @@ const Reviews = () => {
         rating: rating,
         review: desc,
       })
-      .then((response) => { })
-      .catch((error) => { });
+      .then((response) => {})
+      .catch((error) => {});
   };
   return (
     <div>
@@ -104,7 +104,14 @@ const Reviews = () => {
 
                       <div className="ratings">
                         {[...Array(TopReview.rating)].map((e, i) => {
-                          return <FaStar size={20} color="#FDCC0D" key={i} style={{ margin: "0px 5px" }} />;
+                          return (
+                            <FaStar
+                              size={20}
+                              color="#FDCC0D"
+                              key={i}
+                              style={{ margin: "0px 5px" }}
+                            />
+                          );
                         })}
                       </div>
                     </div>
@@ -137,7 +144,7 @@ const Reviews = () => {
                     setshowreview(!showreview);
                   } else {
                     e.target.style.display = "none";
-                    const Login = document.querySelector('.Login');
+                    const Login = document.querySelector(".Login");
                     Login.style.display = "block";
                   }
                 }}
@@ -166,6 +173,7 @@ const Reviews = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  marginTop: "10px",
                 }}
               >
                 <div className="main-rating">
@@ -212,8 +220,8 @@ const Reviews = () => {
                                     ? hover <= 2
                                       ? "red"
                                       : hover <= 4
-                                        ? "yellowgreen"
-                                        : "#66ff00"
+                                      ? "yellowgreen"
+                                      : "#66ff00"
                                     : "#ffffff"
                                 }
                                 onMouseEnter={() => sethover(ratingValue)}
@@ -229,8 +237,8 @@ const Reviews = () => {
                             rating <= 2
                               ? "red"
                               : rating <= 4
-                                ? "yellowgreen"
-                                : "#66ff00",
+                              ? "yellowgreen"
+                              : "#66ff00",
                         }}
                       >
                         {rate}&nbsp;

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
+import "./SellerProfile.css";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import axios from "../../axios";
 import Rating from "@material-ui/lab/Rating";
 import Avatar from "@material-ui/core/Avatar";
-import "./SellerProfile.css";
-import { Helmet } from "react-helmet";
 
 const Verified = {
   user: "verified-user",
