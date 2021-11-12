@@ -35,10 +35,21 @@
   box-shadow: 2px 2px 2px 2px rgba(255, 218, 6, 0.6);
 }
 .book-snaps-full {
+  position: relative;
   margin-top: 10px;
   margin-left: 10px;
   height: 500px;
   width: 400px;
+}
+
+.img-magnifier-glass {
+  position: absolute;
+  background-image: url();
+  border: 3px solid #000;
+  border-radius: 50%;
+  cursor: none;
+  width: 70px;
+  height: 70px;
 }
 
 #video-snap-full {
