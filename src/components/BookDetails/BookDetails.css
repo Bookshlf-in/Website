@@ -45,11 +45,11 @@
 .img-magnifier-glass {
   position: absolute;
   background-image: url();
-  border: 3px solid #000;
+  border: 1px dotted #000;
   border-radius: 50%;
   cursor: none;
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
 }
 
 #video-snap-full {
