@@ -15,30 +15,6 @@ const NavbarItems = () => {
             </div>
           </li>
         </Link>
-        <Link to="/SearchResult/tag:ALL">
-          <li>
-            <div className="navbar-items-chip">
-              <div className="dropdown">
-                <button className="dropbtn">All Categories</button>
-              </div>
-            </div>
-          </li>
-        </Link>
-        <li>
-          <div className="navbar-items-chip">
-            <div className="dropdown">
-              <button className="dropbtn">
-                Other&nbsp;
-                <i className="fas fa-caret-down" />
-              </button>
-              <div className="dropdown-content">
-                <Link to="/Contact">Contact Us</Link>
-                <Link to="/SellerPanel">Sell Old Books</Link>
-                <Link to="/Blog">Blog (Coming Soon)</Link>
-              </div>
-            </div>
-          </div>
-        </li>
         <Link to="/SellerPanel/5">
           <li>
             <div className="navbar-items-chip">
@@ -55,6 +31,16 @@ const NavbarItems = () => {
               <p>
                 <i className="fas fa-info-circle" />
                 &nbsp;AboutUs
+              </p>
+            </div>
+          </li>
+        </Link>
+        <Link to="/Contact">
+          <li>
+            <div className="navbar-items-chip">
+              <p>
+                <i class="fas fa-headset" />
+                &nbsp;Contact Us
               </p>
             </div>
           </li>

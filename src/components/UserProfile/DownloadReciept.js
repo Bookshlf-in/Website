@@ -207,19 +207,40 @@ const MyDoc = (details) => (
 );
 
 function DownloadReciept(props) {
-    return (
-        <div className="App">
-            {
-                console.log(props.orderDetails.photo)
-            }
-            <PDFDownloadLink document={<MyDoc orderDetails={props.orderDetails} />} fileName="BookShlf_Invoice.pdf">
-                {({ blob, url, loading, error }) => (loading ?<Button className="download-receipt-button" variant="contained" color="primary">
-                <CircularProgress style={{ color: "white", height: "25px", width: "25px" }} />
+  return (
+    <div className="App">
+      {console.log(props.orderDetails.photo)}
+      <PDFDownloadLink
+        document={<MyDoc orderDetails={props.orderDetails} />}
+        fileName="BookShlf_Invoice.pdf"
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? (
+            <Button
+              className="download-receipt-button"
+              variant="contained"
+              color="primary"
+            >
+              <CircularProgress
+                style={{ color: "white", height: "25px", width: "25px" }}
+              />
               &nbsp;&nbsp;Generating...
-            </Button>  : <Button className="download-receipt-button" color="primary" variant="contained" id="invoice-btn">Downloading Invoice...</Button>)}
-            </PDFDownloadLink>
-        </div>
-    );
+            </Button>
+          ) : (
+            <Button
+              className="download-receipt-button"
+              color="primary"
+              variant="contained"
+              id="invoice-btn"
+            >
+              <i className="fas fa-download" />
+              &nbsp;&nbsp;&nbsp; Download Invoice
+            </Button>
+          )
+        }
+      </PDFDownloadLink>
+    </div>
+  );
 }
 
 export default DownloadReciept;

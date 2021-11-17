@@ -52,6 +52,10 @@
 .order-progress .MuiTypography-body2 {
   font-family: "PT sans";
 }
+.order-tracking-container-body
+  .MuiDataGrid-footerContainer.css-1b34haf-MuiDataGrid-footerContainer {
+  display: none;
+}
 @-moz-keyframes spin {
   100% {
     -moz-transform: rotate(360deg);

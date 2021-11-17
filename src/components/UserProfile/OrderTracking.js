@@ -8,6 +8,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import DownloadReciept from "./DownloadReciept";
 import Button from "@material-ui/core/Button";
+import { DataGrid } from "@mui/x-data-grid";
 
 var orderID = {
   color: "rgb(72, 72, 245)",
@@ -18,6 +19,26 @@ function getSteps() {
   return ["Order Placed", "Order Shipped", "Order En Route", "Order Delivered"];
 }
 
+const COL = [
+  {
+    field: "bookDetails",
+    headerName: "Book Details",
+    minWidth: 200,
+    flex: 1,
+  },
+  {
+    field: "customerDetails",
+    headerName: "Customer Details",
+    minWidth: 200,
+    flex: 1,
+  },
+  {
+    field: "orderDetails",
+    headerName: "Order Details",
+    minWidth: 200,
+    flex: 1,
+  },
+];
 function getStepContent(stepIndex) {
   switch (stepIndex) {
     case 0:
@@ -56,6 +77,7 @@ function OrderTracking() {
           // console.log(response.data);
           setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
+          setDownloadpdf(true);
         })
         .catch((error) => {});
     };
@@ -83,9 +105,9 @@ function OrderTracking() {
         }, 3000);
       });
   };
-  const handleReceipt = () => {
-    setDownloadpdf(true);
-  };
+  // const handleReceipt = () => {
+  //   setDownloadpdf(true);
+  // };
 
   return (
     <div className="order-tracking-container-body">
@@ -105,104 +127,52 @@ function OrderTracking() {
           <div className="order-details">
             <img src={order.photo} alt="" height="250px" />
           </div>
-          <div className="order-details">
-            <h1>Book Details</h1>
-            <ul style={{ listStyle: "none" }}>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Book Name</b>
-                </span>
-                {order.title}
-              </li>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Book Author</b>
-                </span>
-                {order.author}
-              </li>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Seller Name</b>
-                </span>
-                {order.sellerName}
-              </li>
-            </ul>
-          </div>
-          <div className="order-details">
-            <h1>Customer Details</h1>
-            <ul style={{ listStyle: "none" }}>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Customer Name</b>
-                </span>
-                {order.customerName}
-              </li>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Delivery Address</b>
-                </span>
-                {order.customerAddress.address +
+
+          <DataGrid
+            style={{ width: "100%", minHeight: "350px", fontFamily: "PT sans" }}
+            columns={COL}
+            rows={[
+              {
+                id: 1,
+                bookDetails: order.title,
+                customerDetails: order.customerName,
+                orderDetails: order.price + " /-",
+              },
+              {
+                id: 2,
+                bookDetails: order.author,
+                customerDetails: `${
+                  order.customerAddress.address +
                   ", " +
                   order.customerAddress.city +
                   ", " +
                   order.customerAddress.state +
                   " " +
-                  order.customerAddress.zipCode}
-              </li>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Contact Number</b>
-                </span>
-                {order.customerAddress.phoneNo}
-              </li>
-            </ul>
-          </div>
-          <div className="order-details">
-            <h1>Order Details</h1>
-            <ul style={{ listStyle: "none" }}>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Item Price</b>
-                </span>
-                <span className="price-tag">
-                  <i className="fas fa-rupee-sign" />
-                  &nbsp;{order.price + " /-"}
-                </span>
-              </li>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Item Quantity</b>
-                </span>
-                {order.purchaseQty + ".0"}
-              </li>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Shipping Charges</b>
-                </span>
-                <i className="fas fa-rupee-sign" />
-                {order.shippingCharges + " /-"}
-              </li>
-              <li>
-                <span>
-                  <i className="fas fa-circle"></i>&nbsp;
-                  <b>Order Total</b>
-                </span>
-                <span className="price-tag">
-                  <i className="fas fa-rupee-sign" />
-                  {order.orderTotal + " /-"}
-                </span>
-              </li>
-            </ul>
-          </div>
+                  order.customerAddress.zipCode
+                }`,
+                orderDetails: order.shippingCharges + " /-",
+              },
+              {
+                id: 3,
+                bookDetails: order.sellerName,
+                customerDetails: order.customerAddress.phoneNo,
+                orderDetails: order.purchaseQty,
+              },
+              {
+                id: 4,
+                bookDetails: "",
+                customerDetails: "",
+                orderDetails:
+                  order.price +
+                  " x " +
+                  order.purchaseQty +
+                  " = " +
+                  order.orderTotal +
+                  " /-",
+              },
+            ]}
+          />
+
           <div className="order-progress">
             <Stepper
               activeStep={activeStep}
@@ -248,7 +218,7 @@ function OrderTracking() {
                 className={cls.Cls}
                 style={{ fontSize: "16px", color: "white" }}
               />
-              &nbsp;&nbsp;{cls.msg}
+              &nbsp;&nbsp;&nbsp;{cls.msg}
             </div>
             {/* <div className="download-receipt-button" onClick={handleReceipt}>
               <i className="fas fa-download" />
@@ -259,12 +229,11 @@ function OrderTracking() {
             ) : (
               <Button
                 className="download-receipt-button"
-                onClick={handleReceipt}
+                // onClick={handleReceipt}
                 variant="contained"
                 color="primary"
               >
-                <i className="fas fa-download" />
-                &nbsp;&nbsp;Generate Invoice
+                Generating Invoice...
               </Button>
             )}
           </div>
