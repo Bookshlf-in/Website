@@ -1,9 +1,11 @@
 import { React, useState } from "react";
+import "./Address.css";
 import axios from "../../axios";
 import InputMask from "react-input-mask";
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@mui/material/TextField";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,7 @@ const Address = (props) => {
     msg: "",
   });
   const [deleteAdr, setdeleteAdr] = useState("");
+
   // add address state object
   const [Label, setLabel] = useState("");
   const [Address, setAddress] = useState("");
@@ -132,13 +135,13 @@ const Address = (props) => {
 
   // const deleting the address
   const handelDeleteAddress = (e) => {
-    console.log(e.target.id);
+    // console.log(e.target.id);
     axios
       .delete("/deleteAddress", {
         data: { addressId: e.target.id },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setalert({
           Display: true,
           Type: "success",
@@ -156,7 +159,7 @@ const Address = (props) => {
         setAdr(Adr.filter((address) => address._id !== e.target.id));
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
+        // console.log(error.response.data.errors);
         setalert({
           Display: true,
           Type: "error",
@@ -197,11 +200,12 @@ const Address = (props) => {
             </select>
           </div>
           <div className="address-desc">
-            <input
-              type="text"
-              placeholder="Full Address"
+            <TextField
+              label="Full Address"
+              variant="filled"
               value={Address}
               onChange={(e) => setAddress(e.target.value)}
+              fullWidth
             />
           </div>
           <div className="address-zip">

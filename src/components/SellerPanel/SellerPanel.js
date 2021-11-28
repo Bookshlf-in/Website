@@ -2,7 +2,7 @@ import { React, useState, useContext, useEffect } from "react";
 import "./SellerPanel.css";
 import AccountDetails from "./AccountDetails";
 import Orders from "./Orders";
-import Address from "./Address";
+import Address from "../AddressBook/Address";
 import Reviews from "./SellerReviews";
 import AddBook from "./AddBook";
 import Register from "./SellerRegister";

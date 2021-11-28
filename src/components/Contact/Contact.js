@@ -256,19 +256,20 @@ function Contact() {
               ></div>
               {/* Loader ends */}
             </form>
-          </div>
-          <div className={classes.root} style={{ display: showAlert }}>
-            <Alert
-              variant="outlined"
-              severity={Alerttype}
-              style={{
-                fontFamily: "PT Sans",
-                fontWeight: "bold",
-                color: alertColor,
-              }}
-            >
-              {alertText}
-            </Alert>
+            <div className={classes.root} style={{ display: showAlert }}>
+              <Alert
+                variant="outlined"
+                severity={Alerttype}
+                style={{
+                  fontFamily: "PT Sans",
+                  fontWeight: "bold",
+                  fontSize: "12px",
+                  color: alertColor,
+                }}
+              >
+                {alertText}
+              </Alert>
+            </div>
           </div>
         </div>
       </div>

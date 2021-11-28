@@ -15,6 +15,16 @@ const NavbarItems = () => {
             </div>
           </li>
         </Link>
+        <Link to="/SearchResult/tag:ALL">
+          <li>
+            <div className="navbar-items-chip">
+              <p>
+                <i class="fas fa-globe"></i>
+                &nbsp;All Books
+              </p>
+            </div>
+          </li>
+        </Link>
         <Link to="/SellerPanel/5">
           <li>
             <div className="navbar-items-chip">

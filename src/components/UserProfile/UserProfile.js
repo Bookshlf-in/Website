@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import Account from "./Account";
 import CurrentOrder from "./CurrentOrders";
 import PreviousOrder from "./PreviousOrders";
-import Address from "./Address";
+import Address from "../AddressBook/Address";
 import axios from "../../axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
