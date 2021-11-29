@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@mui/material/TextField";
+import { DataGrid } from "@mui/x-data-grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +43,88 @@ const Address = (props) => {
   const [State, setState] = useState("State");
   const [ZipCode, setZipCode] = useState("");
   const [Adr, setAdr] = useState(props.address);
+
+  const columns = [
+    {
+      field: "addressNo",
+      headerName: "Address No",
+      width: 150,
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 170,
+    },
+    {
+      field: "address",
+      headerName: "Address",
+      width: 240,
+    },
+    {
+      field: "city",
+      headerName: "City",
+      width: 170,
+    },
+    {
+      field: "state",
+      headerName: "State",
+      width: 170,
+    },
+    {
+      field: "zipCode",
+      headerName: "Zip Code",
+      width: 170,
+    },
+    {
+      field: "phoneNo",
+      headerName: "Phone No",
+      width: 170,
+    },
+    {
+      field: "Remove Address",
+      width: 170,
+      sortable: false,
+      renderCell: (cellValues) => {
+        return (
+          <div style={{margin: '0 auto'}}>
+            <i
+              className="fas fa-window-close"
+              id={cellValues.id}
+              title="Remove Address"
+              onClick={(e) => {
+                handelDeleteAddress(e);
+              }}
+              style={{
+                display: deleteAdr !== cellValues.id ? "block" : "none",
+              }}
+            />
+            <CircularProgress
+              style={{
+                display: deleteAdr === cellValues.id ? "block" : "none",
+                height: "25px",
+                width: "25px",
+                color: "red",
+              }}
+            />
+          </div>
+        );
+      },
+    },
+  ];
+
+  const rows = Adr.map((adr, idx) => {
+    return {
+      id: adr._id,
+      addressNo: idx + 1,
+      type: adr.label,
+      address: adr.address,
+      city: adr.city,
+      state: adr.state,
+      zipCode: adr.zipCode,
+      phoneNo: adr.phoneNo,
+    };
+  });
+
 
   // handeling address register request
   const handelRegister = () => {
@@ -136,6 +219,7 @@ const Address = (props) => {
   // const deleting the address
   const handelDeleteAddress = (e) => {
     // console.log(e.target.id);
+    setdeleteAdr(e.target.id);
     axios
       .delete("/deleteAddress", {
         data: { addressId: e.target.id },
@@ -335,57 +419,14 @@ const Address = (props) => {
           {alert.msg}
         </Alert>
       </div>
-      <div className="address-lists" id="address-lists">
-        <table id="address-lists-table">
-          <tr>
-            <th>Address No.</th>
-            <th>Type</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>ZipCode</th>
-            <th>PhoneNo.</th>
-            <th>Remove</th>
-          </tr>
-          {Adr !== null ? (
-            <>
-              {Adr.map((adr, idx) => (
-                <tr>
-                  <td>{idx + 1}</td>
-                  <td>{adr.label}</td>
-                  <td>{adr.address}</td>
-                  <td>{adr.city}</td>
-                  <td>{adr.state}</td>
-                  <td>{adr.zipCode}</td>
-                  <td>{adr.phoneNo}</td>
-                  <td>
-                    <i
-                      className="fas fa-window-close"
-                      id={adr._id}
-                      title="Remove Address"
-                      onClick={(e) => {
-                        handelDeleteAddress(e);
-                      }}
-                      style={{
-                        display: deleteAdr !== adr._id ? "block" : "none",
-                      }}
-                    />
-                    <CircularProgress
-                      style={{
-                        display: deleteAdr === adr._id ? "block" : "none",
-                        height: "25px",
-                        width: "25px",
-                        color: "red",
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </>
-          ) : (
-            <></>
-          )}
-        </table>
+      <div style={{ height: 300, width: "100%", marginTop: "30px" }}>
+        <DataGrid
+          style={{ fontFamily: "PT Sans" }}
+          rows={rows}
+          columns={columns}
+          pageSize={4}
+          disableSelectionOnClick
+        />
       </div>
     </div>
   );
