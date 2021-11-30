@@ -10,9 +10,10 @@
 .address-form {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   margin: 10px;
 }
+
 .address-form fieldset {
   border-radius: 5px 5px 0px 0px;
   border: 2px solid rgb(0, 0, 0);
@@ -157,53 +158,9 @@ label.pincode {
   justify-content: center;
   align-items: center;
 }
-.address-lists table {
-  border-collapse: collapse;
-  color: rgb(0, 0, 0);
-  background-color: #fff;
-  font-family: "PT sans";
-  font-size: 14px;
-}
-.address-lists table,
-th,
-td {
-  border: 2px solid rgb(0, 0, 0);
-}
-.address-lists th,
-td {
-  padding: 10px;
-}
-.address-lists td {
-  vertical-align: middle;
-  text-align: center;
-}
-.address-lists table th:nth-child(1) {
-  width: 100px;
-}
-.address-lists table th:nth-child(2) {
-  width: 150px;
-}
-.address-lists table th:nth-child(3) {
-  width: 300px;
-}
-.address-lists table th:nth-child(4) {
-  width: 150px;
-}
-.address-lists table th:nth-child(5) {
-  width: 150px;
-}
-.address-lists table th:nth-child(6) {
-  width: 150px;
-}
-.address-lists table th:nth-child(7) {
-  width: 150px;
-}
-.address-lists table th:nth-child(8) {
-  width: 50px;
-}
 
 i.fas.fa-window-close {
-  font-size: 60px;
+  font-size: 30px;
   cursor: pointer;
   color: rgb(255, 93, 93);
 }

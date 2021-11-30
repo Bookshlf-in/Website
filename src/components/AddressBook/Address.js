@@ -29,7 +29,7 @@ const Address = (props) => {
   const [loading, setloading] = useState(false);
   const [alert, setalert] = useState({
     Display: false,
-    Type: "",
+    Type: "warning",
     Color: "",
     msg: "",
   });
@@ -46,47 +46,50 @@ const Address = (props) => {
 
   const columns = [
     {
-      field: "addressNo",
-      headerName: "Address No",
-      width: 150,
-    },
-    {
       field: "type",
       headerName: "Type",
-      width: 170,
+      width: 180,
+      sortable: false,
     },
     {
       field: "address",
       headerName: "Address",
-      width: 240,
+      width: 310,
+      sortable: false,
     },
     {
       field: "city",
       headerName: "City",
-      width: 170,
+      maxWidth: 200,
+      minWidth: 170,
+      sortable: false,
     },
     {
       field: "state",
       headerName: "State",
-      width: 170,
+      maxWidth: 200,
+      minWidth: 170,
+      sortable: false,
     },
     {
       field: "zipCode",
       headerName: "Zip Code",
-      width: 170,
+      width: 150,
+      sortable: false,
     },
     {
       field: "phoneNo",
       headerName: "Phone No",
-      width: 170,
+      width: 150,
+      sortable: false,
     },
     {
       field: "Remove Address",
-      width: 170,
+      width: 180,
       sortable: false,
       renderCell: (cellValues) => {
         return (
-          <div style={{margin: '0 auto'}}>
+          <div style={{ margin: "0 auto" }}>
             <i
               className="fas fa-window-close"
               id={cellValues.id}
@@ -115,7 +118,6 @@ const Address = (props) => {
   const rows = Adr.map((adr, idx) => {
     return {
       id: adr._id,
-      addressNo: idx + 1,
       type: adr.label,
       address: adr.address,
       city: adr.city,
@@ -124,7 +126,6 @@ const Address = (props) => {
       phoneNo: adr.phoneNo,
     };
   });
-
 
   // handeling address register request
   const handelRegister = () => {
@@ -262,13 +263,8 @@ const Address = (props) => {
   };
 
   return (
-    <div
-      className="address-bg"
-      style={{
-        background: "aliceblue",
-      }}
-    >
-      <h1 style={{ color: "black", letterSpacing: "2px" }}>Your Addresses</h1>
+    <div className="address-bg">
+      <h1>Your Addresses</h1>
 
       <form className="address-form">
         <fieldset>
@@ -357,7 +353,7 @@ const Address = (props) => {
               </label>
               <InputMask
                 mask="999999"
-                alwaysShowMask="true"
+                alwaysShowMask={true}
                 id="pincode"
                 title="Pincode"
                 onChange={(e) => setZipCode(e.target.value)}
@@ -369,7 +365,7 @@ const Address = (props) => {
               <label htmlFor="country-code">Country Code</label>
               <InputMask
                 mask="99"
-                alwaysShowMask="true"
+                alwaysShowMask={true}
                 id="country-code"
                 defaultValue="91"
               />
@@ -379,7 +375,7 @@ const Address = (props) => {
               <InputMask
                 id="phone-no"
                 mask="9999999999"
-                alwaysShowMask="true"
+                alwaysShowMask={true}
                 onChange={(e) => setPhoneNo(e.target.value)}
               />
             </span>
@@ -419,13 +415,21 @@ const Address = (props) => {
           {alert.msg}
         </Alert>
       </div>
-      <div style={{ height: 300, width: "100%", marginTop: "30px" }}>
+      <div
+        style={{
+          height: 320,
+          width: "100%",
+          marginTop: "30px",
+        }}
+      >
         <DataGrid
           style={{ fontFamily: "PT Sans" }}
           rows={rows}
           columns={columns}
           pageSize={4}
           disableSelectionOnClick
+          disableColumnMenu
+          rowBuffer={4}
         />
       </div>
     </div>
