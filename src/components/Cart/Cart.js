@@ -4,6 +4,9 @@ import { useHistory } from "react-router-dom";
 import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+
 function Cart() {
   const history = useHistory();
   const [user, setUser] = useContext(UserContext);
@@ -26,8 +29,6 @@ function Cart() {
               Math.min(response.data[i].purchaseQty, response.data[i].qty);
           }
           setamount(amt);
-          // console.log(response.data.length);
-          // console.log(response.data);
           setloader(false);
         })
         .catch((error) => {
@@ -54,7 +55,7 @@ function Cart() {
               cartItemId: cart[i]._id,
               purchaseQty: cart[i].purchaseQty,
             })
-            .catch(() => {});
+            .catch(() => { });
         };
         update();
       }
@@ -76,7 +77,7 @@ function Cart() {
               cartItemId: cart[i]._id,
               purchaseQty: cart[i].purchaseQty,
             })
-            .catch(() => {});
+            .catch(() => { });
         };
         update();
       }
@@ -117,7 +118,7 @@ function Cart() {
           wishlist: user.wishlist,
         });
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handelUpdateCart = () => {
@@ -136,7 +137,7 @@ function Cart() {
                 history.push("/Checkout/cart");
               }
             })
-            .catch(() => {});
+            .catch(() => { });
         };
         update();
       }
@@ -202,12 +203,7 @@ function Cart() {
                   // Cart item starts
                   <div className="cart-item" key={idx}>
                     <div className="cart-item-img">
-                      <img
-                        src={item.photo}
-                        alt={item.title}
-                        height="150px"
-                        width="150px"
-                      />
+                      <Avatar src={item.photo} alt={item.title} sx={{ width: 150, height: 150 }} />
                     </div>
                     <div className="cart-item-details">
                       <h2>{item.title}</h2>
@@ -234,15 +230,18 @@ function Cart() {
                           </>
                         )}
                       </h4>
-                      <h4
-                        className="cart-More"
-                        onClick={() => {
-                          history.push(`/BookDetails/${item.bookId}`);
-                        }}
-                      >
+                      <Button variant="contained" href={`/BookDetails/${item.bookId}`} color="primary" style={{
+                        fontSize: "12px",
+                        backgroundColor: "blue",
+                        color: "aliceblue",
+                        padding: "10px",
+                        fontFamily: "PT Sans",
+                        cursor: "pointer",
+                        marginLeft: "5px",
+                      }}>
                         More Details&nbsp;
                         <i className="fas fa-angle-right" />
-                      </h4>
+                      </Button>
                     </div>
                     <div className="cart-item-price">
                       <h3 className="price-tag">
