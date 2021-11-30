@@ -44,7 +44,7 @@
 
 .img-magnifier-glass {
   position: absolute;
-  background-image: url();
+  /* background-image: url(); */
   border: 1px dotted #000;
   border-radius: 50%;
   cursor: none;

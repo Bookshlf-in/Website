@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@mui/material/TextField";
+import { DataGrid } from "@mui/x-data-grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +29,7 @@ const Address = (props) => {
   const [loading, setloading] = useState(false);
   const [alert, setalert] = useState({
     Display: false,
-    Type: "",
+    Type: "warning",
     Color: "",
     msg: "",
   });
@@ -42,6 +43,89 @@ const Address = (props) => {
   const [State, setState] = useState("State");
   const [ZipCode, setZipCode] = useState("");
   const [Adr, setAdr] = useState(props.address);
+
+  const columns = [
+    {
+      field: "type",
+      headerName: "Type",
+      width: 180,
+      sortable: false,
+    },
+    {
+      field: "address",
+      headerName: "Address",
+      width: 310,
+      sortable: false,
+    },
+    {
+      field: "city",
+      headerName: "City",
+      maxWidth: 200,
+      minWidth: 170,
+      sortable: false,
+    },
+    {
+      field: "state",
+      headerName: "State",
+      maxWidth: 200,
+      minWidth: 170,
+      sortable: false,
+    },
+    {
+      field: "zipCode",
+      headerName: "Zip Code",
+      width: 150,
+      sortable: false,
+    },
+    {
+      field: "phoneNo",
+      headerName: "Phone No",
+      width: 150,
+      sortable: false,
+    },
+    {
+      field: "Remove Address",
+      width: 180,
+      sortable: false,
+      renderCell: (cellValues) => {
+        return (
+          <div style={{ margin: "0 auto" }}>
+            <i
+              className="fas fa-window-close"
+              id={cellValues.id}
+              title="Remove Address"
+              onClick={(e) => {
+                handelDeleteAddress(e);
+              }}
+              style={{
+                display: deleteAdr !== cellValues.id ? "block" : "none",
+              }}
+            />
+            <CircularProgress
+              style={{
+                display: deleteAdr === cellValues.id ? "block" : "none",
+                height: "25px",
+                width: "25px",
+                color: "red",
+              }}
+            />
+          </div>
+        );
+      },
+    },
+  ];
+
+  const rows = Adr.map((adr, idx) => {
+    return {
+      id: adr._id,
+      type: adr.label,
+      address: adr.address,
+      city: adr.city,
+      state: adr.state,
+      zipCode: adr.zipCode,
+      phoneNo: adr.phoneNo,
+    };
+  });
 
   // handeling address register request
   const handelRegister = () => {
@@ -136,6 +220,7 @@ const Address = (props) => {
   // const deleting the address
   const handelDeleteAddress = (e) => {
     // console.log(e.target.id);
+    setdeleteAdr(e.target.id);
     axios
       .delete("/deleteAddress", {
         data: { addressId: e.target.id },
@@ -178,13 +263,8 @@ const Address = (props) => {
   };
 
   return (
-    <div
-      className="address-bg"
-      style={{
-        background: "aliceblue",
-      }}
-    >
-      <h1 style={{ color: "black", letterSpacing: "2px" }}>Your Addresses</h1>
+    <div className="address-bg">
+      <h1>Your Addresses</h1>
 
       <form className="address-form">
         <fieldset>
@@ -273,7 +353,7 @@ const Address = (props) => {
               </label>
               <InputMask
                 mask="999999"
-                alwaysShowMask="true"
+                alwaysShowMask={true}
                 id="pincode"
                 title="Pincode"
                 onChange={(e) => setZipCode(e.target.value)}
@@ -285,7 +365,7 @@ const Address = (props) => {
               <label htmlFor="country-code">Country Code</label>
               <InputMask
                 mask="99"
-                alwaysShowMask="true"
+                alwaysShowMask={true}
                 id="country-code"
                 defaultValue="91"
               />
@@ -295,7 +375,7 @@ const Address = (props) => {
               <InputMask
                 id="phone-no"
                 mask="9999999999"
-                alwaysShowMask="true"
+                alwaysShowMask={true}
                 onChange={(e) => setPhoneNo(e.target.value)}
               />
             </span>
@@ -335,57 +415,22 @@ const Address = (props) => {
           {alert.msg}
         </Alert>
       </div>
-      <div className="address-lists" id="address-lists">
-        <table id="address-lists-table">
-          <tr>
-            <th>Address No.</th>
-            <th>Type</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>ZipCode</th>
-            <th>PhoneNo.</th>
-            <th>Remove</th>
-          </tr>
-          {Adr !== null ? (
-            <>
-              {Adr.map((adr, idx) => (
-                <tr>
-                  <td>{idx + 1}</td>
-                  <td>{adr.label}</td>
-                  <td>{adr.address}</td>
-                  <td>{adr.city}</td>
-                  <td>{adr.state}</td>
-                  <td>{adr.zipCode}</td>
-                  <td>{adr.phoneNo}</td>
-                  <td>
-                    <i
-                      className="fas fa-window-close"
-                      id={adr._id}
-                      title="Remove Address"
-                      onClick={(e) => {
-                        handelDeleteAddress(e);
-                      }}
-                      style={{
-                        display: deleteAdr !== adr._id ? "block" : "none",
-                      }}
-                    />
-                    <CircularProgress
-                      style={{
-                        display: deleteAdr === adr._id ? "block" : "none",
-                        height: "25px",
-                        width: "25px",
-                        color: "red",
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </>
-          ) : (
-            <></>
-          )}
-        </table>
+      <div
+        style={{
+          height: 320,
+          width: "100%",
+          marginTop: "30px",
+        }}
+      >
+        <DataGrid
+          style={{ fontFamily: "PT Sans" }}
+          rows={rows}
+          columns={columns}
+          pageSize={4}
+          disableSelectionOnClick
+          disableColumnMenu
+          rowBuffer={4}
+        />
       </div>
     </div>
   );

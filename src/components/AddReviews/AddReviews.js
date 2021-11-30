@@ -38,7 +38,7 @@ const Reviews = () => {
           params: { orderId: params.orderId },
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setdesc(response.data.review);
           setrating(response.data.rating);
           sethover(response.data.rating);

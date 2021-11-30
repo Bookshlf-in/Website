@@ -19,7 +19,7 @@ const NavbarItems = () => {
           <li>
             <div className="navbar-items-chip">
               <p>
-                <i class="fas fa-globe"></i>
+                <i className="fas fa-globe"></i>
                 &nbsp;All Books
               </p>
             </div>
@@ -49,7 +49,7 @@ const NavbarItems = () => {
           <li>
             <div className="navbar-items-chip">
               <p>
-                <i class="fas fa-headset" />
+                <i className="fas fa-headset" />
                 &nbsp;Contact Us
               </p>
             </div>
