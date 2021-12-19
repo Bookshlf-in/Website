@@ -39,6 +39,7 @@ const Address = (props) => {
   const [Label, setLabel] = useState("");
   const [Address, setAddress] = useState("");
   const [PhoneNo, setPhoneNo] = useState("");
+  const [AltPhoneNo, setAltPhoneNo] = useState("");
   const [City, setCity] = useState("City");
   const [State, setState] = useState("State");
   const [ZipCode, setZipCode] = useState("");
@@ -358,7 +359,7 @@ const Address = (props) => {
             </span>
           </div>
           <div className="address-phoneNo">
-            <span style={{ width: "100%" }}>
+            <span>
               <label htmlFor="phone-no">Mobile Phone</label>
               <InputMask
                 id="phone-no"
@@ -366,6 +367,16 @@ const Address = (props) => {
                 autoComplete={true}
                 alwaysShowMask={true}
                 onChange={(e) => setPhoneNo(e.target.value)}
+              />
+            </span>
+            <span>
+              <label htmlFor="alt-phone-no">Alt Mobile Phone</label>
+              <InputMask
+                id="alt-phone-no"
+                mask="9999999999"
+                autoComplete={true}
+                alwaysShowMask={true}
+                onChange={(e) => setAltPhoneNo(e.target.value)}
               />
             </span>
           </div>

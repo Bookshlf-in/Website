@@ -29,6 +29,7 @@
 
 .address-form select {
   background-color: rgba(0, 0, 0, 0.06);
+  font-size: 12px;
 }
 .address-label {
   width: 35%;
@@ -87,7 +88,7 @@ label.pincode {
   top: 0px;
   left: 50%;
   margin-left: -20px;
-  font-size: 14px;
+  font-size: 12px;
 }
 .address-zip span {
   width: 30%;
@@ -114,19 +115,23 @@ label.pincode {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: top;
+  width: 100%;
+  max-width: 300px;
+  margin-right: 5px;
 }
 .address-form .address-phoneNo span label {
   font-family: "PT Sans";
-  font-size: 14px;
+  font-size: 12px;
 }
 
-#phone-no {
+#phone-no,
+#alt-phone-no {
   max-width: 300px;
   letter-spacing: 20px;
   padding-left: 5px;
   height: 50px;
   width: 100%;
+  font-size: 12px;
   font-family: "PT sans";
   border: none;
   color: #000000;
@@ -179,6 +184,9 @@ i.fas.fa-window-close:hover {
   .address-form fieldset div {
     width: 100%;
   }
+  .address-label {
+    margin-bottom: 5px;
+  }
   .address-zip {
     flex-direction: column;
     align-items: center;
@@ -189,12 +197,13 @@ i.fas.fa-window-close:hover {
   }
   .address-zip #state {
     margin-left: 0px;
+    margin-right: 0px;
   }
   .address-zip #state,
   .address-zip #country,
   .address-form .address-zip input {
     margin-left: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .address-form .address-zip input {
     margin: 0px;
@@ -203,9 +212,17 @@ i.fas.fa-window-close:hover {
     width: 100%;
     margin-top: 10px;
   }
-  #phone-no {
+  .address-zip #pincode {
+    margin-left: 0px;
+  }
+  .address-phoneNo {
+    display: flex;
+    flex-direction: column;
+  }
+  #phone-no,
+  #alt-phone-no {
     padding-left: 10px;
-    letter-spacing: 5px;
+    letter-spacing: 10px;
     color: blue;
   }
   .address-lists {
