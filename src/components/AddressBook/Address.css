@@ -26,22 +26,27 @@
   font-family: "PT sans";
   font-size: 20px;
 }
+
+.address-form select {
+  background-color: rgba(0, 0, 0, 0.06);
+}
 .address-label {
   width: 35%;
-  padding: 5px;
+  margin-right: 5px;
 }
 .address-desc {
-  width: 65%;
+  width: 60%;
 }
 .address-desc input,
 .address-desc label {
   font-family: "Pt sans";
+  font-size: 12px;
 }
 
 .address-zip {
   width: 100%;
-  padding: 5px;
   display: flex;
+  margin-top: 5px;
 }
 .address-form .address-label select {
   width: 100%;
@@ -49,8 +54,8 @@
   font-family: "PT sans";
   border: none;
   color: #000000;
-  padding-left: 10px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  border-radius: 5px 5px 0px 0px;
 }
 
 .address-form .address-zip select {
@@ -59,21 +64,22 @@
   font-family: "PT sans";
   border: none;
   color: #000000;
-  padding-left: 10px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
+  border-radius: 5px 5px 0px 0px;
 }
 .address-form .address-zip input {
-  width: 35%;
-  height: 50px;
   font-family: "PT sans";
   border: none;
   color: #000000;
-  padding-left: 10px;
-  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
-  margin: 0px 10px;
+  font-size: 12px;
+  min-width: 200px;
+}
+.address-form .address-zip label {
+  font-family: "PT sans";
+  font-size: 12px;
 }
 .address-zip #state {
-  margin-left: 10px;
+  margin-right: 5px;
 }
 label.pincode {
   font-family: "PT sans";
@@ -93,13 +99,15 @@ label.pincode {
   border: none;
   color: #000000;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
-  letter-spacing: 10px;
+  letter-spacing: 20px;
   text-align: center;
-  margin: 0px;
+  margin-left: 5px;
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: 5px 5px 0px 0px;
 }
 .address-form .address-phoneNo {
   width: 100%;
-  padding: 5px;
+  margin-top: 5px;
   display: flex;
 }
 .address-form .address-phoneNo span {
@@ -111,29 +119,19 @@ label.pincode {
 .address-form .address-phoneNo span label {
   font-family: "PT Sans";
   font-size: 14px;
-  padding-left: 10px;
 }
-#country-code {
-  letter-spacing: 5px;
-  text-decoration: none;
-  height: 50px;
-  width: 100px;
-  font-family: "PT sans";
-  border: none;
-  color: #000000;
-  padding-left: 10px;
-  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
-}
+
 #phone-no {
+  max-width: 300px;
   letter-spacing: 20px;
+  padding-left: 5px;
   height: 50px;
   width: 100%;
   font-family: "PT sans";
   border: none;
   color: #000000;
-  padding-left: 20px;
   box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
-  margin-left: 10px;
+  background-color: rgba(0, 0, 0, 0.06);
 }
 .address-form button {
   border-radius: 0px 0px 5px 5px;

@@ -289,11 +289,6 @@ const Address = (props) => {
             />
           </div>
           <div className="address-zip">
-            <select name="country" id="country">
-              <option value="0">Select Country</option>
-              <option value="">India</option>
-              <option value="">Other</option>
-            </select>
             <select
               name="states"
               id="state"
@@ -342,9 +337,10 @@ const Address = (props) => {
               <option value="Uttarakhand">Uttarakhand</option>
               <option value="West Bengal">West Bengal</option>
             </select>
-            <input
-              type="text"
-              placeholder="City"
+
+            <TextField
+              label="City"
+              variant="filled"
               onChange={(e) => setCity(e.target.value)}
             />
             <span style={{ position: "relative" }}>
@@ -353,6 +349,7 @@ const Address = (props) => {
               </label>
               <InputMask
                 mask="999999"
+                autoComplete={true}
                 alwaysShowMask={true}
                 id="pincode"
                 title="Pincode"
@@ -361,20 +358,12 @@ const Address = (props) => {
             </span>
           </div>
           <div className="address-phoneNo">
-            <span style={{ width: "100px" }}>
-              <label htmlFor="country-code">Country Code</label>
-              <InputMask
-                mask="99"
-                alwaysShowMask={true}
-                id="country-code"
-                defaultValue="91"
-              />
-            </span>
-            <span style={{ width: "calc(100% - 110px)" }}>
+            <span style={{ width: "100%" }}>
               <label htmlFor="phone-no">Mobile Phone</label>
               <InputMask
                 id="phone-no"
                 mask="9999999999"
+                autoComplete={true}
                 alwaysShowMask={true}
                 onChange={(e) => setPhoneNo(e.target.value)}
               />
