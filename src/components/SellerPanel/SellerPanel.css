@@ -275,12 +275,7 @@ p#alert-dialog-description {
   width: 0px;
   top: 0px;
 }
-.seller-register-btn {
-  padding: 5px 15px;
-  background-color: #ff9b3e;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-}
+
 .seller-register-form {
   display: flex;
   justify-content: center;
@@ -290,8 +285,32 @@ p#alert-dialog-description {
   box-shadow: 2px 3px 5px rgb(139, 139, 139);
   border-radius: 10px;
   margin: 10px;
+  min-width: 300px;
 }
 
+.seller-register-form .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root,
+.seller-register-form .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
+.seller-register-form .css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root,
+.seller-register-form .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root,
+.seller-register-form .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  font-family: "PT sans";
+}
+.seller-register-form #mobile-label {
+  margin-bottom: -20px;
+  margin-top: 10px;
+  font-family: "PT sans";
+  z-index: 100;
+}
+.seller-register-form #phone-no,
+.seller-register-form #alt-phone-no {
+  margin-top: 10px;
+  font-family: "PT sans";
+  padding-left: 10px;
+  letter-spacing: 10px;
+  color: blue;
+  text-align: center;
+  background-color: white;
+}
 .uploaded-images-container {
   padding: 10px;
   margin: auto;

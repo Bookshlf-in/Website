@@ -124,8 +124,22 @@ const NavbarMenu = () => {
           }}
         >
           <i className="fas fa-user-alt" />
-          &nbsp;Profile Panel
+          &nbsp;Profile
         </MenuItem>
+        {user ? (
+          <MenuItem
+            style={MenuItemStyle}
+            onClick={() => {
+              setAnchorEl(null);
+              history.push("/UserProfile/2");
+            }}
+          >
+            <i class="fas fa-dolly"></i>
+            &nbsp;Orders
+          </MenuItem>
+        ) : (
+          <></>
+        )}
         {user ? (
           user.roles.includes("admin") ? (
             <MenuItem

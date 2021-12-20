@@ -7,6 +7,9 @@ import { useHistory } from "react-router-dom";
 import { storage } from "../../firebase";
 import { nanoid } from "nanoid";
 import Avatar from "@material-ui/core/Avatar";
+import TextField from "@mui/material/TextField";
+import InputMask from "react-input-mask";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +38,8 @@ export default function SellerRegister() {
   const [msg, setmsg] = useState("");
   const [alert, setalert] = useState(false);
   const [Image, setImage] = useState("/images/user.png");
+  const [PhoneNo, setPhoneNo] = useState("");
+  const [AltPhoneNo, setAltPhoneNo] = useState("");
 
   const handelUpload = (e) => {
     setPhoto(e.target.files[0]);
@@ -90,6 +95,7 @@ export default function SellerRegister() {
                 });
                 setTimeout(() => {
                   history.push("/SellerPanel/1");
+                  history.go(0);
                 }, 2000);
               })
               .catch((error) => {
@@ -123,61 +129,82 @@ export default function SellerRegister() {
           >
             Oops you are not registered. Please Register As Seller.
           </Alert>
-          <div className="seller-register-btn">Register Now as Seller</div>
           <form action="" className="seller-register-form">
-            <div>
-              <div className="uploaded-images">
-                <Avatar
-                  alt="Profile"
-                  src={Image}
-                  style={{ height: "100px", width: "100px" }}
-                />
-              </div>
-              <div className="upload-btn-wrapper">
-                <button
-                  style={{
-                    width: "200px",
-                    marginLeft: "0px",
-                    fontSize: "16px",
-                    height: "40px",
-                  }}
-                >
-                  Upload Image
-                </button>
-                <input
-                  type="file"
-                  accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
-                  onChange={(e) => {
-                    handelUpload(e);
-                  }}
-                  style={{
-                    width: "200px",
-                    height: "40px",
-                  }}
-                />
-              </div>
+            <div className="uploaded-images">
+              <Avatar
+                alt="Profile"
+                src={Image}
+                style={{ height: "100px", width: "100px" }}
+              />
             </div>
-            <input
-              type="text"
-              id="contactName"
-              placeholder="Name"
+            <div className="upload-btn-wrapper">
+              <button
+                style={{
+                  width: "200px",
+                  marginLeft: "0px",
+                  fontSize: "12px",
+                  height: "40px",
+                  cursor: "pointer",
+                }}
+              >
+                Upload Image
+              </button>
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                onChange={(e) => {
+                  handelUpload(e);
+                }}
+                style={{
+                  width: "200px",
+                  height: "40px",
+                  cursor: "pointer",
+                }}
+              />
+            </div>
+            <TextField
+              id="SellerName"
+              label="Name"
+              variant="standard"
               onChange={(e) => setName(e.target.value)}
               value={Name}
-              style={{
-                width: "200px",
-                marginTop: "10px",
-              }}
             />
-            <textarea
-              id="contactReview"
-              placeholder="About Yourself"
+
+            <label htmlFor="phone-no" id="mobile-label">
+              Mobile Phone
+            </label>
+            <InputMask
+              id="phone-no"
+              mask="9999999999"
+              autoComplete={true}
+              alwaysShowMask={true}
+              onChange={(e) => setPhoneNo(e.target.value)}
+            />
+
+            <label htmlFor="alt-phone-no" id="mobile-label">
+              Alt Mobile Phone
+            </label>
+            <InputMask
+              id="alt-phone-no"
+              mask="9999999999"
+              autoComplete={true}
+              alwaysShowMask={true}
+              onChange={(e) => setAltPhoneNo(e.target.value)}
+            />
+
+            <TextField
+              id="SellerAbout"
+              label="About Yourself"
+              multiline
+              rows={4}
               onChange={(e) => setIntro(e.target.value)}
               value={Intro}
               style={{
                 width: "200px",
-                marginTop: "0px",
+                marginBottom: "10px",
               }}
             />
+
             <button
               style={{
                 fontFamily: "PT Sans",
@@ -197,11 +224,12 @@ export default function SellerRegister() {
               }}
             >
               Register&nbsp;
-              <i
-                className="fas fa-circle-notch"
+              <CircularProgress
                 style={{
                   display: load ? "inline-block" : "none",
-                  animation: "spin 2s linear infinite",
+                  height: "15px",
+                  width: "15px",
+                  color: " white",
                 }}
               />
             </button>
