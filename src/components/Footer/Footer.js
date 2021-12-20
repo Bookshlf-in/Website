@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
 function Footer() {
   const classes = useStyles();
 
+  const Year = new Date().getFullYear();
+
   // Alert Messages
   var messages = {
     Success: "Successfully Subscribed!",
@@ -261,7 +263,7 @@ function Footer() {
             </div>
             <div className="footer-link-items">
               <h4>Categories</h4>
-              <Link to="/SearchResult/tag:Jee">JEE Mains</Link>
+              <Link to="/SearchResult/tag:JEE">JEE Mains</Link>
               <Link to="/SearchResult/tag:Neet">NEET PG</Link>
               <Link to="/SearchResult/tag:Jee Advanced">JEE Advanced</Link>
               <Link to="/SearchResult/School">High School</Link>
@@ -272,7 +274,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-container3">
-        &copy; 2021 BookShlf. All Rights Reserved
+        &copy; {Year} BookShlf. All Rights Reserved
       </div>
     </div>
   );

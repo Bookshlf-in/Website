@@ -56,7 +56,7 @@ const BookDetails = (props) => {
         setbook(response.data);
         setwishlist(response.data.wishlist);
         setcart(response.data.cart);
-        console.log(response.data);
+        // console.log(response.data);
         setloader(false);
       });
     };

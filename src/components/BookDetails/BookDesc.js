@@ -1,12 +1,12 @@
 import { React } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
 import FaceIcon from "@material-ui/icons/Face";
 
 function BookDesc(props) {
-  console.log(props);
+  // console.log(props);
   const history = useHistory();
   const handleClick = () => {
     history.push(`/SellerProfile/${props.bookdetails.seller._id}`);

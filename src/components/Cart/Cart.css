@@ -47,6 +47,9 @@
 }
 .cart-item-img {
   width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .cart-item-price {
   width: 25%;
@@ -81,18 +84,7 @@ h5 {
   font-size: 14px;
   font-family: "PT Sans";
 }
-.cart-More {
-  font-size: 12px;
-  background-color: blue;
-  color: aliceblue;
-  padding: 10px;
-  font-family: "PT Sans";
-  cursor: pointer;
-  margin-left: 5px;
-}
-.cart-More:hover {
-  background-color: rgb(15, 184, 240);
-}
+
 .remove-item {
   position: absolute;
   right: 0;

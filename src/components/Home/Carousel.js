@@ -9,6 +9,12 @@ function Carousel() {
   const history = useHistory();
   const content = [
     {
+      title: "Old Books Are Like Old Friends. Full Of Memories",
+      description: "Buy Used Books & Save Environment",
+      button: "Shop Now",
+      image: "/images/qoute-bookshlf.jpg",
+    },
+    {
       title: "Your Online bOOk Store",
       description: "READ WHAT YOU LOVE. LOVE WHAT YOU READ!",
       button: "Explore Now",

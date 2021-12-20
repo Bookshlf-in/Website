@@ -478,16 +478,18 @@ const AllCategories = () => {
               GoBack();
             }}
           >
-            <NavigateBeforeIcon />
-            &nbsp;Prev
             <CircularProgress
               style={{
                 color: "black",
                 height: "15px",
                 width: "15px",
                 display: backload ? "flex" : "none",
+                color: "green",
               }}
             />
+            &nbsp;
+            <NavigateBeforeIcon />
+            &nbsp;Prev
           </button>
           <Fab
             color="primary"
@@ -512,6 +514,7 @@ const AllCategories = () => {
                 height: "15px",
                 width: "15px",
                 display: load ? "flex" : "none",
+                color: "green",
               }}
             />
           </button>
