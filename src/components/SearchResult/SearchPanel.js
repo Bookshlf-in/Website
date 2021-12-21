@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./AllCategories.css";
+import "./SearchPanel.css";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import axios from "../../axios";

@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./Reviews.css";
+import "./CustomerReviews.css";
 import { FaStar } from "react-icons/fa";
 import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
