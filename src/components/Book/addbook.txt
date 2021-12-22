@@ -29,16 +29,16 @@ const AddBook = (props) => {
   const [addForm, setAddForm] = useContext(AddFormContext);
 
   // book Details states
-  const [bookName, setbookName] = useState("");
-  const [bookISBN, setbookISBN] = useState("");
-  const [SP, setSP] = useState("");
-  const [Earn, setEarn] = useState("");
-  const [bookDesc, setbookDesc] = useState("");
+  const [bookName, setbookName] = useState(""); **
+  const [bookISBN, setbookISBN] = useState("");  
+  const [SP, setSP] = useState(""); **
+  const [Earn, setEarn] = useState(""); 
+  const [bookDesc, setbookDesc] = useState(""); 
   const [Weight, setWeight] = useState("");
   const [Edition, setEdition] = useState("");
-  const [Qnty, setQnty] = useState("");
-  const [author, setAuthor] = useState("");
-  const [pickupId, setPickupId] = useState("");
+  const [Qnty, setQnty] = useState(""); **
+  const [author, setAuthor] = useState(""); 
+  const [pickupId, setPickupId] = useState(""); **
   const [tags, setTags] = useState([]);
   const [tag, settag] = useState("");
   const [link, setlink] = useState("");

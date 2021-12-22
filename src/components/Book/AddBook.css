@@ -1,0 +1,53 @@
+#add-book-textfield,
+.add-book-bg .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
+.add-book-bg .css-1d1r5q-MuiFormHelperText-root,
+.add-book-bg .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root,
+.add-book-bg .css-1wc848c-MuiFormHelperText-root {
+  font-family: "Pt sans" !important;
+}
+.add-book-form-lf {
+  padding: 10px;
+}
+.add-book-form-lf fieldset {
+  border-radius: 10px 10px 0px 0px;
+  padding: 12px 15px;
+}
+.add-book-form-lf fieldset legend {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  padding: 0px 5px;
+}
+.add-book-form-lf .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root {
+  left: 10px;
+}
+li.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+  font-family: "PT sans" !important;
+  font-size: 0.75rem;
+}
+.add-book-form-lf .MuiChip-root,
+.add-book-form-lf
+  .css-bf1e45-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-bf1e45-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-bf1e45-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  font-family: "pt sans";
+  font-size: 0.65rem;
+}
+.add-book-form-lf .MuiAlert-root {
+  font-family: "pt sans";
+  font-size: 0.65rem;
+  padding: 0px 6px;
+  justify-content: center;
+  align-items: center;
+}
+.uploaded-image-item {
+  position: relative;
+  border: 2px solid transparent;
+}
+.uploaded-image-item .image-delete {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 100;
+  cursor: pointer;
+}
+.uploaded-image-item:hover {
+  border: 2px solid orangered;
+}
