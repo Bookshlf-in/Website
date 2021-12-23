@@ -52,7 +52,7 @@ const AddBook = (props) => {
 
   // functionality states
   const [checked, setChecked] = useState(false);
-  const [collapse, setcollapse] = useState(false);
+  const [collapse, setcollapse] = useState(true);
   const [sending, setSending] = useState(false);
   const [tagFieldChanges, settagFieldChanges] = useState(false);
   const [openTagMenu, setOpenTagMenu] = useState(false);
@@ -565,7 +565,7 @@ const AddBook = (props) => {
                     onChange={(e) => setbookISBN(e.target.value)}
                   />
                 </Stack>
-                <TextField
+                {/* <TextField
                   id="add-book-textfield"
                   label="Embed Youtube Video Link of Book"
                   InputProps={{
@@ -581,7 +581,7 @@ const AddBook = (props) => {
                   helperText="Make a video of book and Upload it to Youtube and share the video's embed Link"
                   value={link}
                   onChange={(e) => setlink(e.target.value)}
-                />
+                /> */}
               </Stack>
             </form>
           </Collapse>

@@ -2,7 +2,11 @@
 .add-book-bg .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
 .add-book-bg .css-1d1r5q-MuiFormHelperText-root,
 .add-book-bg .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root,
-.add-book-bg .css-1wc848c-MuiFormHelperText-root {
+.add-book-bg .css-1wc848c-MuiFormHelperText-root,
+.add-book-bg .css-348fk2,
+.add-book-bg .css-j7o63n,
+.add-book-bg .css-v7esy,
+.add-book-bg .css-1rcvyyg {
   font-family: "Pt sans" !important;
 }
 .add-book-form-lf {
@@ -17,10 +21,13 @@
   font-weight: bold;
   padding: 0px 5px;
 }
-.add-book-form-lf .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root {
+.add-book-form-lf .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root,
+.add-book-form-lf .css-1rcvyyg {
   left: 10px;
 }
-li.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+li.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root,
+li.css-1km1ehz,
+.add-book-form-lf .css-1cq0fp4.css-1cq0fp4.css-1cq0fp4 {
   font-family: "PT sans" !important;
   font-size: 0.75rem;
 }
