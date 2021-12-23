@@ -25,6 +25,7 @@ import Avatar from "@mui/material/Avatar";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CancelIcon from "@material-ui/icons/CancelTwoTone";
 import Fab from "@mui/material/Fab";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 // Icons
 import CloseIcon from "@material-ui/icons/ArrowDropUpRounded";
@@ -37,7 +38,7 @@ import AddressIcon from "@material-ui/icons/ContactsRounded";
 import TagIcon from "@material-ui/icons/LocalOfferRounded";
 import CameraIcon from "@material-ui/icons/AddAPhotoRounded";
 import SendIcon from "@material-ui/icons/SendRounded";
-import AddIcon from "@material-ui/icons/Add";
+import AddIcon from "@material-ui/icons/AddCircleOutlineRounded";
 import EditionIcon from "@material-ui/icons/Timelapse";
 import AuthorIcon from "@material-ui/icons/Person";
 import WeightIcon from "@material-ui/icons/FitnessCenter";
@@ -49,16 +50,110 @@ const AddBook = (props) => {
   const history = useHistory();
   const [addForm, setAddForm] = useContext(AddFormContext);
 
+  // functionality states
   const [checked, setChecked] = useState(false);
   const [collapse, setcollapse] = useState(false);
   const [sending, setSending] = useState(false);
+  const [tagFieldChanges, settagFieldChanges] = useState(false);
+  const [openTagMenu, setOpenTagMenu] = useState(false);
 
-  const [Adr, setAdr] = useState(null);
+  // Add book form states
+  const [bookName, setbookName] = useState("");
+  const [bookISBN, setbookISBN] = useState("");
+  const [SP, setSP] = useState("");
+  const [mrp, setMrp] = useState("");
+  const [bookDesc, setbookDesc] = useState("");
+  const [Weight, setWeight] = useState("");
+  const [Edition, setEdition] = useState("");
+  const [Qnty, setQnty] = useState(1);
+  const [author, setAuthor] = useState("");
+  const [pickupId, setPickupId] = useState("");
+  const [Adr, setAdr] = useState("");
   const [tags, setTags] = useState([]);
+  const [resulttags, setresultTags] = useState([]);
   const [tag, setTag] = useState("");
+  const [link, setlink] = useState("");
+  const [lang, setlang] = useState("");
+  const [Photo, setPhoto] = useState([]);
+  const [Image, setImage] = useState([]);
 
-  const handleTagDelete = () => {
-    console.info("You clicked the delete icon.");
+  // tag searching on input
+  const handelTagSearch = (e) => {
+    settagFieldChanges(true);
+    setTag(e.target.value);
+    setOpenTagMenu(true);
+    const fetchdata = async () => {
+      axios
+        .get(`/searchTag?q=${e.target.value}`)
+        .then((response) => {
+          setresultTags(response.data);
+          settagFieldChanges(false);
+        })
+        .catch((error) => {});
+    };
+    fetchdata();
+  };
+
+  // Tag adding to Book Tags
+  const handelTagAdd = (tagname) => {
+    if (tagname !== "" && tagname !== undefined && tagname !== null) {
+      setTags(tags.concat(tagname));
+    }
+  };
+
+  // Deleting Tags of Book
+  const handleTagDelete = (tagname) => {
+    setTags(tags.filter((tag) => tagname !== tag));
+  };
+
+  // adding book images in form
+  const UpdateFileList = (fileList) => {
+    setPhoto(fileList);
+    setImage(fileList);
+  };
+  const handelbookAdd = (e, uploadMultiple) => {
+    if (Image.length > 0 && uploadMultiple) {
+      UpdateFileList([...Array.from(e.target.files), ...Image]);
+    } else {
+      UpdateFileList(Array.from(e.target.files));
+    }
+  };
+
+  // deleting book images from form
+  const handleImageDelete = (filename) => {
+    setImage(Image.filter((file) => file.name !== filename));
+    setPhoto(Image.filter((file) => file.name !== filename));
+  };
+
+  // submitting book for review
+  const handelBookSubmitRequest = () => {
+    if (checked) {
+      setSending(!sending);
+      axios
+        .post("/addBook", {
+          title: bookName,
+          MRP: mrp,
+          price: SP,
+          editionYear: Edition,
+          author: author,
+          ISBN: bookISBN,
+          language: lang,
+          pickupAddressId: Adr,
+          description: bookDesc,
+          photos: Photo,
+          weightInGrams: Weight,
+          embedVideo: link,
+          tags: tags,
+          qty: Qnty,
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    } else {
+    }
   };
 
   return (
@@ -80,6 +175,8 @@ const AddBook = (props) => {
                     ),
                   }}
                   variant="standard"
+                  value={bookName}
+                  onChange={(e) => setbookName(e.target.value)}
                 />
                 <TextField
                   id="add-book-textfield"
@@ -95,6 +192,8 @@ const AddBook = (props) => {
                   multiline
                   maxRows={3}
                   helperText="About the book such as Year of purchase, quality etc"
+                  value={bookDesc}
+                  onChange={(e) => setbookDesc(e.target.value)}
                 />
                 <Stack
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
@@ -113,6 +212,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={Qnty}
+                    onChange={(e) => setQnty(e.target.value)}
                   />
                   <TextField
                     id="add-book-textfield"
@@ -125,6 +226,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={SP}
+                    onChange={(e) => setSP(e.target.value)}
                   />
                   <TextField
                     select
@@ -161,18 +264,67 @@ const AddBook = (props) => {
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
                   spacing={2}
                 >
-                  <TextField
-                    id="add-book-textfield"
-                    label="Book Tags"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <TagIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="standard"
-                  />
+                  <div style={{ position: "relative" }}>
+                    <TextField
+                      id="add-book-textfield"
+                      label="Book Tags"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <TagIcon />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            {tagFieldChanges ? (
+                              <CircularProgress
+                                style={{
+                                  color: "rgba(0,0,0,0.6)",
+                                  height: "15px",
+                                  width: "15px",
+                                  marginRight: "15px",
+                                }}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={tag}
+                      onChange={(e) => handelTagSearch(e)}
+                      helperText="Press Enter key to Add the Tag"
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handelTagAdd(e.target.value);
+                        }
+                      }}
+                    />
+                    <ClickAwayListener
+                      onClickAway={() => setOpenTagMenu(false)}
+                    >
+                      {openTagMenu ? (
+                        <div className="searchTagresult">
+                          {resulttags.map((TAG, idx) => (
+                            <MenuItem
+                              id="result-tag"
+                              title={TAG.tag}
+                              key={idx}
+                              value={TAG.tag}
+                              onClick={() => handelTagAdd(TAG.tag)}
+                            >
+                              {TAG.tag}
+                            </MenuItem>
+                          ))}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </ClickAwayListener>
+                  </div>
+
                   <Stack
                     direction={{
                       xs: "column",
@@ -184,18 +336,15 @@ const AddBook = (props) => {
                     alignItems="center"
                     justifyContent="flex-start"
                   >
-                    <Chip
-                      label="JEE Mains"
-                      onDelete={handleTagDelete}
-                      color="primary"
-                      size="small"
-                    />
-                    <Chip
-                      label="JEE Mains"
-                      onDelete={handleTagDelete}
-                      color="primary"
-                      size="small"
-                    />
+                    {tags.map((TAG, idx) => (
+                      <Chip
+                        label={TAG}
+                        key={idx}
+                        onDelete={() => handleTagDelete(TAG)}
+                        color="primary"
+                        size="small"
+                      />
+                    ))}
                   </Stack>
                 </Stack>
                 <Stack
@@ -207,10 +356,14 @@ const AddBook = (props) => {
                   <div style={{ display: "flex" }}>
                     <label htmlFor="icon-button-file">
                       <input
-                        accept="image/*"
+                        accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
                         id="icon-button-file"
                         type="file"
                         style={{ display: "none" }}
+                        onChange={(e) => {
+                          handelbookAdd(e, false);
+                        }}
+                        multiple
                       />
                       <IconButton
                         color="primary"
@@ -235,20 +388,45 @@ const AddBook = (props) => {
                     alignItems="center"
                     justifyContent="flex-start"
                   >
-                    <div className="uploaded-image-item">
-                      <span className="image-delete">
-                        <CancelIcon />
-                      </span>
-                      <Avatar
-                        alt="Sample Book"
-                        src="/images/book1.jpg"
-                        sx={{ width: 150, height: 150 }}
-                        variant="square"
-                      />
-                    </div>
-                    <Fab color="primary" aria-label="add">
-                      <AddIcon />
-                    </Fab>
+                    {Image.map((file, idx) => (
+                      <div className="uploaded-image-item" key={idx}>
+                        <span
+                          className="image-delete"
+                          onClick={() => handleImageDelete(file.name)}
+                        >
+                          <CancelIcon />
+                        </span>
+                        <Avatar
+                          alt={file.name}
+                          src={URL.createObjectURL(file)}
+                          sx={{ width: 150, height: 150 }}
+                          variant="square"
+                        />
+                      </div>
+                    ))}
+                    {Image.length ? (
+                      <label htmlFor="icon-button-file-2">
+                        <input
+                          accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                          id="icon-button-file-2"
+                          type="file"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
+                            handelbookAdd(e, true);
+                          }}
+                          multiple
+                        />
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                        >
+                          <AddIcon style={{ height: "2rem", width: "2rem" }} />
+                        </IconButton>
+                      </label>
+                    ) : (
+                      <></>
+                    )}
                   </Stack>
                 </Stack>
               </Stack>
@@ -267,7 +445,7 @@ const AddBook = (props) => {
               onClick={() => setcollapse(!collapse)}
               fullWidth
               style={{
-                margin: "30px 0px",
+                margin: "30px 10px",
                 fontFamily: "PT sans",
                 fontSize: "12px",
                 letterSpacing: "1px",
@@ -284,7 +462,7 @@ const AddBook = (props) => {
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
                   divider={<Divider orientation="vertical" flexItem />}
                   spacing={2}
-                  justifyContent="space-between"
+                  justifyContent="space-evenly"
                 >
                   <TextField
                     id="add-book-textfield"
@@ -297,6 +475,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={mrp}
+                    onChange={(e) => setMrp(e.target.value)}
                   />
                   <TextField
                     id="add-book-textfield"
@@ -309,6 +489,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={Edition}
+                    onChange={(e) => setEdition(e.target.value)}
                   />
                 </Stack>
 
@@ -316,7 +498,7 @@ const AddBook = (props) => {
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
                   divider={<Divider orientation="vertical" flexItem />}
                   spacing={2}
-                  justifyContent="space-between"
+                  justifyContent="space-evenly"
                 >
                   <TextField
                     id="add-book-textfield"
@@ -329,6 +511,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
                   />
                   <TextField
                     id="add-book-textfield"
@@ -341,6 +525,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={Weight}
+                    onChange={(e) => setWeight(e.target.value)}
                   />
                 </Stack>
 
@@ -348,7 +534,7 @@ const AddBook = (props) => {
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
                   divider={<Divider orientation="vertical" flexItem />}
                   spacing={2}
-                  justifyContent="space-between"
+                  justifyContent="space-evenly"
                 >
                   <TextField
                     id="add-book-textfield"
@@ -361,6 +547,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={lang}
+                    onChange={(e) => setlang(e.target.value)}
                   />
                   <TextField
                     id="add-book-textfield"
@@ -373,6 +561,8 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    value={bookISBN}
+                    onChange={(e) => setbookISBN(e.target.value)}
                   />
                 </Stack>
                 <TextField
@@ -389,6 +579,8 @@ const AddBook = (props) => {
                   multiline
                   maxRows={3}
                   helperText="Make a video of book and Upload it to Youtube and share the video's embed Link"
+                  value={link}
+                  onChange={(e) => setlink(e.target.value)}
                 />
               </Stack>
             </form>
@@ -428,7 +620,9 @@ const AddBook = (props) => {
           }}
         >
           <LoadingButton
-            onClick={() => setSending(!sending)}
+            onClick={() => {
+              handelBookSubmitRequest();
+            }}
             endIcon={<SendIcon />}
             loading={sending}
             loadingPosition="end"

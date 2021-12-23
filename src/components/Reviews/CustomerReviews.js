@@ -134,7 +134,8 @@ const Reviews = () => {
             >
               <button className="Login">
                 <Link to="/Login">
-                  <i class="fas fa-exclamation-triangle" /> Please Login First
+                  <i className="fas fa-exclamation-triangle" /> Please Login
+                  First
                 </Link>
               </button>
               <button

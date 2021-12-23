@@ -176,7 +176,7 @@ export default function SellerRegister() {
             <InputMask
               id="phone-no"
               mask="9999999999"
-              autoComplete={true}
+              autoComplete="true"
               alwaysShowMask={true}
               onChange={(e) => setPhoneNo(e.target.value)}
             />
@@ -187,7 +187,7 @@ export default function SellerRegister() {
             <InputMask
               id="alt-phone-no"
               mask="9999999999"
-              autoComplete={true}
+              autoComplete="true"
               alwaysShowMask={true}
               onChange={(e) => setAltPhoneNo(e.target.value)}
             />

@@ -135,7 +135,7 @@ const NavbarMenu = () => {
               history.go(0);
             }}
           >
-            <i class="fas fa-dolly"></i>
+            <i className="fas fa-dolly"></i>
             &nbsp;Orders
           </MenuItem>
         ) : (
