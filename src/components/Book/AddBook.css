@@ -60,10 +60,15 @@ li.css-1km1ehz,
 }
 .add-book-form-lf .searchTagresult {
   position: absolute;
-  left: 12px;
-  bottom: 42px;
-  background-color: white;
+  left: 24px;
+  top: 42px;
+  background-color: rgba(255, 255, 255, 0.95);
   z-index: 200;
   max-height: 200px;
   overflow-y: auto;
+  box-shadow: 6px 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+.searchTagresult #result-tag {
+  padding: 6px;
 }

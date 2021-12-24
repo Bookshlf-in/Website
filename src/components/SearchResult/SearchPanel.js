@@ -10,6 +10,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import Fab from "@material-ui/core/Fab";
+import AlertTitle from "@mui/material/AlertTitle";
 
 // Alert
 function Alert(props) {
@@ -40,6 +41,7 @@ const AllCategories = () => {
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState("success");
   const [alert, setAlert] = useState("");
+
   // states
   const [search, setsearch] = useState("");
   const [books, setbooks] = useState(null);
@@ -354,6 +356,7 @@ const AllCategories = () => {
       }, 3000);
     }
   };
+
   // Handeling snackbar closing
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -460,7 +463,54 @@ const AllCategories = () => {
                   // ================================
                 ))
               ) : (
-                <h1>No Results Found</h1>
+                <>
+                  <div style={{ padding: "10px" }}>
+                    <Alert
+                      severity="info"
+                      variant="outlined"
+                      style={{ fontFamily: "pt sans" }}
+                    >
+                      <AlertTitle style={{ fontFamily: "pt sans" }}>
+                        No Results Found
+                      </AlertTitle>
+                      If you are not able to find the book you want, then mail
+                      us at -{" "}
+                      <strong
+                        style={{
+                          color: "blue",
+                          cursor: "pointer",
+                          backgroundColor: "rgba(0,0,0,0.06)",
+                          padding: "6px",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        bookshlf.in@gmail.com
+                      </strong>
+                      <br />
+                      <br />
+                      <center>
+                        OR
+                        <br />
+                        <br />
+                        <b
+                          onClick={() => {
+                            history.push("/Contact");
+                          }}
+                          style={{
+                            color: "green",
+                            cursor: "pointer",
+                            backgroundColor: "rgba(0,0,0,0.06)",
+                            padding: "6px",
+                            borderRadius: "5px",
+                            boxShadow: "3px 2px 2px rgba(0,0,0,0.2)",
+                          }}
+                        >
+                          Contact Us
+                        </b>
+                      </center>
+                    </Alert>
+                  </div>
+                </>
               )}
             </>
           ) : (
@@ -470,55 +520,67 @@ const AllCategories = () => {
         {/* ======================================================== */}
 
         {/* more loading */}
-        <div className="loadMore">
-          <button
-            className="loadMore-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              GoBack();
-            }}
-          >
-            <CircularProgress
-              style={{
-                color: "black",
-                height: "15px",
-                width: "15px",
-                display: backload ? "flex" : "none",
-                color: "green",
-              }}
-            />
-            &nbsp;
-            <NavigateBeforeIcon />
-            &nbsp;Prev
-          </button>
-          <Fab
-            color="primary"
-            aria-label="current-page"
-            size="small"
-            style={{ backgroundColor: "orangered", fontFamily: "PT sans" }}
-          >
-            {page}
-          </Fab>
-          <button
-            className="loadMore-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              LoadMore();
-            }}
-          >
-            Next&nbsp;
-            <NavigateNextIcon />
-            <CircularProgress
-              style={{
-                color: "black",
-                height: "15px",
-                width: "15px",
-                display: load ? "flex" : "none",
-                color: "green",
-              }}
-            />
-          </button>
-        </div>
+        {books ? (
+          <>
+            {books.length ? (
+              <div className="loadMore">
+                <button
+                  className="loadMore-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    GoBack();
+                  }}
+                >
+                  <CircularProgress
+                    style={{
+                      color: "black",
+                      height: "15px",
+                      width: "15px",
+                      display: backload ? "flex" : "none",
+                      color: "green",
+                    }}
+                  />
+                  <NavigateBeforeIcon />
+                  &nbsp;Prev
+                </button>
+                <Fab
+                  color="primary"
+                  aria-label="current-page"
+                  size="small"
+                  style={{
+                    backgroundColor: "orangered",
+                    fontFamily: "PT sans",
+                  }}
+                >
+                  {page}
+                </Fab>
+                <button
+                  className="loadMore-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    LoadMore();
+                  }}
+                >
+                  Next&nbsp;
+                  <NavigateNextIcon />
+                  <CircularProgress
+                    style={{
+                      color: "black",
+                      height: "15px",
+                      width: "15px",
+                      display: load ? "flex" : "none",
+                      color: "green",
+                    }}
+                  />
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       {/* !!! do not change !!! */}
       {/*  snackbar starts*/}

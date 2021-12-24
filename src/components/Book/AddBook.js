@@ -99,6 +99,8 @@ const AddBook = (props) => {
     if (tagname !== "" && tagname !== undefined && tagname !== null) {
       setTags(tags.concat(tagname));
     }
+    setOpenTagMenu(false);
+    setTag("");
   };
 
   // Deleting Tags of Book
@@ -301,6 +303,7 @@ const AddBook = (props) => {
                           handelTagAdd(e.target.value);
                         }
                       }}
+                      autoComplete="false"
                     />
                     <ClickAwayListener
                       onClickAway={() => setOpenTagMenu(false)}
