@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from "react";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
+import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import UpdateBook from "./UpdateBook";
+import UpdateBook from "../Book/UpdateBook";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -24,6 +25,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function EnhanceID(id) {
+  var EnhancedID = "";
+  for (let i = 0; i < 24; i++) {
+    if (i > 0 && i % 4 == 0) {
+      EnhancedID += " - ";
+    }
+    EnhancedID += id[i];
+    console.log(EnhancedID);
+  }
+  return EnhancedID;
+}
 const Orders = (props) => {
   const classes = useStyles();
   const [panel, setpanel] = useState("1");
@@ -115,9 +127,9 @@ const Orders = (props) => {
                 setpanel(e.target.value);
               }}
             >
-              <option value="1">Books Sold</option>
-              <option value="2">Book Approved</option>
-              <option value="3">Books Pending For Approval</option>
+              {/* <option value="1">Books Sold</option> */}
+              <option value="1">Book Approved</option>
+              <option value="2">Books Pending For Approval</option>
             </select>
           </div>
         </form>
@@ -144,20 +156,6 @@ const Orders = (props) => {
           <table className="active-orders-table">
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Book ID</th>
-                <th>Dated</th>
-                <th>Details</th>
-                <th>Order Price</th>
-                <th>Buyer</th>
-                <th>Payment Recieved</th>
-              </tr>
-            </thead>
-          </table>
-        ) : panel === "2" ? (
-          <table className="active-orders-table">
-            <thead>
-              <tr>
                 <th>Book ID</th>
                 <th>Book Name</th>
                 <th>ISBN Number</th>
@@ -172,12 +170,42 @@ const Orders = (props) => {
                 <>
                   {approved.map((book, key) => (
                     <tr key={{ key }}>
-                      <td>{book._id}</td>
+                      <td
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "10px",
+                        }}
+                      >
+                        <Avatar
+                          alt={book.title}
+                          src={book.photos[0]}
+                          style={{ height: "150px", width: "150px" }}
+                        />
+                        <span className="enhanceBookID">
+                          {EnhanceID(book._id)}
+                        </span>
+                      </td>
                       <td>{book.title}</td>
                       <td>{book.ISBN}</td>
                       <td>{book.description}</td>
-                      <td>&#8377;{" " + book.price + "/-"}</td>
-                      <td>{book.qty}</td>
+                      <td>
+                        <span className="book-selling-price">
+                          <b>
+                            <i className="fas fa-rupee-sign" /> {book.price}{" "}
+                            {"/-"}
+                          </b>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cart-item-price">
+                          <span className="avl-qty">
+                            <span>{book.qty}</span>
+                          </span>
+                        </span>
+                      </td>
                       <td>
                         <i
                           className="fas fa-window-close"
@@ -210,8 +238,8 @@ const Orders = (props) => {
             <tbody>
               {notsold && notsold.length > 0 ? (
                 <>
-                  {notsold.map((book, key) => (
-                    <tr key={{ key }}>
+                  {notsold.map((book, idx) => (
+                    <tr key={{ idx }}>
                       <th>{book._id}</th>
                       <th>{book.title}</th>
                       <th>{book.description}</th>

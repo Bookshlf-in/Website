@@ -1,15 +1,16 @@
 import { React, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AddFormContext } from "../../Context/formContext";
-import Button from "@material-ui/core/Button";
+import { storage } from "../../firebase";
+import { nanoid } from "nanoid";
 import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
-import { storage } from "../../firebase";
-import { nanoid } from "nanoid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Chip from "@material-ui/core/Chip"; // for book-tag
+import TextField from "@mui/material/TextField";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,33 +29,23 @@ const AddBook = (props) => {
   const [addForm, setAddForm] = useContext(AddFormContext);
 
   // book Details states
-  const [bookName, setbookName] = useState(addForm.title ? addForm.title : "");
-  const [bookISBN, setbookISBN] = useState("9782724088526");
-  const [SP, setSP] = useState(addForm.price ? addForm.price : "");
-  const [Earn, setEarn] = useState(addForm.MRP ? addForm.MRP : "");
-  const [bookDesc, setbookDesc] = useState(
-    addForm.description ? addForm.description : ""
-  );
-  const [Weight, setWeight] = useState(
-    addForm.weightInGrams ? addForm.weightInGrams : ""
-  );
-  const [Edition, setEdition] = useState(
-    addForm.editionYear ? addForm.editionYear : "2021"
-  );
-  const [Qnty, setQnty] = useState(addForm.qty ? addForm.qty : "");
-  const [author, setAuthor] = useState(addForm.author ? addForm.author : "");
-  const [pickupId, setPickupId] = useState(
-    addForm.pickupAddressId ? addForm.pickupAddressId : ""
-  );
-  const [tags, setTags] = useState(addForm.tags ? addForm.tags : []);
+  const [bookName, setbookName] = useState(""); **
+  const [bookISBN, setbookISBN] = useState("");  
+  const [SP, setSP] = useState(""); **
+  const [Earn, setEarn] = useState(""); 
+  const [bookDesc, setbookDesc] = useState(""); 
+  const [Weight, setWeight] = useState("");
+  const [Edition, setEdition] = useState("");
+  const [Qnty, setQnty] = useState(""); **
+  const [author, setAuthor] = useState(""); 
+  const [pickupId, setPickupId] = useState(""); **
+  const [tags, setTags] = useState([]);
   const [tag, settag] = useState("");
-  const [link, setlink] = useState(
-    addForm.embedVideo ? addForm.embedVideo : ""
-  );
-  const [lang, setlang] = useState(addForm.language ? addForm.language : "");
+  const [link, setlink] = useState("");
+  const [lang, setlang] = useState("");
   const [checked, setChecked] = useState(false);
-  const [Photo, setPhoto] = useState(addForm.photos ? addForm.photos : "");
-  const [Image, setImage] = useState(addForm.photos ? addForm.photos : "");
+  const [Photo, setPhoto] = useState("");
+  const [Image, setImage] = useState("");
   const [uploadedBooks, setUploadedBooks] = useState([]);
   const [load, setload] = useState(false);
   const [Adr] = useState(props.address);
@@ -87,10 +78,10 @@ const AddBook = (props) => {
     setChecked(event.target.checked);
   };
 
-  const HandelFormChange = () => {
-    localStorage.setItem("bookshlf_user_AddBook", JSON.stringify(addForm));
-    console.log(addForm);
-  };
+  // const HandelFormChange = () => {
+  //   localStorage.setItem("bookshlf_user_AddBook", JSON.stringify(addForm));
+  //   console.log(addForm);
+  // };
 
   const Initialize = () => {
     settag("");
@@ -110,9 +101,9 @@ const AddBook = (props) => {
         title: "",
         MRP: "",
         price: "",
-        editionYear: "2021",
+        editionYear: "",
         author: "",
-        ISBN: "9782724088526",
+        ISBN: "",
         language: "",
         pickupAddressId: "",
         description: "",
@@ -120,16 +111,16 @@ const AddBook = (props) => {
         weightInGrams: "",
         embedVideo: "",
         tags: [],
-        qty: 1,
+        qty: null,
       })
     );
     setAddForm({
       title: "",
       MRP: "",
       price: "",
-      editionYear: "2021",
+      editionYear: "",
       author: "",
-      ISBN: "9782724088526",
+      ISBN: "",
       language: "",
       pickupAddressId: "",
       description: "",
@@ -137,17 +128,17 @@ const AddBook = (props) => {
       weightInGrams: "",
       embedVideo: "",
       tags: [],
-      qty: 1,
+      qty: null,
     });
   };
 
   const handleDelete = (e) => {
     setTags(tags.filter((tag) => e.target.innerHTML !== tag));
-    setAddForm({
-      ...addForm,
-      tags: tags.filter((tag) => e.target.innerHTML !== tag),
-    });
-    HandelFormChange();
+    // setAddForm({
+    //   ...addForm,
+    //   tags: tags.filter((tag) => e.target.innerHTML !== tag),
+    // });
+    // HandelFormChange();
   };
 
   const handeluploadImages = () => {
@@ -161,8 +152,8 @@ const AddBook = (props) => {
           const uploadTask = storage.ref(`books/${imageName[i]}`).put(Photo[i]);
           uploadTask.on(
             "state_changed",
-            (snapshot) => {},
-            (error) => {},
+            (snapshot) => { },
+            (error) => { },
             () => {
               storage
                 .ref("books")
@@ -172,11 +163,11 @@ const AddBook = (props) => {
                   imgURL.push(Url);
                   if (imgURL.length === Photo.length) {
                     result(imgURL);
-                    setAddForm({
-                      ...addForm,
-                      photos: imgURL,
-                    });
-                    HandelFormChange();
+                    // setAddForm({
+                    //   ...addForm,
+                    //   photos: imgURL,
+                    // });
+                    // HandelFormChange();
                   }
                 });
             }
@@ -261,13 +252,13 @@ const AddBook = (props) => {
   };
 
   function precheck(imglinks) {
-    console.log(SP);
-    console.log(Edition);
-    console.log(author);
-    console.log(lang);
-    console.log(pickupId);
-    console.log(bookDesc);
-    console.log(imglinks);
+    // console.log(SP);
+    // console.log(Edition);
+    // console.log(author);
+    // console.log(lang);
+    // console.log(pickupId);
+    // console.log(bookDesc);
+    // console.log(imglinks);
     return (
       bookName !== "" &&
       SP !== "" &&
@@ -306,7 +297,7 @@ const AddBook = (props) => {
     else if (price > 5000) earnings = 1500 + (price * 3) / 100;
     else earnings = price;
     setEarn(Math.round(price - earnings));
-    setAddForm({ ...addForm, MRP: Math.round(price - earnings) });
+    // setAddForm({ ...addForm, MRP: Math.round(price - earnings) });
     // console.log("Your Earnings : ", earnings);
   };
   return (
@@ -322,8 +313,8 @@ const AddBook = (props) => {
             placeholder="Book Full Name"
             onChange={(e) => {
               setbookName(e.target.value);
-              setAddForm({ ...addForm, title: e.target.value });
-              HandelFormChange();
+              // setAddForm({ ...addForm, title: e.target.value });
+              // HandelFormChange();
             }}
             value={bookName}
           />
@@ -337,11 +328,11 @@ const AddBook = (props) => {
             placeholder="Book Details"
             onChange={(e) => {
               setbookDesc(e.target.value);
-              setAddForm({
-                ...addForm,
-                description: e.target.value,
-              });
-              HandelFormChange();
+              // setAddForm({
+              //   ...addForm,
+              //   description: e.target.value,
+              // });
+              // HandelFormChange();
             }}
             value={bookDesc}
           />
@@ -397,11 +388,11 @@ const AddBook = (props) => {
               if (e.target.value === "addNew") {
                 history.push("/SellerPanel/3");
               } else {
-                setAddForm({
-                  ...addForm,
-                  pickupAddressId: e.target.value,
-                });
-                HandelFormChange();
+                // setAddForm({
+                //   ...addForm,
+                //   pickupAddressId: e.target.value,
+                // });
+                // HandelFormChange();
               }
             }}
           >
@@ -429,11 +420,11 @@ const AddBook = (props) => {
             placeholder="Weight in grams (if possible)"
             onChange={(e) => {
               setWeight(e.target.value);
-              setAddForm({
-                ...addForm,
-                weightInGrams: e.target.value,
-              });
-              HandelFormChange();
+              // setAddForm({
+              //   ...addForm,
+              //   weightInGrams: e.target.value,
+              // });
+              // HandelFormChange();
             }}
             value={Weight}
           />
@@ -458,8 +449,8 @@ const AddBook = (props) => {
             placeholder="Book Author"
             onChange={(e) => {
               setAuthor(e.target.value);
-              setAddForm({ ...addForm, author: e.target.value });
-              HandelFormChange();
+              // setAddForm({ ...addForm, author: e.target.value });
+              // HandelFormChange();
             }}
             value={author}
           />
@@ -473,8 +464,8 @@ const AddBook = (props) => {
             placeholder="Quantity"
             onChange={(e) => {
               setQnty(e.target.value);
-              setAddForm({ ...addForm, qty: e.target.value });
-              HandelFormChange();
+              // setAddForm({ ...addForm, qty: e.target.value });
+              // HandelFormChange();
             }}
             value={Qnty}
           />
@@ -488,8 +479,8 @@ const AddBook = (props) => {
             placeholder="Language"
             onChange={(e) => {
               setlang(e.target.value);
-              setAddForm({ ...addForm, language: e.target.value });
-              HandelFormChange();
+              // setAddForm({ ...addForm, language: e.target.value });
+              // HandelFormChange();
             }}
             value={lang}
           />
@@ -504,11 +495,11 @@ const AddBook = (props) => {
             placeholder="Embed Youtube Video Link(Optional)"
             onChange={(e) => {
               setlink(e.target.value);
-              setAddForm({
-                ...addForm,
-                embedVideo: e.target.value,
-              });
-              HandelFormChange();
+              // setAddForm({
+              //   ...addForm,
+              //   embedVideo: e.target.value,
+              // });
+              // HandelFormChange();
             }}
             value={link}
           />
@@ -542,8 +533,8 @@ const AddBook = (props) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
                   setTags(tags.concat(tag));
-                  setAddForm({ ...addForm, tags: tags });
-                  HandelFormChange();
+                  // setAddForm({ ...addForm, tags: tags });
+                  // HandelFormChange();
                   settag("");
                 }
               }}
@@ -552,8 +543,8 @@ const AddBook = (props) => {
               style={{ cursor: "pointer" }}
               onClick={() => {
                 setTags(tags.concat(tag));
-                setAddForm({ ...addForm, tags: tags });
-                HandelFormChange();
+                // setAddForm({ ...addForm, tags: tags });
+                // HandelFormChange();
                 settag("");
               }}
             >

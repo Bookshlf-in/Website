@@ -204,7 +204,12 @@ const Reviews = () => {
         <div className="review-main">
           <div className="main-book">
             {order ? (
-              <img src={order.photo} alt={order.title} />
+              <img
+                src={order.photo}
+                alt={order.title}
+                width="180px"
+                height="180px"
+              />
             ) : (
               <Skeleton variant="rect" width={180} height={180} />
             )}

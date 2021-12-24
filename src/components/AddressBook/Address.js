@@ -363,7 +363,7 @@ const Address = (props) => {
               <label htmlFor="phone-no">Mobile Phone</label>
               <InputMask
                 id="phone-no"
-                mask="9999999999"
+                mask="999999999999"
                 autoComplete={true}
                 alwaysShowMask={true}
                 onChange={(e) => setPhoneNo(e.target.value)}
@@ -373,7 +373,7 @@ const Address = (props) => {
               <label htmlFor="alt-phone-no">Alt Mobile Phone</label>
               <InputMask
                 id="alt-phone-no"
-                mask="9999999999"
+                mask="999999999999"
                 autoComplete={true}
                 alwaysShowMask={true}
                 onChange={(e) => setAltPhoneNo(e.target.value)}

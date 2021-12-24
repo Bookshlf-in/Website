@@ -57,7 +57,7 @@ const AccountDetails = (props) => {
             {sellerDetails.Intro}
           </span>
           <span className="seller-rating">
-            <i class="fas fa-star"></i>
+            <i className="fas fa-star"></i>
             {[...Array(parseInt(sellerDetails.Rating))].map(() => {
               return <i className="fas fa-star"></i>;
             })}

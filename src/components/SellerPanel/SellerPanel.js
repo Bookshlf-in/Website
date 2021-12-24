@@ -1,10 +1,10 @@
 import { React, useState, useContext, useEffect } from "react";
 import "./SellerPanel.css";
 import AccountDetails from "./AccountDetails";
-import Orders from "./Orders";
+import Orders from "../Order/Orders";
 import Address from "../AddressBook/Address";
 import Reviews from "./SellerReviews";
-import AddBook from "./AddBook";
+import AddBook from "../Book/AddBook";
 import Register from "./SellerRegister";
 import { UserContext } from "../../Context/userContext";
 import { useHistory, useParams } from "react-router-dom";

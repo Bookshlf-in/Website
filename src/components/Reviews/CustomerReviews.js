@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./Reviews.css";
+import "./CustomerReviews.css";
 import { FaStar } from "react-icons/fa";
 import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
@@ -134,7 +134,8 @@ const Reviews = () => {
             >
               <button className="Login">
                 <Link to="/Login">
-                  <i class="fas fa-exclamation-triangle" /> Please Login First
+                  <i className="fas fa-exclamation-triangle" /> Please Login
+                  First
                 </Link>
               </button>
               <button

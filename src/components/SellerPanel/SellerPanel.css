@@ -110,7 +110,7 @@
 }
 .orders-details {
   width: 100%;
-  padding: 10px;
+  margin: 10px 0px;
   overflow-x: auto;
 }
 .orders-details .active-orders-table {
@@ -126,6 +126,7 @@
 .orders-filter .select-wrapper {
   position: relative;
   width: 250px;
+  border-radius: 5px 5px 0px 0px;
 }
 .orders-filter .select-wrapper::after {
   color: black;
@@ -137,30 +138,36 @@
   top: 10px;
   font-size: 24px;
 }
+
 .orders-filter .select {
   -moz-appearance: none;
   -webkit-appearance: none;
-  background: white;
+  background: rgba(0, 0, 0, 0.06);
   border: none;
   border-radius: 0;
   cursor: pointer;
   padding: 12px;
   width: 100%;
-  font-size: 16px;
+  font-size: 12px;
   outline: none;
-  border: 1px solid white;
+  border-radius: 5px 5px 0px 0px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
 }
 .orders-filter .select:focus {
   color: black;
-  border: 1px solid rgb(55, 251, 55);
 }
 .orders-filter .select::-ms-expand {
   display: none;
 }
 .orders-filter .select-wrapper .select option {
   font-weight: bold;
+}
+.enhanceBookID {
+  background-color: rgba(0, 0, 0, 0.06);
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 5px 0px;
 }
 p#alert-dialog-description {
   font-weight: bold;
@@ -183,97 +190,6 @@ p#alert-dialog-description {
   width: 100%;
   text-align: center;
   letter-spacing: 2px;
-}
-
-/* Add Book CSS */
-
-.add-book-bg {
-  width: 100%;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-.add-book-bg h1 {
-  font-family: "PT sans";
-}
-.add-book-form {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: "Roboto", sans-serif;
-  width: 100%;
-  color: #1b2735;
-}
-.add-book-field2,
-.add-book-field1 {
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.add-book-form input {
-  height: 50px;
-  width: 500px;
-  outline: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  padding-left: 10px;
-  background-color: rgba(255, 255, 255, 0.87);
-  border: none;
-}
-.add-book-field2 input {
-  height: 50px;
-  width: 250px;
-  outline: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  padding-left: 10px;
-  background-color: rgba(255, 255, 255, 0.87);
-  border: none;
-}
-.add-book-field1 select {
-  width: 500px;
-}
-.add-book-form .add-book-field1 span,
-.add-book-form .add-book-field2 span {
-  height: 50px;
-  width: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  color: #1b2735;
-  border: 1px solid white;
-}
-.add-book-field2 input:focus,
-.add-book-field1 input:focus {
-  border-bottom: 2px solid rgb(52, 248, 52);
-  background-color: white;
-  transition: 0.1s;
-}
-.add-book-field2 input:focus::placeholder,
-.add-book-field1 input:focus::placeholder {
-  letter-spacing: 2px;
-  color: rgb(241, 58, 58);
-  transition: 0.3s;
-}
-.add-book-field1 .tag::after {
-  background: whitesmoke;
-}
-.add-book-field1 .tag::before {
-  content: "❎";
-  background: transparent;
-  border-radius: 10px;
-  box-shadow: none;
-  height: 0px;
-  left: 5px;
-  position: absolute;
-  width: 0px;
-  top: 0px;
 }
 
 .seller-register-form {
