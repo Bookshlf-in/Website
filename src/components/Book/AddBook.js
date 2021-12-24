@@ -52,7 +52,7 @@ const AddBook = (props) => {
 
   // functionality states
   const [checked, setChecked] = useState(false);
-  const [collapse, setcollapse] = useState(true);
+  const [collapse, setcollapse] = useState(false);
   const [sending, setSending] = useState(false);
   const [tagFieldChanges, settagFieldChanges] = useState(false);
   const [openTagMenu, setOpenTagMenu] = useState(false);
@@ -76,6 +76,39 @@ const AddBook = (props) => {
   const [lang, setlang] = useState("");
   const [Photo, setPhoto] = useState([]);
   const [Image, setImage] = useState([]);
+
+  // Price Format
+  const CheckIfPriceFormat = (priceString) => {
+    for (let i = 0; i < priceString.length; i++) {
+      if (
+        ("0" <= priceString[i] && priceString[i] <= "9") ||
+        priceString[i] === ","
+      ) {
+        continue;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  };
+  const FormatPrice = (priceString) => {
+    var FormattedpriceString = "";
+    if (CheckIfPriceFormat(priceString)) {
+      priceString = priceString.replaceAll(",", "");
+      for (let i = priceString.length - 1; i >= 0; i -= 3) {
+        for (let j = i; j >= 0 && j > i - 3; j--) {
+          FormattedpriceString = priceString[j] + FormattedpriceString;
+          if (j === i - 2 && j > 0) {
+            FormattedpriceString = "," + FormattedpriceString;
+          }
+        }
+      }
+      // FormattedpriceString = "₹ " + FormattedpriceString;
+    } else {
+      FormattedpriceString = SP;
+    }
+    return FormattedpriceString;
+  };
 
   // tag searching on input
   const handelTagSearch = (e) => {
@@ -229,7 +262,9 @@ const AddBook = (props) => {
                     }}
                     variant="standard"
                     value={SP}
-                    onChange={(e) => setSP(e.target.value)}
+                    onChange={(e) => {
+                      setSP(FormatPrice(e.target.value));
+                    }}
                   />
                   <TextField
                     select
@@ -436,19 +471,19 @@ const AddBook = (props) => {
             </fieldset>
           </form>
         </Grid>
-        <Grid item xs={12} lg={4} md={12} sm={12} style={{ padding: "10px" }}>
+        <Grid item xs={12} lg={4} md={12} sm={12}>
           <Tooltip
             title="Fill Extra Details about book. However these fields are not Necessary"
             arrow
+            style={{ fontFamily: "Pt sans" }}
           >
             <Button
               variant="contained"
               color="secondary"
               endIcon={collapse ? <CloseIcon /> : <OpenIcon />}
               onClick={() => setcollapse(!collapse)}
-              fullWidth
               style={{
-                margin: "30px 10px",
+                margin: "10px",
                 fontFamily: "PT sans",
                 fontSize: "12px",
                 letterSpacing: "1px",
@@ -460,115 +495,131 @@ const AddBook = (props) => {
 
           <Collapse in={collapse}>
             <form className="add-book-form-rt">
-              <Stack spacing={2}>
-                <Stack
-                  direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
-                  divider={<Divider orientation="vertical" flexItem />}
-                  spacing={2}
-                  justifyContent="space-evenly"
-                >
-                  <TextField
-                    id="add-book-textfield"
-                    label="Book MRP"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PriceIcon />
-                        </InputAdornment>
-                      ),
+              <fieldset>
+                <Stack spacing={2}>
+                  <Stack
+                    direction={{
+                      xs: "column",
+                      sm: "row",
+                      lg: "row",
+                      md: "row",
                     }}
-                    variant="standard"
-                    value={mrp}
-                    onChange={(e) => setMrp(e.target.value)}
-                  />
-                  <TextField
-                    id="add-book-textfield"
-                    label="Book Edition Year"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <EditionIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="standard"
-                    value={Edition}
-                    onChange={(e) => setEdition(e.target.value)}
-                  />
-                </Stack>
+                    divider={<Divider orientation="vertical" flexItem />}
+                    spacing={2}
+                    justifyContent="space-evenly"
+                  >
+                    <TextField
+                      id="add-book-textfield"
+                      label="Book MRP"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PriceIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={mrp}
+                      onChange={(e) => setMrp(e.target.value)}
+                    />
+                    <TextField
+                      id="add-book-textfield"
+                      label="Book Edition Year"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EditionIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={Edition}
+                      onChange={(e) => setEdition(e.target.value)}
+                    />
+                  </Stack>
 
-                <Stack
-                  direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
-                  divider={<Divider orientation="vertical" flexItem />}
-                  spacing={2}
-                  justifyContent="space-evenly"
-                >
-                  <TextField
-                    id="add-book-textfield"
-                    label="Book Author"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AuthorIcon />
-                        </InputAdornment>
-                      ),
+                  <Stack
+                    direction={{
+                      xs: "column",
+                      sm: "row",
+                      lg: "row",
+                      md: "row",
                     }}
-                    variant="standard"
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                  />
-                  <TextField
-                    id="add-book-textfield"
-                    label="Book Weight in Grams"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <WeightIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="standard"
-                    value={Weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                  />
-                </Stack>
+                    divider={<Divider orientation="vertical" flexItem />}
+                    spacing={2}
+                    justifyContent="space-evenly"
+                  >
+                    <TextField
+                      id="add-book-textfield"
+                      label="Book Author"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AuthorIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={author}
+                      onChange={(e) => setAuthor(e.target.value)}
+                    />
+                    <TextField
+                      id="add-book-textfield"
+                      label="Book Weight in Grams"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <WeightIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={Weight}
+                      onChange={(e) => setWeight(e.target.value)}
+                    />
+                  </Stack>
 
-                <Stack
-                  direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
-                  divider={<Divider orientation="vertical" flexItem />}
-                  spacing={2}
-                  justifyContent="space-evenly"
-                >
-                  <TextField
-                    id="add-book-textfield"
-                    label="Book Language"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <LanguageIcon />
-                        </InputAdornment>
-                      ),
+                  <Stack
+                    direction={{
+                      xs: "column",
+                      sm: "row",
+                      lg: "row",
+                      md: "row",
                     }}
-                    variant="standard"
-                    value={lang}
-                    onChange={(e) => setlang(e.target.value)}
-                  />
-                  <TextField
-                    id="add-book-textfield"
-                    label="Book ISBN Number"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <ISBNIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="standard"
-                    value={bookISBN}
-                    onChange={(e) => setbookISBN(e.target.value)}
-                  />
-                </Stack>
-                {/* <TextField
+                    divider={<Divider orientation="vertical" flexItem />}
+                    spacing={2}
+                    justifyContent="space-evenly"
+                  >
+                    <TextField
+                      id="add-book-textfield"
+                      label="Book Language"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LanguageIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={lang}
+                      onChange={(e) => setlang(e.target.value)}
+                    />
+                    <TextField
+                      id="add-book-textfield"
+                      label="Book ISBN Number"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <ISBNIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={bookISBN}
+                      onChange={(e) => setbookISBN(e.target.value)}
+                    />
+                  </Stack>
+                  {/* <TextField
                   id="add-book-textfield"
                   label="Embed Youtube Video Link of Book"
                   InputProps={{
@@ -585,7 +636,8 @@ const AddBook = (props) => {
                   value={link}
                   onChange={(e) => setlink(e.target.value)}
                 /> */}
-              </Stack>
+                </Stack>
+              </fieldset>
             </form>
           </Collapse>
         </Grid>

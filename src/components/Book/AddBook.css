@@ -9,10 +9,12 @@
 .add-book-bg .css-1rcvyyg {
   font-family: "Pt sans" !important;
 }
-.add-book-form-lf {
+.add-book-form-lf,
+.add-book-form-rt {
   padding: 10px;
 }
-.add-book-form-lf fieldset {
+.add-book-form-lf fieldset,
+.add-book-form-rt fieldset {
   border-radius: 10px 10px 0px 0px;
   padding: 12px 15px;
 }
@@ -71,4 +73,11 @@ li.css-1km1ehz,
 }
 .searchTagresult #result-tag {
   padding: 6px;
+}
+
+@media screen and (max-width: 400px) {
+  .add-book-form-lf,
+  .add-book-form-rt {
+    padding: 0px;
+  }
 }
