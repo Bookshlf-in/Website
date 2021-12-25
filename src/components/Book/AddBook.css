@@ -1,3 +1,6 @@
+.add-book-bg {
+  overflow-x: hidden;
+}
 #add-book-textfield,
 .add-book-bg .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
 .add-book-bg .css-1d1r5q-MuiFormHelperText-root,

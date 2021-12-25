@@ -484,7 +484,14 @@ const AllCategories = () => {
                           borderRadius: "5px",
                         }}
                       >
-                        bookshlf.in@gmail.com
+                        <Link
+                          to={{
+                            pathname: "mailto:contact@bookshlf.in",
+                          }}
+                          target="_blank"
+                        >
+                          contact@bookshlf.in
+                        </Link>
                       </strong>
                       <br />
                       <br />

@@ -28,6 +28,7 @@ const SellerPanel = () => {
   const [bookDetails, setbookDetails] = useState(null);
   const [sellerId, setsellerId] = useState(null);
   const [sellerReview, setsellerReview] = useState(null);
+  const [commisionchart, setcommisionchart] = useState(null);
 
   // getting sellerDetails
   useEffect(() => {
@@ -59,7 +60,17 @@ const SellerPanel = () => {
                     })
                     .then((response) => {
                       setsellerReview(response.data);
-                      setloader(false);
+                      axios
+                        .get("/getCommissionChart", {
+                          params: sellerId,
+                        })
+                        .then((response) => {
+                          setcommisionchart(response.data);
+                          setloader(false);
+                        })
+                        .catch((error) => {
+                          setloader(false);
+                        });
                     })
                     .catch((error) => {
                       setloader(false);
@@ -174,8 +185,8 @@ const SellerPanel = () => {
               <Address address={Adr} />
             ) : params.panel === "4" && sellerReview ? (
               <Reviews reviews={sellerReview} />
-            ) : params.panel === "5" && Adr ? (
-              <AddBook address={Adr} />
+            ) : params.panel === "5" && Adr && commisionchart ? (
+              <AddBook address={Adr} commisionChart={commisionchart} />
             ) : (
               <div></div>
             )}

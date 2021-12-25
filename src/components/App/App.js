@@ -33,6 +33,7 @@ import SellerProfile from "../SellerPanel/SellerProfile";
 
 // Protected Route
 import Protected from "../Protected";
+
 function App() {
   return (
     <Router>

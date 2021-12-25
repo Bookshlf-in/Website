@@ -175,7 +175,14 @@ function Footer() {
               </p>
             </div>
             <div className="footer-contact">
-              <Link to="/">bookshlf@outlook.com</Link>
+              <Link
+                to={{
+                  pathname: "mailto:contact@bookshlf.in",
+                }}
+                target="_blank"
+              >
+                contact@bookshlf.in
+              </Link>
               <br />
               <Link to="/">+91 97926 66122</Link>
             </div>
