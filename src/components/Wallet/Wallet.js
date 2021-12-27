@@ -6,6 +6,7 @@ import WithdrawGrid from "./WithdrawGrid";
 import axios from "../../axios";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
+import { useHistory } from "react-router-dom";
 
 // Wallet Components
 import Grid from "@mui/material/Grid";
@@ -15,6 +16,7 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Skeleton from "@mui/material/Skeleton";
+import Alert from "@material-ui/lab/Alert";
 
 // icons
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
@@ -30,50 +32,24 @@ const iconStyle = {
   fontSize: "0.75rem",
 };
 const Wallet = () => {
+  const history = useHistory();
   const [user, setUser] = useContext(UserContext);
 
   const [loaded, setLoaded] = useState(false);
   const [walletBalance, setwalletBalance] = useState(0);
   const [withdrawRequest, setwithdrawRequest] = useState([]);
   const [transactionList, settransactionList] = useState([]);
+  const [requesting, setrequesting] = useState(false);
+  const [alert, setAlert] = useState({
+    show: false,
+    severity: "success",
+    msg: "",
+  });
 
-  const [widthdrawAmount, setwithdrawAmount] = useState("");
+  const [widthdrawAmount, setwithdrawAmount] = useState(10);
+  const [accountDetails, setaccountDetails] = useState("");
   const [debitAmount, setdebitAmount] = useState(0);
   const [creditAmount, setcreditAmount] = useState(0);
-
-  // Checking if price string is currect
-  const CheckIfPriceFormat = (priceString) => {
-    for (let i = 0; i < priceString.length; i++) {
-      if (
-        ("0" <= priceString[i] && priceString[i] <= "9") ||
-        priceString[i] === ","
-      ) {
-        continue;
-      } else {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  // Price Formatting
-  const FormatPrice = (priceString) => {
-    var FormattedpriceString = "";
-    if (CheckIfPriceFormat(priceString)) {
-      priceString = priceString.replaceAll(",", "");
-      for (let i = priceString.length - 1; i >= 0; i -= 3) {
-        for (let j = i; j >= 0 && j > i - 3; j--) {
-          FormattedpriceString = priceString[j] + FormattedpriceString;
-          if (j === i - 2 && j > 0) {
-            FormattedpriceString = "," + FormattedpriceString;
-          }
-        }
-      }
-    } else {
-      FormattedpriceString = widthdrawAmount;
-    }
-    return FormattedpriceString;
-  };
 
   // handel Debit Amount
   const handelDebitAmount = (debitList) => {
@@ -99,6 +75,46 @@ const Wallet = () => {
         setcreditAmount(amount);
       }
     }
+  };
+
+  // handeling Withdraw Request
+  const handelWithdrawRequest = () => {
+    setrequesting(true);
+    const makeRequest = async () => {
+      axios
+        .post("/withdrawFromWallet", {
+          amount: Number(widthdrawAmount),
+          bankAccountDetails: accountDetails,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          setrequesting(false);
+          setAlert({
+            show: true,
+            msg: response.data.msg,
+            severity: "success",
+          });
+          history.go(0);
+          setTimeout(() => {
+            setAlert({
+              show: false,
+              msg: "",
+              severity: "success",
+            });
+            setwithdrawAmount(10);
+            setaccountDetails("");
+          }, 5000);
+        })
+        .catch((error) => {
+          // console.log(error.response.data);
+          setAlert({
+            show: true,
+            msg: error.response.data.msg,
+            severity: "error",
+          });
+        });
+    };
+    makeRequest();
   };
 
   useEffect(() => {
@@ -137,10 +153,7 @@ const Wallet = () => {
     <>
       <Helmet>
         <title>Wallet | Bookshlf</title>
-        <meta
-          name="description"
-          content="To contact us, fill out and submit the form. We will try our best to answer your questions as soon as possible."
-        />
+        <meta name="description" content="Seller Wallet Bookshlf" />
       </Helmet>
       <Grid container spacing={2} style={{ padding: "10px" }}>
         <Grid item xs={12} lg={6} md={12} sm={12}>
@@ -231,7 +244,7 @@ const Wallet = () => {
                 <Stack direction="column" spacing={2} style={stackStyle}>
                   <TextField
                     label="Amount"
-                    helperText="Enter Amount To be Withdrawn"
+                    helperText="Enter Amount To be Withdrawn. Min Amount is 10."
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -242,7 +255,7 @@ const Wallet = () => {
                     variant="standard"
                     value={widthdrawAmount}
                     onChange={(e) => {
-                      setwithdrawAmount(FormatPrice(e.target.value));
+                      setwithdrawAmount(e.target.value);
                     }}
                   />
                   <TextField
@@ -256,15 +269,15 @@ const Wallet = () => {
                       ),
                     }}
                     variant="standard"
-                    value={widthdrawAmount}
+                    value={accountDetails}
                     onChange={(e) => {
-                      setwithdrawAmount(FormatPrice(e.target.value));
+                      setaccountDetails(e.target.value);
                     }}
                   />
                   <LoadingButton
-                    onClick={() => {}}
+                    onClick={handelWithdrawRequest}
                     endIcon={<SendIcon />}
-                    loading={false}
+                    loading={requesting}
                     loadingPosition="end"
                     variant="contained"
                     style={{
@@ -275,6 +288,9 @@ const Wallet = () => {
                   >
                     Withdraw
                   </LoadingButton>
+                  {alert.show ? (
+                    <Alert severity={alert.severity}>{alert.msg}</Alert>
+                  ) : null}
                 </Stack>
               </Paper>
             )}

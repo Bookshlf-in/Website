@@ -33,6 +33,7 @@ const StyledBadge = withStyles((theme) => ({
     padding: "0 4px",
     fontWeight: "bolder",
     fontSize: "11px",
+    fontFamily: "PT sans",
   },
 }))(Badge);
 

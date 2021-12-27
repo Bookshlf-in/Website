@@ -65,3 +65,6 @@ li.css-uob957-MuiListSubheader-root,
   font-size: 0.75rem;
   font-family: "PT sans";
 }
+.MuiAlert-message {
+  font-family: "PT sans";
+}

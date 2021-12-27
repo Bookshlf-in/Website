@@ -328,7 +328,7 @@ const AddBook = (props) => {
                   variant="standard"
                   multiline
                   maxRows={3}
-                  helperText="About the book such as Year of purchase, quality etc"
+                  helperText="Your Experience About the Book"
                   value={bookDesc}
                   onChange={(e) => setbookDesc(e.target.value)}
                 />
