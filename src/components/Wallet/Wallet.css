@@ -1,0 +1,67 @@
+label.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
+p.css-1d1r5q-MuiFormHelperText-root,
+input.css-1x51dt5-MuiInputBase-input-MuiInput-input,
+li.css-uob957-MuiListSubheader-root,
+.css-konndc-MuiListItemText-root {
+  font-family: "pt sans";
+}
+
+.rupee-custom-style {
+  padding: 6px 15px;
+  border-radius: 10px;
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: rgb(255, 253, 253);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-stack-item {
+  font-family: "PT sans";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.amount-icon {
+  padding: 6px;
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  font-family: "PT sans";
+}
+.wallet-stack-item .debit-amount,
+.wallet-stack-item .credit-amount {
+  padding: 6px;
+  font-size: 12px;
+  font-family: "Staatliches";
+}
+.wallet-stack-item .debit-amount {
+  color: rgb(231, 39, 39);
+}
+.wallet-stack-item .credit-amount {
+  color: forestgreen;
+}
+
+.MuiAccordionSummary-content.MuiAccordionSummary-contentGutters.css-o4b71y-MuiAccordionSummary-content {
+  margin: 0px;
+}
+.MuiList-root.MuiList-padding.css-lijr0t-MuiList-root {
+  padding: 0px;
+}
+.MuiListItem-root.MuiListItem-gutters.MuiListItem-padding.css-1p823my-MuiListItem-root {
+  padding: 0px;
+}
+.MuiListItemText-root.MuiListItemText-multiline.css-konndc-MuiListItemText-root {
+  margin: 0px;
+}
+
+.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary.css-10hburv-MuiTypography-root {
+  font-size: 0.75rem;
+  font-family: "PT sans";
+}
+.MuiTypography-root.MuiTypography-body2.MuiListItemText-secondary.css-83ijpv-MuiTypography-root {
+  font-family: "PT sans";
+  font-size: 0.65rem;
+}
+.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
+  font-size: 0.75rem;
+  font-family: "PT sans";
+}

@@ -248,7 +248,7 @@ function Footer() {
             <div className="footer-link-items">
               <h4>Explore</h4>
               <Link to="/About">About Us</Link>
-              <Link to="/">Sitemap</Link>
+              <Link to="/Sitemap">Sitemap</Link>
               <Link to="/Login">Sign in</Link>
               <Link to="/Signup">Join Us</Link>
             </div>

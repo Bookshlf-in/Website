@@ -37,7 +37,6 @@ import OpenIcon from "@material-ui/icons/ArrowDropDownRounded";
 import BookIcon from "@material-ui/icons/MenuBookRounded";
 import BookDescIcon from "@material-ui/icons/DescriptionRounded";
 import BookQtyIcon from "@material-ui/icons/InboxRounded";
-import PriceIcon from "@material-ui/icons/MonetizationOn";
 import AddressIcon from "@material-ui/icons/ContactsRounded";
 import TagIcon from "@material-ui/icons/LocalOfferRounded";
 import CameraIcon from "@material-ui/icons/AddAPhotoRounded";
