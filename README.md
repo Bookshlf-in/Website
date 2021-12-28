@@ -26,7 +26,6 @@ Made with [contributors-img](https://contrib.rocks).
 
 > Don't forget to ⭐ this repository !!
 
-
 ## Requirements
 
 You will need `node` and `npm` installed globally on your machine.
@@ -111,25 +110,7 @@ git merge dev
 **9.** On Github, create a pull request from your feature branch. Always make the PR against the dev branch! Make sure to summarize your changes you made, and if there's anything specific you want reviewed or tested, note that in the PR.
 
 **10.** When approved, your branch will be merged into master and you're done! Thanks for contributing! :)
+
 # Screenshots
 
-<img src = "public/images/Readme/1.png" width="800"/>
-<img src = "public/images/Readme/2.png" width="800"/>
-<img src = "public/images/Readme/3.png" width="800"/>
-<img src = "public/images/Readme/about.png" width="800"/>
-<img src = "public/images/Readme/6.png" width="800"/>
-<img src = "public/images/Readme/5.png" width="800"/>
-<img src = "public/images/Readme/website_reviews.png" width="800"/>
-<img src = "public/images/Readme/user.png" width="800"/>
-<img src = "public/images/Readme/track.png" width="800"/>
-<img src = "public/images/Readme/seller_profile.png" width="800"/>
-<img src = "public/images/Readme/5.png" width="800"/>
-<img src = "public/images/Readme/previous_orders.png" width="800"/>
-<img src = "public/images/Readme/contact us.png" width="800"/>
-<img src = "public/images/Readme/categories.png" width="800"/>
-<img src = "public/images/Readme/add_book.png" width="800"/>
-<img src = "public/images/Readme/address.png" width="800"/>
-<img src = "public/images/Readme/ative_orders.png" width="800"/>
-<img src = "public/images/Readme/book_approved.png" width="800"/>
-<img src = "public/images/Readme/7.png">
-<img src = "public/images/Readme/sidenav.png" />
+## Will be Uploaded Soon

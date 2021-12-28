@@ -1,10 +1,10 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import "./AddBook.css";
 import axios from "../../axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AddFormContext } from "../../Context/formContext";
-import { storage } from "../../firebase";
-import { nanoid } from "nanoid";
+import { Helmet } from "react-helmet";
+import SellerCommisionChart from "./CommisionChartGrid";
 
 // form components
 import Grid from "@mui/material/Grid";
@@ -24,8 +24,12 @@ import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CancelIcon from "@material-ui/icons/CancelTwoTone";
-import Fab from "@mui/material/Fab";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 // Icons
 import CloseIcon from "@material-ui/icons/ArrowDropUpRounded";
@@ -33,7 +37,6 @@ import OpenIcon from "@material-ui/icons/ArrowDropDownRounded";
 import BookIcon from "@material-ui/icons/MenuBookRounded";
 import BookDescIcon from "@material-ui/icons/DescriptionRounded";
 import BookQtyIcon from "@material-ui/icons/InboxRounded";
-import PriceIcon from "@material-ui/icons/MonetizationOn";
 import AddressIcon from "@material-ui/icons/ContactsRounded";
 import TagIcon from "@material-ui/icons/LocalOfferRounded";
 import CameraIcon from "@material-ui/icons/AddAPhotoRounded";
@@ -44,7 +47,7 @@ import AuthorIcon from "@material-ui/icons/Person";
 import WeightIcon from "@material-ui/icons/FitnessCenter";
 import LanguageIcon from "@material-ui/icons/Translate";
 import ISBNIcon from "@material-ui/icons/Language";
-import YouTubeIcon from "@material-ui/icons/YouTube";
+import HelpIcon from "@material-ui/icons/Help";
 
 const AddBook = (props) => {
   const history = useHistory();
@@ -55,29 +58,33 @@ const AddBook = (props) => {
   const [collapse, setcollapse] = useState(false);
   const [sending, setSending] = useState(false);
   const [tagFieldChanges, settagFieldChanges] = useState(false);
+  const [titleFieldChanges, settitleFieldChanges] = useState(false);
   const [openTagMenu, setOpenTagMenu] = useState(false);
+  const [openTitleMenu, setOpenTitleMenu] = useState(false);
+  const [openpriceChart, setopenpriceChart] = useState(false);
 
   // Add book form states
   const [bookName, setbookName] = useState("");
   const [bookISBN, setbookISBN] = useState("");
   const [SP, setSP] = useState("");
+  const [earn, setearn] = useState("");
   const [mrp, setMrp] = useState("");
   const [bookDesc, setbookDesc] = useState("");
   const [Weight, setWeight] = useState("");
   const [Edition, setEdition] = useState("");
   const [Qnty, setQnty] = useState(1);
   const [author, setAuthor] = useState("");
-  const [pickupId, setPickupId] = useState("");
   const [Adr, setAdr] = useState("");
   const [tags, setTags] = useState([]);
   const [resulttags, setresultTags] = useState([]);
+  const [resulttitles, setresultTitles] = useState([]);
   const [tag, setTag] = useState("");
   const [link, setlink] = useState("");
   const [lang, setlang] = useState("");
   const [Photo, setPhoto] = useState([]);
   const [Image, setImage] = useState([]);
 
-  // Price Format
+  // Checking if price string is currect
   const CheckIfPriceFormat = (priceString) => {
     for (let i = 0; i < priceString.length; i++) {
       if (
@@ -91,6 +98,8 @@ const AddBook = (props) => {
     }
     return true;
   };
+
+  // Price Formatting
   const FormatPrice = (priceString) => {
     var FormattedpriceString = "";
     if (CheckIfPriceFormat(priceString)) {
@@ -103,11 +112,46 @@ const AddBook = (props) => {
           }
         }
       }
-      // FormattedpriceString = "₹ " + FormattedpriceString;
     } else {
       FormattedpriceString = SP;
     }
     return FormattedpriceString;
+  };
+
+  // calculating seller Earnings
+  const handelCalculateEarnings = (priceString) => {
+    if (CheckIfPriceFormat(priceString)) {
+      priceString = priceString.replaceAll(",", "");
+      const fetchdata = async () => {
+        axios
+          .get(`/getSellerEarning?price=${Number(priceString)}`)
+          .then((response) => {
+            setearn(response.data.sellerEarning);
+          })
+          .catch((error) => {
+            setearn("");
+            console.log(error.response.data);
+          });
+      };
+      fetchdata();
+    }
+  };
+
+  // book title search on input
+  const handelBookTitleSearch = (e) => {
+    settitleFieldChanges(true);
+    setbookName(e.target.value);
+    setOpenTitleMenu(true);
+    const fetchdata = async () => {
+      axios
+        .get(`/searchTitle?q=${e.target.value}`)
+        .then((response) => {
+          setresultTitles(response.data);
+          settitleFieldChanges(false);
+        })
+        .catch((error) => {});
+    };
+    fetchdata();
   };
 
   // tag searching on input
@@ -125,6 +169,12 @@ const AddBook = (props) => {
         .catch((error) => {});
     };
     fetchdata();
+  };
+
+  // Tag adding to Book Tags
+  const handelTitleAdd = (titlename) => {
+    setOpenTitleMenu(false);
+    setbookName(titlename);
   };
 
   // Tag adding to Book Tags
@@ -193,26 +243,79 @@ const AddBook = (props) => {
 
   return (
     <div className="add-book-bg">
+      <Helmet>
+        <title>Seller Profile | Bookshlf</title>
+        <meta name="description" content="Bookshlf Seller Profile." />
+      </Helmet>
       <Grid container spacing={2} style={{ padding: "10px" }}>
         <Grid item xs={12} lg={8} md={12} sm={12}>
           <form className="add-book-form-lf">
             <fieldset>
               <legend>Add New Book</legend>
               <Stack spacing={2}>
-                <TextField
-                  id="add-book-textfield"
-                  label="Book Title"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <BookIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="standard"
-                  value={bookName}
-                  onChange={(e) => setbookName(e.target.value)}
-                />
+                <div style={{ position: "relative" }}>
+                  <TextField
+                    id="add-book-textfield"
+                    label="Book Title"
+                    helperText="Name of the Book"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <BookIcon />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          {titleFieldChanges ? (
+                            <CircularProgress
+                              style={{
+                                color: "rgba(0,0,0,0.6)",
+                                height: "15px",
+                                width: "15px",
+                                marginRight: "15px",
+                              }}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                    value={bookName}
+                    fullWidth
+                    onChange={(e) => handelBookTitleSearch(e)}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handelTitleAdd(e.target.value);
+                      }
+                    }}
+                  />
+
+                  <ClickAwayListener
+                    onClickAway={() => setOpenTitleMenu(false)}
+                  >
+                    {openTitleMenu ? (
+                      <div className="searchTagresult">
+                        {resulttitles.map((Title, idx) => (
+                          <MenuItem
+                            id="result-tag"
+                            title={Title.title}
+                            key={idx}
+                            value={Title.title}
+                            onClick={() => handelTitleAdd(Title.title)}
+                          >
+                            {Title.title}
+                          </MenuItem>
+                        ))}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </ClickAwayListener>
+                </div>
+
                 <TextField
                   id="add-book-textfield"
                   label="Book Details"
@@ -226,7 +329,7 @@ const AddBook = (props) => {
                   variant="standard"
                   multiline
                   maxRows={3}
-                  helperText="About the book such as Year of purchase, quality etc"
+                  helperText="Your Experience About the Book"
                   value={bookDesc}
                   onChange={(e) => setbookDesc(e.target.value)}
                 />
@@ -239,6 +342,7 @@ const AddBook = (props) => {
                   <TextField
                     id="add-book-textfield"
                     label="Book Quantity"
+                    helperText="Number Of Books You Have"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -253,10 +357,11 @@ const AddBook = (props) => {
                   <TextField
                     id="add-book-textfield"
                     label="Book Selling Price"
+                    helperText="Press Enter To Calculate Your Earnings"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <PriceIcon />
+                          <i className="fas fa-rupee-sign" />
                         </InputAdornment>
                       ),
                     }}
@@ -264,39 +369,106 @@ const AddBook = (props) => {
                     value={SP}
                     onChange={(e) => {
                       setSP(FormatPrice(e.target.value));
+                      handelCalculateEarnings(e.target.value);
                     }}
                   />
                   <TextField
-                    select
-                    label="Pickup Address"
-                    value={Adr}
-                    onChange={(e) => {
-                      setAdr(e.target.value);
-                      if (e.target.value === "NEWADR") {
-                        history.push("/SellerPanel/3");
-                      }
-                    }}
-                    helperText="Please select your address for Book Pickup"
+                    id="add-book-textfield"
+                    label="Your Earnings"
+                    helperText="Total Earnings You Will Recieve. To Know More Click ↑"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <AddressIcon />
+                          <i className="fas fa-rupee-sign" />
                         </InputAdornment>
                       ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <HelpIcon
+                            style={{
+                              cursor: "pointer",
+                              color: "yellowgreen",
+                            }}
+                            onClick={() => {
+                              setopenpriceChart(true);
+                            }}
+                          />
+                        </InputAdornment>
+                      ),
+                      readOnly: true,
                     }}
-                  >
-                    {props.address.map((option) => (
-                      <MenuItem key={option._id} value={option._id}>
-                        {option.address + ", " + option.zipCode}
-                      </MenuItem>
-                    ))}
-                    {
-                      <MenuItem key={"NEWADR"} value={"NEWADR"}>
-                        {"Add New Address"}
-                      </MenuItem>
-                    }
-                  </TextField>
+                    variant="standard"
+                    value={earn}
+                  />
+                  {openpriceChart ? (
+                    <Dialog
+                      open={openpriceChart}
+                      onClose={() => setopenpriceChart(false)}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle
+                        id="alert-dialog-title"
+                        style={{ fontFamily: "pt sans", fontSize: "16px" }}
+                      >
+                        {"Detailed Chart for Seller Earnings & Commission"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText
+                          id="alert-dialog-description"
+                          style={{
+                            height: 400,
+                            width: "100%",
+                          }}
+                        >
+                          <SellerCommisionChart grid={props.commisionChart} />
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          onClick={() => setopenpriceChart(false)}
+                          variant="contained"
+                          color="primary"
+                          style={{ fontFamily: "pt sans", fontSize: "12px" }}
+                        >
+                          close
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  ) : null}
                 </Stack>
+                <TextField
+                  select
+                  label="Pickup Address"
+                  value={Adr}
+                  onChange={(e) => {
+                    setAdr(e.target.value);
+                    if (e.target.value === "NEWADR") {
+                      history.push("/SellerPanel/3");
+                    }
+                  }}
+                  helperText="Please select your address for Book Pickup"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AddressIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                >
+                  {props.address.map((option) => (
+                    <MenuItem key={option._id} value={option._id}>
+                      {option.address.length > 33
+                        ? option.address.slice(0, 29) + "..."
+                        : option.address}
+                    </MenuItem>
+                  ))}
+                  {
+                    <MenuItem key={"NEWADR"} value={"NEWADR"}>
+                      {"Add New Address"}
+                    </MenuItem>
+                  }
+                </TextField>
                 <Stack
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
                   spacing={2}
@@ -514,7 +686,7 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <PriceIcon />
+                            <i className="fas fa-rupee-sign" />
                           </InputAdornment>
                         ),
                       }}

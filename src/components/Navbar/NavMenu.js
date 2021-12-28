@@ -13,6 +13,7 @@ const MenuItemStyle = {
   fontWeight: "bold",
   fontSize: "12px",
 };
+
 const NavbarMenu = () => {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -159,6 +160,24 @@ const NavbarMenu = () => {
         ) : (
           <></>
         )}
+        {user ? (
+          user.roles.includes("seller") ? (
+            <MenuItem
+              style={MenuItemStyle}
+              onClick={() => {
+                history.push("/Wallet");
+              }}
+            >
+              <i className="fas fa-wallet" />
+              &nbsp;Wallet
+            </MenuItem>
+          ) : (
+            <></>
+          )
+        ) : (
+          <></>
+        )}
+
         <MenuItem
           style={MenuItemStyle}
           onClick={() => {
@@ -177,6 +196,7 @@ const NavbarMenu = () => {
           <i className="fas fa-heart" />
           &nbsp;Wishlist
         </MenuItem>
+
         <MenuItem
           style={MenuItemStyle}
           onClick={() => {

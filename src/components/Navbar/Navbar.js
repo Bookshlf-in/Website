@@ -1,4 +1,4 @@
-import { React, useContext, useEffect } from "react";
+import { React, useState, useContext, useEffect } from "react";
 
 // importing Navbar Components
 import "./Navbar.css";
@@ -17,6 +17,7 @@ import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 
 import axios from "../../axios.js";
 
@@ -27,9 +28,11 @@ const openNav = () => {
 const StyledBadge = withStyles((theme) => ({
   badge: {
     right: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
+    top: 3,
+    border: `1px solid ${theme.palette.background.paper}`,
     padding: "0 4px",
+    fontWeight: "bolder",
+    fontSize: "11px",
     fontFamily: "PT sans",
   },
 }))(Badge);
@@ -37,6 +40,7 @@ const StyledBadge = withStyles((theme) => ({
 const Navbar = () => {
   const history = useHistory();
   const [user, setUser] = useContext(UserContext);
+  const [walletbalance, setwalletbalance] = useState(0);
 
   useEffect(() => {
     if (user) {
@@ -86,6 +90,13 @@ const Navbar = () => {
           });
         })
         .catch((error) => {});
+      axios
+        .get("/getCurrentBalance")
+        .then((response) => {
+          // console.log(response.data);
+          setwalletbalance(response.data.walletBalance);
+        })
+        .catch((error) => {});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -116,6 +127,25 @@ const Navbar = () => {
                 <NavbarSearch />
               </div>
             </li>
+            {user ? (
+              user.roles.includes("seller") ? (
+                <li>
+                  <div className="navbar-items-chip">
+                    <Link to="/Wallet" className="cart-icon">
+                      <IconButton aria-label="wallet">
+                        <StyledBadge
+                          badgeContent={walletbalance}
+                          color="secondary"
+                          max={2000}
+                        >
+                          <AccountBalanceWalletIcon />
+                        </StyledBadge>
+                      </IconButton>
+                    </Link>
+                  </div>
+                </li>
+              ) : null
+            ) : null}
             <li>
               <div className="navbar-items-chip">
                 <Link to="/Cart" className="cart-icon">

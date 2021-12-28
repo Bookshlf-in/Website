@@ -30,9 +30,11 @@ import Blog from "../Blog/Blog";
 import AdminBook from "../AdminPanel/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
+import Wallet from "../Wallet/Wallet";
 
 // Protected Route
 import Protected from "../Protected";
+
 function App() {
   return (
     <Router>
@@ -108,7 +110,10 @@ function App() {
           <Route path="/Sitemap">
             <Sitemap />
           </Route>
-
+          <Route path="/Wallet">
+            <Navbar />
+            <Wallet />
+          </Route>
           <Route path="/">
             <Helmet>
               <title>Home | Bookshlf</title>

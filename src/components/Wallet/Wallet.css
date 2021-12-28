@@ -1,0 +1,78 @@
+.rupee-custom-style {
+  padding: 6px 15px;
+  border-radius: 10px;
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: rgb(255, 253, 253);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-stack-item {
+  font-family: "PT sans";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.amount-icon {
+  padding: 6px;
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  font-family: "PT sans";
+  margin: 10px 0px;
+}
+.wallet-stack-item .debit-amount,
+.wallet-stack-item .credit-amount {
+  padding: 6px;
+  font-size: 14px;
+  font-family: "PT sans";
+}
+.wallet-stack-item .debit-amount {
+  color: rgb(231, 39, 39);
+}
+.wallet-stack-item .credit-amount {
+  color: forestgreen;
+}
+
+.Wallet-Accordian .MuiAccordionSummary-content {
+  margin: 0px !important;
+}
+
+.Wallet-Accordian .MuiAccordionDetails-root {
+  padding: 8px !important;
+}
+
+.Wallet-Accordian .MuiList-root {
+  padding: 0px !important;
+}
+
+.Wallet-Accordian .MuiListItem-gutters {
+  padding: 4px 6px !important;
+}
+
+.Wallet-Accordian .MuiListItemAvatar-root {
+  min-width: 30px !important;
+}
+.Wallet-Accordian .MuiListItemText-root {
+  margin: 0px !important;
+  padding: 0px 6px;
+}
+
+.Wallet-Accordian .MuiTypography-root {
+  font-size: 0.75rem !important;
+  font-family: "PT sans" !important;
+}
+
+.Wallet-Accordian .MuiListItemText-secondary {
+  font-family: "PT sans" !important;
+  font-size: 0.65rem !important;
+}
+
+.Wallet-Accordian .MuiAlert-message {
+  font-family: "PT sans";
+}
+
+.Wallet-Accordian .MuiChip-label {
+  font-family: "PT sans" !important;
+  font-size: 10px !important;
+  letter-spacing: 0.5px !important;
+}
