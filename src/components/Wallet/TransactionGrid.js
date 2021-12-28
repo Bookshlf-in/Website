@@ -1,4 +1,6 @@
 import { React, useState } from "react";
+
+// components
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -10,6 +12,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
+
+// icons
 import CreditIcon from "@material-ui/icons/CallMadeRounded";
 import DebitIcon from "@material-ui/icons/CallReceivedRounded";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -42,11 +46,12 @@ const transactionIDStyle = {
   borderRadius: "10px",
   cursor: "pointer",
 };
+
 const TransactionGrid = (props) => {
   return (
     <>
       {props.data.map((transaction, idx) => (
-        <Accordion key={idx}>
+        <Accordion key={idx} className="Wallet-Accordian">
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={iconStyle} />}
             aria-controls="panel1a-content"

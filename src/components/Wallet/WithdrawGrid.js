@@ -1,4 +1,8 @@
 import { React, useState } from "react";
+import axios from "../../axios";
+import { useHistory } from "react-router-dom";
+
+// components
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -10,11 +14,15 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
+import Chip from "@mui/material/Chip";
 
+// icons
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CancelIcon from "@material-ui/icons/CancelRounded";
 import CompleteIcon from "@material-ui/icons/CheckCircleRounded";
 import PendingIcon from "@material-ui/icons/AccessTimeRounded";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { CircularProgress } from "@mui/material";
 
 const iconStyle = {
   fontSize: "1rem",
@@ -48,12 +56,57 @@ const transactionIDStyle = {
   cursor: "pointer",
 };
 
+const CircularProgressStyle = {
+  color: "white",
+  height: "15px",
+  width: "15px",
+};
+
 const WithdrawGrid = (props) => {
-  console.log(props.data);
+  const history = useHistory();
+  const [requesting, setrequesting] = useState("");
+  const [msg, setmsg] = useState({
+    color: "error",
+    data: "Cancel",
+    icon: "Delete",
+  });
+
+  const handleCancelWithdrawRequest = (ID) => {
+    setrequesting(ID);
+    setmsg({
+      color: "error",
+      data: "Cancel",
+      icon: "progress",
+    });
+
+    const makeRequest = async () => {
+      axios
+        .post("/cancelWithdrawRequest", {
+          requestId: ID,
+        })
+        .then((response) => {
+          console.log(response.data);
+          setmsg({
+            color: "success",
+            data: response.data.msg,
+            icon: "Complete",
+          });
+          setTimeout(() => {
+            history.go(0);
+          }, 5000);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          setrequesting("");
+        });
+    };
+    makeRequest();
+  };
+
   return (
     <>
       {props.data.map((request, idx) => (
-        <Accordion key={idx}>
+        <Accordion key={idx} className="Wallet-Accordian">
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={iconStyle} />}
             aria-controls="panel1a-content"
@@ -94,6 +147,32 @@ const WithdrawGrid = (props) => {
                     request.createdAt.substr(11, 8)
                   }
                 />
+                {request.status === "INITIATED" ? (
+                  <ListItemText
+                    primary={
+                      <Chip
+                        label={requesting === request._id ? msg.data : "Cancel"}
+                        size="small"
+                        onClick={() => handleCancelWithdrawRequest(request._id)}
+                        onDelete={() =>
+                          handleCancelWithdrawRequest(request._id)
+                        }
+                        deleteIcon={
+                          requesting === request._id ? (
+                            msg.icon === "progress" ? (
+                              <CircularProgress style={CircularProgressStyle} />
+                            ) : (
+                              <CompleteIcon />
+                            )
+                          ) : (
+                            <DeleteIcon />
+                          )
+                        }
+                        color={requesting === request._id ? msg.color : "error"}
+                      />
+                    }
+                  />
+                ) : null}
               </ListItem>
             </List>
           </AccordionSummary>

@@ -129,6 +129,7 @@ const AddBook = (props) => {
             setearn(response.data.sellerEarning);
           })
           .catch((error) => {
+            setearn("");
             console.log(error.response.data);
           });
       };
@@ -368,12 +369,7 @@ const AddBook = (props) => {
                     value={SP}
                     onChange={(e) => {
                       setSP(FormatPrice(e.target.value));
-                    }}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handelCalculateEarnings(e.target.value);
-                      }
+                      handelCalculateEarnings(e.target.value);
                     }}
                   />
                   <TextField
@@ -462,7 +458,9 @@ const AddBook = (props) => {
                 >
                   {props.address.map((option) => (
                     <MenuItem key={option._id} value={option._id}>
-                      {option.address + ", " + option.zipCode}
+                      {option.address.length > 33
+                        ? option.address.slice(0, 29) + "..."
+                        : option.address}
                     </MenuItem>
                   ))}
                   {

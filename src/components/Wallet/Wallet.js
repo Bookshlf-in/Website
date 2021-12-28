@@ -7,6 +7,7 @@ import axios from "../../axios";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 
 // Wallet Components
 import Grid from "@mui/material/Grid";
@@ -31,7 +32,24 @@ const stackStyle = {
 const iconStyle = {
   fontSize: "0.75rem",
 };
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans",
+    "& label": {
+      fontFamily: "PT Sans",
+    },
+    "& input": {
+      fontFamily: "PT Sans",
+    },
+    "& p": {
+      fontFamily: "PT sans",
+    },
+  },
+});
+
 const Wallet = () => {
+  const classes = useStyles();
   const history = useHistory();
   const [user, setUser] = useContext(UserContext);
 
@@ -106,10 +124,11 @@ const Wallet = () => {
           }, 5000);
         })
         .catch((error) => {
-          // console.log(error.response.data);
+          setrequesting(false);
+          console.log(error.response.data.errors[0].error);
           setAlert({
             show: true,
-            msg: error.response.data.msg,
+            msg: error.response.data.errors[0].error,
             severity: "error",
           });
         });
@@ -155,198 +174,212 @@ const Wallet = () => {
         <title>Wallet | Bookshlf</title>
         <meta name="description" content="Seller Wallet Bookshlf" />
       </Helmet>
-      <Grid container spacing={2} style={{ padding: "10px" }}>
-        <Grid item xs={12} lg={6} md={12} sm={12}>
-          <Stack direction="column" spacing={2}>
-            {!loaded ? (
-              <>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={50}
-                  sx={{ bgcolor: "grey.500" }}
-                ></Skeleton>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={50}
-                  sx={{ bgcolor: "grey.500" }}
-                ></Skeleton>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={50}
-                  sx={{ bgcolor: "grey.500" }}
-                ></Skeleton>
-              </>
-            ) : (
-              <Paper elevation={2}>
-                <Stack direction="column" spacing={3} style={stackStyle}>
-                  <Stack direction="row" justifyContent="space-between">
-                    <div className="wallet-stack-item">
-                      <h3>Balance</h3>
-                    </div>
-                    <div className="wallet-stack-item">
-                      <h3 className="rupee-custom-style">
-                        <i className="fas fa-rupee-sign" />
-                      </h3>
-                    </div>
-                  </Stack>
-                  <Stack direction="row" spacing={3}>
-                    <div className="wallet-stack-item">
-                      <h2>
-                        <i className="fas fa-rupee-sign" />
-                      </h2>
-                    </div>
-                    <div className="wallet-stack-item">
-                      <h4 className="amount-icon">{walletBalance}</h4>
-                    </div>
-                  </Stack>
-                  <Stack direction="row" spacing={5} justifyContent="center">
-                    <div className="wallet-stack-item">
-                      <span className="amount-icon">
-                        <DebitIcon style={iconStyle} />
-                      </span>
-                      <span className="debit-amount">
-                        - <i className="fas fa-rupee-sign" /> {debitAmount}
-                      </span>
-                    </div>
-                    <div className="wallet-stack-item">
-                      <span className="amount-icon">
-                        <CreditIcon style={iconStyle} />
-                      </span>
-                      <span className="credit-amount">
-                        + <i className="fas fa-rupee-sign" /> {creditAmount}
-                      </span>
-                    </div>
-                  </Stack>
-                </Stack>
-              </Paper>
-            )}
-            {!loaded ? (
-              <>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={100}
-                  sx={{ bgcolor: "grey.500" }}
-                ></Skeleton>
-
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={100}
-                  sx={{ bgcolor: "grey.500" }}
-                ></Skeleton>
-              </>
-            ) : (
-              <Paper elevation={2}>
-                <Stack direction="column" spacing={2} style={stackStyle}>
-                  <TextField
-                    label="Amount"
-                    helperText="Enter Amount To be Withdrawn. Min Amount is 10."
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
+      {user ? (
+        <Grid container spacing={2} style={{ padding: "10px" }}>
+          <Grid item xs={12} lg={6} md={12} sm={12}>
+            <Stack direction="column" spacing={2}>
+              {!loaded ? (
+                <>
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={50}
+                    sx={{ bgcolor: "grey.500" }}
+                  ></Skeleton>
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={50}
+                    sx={{ bgcolor: "grey.500" }}
+                  ></Skeleton>
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={50}
+                    sx={{ bgcolor: "grey.500" }}
+                  ></Skeleton>
+                </>
+              ) : (
+                <Paper elevation={2}>
+                  <Stack direction="column" spacing={1} style={stackStyle}>
+                    <Stack direction="row" justifyContent="space-between">
+                      <div className="wallet-stack-item">
+                        <h3>Balance</h3>
+                      </div>
+                      <div className="wallet-stack-item">
+                        <h3 className="rupee-custom-style">
                           <i className="fas fa-rupee-sign" />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="standard"
-                    value={widthdrawAmount}
-                    onChange={(e) => {
-                      setwithdrawAmount(e.target.value);
-                    }}
-                  />
-                  <TextField
-                    label="Account Details"
-                    helperText="Please Provide Bank Account Details (Account Number & branch ISBN Code ) or UPI ID or Phone Number "
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountBalanceIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="standard"
-                    value={accountDetails}
-                    onChange={(e) => {
-                      setaccountDetails(e.target.value);
-                    }}
-                  />
-                  <LoadingButton
-                    onClick={handelWithdrawRequest}
-                    endIcon={<SendIcon />}
-                    loading={requesting}
-                    loadingPosition="end"
-                    variant="contained"
-                    style={{
-                      fontFamily: "PT sans",
-                      fontSize: "12px",
-                      letterSpacing: "1px",
-                    }}
-                  >
-                    Withdraw
-                  </LoadingButton>
-                  {alert.show ? (
-                    <Alert severity={alert.severity}>{alert.msg}</Alert>
-                  ) : null}
+                        </h3>
+                      </div>
+                    </Stack>
+                    <Stack direction="row" spacing={3}>
+                      <div className="wallet-stack-item">
+                        <h2>
+                          <i className="fas fa-rupee-sign" />
+                        </h2>
+                      </div>
+                      <div className="wallet-stack-item">
+                        <h3 className="amount-icon">{walletBalance}</h3>
+                      </div>
+                    </Stack>
+                    <Stack direction="row" spacing={5} justifyContent="center">
+                      <div className="wallet-stack-item">
+                        <span className="amount-icon">
+                          <DebitIcon style={iconStyle} />
+                        </span>
+                        <span className="debit-amount">
+                          -&nbsp;
+                          <i className="fas fa-rupee-sign" />
+                          &nbsp;{debitAmount}
+                        </span>
+                      </div>
+                      <div className="wallet-stack-item">
+                        <span className="amount-icon">
+                          <CreditIcon style={iconStyle} />
+                        </span>
+                        <span className="credit-amount">
+                          +&nbsp;
+                          <i className="fas fa-rupee-sign" />
+                          &nbsp;{creditAmount}
+                        </span>
+                      </div>
+                    </Stack>
+                  </Stack>
+                </Paper>
+              )}
+              {!loaded ? (
+                <>
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={100}
+                    sx={{ bgcolor: "grey.500" }}
+                  ></Skeleton>
+
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={100}
+                    sx={{ bgcolor: "grey.500" }}
+                  ></Skeleton>
+                </>
+              ) : (
+                <Paper elevation={2}>
+                  <Stack direction="column" spacing={2} style={stackStyle}>
+                    <TextField
+                      className={classes.root}
+                      label="Amount"
+                      helperText="Enter Amount To be Withdrawn. Min Amount is 10."
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <i className="fas fa-rupee-sign" />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={widthdrawAmount}
+                      onChange={(e) => {
+                        setwithdrawAmount(e.target.value);
+                      }}
+                    />
+                    <TextField
+                      className={classes.root}
+                      label="Account Details"
+                      helperText="Please Provide Bank Account Details (Account Number & branch ISBN Code ) or UPI ID or Phone Number "
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountBalanceIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                      value={accountDetails}
+                      onChange={(e) => {
+                        setaccountDetails(e.target.value);
+                      }}
+                    />
+                    <LoadingButton
+                      onClick={handelWithdrawRequest}
+                      endIcon={<SendIcon />}
+                      loading={requesting}
+                      loadingPosition="end"
+                      variant="contained"
+                      style={{
+                        fontFamily: "PT sans",
+                        fontSize: "12px",
+                        letterSpacing: "1px",
+                      }}
+                    >
+                      Withdraw
+                    </LoadingButton>
+                    {alert.show ? (
+                      <Alert severity={alert.severity} className={classes.root}>
+                        {alert.msg}
+                      </Alert>
+                    ) : null}
+                  </Stack>
+                </Paper>
+              )}
+            </Stack>
+          </Grid>
+          <Grid item xs={12} lg={6} md={12} sm={12}>
+            <Stack direction="column" spacing={2}>
+              {!loaded ? (
+                <>
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={150}
+                    sx={{ bgcolor: "grey.500" }}
+                  ></Skeleton>
+                </>
+              ) : (
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  style={{
+                    maxHeight: "300px",
+                    overflowY: "auto",
+                    padding: "10px",
+                  }}
+                >
+                  <b className="amount-icon"> Recent Widthdraw Requests </b>
+                  <WithdrawGrid data={withdrawRequest} />
                 </Stack>
-              </Paper>
-            )}
-          </Stack>
+              )}
+              {!loaded ? (
+                <>
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={150}
+                    sx={{ bgcolor: "grey.500" }}
+                  ></Skeleton>
+                </>
+              ) : (
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  style={{
+                    maxHeight: "300px",
+                    overflowY: "auto",
+                    padding: "10px",
+                  }}
+                >
+                  <b className="amount-icon"> Previous Transactions </b>
+                  <TransactionTable data={transactionList} />
+                </Stack>
+              )}
+            </Stack>
+          </Grid>
         </Grid>
-        <Grid item xs={12} lg={6} md={12} sm={12}>
-          <Stack direction="column" spacing={2}>
-            {!loaded ? (
-              <>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={150}
-                  sx={{ bgcolor: "grey.500" }}
-                ></Skeleton>
-              </>
-            ) : (
-              <Stack
-                direction="column"
-                spacing={1}
-                style={{
-                  maxHeight: "300px",
-                  overflowY: "auto",
-                  padding: "10px",
-                }}
-              >
-                <b className="amount-icon"> Recent Widthdraw Requests </b>
-                <WithdrawGrid data={withdrawRequest} />
-              </Stack>
-            )}
-            {!loaded ? (
-              <>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={150}
-                  sx={{ bgcolor: "grey.500" }}
-                ></Skeleton>
-              </>
-            ) : (
-              <Stack
-                direction="column"
-                spacing={1}
-                style={{
-                  maxHeight: "300px",
-                  overflowY: "auto",
-                  padding: "10px",
-                }}
-              >
-                <b className="amount-icon"> Previous Transactions </b>
-                <TransactionTable data={transactionList} />
-              </Stack>
-            )}
-          </Stack>
-        </Grid>
-      </Grid>
+      ) : (
+        <Alert severity="error" className={classes.root}>
+          Please Login
+        </Alert>
+      )}
     </>
   );
 };

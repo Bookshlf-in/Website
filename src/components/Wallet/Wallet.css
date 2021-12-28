@@ -1,11 +1,3 @@
-label.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
-p.css-1d1r5q-MuiFormHelperText-root,
-input.css-1x51dt5-MuiInputBase-input-MuiInput-input,
-li.css-uob957-MuiListSubheader-root,
-.css-konndc-MuiListItemText-root {
-  font-family: "pt sans";
-}
-
 .rupee-custom-style {
   padding: 6px 15px;
   border-radius: 10px;
@@ -26,12 +18,13 @@ li.css-uob957-MuiListSubheader-root,
   background-color: rgba(0, 0, 0, 0.06);
   border-radius: 10px;
   font-family: "PT sans";
+  margin: 10px 0px;
 }
 .wallet-stack-item .debit-amount,
 .wallet-stack-item .credit-amount {
   padding: 6px;
-  font-size: 12px;
-  font-family: "Staatliches";
+  font-size: 14px;
+  font-family: "PT sans";
 }
 .wallet-stack-item .debit-amount {
   color: rgb(231, 39, 39);
@@ -40,31 +33,46 @@ li.css-uob957-MuiListSubheader-root,
   color: forestgreen;
 }
 
-.MuiAccordionSummary-content.MuiAccordionSummary-contentGutters.css-o4b71y-MuiAccordionSummary-content {
-  margin: 0px;
-}
-.MuiList-root.MuiList-padding.css-lijr0t-MuiList-root {
-  padding: 0px;
-}
-.MuiListItem-root.MuiListItem-gutters.MuiListItem-padding.css-1p823my-MuiListItem-root {
-  padding: 0px;
-}
-.MuiListItemText-root.MuiListItemText-multiline.css-konndc-MuiListItemText-root {
-  margin: 0px;
+.Wallet-Accordian .MuiAccordionSummary-content {
+  margin: 0px !important;
 }
 
-.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary.css-10hburv-MuiTypography-root {
-  font-size: 0.75rem;
+.Wallet-Accordian .MuiAccordionDetails-root {
+  padding: 8px !important;
+}
+
+.Wallet-Accordian .MuiList-root {
+  padding: 0px !important;
+}
+
+.Wallet-Accordian .MuiListItem-gutters {
+  padding: 4px 6px !important;
+}
+
+.Wallet-Accordian .MuiListItemAvatar-root {
+  min-width: 30px !important;
+}
+.Wallet-Accordian .MuiListItemText-root {
+  margin: 0px !important;
+  padding: 0px 6px;
+}
+
+.Wallet-Accordian .MuiTypography-root {
+  font-size: 0.75rem !important;
+  font-family: "PT sans" !important;
+}
+
+.Wallet-Accordian .MuiListItemText-secondary {
+  font-family: "PT sans" !important;
+  font-size: 0.65rem !important;
+}
+
+.Wallet-Accordian .MuiAlert-message {
   font-family: "PT sans";
 }
-.MuiTypography-root.MuiTypography-body2.MuiListItemText-secondary.css-83ijpv-MuiTypography-root {
-  font-family: "PT sans";
-  font-size: 0.65rem;
-}
-.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
-  font-size: 0.75rem;
-  font-family: "PT sans";
-}
-.MuiAlert-message {
-  font-family: "PT sans";
+
+.Wallet-Accordian .MuiChip-label {
+  font-family: "PT sans" !important;
+  font-size: 10px !important;
+  letter-spacing: 0.5px !important;
 }

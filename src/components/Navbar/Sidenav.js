@@ -69,6 +69,15 @@ const Sidenav = () => {
           />
         )}
         {user ? (
+          user.roles.includes("seller") ? (
+            <SideNavLink
+              to="/Wallet"
+              iconClass="fas fa-wallet"
+              label="Wallet"
+            />
+          ) : null
+        ) : null}
+        {user ? (
           <SideNavLink
             to="/Cart"
             iconClass="fas fa-shopping-cart"
