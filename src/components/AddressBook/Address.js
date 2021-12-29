@@ -116,7 +116,7 @@ const Address = (props) => {
     },
   ];
 
-  const rows = Adr.map((adr, idx) => {
+  const rows = Adr.map((adr) => {
     return {
       id: adr._id,
       type: adr.label,
@@ -144,12 +144,13 @@ const Address = (props) => {
           label: Label,
           address: Address,
           phoneNo: PhoneNo,
+          altPhoneNo: AltPhoneNo,
           city: City,
           state: State,
           zipCode: ZipCode,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setalert({
             Display: true,
             Type: "success",

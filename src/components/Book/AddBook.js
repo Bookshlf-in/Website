@@ -62,11 +62,17 @@ const AddBook = (props) => {
   const [openTagMenu, setOpenTagMenu] = useState(false);
   const [openTitleMenu, setOpenTitleMenu] = useState(false);
   const [openpriceChart, setopenpriceChart] = useState(false);
+  const [alert, setalert] = useState({
+    show: false,
+    type: "info",
+    msg: "",
+  });
 
   // Add book form states
   const [bookName, setbookName] = useState("");
   const [bookISBN, setbookISBN] = useState("");
   const [SP, setSP] = useState("");
+  const [sellingPrice, setsellingPrice] = useState("");
   const [earn, setearn] = useState("");
   const [mrp, setMrp] = useState("");
   const [bookDesc, setbookDesc] = useState("");
@@ -104,6 +110,7 @@ const AddBook = (props) => {
     var FormattedpriceString = "";
     if (CheckIfPriceFormat(priceString)) {
       priceString = priceString.replaceAll(",", "");
+      setsellingPrice(Number(priceString));
       for (let i = priceString.length - 1; i >= 0; i -= 3) {
         for (let j = i; j >= 0 && j > i - 3; j--) {
           FormattedpriceString = priceString[j] + FormattedpriceString;
@@ -130,7 +137,7 @@ const AddBook = (props) => {
           })
           .catch((error) => {
             setearn("");
-            console.log(error.response.data);
+            // console.log(error.response.data);
           });
       };
       fetchdata();
@@ -193,7 +200,6 @@ const AddBook = (props) => {
 
   // adding book images in form
   const UpdateFileList = (fileList) => {
-    setPhoto(fileList);
     setImage(fileList);
   };
   const handelbookAdd = (e, uploadMultiple) => {
@@ -207,37 +213,167 @@ const AddBook = (props) => {
   // deleting book images from form
   const handleImageDelete = (filename) => {
     setImage(Image.filter((file) => file.name !== filename));
-    setPhoto(Image.filter((file) => file.name !== filename));
   };
 
   // submitting book for review
-  const handelBookSubmitRequest = () => {
-    if (checked) {
-      setSending(!sending);
-      axios
-        .post("/addBook", {
-          title: bookName,
-          MRP: mrp,
-          price: SP,
-          editionYear: Edition,
-          author: author,
-          ISBN: bookISBN,
-          language: lang,
-          pickupAddressId: Adr,
-          description: bookDesc,
-          photos: Photo,
-          weightInGrams: Weight,
-          embedVideo: link,
-          tags: tags,
-          qty: Qnty,
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error.response.data);
+  const handelBookSubmitRequest = async (imglinks) => {
+    axios
+      .post("/addBook", {
+        title: bookName,
+        MRP: mrp,
+        price: sellingPrice,
+        editionYear: Edition,
+        author: author,
+        ISBN: bookISBN,
+        language: lang,
+        pickupAddressId: Adr,
+        description: bookDesc,
+        photos: imglinks,
+        weightInGrams: Weight,
+        embedVideo: link,
+        tags: tags,
+        qty: Qnty,
+      })
+      .then((response) => {
+        // console.log(response.data);
+        setSending(!sending);
+        setalert({
+          show: true,
+          msg: "Book Added Successfully",
+          type: "success",
         });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            msg: "",
+            type: "info",
+          });
+          history.push("/SellerPanel/2");
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  };
+
+  // uploading images to google cloud server
+
+  // Image Size Validator
+  const validateSize = () => {
+    for (let i = 0; i < Image.length; i++) {
+      const fileSize = Image[i].size / 1024 / 1024; // in MiB
+      if (fileSize > 5) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  // uploading single image File
+  const uploadSingleImage = async (img) => {
+    const formData = new FormData();
+    formData.append("folder", "sellingBooks");
+    formData.append("file", img);
+
+    const result = await axios({
+      method: "post",
+      url: "/uploadFile",
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => {
+        return response.data.link;
+      })
+      .catch((error) => {
+        // console.log(error.response.data);
+      });
+
+    return result;
+  };
+
+  // uploading All Images of Books
+  const uploadImages = async (arrImg) => {
+    return await Promise.all(
+      arrImg.map(async (img) => {
+        const imgUrl = await uploadSingleImage(img);
+        // console.log(imgUrl);
+        return imgUrl;
+      })
+    );
+  };
+
+  // upload and Fetching URLs of Uploaded Books
+  const uploadBook = async () => {
+    setSending((prev) => !prev);
+    if (Image.length >= 3) {
+      // altleast 3 Images of Book
+      if (checked) {
+        // Agreed to Terms and Conditions
+        if (validateSize()) {
+          // Validating Image Sizes
+          if (sellingPrice >= 100) {
+            // Selling Price of Book Should be Atleast 100
+            const urls = await uploadImages(Image);
+            handelBookSubmitRequest(urls);
+          } else {
+            setSending((prev) => !prev);
+            setalert({
+              show: true,
+              msg: "Selling Price Cannot be Less than 100",
+              type: "error",
+            });
+            setTimeout(() => {
+              setalert({
+                show: false,
+                msg: "",
+                type: "info",
+              });
+            }, 6000);
+          }
+        } else {
+          setSending((prev) => !prev);
+          setalert({
+            show: true,
+            msg: "Images Should Not Exceed 5MB Size",
+            type: "error",
+          });
+          setTimeout(() => {
+            setalert({
+              show: false,
+              msg: "",
+              type: "info",
+            });
+          }, 6000);
+        }
+      } else {
+        setSending((prev) => !prev);
+        setalert({
+          show: true,
+          msg: "Please Check the Box",
+          type: "error",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            msg: "",
+            type: "info",
+          });
+        }, 6000);
+      }
     } else {
+      setSending((prev) => !prev);
+      setalert({
+        show: true,
+        msg: "Please Upload At Least 3 Images Of Book.",
+        type: "error",
+      });
+      setTimeout(() => {
+        setalert({
+          show: false,
+          msg: "",
+          type: "info",
+        });
+      }, 6000);
     }
   };
 
@@ -357,7 +493,7 @@ const AddBook = (props) => {
                   <TextField
                     id="add-book-textfield"
                     label="Book Selling Price"
-                    helperText="Press Enter To Calculate Your Earnings"
+                    helperText="Min Price Should be 100"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -458,9 +594,7 @@ const AddBook = (props) => {
                 >
                   {props.address.map((option) => (
                     <MenuItem key={option._id} value={option._id}>
-                      {option.address.length > 33
-                        ? option.address.slice(0, 29) + "..."
-                        : option.address}
+                      {option.address + ", " + option.zipCode}
                     </MenuItem>
                   ))}
                   {
@@ -823,16 +957,22 @@ const AddBook = (props) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          <Checkbox
-            checked={checked}
-            onChange={() => {
-              setChecked(!checked);
-            }}
-            inputProps={{ "aria-label": "controlled" }}
-          />
-          <b style={{ fontFamily: "pt sans" }}>I agree to Terms & Conditions</b>
+          {alert.show ? <Alert severity={alert.type}>{alert.msg}</Alert> : null}
+          <div>
+            <Checkbox
+              checked={checked}
+              onChange={() => {
+                setChecked(!checked);
+              }}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+            <b style={{ fontFamily: "pt sans" }}>
+              I agree to Terms & Conditions
+            </b>
+          </div>
         </Grid>
         <Grid
           item
@@ -848,7 +988,7 @@ const AddBook = (props) => {
         >
           <LoadingButton
             onClick={() => {
-              handelBookSubmitRequest();
+              uploadBook();
             }}
             endIcon={<SendIcon />}
             loading={sending}
@@ -860,7 +1000,7 @@ const AddBook = (props) => {
               letterSpacing: "1px",
             }}
           >
-            Submit For Review
+            {sending ? "Submitting ..." : "Submit For Review"}
           </LoadingButton>
         </Grid>
       </Grid>

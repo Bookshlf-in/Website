@@ -1,70 +1,11 @@
 /* Admin-panel-css */
 .adminpanel-container {
   display: flex;
-  background-color: rgb(231, 231, 231);
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
   font-family: "PT sans";
-}
-
-.adminpanel-bar {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
-  z-index: 1005;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  list-style: none;
-  width: 100%;
-  background-color: black;
-}
-
-.adminpanel-bar a {
-  height: 60px;
-  color: white;
-  font-size: 21px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  letter-spacing: 2px;
-}
-.adminpanel-bar a:hover {
-  color: black;
-  background-color: rgb(233, 232, 232);
-  transition: 0.3s;
-  cursor: pointer;
-}
-/* orders-css */
-.panel-orders-container {
-  background-color: rgb(0, 95, 179);
-  width: 100%;
-}
-
-.panel-orders-ul {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.panel-orders-ul li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  width: 100%;
-  color: white;
-  list-style: none;
-  letter-spacing: 2px;
-}
-.panel-orders-ul li:hover {
-  background-color: rgb(23, 145, 251);
-  cursor: pointer;
-  transition: 0.3s;
 }
 
 /* FindProfile css */
