@@ -1,185 +1,359 @@
 import { React, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "../../axios";
+
+// components
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Alert from "@material-ui/lab/Alert";
+
+// icons
+import SearchIcon from "@material-ui/icons/Search";
+import PersonIcon from "@material-ui/icons/Person";
+
+// custom components
+import UserProfile from "./UserProfile";
+import SellerProfile from "./SellerProfile";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    "& label": {
+      fontFamily: "PT sans !important",
+    },
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+    "& div": {
+      "& input": {
+        fontFamily: "PT sans !important",
+      },
+    },
+  },
+});
+
 const FindProfile = () => {
+  const classes = useStyles();
+
+  // functionality states
+  const [userLoad1, setuserLoad1] = useState(false);
+  const [userLoad2, setuserLoad2] = useState(false);
+  const [sellerLoad1, setsellerLoad1] = useState(false);
+  const [sellerLoad2, setsellerLoad2] = useState(false);
+  const [alert, setAlert] = useState({
+    show: false,
+    type: "info",
+    msg: "",
+  });
+
+  // data states
   const [userProfile, setUserProfile] = useState(null);
   const [sellerProfile, setSellerProfile] = useState(null);
-  const [load, setload] = useState(false);
-  const [email, setemail] = useState("");
+  const [useremail, setuseremail] = useState("");
+  const [selleremail, setselleremail] = useState("");
+  const [userId, setuserId] = useState("");
+  const [sellerId, setsellerId] = useState("");
 
-  const getUserProfile = (e) => {
-    e.preventDefault();
-    setload(true);
-    const fetch = async () => {
+  const getUserProfilefromEmail = () => {
+    setuserLoad1(true);
+    const fetch = () => {
       axios
         .get("/admin-getUserProfile", {
-          params: { email: email },
+          params: { email: useremail },
         })
         .then((response) => {
-          console.log(response.data);
           setUserProfile(response.data);
-          setSellerProfile(null);
-          setload(false);
+          setuserLoad1(false);
         })
         .catch((error) => {
-          console.log(error.response.data);
-          setUserProfile("notFound");
-          setSellerProfile(null);
-          setload(false);
+          setAlert({
+            show: true,
+            msg: error.response.data.error,
+            type: "error",
+          });
+          setTimeout(() => {
+            setAlert({
+              show: false,
+              msg: "",
+              type: "info",
+            });
+          }, 6000);
+          setuserLoad1(false);
         });
     };
     fetch();
   };
 
-  const getSellerProfile = (e) => {
-    e.preventDefault();
-    setload(true);
-    const fetch = async () => {
+  const getUserProfilefromId = () => {
+    setuserLoad2(true);
+    const fetch = () => {
       axios
-        .get("/admin-getSellerProfile", {
-          params: { email: email },
+        .get("/admin-getUserProfile", {
+          params: { userId: userId },
         })
         .then((response) => {
-          console.log(response.data);
-          setSellerProfile(response.data);
-          setUserProfile(null);
-          setload(false);
+          setUserProfile(response.data);
+          setuserLoad2(false);
         })
         .catch((error) => {
-          console.log(error.response.data);
-          setSellerProfile("notFound");
-          setUserProfile(null);
-          setload(false);
+          setAlert({
+            show: true,
+            msg: error.response.data.error,
+            type: "error",
+          });
+          setTimeout(() => {
+            setAlert({
+              show: false,
+              msg: "",
+              type: "info",
+            });
+          }, 6000);
+          setuserLoad2(false);
+        });
+    };
+    fetch();
+  };
+
+  const getSellerProfilefromEmail = () => {
+    setsellerLoad1(true);
+    const fetch = () => {
+      axios
+        .get("/admin-getSellerProfile", {
+          params: { email: selleremail },
+        })
+        .then((response) => {
+          setSellerProfile(response.data);
+          setsellerLoad1(false);
+        })
+        .catch((error) => {
+          setAlert({
+            show: true,
+            msg: error.response.data.error,
+            type: "error",
+          });
+          setTimeout(() => {
+            setAlert({
+              show: false,
+              msg: "",
+              type: "info",
+            });
+          }, 6000);
+          setsellerLoad1(false);
+        });
+    };
+    fetch();
+  };
+
+  const getSellerProfilefromId = () => {
+    setsellerLoad2(true);
+    const fetch = () => {
+      axios
+        .get("/admin-getSellerProfile", {
+          params: { sellerId: sellerId },
+        })
+        .then((response) => {
+          setSellerProfile(response.data);
+          setsellerLoad2(false);
+        })
+        .catch((error) => {
+          setAlert({
+            show: true,
+            msg: error.response.data.error,
+            type: "error",
+          });
+          setTimeout(() => {
+            setAlert({
+              show: false,
+              msg: "",
+              type: "info",
+            });
+          }, 6000);
+          setsellerLoad2(false);
         });
     };
     fetch();
   };
 
   return (
-    <div className="findprofile-cont">
-      <div className="findprofile-email">
-        <form action="">
-          <input
-            className="findprofile-email-input"
-            type="email"
-            placeholder="Enter Email Address"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
+    <Stack direction="column" spacing={2}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        spacing={2}
+        divider={<Divider orientation="vertical" flexItem />}
+      >
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
+          <TextField
+            className={classes.root}
+            label="User Email Address"
+            helperText="Enter Email Address To Find Profile"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon />
+                </InputAdornment>
+              ),
+            }}
+            fullWidth
+            variant="standard"
+            value={useremail}
+            onChange={(e) => setuseremail(e.target.value)}
           />
-          <button
-            type="submit"
-            className="findprofile-email-button"
-            onClick={(e) => {
-              getUserProfile(e);
+          <TextField
+            className={classes.root}
+            label="User ID"
+            helperText="Enter Unique ID(24 letters) To Find Profile"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon />
+                </InputAdornment>
+              ),
             }}
-          >
-            Find User Profile
-          </button>
-          <span>OR</span>
-          <button
-            type="submit"
-            className="findprofile-email-button"
-            onClick={(e) => {
-              getSellerProfile(e);
+            fullWidth
+            variant="standard"
+            value={userId}
+            onChange={(e) => setuserId(e.target.value)}
+          />
+        </Stack>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
+          <TextField
+            className={classes.root}
+            label="Seller Email Address"
+            helperText="Enter Email Address To Find Profile"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon />
+                </InputAdornment>
+              ),
             }}
+            fullWidth
+            variant="standard"
+            value={selleremail}
+            onChange={(e) => setselleremail(e.target.value)}
+          />
+          <TextField
+            className={classes.root}
+            label="Seller ID"
+            helperText="Enter Unique ID(24 letters) To Find Profile"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon />
+                </InputAdornment>
+              ),
+            }}
+            fullWidth
+            variant="standard"
+            value={sellerId}
+            onChange={(e) => setsellerId(e.target.value)}
+          />
+        </Stack>
+      </Stack>
+      <Stack
+        direction={{ xs: "column", lg: "row", md: "row", sm: "row" }}
+        justifyContent="space-evenly"
+        alignItems="center"
+        spacing={2}
+        divider={<Divider orientation="vertical" flexItem />}
+      >
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
+          <LoadingButton
+            loading={userLoad1}
+            loadingPosition="start"
+            startIcon={<SearchIcon />}
+            variant="contained"
+            fullWidth
+            className={classes.root}
+            onClick={getUserProfilefromEmail}
           >
-            Find Seller Profile
-          </button>
-        </form>
-      </div>
-      {load ? (
-        <i
-          className="fas fa-circle-notch"
-          style={{
-            display: load ? "inline-block" : "none",
-            animation: "spin 2s linear infinite",
-            fontSize: "64px",
-          }}
-        />
-      ) : (
-        <div className="findprofile-profile">
-          <div className="findprofile-profile-box">
-            {sellerProfile === null ? (
-              <>
-                {userProfile === "notFound" ? (
-                  <h1>Not Found!</h1>
-                ) : (
-                  <>
-                    <h1>{userProfile ? userProfile.name : ""}</h1>
-                    <h2>{userProfile ? userProfile.email : ""}</h2>
-                    <h2>
-                      {userProfile
-                        ? userProfile.emailVerified
-                          ? "Verified"
-                          : "Not Verified"
-                        : ""}
-                    </h2>
-                    <p
-                      style={{
-                        display: userProfile ? "block" : "none",
-                      }}
-                    >
-                      <b>Roles</b> :{" "}
-                      {userProfile
-                        ? userProfile.roles.map((role) => <i>{role + " "}</i>)
-                        : ""}
-                    </p>
-                    <h3>{userProfile ? "ID : " + userProfile._id : ""}</h3>
-                  </>
-                )}
-              </>
-            ) : userProfile === null ? (
-              <>
-                {sellerProfile === "notFound" ? (
-                  <h1>Not Found!</h1>
-                ) : (
-                  <>
-                    <img
-                      src={sellerProfile ? sellerProfile.photo : ""}
-                      alt={sellerProfile ? sellerProfile.name : ""}
-                      height="100px"
-                      width="100px"
-                    />
-                    <h1>{sellerProfile ? sellerProfile.name : ""}</h1>
-                    <h2>{sellerProfile ? sellerProfile.email : ""}</h2>
-                    <h2>
-                      {sellerProfile
-                        ? sellerProfile.isVerified
-                          ? "Verified"
-                          : "Not Verified"
-                        : ""}
-                    </h2>
-                    <p>{sellerProfile ? sellerProfile.intro : ""}</p>
-                    <ul>
-                      <li>
-                        {sellerProfile ? "Rating " + sellerProfile.rating : ""}
-                      </li>
-                      <li>
-                        {sellerProfile
-                          ? "Total Ratings " + sellerProfile.noOfRatings
-                          : ""}
-                      </li>
-                      <li>
-                        {sellerProfile
-                          ? "Total Reviews " + sellerProfile.noOfReviews
-                          : ""}
-                      </li>
-                    </ul>
-                    <h3>
-                      {sellerProfile ? "Seller ID : " + sellerProfile._id : ""}
-                    </h3>
-                    <h3>
-                      {sellerProfile ? "User ID : " + sellerProfile.userId : ""}
-                    </h3>
-                  </>
-                )}
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+            Find User Profile From Email
+          </LoadingButton>
+
+          <LoadingButton
+            loading={userLoad2}
+            loadingPosition="start"
+            startIcon={<SearchIcon />}
+            fullWidth
+            variant="contained"
+            className={classes.root}
+            onClick={getUserProfilefromId}
+          >
+            Find User Profile From ID
+          </LoadingButton>
+        </Stack>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
+          <LoadingButton
+            loading={sellerLoad1}
+            loadingPosition="start"
+            startIcon={<SearchIcon />}
+            variant="contained"
+            fullWidth
+            className={classes.root}
+            onClick={getSellerProfilefromEmail}
+          >
+            Find Seller Profile From Email
+          </LoadingButton>
+
+          <LoadingButton
+            loading={sellerLoad2}
+            loadingPosition="start"
+            startIcon={<SearchIcon />}
+            fullWidth
+            variant="contained"
+            className={classes.root}
+            onClick={getSellerProfilefromId}
+          >
+            Find Seller Profile From ID
+          </LoadingButton>
+        </Stack>
+      </Stack>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
+        {alert.show ? (
+          <Alert severity={alert.type} className={classes.root}>
+            {alert.msg}
+          </Alert>
+        ) : null}
+        <Stack
+          direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          {userProfile ? <UserProfile data={userProfile} /> : null}
+          {sellerProfile ? <SellerProfile data={sellerProfile} /> : null}
+        </Stack>
+      </Stack>
+    </Stack>
   );
 };
 

@@ -22,6 +22,7 @@ import Seller from "./Sellers";
 import Orders from "./Orders";
 import Messages from "./Messages";
 import Profile from "./FindProfile";
+import Wallet from "./Wallet";
 
 const useStyles = makeStyles({
   root: {
@@ -77,7 +78,7 @@ const AdminNavbar = () => {
               className={classes.root}
             />
             <Tab
-              label="Sellers"
+              label="Sellers Verification"
               icon={<SellersIcon />}
               value="4"
               className={classes.root}
@@ -108,7 +109,9 @@ const AdminNavbar = () => {
         <TabPanel value="4">
           <Seller />
         </TabPanel>
-        <TabPanel value="5">Wallet to be Added</TabPanel>
+        <TabPanel value="5">
+          <Wallet />
+        </TabPanel>
       </TabContext>
     </Box>
   );

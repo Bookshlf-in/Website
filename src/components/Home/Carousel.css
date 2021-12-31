@@ -33,7 +33,7 @@ button {
   letter-spacing: 1px;
 }
 
-button:hover {
+.carousel button:hover {
   color: #ffffff;
   background: #ff7300;
   -webkit-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
