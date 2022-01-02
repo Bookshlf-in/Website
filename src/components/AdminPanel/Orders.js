@@ -42,7 +42,7 @@ const Orders = () => {
           >
             <Tab label="Book Verification" value="1" className={classes.root} />
             <Tab label="Order Details" value="2" className={classes.root} />
-            <Tab label="Update Order" value="3" className={classes.root} />
+            <Tab label="Find Order" value="3" className={classes.root} />
             <Tab label="Seller Books" value="4" className={classes.root} />
           </TabList>
         </Box>

@@ -9,6 +9,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Chip from "@mui/material/Chip";
 import Pagination from "@mui/material/Pagination";
+import Button from "@mui/material/Button";
 
 // icons
 import LoadIcon from "@material-ui/icons/AutorenewRounded";
@@ -67,7 +68,7 @@ const GetOrderDetails = () => {
     {
       field: "orderTotal",
       headerName: "Order Total",
-      width: 150,
+      width: 100,
       sortable: false,
       renderCell: (price) => {
         return (
@@ -152,6 +153,24 @@ const GetOrderDetails = () => {
         );
       },
     },
+    {
+      field: "trackOrder",
+      headerName: "Track & Update Order",
+      width: 200,
+      sortable: false,
+      renderCell: (link) => {
+        return (
+          <Button
+            className={classes.root}
+            size="small"
+            href={`/AdminTrack/${link.value}`}
+            variant="outlined"
+          >
+            Update & Track
+          </Button>
+        );
+      },
+    },
   ];
 
   const rows = orderList.map((order) => {
@@ -164,6 +183,7 @@ const GetOrderDetails = () => {
       orderStatus: order.status,
       customerContact: order.customerAddress.phoneNo,
       sellerContact: order.sellerAddress.phoneNo,
+      trackOrder: order._id,
     };
   });
 
