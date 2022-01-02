@@ -1,216 +1,400 @@
 import { React, useState, useEffect } from "react";
-import "../BookDetails/BookDetails.css";
-import Booksnaps from "../BookDetails/Booksnaps";
-import Bookfullsnap from "../BookDetails/Bookfullsnap";
-import BookDesc from "../BookDetails/BookDesc";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "../../axios";
-import UpdateBook from "./UpdateBook";
-import Fade from "@material-ui/core/Fade";
+
+// Components
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
+import Avatar from "@mui/material/Avatar";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Alert from "@material-ui/lab/Alert";
+import LoadingButton from "@mui/lab/LoadingButton";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import MenuItem from "@mui/material/MenuItem";
+import LinearProgress from "@mui/material/LinearProgress";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import SendIcon from "@material-ui/icons/SendRounded";
+
+// Icons
+import TagIcon from "@material-ui/icons/LocalOfferRounded";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+    "& label": {
+      fontFamily: "PT sans !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+    "& textarea": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+  },
+});
 
 const BookDetails = () => {
-  const params = useParams();
-  const history = useHistory();
+  // calling hooks
+  const classes = useStyles();
+  const bookId = useParams().bookId;
+
+  // functionality States
   const [load, setload] = useState(true);
   const [book, setbook] = useState({});
-  const [update, setupdate] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [rejectmsg, setrejectmsg] = useState("");
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-    setrejectmsg("");
-  };
+  const [tagFieldChanges, settagFieldChanges] = useState(false);
+  const [openTagMenu, setOpenTagMenu] = useState(false);
+  const [updating, setupdating] = useState(false);
+  const [alert, setalert] = useState({
+    show: false,
+    type: "info",
+    msg: "",
+  });
+
+  // Add book form states
+  const [bookName, setbookName] = useState("");
+  const [bookISBN, setbookISBN] = useState("");
+  const [SP, setSP] = useState("");
+  const [mrp, setMrp] = useState("");
+  const [bookDesc, setbookDesc] = useState("");
+  const [Weight, setWeight] = useState("");
+  const [Edition, setEdition] = useState("");
+  const [Qnty, setQnty] = useState(1);
+  const [author, setAuthor] = useState("");
+  const [tags, setTags] = useState([]);
+  const [resulttags, setresultTags] = useState([]);
+  const [tag, setTag] = useState("");
+  const [link, setlink] = useState("");
+  const [lang, setlang] = useState("");
+
+  // Loading Book Details
   useEffect(() => {
     const fetchData = async () => {
       axios
         .get("/admin-getBookDetails", {
-          params: { bookId: params.bookId },
+          params: { bookId: bookId },
         })
         .then((response) => {
           setbook(response.data);
-          console.log(response.data);
+          setbookName(response.data.title);
+          setbookDesc(response.data.description);
+          setAuthor(response.data.author);
+          setEdition(response.data.editionYear);
+          setbookISBN(response.data.ISBN);
+          setSP(response.data.price);
+          setMrp(response.data.MRP);
+          setQnty(response.data.qty);
+          setlang(response.data.language);
+          setWeight(response.data.weightInGrams);
+          setlink(response.data.embedVideo);
+          setTags(response.data.tags);
           setload(false);
         })
         .catch((error) => {});
     };
     fetchData();
   }, []);
-  const ApproveBook = (e, id) => {
-    e.target.innerHTML = "Approving...";
-    axios
-      .post("/admin-approveBook", {
-        bookId: id,
-      })
-      .then((response) => {
-        console.log(response.data.msg);
-        e.target.innerHTML = "Approved";
-        history.push("/Admin/1");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        e.target.innerHTML = "Error Occured!";
-        setTimeout(() => {
-          e.target.innerHTML = "Not Approved";
-        }, 3000);
-      });
-  };
-  const RejectBook = (e, id) => {
-    if (rejectmsg.length > 10) {
-      e.target.innerHTML = "Rejecting...";
+
+  // tag searching on input
+  const handelTagSearch = (e) => {
+    settagFieldChanges(true);
+    setTag(e.target.value);
+    setOpenTagMenu(true);
+    const fetchdata = async () => {
       axios
-        .post("/admin-rejectBookApproval", {
-          bookId: id,
-          message: rejectmsg,
-        })
+        .get(`/searchTag?q=${e.target.value}`)
         .then((response) => {
-          console.log(response.data.msg);
-          history.push("/Admin/1");
+          setresultTags(response.data);
+          settagFieldChanges(false);
         })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
-    } else {
-      handleChange();
-    }
+        .catch((error) => {});
+    };
+    fetchdata();
   };
-  const deleteBook = (e, id) => {
-    e.target.innerHTML = "Deleting...";
+
+  // Tag adding to Book Tags
+  const handelTagAdd = (tagname) => {
+    if (tagname !== "" && tagname !== undefined && tagname !== null) {
+      setTags(tags.concat(tagname));
+    }
+    setOpenTagMenu(false);
+    setTag("");
+  };
+
+  // Deleting Tags of Book
+  const handleTagDelete = (tagname) => {
+    setTags(tags.filter((tag) => tagname !== tag));
+  };
+
+  const UpdateBook = () => {
+    setupdating(true);
     axios
-      .delete("/admin-deleteBook", {
-        data: { bookId: id, message: "Book is not Appropriate" },
+      .post("/admin-updateBookDetails", {
+        bookId: bookId,
+        title: bookName,
+        MRP: mrp,
+        price: SP,
+        editionYear: Edition,
+        author: author,
+        ISBN: bookISBN,
+        language: lang,
+        description: bookDesc,
+        weightInGrams: Weight,
+        embedVideo: link,
+        tags: tags,
+        qty: Qnty,
       })
       .then((response) => {
-        console.log(response.data.msg);
-        e.target.innerHTML = "Delete";
-        history.push("/Admin/1");
+        console.log(response.data);
+        setupdating(false);
+        setalert({
+          show: true,
+          msg: "Book Updated Successfully",
+          type: "success",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            msg: "",
+            type: "info",
+          });
+        }, 3000);
       })
       .catch((error) => {
+        setupdating(false);
         console.log(error.response.data);
-        e.target.innerHTML = "Error Occured!";
-        setTimeout(() => {
-          e.target.innerHTML = "Delete";
-        }, 3000);
       });
   };
 
   return (
-    <div>
-      <div className="book-details-bg">
-        {load ? (
-          <i
-            className="fas fa-circle-notch"
-            style={{
-              display: load ? "inline-block" : "none",
-              animation: "spin 2s linear infinite",
-              fontSize: "64px",
-              marginTop: "40px",
-            }}
-          />
-        ) : (
-          <div className="book-main-container">
-            <Booksnaps snaps={book.photos} video={book.embedVideo} />
-            <Bookfullsnap url={book.photos[0]} />
-            <BookDesc bookdetails={book} />
-            <div>
-              <button
-                className="admin-bookdetails-btn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (book) {
-                    setupdate(true);
-                  }
-                }}
-              >
-                Update Details
-              </button>
-              <button
-                className="admin-bookdetails-btn"
-                onClick={(e) => {
-                  ApproveBook(e, params.bookId);
-                }}
-              >
-                Approve Book
-              </button>
-              <button
-                className="admin-bookdetails-btn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleChange();
-                }}
-                style={{
-                  display: checked ? "none" : "",
-                }}
-              >
-                Reject Book
-              </button>
-              <Fade
-                in={checked}
-                style={{
-                  display: !checked ? "none" : "",
-                  marginTop: "10px",
-                  border: "1px solid black",
-                  padding: "10px",
-                }}
-              >
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Rejection Message"
-                    className="Reject-msg"
-                    value={rejectmsg}
-                    onChange={(e) => setrejectmsg(e.target.value)}
+    <>
+      {load ? (
+        <LinearProgress sx={{ width: "100%" }} />
+      ) : (
+        <Stack
+          direction="column"
+          spacing={2}
+          sx={{
+            width: "100%",
+            padding: "10px",
+          }}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
+            <Stack direction="column" spacing={2}>
+              {book ? (
+                book.photos.map((link, i) => (
+                  <Avatar
+                    key={i}
+                    src={link}
+                    alt="book"
+                    variant="rounded"
+                    sx={{ width: "300px", height: "400px" }}
                   />
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      RejectBook(e, params.bookId);
-                    }}
-                    className="reject-btn"
-                  >
-                    Reject
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleChange();
-                    }}
-                    className="reject-btn"
-                  >
-                    X
-                  </button>
-                </div>
-              </Fade>
-              <button
-                className="admin-bookdetails-btn"
-                onClick={(e) => {
-                  deleteBook(e, params.bookId);
-                }}
-              >
-                Delete Book
-              </button>
-            </div>
-            {update ? (
-              <i
-                className="fas fa-window-close"
-                onClick={() => {
-                  setupdate(false);
-                }}
-                style={{
-                  position: "absolute",
-                  float: "left",
-                  zIndex: "102",
-                  right: "20px",
-                  top: "10px",
-                }}
+                ))
+              ) : (
+                <></>
+              )}
+            </Stack>
+            <Stack
+              direction="column"
+              spacing={2}
+              sx={{
+                width: "100%",
+                padding: "10px",
+              }}
+            >
+              <TextField
+                label="Book Title"
+                variant="standard"
+                value={bookName}
+                className={classes.root}
+                onChange={(e) => setbookName(e.target.value)}
               />
-            ) : (
-              <></>
-            )}
-            {update ? <UpdateBook book={book} /> : <></>}
-          </div>
-        )}
-      </div>
-    </div>
+              <TextField
+                label="Book Description"
+                variant="standard"
+                multiline
+                maxRows={3}
+                value={bookDesc}
+                className={classes.root}
+                onChange={(e) => setbookDesc(e.target.value)}
+              />
+              <TextField
+                label="Book Author"
+                variant="standard"
+                value={author}
+                className={classes.root}
+                onChange={(e) => setAuthor(e.target.value)}
+              />
+              <TextField
+                label="Book Edition"
+                variant="standard"
+                value={Edition}
+                className={classes.root}
+                onChange={(e) => setEdition(e.target.value)}
+              />
+              <TextField
+                label="Book ISBN"
+                variant="standard"
+                value={bookISBN}
+                className={classes.root}
+                onChange={(e) => setbookISBN(e.target.value)}
+              />
+              <TextField
+                label="Book Selling Price"
+                variant="standard"
+                value={SP}
+                className={classes.root}
+                onChange={(e) => setSP(e.target.value)}
+              />
+              <TextField
+                label="Book MRP"
+                variant="standard"
+                value={mrp}
+                className={classes.root}
+                onChange={(e) => setMrp(e.target.value)}
+              />
+              <TextField
+                label="Book Quantity"
+                variant="standard"
+                value={Qnty}
+                className={classes.root}
+                onChange={(e) => setQnty(e.target.value)}
+              />
+              <TextField
+                label="Book Language"
+                variant="standard"
+                value={lang}
+                className={classes.root}
+                onChange={(e) => setlang(e.target.value)}
+              />
+              <TextField
+                label="Book Weight in Grams"
+                variant="standard"
+                value={Weight}
+                className={classes.root}
+                onChange={(e) => setWeight(e.target.value)}
+              />
+              <div>
+                <TextField
+                  className={classes.root}
+                  label="Book Tags"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <TagIcon />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {tagFieldChanges ? (
+                          <CircularProgress
+                            style={{
+                              color: "rgba(0,0,0,0.6)",
+                              height: "15px",
+                              width: "15px",
+                              marginRight: "15px",
+                            }}
+                          />
+                        ) : (
+                          <></>
+                        )}
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="standard"
+                  value={tag}
+                  onChange={(e) => handelTagSearch(e)}
+                  helperText="Press Enter key to Add the Tag"
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handelTagAdd(e.target.value);
+                    }
+                  }}
+                  autoComplete="false"
+                />
+                <ClickAwayListener onClickAway={() => setOpenTagMenu(false)}>
+                  {openTagMenu ? (
+                    <div className="searchTagresult">
+                      {resulttags.map((TAG, idx) => (
+                        <MenuItem
+                          id="result-tag"
+                          title={TAG.tag}
+                          key={idx}
+                          value={TAG.tag}
+                          onClick={() => handelTagAdd(TAG.tag)}
+                        >
+                          {TAG.tag}
+                        </MenuItem>
+                      ))}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </ClickAwayListener>
+              </div>
+
+              <Stack
+                direction={{
+                  xs: "column",
+                  sm: "row",
+                  lg: "row",
+                  md: "row",
+                }}
+                spacing={0.5}
+                alignItems="center"
+                justifyContent="flex-start"
+              >
+                {tags.map((TAG, idx) => (
+                  <Chip
+                    label={TAG}
+                    key={idx}
+                    onDelete={() => handleTagDelete(TAG)}
+                    color="primary"
+                    size="small"
+                    className={classes.root}
+                  />
+                ))}
+              </Stack>
+
+              <TextField
+                label="Book Video Link (Youtube)"
+                variant="standard"
+                value={link}
+                className={classes.root}
+                onChange={(e) => setlink(e.target.value)}
+              />
+
+              <LoadingButton
+                endIcon={<SendIcon />}
+                loading={updating}
+                loadingPosition="end"
+                variant="contained"
+                className={classes.root}
+                onClick={UpdateBook}
+              >
+                Update Book
+              </LoadingButton>
+
+              {alert.show ? (
+                <Alert severity={alert.type} className={classes.root}>
+                  {alert.msg}
+                </Alert>
+              ) : null}
+            </Stack>
+          </Stack>
+        </Stack>
+      )}
+    </>
   );
 };
 export default BookDetails;

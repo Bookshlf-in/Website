@@ -46,16 +46,16 @@ const Orders = () => {
             <Tab label="Seller Books" value="4" className={classes.root} />
           </TabList>
         </Box>
-        <TabPanel value="1">
+        <TabPanel style={{ padding: "0px" }} value="1">
           <BookVerification />
         </TabPanel>
-        <TabPanel value="2">
+        <TabPanel style={{ padding: "0px" }} value="2">
           <OrderDetails />
         </TabPanel>
-        <TabPanel value="3">
+        <TabPanel style={{ padding: "0px" }} value="3">
           <UpdateOrder />
         </TabPanel>
-        <TabPanel value="4">
+        <TabPanel style={{ padding: "0px" }} value="4">
           <SellerBooks />
         </TabPanel>
       </TabContext>
