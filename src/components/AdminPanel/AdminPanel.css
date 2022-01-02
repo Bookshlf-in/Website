@@ -14,87 +14,15 @@
 }
 
 /* GetOrderDeatils css */
-.god-cont {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 50px;
-  background-color: rgb(231, 231, 231);
+.admin-orders .MuiDataGrid-cell {
+  font-size: 10px !important;
 }
 
-.god-search {
-  margin-bottom: 50px;
+.admin-orders .MuiChip-root {
+  cursor: pointer;
+  font-family: "PT sans";
 }
 
-.god-search-id {
-  padding: 15px 20px;
-  width: 350px;
-  border: 0.1px solid rgb(240, 79, 79);
-  box-sizing: border-box;
-  outline: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-}
-
-.god-search-id::placeholder {
-  color: rgb(240, 79, 79);
-}
-
-.god-search-id:focus {
-  border: 0.5px solid rgb(97, 226, 136);
-  transition: 0.3s ease-in-out;
-}
-
-.god-search-id:focus::placeholder {
-  color: rgb(97, 226, 136);
-}
-
-.god-search-button {
-  padding: 15px 20px;
-  margin-left: 20px;
-  width: 150px;
-  display: inline-block;
-  outline: none;
-  background-color: black;
-  color: white;
-  border: none;
-  font-family: "PT sans", sans-serif;
-  letter-spacing: 2px;
-}
-
-.god-search-button:hover {
-  background-color: rgb(240, 79, 79);
-  transition: 0.2s ease-in-out;
-  font-weight: bold;
-}
-.god-table {
-  margin: 20px;
-}
-.god-table table,
-th,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-.god-table th {
-  padding: 20px;
-  text-align: left;
-  background-color: rgb(65, 64, 64);
-  color: white;
-}
-
-.god-table td {
-  padding: 20px;
-  text-align: left;
-  font-family: "Courier New", Courier, monospace;
-}
-
-.god-table tr:nth-child(even) {
-  background-color: #eee;
-}
-
-.god-table tr:nth-child(odd) {
-  background-color: #fff;
+.admin-orders i.fas.fa-rupee-sign {
+  font-size: 12px;
 }

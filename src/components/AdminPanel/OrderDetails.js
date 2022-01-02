@@ -1,211 +1,220 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "../../axios";
-const GetOrderDetails = (props) => {
-  const [orderlist, setorderlist] = useState([]);
+
+// components
+import Stack from "@mui/material/Stack";
+import { DataGrid } from "@mui/x-data-grid";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Chip from "@mui/material/Chip";
+import Pagination from "@mui/material/Pagination";
+
+// icons
+import LoadIcon from "@material-ui/icons/AutorenewRounded";
+import CheckIcon from "@material-ui/icons/CheckCircleRounded";
+import PendingIcon from "@material-ui/icons/AccessTimeRounded";
+import CallIcon from "@material-ui/icons/CallRounded";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    fontFamily: "PT sans !important",
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+    "& ul": {
+      "& li": {
+        "& button": {
+          fontFamily: "PT sans !important",
+        },
+      },
+    },
+  },
+}));
+
+const GetOrderDetails = () => {
+  const classes = useStyles();
+
+  // functionality States
+  const [orderLoad, setorderLoad] = useState(false);
+
+  // data States
+  const [orderList, setorderList] = useState([]);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(0);
-  const [load, setload] = useState(false);
-  const GetOrderList = () => {
-    setload(true);
+
+  const GetOrderList = (pageNo) => {
+    setorderLoad(true);
+    setpage(pageNo);
     axios
-      .get("/admin-getOrderList")
+      .get(`/admin-getOrderList?page=${pageNo}`)
       .then((response) => {
-        setorderlist(response.data.data);
+        setorderLoad(false);
+        setorderList(response.data.data);
         settotalPages(response.data.totalPages);
-        // console.log(response.data);
-        setload(false);
+        console.log(response.data);
       })
       .catch((error) => {});
   };
-  const LoadMore = () => {
-    if (page + 1 <= totalPages) {
-      axios
-        .get("/admin-getOrderList", {
-          params: { page: page + 1, noOfBooksInOnePage: 10 },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          setpage(page + 1);
-          settotalPages(response.data.totalPages);
-          setorderlist(orderlist.concat(response.data.data));
-        })
-        .catch((error) => {});
-    }
-  };
-  return (
-    <div className="god-cont">
-      <button
-        type="submit"
-        className="findprofile-email-button"
-        onClick={(e) => {
-          e.preventDefault();
-          GetOrderList();
-        }}
-      >
-        Fetch Orders List / Update
-      </button>
-      <div className="god-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Order No.</th>
-              <th>Seller Details</th>
-              <th>Customer Details</th>
-              <th>Order Details</th>
-              <th>Track Order</th>
-            </tr>
-          </thead>
-          {load ? (
-            <tbody>
-              <tr>
-                <td>
-                  <i
-                    className="fas fa-circle-notch"
-                    style={{
-                      display: load ? "inline-block" : "none",
-                      animation: "spin 2s linear infinite",
-                      fontSize: "32px",
-                    }}
-                  />
-                </td>
-                <td>
-                  <i
-                    className="fas fa-circle-notch"
-                    style={{
-                      display: load ? "inline-block" : "none",
-                      animation: "spin 2s linear infinite",
-                      fontSize: "32px",
-                    }}
-                  />
-                </td>
-                <td>
-                  <i
-                    className="fas fa-circle-notch"
-                    style={{
-                      display: load ? "inline-block" : "none",
-                      animation: "spin 2s linear infinite",
-                      fontSize: "32px",
-                    }}
-                  />
-                </td>
-                <td>
-                  <i
-                    className="fas fa-circle-notch"
-                    style={{
-                      display: load ? "inline-block" : "none",
-                      animation: "spin 2s linear infinite",
-                      fontSize: "32px",
-                    }}
-                  />
-                </td>
-                <td>
-                  <i
-                    className="fas fa-circle-notch"
-                    style={{
-                      display: load ? "inline-block" : "none",
-                      animation: "spin 2s linear infinite",
-                      fontSize: "32px",
-                    }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          ) : (
-            <tbody>
-              {orderlist.length > 0 ? (
-                <>
-                  {orderlist.map((order, i) => (
-                    <tr>
-                      <td>{i + 1}</td>
-                      <td>
-                        <ul>
-                          <li>{"Seller Name : " + order.sellerName}</li>
-                          <li>{"Seller ID : " + order.sellerId}</li>
-                          <li>
-                            {"Seller Address : " +
-                              order.sellerAddress.address +
-                              " " +
-                              order.sellerAddress.city +
-                              " " +
-                              order.sellerAddress.state +
-                              " " +
-                              order.sellerAddress.zipCode}
-                          </li>
-                          <li>{"Address ID : " + order.sellerAddress._id}</li>
-                          <li>
-                            {"Seller Contact Number : " +
-                              order.sellerAddress.phoneNo}
-                          </li>
-                        </ul>
-                      </td>
-                      <td>
-                        <ul>
-                          <li>{"Customer Name : " + order.customerName}</li>
-                          <li>{"Customer ID : " + order.customerId}</li>
-                          <li>
-                            {"Address : " +
-                              order.customerAddress.address +
-                              " " +
-                              order.customerAddress.city +
-                              " " +
-                              order.customerAddress.state +
-                              " " +
-                              order.customerAddress.zipCode}
-                          </li>
-                          <li>{"Address ID : " + order.customerAddress._id}</li>
-                          <li>
-                            {"Contact Number : " +
-                              order.customerAddress.phoneNo}
-                          </li>
-                        </ul>
-                      </td>
-                      <td>
-                        <ul>
-                          <li>{"Order ID : " + order._id}</li>
-                          <li>{"Book ID : " + order.bookId}</li>
-                          <li>{"Order Total : " + order.orderTotal + "/-"}</li>
-                          <li>{"Payment Mode : " + order.paymentMode}</li>
-                          <li>{"Payment Status : " + order.paymentStatus}</li>
-                        </ul>
-                      </td>
-                      <td>
-                        <Link
-                          className="tracking-order-link"
-                          to={`/AdminTrack/${order._id}`}
-                          target="_blank"
-                        >
-                          Update&nbsp;this&nbsp;Order
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </>
-              ) : (
-                <></>
-              )}
-            </tbody>
-          )}
 
-          <tfoot>
-            <tr>
-              <td>---</td>
-              <td>---</td>
-              <td>---</td>
-              <td>---</td>
-              <td>---</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      {page + 1 <= totalPages ? (
-        <button onClick={() => LoadMore()} style={{ marginTop: "20px" }}>
-          More
-        </button>
-      ) : (
-        <></>
-      )}
-    </div>
+  const columns = [
+    {
+      field: "orderId",
+      headerName: "Order ID",
+      width: 180,
+      sortable: false,
+    },
+    {
+      field: "orderTotal",
+      headerName: "Order Total",
+      width: 150,
+      sortable: false,
+      renderCell: (price) => {
+        return (
+          <Chip
+            icon={<i className="fas fa-rupee-sign" />}
+            label={price.value}
+            size="small"
+            variant="filled"
+            color="default"
+          />
+        );
+      },
+    },
+    {
+      field: "payMode",
+      headerName: "Payment Mode",
+      maxWidth: 200,
+      minWidth: 170,
+      sortable: false,
+    },
+    {
+      field: "status",
+      headerName: "Payment Status",
+      width: 150,
+      sortable: false,
+      renderCell: (status) => {
+        return (
+          <Chip
+            label={status.value}
+            size="small"
+            icon={status.value === "Paid" ? <CheckIcon /> : <PendingIcon />}
+            color={status.value === "Paid" ? "success" : "warning"}
+          />
+        );
+      },
+    },
+    {
+      field: "orderStatus",
+      headerName: "Order Status",
+      width: 150,
+      sortable: false,
+      renderCell: (status) => {
+        return (
+          <Chip
+            label={status.value[status.value.length - 1]}
+            size="small"
+            variant="outlined"
+            color="secondary"
+          />
+        );
+      },
+    },
+    {
+      field: "customerContact",
+      headerName: "Customer Contact",
+      width: 150,
+      sortable: false,
+      renderCell: (phone) => {
+        return (
+          <Chip
+            label={phone.value}
+            size="small"
+            icon={<CallIcon />}
+            color="primary"
+          />
+        );
+      },
+    },
+    {
+      field: "sellerContact",
+      headerName: "Seller Contact",
+      width: 150,
+      sortable: false,
+      renderCell: (phone) => {
+        return (
+          <Chip
+            label={phone.value}
+            size="small"
+            icon={<CallIcon />}
+            color="primary"
+          />
+        );
+      },
+    },
+  ];
+
+  const rows = orderList.map((order) => {
+    return {
+      id: order._id,
+      orderId: order._id,
+      orderTotal: order.orderTotal,
+      payMode: order.paymentMode,
+      status: order.paymentStatus,
+      orderStatus: order.status,
+      customerContact: order.customerAddress.phoneNo,
+      sellerContact: order.sellerAddress.phoneNo,
+    };
+  });
+
+  return (
+    <Stack
+      direction="column"
+      spacing={2}
+      sx={{
+        height: "123vh",
+        width: "100%",
+        padding: "10px",
+      }}
+      justifyContent="center"
+      alignItems="center"
+      className="admin-orders"
+    >
+      <LoadingButton
+        loading={orderLoad}
+        loadingPosition="start"
+        startIcon={<LoadIcon />}
+        variant="contained"
+        className={classes.root}
+        color="success"
+        onClick={() => GetOrderList(1)}
+      >
+        Fetch Order List
+      </LoadingButton>
+      <Pagination
+        count={totalPages}
+        page={page}
+        onChange={(e, pageNo) => {
+          GetOrderList(pageNo);
+        }}
+        color="primary"
+        className={classes.root}
+      />
+      <DataGrid
+        style={{
+          fontFamily: "PT Sans",
+          width: "100%",
+          padding: "10px",
+        }}
+        rows={rows}
+        columns={columns}
+        pageSize={10}
+        rowBuffer={4}
+        hideFooterPagination
+        className={classes.root}
+        loading={orderLoad}
+      />
+    </Stack>
   );
 };
 
