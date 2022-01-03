@@ -1,38 +1,102 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "../../axios";
-import { Link } from "react-router-dom";
-import Fade from "@material-ui/core/Fade";
 
-function BookVerification() {
-  const [books, setbooks] = useState(null);
-  const [filteredbooks, setfilteredbooks] = useState(null);
+// components
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Avatar from "@mui/material/Avatar";
+import Alert from "@material-ui/lab/Alert";
+import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Pagination from "@mui/material/Pagination";
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
+// icons
+import LoadIcon from "@material-ui/icons/AutorenewRounded";
+import DeleteIcon from "@material-ui/icons/Delete";
+import CheckIcon from "@material-ui/icons/CheckCircleRounded";
+import CancelIcon from "@material-ui/icons/CancelRounded";
+import NextIcon from "@material-ui/icons/NavigateNextRounded";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    "& span": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px",
+    },
+    "& label": {
+      fontFamily: "PT sans !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+    "& ul": {
+      "& li": {
+        "& button": {
+          fontFamily: "PT sans !important",
+        },
+      },
+    },
+  },
+});
+
+const BookVerification = () => {
+  const classes = useStyles();
+  const history = useHistory();
+
+  // functionality States
+  const [showverify, setshowverify] = useState(false);
+  const [load, setload] = useState(false);
+  const [bookDel, setbookDel] = useState("");
+  const [checkId, setcheckId] = useState("");
+  const [rejectId, setrejectId] = useState("");
+  const [rejectOpen, setrejectOpen] = useState(false);
+
+  // data States
+  const [books, setbooks] = useState([]);
+  const [verifiedbooks, setverifiedbooks] = useState([]);
+  const [notVerifiedbooks, setNotVerifiedbooks] = useState([]);
   const [totalPages, settotalPages] = useState(0);
   const [page, setpage] = useState(1);
-  const [load, setload] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [open, setopen] = useState(null);
-  const [rejectmsg, setrejectmsg] = useState("");
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-    setopen(null);
-    setrejectmsg("");
-  };
+  const [rejectMsg, setrejectMsg] = useState("");
+  const [bookReject, setbookReject] = useState({
+    title: "",
+    content: "",
+    id: "",
+    img: "",
+  });
 
-  const getBooks = async () => {
+  // fetchings book lists
+  const getBooks = async (pageNo) => {
     setload(true);
+    setpage(pageNo);
     axios
       .get("/admin-getBookList", {
-        params: { page: 1, noOfBooksInOnePage: 10 },
+        params: { page: pageNo, noOfBooksInOnePage: 10 },
       })
       .then((response) => {
         setbooks(response.data.data);
-        console.log(response.data.data);
         settotalPages(response.data.totalPages);
-        setfilteredbooks(
-          response.data.data.filter(
-            (book) =>
-              book.isApproved === false && book.status !== "Approval rejected"
-          )
+        setverifiedbooks(
+          response.data.data.filter((book) => book.isApproved === true)
+        );
+        setNotVerifiedbooks(
+          response.data.data.filter((book) => book.isApproved === false)
         );
         setload(false);
       })
@@ -40,293 +104,413 @@ function BookVerification() {
         setload(false);
       });
   };
-  const ApproveBook = (e, id) => {
-    e.target.innerHTML = "Approving...";
+
+  // approving books
+  const ApproveBook = (bookId) => {
+    setcheckId(bookId);
     axios
       .post("/admin-approveBook", {
-        bookId: id,
+        bookId: bookId,
       })
       .then((response) => {
-        console.log(response.data.msg);
-        setfilteredbooks(
-          filteredbooks.filter(
-            (book) => book._id !== id && book.status !== "Approval rejected"
-          )
+        setcheckId("");
+        setNotVerifiedbooks(
+          notVerifiedbooks.filter((book) => book._id !== bookId)
         );
-        e.target.innerHTML = "Approved";
+        console.log(response.data.msg);
       })
       .catch((error) => {
+        setcheckId("");
         console.log(error.response.data);
-        e.target.innerHTML = "Error Occured!";
-        setTimeout(() => {
-          e.target.innerHTML = "Not Approved";
-        }, 3000);
       });
   };
-  const RejectBook = (e, id) => {
-    if (rejectmsg.length > 10) {
-      e.target.innerHTML = "Rejecting...";
-      axios
-        .post("/admin-rejectBookApproval", {
-          bookId: id,
-          message: rejectmsg,
-        })
-        .then((response) => {
-          console.log(response.data.msg);
-          setfilteredbooks(
-            filteredbooks.filter(
-              (book) => book._id !== id && book.status !== "Approval rejected"
-            )
-          );
-          handleChange();
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
-    }
+
+  // Reject Book
+  const RejectBook = (book, bookId) => {
+    setrejectOpen(true);
+    setbookReject({
+      title: book.title,
+      content:
+        "Reject Book - " +
+        book.title +
+        ". This Book will Be Rejected Back to Seller.",
+      id: bookId,
+      img: book.photos[0],
+    });
   };
-  const deleteBook = (e, id) => {
-    e.target.innerHTML = "Deleting...";
+
+  const RejectBookDialog = (bookId, msg) => {
+    setrejectOpen(false);
+    setrejectId(bookId);
+    axios
+      .post("/admin-rejectBookApproval", {
+        bookId: bookId,
+        message: msg,
+      })
+      .then((response) => {
+        setrejectId("");
+        history.go(0);
+      })
+      .catch((error) => {
+        setcheckId("");
+        console.log(error.response.data);
+      });
+  };
+
+  // Deleting Books
+  const handelDeleteBook = (bookId) => {
+    setbookDel(bookId);
     axios
       .delete("/admin-deleteBook", {
-        data: { bookId: id, message: "Book is not Appropriate" },
+        data: {
+          bookId: bookId,
+          message: "Book is not Appropriate and Have Many Unavoidable errors",
+        },
       })
       .then((response) => {
-        console.log(response.data.msg);
-        books.filter((book) => book._id !== id);
-        setfilteredbooks(
-          filteredbooks.filter(
-            (book) => book._id !== id && book.status !== "Approval rejected"
-          )
+        setbookDel("");
+        setverifiedbooks(verifiedbooks.filter((book) => book._id !== bookId));
+        setNotVerifiedbooks(
+          notVerifiedbooks.filter((book) => book._id !== bookId)
         );
-        e.target.innerHTML = "Delete";
       })
       .catch((error) => {
         console.log(error.response.data);
-        e.target.innerHTML = "Error Occured!";
-        setTimeout(() => {
-          e.target.innerHTML = "Delete";
-        }, 3000);
       });
   };
-  const LoadMore = () => {
-    if (page + 1 <= totalPages) {
-      axios
-        .get("/admin-getBookList", {
-          params: { page: page + 1, noOfBooksInOnePage: 10 },
-        })
-        .then((response) => {
-          setbooks(books.concat(response.data.data));
-          // console.log(response.data.data);
-          setpage(page + 1);
-          settotalPages(response.data.totalPages);
-          setfilteredbooks(
-            books
-              .concat(response.data.data)
-              .filter(
-                (book) =>
-                  book.isApproved === false &&
-                  book.status !== "Approval rejected"
-              )
-          );
-        })
-        .catch((error) => {});
-    }
-  };
-  return (
-    <div className="bv-cont">
-      <button
-        type="submit"
-        className="findprofile-email-button"
-        onClick={(e) => {
-          e.preventDefault();
-          getBooks();
-        }}
-      >
-        Fetch Books / Update
-      </button>
-      <br />
-      <select
-        className="bv-btns"
-        onChange={(e) => {
-          if (books) {
-            if (e.target.value === "Unverified") {
-              setfilteredbooks(
-                books.filter(
-                  (book) =>
-                    book.isApproved === false &&
-                    book.status !== "Approval rejected"
-                )
-              );
-            } else {
-              setfilteredbooks(
-                books.filter(
-                  (book) =>
-                    book.isApproved === true &&
-                    book.status !== "Approval rejected"
-                )
-              );
-            }
-          }
-        }}
-      >
-        <option value="Unverified">Not Approved</option>
-        <option value="Verified">Approved</option>
-      </select>
 
-      <div className="bv-items-cont">
-        {load ? (
-          <i
-            className="fas fa-circle-notch"
-            style={{
-              display: load ? "inline-block" : "none",
-              animation: "spin 2s linear infinite",
-              fontSize: "64px",
-              marginTop: "40px",
-            }}
+  return (
+    <Stack
+      direction="column"
+      spacing={2}
+      sx={{
+        width: "100%",
+        padding: "10px",
+      }}
+      justifyContent="center"
+      alignItems="center"
+      className="admin-book-verify-container"
+    >
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ width: "100%" }}
+        justifyContent="space-evenly"
+      >
+        <LoadingButton
+          loading={load}
+          loadingPosition="start"
+          startIcon={<LoadIcon />}
+          variant="contained"
+          className={classes.root}
+          onClick={() => getBooks(1)}
+        >
+          Fetch Books
+        </LoadingButton>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={!showverify}
+                onChange={(e, value) => {
+                  setshowverify((prev) => !prev);
+                  getBooks(page);
+                }}
+                color="error"
+              />
+            }
+            label="Show Not Verified Books"
+            labelPlacement="bottom"
+            className={classes.root}
           />
-        ) : (
-          <>
-            {filteredbooks ? (
-              <>
-                {filteredbooks.map((book, i) => (
-                  <div className="bv-items-inner-cont" key={i}>
-                    <div
-                      className="Delete-book"
-                      onClick={(e) => {
-                        deleteBook(e, book._id);
+        </FormGroup>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={showverify}
+                onChange={(e, value) => {
+                  setshowverify((prev) => !prev);
+                  getBooks(page);
+                }}
+                color="success"
+              />
+            }
+            label="Show Verified Books"
+            labelPlacement="bottom"
+            className={classes.root}
+          />
+        </FormGroup>
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ width: "100%" }}
+        justifyContent="space-evenly"
+      >
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={(e, pageNo) => {
+            getBooks(pageNo);
+          }}
+          color="primary"
+          className={classes.root}
+        />
+      </Stack>
+      <Grid container spacing={2}>
+        {showverify ? (
+          verifiedbooks.length > 0 ? (
+            verifiedbooks.map((book, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: 400,
+                    border: "0.5px solid rgba(99, 99, 99, 0.1)",
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    padding: "10px",
+                  }}
+                >
+                  <Stack
+                    direction="column"
+                    sx={{ width: "100%", padding: "10px" }}
+                    spacing={1}
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Avatar
+                      alt={book.title}
+                      src={book.photos[0]}
+                      sx={{ height: 150, width: 110 }}
+                      variant="rounded"
+                    />
+                    <Typography
+                      align="center"
+                      className={classes.root}
+                      variant="body2"
+                    >
+                      {book.title}
+                    </Typography>
+                    <Chip
+                      icon={<i className="fas fa-rupee-sign" />}
+                      label={book.price}
+                      className={classes.root}
+                    />
+                    <Chip
+                      icon={<CheckIcon />}
+                      label="Approved"
+                      className={classes.root}
+                      color="success"
+                      size="small"
+                    />
+                    <Button
+                      variant="outlined"
+                      endIcon={<NextIcon />}
+                      className={classes.root}
+                      color="primary"
+                      onClick={() => {
+                        history.push(`/AdminBook/${book._id}`);
                       }}
                     >
-                      Delete
-                    </div>
-                    <div className="bv-item1">
-                      <div className="search-book">
-                        <div className="search-book-pic">
-                          <img
-                            src={book.photos[0]}
-                            alt={book.title}
-                            title={book.title}
-                            height="100%"
-                            width="100%"
-                            className="bs-image"
-                          />
-                        </div>
-                        <div className="search-book-details">
-                          <p className="details-para1">{book.title}</p>
-                          <p className="details-para3">
-                            {book.author} Edition : {book.editionYear}
-                          </p>
-                          <p className="details-para4">
-                            <i className="fas fa-rupee-sign" />
-                            &nbsp;{book.price}
-                            &nbsp;/-
-                          </p>
-                          <div
-                            title="View Book Details"
-                            className="book-more-details"
-                          >
-                            <Link to={`/AdminBook/${book._id}`}>
-                              More Details&nbsp;
-                              <i className="fas fa-angle-double-right" />
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bv-item2">
-                      <div
-                        className={`bv-verify ${
-                          book.isApproved
-                            ? "verified-user"
-                            : "non-verified-user"
-                        }`}
-                        title="Click to Approve the book"
-                        onClick={(e) => {
-                          ApproveBook(e, book._id);
-                        }}
-                      >
-                        {book.isApproved ? "Approved" : "Not Approved"}
-                      </div>
-                      <>
-                        {book.isApproved === false ? (
-                          <>
-                            <div
-                              className="bv-verify reject-book"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleChange();
-                                setopen(book._id);
-                              }}
-                              style={{
-                                display:
-                                  checked && book._id === open ? "none" : "",
-                              }}
-                            >
-                              Reject
-                            </div>
-                            <Fade
-                              in={checked && book._id === open}
-                              style={{
-                                display: !(checked && book._id === open)
-                                  ? "none"
-                                  : "",
-                                marginLeft: "10px",
-                                border: "1px solid black",
-                                padding: "10px",
-                              }}
-                            >
-                              <div>
-                                <input
-                                  type="text"
-                                  placeholder="Rejection Message"
-                                  className="Reject-msg"
-                                  value={rejectmsg}
-                                  onChange={(e) => setrejectmsg(e.target.value)}
-                                />
-                                <button
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    RejectBook(e, book._id);
-                                  }}
-                                  className="reject-btn"
-                                >
-                                  Reject
-                                </button>
-                                <button
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    handleChange();
-                                  }}
-                                  className="reject-btn"
-                                >
-                                  X
-                                </button>
-                              </div>
-                            </Fade>
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    </div>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <></>
-            )}
-          </>
+                      More Details
+                    </Button>
+                    <LoadingButton
+                      loading={bookDel === book._id ? true : false}
+                      loadingPosition="start"
+                      startIcon={<DeleteIcon />}
+                      variant="contained"
+                      className={classes.root}
+                      onClick={() => {
+                        handelDeleteBook(book._id);
+                      }}
+                      color="error"
+                    >
+                      Delete Book
+                    </LoadingButton>
+                  </Stack>
+                </Box>
+              </Grid>
+            ))
+          ) : (
+            <Grid item sm={12} md={12} lg={12} xs={12}>
+              <Alert severity="error" className={classes.root} color="warning">
+                No Books in this Page
+              </Alert>
+            </Grid>
+          )
+        ) : notVerifiedbooks.length > 0 ? (
+          notVerifiedbooks.map((book, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+              <Box
+                sx={{
+                  width: "100%",
+                  height: 400,
+                  border: "0.5px solid rgba(99, 99, 99, 0.1)",
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                  padding: "10px",
+                }}
+              >
+                <Stack
+                  direction="column"
+                  sx={{ width: "100%", padding: "10px" }}
+                  spacing={1}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Avatar
+                    alt={book.title}
+                    src={book.photos[0]}
+                    sx={{ height: 150, width: 110 }}
+                    variant="rounded"
+                  />
+                  <Typography
+                    align="center"
+                    className={classes.root}
+                    variant="body2"
+                  >
+                    {book.title}
+                  </Typography>
+                  <Chip
+                    icon={<i className="fas fa-rupee-sign" />}
+                    label={book.price}
+                    className={classes.root}
+                  />
+                  <Chip
+                    icon={<CancelIcon />}
+                    label="Not Approved"
+                    className={classes.root}
+                    color="error"
+                    size="small"
+                  />
+                  <Button
+                    variant="outlined"
+                    endIcon={<NextIcon />}
+                    className={classes.root}
+                    color="primary"
+                    onClick={() => {
+                      history.push(`/AdminBook/${book._id}`);
+                    }}
+                    size="small"
+                  >
+                    More Details
+                  </Button>
+                  <Stack direction="row" spacing={1}>
+                    <LoadingButton
+                      loading={checkId === book._id ? true : false}
+                      loadingPosition="start"
+                      startIcon={<CheckIcon />}
+                      variant="contained"
+                      className={classes.root}
+                      onClick={() => ApproveBook(book._id)}
+                      color="success"
+                      size="small"
+                    >
+                      {checkId === book._id ? "Approving..." : "Approve"}
+                    </LoadingButton>
+                    <LoadingButton
+                      loading={rejectId === book._id ? true : false}
+                      loadingPosition="start"
+                      startIcon={<CancelIcon />}
+                      variant="contained"
+                      className={classes.root}
+                      onClick={() => RejectBook(book, book._id)}
+                      color="warning"
+                      size="small"
+                      disabled={
+                        book.status === "Approval rejected" ? true : false
+                      }
+                    >
+                      {book.status === "Approval rejected"
+                        ? "Rejected"
+                        : "Reject"}
+                    </LoadingButton>
+                  </Stack>
+                  <LoadingButton
+                    loading={bookDel === book._id ? true : false}
+                    loadingPosition="start"
+                    startIcon={<DeleteIcon />}
+                    variant="contained"
+                    className={classes.root}
+                    onClick={() => {
+                      handelDeleteBook(book._id);
+                    }}
+                    color="error"
+                    size="small"
+                  >
+                    Delete Book
+                  </LoadingButton>
+                </Stack>
+              </Box>
+            </Grid>
+          ))
+        ) : (
+          <Grid item sm={12} md={12} lg={12} xs={12}>
+            <Alert severity="error" className={classes.root} color="warning">
+              No Books in this Page
+            </Alert>
+          </Grid>
         )}
-      </div>
-      {page + 1 <= totalPages ? (
-        <button onClick={() => LoadMore()} style={{ marginTop: "20px" }}>
-          More
-        </button>
-      ) : (
-        <></>
-      )}
-    </div>
+      </Grid>
+      <Dialog
+        open={rejectOpen}
+        onClose={() => setrejectOpen(false)}
+        className={classes.root}
+      >
+        <DialogTitle className={classes.root}>{bookReject.title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Avatar
+              alt={bookReject.title}
+              src={bookReject.img}
+              sx={{ height: 150, width: 110 }}
+              variant="rounded"
+            />
+          </DialogContentText>
+          <DialogContentText className={classes.root}>
+            {bookReject.content}
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Rejection Message With Reason"
+            type="text"
+            fullWidth
+            variant="standard"
+            className={classes.root}
+            value={rejectMsg}
+            onChange={(e) => setrejectMsg(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setrejectOpen(false)}
+            variant="outlined"
+            className={classes.root}
+            color="error"
+            size="small"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => RejectBookDialog(bookReject.id, rejectMsg)}
+            variant="outlined"
+            className={classes.root}
+            color="warning"
+            size="small"
+          >
+            Reject Book
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Stack>
   );
-}
+};
 
 export default BookVerification;

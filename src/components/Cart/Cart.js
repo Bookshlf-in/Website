@@ -4,8 +4,9 @@ import { useHistory } from "react-router-dom";
 import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Alert from "@material-ui/lab/Alert";
 
 function Cart() {
   const history = useHistory();
@@ -55,7 +56,7 @@ function Cart() {
               cartItemId: cart[i]._id,
               purchaseQty: cart[i].purchaseQty,
             })
-            .catch(() => { });
+            .catch(() => {});
         };
         update();
       }
@@ -77,7 +78,7 @@ function Cart() {
               cartItemId: cart[i]._id,
               purchaseQty: cart[i].purchaseQty,
             })
-            .catch(() => { });
+            .catch(() => {});
         };
         update();
       }
@@ -118,7 +119,7 @@ function Cart() {
           wishlist: user.wishlist,
         });
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const handelUpdateCart = () => {
@@ -137,7 +138,7 @@ function Cart() {
                 history.push("/Checkout/cart");
               }
             })
-            .catch(() => { });
+            .catch(() => {});
         };
         update();
       }
@@ -157,24 +158,11 @@ function Cart() {
             textAlign: "center",
           }}
         >
-          <div>
-            <i
-              className="far fa-frown"
-              style={{
-                fontSize: "10em",
-                color: "rgba(255,0,0,0.4)",
-              }}
-            />
-            <br />
-            <h1
-              style={{
-                fontSize: "3",
-                color: "rgba(255,0,0,0.4)",
-              }}
-            >
-              Please Login to See Your CartList!
-            </h1>
-          </div>
+          <Alert severity="warning" variant="outlined">
+            <strong style={{ fontFamily: "PT sans" }}>
+              Please Login to See Your Cart Items
+            </strong>
+          </Alert>
         </div>
       ) : (
         <>
@@ -203,7 +191,11 @@ function Cart() {
                   // Cart item starts
                   <div className="cart-item" key={idx}>
                     <div className="cart-item-img">
-                      <Avatar src={item.photo} alt={item.title} sx={{ width: 150, height: 150 }} />
+                      <Avatar
+                        src={item.photo}
+                        alt={item.title}
+                        sx={{ width: 150, height: 150 }}
+                      />
                     </div>
                     <div className="cart-item-details">
                       <h2>{item.title}</h2>
@@ -230,15 +222,20 @@ function Cart() {
                           </>
                         )}
                       </h4>
-                      <Button variant="contained" href={`/BookDetails/${item.bookId}`} color="primary" style={{
-                        fontSize: "12px",
-                        backgroundColor: "blue",
-                        color: "aliceblue",
-                        padding: "10px",
-                        fontFamily: "PT Sans",
-                        cursor: "pointer",
-                        marginLeft: "5px",
-                      }}>
+                      <Button
+                        variant="contained"
+                        href={`/BookDetails/${item.bookId}`}
+                        color="primary"
+                        style={{
+                          fontSize: "12px",
+                          backgroundColor: "blue",
+                          color: "aliceblue",
+                          padding: "10px",
+                          fontFamily: "PT Sans",
+                          cursor: "pointer",
+                          marginLeft: "5px",
+                        }}
+                      >
                         More Details&nbsp;
                         <i className="fas fa-angle-right" />
                       </Button>

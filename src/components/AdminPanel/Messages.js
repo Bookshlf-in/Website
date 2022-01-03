@@ -1,241 +1,336 @@
 import { React, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from "../../axios";
 
-const Messages = (props) => {
+// components
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import LoadingButton from "@mui/lab/LoadingButton";
+import IconButton from "@mui/material/IconButton";
+import Pagination from "@mui/material/Pagination";
+
+// icons
+import CircularProgress from "@material-ui/core/CircularProgress";
+import LoadIcon from "@material-ui/icons/AutorenewRounded";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import CheckIcon from "@material-ui/icons/CheckCircleRounded";
+import CheckCircleIcon from "@material-ui/icons/CheckCircleOutlineRounded";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    "& label": {
+      fontFamily: "PT sans !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+    "& textarea": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+    "& button": {
+      "&:hover": {
+        color: "black !important",
+      },
+    },
+    "& span": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px",
+    },
+    "& ul": {
+      "& li": {
+        "& button": {
+          fontFamily: "PT sans !important",
+        },
+      },
+    },
+  },
+});
+
+const Messages = () => {
+  const classes = useStyles();
+
+  // functionality States
+  const [shownotseen, setshownotseen] = useState(false);
+  const [msgload, setmsgload] = useState(false);
+  const [msgdeleteId, setmsgdeleteId] = useState("");
+  const [msgreadId, setmsgreadId] = useState("");
+
+  // data states
   const [messages, setmessages] = useState([]);
   const [filteredMessages, setfilteredMessages] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
-  const [load, setload] = useState(false);
-  const [page, setpage] = useState(1);
-  const [type, settype] = useState("UnRead");
+  const [totalPages, setTotalPages] = useState(1);
+  const [Page, setpage] = useState(1);
 
-  const filter = (read) => {
-    setfilteredMessages(
-      messages.filter((message) => {
-        return message.read !== read;
-      })
-    );
-  };
-
-  const getMessages = () => {
-    setload(true);
+  // fetching Messages
+  const handelgetMessages = (pageNo) => {
+    setmsgload(true);
+    setpage(pageNo);
     axios
-      .get("/admin-getMessageList", { params: { page: 1 } })
+      .get(`/admin-getMessageList?page=${pageNo}&noOfMessagesInOnePage=3`)
       .then((response) => {
-        setmessages(response.data.data);
         setTotalPages(response.data.totalPages);
-        setfilteredMessages(
-          response.data.data.filter((message) => {
-            return message.read === false;
-          })
-        );
-        setload(false);
-        console.log(response.data);
+        setmessages(response.data.data);
+        setfilteredMessages(response.data.data);
+        setmsgload(false);
       })
       .catch((error) => {
-        setload(false);
+        console.log(error.response.data);
+        setmsgload(false);
       });
   };
-  const LoadMore = () => {
-    if (page + 1 <= totalPages) {
-      axios
-        .get("/admin-getMessageList", { params: { page: page + 1 } })
-        .then((response) => {
-          setmessages(messages.concat(response.data.data));
-          setTotalPages(response.data.totalPages);
-          setfilteredMessages(
-            messages.concat(response.data.data).filter((message) => {
-              return message.read === (type === "UnRead" ? false : true);
-            })
-          );
-          setpage(page + 1);
-          console.log(response.data);
-        })
-        .catch((error) => {});
+
+  // deleting Messages
+  const handelDeleteMessages = (msgId) => {
+    setmsgdeleteId(msgId);
+    axios
+      .delete("/admin-deleteMessage", { data: { messageId: msgId } })
+      .then((response) => {
+        setfilteredMessages(
+          filteredMessages.filter((message) => message._id !== msgId)
+        );
+        setmessages(messages.filter((message) => message._id !== msgId));
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  };
+
+  // filtering messages
+  const handelfilterMessages = (seen) => {
+    if (seen) {
+      setfilteredMessages(messages.filter((message) => message.read === false));
+    } else {
+      setfilteredMessages(messages);
     }
   };
-  const MarkAsRead = (e, message, id) => {
-    e.target.className = "fas fa-spinner";
-    e.target.style.animation = "spin 2s linear infinite";
-    message.read = true;
-    axios
-      .post("/admin-markMessageAsRead", {
-        messageId: id,
-      })
-      .then((response) => {
-        setfilteredMessages(
-          messages.filter((message) => {
-            return message.read === (type === "UnRead" ? false : true);
-          })
-        );
-      })
-      .catch((error) => {});
+
+  // Marking messages as Read or Unread
+  const handelReadMessages = (Id, isRead) => {
+    setmsgreadId(Id);
+    if (!isRead) {
+      axios
+        .post("/admin-markMessageAsRead", {
+          messageId: Id,
+        })
+        .then((response) => {
+          setmsgreadId("");
+          setfilteredMessages(
+            filteredMessages.map((message) =>
+              message._id === Id ? { ...message, read: true } : message
+            )
+          );
+          setmessages(
+            messages.map((message) =>
+              message._id === Id ? { ...message, read: true } : message
+            )
+          );
+          if (shownotseen) {
+            handelfilterMessages();
+          }
+        })
+        .catch((error) => {
+          setmsgreadId("");
+        });
+    } else {
+      axios
+        .post("/admin-markMessageAsUnread", {
+          messageId: Id,
+        })
+        .then((response) => {
+          setmsgreadId("");
+          setfilteredMessages(
+            filteredMessages.map((message) =>
+              message._id === Id ? { ...message, read: false } : message
+            )
+          );
+          setmessages(
+            messages.map((message) =>
+              message._id === Id ? { ...message, read: false } : message
+            )
+          );
+        })
+        .catch((error) => {
+          setmsgreadId("");
+        });
+    }
   };
-  const MarkAsUnRead = (e, message, id) => {
-    e.target.className = "fas fa-spinner";
-    e.target.style.animation = "spin 2s linear infinite";
-    message.read = false;
-    axios
-      .post("/admin-markMessageAsUnread", {
-        messageId: id,
-      })
-      .then((response) => {
-        setfilteredMessages(
-          messages.filter((message) => {
-            return message.read === (type === "UnRead" ? false : true);
-          })
-        );
-      })
-      .catch((error) => {});
-  };
-  const DeleteMessage = (e, id) => {
-    e.target.className = "fas fa-spinner";
-    e.target.style.animation = "spin 2s linear infinite";
-    axios
-      .delete("/admin-deleteMessage", {
-        data: { messageId: id },
-      })
-      .then((response) => {
-        setfilteredMessages(
-          filteredMessages.filter((message) => {
-            return message._id !== id;
-          })
-        );
-      })
-      .catch((error) => {});
-  };
+
   return (
-    <div className="messages-cont">
-      <button
-        type="submit"
-        className="findprofile-email-button"
-        onClick={(e) => {
-          e.preventDefault();
-          getMessages();
+    <Stack
+      direction="column"
+      spacing={2}
+      sx={{
+        width: "100%",
+        padding: "10px",
+      }}
+      justifyContent="center"
+      alignItems="center"
+      className="msg-container"
+    >
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          width: "100%",
+          maxWidth: "800px",
         }}
+        justifyContent="space-evenly"
       >
-        Fetch Messages / Update
-      </button>
-      <br />
-      {load ? (
-        <i
-          className="fas fa-circle-notch"
-          style={{
-            display: load ? "inline-block" : "none",
-            animation: "spin 2s linear infinite",
-            fontSize: "64px",
-          }}
-        />
-      ) : (
-        <>
-          <select
-            className="bv-btns"
-            onChange={(e) => {
-              settype(e.target.value);
-              if (e.target.value === "UnRead") {
-                filter(true);
-              } else {
-                filter(false);
-              }
-            }}
-          >
-            <option value="UnRead">Not Seen</option>
-            <option value="Read">Seen</option>
-          </select>
-          {filteredMessages.length ? (
-            <>
-              {filteredMessages.map((message, idx) => (
-                <div className="messages-item" key={idx}>
-                  <div className="messages-item-top">
-                    <p className="messages-top-name">Name : {message.name}</p>
-                    <p className="messages-top-email">
-                      Email :{" "}
-                      <input
-                        id={message._id}
-                        type="text"
-                        value={message.email}
-                        contentEditable="false"
-                      />{" "}
-                      &nbsp;&nbsp;
-                      <i
-                        className="far fa-copy"
-                        title="Copy to Clipboard"
-                        onClick={(e) => {
-                          const mail = document.getElementById(message._id);
-                          mail.select();
-                          document.execCommand("copy");
-                          e.target.innerHTML = "copied!";
-                          setTimeout(() => {
-                            e.target.innerHTML = "";
-                          }, 3000);
-                        }}
-                      ></i>
-                    </p>
-                  </div>
-                  <div className="messages-item-middle">
-                    <p className="messages-middle-sub">Subject :</p>
-                    <div className="messages-middle-sub-containt">
-                      <textarea
-                        className="messages-subject"
-                        value={message.subject}
-                      />
-                    </div>
-                  </div>
-                  <div className="messages-item-bottom">
-                    <p className="messages-bottom-message">Message</p>
-                    <div className="messages-bottom-message-containt">
-                      <textarea
-                        className="messages-desc"
-                        value={message.message}
-                      />
-                    </div>
-                  </div>
-                  <div className="delete-message" title="Delete Message">
-                    <i
-                      className="fas fa-trash-alt"
-                      onClick={(e) => {
-                        DeleteMessage(e, message._id);
-                      }}
-                    />
-                  </div>
-                  <div
-                    className="markasread-message"
-                    title={message.read ? "Mark as UnRead" : "Mark as Read"}
-                  >
-                    <i
-                      className={
-                        message.read ? "fas fa-check-square" : "far fa-square"
-                      }
-                      onClick={(e) => {
-                        if (message.read) {
-                          MarkAsUnRead(e, message, message._id);
-                        } else {
-                          MarkAsRead(e, message, message._id);
-                        }
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  LoadMore();
+        <LoadingButton
+          loading={msgload}
+          loadingPosition="start"
+          startIcon={<LoadIcon />}
+          variant="contained"
+          className={classes.root}
+          onClick={() => handelgetMessages(1)}
+        >
+          Fetch Messages
+        </LoadingButton>
+
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={shownotseen}
+                onChange={(e, value) => {
+                  setshownotseen((prev) => !prev);
+                  handelfilterMessages(value);
                 }}
-                style={{
-                  display: page + 1 <= totalPages ? "block" : "none",
+                color="error"
+              />
+            }
+            label="Show Not Seen Messages"
+            labelPlacement="bottom"
+            className={classes.root}
+          />
+        </FormGroup>
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          width: "100%",
+        }}
+        justifyContent="space-evenly"
+      >
+        <Pagination
+          count={totalPages}
+          page={Page}
+          onChange={(e, pageNo) => {
+            handelgetMessages(pageNo);
+          }}
+          color="primary"
+          className={classes.root}
+        />
+      </Stack>
+      {filteredMessages.map((message, index) => (
+        <Box
+          sx={{
+            width: [300, 400, 800],
+            boxShadow: "2px 3px 5px rgba(0,0,0,0.3)",
+            borderRadius: "10px",
+            cursor: "pointer",
+            padding: "10px",
+          }}
+          key={index}
+        >
+          <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
+            <Stack
+              direction="row"
+              sx={{ width: "100%" }}
+              justifyContent="space-between"
+              spacing={5}
+            >
+              <TextField
+                className={classes.root}
+                label="Email"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <FileCopyIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                fullWidth
+                readOnly
+                variant="filled"
+                value={message.email}
+              />
+              <IconButton
+                aria-label="delete"
+                color="error"
+                className={classes.root}
+                onClick={() => handelDeleteMessages(message._id)}
+              >
+                {message._id === msgdeleteId ? (
+                  <CircularProgress size="1em" color="inherit" />
+                ) : (
+                  <DeleteIcon fontSize="inherit" />
+                )}
+              </IconButton>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={5}
+              sx={{ width: "100%" }}
+              justifyContent="space-evenly"
+            >
+              <TextField
+                className={classes.root}
+                label="Subject"
+                fullWidth
+                readOnly
+                variant="filled"
+                value={message.subject}
+              />
+              <IconButton
+                aria-label="delete"
+                color="success"
+                className={classes.root}
+                onClick={() => {
+                  console.log(message.read);
+                  handelReadMessages(message._id, message.read);
                 }}
               >
-                More&nbsp;
-                <i className="fas fa-caret-down" />
-              </button>
-            </>
-          ) : (
-            <h1>Nothing Here!</h1>
-          )}
-        </>
-      )}
-    </div>
+                {msgreadId === message._id ? (
+                  <CircularProgress size="1em" color="inherit" />
+                ) : message.read ? (
+                  <CheckIcon />
+                ) : (
+                  <CheckCircleIcon />
+                )}
+              </IconButton>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={5}
+              sx={{ width: "100%" }}
+              justifyContent="space-evenly"
+            >
+              <TextField
+                className={classes.root}
+                label="Message"
+                fullWidth
+                readOnly
+                multiline
+                maxRows={4}
+                variant="filled"
+                value={message.message}
+              />
+            </Stack>
+          </Stack>
+        </Box>
+      ))}
+    </Stack>
   );
 };
 

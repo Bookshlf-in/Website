@@ -486,11 +486,11 @@ const AllCategories = () => {
                       >
                         <Link
                           to={{
-                            pathname: "mailto:contact@bookshlf.in",
+                            pathname: "mailto:bookshlf.in@gmail.com",
                           }}
                           target="_blank"
                         >
-                          contact@bookshlf.in
+                          bookshlf.in@gmail.com
                         </Link>
                       </strong>
                       <br />

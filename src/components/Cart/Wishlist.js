@@ -4,6 +4,8 @@ import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "@material-ui/lab/Alert";
+
 const style = {
   padding: "10px",
   border: "1px solid black",
@@ -78,8 +80,9 @@ const Wishlist = () => {
   return (
     <div
       style={{
-        height: "calc(100vh - 90px)",
+        height: "calc(100vh - 56px)",
         width: "100%",
+        backgroundColor: "aliceblue",
       }}
     >
       {user === null ? (
@@ -93,24 +96,11 @@ const Wishlist = () => {
             textAlign: "center",
           }}
         >
-          <div>
-            <i
-              className="far fa-frown"
-              style={{
-                fontSize: "10em",
-                color: "rgba(255,0,0,0.4)",
-              }}
-            />
-            <br />
-            <h1
-              style={{
-                fontSize: "3",
-                color: "rgba(255,0,0,0.4)",
-              }}
-            >
-              Please Login to See Your Wishlist!
-            </h1>
-          </div>
+          <Alert severity="warning" variant="outlined">
+            <strong style={{ fontFamily: "PT sans" }}>
+              Please Login to See or Create Your Wishlist
+            </strong>
+          </Alert>
         </div>
       ) : (
         <>

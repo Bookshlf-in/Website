@@ -177,11 +177,11 @@ function Footer() {
             <div className="footer-contact">
               <Link
                 to={{
-                  pathname: "mailto:contact@bookshlf.in",
+                  pathname: "mailto:bookshlf.in@gmail.com ",
                 }}
                 target="_blank"
               >
-                contact@bookshlf.in
+                bookshlf.in@gmail.com
               </Link>
               <br />
               <Link to="/">+91 97926 66122</Link>
