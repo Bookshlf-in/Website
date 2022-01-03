@@ -28,6 +28,7 @@ import TextField from "@mui/material/TextField";
 import NextIcon from "@material-ui/icons/NavigateNextRounded";
 import CheckIcon from "@material-ui/icons/CheckCircleRounded";
 import CallIcon from "@material-ui/icons/CallRounded";
+import CancelIcon from "@material-ui/icons/CancelRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -71,17 +72,13 @@ const OrderTracking = () => {
   const params = useParams();
   const [order, setorder] = useState({});
   const [load, setload] = useState(false);
-  const [cls, setcls] = useState({
-    Cls: "fas fa-window-close",
-    msg: "Cancel Order",
-  });
-
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const [next, setnext] = useState(false);
-  const [back, setback] = useState(false);
+  const [cancelLoad, setcancelLoad] = useState(false);
   const [paid, setpaid] = useState(false);
   const [trackLink, settrackLink] = useState("");
+  const [payload, setpayload] = useState(false);
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -102,20 +99,17 @@ const OrderTracking = () => {
     fetchdata();
   }, []);
 
-  const handelCancelOrder = (ORDERID) => {
-    setcls({
-      Cls: "fas fa-spinner",
-      msg: "Cancelling Order...",
-    });
+  const handelCancelOrder = () => {
+    setcancelLoad(true);
     axios
       .delete("/admin-markOrderAsCancelled", {
-        data: { orderId: ORDERID },
+        data: { orderId: order._id },
       })
       .then((response) => {
-        setcls({
-          Cls: "fas fa-check-circle",
-          msg: "Order Cancelled",
-        });
+        setcancelLoad(false);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
       });
   };
 
@@ -196,73 +190,7 @@ const OrderTracking = () => {
         .catch();
     }
   };
-  const handlePrevStep = (OrderId) => {
-    setback(true);
-    if (activeStep === 4) {
-      axios
-        .post("/admin-changeOrderProgress", {
-          orderId: OrderId,
-          progress: 75,
-        })
-        .then(() => {
-          setActiveStep(3);
-          setback(false);
-        })
-        .catch(() => {
-          setback(false);
-        });
-    } else if (activeStep === 3) {
-      axios
-        .post("/admin-markOrderAsShipped", { orderId: OrderId })
-        .then((response) => {
-          axios
-            .post("/admin-changeOrderProgress", {
-              orderId: OrderId,
-              progress: 50,
-            })
-            .then(() => {
-              setActiveStep(2);
-              setback(false);
-            })
-            .catch(() => {
-              setback(false);
-            });
-        })
-        .catch();
-    } else if (activeStep === 2) {
-      axios
-        .post("/admin-markOrderAsPacked", { orderId: OrderId })
-        .then((response) => {
-          axios
-            .post("/admin-changeOrderProgress", {
-              orderId: OrderId,
-              progress: 25,
-            })
-            .then(() => {
-              setActiveStep(1);
-              setback(false);
-            })
-            .catch(() => {
-              setback(false);
-            });
-        })
-        .catch();
-    } else if (activeStep === 1) {
-      axios
-        .post("/admin-changeOrderProgress", {
-          orderId: OrderId,
-          progress: 0,
-        })
-        .then(() => {
-          setActiveStep(0);
-          setback(false);
-        })
-        .catch(() => {
-          setback(false);
-        });
-    }
-  };
-  const [payload, setpayload] = useState(false);
+
   const sendSellerPay = () => {
     setpayload(true);
     axios
@@ -754,7 +682,6 @@ const OrderTracking = () => {
             <TextField
               className={classes.root}
               label="External Order Tracking Link"
-              // helperText="Add External Order Tracking Link for Customer"
               variant="standard"
               sx={{ width: 400 }}
               onChange={(e) => settrackLink(e.target.value)}
@@ -814,31 +741,6 @@ const OrderTracking = () => {
               className={classes.root}
               variant="contained"
               color="primary"
-              onClick={() => handlePrevStep(order._id)}
-              disabled={activeStep === 0}
-            >
-              {back ? (
-                <>
-                  <CircularProgress
-                    style={{
-                      color: "white",
-                      height: "15px",
-                      width: "15px",
-                      fontWeight: "bold",
-                    }}
-                  />
-                  &nbsp;&nbsp;
-                </>
-              ) : (
-                <></>
-              )}
-              Back
-            </Button>
-
-            <Button
-              className={classes.root}
-              variant="contained"
-              color="primary"
               onClick={() => handleNextStep(order._id)}
               disabled={activeStep === 4}
             >
@@ -868,19 +770,18 @@ const OrderTracking = () => {
             alignItems="center"
           >
             {activeStep < 4 ? (
-              <div
-                className="cancel-order-button"
-                id={order._id}
-                onClick={(e) => {
-                  handelCancelOrder(e.target.id);
-                }}
+              <LoadingButton
+                loading={cancelLoad}
+                loadingPosition="end"
+                endIcon={<CancelIcon />}
+                variant="contained"
+                color="error"
+                className={classes.root}
+                onClick={handelCancelOrder}
+                disabled={order.status === "Cancelled"}
               >
-                <i
-                  className={cls.Cls}
-                  style={{ fontSize: "16px", color: "white" }}
-                />
-                &nbsp;&nbsp;{cls.msg}
-              </div>
+                Cancel Order
+              </LoadingButton>
             ) : null}
             <LoadingButton
               loading={payload}
