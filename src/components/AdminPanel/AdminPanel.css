@@ -23,6 +23,7 @@
   font-family: "PT sans";
 }
 
-.admin-orders i.fas.fa-rupee-sign {
+.admin-orders i.fas.fa-rupee-sign,
+.datagrid-stack-wallet i.fas.fa-rupee-sign {
   font-size: 12px;
 }

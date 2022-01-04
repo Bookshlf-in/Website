@@ -13,6 +13,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import LoadingButton from "@mui/lab/LoadingButton";
 import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
+import Alert from "@material-ui/lab/Alert";
 
 // icons
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -214,122 +215,130 @@ const Messages = () => {
           />
         </FormGroup>
       </Stack>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{
-          width: "100%",
-        }}
-        justifyContent="space-evenly"
-      >
-        <Pagination
-          count={totalPages}
-          page={Page}
-          onChange={(e, pageNo) => {
-            handelgetMessages(pageNo);
-          }}
-          color="primary"
-          className={classes.root}
-        />
-      </Stack>
-      {filteredMessages.map((message, index) => (
-        <Box
+      {filteredMessages.length > 0 ? (
+        <Stack
+          direction="row"
+          spacing={2}
           sx={{
-            width: [300, 400, 800],
-            boxShadow: "2px 3px 5px rgba(0,0,0,0.3)",
-            borderRadius: "10px",
-            cursor: "pointer",
-            padding: "10px",
+            width: "100%",
           }}
-          key={index}
+          justifyContent="space-evenly"
         >
-          <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
-            <Stack
-              direction="row"
-              sx={{ width: "100%" }}
-              justifyContent="space-between"
-              spacing={5}
-            >
-              <TextField
-                className={classes.root}
-                label="Email"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <FileCopyIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                fullWidth
-                readOnly
-                variant="filled"
-                value={message.email}
-              />
-              <IconButton
-                aria-label="delete"
-                color="error"
-                className={classes.root}
-                onClick={() => handelDeleteMessages(message._id)}
+          <Pagination
+            count={totalPages}
+            page={Page}
+            onChange={(e, pageNo) => {
+              handelgetMessages(pageNo);
+            }}
+            color="primary"
+            className={classes.root}
+          />
+        </Stack>
+      ) : null}
+      {filteredMessages.length > 0 ? (
+        filteredMessages.map((message, index) => (
+          <Box
+            sx={{
+              width: [300, 400, 800],
+              boxShadow: "2px 3px 5px rgba(0,0,0,0.3)",
+              borderRadius: "10px",
+              cursor: "pointer",
+              padding: "10px",
+            }}
+            key={index}
+          >
+            <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
+              <Stack
+                direction="row"
+                sx={{ width: "100%" }}
+                justifyContent="space-between"
+                spacing={5}
               >
-                {message._id === msgdeleteId ? (
-                  <CircularProgress size="1em" color="inherit" />
-                ) : (
-                  <DeleteIcon fontSize="inherit" />
-                )}
-              </IconButton>
-            </Stack>
-            <Stack
-              direction="row"
-              spacing={5}
-              sx={{ width: "100%" }}
-              justifyContent="space-evenly"
-            >
-              <TextField
-                className={classes.root}
-                label="Subject"
-                fullWidth
-                readOnly
-                variant="filled"
-                value={message.subject}
-              />
-              <IconButton
-                aria-label="delete"
-                color="success"
-                className={classes.root}
-                onClick={() => {
-                  console.log(message.read);
-                  handelReadMessages(message._id, message.read);
-                }}
+                <TextField
+                  className={classes.root}
+                  label="Email"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <FileCopyIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  fullWidth
+                  readOnly
+                  variant="filled"
+                  value={message.email}
+                />
+                <IconButton
+                  aria-label="delete"
+                  color="error"
+                  className={classes.root}
+                  onClick={() => handelDeleteMessages(message._id)}
+                >
+                  {message._id === msgdeleteId ? (
+                    <CircularProgress size="1em" color="inherit" />
+                  ) : (
+                    <DeleteIcon fontSize="inherit" />
+                  )}
+                </IconButton>
+              </Stack>
+              <Stack
+                direction="row"
+                spacing={5}
+                sx={{ width: "100%" }}
+                justifyContent="space-evenly"
               >
-                {msgreadId === message._id ? (
-                  <CircularProgress size="1em" color="inherit" />
-                ) : message.read ? (
-                  <CheckIcon />
-                ) : (
-                  <CheckCircleIcon />
-                )}
-              </IconButton>
+                <TextField
+                  className={classes.root}
+                  label="Subject"
+                  fullWidth
+                  readOnly
+                  variant="filled"
+                  value={message.subject}
+                />
+                <IconButton
+                  aria-label="delete"
+                  color="success"
+                  className={classes.root}
+                  onClick={() => {
+                    console.log(message.read);
+                    handelReadMessages(message._id, message.read);
+                  }}
+                >
+                  {msgreadId === message._id ? (
+                    <CircularProgress size="1em" color="inherit" />
+                  ) : message.read ? (
+                    <CheckIcon />
+                  ) : (
+                    <CheckCircleIcon />
+                  )}
+                </IconButton>
+              </Stack>
+              <Stack
+                direction="row"
+                spacing={5}
+                sx={{ width: "100%" }}
+                justifyContent="space-evenly"
+              >
+                <TextField
+                  className={classes.root}
+                  label="Message"
+                  fullWidth
+                  readOnly
+                  multiline
+                  maxRows={4}
+                  variant="filled"
+                  value={message.message}
+                />
+              </Stack>
             </Stack>
-            <Stack
-              direction="row"
-              spacing={5}
-              sx={{ width: "100%" }}
-              justifyContent="space-evenly"
-            >
-              <TextField
-                className={classes.root}
-                label="Message"
-                fullWidth
-                readOnly
-                multiline
-                maxRows={4}
-                variant="filled"
-                value={message.message}
-              />
-            </Stack>
-          </Stack>
-        </Box>
-      ))}
+          </Box>
+        ))
+      ) : (
+        <Alert severity="error" className={classes.root} color="warning">
+          No Books in this Page
+        </Alert>
+      )}
     </Stack>
   );
 };
