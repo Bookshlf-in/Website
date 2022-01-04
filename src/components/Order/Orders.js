@@ -3,7 +3,6 @@ import axios from "../../axios";
 import Alert from "@material-ui/lab/Alert";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import UpdateBook from "../Book/UpdateBook";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -372,7 +371,6 @@ const Orders = (props) => {
       ) : (
         <></>
       )}
-      {update ? <UpdateBook book={bookprops} /> : <></>}
     </div>
   );
 };

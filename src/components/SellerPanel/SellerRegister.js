@@ -4,8 +4,6 @@ import Alert from "@material-ui/lab/Alert";
 import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
-import { storage } from "../../firebase";
-import { nanoid } from "nanoid";
 import Avatar from "@material-ui/core/Avatar";
 import TextField from "@mui/material/TextField";
 import InputMask from "react-input-mask";
@@ -48,69 +46,6 @@ export default function SellerRegister() {
 
   const handelRegister = () => {
     setload(true);
-    const imageName = nanoid(10) + Photo.name;
-
-    // uploading profile photo to firebase server with unique name
-    const uploadTask = storage.ref(`profile/${imageName}`).put(Photo);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {},
-      (error) => {
-        // console.log(error);
-      },
-      () => {
-        storage
-          .ref("profile")
-          .child(imageName)
-          .getDownloadURL()
-          .then((imgUrl) => {
-            axios
-              .post("/sellerRegister", {
-                name: Name,
-                intro: Intro,
-                photo: imgUrl,
-              })
-              .then((response) => {
-                setload(false);
-                seterr(false);
-                setmsg("Successfully registered as Seller!");
-                setalert(true);
-                user.roles.push("seller");
-                localStorage.setItem(
-                  "bookshlf_user",
-                  JSON.stringify({
-                    authHeader: user.authHeader,
-                    roles: user.roles,
-                    email: user.email,
-                    wishlist: user.wishlist,
-                    cartitems: user.cartitems,
-                  })
-                );
-                setUser({
-                  authHeader: user.authHeader,
-                  roles: user.roles,
-                  email: user.email,
-                  wishlist: user.wishlist,
-                  cartitems: user.cartitems,
-                });
-                setTimeout(() => {
-                  history.push("/SellerPanel/1");
-                  history.go(0);
-                }, 2000);
-              })
-              .catch((error) => {
-                if (error.response) {
-                  console.log(error.response.data);
-                  console.log(user);
-                  setload(false);
-                  seterr(true);
-                  setmsg(`Registration Failed! ${error.response.data.error}`);
-                  setalert(true);
-                }
-              });
-          });
-      }
-    );
   };
   return (
     <div>
