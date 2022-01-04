@@ -8,10 +8,8 @@ import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
 const AdminPanel = () => {
-  const [user, setUser] = useContext(UserContext);
-  const [Admin, setAdmin] = useState(
-    user ? user.roles.includes("admin") : false
-  );
+  const [user] = useContext(UserContext);
+  const [Admin] = useState(user ? user.roles.includes("admin") : false);
   return (
     <div className="adminpanel-container">
       {Admin ? (
