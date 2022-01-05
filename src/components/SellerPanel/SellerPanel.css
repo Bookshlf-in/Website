@@ -1,44 +1,5 @@
-.SellerPanel-container {
-  background: whitesmoke;
-  min-height: calc(100vh - 60px);
-}
-.SellerPanel-navbar {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.panel-nav-bg {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #ffffff;
-}
-.panel-item {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: aliceblue;
-  position: relative;
-  color: rgb(22, 22, 22);
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px;
-  border-bottom: 2px solid aliceblue;
-}
-.panel-item span,
-.panel-item p {
-  padding: 5px;
-}
-
-.panel-item:hover {
-  border-bottom: 2px solid rgb(22, 22, 22);
-  cursor: pointer;
+.sellerPanel-container .MuiTabs-flexContainer {
+  height: 100% !important;
 }
 
 /* Account Details CSS */
@@ -211,119 +172,26 @@ p#alert-dialog-description {
 .seller-register-form .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
   font-family: "PT sans";
 }
-.seller-register-form #mobile-label {
-  margin-bottom: -20px;
-  margin-top: 10px;
-  font-family: "PT sans";
-  z-index: 100;
+#mobile-label {
+  color: rgba(0, 0, 0, 0.6);
 }
-.seller-register-form #phone-no,
-.seller-register-form #alt-phone-no {
-  margin-top: 10px;
-  font-family: "PT sans";
-  padding-left: 10px;
-  letter-spacing: 10px;
-  color: blue;
+#phone-no,
+#alt-phone-no {
+  letter-spacing: 5px;
   text-align: center;
-  background-color: white;
-}
-.uploaded-images-container {
-  padding: 10px;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.uploaded-images-container img {
-  margin: 7px;
-  /* padding: 7px; */
-  max-height: 150px;
-  max-width: 250px;
-  min-height: 100px;
-  min-width: 100px;
+  font-size: 0.8em;
+  color: rgb(146, 146, 146);
 }
 
-.uploaded-image button {
-  padding: 0;
-  position: relative;
-  display: block;
-  visibility: hidden;
-  border-radius: 50%;
-  top: 20px;
-  left: 90px;
-  height: 1.5rem;
-  width: 1.5rem;
+#phone-no:focus,
+#alt-phone-no:focus {
+  letter-spacing: 6px;
+  transition: 0.2s;
+  border-radius: 0px;
+  color: rgb(17, 17, 17);
+  border-bottom: 2px solid #1976d2;
 }
 
-.uploaded-image:hover button {
-  visibility: visible;
-  border: 2px solid;
-  border-color: #ff9b3e;
-}
-
-.uploaded-image:hover img {
-  border: 2px solid;
-  border-radius: 5px;
-  border-color: #ff9b3e;
-}
-
-.upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.upload-btn-wrapper button {
-  border: 2px solid #ff9b3e;
-  color: #ff9b3e;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-  width: 250px;
-  height: 60px;
-  /* margin-left: 20px; */
-  cursor: pointer;
-}
-
-.upload-btn-wrapper input[type="file"] {
-  font-size: 30px;
-  width: 250px;
-  height: 60px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-.upload-btn-wrapper span {
-  position: absolute;
-  top: 3px;
-  left: 40px;
-  color: red;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  font-size: 9px;
-  cursor: pointer;
-}
-.update-book-bg {
-  float: left;
-  position: absolute;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  color: black;
-  z-index: 100;
-  background-color: whitesmoke;
-}
-.update-book-checkbox .MuiCheckbox-root {
-  color: #f50057;
-}
 @media screen and (max-width: 450px) {
   .orders-details {
     padding: 10px 0px;
@@ -382,6 +250,15 @@ p#alert-dialog-description {
 @media (max-width: 560px) {
   .seller-info-right {
     padding-left: 10px;
+  }
+  .sellerPanel-container .MuiTabs-flexContainer {
+    padding: 9px !important;
+    flex-direction: column;
+  }
+  .sellerPanel-container .MuiTab-root {
+    padding: 16px !important;
+    justify-content: flex-start;
+    font-size: 14px !important;
   }
 }
 

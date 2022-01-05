@@ -1,7 +1,7 @@
 import { React, useState, useContext } from "react";
 import "./AddBook.css";
 import axios from "../../axios";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AddFormContext } from "../../Context/formContext";
 import { Helmet } from "react-helmet";
 import SellerCommisionChart from "./CommisionChartGrid";
@@ -969,9 +969,16 @@ const AddBook = (props) => {
               }}
               inputProps={{ "aria-label": "controlled" }}
             />
-            <b style={{ fontFamily: "pt sans" }}>
+            <Link
+              style={{ fontFamily: "pt sans" }}
+              to={{
+                pathname:
+                  "https://www.termsandconditionsgenerator.com/live.php?token=pP3839LpZ8HDIPcORRLXomSRqIXPnxOV",
+              }}
+              target="_blank"
+            >
               I agree to Terms & Conditions
-            </b>
+            </Link>
           </div>
         </Grid>
         <Grid
