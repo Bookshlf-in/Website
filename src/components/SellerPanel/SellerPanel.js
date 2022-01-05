@@ -1,4 +1,17 @@
 import { React, useState, useContext, useEffect } from "react";
+import { UserContext } from "../../Context/userContext";
+import { useHistory, useParams } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import axios from "../../axios";
+
+// Components
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+
+// custom Components
 import "./SellerPanel.css";
 import AccountDetails from "./AccountDetails";
 import Orders from "../Order/Orders";
@@ -6,23 +19,36 @@ import Address from "../AddressBook/Address";
 import Reviews from "./SellerReviews";
 import AddBook from "../Book/AddBook";
 import Register from "./SellerRegister";
-import { UserContext } from "../../Context/userContext";
-import { useHistory, useParams } from "react-router-dom";
-import axios from "../../axios";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@mui/material/LinearProgress";
+
+// icons
+import OrderIcon from "@material-ui/icons/LocalShipping";
+import ProfileIcon from "@material-ui/icons/AccountCircleRounded";
+import SellersIcon from "@material-ui/icons/ContactMailRounded";
+import ReviewIcon from "@material-ui/icons/RateReviewRounded";
+import BookIcon from "@material-ui/icons/MenuBookRounded";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    fontSize: "12px !important",
+    minHeight: "0px !important",
+  },
+});
 
 const SellerPanel = () => {
   // context states
   const [user] = useContext(UserContext);
   const history = useHistory();
+  const classes = useStyles();
   const params = useParams();
 
   // component states
-  const [, setPanel] = useState(params.panel);
+  const [panel, setPanel] = useState(params.panel);
   const [role, setRole] = useState(false);
 
   // loader states
-  const [loader, setloader] = useState(true);
+  const [Loading, setLoading] = useState(true);
   const [sellerDetails, setsellerDetails] = useState(null);
   const [Adr, setAdr] = useState(null);
   const [bookDetails, setbookDetails] = useState(null);
@@ -66,134 +92,117 @@ const SellerPanel = () => {
                         })
                         .then((response) => {
                           setcommisionchart(response.data);
-                          setloader(false);
+                          setLoading(false);
                         })
                         .catch((error) => {
-                          setloader(false);
+                          setLoading(false);
                         });
                     })
                     .catch((error) => {
-                      setloader(false);
+                      setLoading(false);
                     });
                 })
                 .catch((error) => {
-                  setloader(false);
+                  setLoading(false);
                 });
             })
             .catch((error) => {
-              setloader(false);
+              setLoading(false);
             });
         })
         .catch((error) => {
-          setloader(false);
+          setLoading(false);
         });
     };
     if (user) {
       fetchData();
     } else {
-      setloader(false);
+      setLoading(false);
     }
   }, []);
 
-  return (
-    <div>
-      {/* Loader */}
-      <div
-        className="page-loader"
-        style={{ display: loader ? "flex" : "none" }}
-      >
-        <CircularProgress style={{ height: "80px", width: "80px" }} />
-      </div>
+  const handleChange = (event, newValue) => {
+    history.push(`/SellerPanel/${newValue}`);
+    setPanel(newValue);
+  };
 
-      {/* Components */}
-      <div style={{ display: loader ? "none" : "block" }}>
-        {role === false || user === null ? (
-          <Register />
-        ) : (
-          <div className="SellerPanel-container">
-            <div className="SellerPanel-navbar">
-              <div className="panel-nav-bg">
-                <div
-                  className="panel-item"
-                  onClick={() => {
-                    setPanel("1");
-                    history.push("/SellerPanel/1");
-                  }}
-                >
-                  <span>
-                    <i className="fas fa-user" />
-                  </span>
-                  <p>PROFILE</p>
-                </div>
-                <div
-                  className="panel-item"
-                  onClick={() => {
-                    setPanel("2");
-                    history.push("/SellerPanel/2");
-                  }}
-                >
-                  <span>
-                    <i className="fas fa-clipboard-list" />
-                  </span>
-                  <p>YOUR BOOKS</p>
-                </div>
-                <div
-                  className="panel-item"
-                  onClick={() => {
-                    setPanel("3");
-                    history.push("/SellerPanel/3");
-                  }}
-                >
-                  <span>
-                    <i className="fas fa-map-marker" />
-                  </span>
-                  <p>ADDRESS</p>
-                </div>
-                <div
-                  className="panel-item"
-                  onClick={() => {
-                    setPanel("4");
-                    history.push("/SellerPanel/4");
-                  }}
-                >
-                  <span>
-                    <i className="far fa-comments" />
-                  </span>
-                  <p>REVIEWS</p>
-                </div>
-                <div
-                  className="panel-item"
-                  onClick={() => {
-                    setPanel("5");
-                    history.push("/SellerPanel/5");
-                  }}
-                >
-                  <span>
-                    <i className="fas fa-book" />
-                    &nbsp;
-                    <i className="fas fa-plus" />
-                  </span>
-                  <p> ADD NEW BOOK</p>
-                </div>
-              </div>
-            </div>
-            {params.panel === "1" && sellerDetails ? (
-              <AccountDetails seller={sellerDetails} />
-            ) : params.panel === "2" && bookDetails && Adr ? (
-              <Orders books={bookDetails} address={Adr} />
-            ) : params.panel === "3" && Adr ? (
-              <Address address={Adr} />
-            ) : params.panel === "4" && sellerReview ? (
-              <Reviews reviews={sellerReview} />
-            ) : params.panel === "5" && Adr && commisionchart ? (
-              <AddBook address={Adr} commisionChart={commisionchart} />
-            ) : (
-              <div></div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        typography: "body1",
+        minHeight: "calc(100vh - 56px)",
+      }}
+      className="sellerPanel-container"
+    >
+      {Loading ? (
+        <LinearProgress sx={{ width: "100%" }} />
+      ) : role === false || user === null ? (
+        <Register />
+      ) : (
+        <TabContext value={panel}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList
+              onChange={handleChange}
+              aria-label="admin-tabList"
+              variant="fullWidth"
+              selectionFollowsFocus
+            >
+              <Tab
+                iconPosition="start"
+                label="Profile"
+                icon={<ProfileIcon />}
+                value="1"
+                className={classes.root}
+              />
+              <Tab
+                iconPosition="start"
+                label="Orders"
+                icon={<OrderIcon />}
+                value="2"
+                className={classes.root}
+              />
+              <Tab
+                iconPosition="start"
+                label="Address"
+                icon={<SellersIcon />}
+                value="3"
+                className={classes.root}
+              />
+              <Tab
+                iconPosition="start"
+                label="Reviews"
+                icon={<ReviewIcon />}
+                value="4"
+                className={classes.root}
+              />
+              <Tab
+                iconPosition="start"
+                label="Add Book"
+                icon={<BookIcon />}
+                value="5"
+                className={classes.root}
+              />
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            <AccountDetails seller={sellerDetails} />
+          </TabPanel>
+          <TabPanel value="2">
+            <Orders books={bookDetails} address={Adr} />
+          </TabPanel>
+          <TabPanel value="3">
+            <Address address={Adr} />
+          </TabPanel>
+          <TabPanel value="4">
+            <Reviews reviews={sellerReview} />
+          </TabPanel>
+          <TabPanel value="5">
+            <AddBook address={Adr} commisionChart={commisionchart} />
+          </TabPanel>
+        </TabContext>
+      )}
+    </Box>
   );
 };
 export default SellerPanel;

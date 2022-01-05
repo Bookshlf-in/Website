@@ -1,9 +1,8 @@
 import { React, useState } from "react";
 import axios from "../../axios";
-import { storage } from "../../firebase";
-import { nanoid } from "nanoid";
 import Avatar from "@material-ui/core/Avatar";
 import Collapse from "@material-ui/core/Collapse";
+
 const Verified = {
   user: "verified-user",
   tag: "Verified",
@@ -113,7 +112,7 @@ const AccountDetails = (props) => {
           Update Profile&nbsp;&nbsp;
           <i className={open ? "fas fa-chevron-up" : "fas fa-chevron-down"} />
         </button>
-        <Collapse in={open}>
+        {/* <Collapse in={open}>
           <form
             action=""
             style={{
@@ -241,7 +240,7 @@ const AccountDetails = (props) => {
               {text}
             </button>
           </form>
-        </Collapse>
+        </Collapse> */}
       </div>
     </div>
   );

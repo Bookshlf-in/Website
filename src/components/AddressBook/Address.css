@@ -126,17 +126,16 @@ label.pincode {
 
 #phone-no,
 #alt-phone-no {
-  max-width: 300px;
-  letter-spacing: 20px;
-  padding-left: 5px;
-  height: 50px;
+  padding: 9px 16px;
   width: 100%;
   font-size: 12px;
-  font-family: "PT sans";
   border: none;
-  color: #000000;
-  box-shadow: 0 4px 10px rgba(0, 29, 54, 0.04);
-  background-color: rgba(0, 0, 0, 0.06);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.42);
+}
+#phone-no:hover,
+#alt-phone-no:hover {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.9);
+  transition: 0.2s;
 }
 .address-form button {
   border-radius: 0px 0px 5px 5px;

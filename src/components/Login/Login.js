@@ -141,7 +141,7 @@ function Login() {
           });
           setTimeout(() => {
             setloader("none");
-            history.goBack();
+            history.push("/");
           }, 5000);
         })
         .catch((error) => {
