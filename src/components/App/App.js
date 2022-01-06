@@ -34,7 +34,7 @@ import Wallet from "../Wallet/Wallet";
 // Protected Route
 import Protected from "../Protected";
 
-function App() {
+const App = () => {
   return (
     <Router>
       <div className="App">
@@ -131,6 +131,6 @@ function App() {
       </div>
     </Router>
   );
-}
+};
 
 export default App;

@@ -1,24 +1,43 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { makeStyles } from "@mui/styles";
 
+const useStyles = makeStyles(() => ({
+  root: {
+    fontFamily: "PT sans",
+    width: 320,
+    "& p": {
+      fontFamily: "PT sans !important",
+      fontSize: "10px",
+    },
+    "& div": {
+      fontFamily: "PT sans !important",
+      fontSize: "9px",
+    },
+  },
+}));
 const CommisionChartGrid = (props) => {
+  const classes = useStyles();
   const columns = [
     {
       field: "priceLimit",
       headerName: "Price Limit",
-      width: 100,
+      minWidth: 60,
+      flex: 1,
       sortable: false,
     },
     {
       field: "percentageCommission",
       headerName: "Commission (%)",
-      width: 120,
+      minWidth: 80,
+      flex: 3,
       sortable: false,
     },
     {
       field: "fixedCommission",
       headerName: "Commission (Fixed)",
-      width: 130,
+      minWidth: 80,
+      flex: 3,
       sortable: false,
     },
   ];
@@ -33,13 +52,13 @@ const CommisionChartGrid = (props) => {
 
   return (
     <DataGrid
-      style={{ fontFamily: "PT Sans", fontSize: "11px", width: "360px" }}
+      className={classes.root}
       rows={rows}
       columns={columns}
       pageSize={10}
       disableSelectionOnClick
       disableColumnMenu
-      rowBuffer={4}
+      density="compact"
     />
   );
 };
