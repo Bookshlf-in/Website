@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import Carousel from "../Home/Carousel";
 import Categories from "../Home/Categories";
 import BestSelling from "../Home/BestSelling";
 import Review from "../Reviews/CustomerReviews";
@@ -123,7 +122,6 @@ function App() {
               />
             </Helmet>
             <Navbar />
-            <Carousel />
             <Categories />
             <BestSelling />
             <Review />

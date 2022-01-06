@@ -1,15 +1,54 @@
-import React from "react";
-import "./About.css";
+import { React } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
 
+// Components
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+
+// Icons
+import WebsiteIcon from "@mui/icons-material/Language";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
+// Images
+import img1 from "./AboutBG/aboutbg_1.jpg";
+
+// Links
 const GITHUB_URL = "https://github.com/Bookshlf-in";
 const WEBSITE_URL = "https://bookshlf.in";
+const YOUTUBE_URL = "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ";
+const FACEBOOK_URL = "https://www.facebook.com/Bookshlf-109479771200918";
+const TWITTER_URL = "https://twitter.com/BookshlfA";
+const LINKEDIN_URL = "https://www.linkedin.com/in/bookshlf-by-aman-861073223/";
+const INSTAGRAM_URL = "https://twitter.com/BookshlfA";
 
-function About() {
-  const openWebsite = () => window.open(WEBSITE_URL, "_blank").focus();
-  const openGithub = () => window.open(GITHUB_URL, "_blank").focus();
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+    padding: "10px",
+    minHeight: "calc(100vh - 56px)",
+    backgroundImage: `url(${img1})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "norepeat",
+  },
+});
 
+const About = () => {
+  const classes = useStyles();
+  const Year = new Date().getFullYear();
+  // Opening Links
+  const OpenLink = (link) => {
+    window.open(link, "_blank").focus();
+  };
   return (
     <>
       <Helmet>
@@ -19,136 +58,106 @@ function About() {
           content="We are a team of students who are enthusiastic developers. We are trying to create a platform for students who cannot afford to buy books due to financial problems."
         />
       </Helmet>
-
-      <div className="About-bg">
-        <div className="night">
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-          <div className="shooting_star"></div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
+      <Box className={classes.root}>
+        <Stack
+          sx={{ width: "100%", padding: "10px" }}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
         >
-          <img src="/images/smallLogo.svg" alt="bookhlf.in" height="60px" />
-
-          <div className="About-title">
-            <p>Bookshlf</p>
-          </div>
-
-          <div className="About-description">
-            <p>E-commerce platform to buy and sell used books</p>
-          </div>
-
-          <div className="About-textbox">
-            <p>
+          <Avatar
+            src="/images/smallLogo.svg"
+            alt="bookhlf.in"
+            variant="rounded"
+            sx={{ height: 67, width: 80 }}
+          />
+          <Typography
+            variant="h1"
+            sx={{ fontFamily: "PT sans", color: "rgba(0,0,0,0.6)" }}
+          >
+            BOOKSHLF
+          </Typography>
+          <Typography variant="body1">
+            <strong>E-commerce platform to buy and sell used books</strong>
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              maxWidth: 600,
+              padding: "20px",
+              textAlign: "justify",
+              backgroundColor: "rgba(255,255,255,0.4)",
+              borderRadius: "10px",
+            }}
+          >
+            <strong>
               We are a small team of students who are enthusiastic developers.
               We are trying to create a better viable platform for students who
               want to learn but due to financial issues can't afford new books.
               We also want to help those who want to sell thier books which they
               don't need. We hope that you will find this platform usefull. We
-              are always trying to make this platform better and better.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "150px",
-              alignItems: "center",
-            }}
+              are always trying to make this platform better.
+            </strong>
+          </Typography>
+          <Typography variant="h4">
+            <strong>Reach Us</strong>
+          </Typography>
+          <Stack
+            spacing={2}
+            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
           >
-            <button className="About-button" onClick={openWebsite}>
-              <p>Website</p>
-            </button>
-            <button className="About-button" onClick={openGithub}>
-              Github
-            </button>
-          </div>
-
-          <section className="about-social-media">
-            <div className="social-media-wrap">
-              <div className="social-icons">
-                <Link
-                  className="social-icon-link facebook"
-                  to={{
-                    pathname:
-                      "https://www.facebook.com/Bookshlf-109479771200918",
-                  }}
-                  target="_blank"
-                  aria-label="Facebook"
-                >
-                  <i className="fab fa-facebook-f"></i>
-                </Link>
-                <Link
-                  className="social-icon-link instagram"
-                  to={{
-                    pathname: "https://instagram.com/_bookshlf",
-                  }}
-                  target="_blank"
-                  aria-label="Instagram"
-                >
-                  <i className="fab fa-instagram"></i>
-                </Link>
-                <Link
-                  className="social-icon-link twitter"
-                  to={{
-                    pathname: "https://twitter.com/BookshlfA",
-                  }}
-                  target="_blank"
-                  aria-label="Twitter"
-                >
-                  <i className="fab fa-twitter"></i>
-                </Link>
-                <Link
-                  className="social-icon-link linkedin"
-                  to={{
-                    pathname:
-                      "https://www.linkedin.com/in/bookshlf-by-aman-861073223/",
-                  }}
-                  target="_blank"
-                  aria-label="Linkedin"
-                >
-                  <i className="fab fa-linkedin"></i>
-                </Link>
-                <Link
-                  className="social-icon-link youtube"
-                  to={{
-                    pathname:
-                      "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ",
-                  }}
-                  target="_blank"
-                  aria-label="Youtube"
-                >
-                  <i className="fab fa-youtube"></i>
-                </Link>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
+            <IconButton
+              aria-label="github"
+              onClick={() => OpenLink(GITHUB_URL)}
+            >
+              <GitHubIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              aria-label="website"
+              onClick={() => OpenLink(WEBSITE_URL)}
+            >
+              <WebsiteIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              aria-label="website"
+              onClick={() => OpenLink(YOUTUBE_URL)}
+            >
+              <YouTubeIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              aria-label="website"
+              onClick={() => OpenLink(INSTAGRAM_URL)}
+            >
+              <InstagramIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              aria-label="website"
+              onClick={() => OpenLink(FACEBOOK_URL)}
+            >
+              <FacebookIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              aria-label="website"
+              onClick={() => OpenLink(TWITTER_URL)}
+            >
+              <TwitterIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              aria-label="website"
+              onClick={() => OpenLink(LINKEDIN_URL)}
+            >
+              <LinkedInIcon sx={{ color: "white" }} />
+            </IconButton>
+          </Stack>
+          <Typography
+            variant="h3"
+            sx={{ color: "rgba(255,255,255,0.4)", letterSpacing: "5px" }}
+          >
+            <strong>{Year}</strong>
+          </Typography>
+        </Stack>
+      </Box>
     </>
   );
-}
+};
 export default About;
