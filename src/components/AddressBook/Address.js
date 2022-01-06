@@ -368,6 +368,13 @@ const Address = (props) => {
         padding: "10px",
       }}
     >
+      <Helmet>
+        <title>Address Book | Bookshlf</title>
+        <meta
+          name="description"
+          content="Your Address Book. All Your addresses are stored here."
+        />
+      </Helmet>
       <Stack
         spacing={2}
         direction="column"
