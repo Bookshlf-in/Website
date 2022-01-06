@@ -4,7 +4,7 @@ import "./AdminPanel.css";
 
 // Components
 import AdminNavbar from "./AdminPanelNavbar";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
 const AdminPanel = () => {

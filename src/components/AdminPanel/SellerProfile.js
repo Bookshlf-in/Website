@@ -1,5 +1,5 @@
-import { React, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { React } from "react";
+import { makeStyles } from "@mui/styles";
 
 // components
 import Stack from "@mui/material/Stack";
@@ -10,16 +10,16 @@ import Rating from "@mui/material/Rating";
 import Fab from "@mui/material/Fab";
 
 // icons
-import InfoIcon from "@material-ui/icons/InfoRounded";
-import CheckIcon from "@material-ui/icons/CheckCircleRounded";
-import CancelIcon from "@material-ui/icons/CancelRounded";
-import PersonIcon from "@material-ui/icons/PersonRounded";
-import IDIcon from "@material-ui/icons/AssignmentIndRounded";
-import UpdateIcon from "@material-ui/icons/UpdateRounded";
-import TimeIcon from "@material-ui/icons/TimelapseRounded";
-import StarIcon from "@material-ui/icons/StarRounded";
-import RatingIcon from "@material-ui/icons/StarsRounded";
-import WalletIcon from "@material-ui/icons/AccountBalanceWalletRounded";
+import InfoIcon from "@mui/icons-material/InfoRounded";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import PersonIcon from "@mui/icons-material/PersonRounded";
+import IDIcon from "@mui/icons-material/AssignmentIndRounded";
+import UpdateIcon from "@mui/icons-material/UpdateRounded";
+import TimeIcon from "@mui/icons-material/TimelapseRounded";
+import StarIcon from "@mui/icons-material/StarRounded";
+import RatingIcon from "@mui/icons-material/StarsRounded";
+import WalletIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 
 const useStyles = makeStyles({
   root: {

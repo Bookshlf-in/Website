@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
@@ -11,10 +11,10 @@ import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 
 // icons
-import LoadIcon from "@material-ui/icons/AutorenewRounded";
-import CheckIcon from "@material-ui/icons/CheckCircleRounded";
-import PendingIcon from "@material-ui/icons/AccessTimeRounded";
-import CallIcon from "@material-ui/icons/CallRounded";
+import LoadIcon from "@mui/icons-material/AutorenewRounded";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import PendingIcon from "@mui/icons-material/AccessTimeRounded";
+import CallIcon from "@mui/icons-material/CallRounded";
 
 const useStyles = makeStyles((theme) => ({
   root: {

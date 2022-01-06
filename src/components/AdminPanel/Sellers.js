@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 import { useHistory } from "react-router-dom";
 
@@ -15,12 +15,12 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 // icons
-import LoadIcon from "@material-ui/icons/AutorenewRounded";
-import InfoIcon from "@material-ui/icons/InfoRounded";
-import CheckIcon from "@material-ui/icons/CheckCircleRounded";
-import CancelIcon from "@material-ui/icons/CancelRounded";
-import PersonIcon from "@material-ui/icons/PersonRounded";
-import IDIcon from "@material-ui/icons/AssignmentIndRounded";
+import LoadIcon from "@mui/icons-material/AutorenewRounded";
+import InfoIcon from "@mui/icons-material/InfoRounded";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import PersonIcon from "@mui/icons-material/PersonRounded";
+import IDIcon from "@mui/icons-material/AssignmentIndRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -49,7 +49,7 @@ const Sellers = () => {
   const [sellerverifyId, setsellerverifyId] = useState("");
 
   // data states
-  const [seller, setseller] = useState([]);
+  const [, setseller] = useState([]);
   const [verifiedSeller, setVerifiedSeller] = useState([]);
   const [NotverifiedSeller, setNotVerifiedSeller] = useState([]);
   const [page, setpage] = useState(1);

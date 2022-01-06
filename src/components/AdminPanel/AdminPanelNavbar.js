@@ -10,12 +10,12 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
 // icons
-import OrderIcon from "@material-ui/icons/LocalShipping";
-import ChatIcon from "@material-ui/icons/ChatRounded";
-import ProfileIcon from "@material-ui/icons/AccountCircleRounded";
-import SellersIcon from "@material-ui/icons/ContactMailRounded";
-import HomeIcon from "@material-ui/icons/HomeRounded";
-import WalletIcon from "@material-ui/icons/AccountBalanceWalletRounded";
+import OrderIcon from "@mui/icons-material/LocalShipping";
+import ChatIcon from "@mui/icons-material/ChatRounded";
+import ProfileIcon from "@mui/icons-material/AccountCircleRounded";
+import SellersIcon from "@mui/icons-material/ContactMailRounded";
+import HomeIcon from "@mui/icons-material/HomeRounded";
+import WalletIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 
 // custom components
 import Seller from "./Sellers";

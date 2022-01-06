@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
@@ -8,12 +8,12 @@ import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import CircularProgress from "@mui/material/CircularProgress";
 import LinearProgress from "@mui/material/LinearProgress";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -25,10 +25,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import TextField from "@mui/material/TextField";
 
 // icons
-import NextIcon from "@material-ui/icons/NavigateNextRounded";
-import CheckIcon from "@material-ui/icons/CheckCircleRounded";
-import CallIcon from "@material-ui/icons/CallRounded";
-import CancelIcon from "@material-ui/icons/CancelRounded";
+import NextIcon from "@mui/icons-material/NavigateNextRounded";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import CallIcon from "@mui/icons-material/CallRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -97,7 +97,7 @@ const OrderTracking = () => {
         .catch((error) => {});
     };
     fetchdata();
-  }, []);
+  }, [params.orderId]);
 
   const handelCancelOrder = () => {
     setcancelLoad(true);

@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Pagination from "@mui/material/Pagination";
@@ -25,11 +25,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 // icons
-import LoadIcon from "@material-ui/icons/AutorenewRounded";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CheckIcon from "@material-ui/icons/CheckCircleRounded";
-import CancelIcon from "@material-ui/icons/CancelRounded";
-import NextIcon from "@material-ui/icons/NavigateNextRounded";
+import LoadIcon from "@mui/icons-material/AutorenewRounded";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import NextIcon from "@mui/icons-material/NavigateNextRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -68,7 +68,7 @@ const BookVerification = () => {
   const [rejectOpen, setrejectOpen] = useState(false);
 
   // data States
-  const [books, setbooks] = useState([]);
+  const [, setbooks] = useState([]);
   const [verifiedbooks, setverifiedbooks] = useState([]);
   const [notVerifiedbooks, setNotVerifiedbooks] = useState([]);
   const [totalPages, settotalPages] = useState(0);
