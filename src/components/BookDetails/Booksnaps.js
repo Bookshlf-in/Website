@@ -1,59 +1,53 @@
-import React from "react";
-function Booksnaps(props) {
-  function handleClick(id, source) {
-    console.log(id);
-    if (id !== "video") {
-      document.getElementById("video-snap-full").style.display = "none";
-      document.getElementById("book-snaps").style.display = "inline-block";
-      document.getElementById("book-snaps-full").src = source;
-    } else {
-      document.getElementById("book-snaps").style.display = "none";
-      document.getElementById("video-snap-full").style.display = "inline-block";
-      document.getElementById("video-snap-source").src = source;
-    }
-  }
+import { React, useState } from "react";
+
+// Components
+import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
+const Booksnaps = (props) => {
+  // data States
+  const [snap, setSnap] = useState(0);
+
+  // changing Snaps
+  const handelClick = (snapNo) => {
+    setSnap(snapNo);
+  };
   return (
-    <div className="book-snaps">
-      {props.snaps ? (
-        <>
-          {props.snaps.map((snap, idx) => (
-            <div className="snapshot" key={idx}>
-              <img
-                src={snap}
-                alt="snapshots"
-                height="70px"
-                width="70px"
-                id={"snap" + idx}
-                onClick={(e) => {
-                  handleClick(e.target.id, snap);
-                }}
-              />
-            </div>
-          ))}
-        </>
-      ) : (
-        <></>
-      )}
-      {props.video ? (
-        <div
-          className="video-snapshot"
-          id="video"
-          onClick={(e) => {
-            handleClick(e.target.id, props.video);
-          }}
-        >
-          <img
-            src="/images/youtube.png"
-            alt="video"
-            height="70px"
-            width="70px"
-            id="video"
-          />
-        </div>
-      ) : (
-        <></>
-      )}
-    </div>
+    <Stack
+      direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+      spacing={{ xs: 2, sm: 10, md: 10, lg: 10 }}
+      className="book-details-snap"
+      justifyContent="space-evenly"
+    >
+      <Stack
+        direction={{ xs: "row", sm: "column", md: "column", lg: "column" }}
+        spacing={{ xs: 1, sm: 2, md: 2, lg: 2 }}
+        sx={{ overflowX: "auto" }}
+        justifyContent="center"
+      >
+        {props.snaps
+          ? props.snaps.length
+            ? props.snaps.map((snap, index) => (
+                <Avatar
+                  src={snap}
+                  alt="book-snapshot"
+                  key={index}
+                  onClick={() => handelClick(index)}
+                  className="book-snapshots"
+                  variant="rounded"
+                />
+              ))
+            : null
+          : null}
+      </Stack>
+      <Stack alignItems="center" justifyContent="center">
+        <Avatar
+          src={props.snaps[snap]}
+          alt="book-large-snapshot"
+          className="book-large-snapshot"
+          variant="rounded"
+        />
+      </Stack>
+    </Stack>
   );
-}
+};
 export default Booksnaps;
