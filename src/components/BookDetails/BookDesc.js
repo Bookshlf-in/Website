@@ -64,86 +64,93 @@ const BookDesc = (props) => {
           </Alert>
         </Stack>
       ) : null}
-      <Divider />
-      <Stack justifyContent="space-evenly" direction="row">
-        <Typography variant="body2">
-          <strong>Selling Price :</strong>{" "}
-          <Chip
-            icon={<RupeeIcon />}
-            label={book.price}
-            color="success"
-            variant="filled"
-            size="small"
-            className={classes.root}
-          />
-        </Typography>
-        {book?.MRP ? (
-          <Typography variant="body2">
-            <strong>MRP :</strong>{" "}
+      <Divider flexItem />
+      <Stack
+        spacing={2}
+        sx={{ width: "100%" }}
+        justifyContent="center"
+        direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+      >
+        <Stack direction="column" spacing={3}>
+          <Typography variant="body2" className={classes.root}>
+            <strong>Selling Price :</strong>{" "}
             <Chip
               icon={<RupeeIcon />}
-              label={book?.MRP}
-              color="primary"
+              label={book.price}
+              color="success"
               variant="filled"
               size="small"
               className={classes.root}
             />
           </Typography>
-        ) : null}
-      </Stack>
-      <Stack justifyContent="space-evenly" direction="row">
-        {book?.author ? (
-          <Typography variant="body2">
-            <strong>Author :</strong>{" "}
-            <Chip
-              label={book?.author}
-              color="default"
-              variant="outlined"
-              size="small"
-              className={classes.root}
-            />
-          </Typography>
-        ) : null}
+          {book?.MRP ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>MRP :</strong>{" "}
+              <Chip
+                icon={<RupeeIcon />}
+                label={book?.MRP}
+                color="primary"
+                variant="filled"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+        </Stack>
+        <Stack direction="column" spacing={3}>
+          {book?.author ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Author :</strong>{" "}
+              <Chip
+                label={book?.author}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
 
-        {book?.author ? (
-          <Typography variant="body2">
-            <strong>Edition Year :</strong>{" "}
-            <Chip
-              label={book?.editionYear}
-              color="default"
-              variant="outlined"
-              size="small"
-              className={classes.root}
-            />
-          </Typography>
-        ) : null}
-      </Stack>
-      <Stack justifyContent="space-evenly" direction="row">
-        {book?.ISBN ? (
-          <Typography variant="body2">
-            <strong>Book ISBN :</strong>{" "}
-            <Chip
-              label={book?.ISBN}
-              color="default"
-              variant="outlined"
-              size="small"
-              className={classes.root}
-            />
-          </Typography>
-        ) : null}
+          {book?.author ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Edition Year :</strong>{" "}
+              <Chip
+                label={book?.editionYear}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+        </Stack>
+        <Stack direction="column" spacing={3}>
+          {book?.ISBN ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Book ISBN :</strong>{" "}
+              <Chip
+                label={book?.ISBN}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
 
-        {book?.qty ? (
-          <Typography variant="body2">
-            <strong>Book Quantity :</strong>{" "}
-            <Chip
-              label={book?.qty}
-              color="default"
-              variant="outlined"
-              size="small"
-              className={classes.root}
-            />
-          </Typography>
-        ) : null}
+          {book?.qty ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Book Quantity :</strong>{" "}
+              <Chip
+                label={book?.qty}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+        </Stack>
       </Stack>
       <Divider />
       <Stack sx={{ width: "100%" }} justifyContent="center" alignItems="center">
@@ -206,7 +213,7 @@ const BookDesc = (props) => {
       >
         {book.tags.map((tag, index) => (
           <Chip
-            variant="filled"
+            variant="outlined"
             color="primary"
             size="small"
             label={tag}
@@ -222,12 +229,3 @@ const BookDesc = (props) => {
   );
 };
 export default BookDesc;
-
-/*
-createdAt: "2021-07-15T20:31:22.480Z"
-isVerified: true
-name: "Awesome Sellers"
-noOfRatings: 1
-rating: 4
-_id: "60f09b1a3a24d10022919697"
- */
