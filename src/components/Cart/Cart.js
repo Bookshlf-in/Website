@@ -1,343 +1,412 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./Cart.css";
 import { useHistory } from "react-router-dom";
-import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Alert from "@material-ui/lab/Alert";
+import { Helmet } from "react-helmet";
+import { makeStyles } from "@mui/styles";
+import axios from "../../axios";
 
-function Cart() {
+// Components
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
+import Fab from "@mui/material/Fab";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import Skeleton from "@mui/material/Skeleton";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import LoadingButton from "@mui/lab/LoadingButton";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+
+// Icons
+import RupeeIcon from "@mui/icons-material/CurrencyRupee";
+import SellerIcon from "@mui/icons-material/AccountCircle";
+import AddIcon from "@mui/icons-material/AddRounded";
+import RemoveIcon from "@mui/icons-material/RemoveRounded";
+import BackIcon from "@mui/icons-material/ArrowBackIosRounded";
+import NextIcon from "@mui/icons-material/NavigateNextRounded";
+import CheckoutIcon from "@mui/icons-material/RedoRounded";
+import CancelIcon from "@mui/icons-material/Close";
+
+// Use Styles
+const useStyles = makeStyles(() => ({
+  root: {
+    fontFamily: "PT sans !important",
+  },
+  Button: {
+    fontFamily: "PT sans !important",
+    borderRadius: "20px !important",
+  },
+  Stack: {
+    padding: "10px",
+    borderRadius: "5px !important",
+    border: "1px solid rgba(0,0,0,0.06)",
+  },
+}));
+
+const Cart = () => {
   const history = useHistory();
+  const classes = useStyles();
   const [user, setUser] = useContext(UserContext);
+
+  // Functionality States
+  const [cartLoading, setcartLoading] = useState(true);
+  const [checkout, setcheckout] = useState(false);
+
+  // Data States
   const [cart, setcart] = useState([]);
-  const [loader, setloader] = useState(true);
   const [amount, setamount] = useState(0);
   const [removingId, setremovingId] = useState("");
-  const [checkout, setcheckout] = useState(false);
-  var amt = 0;
 
+  // Fetching Cart Items
   useEffect(() => {
     const fetchData = async () => {
       axios
         .get("/getCartList")
         .then((response) => {
+          // console.log(response.data);
           setcart(response.data);
+          setamount(0);
           for (let i = 0; i < response.data.length; i++) {
-            amt +=
-              response.data[i].price *
-              Math.min(response.data[i].purchaseQty, response.data[i].qty);
+            setamount(
+              (prev) =>
+                prev + response.data[i].price * response.data[i].purchaseQty
+            );
           }
-          setamount(amt);
-          setloader(false);
+          setcartLoading(false);
         })
         .catch((error) => {
           setcart([]);
-          setloader(false);
+          setcartLoading(false);
         });
     };
     fetchData();
   }, []);
 
-  const addItem = (id, maxx, price) => {
-    var qty = Number.parseInt(document.getElementById(id).innerHTML);
-    if (qty < maxx) {
-      qty += 1;
-      cart[id].purchaseQty = qty;
-      amt = amount + price;
-      setamount(amt);
-      document.getElementById(id).innerHTML = qty;
-
-      for (let i = 0; i < cart.length; i++) {
-        const update = async () => {
-          axios
-            .post("/changeCartItemPurchaseQty", {
-              cartItemId: cart[i]._id,
-              purchaseQty: cart[i].purchaseQty,
-            })
-            .catch(() => {});
-        };
-        update();
-      }
-    }
-  };
-  const DeleteItem = (id, price) => {
-    var qty = Number.parseInt(document.getElementById(id).innerHTML);
-    if (qty > 1) {
-      qty -= 1;
-      cart[id].purchaseQty = qty;
-      amt = amount - price;
-      setamount(amt);
-      document.getElementById(id).innerHTML = qty;
-
-      for (let i = 0; i < cart.length; i++) {
-        const update = async () => {
-          axios
-            .post("/changeCartItemPurchaseQty", {
-              cartItemId: cart[i]._id,
-              purchaseQty: cart[i].purchaseQty,
-            })
-            .catch(() => {});
-        };
-        update();
-      }
-    } else {
-    }
+  // Increase Item Value
+  const handelAddItem = (id, index) => {
+    setcart(
+      cart.map((item) =>
+        item._id === id ? { ...item, purchaseQty: item.purchaseQty + 1 } : item
+      )
+    );
+    setamount((prev) => prev + cart[index].price);
   };
 
-  const handelRemoveItem = (ID) => {
-    setremovingId(ID);
-    amt = 0;
+  // Decrease Item Value
+  const handelRemoveItem = (id, index) => {
+    setcart(
+      cart.map((item) =>
+        item._id === id ? { ...item, purchaseQty: item.purchaseQty - 1 } : item
+      )
+    );
+    setamount((prev) => prev - cart[index].price);
+  };
+
+  // Handeling Cart Changes
+  const handelCart = (bookId) => {
+    setremovingId(bookId);
     axios
       .delete("/deleteCartItem", {
-        data: { bookId: ID },
+        data: { bookId: bookId },
       })
       .then((response) => {
-        let memo = cart.filter((item) => ID !== item.bookId);
-        setcart(memo);
-
-        for (let i = 0; i < memo.length; i++) {
-          amt += memo[i].price;
-        }
-        setamount(amt);
+        // console.log(response.data);
+        setamount(
+          (prev) =>
+            prev -
+            cart[cart.findIndex((f) => f.bookId === bookId)].price *
+              cart[cart.findIndex((f) => f.bookId === bookId)].purchaseQty
+        );
+        setcart(cart.filter((item) => bookId !== item.bookId));
         localStorage.setItem(
           "bookshlf_user",
-          JSON.stringify({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems - 1,
-            wishlist: user.wishlist,
-          })
+          JSON.stringify({ ...user, cartitems: user.cartitems - 1 })
         );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: user.cartitems - 1,
-          wishlist: user.wishlist,
-        });
+        setUser({ ...user, cartitems: user.cartitems - 1 });
       })
       .catch((err) => {});
   };
 
-  const handelUpdateCart = () => {
-    if (cart.length > 0) {
-      setcheckout(true);
-      for (let i = 0; i < cart.length; i++) {
-        const update = async () => {
-          axios
-            .post("/changeCartItemPurchaseQty", {
-              cartItemId: cart[i]._id,
-              purchaseQty: cart[i].purchaseQty,
-            })
-            .then(() => {
-              // console.log(i);
-              if (i === cart.length - 1) {
-                history.push("/Checkout/cart");
-              }
-            })
-            .catch(() => {});
-        };
-        update();
-      }
-    }
+  // update Single Cart Item Purchase Quantity
+  const UpdatePurchaseQty = async (Id, qty) => {
+    const request = await axios
+      .post("/changeCartItemPurchaseQty", {
+        cartItemId: Id,
+        purchaseQty: qty,
+      })
+      .then((response) => {
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        // console.log(error.response.data);
+      });
+    return request;
+  };
+
+  // update All Cart Items Purchase Quantity
+  const UpdateAllPurchaseQty = async () => {
+    return await Promise.all(
+      cart.map(async (item) => {
+        return await UpdatePurchaseQty(item._id, item.purchaseQty);
+      })
+    );
+  };
+
+  // Checking Out
+  const Checkout = async () => {
+    setcheckout(true);
+    await UpdateAllPurchaseQty();
+    history.push("/Checkout/cart");
+    setcheckout(false);
   };
 
   return (
-    <div className="cart-main">
-      {user === null ? (
-        <div
-          style={{
-            minHeight: "100%",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
+    <>
+      <Helmet>
+        <title>Cart | Bookshlf</title>
+        <meta
+          name="description"
+          content="Bookshlf Cart. All Items Added to Cart are Visible here."
+        />
+      </Helmet>
+      {user ? (
+        <Grid
+          container
+          sx={{ padding: "10px" }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          <Alert severity="warning" variant="outlined">
-            <strong style={{ fontFamily: "PT sans" }}>
-              Please Login to See Your Cart Items
-            </strong>
-          </Alert>
-        </div>
-      ) : (
-        <>
-          {/* Loader */}
-          <div
-            className="page-loader"
-            style={{ display: loader ? "flex" : "none" }}
-          >
-            <CircularProgress style={{ height: "50px", width: "50px" }} />
-          </div>
-
-          <div
-            className="cart-container-left"
-            style={{ display: loader ? "none" : "block" }}
-          >
-            <h1 className="cart-title">
-              <i className="fas fa-cart-arrow-down"></i>&nbsp;Cart
-              <span className="cart-item-count">
-                {user.cartitems}&nbsp;Items
-              </span>
-            </h1>
-
-            {cart && cart.length ? (
-              <>
-                {cart.map((item, idx) => (
-                  // Cart item starts
-                  <div className="cart-item" key={idx}>
-                    <div className="cart-item-img">
+          {cartLoading ? (
+            <>
+              <Grid item xs={12} sm={8} md={8} lg={8}>
+                <Skeleton variant="rectangle" height={100} width="100%" />
+              </Grid>
+              <Grid item xs={12} sm={4} md={4} lg={4}>
+                <Skeleton variant="rectangle" height={100} width="100%" />
+              </Grid>
+              <Grid item xs={12} sm={8} md={8} lg={8}>
+                <Skeleton variant="rectangle" height={100} width="100%" />
+              </Grid>
+              <Grid item xs={12} sm={4} md={4} lg={4}>
+                <Skeleton variant="rectangle" height={100} width="100%" />
+              </Grid>
+              <Grid item xs={12} sm={8} md={8} lg={8}>
+                <Skeleton variant="rectangle" height={100} width="100%" />
+              </Grid>
+              <Grid item xs={12} sm={4} md={4} lg={4}>
+                <Skeleton variant="rectangle" height={100} width="100%" />
+              </Grid>
+            </>
+          ) : (
+            <>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Stack
+                  direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+                  justifyContent="space-evenly"
+                  spacing={2}
+                >
+                  <Button
+                    startIcon={<BackIcon />}
+                    variant="outlined"
+                    size="small"
+                    className={classes.Button}
+                    color="secondary"
+                    href="/SearchResult/tag:ALL"
+                  >
+                    Continue Shopping
+                  </Button>
+                  <Fab
+                    variant="extended"
+                    size="small"
+                    color="primary"
+                    aria-label="cart-total"
+                  >
+                    <RupeeIcon sx={{ mr: 1, height: 20, width: 20 }} />
+                    <strong>{amount + " ( " + cart.length + " Item )"}</strong>
+                  </Fab>
+                  <LoadingButton
+                    loading={checkout}
+                    loadingPosition="end"
+                    endIcon={<CheckoutIcon />}
+                    variant="contained"
+                    size="small"
+                    color="warning"
+                    className={classes.Button}
+                    disabled={cart.length == 0}
+                    onClick={Checkout}
+                  >
+                    Checkout
+                  </LoadingButton>
+                </Stack>
+              </Grid>
+              {cart.length ? (
+                cart.map((product, index) => (
+                  <Grid item xs={12} sm={12} md={12} lg={12} key={index}>
+                    <Stack
+                      className={classes.Stack}
+                      spacing={3}
+                      direction={{
+                        xs: "column",
+                        sm: "row",
+                        md: "row",
+                        lg: "row",
+                      }}
+                      justifyContent={{
+                        xs: "center",
+                        sm: "flex-start",
+                        md: "flex-start",
+                        lg: "flex-start",
+                      }}
+                      alignItems="center"
+                    >
                       <Avatar
-                        src={item.photo}
-                        alt={item.title}
-                        sx={{ width: 150, height: 150 }}
+                        variant="rounded"
+                        src={product.photo}
+                        alt={product.title}
+                        sx={{ height: 100, width: 80 }}
                       />
-                    </div>
-                    <div className="cart-item-details">
-                      <h2>{item.title}</h2>
-                      <h3>Edition : {item.editionYear}</h3>
-                      <h3>Author : {item.author}</h3>
-                      <h4
-                        onClick={() => {
-                          handelRemoveItem(item.bookId);
+                      <Stack
+                        direction="column"
+                        spacing={1}
+                        sx={{ width: "100%" }}
+                        justifyContent={{
+                          xs: "center",
+                          sm: "flex-start",
+                          md: "flex-start",
+                          lg: "flex-start",
                         }}
-                        className="remove-item"
+                        alignItems="center"
                       >
-                        {removingId === item.bookId ? (
-                          <CircularProgress
-                            style={{
-                              height: "20px",
-                              width: "20px",
-                              color: "white",
-                            }}
+                        <Typography variant="body2">
+                          <strong>{product.title}</strong>
+                        </Typography>
+                        <Typography variant="caption">
+                          <strong>{product.author}</strong>
+                        </Typography>
+                        <div>
+                          <Chip
+                            icon={<SellerIcon />}
+                            label={product.sellerName}
+                            size="small"
+                            className={classes.root}
+                            color="primary"
+                            variant="outlined"
                           />
-                        ) : (
-                          <>
-                            <i className="fas fa-trash-alt" />{" "}
-                            <span>Remove Item</span>
-                          </>
-                        )}
-                      </h4>
-                      <Button
-                        variant="contained"
-                        href={`/BookDetails/${item.bookId}`}
-                        color="primary"
-                        style={{
-                          fontSize: "12px",
-                          backgroundColor: "blue",
-                          color: "aliceblue",
-                          padding: "10px",
-                          fontFamily: "PT Sans",
-                          cursor: "pointer",
-                          marginLeft: "5px",
-                        }}
+                        </div>
+                      </Stack>
+                      <Stack
+                        direction="column"
+                        spacing={1}
+                        alignItems="center"
+                        sx={{ width: "100%" }}
                       >
-                        More Details&nbsp;
-                        <i className="fas fa-angle-right" />
-                      </Button>
-                    </div>
-                    <div className="cart-item-price">
-                      <h3 className="price-tag">
-                        <i className="fas fa-rupee-sign" />
-                        &nbsp;{item.price}&nbsp;/-
-                      </h3>
-                      <h3 className="avl-qty">
-                        Available Quantity : <span>{item.qty}</span>
-                      </h3>
-                      <h3 style={{ color: "green" }}>Purchasing Quantity</h3>
-                      <table className="book-quantity">
-                        <thead>
-                          <tr>
-                            <td>
-                              <i
-                                className="fas fa-minus-square"
-                                onClick={() => {
-                                  DeleteItem(idx, item.price);
-                                }}
-                              />
-                            </td>
-                            <td
-                              id={idx}
-                              style={{
-                                color: "green",
-                                fontFamily: "PT Sans",
-                              }}
-                            >
-                              {Math.min(item.purchaseQty, item.qty)}
-                            </td>
-                            <td>
-                              <i
-                                className="fas fa-plus-square"
-                                onClick={() => {
-                                  addItem(idx, item.qty, item.price);
-                                }}
-                              />
-                            </td>
-                          </tr>
-                        </thead>
-                      </table>
-                    </div>
-                    <p className="alert-cart-item">
-                      <i className="fas fa-info-circle"></i> Do not delay the
-                      purchase, adding items to your cart does not mean booking
-                      them.
-                    </p>
-                  </div>
-                  // Cart Item Ends
-                ))}
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-          <div
-            className="cart-container-right"
-            style={{ display: loader ? "none" : "block" }}
-          >
-            <h2>Total Amount Payable</h2>
-            <div className="cart-total">
-              <p>
-                Amount <br />
-                <i>(Excluding GST and shipping charges)</i>
-              </p>
-              <h3>
-                <i className="fas fa-rupee-sign" />
-                &nbsp;{amount}/-
-              </h3>
-            </div>
-            <div
-              className="cart-checkout"
-              onClick={(e) => {
-                // console.log(cart);
-                handelUpdateCart(e);
-              }}
-            >
-              {checkout ? (
-                <>
-                  <CircularProgress
-                    style={{
-                      height: "25px",
-                      width: "25px",
-                      color: "white",
-                    }}
-                  />
-                  &nbsp;Checking Out...
-                </>
+                        <Chip
+                          label={product.price * product.purchaseQty}
+                          icon={<RupeeIcon />}
+                          color="secondary"
+                          size="small"
+                          className={classes.root}
+                        />
+                        <ButtonGroup
+                          disableElevation
+                          variant="outlined"
+                          size="small"
+                          color="info"
+                        >
+                          <IconButton
+                            color="primary"
+                            aria-label="Remove Item Quantity"
+                            component="span"
+                            disabled={product.purchaseQty <= 1}
+                            onClick={() => handelRemoveItem(product._id, index)}
+                          >
+                            <RemoveIcon color="error" />
+                          </IconButton>
+                          <Button
+                            aria-label="add Item Quantity"
+                            className={classes.root}
+                            sx={{ margin: "0px 6px" }}
+                          >
+                            {product.purchaseQty}
+                          </Button>
+                          <IconButton
+                            color="primary"
+                            aria-label="add Item Quantity"
+                            component="span"
+                            disabled={product.qty <= product.purchaseQty}
+                            onClick={() => handelAddItem(product._id, index)}
+                          >
+                            <AddIcon color="success" />
+                          </IconButton>
+                        </ButtonGroup>
+
+                        <Typography variant="caption" className={classes.root}>
+                          Available Qty : <strong>{product.qty}</strong>
+                        </Typography>
+                      </Stack>
+                      <Stack
+                        sx={{ width: "100%" }}
+                        justifyContent="center"
+                        direction="row"
+                      >
+                        <div>
+                          <Button
+                            variant="outlined"
+                            className={classes.Button}
+                            endIcon={<NextIcon />}
+                            color="primary"
+                            size="small"
+                          >
+                            More Details
+                          </Button>
+                        </div>
+                      </Stack>
+                      <Stack
+                        sx={{ width: "100%" }}
+                        justifyContent="center"
+                        direction="row"
+                      >
+                        <Fab
+                          aria-label="remove-from-cart"
+                          size="small"
+                          sx={{ backgroundColor: "rgba(255,0,0,0.6)" }}
+                          onClick={() => handelCart(product.bookId)}
+                        >
+                          {removingId === product.bookId ? (
+                            <CircularProgress size="1rem" />
+                          ) : (
+                            <CancelIcon />
+                          )}
+                        </Fab>
+                      </Stack>
+                    </Stack>
+                  </Grid>
+                ))
               ) : (
-                <>
-                  <i className="fas fa-money-check-alt" />
-                  &nbsp;Checkout
-                </>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <Stack sx={{ width: "100%" }}>
+                    <Alert severity="info">
+                      <Typography variant="body1" className={classes.root}>
+                        Your Cart is Empty. Add Items to see them in Cart.
+                      </Typography>
+                    </Alert>
+                  </Stack>
+                </Grid>
               )}
-            </div>
-          </div>
-        </>
+            </>
+          )}
+        </Grid>
+      ) : (
+        <Alert severity="error">
+          <Typography variant="body1" className={classes.root}>
+            Please Login to see your Shopping Cart
+          </Typography>
+        </Alert>
       )}
-    </div>
+    </>
   );
-}
+};
 export default Cart;

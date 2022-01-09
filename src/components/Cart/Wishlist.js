@@ -202,8 +202,7 @@ const Wishlist = () => {
                           More Details
                         </Button>
                         <Fab
-                          aria-label="Add-to-Wishlist"
-                          size="small"
+                          aria-label="Remove-from-Wishlist"
                           onClick={() => handelWishList(item.bookId)}
                         >
                           {removeId === item.bookId ? (

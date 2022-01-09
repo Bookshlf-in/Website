@@ -99,7 +99,7 @@ const BookDetails = () => {
         .catch((error) => {});
     };
     fetchData();
-  }, [bookId]);
+  }, []);
 
   // tag searching on input
   const handelTagSearch = (e) => {

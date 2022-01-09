@@ -25,7 +25,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const BookDesc = (props) => {
-  console.log(props.bookdetails);
   const classes = useStyles();
   const book = props.bookdetails;
   const history = useHistory();

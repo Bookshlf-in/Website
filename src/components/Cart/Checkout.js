@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./Payment.css";
+import "./Checkout.css";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";

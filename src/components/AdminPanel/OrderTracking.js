@@ -97,7 +97,7 @@ const OrderTracking = () => {
         .catch((error) => {});
     };
     fetchdata();
-  }, [params.orderId]);
+  }, []);
 
   const handelCancelOrder = () => {
     setcancelLoad(true);

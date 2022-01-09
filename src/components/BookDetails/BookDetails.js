@@ -19,7 +19,6 @@ import Skeleton from "@mui/material/Skeleton";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { Box } from "@mui/system";
 
 // Icons
 import AddCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -206,7 +205,7 @@ const BookDetails = () => {
   };
 
   return (
-    <Box>
+    <>
       <Helmet>
         {book.title ? <title>{book.title} | Bookshlf</title> : null}
         {book.description ? (
@@ -347,7 +346,7 @@ const BookDetails = () => {
           </Alert>
         </Snackbar>
       </div>
-    </Box>
+    </>
   );
 };
 export default BookDetails;
