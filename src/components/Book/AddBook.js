@@ -4,26 +4,26 @@ import axios from "../../axios";
 import { Link, useHistory } from "react-router-dom";
 import { AddFormContext } from "../../Context/formContext";
 import { Helmet } from "react-helmet";
+import { makeStyles } from "@mui/styles";
 import SellerCommisionChart from "./CommisionChartGrid";
 
 // form components
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Chip from "@material-ui/core/Chip"; // for book-tag
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
+import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import Collapse from "@material-ui/core/Collapse";
+import Collapse from "@mui/material/Collapse";
 import Tooltip from "@mui/material/Tooltip";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import LoadingButton from "@mui/lab/LoadingButton";
-import CancelIcon from "@material-ui/icons/CancelTwoTone";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -32,24 +32,43 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 // Icons
-import CloseIcon from "@material-ui/icons/ArrowDropUpRounded";
-import OpenIcon from "@material-ui/icons/ArrowDropDownRounded";
-import BookIcon from "@material-ui/icons/MenuBookRounded";
-import BookDescIcon from "@material-ui/icons/DescriptionRounded";
-import BookQtyIcon from "@material-ui/icons/InboxRounded";
-import AddressIcon from "@material-ui/icons/ContactsRounded";
-import TagIcon from "@material-ui/icons/LocalOfferRounded";
-import CameraIcon from "@material-ui/icons/AddAPhotoRounded";
-import SendIcon from "@material-ui/icons/SendRounded";
-import AddIcon from "@material-ui/icons/AddCircleOutlineRounded";
-import EditionIcon from "@material-ui/icons/Timelapse";
-import AuthorIcon from "@material-ui/icons/Person";
-import WeightIcon from "@material-ui/icons/FitnessCenter";
-import LanguageIcon from "@material-ui/icons/Translate";
-import ISBNIcon from "@material-ui/icons/Language";
-import HelpIcon from "@material-ui/icons/Help";
+import CancelIcon from "@mui/icons-material/CancelTwoTone";
+import CloseIcon from "@mui/icons-material/ArrowDropUpRounded";
+import OpenIcon from "@mui/icons-material/ArrowDropDownRounded";
+import BookIcon from "@mui/icons-material/MenuBookRounded";
+import BookDescIcon from "@mui/icons-material/DescriptionRounded";
+import BookQtyIcon from "@mui/icons-material/InboxRounded";
+import AddressIcon from "@mui/icons-material/ContactsRounded";
+import TagIcon from "@mui/icons-material/LocalOfferRounded";
+import CameraIcon from "@mui/icons-material/AddAPhotoRounded";
+import SendIcon from "@mui/icons-material/SendRounded";
+import AddIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import EditionIcon from "@mui/icons-material/Timelapse";
+import AuthorIcon from "@mui/icons-material/Person";
+import WeightIcon from "@mui/icons-material/FitnessCenter";
+import LanguageIcon from "@mui/icons-material/Translate";
+import ISBNIcon from "@mui/icons-material/Language";
+import HelpIcon from "@mui/icons-material/Help";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    fontWeight: "bolder",
+    // fontFamily: "PT sans !important",
+    "& label": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+    },
+  },
+}));
 
 const AddBook = (props) => {
+  const classes = useStyles();
   const history = useHistory();
   const [addForm, setAddForm] = useContext(AddFormContext);
 
@@ -380,10 +399,10 @@ const AddBook = (props) => {
   return (
     <div className="add-book-bg">
       <Helmet>
-        <title>Seller Profile | Bookshlf</title>
-        <meta name="description" content="Bookshlf Seller Profile." />
+        <title>Add Book | Bookshlf</title>
+        <meta name="description" content="Add Your Book" />
       </Helmet>
-      <Grid container spacing={2} style={{ padding: "10px" }}>
+      <Grid container spacing={2}>
         <Grid item xs={12} lg={8} md={12} sm={12}>
           <form className="add-book-form-lf">
             <fieldset>
@@ -552,10 +571,7 @@ const AddBook = (props) => {
                       <DialogContent>
                         <DialogContentText
                           id="alert-dialog-description"
-                          style={{
-                            height: 400,
-                            width: "100%",
-                          }}
+                          sx={{ height: 400 }}
                         >
                           <SellerCommisionChart grid={props.commisionChart} />
                         </DialogContentText>
@@ -971,10 +987,7 @@ const AddBook = (props) => {
             />
             <Link
               style={{ fontFamily: "pt sans" }}
-              to={{
-                pathname:
-                  "https://www.termsandconditionsgenerator.com/live.php?token=pP3839LpZ8HDIPcORRLXomSRqIXPnxOV",
-              }}
+              to="/TermsofUse&PrivacyPolicy"
               target="_blank"
             >
               I agree to Terms & Conditions

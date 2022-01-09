@@ -1,10 +1,10 @@
 import { React, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
 import Stack from "@mui/material/Stack";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/material/Alert";
 import Chip from "@mui/material/Chip";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
@@ -30,16 +30,16 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid } from "@mui/x-data-grid";
 
 // icons
-import LoadIcon from "@material-ui/icons/AutorenewRounded";
-import SearchIcon from "@material-ui/icons/Search";
-import IDIcon from "@material-ui/icons/AssignmentIndRounded";
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
-import SendIcon from "@material-ui/icons/Send";
-import CreditIcon from "@material-ui/icons/CallMadeRounded";
-import DebitIcon from "@material-ui/icons/CallReceivedRounded";
-import CancelIcon from "@material-ui/icons/CancelRounded";
-import CompleteIcon from "@material-ui/icons/CheckCircleRounded";
-import PendingIcon from "@material-ui/icons/AccessTimeRounded";
+import LoadIcon from "@mui/icons-material/AutorenewRounded";
+import SearchIcon from "@mui/icons-material/Search";
+import IDIcon from "@mui/icons-material/AssignmentIndRounded";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import SendIcon from "@mui/icons-material/Send";
+import CreditIcon from "@mui/icons-material/CallMadeRounded";
+import DebitIcon from "@mui/icons-material/CallReceivedRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import CompleteIcon from "@mui/icons-material/CheckCircleRounded";
+import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 
 const useStyles = makeStyles({
   root: {

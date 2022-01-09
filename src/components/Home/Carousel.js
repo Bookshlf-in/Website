@@ -1,72 +1,37 @@
 import React from "react";
-import Slider from "react-animated-slider";
-import "react-animated-slider/build/horizontal.css";
-import "./Slider-animations.css";
-import "./Carousel.css";
-import { useHistory } from "react-router-dom";
+import Carousel from "react-material-ui-carousel";
+import { Paper, Button } from "@mui/material";
 
-function Carousel() {
-  const history = useHistory();
-  const content = [
+function Item(props) {
+  return (
+    <Paper>
+      <h2>{props.item.name}</h2>
+      <p>{props.item.description}</p>
+
+      <Button className="CheckButton">Check it out!</Button>
+    </Paper>
+  );
+}
+
+function HomeCarousel(props) {
+  var items = [
     {
-      title: "Old Books Are Like Old Friends. Full Of Memories",
-      description: "Buy Used Books & Save Environment",
-      button: "Shop Now",
-      image: "/images/qoute-bookshlf.jpg",
+      name: "Random Name #1",
+      description: "Probably the most random thing you have ever seen!",
     },
     {
-      title: "Your Online bOOk Store",
-      description: "READ WHAT YOU LOVE. LOVE WHAT YOU READ!",
-      button: "Explore Now",
-      image: "/images/carousel_bg1.jpg",
-    },
-    {
-      title: "Sell Your Old Books",
-      description: "Sell your old books with best possible prices",
-      button: "Sell Now",
-      image: "/images/carousel_bg2.jpg",
-    },
-    {
-      title: "JEE(Main + Advance), NEET Books By V & S Publisher",
-      description: "UPTO 80% OFF ONLY THIS WEEK",
-      button: "Shop Now",
-      image: "/images/carousel_bg4.jpg",
+      name: "Random Name #2",
+      description: "Hello World!",
     },
   ];
 
   return (
-    <div className="carousel">
-      <div className="corousel-container">
-        <Slider className="slider-wrapper" autoplay="5000">
-          {content.map((item, index) => (
-            <div
-              key={index}
-              className="slider-content"
-              style={{
-                background: `url('${item.image}') no-repeat center center`,
-              }}
-            >
-              <div className="inner">
-                <h1>{item.title}</h1>
-                <p>{item.description}</p>
-                <button
-                  onClick={() => {
-                    if (item.button === "Sell Now") {
-                      history.push("/SellerPanel/5");
-                    } else {
-                      history.push("/SearchResult/tag:ALL");
-                    }
-                  }}
-                >
-                  {item.button}
-                </button>
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
-    </div>
+    <Carousel>
+      {items.map((item, i) => (
+        <Item key={i} item={item} />
+      ))}
+    </Carousel>
   );
 }
 
-export default Carousel;
+export default HomeCarousel;

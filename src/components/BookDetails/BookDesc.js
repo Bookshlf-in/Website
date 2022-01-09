@@ -1,127 +1,230 @@
 import { React } from "react";
 import { useHistory } from "react-router-dom";
-import Rating from "@material-ui/lab/Rating";
-import Chip from "@material-ui/core/Chip";
-import DoneIcon from "@material-ui/icons/Done";
-import FaceIcon from "@material-ui/icons/Face";
+import { makeStyles } from "@mui/styles";
 
-function BookDesc(props) {
-  // console.log(props);
+// Components
+import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Rating from "@mui/material/Rating";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+
+// Icons
+import FaceIcon from "@mui/icons-material/Face";
+import RupeeIcon from "@mui/icons-material/CurrencyRupee";
+import BookIcon from "@mui/icons-material/Bookmark";
+import CheckIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    fontFamily: "PT sans !important",
+  },
+}));
+
+const BookDesc = (props) => {
+  const classes = useStyles();
+  const book = props.bookdetails;
   const history = useHistory();
+
   const handleClick = () => {
     history.push(`/SellerProfile/${props.bookdetails.seller._id}`);
   };
-  const handleDelete = () => {
-    history.push(`/SellerProfile/${props.bookdetails.seller._id}`);
+
+  const handelTagClick = (tagName) => {
+    history.push(`/SearchResult/tag:${tagName}`);
   };
 
   return (
-    <div className="book-description">
-      <div className="book-fullname">
-        <h1>{props.bookdetails.title}</h1>
-      </div>
-      <div className="book-subheading">
-        {/* <span className="book-isbn">
-          <i className="fas fa-atlas" />
-          &nbsp;ISBN&nbsp;:&nbsp;<b>{props.bookdetails.ISBN}</b>
-        </span> */}
-        {/* <span className="book-edition">
-          Edition&nbsp;:&nbsp;<b>{props.bookdetails.editionYear}</b>
-        </span> */}
-      </div>
-      <div className="about-book">
-        <span className="book-rating" id="book-rating">
-          {/* <Rating name="read-only" value={5} readOnly /> */}
-        </span>
-        {/* <span className="book-cutomer-reviews">
-          <Link to="#">Customer Reviews</Link>
-        </span> */}
-      </div>
-      <div className="book-selling">
-        {/* <div className="book-mrp">
-          MRP :{" "}
-          <b>
-            <i className="fas fa-rupee-sign" /> {props.bookdetails.MRP}/-
-          </b>
-        </div> */}
-        <div className="book-selling-price">
-          Selling price :{" "}
-          <b>
-            <i className="fas fa-rupee-sign" /> {props.bookdetails.price}/-
-          </b>
-        </div>
-        {/* <div className="book-savings">
-          Total Discount :{" "}
-          <b>
-            {Math.round(
-              ((props.bookdetails.MRP - props.bookdetails.price) /
-                props.bookdetails.MRP) *
-                100
-            )}
-            &nbsp;%
-          </b>
-        </div> */}
-      </div>
-      <div className="book-other-details">
-        <h2> Book Description</h2>
-        <p>{props.bookdetails.description}</p>
-      </div>
-      <div className="book-tags">
-        {props.bookdetails.tags && props.bookdetails.tags.length > 0 ? (
-          <>
-            {props.bookdetails.tags.map((tagname) => (
-              <span
-                className="tag"
-                key={tagname}
-                onClick={() => {
-                  history.push(`/SearchResult/tag:${tagname}`);
-                }}
-                title={`Search ${tagname}`}
-              >
-                {tagname}
-              </span>
-            ))}
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
-      <div className="book-seller">
-        <div className="book-seller-name">
-          <b style={{ fontFamily: "PT Sans" }}>Seller</b>
-          <br />
+    <Stack direction="column" spacing={2}>
+      <Typography variant="h5" align="center">
+        <strong>{book.title}</strong>
+      </Typography>
+      {book.status === "Cancelled" ? (
+        <Stack
+          sx={{ width: "100%" }}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Alert severity="warning" sx={{ width: 300 }}>
+            <AlertTitle>
+              <Typography variant="body1">
+                <strong>Book Not Available</strong>
+              </Typography>
+            </AlertTitle>
+            <Typography variant="caption">
+              <strong>
+                This Book is Currently Not Available & May Remain Same for Not
+                Known Period of time
+              </strong>
+            </Typography>
+          </Alert>
+        </Stack>
+      ) : null}
+      <Divider flexItem />
+      <Stack
+        spacing={2}
+        sx={{ width: "100%" }}
+        justifyContent="center"
+        direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+      >
+        <Stack direction="column" spacing={3}>
+          <Typography variant="body2" className={classes.root}>
+            <strong>Selling Price :</strong>{" "}
+            <Chip
+              icon={<RupeeIcon />}
+              label={book.price}
+              color="success"
+              variant="filled"
+              size="small"
+              className={classes.root}
+            />
+          </Typography>
+          {book?.MRP ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>MRP :</strong>{" "}
+              <Chip
+                icon={<RupeeIcon />}
+                label={book?.MRP}
+                color="primary"
+                variant="filled"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+        </Stack>
+        <Stack direction="column" spacing={3}>
+          {book?.author ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Author :</strong>{" "}
+              <Chip
+                label={book?.author}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+
+          {book?.author ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Edition Year :</strong>{" "}
+              <Chip
+                label={book?.editionYear}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+        </Stack>
+        <Stack direction="column" spacing={3}>
+          {book?.ISBN ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Book ISBN :</strong>{" "}
+              <Chip
+                label={book?.ISBN}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+
+          {book?.qty ? (
+            <Typography variant="body2" className={classes.root}>
+              <strong>Book Quantity :</strong>{" "}
+              <Chip
+                label={book?.qty}
+                color="default"
+                variant="outlined"
+                size="small"
+                className={classes.root}
+              />
+            </Typography>
+          ) : null}
+        </Stack>
+      </Stack>
+      <Divider />
+      <Stack sx={{ width: "100%" }} justifyContent="center" alignItems="center">
+        <Typography variant="h5" className={classes.root}>
+          Book Description
+        </Typography>
+        <Typography variant="body1" align="justify" sx={{ maxWidth: 400 }}>
+          <strong>{book?.description}</strong>
+        </Typography>
+      </Stack>
+      <Stack
+        sx={{ width: "100%" }}
+        direction="column"
+        spacing={2}
+        alignItems="center"
+      >
+        <Stack direction="row" spacing={2}>
           <Chip
+            label={book.seller.name}
+            className={classes.root}
             icon={<FaceIcon />}
-            label={
-              props.bookdetails.seller
-                ? props.bookdetails.seller.name
-                : props.bookdetails.sellerName
-            }
+            color="secondary"
+            variant="outlined"
+            size="small"
             onClick={handleClick}
-            onDelete={handleDelete}
-            deleteIcon={
-              props.bookdetails.seller.isVerified ? <DoneIcon /> : <></>
+          />
+          <Chip
+            label={
+              book.seller.isVerified ? "Verified Seller" : "Not Verified Seller"
             }
-            style={{ backgroundColor: "rgb(10,250,10)", color: "black" }}
+            className={classes.root}
+            icon={book.seller.isVerified ? <CheckIcon /> : <CancelIcon />}
+            color={book.seller.isVerified ? "success" : "error"}
+            variant="outlined"
+            size="small"
           />
-        </div>
-        <div className="book-seller-rating" id="book-seller-rating">
-          <Rating
-            name="read-only"
-            value={props.bookdetails.seller.rating}
-            readOnly
-            style={{ fontSize: "0.8em" }}
+        </Stack>
+
+        <Rating value={book.seller.rating} precision={0.5} readOnly />
+        <Typography variant="caption" align="center">
+          <strong>Total Ratings Recieved : </strong>{" "}
+          <Chip
+            label={book.seller.noOfRatings}
+            size="small"
+            className={classes.root}
           />
-          (
-          {props.bookdetails.seller.rating > 5
-            ? 5
-            : props.bookdetails.seller.rating}
-          )
-          <br />
-          Total Reviews : {props.bookdetails.seller.noOfRatings}
-        </div>
-      </div>
-    </div>
+        </Typography>
+      </Stack>
+      <Divider />
+      <Typography variant="h5" className={classes.root} align="center">
+        Book Tags
+      </Typography>
+      <Stack
+        sx={{ width: "100%" }}
+        justifyContent="center"
+        alignItems="center"
+        className="book-details-tag-stack"
+        direction="row"
+        spacing={1}
+      >
+        {book.tags.map((tag, index) => (
+          <Chip
+            variant="outlined"
+            color="primary"
+            size="small"
+            label={tag}
+            key={index}
+            icon={<BookIcon />}
+            className={classes.root}
+            sx={{ cursor: "pointer" }}
+            onClick={() => handelTagClick(tag)}
+          />
+        ))}
+      </Stack>
+    </Stack>
   );
-}
+};
 export default BookDesc;

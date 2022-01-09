@@ -1,5 +1,5 @@
-import { React, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { React } from "react";
+import { makeStyles } from "@mui/styles";
 
 // components
 import Stack from "@mui/material/Stack";
@@ -7,14 +7,14 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 
 // icons
-import EmailIcon from "@material-ui/icons/EmailRounded";
-import RolesIcon from "@material-ui/icons/SupervisorAccountRounded";
-import CheckIcon from "@material-ui/icons/CheckCircleRounded";
-import CancelIcon from "@material-ui/icons/CancelRounded";
-import PersonIcon from "@material-ui/icons/PersonRounded";
-import IDIcon from "@material-ui/icons/AssignmentIndRounded";
-import UpdateIcon from "@material-ui/icons/UpdateRounded";
-import TimeIcon from "@material-ui/icons/TimelapseRounded";
+import EmailIcon from "@mui/icons-material/EmailRounded";
+import RolesIcon from "@mui/icons-material/SupervisorAccountRounded";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import PersonIcon from "@mui/icons-material/PersonRounded";
+import IDIcon from "@mui/icons-material/AssignmentIndRounded";
+import UpdateIcon from "@mui/icons-material//UpdateRounded";
+import TimeIcon from "@mui/icons-material/TimelapseRounded";
 
 const useStyles = makeStyles({
   root: {

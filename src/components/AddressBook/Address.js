@@ -1,24 +1,48 @@
 import { React, useState } from "react";
+import { Helmet } from "react-helmet";
+import { makeStyles } from "@mui/styles";
 import "./Address.css";
 import axios from "../../axios";
-import InputMask from "react-input-mask";
-import { makeStyles } from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import TextField from "@mui/material/TextField";
-import { DataGrid } from "@mui/x-data-grid";
 
-const useStyles = makeStyles((theme) => ({
+// Components
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import IconButton from "@mui/material/IconButton";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { DataGrid } from "@mui/x-data-grid";
+import Chip from "@mui/material/Chip";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
+
+// Icons
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/AddCircleRounded";
+import CallIcon from "@mui/icons-material/CallRounded";
+import PinIcon from "@mui/icons-material/FiberPinRounded";
+import HomeIcon from "@mui/icons-material/HomeRounded";
+import OfficeIcon from "@mui/icons-material/ApartmentRounded";
+import TempIcon from "@mui/icons-material/NotListedLocationRounded";
+
+const useStyles = makeStyles(() => ({
   root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
+    fontWeight: "bolder",
+    // fontFamily: "PT sans !important",
+    "& label": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
     },
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingTop: "20px",
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+    },
   },
 }));
 
@@ -28,9 +52,8 @@ const Address = (props) => {
   // functionality states
   const [loading, setloading] = useState(false);
   const [alert, setalert] = useState({
-    Display: false,
-    Type: "warning",
-    Color: "",
+    show: false,
+    type: "warning",
     msg: "",
   });
   const [deleteAdr, setdeleteAdr] = useState("");
@@ -40,8 +63,8 @@ const Address = (props) => {
   const [Address, setAddress] = useState("");
   const [PhoneNo, setPhoneNo] = useState("");
   const [AltPhoneNo, setAltPhoneNo] = useState("");
-  const [City, setCity] = useState("City");
-  const [State, setState] = useState("State");
+  const [City, setCity] = useState("");
+  const [State, setState] = useState("");
   const [ZipCode, setZipCode] = useState("");
   const [Adr, setAdr] = useState(props.address);
 
@@ -49,68 +72,151 @@ const Address = (props) => {
     {
       field: "type",
       headerName: "Type",
-      width: 180,
+      minWidth: 150,
+      flex: 1,
       sortable: false,
+      renderCell: (type) => {
+        return (
+          <Chip
+            icon={
+              type.value === "Home Address" ? (
+                <HomeIcon />
+              ) : type.value === "Office Address" ? (
+                <OfficeIcon />
+              ) : (
+                <TempIcon />
+              )
+            }
+            color="default"
+            label={type.value}
+            size="small"
+            className={classes.root}
+          />
+        );
+      },
     },
     {
       field: "address",
       headerName: "Address",
-      width: 310,
+      minWidth: 180,
+      flex: 2,
       sortable: false,
+      renderCell: (adr) => {
+        return (
+          <Typography variant="caption">
+            <strong>{adr.value}</strong>
+          </Typography>
+        );
+      },
     },
     {
       field: "city",
       headerName: "City",
-      maxWidth: 200,
-      minWidth: 170,
+      minWidth: 150,
+      flex: 1,
       sortable: false,
+      renderCell: (city) => {
+        return (
+          <Typography variant="caption">
+            <strong>{city.value}</strong>
+          </Typography>
+        );
+      },
     },
     {
       field: "state",
       headerName: "State",
-      maxWidth: 200,
-      minWidth: 170,
+      minWidth: 150,
+      flex: 1,
       sortable: false,
+      renderCell: (state) => {
+        return (
+          <Typography variant="caption">
+            <strong>{state.value}</strong>
+          </Typography>
+        );
+      },
     },
     {
       field: "zipCode",
       headerName: "Zip Code",
-      width: 150,
+      minWidth: 150,
+      flex: 1,
       sortable: false,
+      renderCell: (zip) => {
+        return (
+          <Chip
+            icon={<PinIcon />}
+            color="default"
+            label={zip.value}
+            size="small"
+            className={classes.root}
+          />
+        );
+      },
     },
     {
       field: "phoneNo",
       headerName: "Phone No",
-      width: 150,
+      minWidth: 150,
+      flex: 1,
       sortable: false,
+      renderCell: (phone) => {
+        return (
+          <Chip
+            icon={<CallIcon />}
+            color="primary"
+            label={phone.value}
+            size="small"
+            className={classes.root}
+          />
+        );
+      },
+    },
+    {
+      field: "altphoneNo",
+      headerName: "Alt Phone No",
+      flex: 1,
+      minWidth: 150,
+      sortable: false,
+      renderCell: (phone) => {
+        return (
+          <Chip
+            icon={<CallIcon />}
+            color="primary"
+            label={phone.value ? phone.value : "Not Provided"}
+            size="small"
+            className={classes.root}
+          />
+        );
+      },
     },
     {
       field: "Remove Address",
-      width: 180,
+      minWidth: 150,
+      flex: 1,
       sortable: false,
       renderCell: (cellValues) => {
         return (
-          <div style={{ margin: "0 auto" }}>
-            <i
-              className="fas fa-window-close"
-              id={cellValues.id}
-              title="Remove Address"
-              onClick={(e) => {
-                handelDeleteAddress(e);
-              }}
-              style={{
-                display: deleteAdr !== cellValues.id ? "block" : "none",
-              }}
-            />
-            <CircularProgress
-              style={{
-                display: deleteAdr === cellValues.id ? "block" : "none",
-                height: "25px",
-                width: "25px",
-                color: "red",
-              }}
-            />
-          </div>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <IconButton
+              aria-label="delete"
+              onClick={() => handelDeleteAddress(cellValues.id)}
+            >
+              {deleteAdr !== cellValues.id ? (
+                <DeleteIcon color="error" />
+              ) : (
+                <CircularProgress color="error" size={25} />
+              )}
+            </IconButton>
+          </Box>
         );
       },
     },
@@ -125,6 +231,7 @@ const Address = (props) => {
       state: adr.state,
       zipCode: adr.zipCode,
       phoneNo: adr.phoneNo,
+      altphoneNo: adr.AltPhoneNo,
     };
   });
 
@@ -152,17 +259,15 @@ const Address = (props) => {
         .then((response) => {
           // console.log(response.data);
           setalert({
-            Display: true,
-            Type: "success",
-            Color: "yellowgreen",
+            show: true,
+            type: "success",
             msg: response.data.msg,
           });
           setloading(false);
           setTimeout(() => {
             setalert({
-              Display: false,
-              Type: "",
-              Color: "",
+              show: false,
+              type: "",
               msg: "",
             });
           }, 3000);
@@ -183,17 +288,15 @@ const Address = (props) => {
         .catch((error) => {
           if (error.response) {
             setalert({
-              Display: true,
-              Type: "error",
-              Color: "red",
+              show: true,
+              type: "error",
               msg: "Please Fill All Fields Correctly!",
             });
 
             setTimeout(() => {
               setalert({
-                Display: false,
-                Type: "",
-                Color: "",
+                show: false,
+                type: "",
                 msg: "",
               });
             }, 3000);
@@ -203,16 +306,14 @@ const Address = (props) => {
     } else {
       setloading(false);
       setalert({
-        Display: true,
-        Type: "error",
-        Color: "red",
+        show: true,
+        type: "error",
         msg: "Please Fill All Fields Correctly!",
       });
       setTimeout(() => {
         setalert({
-          Display: false,
-          Type: "",
-          Color: "",
+          show: false,
+          type: "",
           msg: "",
         });
       }, 3000);
@@ -220,44 +321,40 @@ const Address = (props) => {
   };
 
   // const deleting the address
-  const handelDeleteAddress = (e) => {
+  const handelDeleteAddress = (id) => {
     // console.log(e.target.id);
-    setdeleteAdr(e.target.id);
+    setdeleteAdr(id);
     axios
       .delete("/deleteAddress", {
-        data: { addressId: e.target.id },
+        data: { addressId: id },
       })
       .then((response) => {
         // console.log(response.data);
         setalert({
-          Display: true,
-          Type: "success",
-          Color: "yellowgreen",
+          show: true,
+          type: "success",
           msg: response.data.msg,
         });
         setTimeout(() => {
           setalert({
-            Display: false,
-            Type: "",
-            Color: "",
+            show: false,
+            type: "",
             msg: "",
           });
         }, 3000);
-        setAdr(Adr.filter((address) => address._id !== e.target.id));
+        setAdr(Adr.filter((address) => address._id !== id));
       })
       .catch((error) => {
         // console.log(error.response.data.errors);
         setalert({
-          Display: true,
+          show: true,
           Type: "error",
-          Color: "red",
           msg: error.response.data.error,
         });
         setTimeout(() => {
           setalert({
-            Display: false,
-            Type: "",
-            Color: "",
+            show: false,
+            type: "",
             msg: "",
           });
         }, 5000);
@@ -265,175 +362,217 @@ const Address = (props) => {
   };
 
   return (
-    <div className="address-bg">
-      <h1>Your Addresses</h1>
+    <Box
+      sx={{
+        width: "100%",
+        padding: "10px",
+      }}
+    >
+      <Helmet>
+        <title>Address Book | Bookshlf</title>
+        <meta
+          name="description"
+          content="Your Address Book. All Your addresses are stored here."
+        />
+      </Helmet>
+      <Stack
+        spacing={2}
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Typography variant="h5">
+          <strong>Your Address Book</strong>
+        </Typography>
 
-      <form className="address-form">
-        <fieldset>
-          <legend>
-            <i className="fas fa-address-book" /> Add New Address :
-          </legend>
-          <div className="address-label">
-            <select name="" id="" onChange={(e) => setLabel(e.target.value)}>
-              <option value="0">Address Type</option>
-              <option value="Home Address"> Home Address</option>
-              <option value="Office Address"> Office Address</option>
-              <option value="Temporary Address"> Temporary Address</option>
-            </select>
-          </div>
-          <div className="address-desc">
+        <Stack
+          spacing={2}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          className="address-form-stack"
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+            spacing={2}
+            sx={{ width: "100%" }}
+            justifyContent="center"
+          >
+            <FormControl
+              fullWidth
+              variant="filled"
+              sx={{ maxWidth: 300 }}
+              className={classes.root}
+            >
+              <InputLabel id="address-type-label">Address Type</InputLabel>
+              <Select
+                labelId="address-type-label"
+                value={Label}
+                label="Age"
+                onChange={(e) => setLabel(e.target.value)}
+              >
+                <MenuItem value="Home Address">Home Address</MenuItem>
+                <MenuItem value="Office Address">Office Address</MenuItem>
+                <MenuItem value="Temporary Address">Temporary Address</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               label="Full Address"
               variant="filled"
               value={Address}
               onChange={(e) => setAddress(e.target.value)}
               fullWidth
+              className={classes.root}
+              sx={{ maxWidth: 600 }}
             />
-          </div>
-          <div className="address-zip">
-            <select
-              name="states"
-              id="state"
-              onChange={(e) => setState(e.target.value)}
+          </Stack>
+          <Stack
+            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+            spacing={2}
+            sx={{ width: "100%" }}
+            justifyContent="center"
+          >
+            <FormControl
+              fullWidth
+              variant="filled"
+              className={classes.root}
+              sx={{ maxWidth: 300 }}
             >
-              <option value="">Select State</option>
-              <option value="Andaman and Nicobar Islands">
-                Andaman and Nicobar Islands
-              </option>
-              <option value="Andhra Pradesh">Andhra Pradesh</option>
-              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-              <option value="Assam">Assam</option>
-              <option value="Bihar">Bihar</option>
-              <option value="Chandigarh">Chandigarh</option>
-              <option value="Chhattisgarh">Chhattisgarh</option>
-              <option value="Dadra and Nagar Haveli">
-                Dadra and Nagar Haveli
-              </option>
-              <option value="Daman and Diu">Daman and Diu</option>
-              <option value="Delhi">Delhi</option>
-              <option value="Goa">Goa</option>
-              <option value="Gujarat">Gujarat</option>
-              <option value="Haryana">Haryana</option>
-              <option value="Himachal Pradesh">Himachal Pradesh</option>
-              <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-              <option value="Jharkhand">Jharkhand</option>
-              <option value="Karnataka">Karnataka</option>
-              <option value="Kerala">Kerala</option>
-              <option value="Ladakh">Ladakh</option>
-              <option value="Lakshadweep">Lakshadweep</option>
-              <option value="Madhya Pradesh">Madhya Pradesh</option>
-              <option value="Maharashtra">Maharashtra</option>
-              <option value="Manipur">Manipur</option>
-              <option value="Meghalaya">Meghalaya</option>
-              <option value="Mizoram">Mizoram</option>
-              <option value="Nagaland">Nagaland</option>
-              <option value="Odisha">Odisha</option>
-              <option value="Puducherry">Puducherry</option>
-              <option value="Punjab">Punjab</option>
-              <option value="Rajasthan">Rajasthan</option>
-              <option value="Sikkim">Sikkim</option>
-              <option value="Tamil Nadu">Tamil Nadu</option>
-              <option value="Telangana">Telangana</option>
-              <option value="Tripura">Tripura</option>
-              <option value="Uttar Pradesh">Uttar Pradesh</option>
-              <option value="Uttarakhand">Uttarakhand</option>
-              <option value="West Bengal">West Bengal</option>
-            </select>
-
+              <InputLabel id="state-label">State</InputLabel>
+              <Select
+                labelId="state-label"
+                value={State}
+                label="State"
+                onChange={(e) => setState(e.target.value)}
+              >
+                <MenuItem value="Andaman and Nicobar Islands">
+                  Andaman and Nicobar Islands
+                </MenuItem>
+                <MenuItem value="Andhra Pradesh">Andhra Pradesh</MenuItem>
+                <MenuItem value="Arunachal Pradesh">Arunachal Pradesh</MenuItem>
+                <MenuItem value="Assam">Assam</MenuItem>
+                <MenuItem value="Bihar">Bihar</MenuItem>
+                <MenuItem value="Chandigarh">Chandigarh</MenuItem>
+                <MenuItem value="Chhattisgarh">Chhattisgarh</MenuItem>
+                <MenuItem value="Dadra and Nagar Haveli">
+                  Dadra and Nagar Haveli
+                </MenuItem>
+                <MenuItem value="Daman and Diu">Daman and Diu</MenuItem>
+                <MenuItem value="Delhi">Delhi</MenuItem>
+                <MenuItem value="Goa">Goa</MenuItem>
+                <MenuItem value="Gujarat">Gujarat</MenuItem>
+                <MenuItem value="Haryana">Haryana</MenuItem>
+                <MenuItem value="Himachal Pradesh">Himachal Pradesh</MenuItem>
+                <MenuItem value="Jammu and Kashmir">Jammu and Kashmir</MenuItem>
+                <MenuItem value="Jharkhand">Jharkhand</MenuItem>
+                <MenuItem value="Karnataka">Karnataka</MenuItem>
+                <MenuItem value="Kerala">Kerala</MenuItem>
+                <MenuItem value="Ladakh">Ladakh</MenuItem>
+                <MenuItem value="Lakshadweep">Lakshadweep</MenuItem>
+                <MenuItem value="Madhya Pradesh">Madhya Pradesh</MenuItem>
+                <MenuItem value="Maharashtra">Maharashtra</MenuItem>
+                <MenuItem value="Manipur">Manipur</MenuItem>
+                <MenuItem value="Meghalaya">Meghalaya</MenuItem>
+                <MenuItem value="Mizoram">Mizoram</MenuItem>
+                <MenuItem value="Nagaland">Nagaland</MenuItem>
+                <MenuItem value="Odisha">Odisha</MenuItem>
+                <MenuItem value="Puducherry">Puducherry</MenuItem>
+                <MenuItem value="Punjab">Punjab</MenuItem>
+                <MenuItem value="Rajasthan">Rajasthan</MenuItem>
+                <MenuItem value="Sikkim">Sikkim</MenuItem>
+                <MenuItem value="Tamil Nadu">Tamil Nadu</MenuItem>
+                <MenuItem value="Telangana">Telangana</MenuItem>
+                <MenuItem value="Tripura">Tripura</MenuItem>
+                <MenuItem value="Uttar Pradesh">Uttar Pradesh</MenuItem>
+                <MenuItem value="Uttarakhand">Uttarakhand</MenuItem>
+                <MenuItem value="West Bengal">West Bengal</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
+              className={classes.root}
               label="City"
               variant="filled"
+              fullWidth
+              value={City}
               onChange={(e) => setCity(e.target.value)}
+              sx={{ maxWidth: 300 }}
             />
-            <span style={{ position: "relative" }}>
-              <label htmlFor="pincode" className="pincode">
-                Pincode
-              </label>
-              <InputMask
-                mask="999999"
-                autoComplete={true}
-                alwaysShowMask={true}
-                id="pincode"
-                title="Pincode"
-                onChange={(e) => setZipCode(e.target.value)}
-              />
-            </span>
-          </div>
-          <div className="address-phoneNo">
-            <span>
-              <label htmlFor="phone-no">Mobile Phone</label>
-              <InputMask
-                id="phone-no"
-                mask="999999999999"
-                autoComplete={true}
-                alwaysShowMask={true}
-                onChange={(e) => setPhoneNo(e.target.value)}
-              />
-            </span>
-            <span>
-              <label htmlFor="alt-phone-no">Alt Mobile Phone</label>
-              <InputMask
-                id="alt-phone-no"
-                mask="999999999999"
-                autoComplete={true}
-                alwaysShowMask={true}
-                onChange={(e) => setAltPhoneNo(e.target.value)}
-              />
-            </span>
-          </div>
-        </fieldset>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handelRegister();
-          }}
+            <TextField
+              className={classes.root}
+              label="Pincode"
+              variant="filled"
+              fullWidth
+              value={ZipCode}
+              onChange={(e) => setZipCode(e.target.value)}
+              type="number"
+              sx={{ maxWidth: 284 }}
+            />
+          </Stack>
+          <Stack
+            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+            spacing={2}
+            sx={{ width: "100%" }}
+            justifyContent="center"
+          >
+            <TextField
+              className={classes.root}
+              label="Contact Number"
+              variant="filled"
+              fullWidth
+              value={PhoneNo}
+              onChange={(e) => setPhoneNo(e.target.value)}
+              type="number"
+              sx={{ maxWidth: 300 }}
+            />
+            <TextField
+              className={classes.root}
+              label="Alternate Contact Number"
+              variant="filled"
+              fullWidth
+              value={AltPhoneNo}
+              onChange={(e) => setAltPhoneNo(e.target.value)}
+              type="number"
+              sx={{ maxWidth: 300 }}
+            />
+            <LoadingButton
+              className={classes.root}
+              variant="contained"
+              fullWidth
+              color="success"
+              sx={{ maxWidth: 284, fontFamily: "PT sans" }}
+              onClick={handelRegister}
+              endIcon={<AddIcon />}
+              loading={loading}
+              loadingPosition="end"
+            >
+              Add Address
+            </LoadingButton>
+          </Stack>
+        </Stack>
+        {alert.show ? (
+          <Alert
+            severity={alert.type}
+            className={classes.root}
+            sx={{ fontFamily: "PT sans" }}
+          >
+            {alert.msg}
+          </Alert>
+        ) : null}
+        <Stack
+          sx={{ height: 300, width: "100%", padding: "10px" }}
+          className="address-datagrid-stack"
         >
-          + Add Address&nbsp;
-          <CircularProgress
-            style={{
-              display: !loading ? "none" : "inline-block",
-              height: "15px",
-              width: "15px",
-              color: "white",
-            }}
+          <DataGrid
+            loading={loading}
+            className={classes.root}
+            rows={rows}
+            columns={columns}
+            pageSize={3}
+            disableSelectionOnClick
           />
-        </button>
-      </form>
-      <div
-        className={classes.root}
-        style={{ display: alert.Display ? "flex" : "none" }}
-      >
-        <Alert
-          variant="outlined"
-          severity={alert.Type}
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-            color: alert.Color,
-            width: "250px",
-          }}
-        >
-          {alert.msg}
-        </Alert>
-      </div>
-      <div
-        style={{
-          height: 320,
-          width: "100%",
-          marginTop: "30px",
-        }}
-      >
-        <DataGrid
-          style={{ fontFamily: "PT Sans" }}
-          rows={rows}
-          columns={columns}
-          pageSize={4}
-          disableSelectionOnClick
-          disableColumnMenu
-          rowBuffer={4}
-        />
-      </div>
-    </div>
+        </Stack>
+      </Stack>
+    </Box>
   );
 };
 export default Address;

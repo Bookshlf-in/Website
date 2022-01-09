@@ -15,7 +15,7 @@ import UserSignup from "../Signup/UserSignup";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
-import Checkout from "../Cart/Payment";
+import Checkout from "../Cart/Checkout";
 import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../Reviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
@@ -31,11 +31,12 @@ import AdminBook from "../AdminPanel/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
+import Terms from "../Footer/Terms";
 
 // Protected Route
 import Protected from "../Protected";
 
-function App() {
+const App = () => {
   return (
     <Router>
       <div className="App">
@@ -110,6 +111,9 @@ function App() {
           <Route path="/Sitemap">
             <Sitemap />
           </Route>
+          <Route path="/TermsofUse&PrivacyPolicy">
+            <Terms />
+          </Route>
           <Route path="/Wallet">
             <Navbar />
             <Wallet />
@@ -133,6 +137,6 @@ function App() {
       </div>
     </Router>
   );
-}
+};
 
 export default App;

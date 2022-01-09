@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
@@ -13,15 +13,15 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import LoadingButton from "@mui/lab/LoadingButton";
 import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // icons
-import CircularProgress from "@material-ui/core/CircularProgress";
-import LoadIcon from "@material-ui/icons/AutorenewRounded";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import CheckIcon from "@material-ui/icons/CheckCircleRounded";
-import CheckCircleIcon from "@material-ui/icons/CheckCircleOutlineRounded";
+import LoadIcon from "@mui/icons-material/AutorenewRounded";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import CheckCircleIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 
 const useStyles = makeStyles({
   root: {

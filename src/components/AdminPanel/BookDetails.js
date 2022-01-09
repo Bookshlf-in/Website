@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // Components
@@ -8,17 +8,17 @@ import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import LinearProgress from "@mui/material/LinearProgress";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import SendIcon from "@material-ui/icons/SendRounded";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Icons
-import TagIcon from "@material-ui/icons/LocalOfferRounded";
+import TagIcon from "@mui/icons-material/LocalOfferRounded";
+import SendIcon from "@mui/icons-material/SendRounded";
 
 const useStyles = makeStyles({
   root: {
