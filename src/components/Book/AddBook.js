@@ -987,10 +987,7 @@ const AddBook = (props) => {
             />
             <Link
               style={{ fontFamily: "pt sans" }}
-              to={{
-                pathname:
-                  "https://www.termsandconditionsgenerator.com/live.php?token=pP3839LpZ8HDIPcORRLXomSRqIXPnxOV",
-              }}
+              to="/TermsofUse&PrivacyPolicy"
               target="_blank"
             >
               I agree to Terms & Conditions

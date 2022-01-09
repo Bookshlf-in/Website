@@ -264,7 +264,9 @@ function Footer() {
             <div className="footer-link-items">
               <h4>Policy</h4>
               <Link to="/">Return Policy</Link>
-              <Link to="/">Terms Of Use</Link>
+              <Link to="/TermsofUse&PrivacyPolicy" target="_blank">
+                Terms Of Use
+              </Link>
               <Link to="/">Security</Link>
               <Link to="/">Privacy</Link>
             </div>

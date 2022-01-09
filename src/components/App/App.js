@@ -30,6 +30,7 @@ import AdminBook from "../AdminPanel/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
+import Terms from "../Footer/Terms";
 
 // Protected Route
 import Protected from "../Protected";
@@ -108,6 +109,9 @@ const App = () => {
           </Route>
           <Route path="/Sitemap">
             <Sitemap />
+          </Route>
+          <Route path="/TermsofUse&PrivacyPolicy">
+            <Terms />
           </Route>
           <Route path="/Wallet">
             <Navbar />
