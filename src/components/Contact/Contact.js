@@ -1,17 +1,16 @@
 import { React, useState } from "react";
-import "./Contact.css";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
-import axios from "../../axios";
+import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet";
+import axios from "../../axios";
+import "./Contact.css";
+
+// Components
+import Alert from "@mui/material/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
   },
 }));
 
@@ -225,7 +224,7 @@ function Contact() {
               <br />
               <textarea
                 id="contactReview"
-                placeholder="Details please! Your review helps other shoppers."
+                placeholder="Details please! Its Helps our Team to Get Better Understadings of Your Query."
                 onChange={(e) => setMessage(e.target.value)}
                 value={Message}
                 onKeyPress={(e) => {
@@ -258,7 +257,6 @@ function Contact() {
             </form>
             <div className={classes.root} style={{ display: showAlert }}>
               <Alert
-                variant="outlined"
                 severity={Alerttype}
                 style={{
                   fontFamily: "PT Sans",

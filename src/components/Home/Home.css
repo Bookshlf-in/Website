@@ -1,0 +1,45 @@
+.carousel-bg {
+  position: relative !important;
+  height: 75vh;
+  background-position: center;
+  background-size: cover;
+  transition: 1s;
+}
+.carousel-button {
+  position: absolute !important;
+  bottom: 10px;
+  font-family: "Staatliches", sans-serif !important;
+  letter-spacing: 2px !important;
+  transition: 0.5s !important;
+  font-size: 1.5em !important;
+  opacity: 0.9;
+  min-width: 250px !important;
+}
+.carousel-label-title {
+  font-family: "Staatliches", sans-serif !important;
+  font-size: 6em !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.carousel-label-body {
+  font-family: "Staatliches", sans-serif !important;
+  font-size: 1em !important;
+  color: white !important;
+  line-height: 0 !important;
+}
+@media screen and (max-width: 600px) {
+  .carousel-bg {
+    height: 40vh;
+  }
+  .carousel-button {
+    font-size: 1em !important;
+    min-width: 200px !important;
+  }
+  .carousel-label-title {
+    font-size: 2em !important;
+  }
+
+  .carousel-label-body {
+    font-size: 0.8em !important;
+  }
+}
