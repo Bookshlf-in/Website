@@ -14,16 +14,21 @@
   width: 100%;
   display: inline-block;
   font-size: 20px;
+  font-family: "Staatliches";
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .header-viewall {
   display: inline-block;
   position: absolute;
   right: 20px;
+  font-family: "Staatliches";
+  letter-spacing: 2px;
 }
 
 .header-viewall a {
-  color: #525252;
+  color: #506ef7;
   text-decoration: none;
   margin-bottom: 20px;
 }
