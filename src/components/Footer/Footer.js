@@ -1,24 +1,20 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
-import "./Footer.css";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import "./Footer.css";
+import * as EmailValidator from "email-validator";
 
-// Alert
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+// Components
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Use Styles
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
+    fontFamily: "PT sans !important",
   },
 }));
 
@@ -47,7 +43,7 @@ function Footer() {
   const handelSubscription = () => {
     // console.log(Email);
     if (Email !== null) {
-      if ((Email.length > 5) & Email.includes("@") & Email.includes(".")) {
+      if (EmailValidator.validate(Email)) {
         setLoading(true);
         axios
           .post("/newsletterSubscribe", {
@@ -137,23 +133,12 @@ function Footer() {
                 style={{
                   height: "15px",
                   width: "15px",
-                  color: "black",
                   display: loading ? "inline-block" : "none",
                 }}
+                color="success"
               />
             </div>
           </form>
-          {/* !!! do not change !!! */}
-          {/*  snackbar starts*/}
-          <div className={classes.root}>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity={severity}>
-                {alert}
-              </Alert>
-            </Snackbar>
-          </div>
-          {/* snackbar ends */}
-          {/* !!! do not change !!! */}
         </div>
       </section>
       <div className="footer-container2">
@@ -284,6 +269,18 @@ function Footer() {
       </div>
       <div className="footer-container3">
         &copy; {Year} BookShlf. All Rights Reserved
+      </div>
+      <div className={classes.root}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity={severity}
+            className={classes.root}
+            variant="filled"
+          >
+            {alert}
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );

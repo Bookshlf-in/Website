@@ -49,12 +49,13 @@ footer-subscription > p {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 0.1px solid rgb(240, 79, 79);
+  border: 1px solid rgba(240, 79, 79, 0.6);
   box-sizing: border-box;
   outline: none;
-  font-family: "Roboto", sans-serif;
+  font-family: "PT sans", sans-serif;
   font-weight: 900;
   font-size: 12px;
+  border-radius: 5px;
 }
 .footer-subscription-input::placeholder {
   color: rgb(240, 79, 79);
@@ -84,14 +85,19 @@ footer-subscription > p {
   font-size: 14px;
   background-color: black;
   color: white;
-  font-family: "Roboto", sans-serif;
+  font-family: "PT sans", sans-serif;
+  letter-spacing: 0.5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
 }
 .footer-subscription-button:hover {
   background-color: rgb(240, 79, 79);
   font-weight: bold;
+  transition: 0.3s;
+  transition-timing-function: ease;
 }
 .footer-input {
   padding: 8px 20px;
