@@ -39,6 +39,9 @@ const App = () => {
       <div className="App">
         <Switch>
           <Route path="/Login" component={Login} />
+          <Route path="/PasswordRecovery">
+            <ForgotPassword />
+          </Route>
           <Route path="/Signup" component={UserSignup} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/About">

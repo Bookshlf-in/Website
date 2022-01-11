@@ -1,292 +1,342 @@
 import { React, useState, useContext } from "react";
-import "./Login.css";
-import axios from "../../axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import { AddFormContext } from "../../Context/formContext";
-import CircularProgress from "@material-ui/core/CircularProgress";
-const eye = {
-  open: "far fa-eye",
-  close: "fas fa-eye-slash",
-};
+import { makeStyles } from "@mui/styles";
+import axios from "../../axios";
+import * as EmailValidator from "email-validator";
+import "./Login.css";
 
-const Errorstyle = {
-  borderBottom: "3px solid rgb(240, 39, 39)",
-  color: "rgb(240, 39, 39)",
-};
-function Login() {
+// Components
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+
+// Icons
+import HomeIcon from "@mui/icons-material/HomeRounded";
+import EmailIcon from "@mui/icons-material/EmailRounded";
+import PasswordIcon from "@mui/icons-material/PasswordRounded";
+import SignupIcon from "@mui/icons-material/GroupAddRounded";
+import LoginIcon from "@mui/icons-material/LoginRounded";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import ErrorIcon from "@mui/icons-material/Error";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    color: "whitesmoke !important",
+    "& p": {
+      fontFamily: "PT sans !important",
+      color: "whitesmoke",
+    },
+    "& label": {
+      fontFamily: "PT sans !important",
+      color: "whitesmoke !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+      color: "whitesmoke !important",
+      fontSize: "14px !important",
+      letterSpacing: "0.8px !important",
+    },
+  },
+});
+
+const Login = () => {
+  const history = useHistory();
+  const classes = useStyles();
+
   // context states
   const [, setUser] = useContext(UserContext);
-  const [addForm, setAddForm] = useContext(AddFormContext);
-  const history = useHistory();
+  const [, setAddForm] = useContext(AddFormContext);
 
-  // login states
-  const [Name, setName] = useState("");
-  const [Password, setPassword] = useState("");
+  // Functionality States
+  const [showpassword, setshowPassword] = useState(false);
+  const [loginLoad, setloginLoad] = useState(false);
+  const [emailError, setemailError] = useState(false);
+  const [emailerrorMsg, setemailerrorMsg] = useState("");
+  const [passwordError, setpasswordError] = useState(false);
+  const [passworderrorMsg, setpassworderrorMsg] = useState("");
 
-  // other states
-  const [show, setshow] = useState(eye.close);
-  const [val, setval] = useState("password");
-  const [alert1, setalert1] = useState("none");
-  const [alert2, setalert2] = useState("none");
-  const [alertText1, setalertText1] = useState("Email is Incorrect");
-  const [alertText2, setalertText2] = useState("Password is Incorrect");
-  const [Red1, makeRed1] = useState(false);
-  const [Red2, makeRed2] = useState(false);
-  const [loader, setloader] = useState("none");
+  // data states
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // showing password and hiding
-  const handelClick = (e) => {
-    if (show === eye.close) {
-      setshow(eye.open);
-      setval("text");
-      document.getElementById(e.target.id).style.color = "rgb(240, 39, 39)";
-    } else {
-      setshow(eye.close);
-      setval("password");
-      document.getElementById(e.target.id).style.color = "rgb(53, 53, 53)";
-    }
+  // showing and hiding password
+  const handleShowPassword = () => {
+    setshowPassword((prev) => !prev);
   };
 
-  const setDefault = () => {
-    setalert1("none");
-    setalert2("none");
-    makeRed1(false);
-    makeRed2(false);
+  // Handeling Login Navbar
+  const handelNav = (e, value) => {
+    if (value === "1") history.push("/");
+    if (value === "2") history.push("/Login");
+    if (value === "3") history.push("/Signup");
   };
 
-  // Handeling Default Errors
-  const handleDefaultError = () => {
-    if (Name === "") {
-      setalert1("block");
-      setalertText1("Please Fill Your Email");
-      makeRed1(true);
-    }
-    if (Password === "") {
-      setalert2("block");
-      setalertText2("Please Fill Your Password");
-      makeRed2(true);
-    }
-  };
-
-  // Handeling the Login
+  // handeling Login
   const handelLogin = () => {
-    setDefault();
-    if ((Name !== "") & (Password !== "")) {
-      // post request to login
-      setloader("block");
-      axios
-        .post("/signIn", {
-          email: Name,
-          password: Password,
-        })
-        .then((response) => {
-          // console.log("Logged In", response);
-          if (response.data.token) {
-            axios.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${response.data.token}`;
-          }
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({
+    setloginLoad(true);
+    if (EmailValidator.validate(email)) {
+      if (password !== "") {
+        axios
+          .post("/signIn", {
+            email: email,
+            password: password,
+          })
+          .then((response) => {
+            if (response.data.token) {
+              axios.defaults.headers.common[
+                "Authorization"
+              ] = `Bearer ${response.data.token}`;
+            }
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({
+                authHeader: `Bearer ${response.data.token}`,
+                roles: response.data.roles,
+                email: email,
+                cartitems: 0,
+                wishlist: 0,
+              })
+            );
+            setUser({
               authHeader: `Bearer ${response.data.token}`,
               roles: response.data.roles,
-              email: Name,
+              email: email,
               cartitems: 0,
               wishlist: 0,
-            })
-          );
-          localStorage.setItem(
-            "bookshlf_user_AddBook",
-            JSON.stringify({
-              title: "",
-              MRP: "",
-              price: "",
-              editionYear: "",
-              author: "",
-              ISBN: "",
-              language: "",
-              pickupAddressId: "",
-              description: "",
-              photos: [],
-              weightInGrams: "",
-              embedVideo: "",
-              tags: [],
-              qty: 1,
-            })
-          );
-          setUser({
-            authHeader: `Bearer ${response.data.token}`,
-            roles: response.data.roles,
-            email: Name,
-            cartitems: 0,
-            wishlist: 0,
-          });
-          setAddForm({
-            title: "",
-            MRP: "",
-            price: "",
-            editionYear: "",
-            author: "",
-            ISBN: "",
-            language: "",
-            pickupAddressId: "",
-            description: "",
-            photos: [],
-            weightInGrams: "",
-            embedVideo: "",
-            tags: [],
-            qty: 1,
-          });
-          setTimeout(() => {
-            setloader("none");
+            });
+            setloginLoad(false);
             history.push("/");
-          }, 5000);
-        })
-        .catch((error) => {
-          if (error.response) {
-            HandelError(error.response.data.errors[0]);
-          }
-          setloader("none");
-        });
+          })
+          .catch((error) => {
+            setloginLoad(false);
+            console.log(error.response.data.errors);
+            if (error.response.data.errors[0].param === "email") {
+              setemailError(true);
+              setemailerrorMsg(error.response.data.errors[0].error);
+              setTimeout(() => {
+                setemailError(false);
+                setemailerrorMsg("");
+              }, 5000);
+            } else {
+              setpasswordError(true);
+              setpassworderrorMsg(error.response.data.errors[0].error);
+              setTimeout(() => {
+                setpasswordError(false);
+                setpassworderrorMsg("");
+              }, 5000);
+            }
+          });
+      } else {
+        setloginLoad(false);
+        setpasswordError(true);
+        setpassworderrorMsg("Password Cannot be Empty!");
+        setTimeout(() => {
+          setpasswordError(false);
+          setpassworderrorMsg("");
+        }, 5000);
+      }
     } else {
-      handleDefaultError();
+      setloginLoad(false);
+      setemailError(true);
+      setemailerrorMsg("Invalid Email!");
+      setTimeout(() => {
+        setemailError(false);
+        setemailerrorMsg("");
+      }, 5000);
     }
   };
-
-  // Handeling Error
-  const HandelError = (error) => {
-    if (error.param === "email") {
-      setalert1("block");
-      setalertText1(error.error);
-      makeRed1(true);
-    }
-    if (error.param === "password") {
-      setalert2("block");
-      setalertText2(error.error);
-      makeRed2(true);
-    }
-  };
-
   return (
-    <div className="login-bg">
-      <div className="login-container">
-        {/* Left container in login container starts */}
-        <div className="login-floating-nav">
-          <span
-            onClick={() => {
-              history.push("/");
-            }}
-          >
-            <i className="fas fa-home"></i>&nbsp;HOME
-          </span>
-        </div>
-        <div className="login-container-left">
-          <div className="login-container-left-logo">
-            <img src="/images/favicon.ico" height="70px" alt="Bookshlf.in" />
-          </div>
-          <div className="login-container-left-main">
-            <h2> Login </h2>
-            <div className="login-container-left-main-form">
-              {/* Login form */}
-              <form autoComplete="off">
-                <div className="login-form-email-lable">Email</div>
-                <div className="login-form-email-input">
-                  <input
-                    type="email"
-                    value={Name}
-                    placeholder="yourname@email.com"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      setName(e.target.value);
-                      makeRed1(false);
-                      setalert1("none");
-                      setalertText1("");
-                    }}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handelLogin();
-                      }
-                    }}
-                    style={Red1 ? Errorstyle : {}}
-                  />
-                  <span
-                    style={{
-                      display: alert1,
-                    }}
-                  >
-                    <i className="fas fa-exclamation-circle"></i> {alertText1}
-                  </span>
-                </div>
-                <div className="login-form-password-lable">Password</div>
-                <div className="login-form-password-input">
-                  <i
-                    className={show}
-                    id="eye"
-                    onClick={(e) => handelClick(e)}
-                  />
-                  <input
-                    type={val}
-                    value={Password}
-                    placeholder="Password"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      makeRed2(false);
-                      setalert2("none");
-                      setalertText2("");
-                    }}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handelLogin();
-                      }
-                    }}
-                    style={Red2 ? Errorstyle : {}}
-                  />
-                  <span
-                    style={{
-                      display: alert2,
-                    }}
-                  >
-                    <i className="fas fa-exclamation-circle"></i> {alertText2}
-                  </span>
-                </div>
-                <div className="login-form-forgot-password">
-                  <Link to="/ForgotPassword">Forgot Your Password ?</Link>
-                </div>
-                <div className="login-form-submit-button">
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handelLogin();
-                    }}
-                  >
-                    Login
-                  </button>
-                  <div className="login-load" style={{ display: loader }}>
-                    <CircularProgress
-                      style={{
-                        height: "20px",
-                        width: "20px",
-                      }}
-                    />
-                  </div>
-                  <span className="register">
-                    <Link to="/Signup">Create Account</Link>
-                    &nbsp; instead ?
-                  </span>
-                </div>
-              </form>
-              {/* Login Form Ends */}
-            </div>
-          </div>
-        </div>
-        {/* Left container ends here */}
-      </div>
-    </div>
+    <Stack
+      className="login-bg"
+      sx={{
+        backgroundColor: "rgb(35, 47, 62)",
+        width: "100%",
+        minHeight: "100vh",
+      }}
+      justifyContent="center"
+      alignItems="center"
+      spacing={1}
+    >
+      <Stack sx={{ width: "100%", padding: "0px 10px" }}>
+        <TabContext value={"2"}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList onChange={handelNav} aria-label="admin-tabList">
+              <Tab
+                label="Home"
+                icon={<HomeIcon sx={{ height: 15, width: 15 }} />}
+                value="1"
+                className={classes.root}
+                sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                iconPosition="start"
+              />
+              <Tab
+                label="Login"
+                icon={<LoginIcon sx={{ height: 15, width: 15 }} />}
+                value="2"
+                className={classes.root}
+                sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                iconPosition="start"
+              />
+              <Tab
+                label="SignUp"
+                icon={<SignupIcon sx={{ height: 15, width: 15 }} />}
+                value="3"
+                className={classes.root}
+                sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                iconPosition="start"
+              />
+            </TabList>
+          </Box>
+        </TabContext>
+      </Stack>
+      <Avatar
+        src="/images/smallLogoView.png"
+        variant="rounded"
+        sx={{ height: 60, width: 60 }}
+      />
+      <Typography
+        variant="h6"
+        sx={{
+          fontFamily: "Staatliches",
+          color: "whitesmoke",
+          letterSpacing: "2px",
+        }}
+      >
+        Bookshlf
+      </Typography>
+      <Typography
+        variant="h4"
+        sx={{
+          fontFamily: "Staatliches",
+          color: "whitesmoke",
+          letterSpacing: "2px",
+        }}
+      >
+        Login
+      </Typography>
+      <Stack sx={{ width: "100%", maxWidth: 420, padding: "10px" }}>
+        <TextField
+          className={classes.root}
+          label="Email"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon color="primary" />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                {emailError ? <ErrorIcon color="error" /> : <></>}
+              </InputAdornment>
+            ),
+          }}
+          helperText={emailError ? emailerrorMsg : "Enter Your Email"}
+          variant="standard"
+          error={emailError}
+          fullWidth
+          sx={{ fontSize: "12px" }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </Stack>
+      <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
+        <TextField
+          className={classes.root}
+          label="Password"
+          type={showpassword ? "text" : "password"}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PasswordIcon color="primary" />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle-password-visibility"
+                  onClick={handleShowPassword}
+                  // onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                  size="small"
+                >
+                  {showpassword ? (
+                    <Visibility color="success" />
+                  ) : (
+                    <VisibilityOff color="primary" />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          helperText={passwordError ? passworderrorMsg : "Enter Your Password"}
+          variant="standard"
+          error={passwordError}
+          fullWidth
+          sx={{ fontSize: "12px" }}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </Stack>
+      <Stack
+        sx={{ width: "100%", maxWidth: 420 }}
+        justifyContent="flex-end"
+        direction="row"
+      >
+        <Button
+          href={`/PasswordRecovery/${email}`}
+          size="small"
+          sx={{
+            letterSpacing: "1px",
+            fontFamily: "PT sans",
+            fontSize: "12px",
+            cursor: "pointer",
+          }}
+          color="warning"
+        >
+          Forgot Password ?
+        </Button>
+      </Stack>
+      <Stack
+        sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}
+        justifyContent="space-between"
+        direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+        spacing={2}
+      >
+        <LoadingButton
+          className={classes.root}
+          color="primary"
+          variant="contained"
+          loading={loginLoad}
+          endIcon={<LoginIcon />}
+          loadingPosition="end"
+          onClick={handelLogin}
+        >
+          Login
+        </LoadingButton>
+        <Button
+          href="/Signup"
+          color="secondary"
+          variant="contained"
+          size="small"
+          className={classes.root}
+        >
+          Create Account Instead ?
+        </Button>
+      </Stack>
+    </Stack>
   );
-}
+};
 export default Login;
