@@ -122,7 +122,6 @@ const Login = () => {
           })
           .catch((error) => {
             setloginLoad(false);
-            console.log(error.response.data.errors);
             if (error.response.data.errors[0].param === "email") {
               setemailError(true);
               setemailerrorMsg(error.response.data.errors[0].error);

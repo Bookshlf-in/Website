@@ -27,7 +27,6 @@
     "react-icon": "^1.0.0",
     "react-icons": "^4.2.0",
     "react-input-mask": "^3.0.0-alpha.2",
-    "react-material-ui-carousel": "^3.1.1",
     "react-router-dom": "^5.2.0",
     "web-vitals": "^2.1.3"
   },
