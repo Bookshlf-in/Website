@@ -15,7 +15,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 // Images
@@ -26,7 +25,6 @@ const GITHUB_URL = "https://github.com/Bookshlf-in";
 const WEBSITE_URL = "https://bookshlf.in";
 const YOUTUBE_URL = "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ";
 const FACEBOOK_URL = "https://www.facebook.com/Bookshlf-109479771200918";
-const TWITTER_URL = "https://twitter.com/BookshlfA";
 const LINKEDIN_URL = "https://www.linkedin.com/in/bookshlf-by-aman-861073223/";
 const INSTAGRAM_URL = "https://twitter.com/BookshlfA";
 
@@ -73,11 +71,15 @@ const About = () => {
           />
           <Typography
             variant="h1"
-            sx={{ fontFamily: "PT sans", color: "rgba(0,0,0,0.6)" }}
+            sx={{
+              fontFamily: "PT sans",
+              color: "rgba(0,0,0,0.6)",
+              "@media screen and (max-width:600px)": { fontSize: "3em " },
+            }}
           >
             BOOKSHLF
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" align="center">
             <strong>E-commerce platform to buy and sell used books</strong>
           </Typography>
           <Typography
@@ -99,55 +101,53 @@ const About = () => {
               are always trying to make this platform better.
             </strong>
           </Typography>
-          <Typography variant="h4">
+          <Typography variant="h4" align="center">
             <strong>Reach Us</strong>
           </Typography>
           <Stack
             spacing={2}
             direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
           >
-            <IconButton
-              aria-label="github"
-              onClick={() => OpenLink(GITHUB_URL)}
-            >
-              <GitHubIcon sx={{ color: "white" }} />
-            </IconButton>
-            <IconButton
-              aria-label="website"
-              onClick={() => OpenLink(WEBSITE_URL)}
-            >
-              <WebsiteIcon sx={{ color: "white" }} />
-            </IconButton>
-            <IconButton
-              aria-label="website"
-              onClick={() => OpenLink(YOUTUBE_URL)}
-            >
-              <YouTubeIcon sx={{ color: "white" }} />
-            </IconButton>
-            <IconButton
-              aria-label="website"
-              onClick={() => OpenLink(INSTAGRAM_URL)}
-            >
-              <InstagramIcon sx={{ color: "white" }} />
-            </IconButton>
-            <IconButton
-              aria-label="website"
-              onClick={() => OpenLink(FACEBOOK_URL)}
-            >
-              <FacebookIcon sx={{ color: "white" }} />
-            </IconButton>
-            <IconButton
-              aria-label="website"
-              onClick={() => OpenLink(TWITTER_URL)}
-            >
-              <TwitterIcon sx={{ color: "white" }} />
-            </IconButton>
-            <IconButton
-              aria-label="website"
-              onClick={() => OpenLink(LINKEDIN_URL)}
-            >
-              <LinkedInIcon sx={{ color: "white" }} />
-            </IconButton>
+            <Stack spacing={2} direction="row">
+              <IconButton
+                aria-label="github"
+                onClick={() => OpenLink(GITHUB_URL)}
+              >
+                <GitHubIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(WEBSITE_URL)}
+              >
+                <WebsiteIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(YOUTUBE_URL)}
+              >
+                <YouTubeIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Stack>
+            <Stack spacing={2} direction="row">
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(INSTAGRAM_URL)}
+              >
+                <InstagramIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(FACEBOOK_URL)}
+              >
+                <FacebookIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(LINKEDIN_URL)}
+              >
+                <LinkedInIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Stack>
           </Stack>
           <Typography
             variant="h3"

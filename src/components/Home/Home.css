@@ -1,45 +1,102 @@
-.carousel-bg {
-  position: relative !important;
+.slider {
   height: 75vh;
-  background-position: center;
+  background-color: #282828bb;
+  position: relative;
+}
+.slider__imageContainer {
+  width: 100%;
+  height: 100%;
+}
+.slider__image {
   background-size: cover;
-  transition: 1s;
-}
-.carousel-button {
-  position: absolute !important;
-  bottom: 10px;
-  font-family: "Staatliches", sans-serif !important;
-  letter-spacing: 2px !important;
-  transition: 0.5s !important;
-  font-size: 1.5em !important;
-  opacity: 0.9;
-  min-width: 250px !important;
-}
-.carousel-label-title {
-  font-family: "Staatliches", sans-serif !important;
-  font-size: 6em !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  transition: 2s;
+  transition-timing-function: ease;
 }
 
-.carousel-label-body {
-  font-family: "Staatliches", sans-serif !important;
-  font-size: 1em !important;
+.slider .MuiSvgIcon-root {
   color: white !important;
-  line-height: 0 !important;
+  height: 15px;
+  width: 15px;
 }
+.slider .MuiIconButton-root {
+  padding: 5px;
+}
+
+.slider__bulletContainer {
+  width: max-content;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.slider__bulletContainer:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.slider__title {
+  position: absolute;
+  top: 10px;
+  text-align: center;
+  width: 100%;
+  font-family: "Staatliches";
+  font-size: 6em;
+  color: rgba(255, 255, 255, 0.96);
+}
+.slider__body {
+  text-align: center;
+  width: 100%;
+  font-family: "Staatliches";
+  font-size: 0.33em;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.96);
+}
+.slider__btn {
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.96);
+}
+.slider__btn a {
+  font-family: "Staatliches" !important;
+  font-size: 1em;
+  letter-spacing: 1px;
+  background-color: orangered;
+}
+.slider__rightNavigation {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+}
+.slider__leftNavigation:hover,
+.slider__rightNavigation:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+.slider__leftNavigation {
+  left: 10px;
+}
+.slider__rightNavigation {
+  right: 10px;
+}
+
 @media screen and (max-width: 600px) {
-  .carousel-bg {
+  .slider {
     height: 40vh;
   }
-  .carousel-button {
-    font-size: 1em !important;
-    min-width: 200px !important;
+  .slider__title {
+    top: 10px;
+    font-size: 2em;
   }
-  .carousel-label-title {
-    font-size: 2em !important;
+  .slider__body {
+    font-size: 0.5em;
   }
-
-  .carousel-label-body {
-    font-size: 0.8em !important;
+  .slider__btn {
+    bottom: 30px;
   }
 }

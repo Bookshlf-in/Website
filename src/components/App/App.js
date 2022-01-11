@@ -33,15 +33,11 @@ import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
 
-// Protected Route
-import Protected from "../Protected";
-
 const App = () => {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/Protected" component={Protected} />
           <Route path="/Login" component={Login} />
           <Route path="/Signup" component={UserSignup} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
