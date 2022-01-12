@@ -1,269 +1,315 @@
-import { React, useState } from "react";
-import "./Signup.css";
-import "./Verify.css";
-import { Link } from "react-router-dom";
+import { React, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import { Helmet } from "react-helmet";
 import axios from "../../axios";
-import Verify from "./Verify";
 import * as EmailValidator from "email-validator";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import "./Signup.css";
 
-const eye = {
-  open: "far fa-eye",
-  close: "fas fa-eye-slash",
-};
-const Errorstyle = {
-  border: "2px solid red",
-  color: "red",
-};
+// Components
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const Msg = {
-  notMatch: "Password does not match",
-  Match: "Password Matches",
-};
+// Icons
+import HomeIcon from "@mui/icons-material/HomeRounded";
+import LoginIcon from "@mui/icons-material/LoginRounded";
+import SignupIcon from "@mui/icons-material/GroupAddRounded";
+import EmailIcon from "@mui/icons-material/EmailRounded";
+import NameIcon from "@mui/icons-material/AccountCircleRounded";
+import PasswordIcon from "@mui/icons-material/PasswordRounded";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-function UserSignup() {
-  // signup states
-  const [show, setshow] = useState(eye.close);
-  const [val, setval] = useState("password");
-  const [FName, setFName] = useState("");
-  const [LName, setLName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-  const [confPassword, setConfPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [Step, setStep] = useState(1);
-  let [message, setmessage] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  let [Red, makeRed] = useState({
-    name: false,
-    email: false,
-    password: false,
-    confirm: false,
-  });
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    color: "whitesmoke !important",
+    "& p": {
+      fontFamily: "PT sans !important",
+      color: "whitesmoke",
+    },
+    "& label": {
+      fontFamily: "PT sans !important",
+      color: "whitesmoke !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+      color: "whitesmoke !important",
+      fontSize: "14px !important",
+      letterSpacing: "0.8px !important",
+    },
+  },
+});
 
-  // Signup handeling
-  const handelSignUp = () => {
-    if (EmailValidator.validate(Email)) {
-      setLoading(true);
-      if (!Red.confirm) {
-        axios
-          .post("/signUp", {
-            name: FName + " " + LName,
-            email: Email,
-            password: Password,
-          })
-          .then((response) => {
-            console.log(response.data);
-            setStep(2);
-            setLoading(false);
-          })
-          .catch((error) => {
-            if (error.response) {
-              handelError(error.response.data.errors[0]);
-            }
-            setLoading(false);
-          });
-      } else {
-        setLoading(false);
-      }
-    }
+const UserSignup = () => {
+  const history = useHistory();
+  const classes = useStyles();
+
+  // Handeling SignUP Navbar
+  const handelNav = (e, value) => {
+    if (value === "1") history.push("/");
+    if (value === "2") history.push("/Login");
+    if (value === "3") history.push("/Signup");
   };
-  const handelError = (e) => {
-    const param = e.param;
-    const msg = e.error;
-    if (param === "name") {
-      makeRed({ name: true });
-      setmessage({ name: msg });
-    } else if (param === "email") {
-      makeRed({ email: true });
-      setmessage({ email: msg });
-    } else if (param === "password") {
-      makeRed({ password: true });
-      setmessage({ password: msg });
-    }
-  };
+
   return (
-    <div className="signup-bg">
-      {Step === 1 ? (
-        <div className="signup-box">
-          <div className="floating-login-button">
-            <Link to="/">
-              <i className="fas fa-home"></i>&nbsp;Home
-            </Link>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Link to="/Login">
-              <i className="fas fa-sign-in-alt"></i>&nbsp;Login
-            </Link>
-          </div>
-          <div className="signup-logo">
-            <img src="/images/favicon.ico" alt="" height="50px" />
-          </div>
-
-          <form className="signup-form">
-            <h1 className="neonText">Register</h1>
-            <div className="signup-name">
-              <span>
-                <i className="fas fa-user" />
-              </span>
-              <input
-                type="text"
-                placeholder="First Name"
-                onChange={(e) => setFName(e.target.value)}
-                value={FName}
-                style={Red.name ? Errorstyle : {}}
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                onChange={(e) => setLName(e.target.value)}
-                value={LName}
-              />
-              <b
-                style={{
-                  display: Red.name ? "inline-block" : "none",
-                }}
-              >
-                <i className="fas fa-exclamation-circle" />
-                &nbsp;{message.name}
-              </b>
-            </div>
-            <div className="signup-email">
-              <span>
-                <i className="fas fa-envelope" />
-              </span>
-              <input
-                type="mail"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={Email}
-                style={Red.email ? Errorstyle : {}}
-              />
-              <b
-                style={{
-                  display: Red.email ? "inline-block" : "none",
-                }}
-              >
-                <i className="fas fa-exclamation-circle" />
-                &nbsp;{message.email}
-              </b>
-            </div>
-            <div className="signup-password">
-              <span>
-                <i className="fas fa-key" />
-              </span>
-              <input
-                type={val}
-                placeholder="Password"
-                id="pass"
-                onChange={(e) => setPassword(e.target.value)}
-                value={Password}
-                style={Red.password ? Errorstyle : {}}
-              />
-              <i
-                className={show}
-                onClick={() => {
-                  if (show === eye.close) {
-                    setshow(eye.open);
-                    setval("text");
-                  } else {
-                    setshow(eye.close);
-                    setval("password");
-                  }
-                }}
-              />
-              <b
-                style={{
-                  display: Red.password ? "inline-block" : "none",
-                }}
-              >
-                <i className="fas fa-exclamation-circle" />
-                &nbsp;{message.password}
-              </b>
-            </div>
-            <div className="signup-confirm-password">
-              <span>
-                <i className="fas fa-lock" />
-              </span>
-              <input
-                type={val}
-                id="confirm-pass"
-                placeholder="Confirm Password"
-                value={confPassword}
-                onChange={(e) => {
-                  setConfPassword(e.target.value);
-                  if (Password !== e.target.value) {
-                    Red.confirm = true;
-                  } else {
-                    Red.confirm = false;
-                  }
-                }}
-                style={Red.confirm ? Errorstyle : {}}
-              />
-              <i
-                className={show}
-                onClick={() => {
-                  if (show === eye.close) {
-                    setshow(eye.open);
-                    setval("text");
-                  } else {
-                    setshow(eye.close);
-                    setval("password");
-                  }
-                }}
-              />
-              <b
-                style={{
-                  color: Red.confirm ? "red" : "green",
-                  display: confPassword !== "" ? "inline-block" : "none",
-                }}
-              >
-                <i className="fas fa-exclamation-circle" />
-                &nbsp;
-                {Red.confirm ? Msg.notMatch : Msg.Match}
-                {Password === confPassword
-                  ? (Red.confirm = false)
-                  : (Red.confirm = true)}
-              </b>
-            </div>
-            <div className="signup-button">
-              <span>
-                <i className="fas fa-user-plus" />
-              </span>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handelSignUp();
-                }}
-              >
-                SignUp&nbsp;&nbsp;&nbsp;
-                <CircularProgress
-                  style={{
-                    height: "15px",
-                    width: "15px",
-                    color: "white",
-                    display: loading ? "inline-block" : "none",
-                  }}
+    <>
+      <Helmet>
+        <title>SignUp | Bookshlf</title>
+      </Helmet>
+      <Stack
+        className="login-bg"
+        sx={{
+          backgroundColor: "rgb(35, 47, 62)",
+          width: "100%",
+          minHeight: "100vh",
+        }}
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+      >
+        <Stack sx={{ width: "100%", padding: "0px 10px" }}>
+          <TabContext value={"3"}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList onChange={handelNav} aria-label="admin-tabList">
+                <Tab
+                  label="Home"
+                  icon={<HomeIcon sx={{ height: 15, width: 15 }} />}
+                  value="1"
+                  className={classes.root}
+                  sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                  iconPosition="start"
                 />
-              </button>
-            </div>
-          </form>
-        </div>
-      ) : (
-        <Verify mail={Email} otpsent={true} />
-      )}
-    </div>
+                <Tab
+                  label="Login"
+                  icon={<LoginIcon sx={{ height: 15, width: 15 }} />}
+                  value="2"
+                  className={classes.root}
+                  sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                  iconPosition="start"
+                />
+                <Tab
+                  label="SignUp"
+                  icon={<SignupIcon sx={{ height: 15, width: 15 }} />}
+                  value="3"
+                  className={classes.root}
+                  sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                  iconPosition="start"
+                />
+              </TabList>
+            </Box>
+          </TabContext>
+        </Stack>
+        <Avatar
+          src="/images/smallLogoView.png"
+          variant="rounded"
+          sx={{ height: 60, width: 60 }}
+        />
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "Staatliches",
+            color: "whitesmoke",
+            letterSpacing: "2px",
+          }}
+        >
+          Bookshlf
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "Staatliches",
+            color: "whitesmoke",
+            letterSpacing: "2px",
+          }}
+        >
+          Register
+        </Typography>
+        <Stack
+          sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}
+          spacing={2}
+          direction="row"
+        >
+          <TextField
+            className={classes.root}
+            label="First Name"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <NameIcon color="primary" />
+                </InputAdornment>
+              ),
+              // endAdornment: (
+              //   <InputAdornment position="end">
+              //     {emailError ? <ErrorIcon color="error" /> : <></>}
+              //   </InputAdornment>
+              // ),
+            }}
+            // helperText={emailError ? emailerrorMsg : "Enter Your Email"}
+            variant="filled"
+            // error={emailError}
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            // value={email}
+            // onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            className={classes.root}
+            label="Last Name"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <NameIcon color="primary" sx={{ opacity: 0 }} />
+                </InputAdornment>
+              ),
+              // endAdornment: (
+              //   <InputAdornment position="end">
+              //     {emailError ? <ErrorIcon color="error" /> : <></>}
+              //   </InputAdornment>
+              // ),
+            }}
+            // helperText={emailError ? emailerrorMsg : "Enter Your Email"}
+            variant="filled"
+            // error={emailError}
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            // value={email}
+            // onChange={(e) => setEmail(e.target.value)}
+          />
+        </Stack>
+        <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
+          <TextField
+            className={classes.root}
+            label="Email"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailIcon color="primary" />
+                </InputAdornment>
+              ),
+              // endAdornment: (
+              //   <InputAdornment position="end">
+              //     {emailError ? <ErrorIcon color="error" /> : <></>}
+              //   </InputAdornment>
+              // ),
+            }}
+            // helperText={emailError ? emailerrorMsg : "Enter Your Email"}
+            variant="filled"
+            // error={emailError}
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            // value={email}
+            // onChange={(e) => setEmail(e.target.value)}
+          />
+        </Stack>
+        <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
+          <TextField
+            className={classes.root}
+            label="Password"
+            // type={showpassword ? "text" : "password"}
+            name="password"
+            autoComplete="new-password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PasswordIcon color="primary" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle-password-visibility"
+                    // onClick={handleShowPassword}
+                    // onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                    size="small"
+                  >
+                    {false ? (
+                      <Visibility color="success" />
+                    ) : (
+                      <VisibilityOff color="primary" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            helperText="Create New Password"
+            variant="filled"
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            // value={password}
+            // onChange={(e) => setPassword(e.target.value)}
+          />
+        </Stack>
+        <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
+          <TextField
+            className={classes.root}
+            label="Password"
+            // type={showpassword ? "text" : "password"}
+            name="password"
+            autoComplete="new-password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PasswordIcon color="primary" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle-password-visibility"
+                    // onClick={handleShowPassword}
+                    // onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                    size="small"
+                  >
+                    {false ? (
+                      <Visibility color="success" />
+                    ) : (
+                      <VisibilityOff color="primary" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            helperText="Verify Entered Password"
+            variant="filled"
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            // value={password}
+            // onChange={(e) => setPassword(e.target.value)}
+          />
+        </Stack>
+        <Stack
+          sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}
+          spacing={2}
+        >
+          <LoadingButton
+            className={classes.root}
+            color="primary"
+            variant="contained"
+            // loading={loginLoad}
+            endIcon={<SignupIcon />}
+            loadingPosition="end"
+            // onClick={handelLogin}
+          >
+            Register
+          </LoadingButton>
+        </Stack>
+      </Stack>
+    </>
   );
-}
+};
 
 export default UserSignup;
-
-// const handleInputChange = event => {
-//   const { name, value } = event.target;
-//   setState(prevState => ({
-//     ...prevState,
-//     [name]: value
-//   }));
-// };
