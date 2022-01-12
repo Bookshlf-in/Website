@@ -12,15 +12,20 @@
 .heading {
   display: inline-block;
   font-size: 20px;
+  font-family: "Staatliches";
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.8);
 }
 .heading-para {
   display: inline-block;
   position: absolute;
   right: 10px;
+  font-family: "Staatliches";
+  letter-spacing: 2px;
 }
 
 .heading-para a {
-  color: #525252;
+  color: #506ef7;
   text-decoration: none;
   margin-bottom: 20px;
 }

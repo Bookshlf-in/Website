@@ -7,7 +7,7 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Carousel from "../Home/Carousel";
 import Categories from "../Home/Categories";
-import BestSelling from "../Home/BestSelling";
+// import BestSelling from "../Home/BestSelling";
 import Review from "../Reviews/CustomerReviews";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
@@ -33,16 +33,15 @@ import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
 
-// Protected Route
-import Protected from "../Protected";
-
 const App = () => {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/Protected" component={Protected} />
           <Route path="/Login" component={Login} />
+          <Route path="/PasswordRecovery">
+            <ForgotPassword />
+          </Route>
           <Route path="/Signup" component={UserSignup} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/About">
@@ -129,7 +128,7 @@ const App = () => {
             <Navbar />
             <Carousel />
             <Categories />
-            <BestSelling />
+            {/* <BestSelling /> */}
             <Review />
             <Footer />
           </Route>

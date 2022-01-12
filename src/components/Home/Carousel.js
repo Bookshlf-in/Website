@@ -1,86 +1,134 @@
-import { React, useState } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import "./Home.css";
 
 // Components
-import Carousel from "react-material-ui-carousel";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { Typography, Button, IconButton } from "@mui/material";
 
-// Images
-import BG_1 from "./CarouselBg/carousel_bg1.jpg";
-import BG_2 from "./CarouselBg/carousel_bg2.jpg";
-import BG_3 from "./CarouselBg/carousel_bg3.jpg";
-import BG_4 from "./CarouselBg/carousel_bg4.jpg";
-import BG_5 from "./CarouselBg/carousel_bg5.png";
-import BG_6 from "./CarouselBg/carousel_bg6.png";
+// Icons
+import ActiveIcon from "@mui/icons-material/FiberManualRecordRounded";
+import NotActiveIcon from "@mui/icons-material/FiberManualRecordOutlined";
+import LeftIcon from "@mui/icons-material/ChevronLeftRounded";
+import RightIcon from "@mui/icons-material/ChevronRightRounded";
 
-const CarouselComponent = (props) => {
+const images = [
+  {
+    url: "/images/CarouselBg/carousel_bg1.jpg",
+  },
+  {
+    url: "/images/CarouselBg/carousel_bg2.jpg",
+  },
+  {
+    url: "/images/CarouselBg/carousel_bg3.jpg",
+  },
+  {
+    url: "/images/CarouselBg/carousel_bg4.jpg",
+  },
+  {
+    url: "/images/CarouselBg/carousel_bg5.png",
+  },
+  {
+    url: "/images/CarouselBg/carousel_bg6.png",
+  },
+];
+
+const totalImages = images.length;
+
+const slideLabel = [
+  {
+    title: "BUY USED BOOKS",
+    body: "Buy Used Books at Discounted Price at Bookshlf",
+    btn: "BUY NOW",
+    link: "/SearchResult/tag:ALL",
+  },
+  {
+    title: "SELL USED BOOKS",
+    body: "Sell Used Books on Bookshlf and get best Price for your Book",
+    btn: "SELL NOW",
+    link: "/SellerPanel/5",
+  },
+  {
+    title: "OLD BOOKS ARE LIKE OLD FRIENDS.",
+    body: "Full of memories and Emotions",
+    btn: "JOIN NOW",
+    link: "/Login",
+  },
+  {
+    title: "BEST JEE MAINS & ADVANCED BOOKS",
+    body: "Get Best Jee Mains, Advanced, Neet UG etc Books for discounted Prices",
+    btn: "BUY NOW",
+    link: "/SearchResult/tag:JEE",
+  },
+  { title: "", body: "", btn: "" },
+  { title: "", body: "", btn: "" },
+];
+
+const Slider = () => {
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const slideLeft = () => {
+    setImageIndex((imageIndex + totalImages - 1) % totalImages);
+  };
+
+  const slideRight = useCallback(() => {
+    setImageIndex((imageIndex + 1) % totalImages);
+  }, [imageIndex]);
+
+  useEffect(() => {
+    const myTimeout = setTimeout(slideRight, 5000);
+    return () => {
+      clearTimeout(myTimeout);
+    };
+  }, [slideRight]);
+
   return (
-    <Stack
-      justifyContent="flex-start"
-      alignItems="center"
-      className="carousel-bg"
-      sx={{ backgroundImage: `url(${props.src})` }}
-    >
-      <Typography className="carousel-label-title" align="center">
-        {props.label}
-      </Typography>
-      <Typography className="carousel-label-body" align="center">
-        {props.txt}
-      </Typography>
-      {props.slideNo !== 4 && props.slideNo !== 5 ? (
-        <Button variant="contained" color="warning" className="carousel-button">
-          {props.btn}
-        </Button>
+    <div className="slider">
+      <div className="slider__imageContainer">
+        <a href={images[imageIndex].url}>
+          <div
+            className="slider__image"
+            style={{
+              backgroundImage: `url("${images[imageIndex].url}")`,
+            }}
+          ></div>
+        </a>
+      </div>
+      <div className="slider__bulletContainer">
+        {images.map((image, i) => (
+          <IconButton onClick={() => setImageIndex(i)} key={i}>
+            {imageIndex === i ? (
+              <ActiveIcon style={{ height: "25px", width: "25px" }} />
+            ) : (
+              <NotActiveIcon />
+            )}
+          </IconButton>
+        ))}
+      </div>
+      <div className="slider__title">
+        {slideLabel[imageIndex].title}
+        <div className="slider__body">{slideLabel[imageIndex].body}</div>
+      </div>
+
+      {imageIndex < 4 ? (
+        <div className="slider__btn">
+          <Button variant="contained" href={slideLabel[imageIndex].link}>
+            {slideLabel[imageIndex].btn}
+          </Button>
+        </div>
       ) : null}
-    </Stack>
+      <div className="slider__navigationButtons">
+        <div className="slider__leftNavigation">
+          <IconButton onClick={slideLeft}>
+            <LeftIcon />
+          </IconButton>
+        </div>
+        <div className="slider__rightNavigation">
+          <IconButton onClick={slideRight}>
+            <RightIcon />
+          </IconButton>
+        </div>
+      </div>
+    </div>
   );
 };
 
-const HomeCarousel = () => {
-  const BG = [
-    {
-      src: BG_1,
-      label: "Purchase Used Books",
-      txt: "Bookshlf is the best place to Buy your Used Books",
-      btn: "Buy Now",
-    },
-    {
-      src: BG_2,
-      label: "Sell Your Books",
-      txt: "In Bookshlf You can decide the Price of Your book to be sold.",
-      btn: "Sell Now",
-    },
-    {
-      src: BG_3,
-      label: "Books Are Like Old Friends. Full Of Memories.",
-      txt: "Get Used Books At Discounted Prices. Make a Step Towards saving Environment",
-      btn: "ALL Books",
-    },
-    {
-      src: BG_4,
-      label: "Buy & Sell Best JEE Mains & Advanced Books",
-      txt: "buy and sell books of any competitive exams all over india.",
-      btn: "Buy Now",
-    },
-    { src: BG_5, label: "", txt: "", btn: "" },
-    { src: BG_6, label: "", txt: "", btn: "" },
-  ];
-  return (
-    <Carousel animation="slide" duration="1000" interval="5000" autoPlay={true}>
-      {BG.map((item, i) => (
-        <CarouselComponent
-          key={i}
-          slideNo={i}
-          src={item.src}
-          label={item.label}
-          txt={item.txt}
-          btn={item.btn}
-        />
-      ))}
-    </Carousel>
-  );
-};
-
-export default HomeCarousel;
+export default Slider;
