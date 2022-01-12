@@ -359,6 +359,7 @@ const Cart = () => {
                             endIcon={<NextIcon />}
                             color="primary"
                             size="small"
+                            href={`/BookDetails/${product.bookId}`}
                           >
                             More Details
                           </Button>
