@@ -7,7 +7,7 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Carousel from "../Home/Carousel";
 import Categories from "../Home/Categories";
-import BestSelling from "../Home/BestSelling";
+// import BestSelling from "../Home/BestSelling";
 import Review from "../Reviews/CustomerReviews";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
@@ -128,7 +128,7 @@ const App = () => {
             <Navbar />
             <Carousel />
             <Categories />
-            <BestSelling />
+            {/* <BestSelling /> */}
             <Review />
             <Footer />
           </Route>

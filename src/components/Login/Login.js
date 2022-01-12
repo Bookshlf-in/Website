@@ -295,7 +295,7 @@ const Login = () => {
         direction="row"
       >
         <Button
-          href={`/PasswordRecovery/${email}`}
+          href="/PasswordRecovery"
           size="small"
           sx={{
             letterSpacing: "1px",
