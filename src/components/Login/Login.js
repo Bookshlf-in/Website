@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import { AddFormContext } from "../../Context/formContext";
 import { makeStyles } from "@mui/styles";
+import { Helmet } from "react-helmet";
 import axios from "../../axios";
 import * as EmailValidator from "email-validator";
 import "./Login.css";
@@ -158,184 +159,191 @@ const Login = () => {
     }
   };
   return (
-    <Stack
-      className="login-bg"
-      sx={{
-        backgroundColor: "rgb(35, 47, 62)",
-        width: "100%",
-        minHeight: "100vh",
-      }}
-      justifyContent="center"
-      alignItems="center"
-      spacing={1}
-    >
-      <Stack sx={{ width: "100%", padding: "0px 10px" }}>
-        <TabContext value={"2"}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handelNav} aria-label="admin-tabList">
-              <Tab
-                label="Home"
-                icon={<HomeIcon sx={{ height: 15, width: 15 }} />}
-                value="1"
-                className={classes.root}
-                sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
-                iconPosition="start"
-              />
-              <Tab
-                label="Login"
-                icon={<LoginIcon sx={{ height: 15, width: 15 }} />}
-                value="2"
-                className={classes.root}
-                sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
-                iconPosition="start"
-              />
-              <Tab
-                label="SignUp"
-                icon={<SignupIcon sx={{ height: 15, width: 15 }} />}
-                value="3"
-                className={classes.root}
-                sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
-                iconPosition="start"
-              />
-            </TabList>
-          </Box>
-        </TabContext>
-      </Stack>
-      <Avatar
-        src="/images/smallLogoView.png"
-        variant="rounded"
-        sx={{ height: 60, width: 60 }}
-      />
-      <Typography
-        variant="h6"
-        sx={{
-          fontFamily: "Staatliches",
-          color: "whitesmoke",
-          letterSpacing: "2px",
-        }}
-      >
-        Bookshlf
-      </Typography>
-      <Typography
-        variant="h4"
-        sx={{
-          fontFamily: "Staatliches",
-          color: "whitesmoke",
-          letterSpacing: "2px",
-        }}
-      >
-        Login
-      </Typography>
-      <Stack sx={{ width: "100%", maxWidth: 420, padding: "10px" }}>
-        <TextField
-          className={classes.root}
-          label="Email"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon color="primary" />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                {emailError ? <ErrorIcon color="error" /> : <></>}
-              </InputAdornment>
-            ),
-          }}
-          helperText={emailError ? emailerrorMsg : "Enter Your Email"}
-          variant="standard"
-          error={emailError}
-          fullWidth
-          sx={{ fontSize: "12px" }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </Stack>
-      <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
-        <TextField
-          className={classes.root}
-          label="Password"
-          type={showpassword ? "text" : "password"}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PasswordIcon color="primary" />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle-password-visibility"
-                  onClick={handleShowPassword}
-                  // onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                  size="small"
-                >
-                  {showpassword ? (
-                    <Visibility color="success" />
-                  ) : (
-                    <VisibilityOff color="primary" />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          helperText={passwordError ? passworderrorMsg : "Enter Your Password"}
-          variant="standard"
-          error={passwordError}
-          fullWidth
-          sx={{ fontSize: "12px" }}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </Stack>
+    <>
+      <Helmet>
+        <title>Login | Bookshlf</title>
+      </Helmet>
       <Stack
-        sx={{ width: "100%", maxWidth: 420 }}
-        justifyContent="flex-end"
-        direction="row"
+        className="login-bg"
+        sx={{
+          backgroundColor: "rgb(35, 47, 62)",
+          width: "100%",
+          minHeight: "100vh",
+        }}
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
       >
-        <Button
-          href="/PasswordRecovery"
-          size="small"
+        <Stack sx={{ width: "100%", padding: "0px 10px" }}>
+          <TabContext value={"2"}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList onChange={handelNav} aria-label="admin-tabList">
+                <Tab
+                  label="Home"
+                  icon={<HomeIcon sx={{ height: 15, width: 15 }} />}
+                  value="1"
+                  className={classes.root}
+                  sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                  iconPosition="start"
+                />
+                <Tab
+                  label="Login"
+                  icon={<LoginIcon sx={{ height: 15, width: 15 }} />}
+                  value="2"
+                  className={classes.root}
+                  sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                  iconPosition="start"
+                />
+                <Tab
+                  label="SignUp"
+                  icon={<SignupIcon sx={{ height: 15, width: 15 }} />}
+                  value="3"
+                  className={classes.root}
+                  sx={{ color: "whitesmoke", fontSize: "12px", minHeight: 0 }}
+                  iconPosition="start"
+                />
+              </TabList>
+            </Box>
+          </TabContext>
+        </Stack>
+        <Avatar
+          src="/images/smallLogoView.png"
+          variant="rounded"
+          sx={{ height: 60, width: 60 }}
+        />
+        <Typography
+          variant="h6"
           sx={{
-            letterSpacing: "1px",
-            fontFamily: "PT sans",
-            fontSize: "12px",
-            cursor: "pointer",
+            fontFamily: "Staatliches",
+            color: "whitesmoke",
+            letterSpacing: "2px",
           }}
-          color="warning"
         >
-          Forgot Password ?
-        </Button>
-      </Stack>
-      <Stack
-        sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}
-        justifyContent="space-between"
-        direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
-        spacing={2}
-      >
-        <LoadingButton
-          className={classes.root}
-          color="primary"
-          variant="contained"
-          loading={loginLoad}
-          endIcon={<LoginIcon />}
-          loadingPosition="end"
-          onClick={handelLogin}
+          Bookshlf
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "Staatliches",
+            color: "whitesmoke",
+            letterSpacing: "2px",
+          }}
         >
           Login
-        </LoadingButton>
-        <Button
-          href="/Signup"
-          color="secondary"
-          variant="contained"
-          size="small"
-          className={classes.root}
+        </Typography>
+        <Stack sx={{ width: "100%", maxWidth: 420, padding: "10px" }}>
+          <TextField
+            className={classes.root}
+            label="Email"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailIcon color="primary" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  {emailError ? <ErrorIcon color="error" /> : <></>}
+                </InputAdornment>
+              ),
+            }}
+            helperText={emailError ? emailerrorMsg : "Enter Your Email"}
+            variant="standard"
+            error={emailError}
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Stack>
+        <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
+          <TextField
+            className={classes.root}
+            label="Password"
+            type={showpassword ? "text" : "password"}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PasswordIcon color="primary" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle-password-visibility"
+                    onClick={handleShowPassword}
+                    // onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                    size="small"
+                  >
+                    {showpassword ? (
+                      <Visibility color="success" />
+                    ) : (
+                      <VisibilityOff color="primary" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            helperText={
+              passwordError ? passworderrorMsg : "Enter Your Password"
+            }
+            variant="standard"
+            error={passwordError}
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Stack>
+        <Stack
+          sx={{ width: "100%", maxWidth: 420 }}
+          justifyContent="flex-end"
+          direction="row"
         >
-          Create Account Instead ?
-        </Button>
+          <Button
+            href="/PasswordRecovery"
+            size="small"
+            sx={{
+              letterSpacing: "1px",
+              fontFamily: "PT sans",
+              fontSize: "12px",
+              cursor: "pointer",
+            }}
+            color="warning"
+          >
+            Forgot Password ?
+          </Button>
+        </Stack>
+        <Stack
+          sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}
+          justifyContent="space-between"
+          direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+          spacing={2}
+        >
+          <LoadingButton
+            className={classes.root}
+            color="primary"
+            variant="contained"
+            loading={loginLoad}
+            endIcon={<LoginIcon />}
+            loadingPosition="end"
+            onClick={handelLogin}
+          >
+            Login
+          </LoadingButton>
+          <Button
+            href="/Signup"
+            color="secondary"
+            variant="contained"
+            size="small"
+            className={classes.root}
+          >
+            Create Account Instead ?
+          </Button>
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 };
 export default Login;

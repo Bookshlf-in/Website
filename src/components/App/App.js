@@ -7,11 +7,11 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Carousel from "../Home/Carousel";
 import Categories from "../Home/Categories";
-// import BestSelling from "../Home/BestSelling";
 import Review from "../Reviews/CustomerReviews";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
 import UserSignup from "../Signup/UserSignup";
+import Verify from "../Signup/Verify";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
@@ -43,7 +43,7 @@ const App = () => {
             <ForgotPassword />
           </Route>
           <Route path="/Signup" component={UserSignup} />
-          <Route path="/ForgotPassword" component={ForgotPassword} />
+          <Route path="/Verify/:Email" component={Verify} />
           <Route path="/About">
             <Navbar />
             <About />
@@ -128,7 +128,6 @@ const App = () => {
             <Navbar />
             <Carousel />
             <Categories />
-            {/* <BestSelling /> */}
             <Review />
             <Footer />
           </Route>
