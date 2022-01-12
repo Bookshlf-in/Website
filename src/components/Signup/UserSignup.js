@@ -4,7 +4,6 @@ import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet";
 import axios from "../../axios";
 import * as EmailValidator from "email-validator";
-import "./Signup.css";
 
 // Components
 import Stack from "@mui/material/Stack";
@@ -18,8 +17,6 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 
 // Icons
 import HomeIcon from "@mui/icons-material/HomeRounded";
@@ -30,6 +27,8 @@ import NameIcon from "@mui/icons-material/AccountCircleRounded";
 import PasswordIcon from "@mui/icons-material/PasswordRounded";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import ErrorIcon from "@mui/icons-material/Error";
+import CheckCircle from "@mui/icons-material/CheckCircleRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -46,8 +45,8 @@ const useStyles = makeStyles({
     "& input": {
       fontFamily: "PT sans !important",
       color: "whitesmoke !important",
-      fontSize: "14px !important",
-      letterSpacing: "0.8px !important",
+      fontSize: "16px !important",
+      letterSpacing: "1px !important",
     },
   },
 });
@@ -56,6 +55,20 @@ const UserSignup = () => {
   const history = useHistory();
   const classes = useStyles();
 
+  // Function States
+  const [emailError, setemailError] = useState(false);
+  const [emailErrorMsg, setemailErrorMsg] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [passwordMatch, setpasswordMatch] = useState(false);
+  const [showpassword, setshowPassword] = useState(false);
+  const [signupLoad, setSignupLoad] = useState(false);
+
+  // Data States
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
+
   // Handeling SignUP Navbar
   const handelNav = (e, value) => {
     if (value === "1") history.push("/");
@@ -63,6 +76,59 @@ const UserSignup = () => {
     if (value === "3") history.push("/Signup");
   };
 
+  // checking if both input passwords are matching
+  const handleVerifyPassword = (e) => {
+    setVerifyPassword(e.target.value);
+    if (password.length > 0 && password !== e.target.value) {
+      setpasswordMatch(false);
+    } else if (password.length > 0 && password === e.target.value) {
+      setpasswordMatch(true);
+    }
+  };
+
+  // handeling sign up
+  const handelSignup = () => {
+    setSignupLoad(true);
+    if (name.length) {
+      if (EmailValidator.validate(email)) {
+        if (passwordMatch) {
+          axios
+            .post("/signUp", {
+              name: name,
+              email: email,
+              password: password,
+            })
+            .then((response) => {
+              setSignupLoad(false);
+              history.push(`/Verify/${email}`);
+            })
+            .catch((error) => {
+              setSignupLoad(false);
+              if (error.response.data.errors[0].param === "email") {
+                setemailError(true);
+                setemailErrorMsg(error.response.data.errors[0].error);
+                setTimeout(() => {
+                  setemailError(false);
+                  setemailErrorMsg("");
+                }, 5000);
+              }
+            });
+        }
+      } else {
+        setSignupLoad(false);
+        setemailError(false);
+        setTimeout(() => {
+          setemailError(false);
+        }, 5000);
+      }
+    } else {
+      setSignupLoad(false);
+      setNameError(true);
+      setTimeout(() => {
+        setNameError(false);
+      }, 5000);
+    }
+  };
   return (
     <>
       <Helmet>
@@ -138,54 +204,33 @@ const UserSignup = () => {
         </Typography>
         <Stack
           sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}
-          spacing={2}
+          spacing={1}
           direction="row"
         >
           <TextField
             className={classes.root}
-            label="First Name"
+            label="Full Name"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <NameIcon color="primary" />
                 </InputAdornment>
               ),
-              // endAdornment: (
-              //   <InputAdornment position="end">
-              //     {emailError ? <ErrorIcon color="error" /> : <></>}
-              //   </InputAdornment>
-              // ),
-            }}
-            // helperText={emailError ? emailerrorMsg : "Enter Your Email"}
-            variant="filled"
-            // error={emailError}
-            fullWidth
-            sx={{ fontSize: "12px" }}
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            className={classes.root}
-            label="Last Name"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <NameIcon color="primary" sx={{ opacity: 0 }} />
+              endAdornment: (
+                <InputAdornment position="end">
+                  {nameError ? <ErrorIcon color="error" /> : <></>}
                 </InputAdornment>
               ),
-              // endAdornment: (
-              //   <InputAdornment position="end">
-              //     {emailError ? <ErrorIcon color="error" /> : <></>}
-              //   </InputAdornment>
-              // ),
             }}
-            // helperText={emailError ? emailerrorMsg : "Enter Your Email"}
+            helperText={
+              nameError ? "Name should be atleast 3 characters long" : null
+            }
             variant="filled"
-            // error={emailError}
+            error={nameError}
             fullWidth
             sx={{ fontSize: "12px" }}
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </Stack>
         <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
@@ -198,26 +243,32 @@ const UserSignup = () => {
                   <EmailIcon color="primary" />
                 </InputAdornment>
               ),
-              // endAdornment: (
-              //   <InputAdornment position="end">
-              //     {emailError ? <ErrorIcon color="error" /> : <></>}
-              //   </InputAdornment>
-              // ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  {emailError ? <ErrorIcon color="error" /> : <></>}
+                </InputAdornment>
+              ),
             }}
-            // helperText={emailError ? emailerrorMsg : "Enter Your Email"}
+            helperText={
+              emailError
+                ? emailErrorMsg
+                : email.length === 0 && emailError
+                ? "Incorrect Email"
+                : null
+            }
             variant="filled"
-            // error={emailError}
+            error={emailError}
             fullWidth
             sx={{ fontSize: "12px" }}
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Stack>
         <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
           <TextField
             className={classes.root}
             label="Password"
-            // type={showpassword ? "text" : "password"}
+            type={showpassword ? "text" : "password"}
             name="password"
             autoComplete="new-password"
             InputProps={{
@@ -230,12 +281,11 @@ const UserSignup = () => {
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle-password-visibility"
-                    // onClick={handleShowPassword}
-                    // onMouseDown={handleMouseDownPassword}
+                    onClick={() => setshowPassword((prev) => !prev)}
                     edge="end"
                     size="small"
                   >
-                    {false ? (
+                    {showpassword ? (
                       <Visibility color="success" />
                     ) : (
                       <VisibilityOff color="primary" />
@@ -248,33 +298,38 @@ const UserSignup = () => {
             variant="filled"
             fullWidth
             sx={{ fontSize: "12px" }}
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Stack>
         <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
           <TextField
             className={classes.root}
             label="Password"
-            // type={showpassword ? "text" : "password"}
+            type={showpassword ? "text" : "password"}
             name="password"
             autoComplete="new-password"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PasswordIcon color="primary" />
+                  {verifyPassword.length === 0 ? (
+                    <PasswordIcon color="primary" />
+                  ) : passwordMatch ? (
+                    <CheckCircle color="success" />
+                  ) : (
+                    <ErrorIcon color="error" />
+                  )}
                 </InputAdornment>
               ),
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle-password-visibility"
-                    // onClick={handleShowPassword}
-                    // onMouseDown={handleMouseDownPassword}
+                    onClick={() => setshowPassword((prev) => !prev)}
                     edge="end"
                     size="small"
                   >
-                    {false ? (
+                    {showpassword ? (
                       <Visibility color="success" />
                     ) : (
                       <VisibilityOff color="primary" />
@@ -283,12 +338,25 @@ const UserSignup = () => {
                 </InputAdornment>
               ),
             }}
-            helperText="Verify Entered Password"
+            helperText={
+              verifyPassword.length === 0
+                ? "Enter Password to Verify"
+                : passwordMatch
+                ? "Password Matches"
+                : "Password Doesn't Matches"
+            }
             variant="filled"
             fullWidth
+            color={
+              verifyPassword.length === 0
+                ? "primary"
+                : passwordMatch
+                ? "success"
+                : "error"
+            }
             sx={{ fontSize: "12px" }}
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
+            value={verifyPassword}
+            onChange={handleVerifyPassword}
           />
         </Stack>
         <Stack
@@ -299,10 +367,10 @@ const UserSignup = () => {
             className={classes.root}
             color="primary"
             variant="contained"
-            // loading={loginLoad}
+            loading={signupLoad}
             endIcon={<SignupIcon />}
             loadingPosition="end"
-            // onClick={handelLogin}
+            onClick={handelSignup}
           >
             Register
           </LoadingButton>
