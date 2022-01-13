@@ -1014,11 +1014,7 @@ const AddBook = (props) => {
             loading={sending}
             loadingPosition="end"
             variant="contained"
-            style={{
-              fontFamily: "PT sans",
-              fontSize: "12px",
-              letterSpacing: "1px",
-            }}
+            className={classes.root}
           >
             {sending ? "Submitting ..." : "Submit For Review"}
           </LoadingButton>
