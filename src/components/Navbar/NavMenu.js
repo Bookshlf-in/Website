@@ -121,7 +121,7 @@ const NavbarMenu = () => {
         <MenuItem
           style={MenuItemStyle}
           onClick={() => {
-            history.push("/UserProfile/1");
+            history.push("/UserPanel/1");
           }}
         >
           <i className="fas fa-user-alt" />
@@ -132,7 +132,7 @@ const NavbarMenu = () => {
             style={MenuItemStyle}
             onClick={() => {
               setAnchorEl(null);
-              history.push("/UserProfile/2");
+              history.push("/UserPanel/2");
               history.go(0);
             }}
           >

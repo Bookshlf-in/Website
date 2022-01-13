@@ -15,14 +15,14 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // icons
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import CancelIcon from "@material-ui/icons/CancelRounded";
-import CompleteIcon from "@material-ui/icons/CheckCircleRounded";
-import PendingIcon from "@material-ui/icons/AccessTimeRounded";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { CircularProgress } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import CompleteIcon from "@mui/icons-material/CheckCircleRounded";
+import PendingIcon from "@mui/icons-material/AccessTimeRounded";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const iconStyle = {
   fontSize: "1rem",

@@ -2,6 +2,7 @@ import { React, useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { UserContext } from "../../Context/userContext";
+import { Helmet } from "react-helmet";
 import axios from "../../axios";
 import * as EmailValidator from "email-validator";
 import "./ForgotPassword.css";
@@ -317,364 +318,380 @@ const ForgotPassword = () => {
     }
   };
   return (
-    <Stack
-      className="password-recovery-bg"
-      sx={{
-        backgroundColor: "rgb(35, 47, 62)",
-        width: "100%",
-        minHeight: "100vh",
-      }}
-      justifyContent="center"
-      alignItems="center"
-      spacing={1}
-    >
-      <Stack sx={{ width: "100%", padding: "0px 10px" }}>
-        <TabContext value={"2"}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handelNav} aria-label="admin-tabList">
-              <Tab
-                label="Home"
-                icon={<HomeIcon sx={{ height: 15, width: 15 }} />}
-                value="1"
-                className={classes.root}
-                sx={{
-                  color: "whitesmoke",
-                  fontSize: "12px",
-                  minHeight: 0,
-                  padding: "9px 0px",
-                }}
-                iconPosition="start"
-              />
-              <Tab
-                label="Recovery"
-                icon={<RecoveryIcon sx={{ height: 15, width: 15 }} />}
-                value="2"
-                className={classes.root}
-                sx={{
-                  color: "whitesmoke",
-                  fontSize: "12px",
-                  minHeight: 0,
-                  padding: "9px 0px",
-                }}
-                iconPosition="start"
-              />
-              <Tab
-                label="Login"
-                icon={<LoginIcon sx={{ height: 15, width: 15 }} />}
-                value="3"
-                className={classes.root}
-                sx={{
-                  color: "whitesmoke",
-                  fontSize: "12px",
-                  minHeight: 0,
-                  padding: "9px 0px",
-                }}
-                iconPosition="start"
-              />
-            </TabList>
-          </Box>
-        </TabContext>
-      </Stack>
-      <Avatar
-        src="/images/smallLogoView.png"
-        variant="rounded"
-        sx={{ height: 60, width: 60 }}
-      />
-      <Typography
-        variant="h6"
-        sx={{
-          fontFamily: "Staatliches",
-          color: "whitesmoke",
-          letterSpacing: "2px",
-        }}
-        align="center"
-      >
-        Bookshlf
-      </Typography>
-      <Typography
-        variant="h4"
-        sx={{
-          fontFamily: "Staatliches",
-          color: "whitesmoke",
-          letterSpacing: "2px",
-        }}
-        align="center"
-      >
-        Password Recovery
-      </Typography>
+    <>
+      <Helmet>
+        <title>Recovery | Bookshlf</title>
+      </Helmet>
       <Stack
-        sx={{ width: "100%", maxWidth: 800, padding: " 0px 10px" }}
-        spacing={2}
-        direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
-        justifyContent="center"
+        className="password-recovery-bg"
+        sx={{
+          backgroundColor: "rgb(35, 47, 62)",
+          width: "100%",
+          minHeight: "100vh",
+        }}
         alignItems="center"
-      >
-        <TextField
-          className={classes.root}
-          label="Email"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon color="primary" />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                {emailError ? <ErrorIcon color="error" /> : <></>}
-              </InputAdornment>
-            ),
-          }}
-          helperText={
-            emailError ? emailerrorMsg : "Enter Your Registered Email"
-          }
-          variant="standard"
-          error={emailError}
-          fullWidth
-          sx={{ fontSize: "12px" }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <LoadingButton
-          className={classes.root}
-          loading={otpLoad}
-          loadingPosition="end"
-          endIcon={otpsentIcon ? <CheckCircle /> : <SendIcon />}
-          color="success"
-          size="small"
-          variant="contained"
-          sx={{ minWidth: 150 }}
-          onClick={handelSendOtp}
-          disabled={otpsentIcon}
-        >
-          {otpsentIcon ? "OTP Sent" : otpsent === 0 ? "Send Otp" : "Send Again"}
-        </LoadingButton>
-        {otpsentIcon ? (
-          <Typography className={classes.root} variant="caption">
-            Resend&nbsp;OTP&nbsp;in&nbsp;
-            <Clock time={interval} />
-            &nbsp;secs.
-          </Typography>
-        ) : null}
-      </Stack>
-      <Stack
-        sx={{
-          maxWidth: 800,
-          padding: "10px",
-          backgroundColor: "rgba(255,255,255,0.1)",
-          borderRadius: "10px",
-        }}
         spacing={1}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
       >
-        <Typography>
-          {lock ? (
-            <LockedIcon color="success" sx={{ height: 32, width: 32 }} />
-          ) : (
-            <UnlockedIcon color="error" sx={{ height: 32, width: 32 }} />
-          )}
+        <Stack sx={{ width: "100%", padding: "0px 10px" }}>
+          <TabContext value={"2"}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList onChange={handelNav} aria-label="admin-tabList">
+                <Tab
+                  label="Home"
+                  icon={<HomeIcon sx={{ height: 15, width: 15 }} />}
+                  value="1"
+                  className={classes.root}
+                  sx={{
+                    color: "whitesmoke",
+                    fontSize: "12px",
+                    minHeight: 0,
+                    padding: "9px 0px",
+                  }}
+                  iconPosition="start"
+                />
+                <Tab
+                  label="Recovery"
+                  icon={<RecoveryIcon sx={{ height: 15, width: 15 }} />}
+                  value="2"
+                  className={classes.root}
+                  sx={{
+                    color: "whitesmoke",
+                    fontSize: "12px",
+                    minHeight: 0,
+                    padding: "9px 0px",
+                  }}
+                  iconPosition="start"
+                />
+                <Tab
+                  label="Login"
+                  icon={<LoginIcon sx={{ height: 15, width: 15 }} />}
+                  value="3"
+                  className={classes.root}
+                  sx={{
+                    color: "whitesmoke",
+                    fontSize: "12px",
+                    minHeight: 0,
+                    padding: "9px 0px",
+                  }}
+                  iconPosition="start"
+                />
+              </TabList>
+            </Box>
+          </TabContext>
+        </Stack>
+        <Avatar
+          src="/images/smallLogoView.png"
+          variant="rounded"
+          sx={{ height: 60, width: 60 }}
+        />
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "Staatliches",
+            color: "whitesmoke",
+            letterSpacing: "2px",
+          }}
+          align="center"
+        >
+          Bookshlf
         </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "Staatliches",
+            color: "whitesmoke",
+            letterSpacing: "2px",
+          }}
+          align="center"
+        >
+          Password Recovery
+        </Typography>
+        <Stack
+          sx={{ width: "100%", maxWidth: 800, padding: " 0px 10px" }}
+          spacing={2}
+          direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <TextField
+            className={classes.root}
+            label="Email"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailIcon color="primary" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  {emailError ? <ErrorIcon color="error" /> : <></>}
+                </InputAdornment>
+              ),
+            }}
+            helperText={
+              emailError ? emailerrorMsg : "Enter Your Registered Email"
+            }
+            variant="standard"
+            error={emailError}
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <LoadingButton
+            className={classes.root}
+            loading={otpLoad}
+            loadingPosition="end"
+            endIcon={otpsentIcon ? <CheckCircle /> : <SendIcon />}
+            color="success"
+            size="small"
+            variant="contained"
+            sx={{ minWidth: 150 }}
+            onClick={handelSendOtp}
+            disabled={otpsentIcon}
+          >
+            {otpsentIcon
+              ? "OTP Sent"
+              : otpsent === 0
+              ? "Send Otp"
+              : "Send Again"}
+          </LoadingButton>
+          {otpsentIcon ? (
+            <Typography className={classes.root} variant="caption">
+              Resend&nbsp;OTP&nbsp;in&nbsp;
+              <Clock time={interval} />
+              &nbsp;secs.
+            </Typography>
+          ) : null}
+        </Stack>
+        <Stack
+          sx={{
+            maxWidth: 800,
+            padding: "10px",
+            backgroundColor: "rgba(255,255,255,0.1)",
+            borderRadius: "10px",
+          }}
+          spacing={1}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography>
+            {lock ? (
+              <LockedIcon color="success" sx={{ height: 32, width: 32 }} />
+            ) : (
+              <UnlockedIcon color="error" sx={{ height: 32, width: 32 }} />
+            )}
+          </Typography>
 
-        <Stack id="otp" direction="row" spacing={1} justifyContent="center">
+          <Stack id="otp" direction="row" spacing={1} justifyContent="center">
+            <input
+              className="otp-input-field"
+              type="text"
+              id="first"
+              maxLength="1"
+              autoComplete="off"
+            />
+            <input
+              className="otp-input-field"
+              type="text"
+              id="second"
+              maxLength="1"
+              autoComplete="off"
+            />
+            <input
+              className="otp-input-field"
+              type="text"
+              id="third"
+              maxLength="1"
+              autoComplete="off"
+            />
+            <input
+              className="otp-input-field"
+              type="text"
+              id="fourth"
+              maxLength="1"
+              autoComplete="off"
+            />
+            <input
+              className="otp-input-field"
+              type="text"
+              id="fifth"
+              maxLength="1"
+              autoComplete="off"
+            />
+            <input
+              className="otp-input-field"
+              type="text"
+              id="sixth"
+              maxLength="1"
+              name="field"
+              autoComplete="nope"
+            />
+          </Stack>
           <input
-            className="otp-input-field"
+            className="otp-input-field-mobile"
             type="text"
-            id="first"
-            maxLength="1"
+            maxLength="6"
             autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="second"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="third"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="fourth"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="fifth"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="sixth"
-            maxLength="1"
-            name="field"
-            autoComplete="nope"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
           />
         </Stack>
-      </Stack>
-      {otpsent ? (
-        <Alert
-          severity="info"
-          variant="filled"
-          sx={{
-            fontFamily: "PT sans",
-            fontSize: "12px",
-            padding: "0px 10px",
-          }}
+        {otpsent ? (
+          <Alert
+            severity="info"
+            variant="filled"
+            sx={{
+              fontFamily: "PT sans",
+              fontSize: "12px",
+              padding: "0px 10px",
+            }}
+          >
+            Didn't Recieve OTP ? Check You Mail Spam!
+          </Alert>
+        ) : null}
+        {otpError ? (
+          <Alert
+            severity="error"
+            variant="filled"
+            size="small"
+            sx={{
+              fontFamily: "PT sans",
+              fontSize: "12px",
+              padding: "0px 10px",
+            }}
+          >
+            {otperrorMsg}
+          </Alert>
+        ) : null}
+        <Stack
+          sx={{ width: "100%", maxWidth: 800, padding: "0px 10px" }}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
         >
-          Didn't Recieve OTP ? Check You Mail Spam!
-        </Alert>
-      ) : null}
-      {otpError ? (
-        <Alert
-          severity="error"
-          variant="filled"
-          size="small"
-          sx={{
-            fontFamily: "PT sans",
-            fontSize: "12px",
-            padding: "0px 10px",
-          }}
-        >
-          {otperrorMsg}
-        </Alert>
-      ) : null}
-      <Stack
-        sx={{ width: "100%", maxWidth: 800, padding: "0px 10px" }}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <TextField
-          className={classes.root}
-          label="Password"
-          type={showpassword ? "text" : "password"}
-          name="password"
-          autoComplete="new-password"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PasswordIcon color="primary" />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle-password-visibility"
-                  onClick={handleShowPassword}
-                  // onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                  size="small"
-                >
-                  {showpassword ? (
-                    <Visibility color="success" />
-                  ) : (
-                    <VisibilityOff color="primary" />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          helperText="Enter Your New Password"
-          variant="standard"
-          fullWidth
-          sx={{ fontSize: "12px" }}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </Stack>
-      <Stack
-        sx={{ width: "100%", maxWidth: 800, padding: "0px 10px" }}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <TextField
-          className={classes.root}
-          label="Verify Password"
-          type={showpassword ? "text" : "password"}
-          name="password"
-          autoComplete="new-password"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                {newpassword.length === 0 ? (
+          <TextField
+            className={classes.root}
+            label="Password"
+            type={showpassword ? "text" : "password"}
+            name="password"
+            autoComplete="new-password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
                   <PasswordIcon color="primary" />
-                ) : passwordMatch ? (
-                  <CheckCircle color="success" />
-                ) : (
-                  <ErrorIcon color="error" />
-                )}
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle-password-visibility"
-                  onClick={handleShowPassword}
-                  edge="end"
-                  size="small"
-                >
-                  {showpassword ? (
-                    <Visibility color="success" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle-password-visibility"
+                    onClick={handleShowPassword}
+                    // onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                    size="small"
+                  >
+                    {showpassword ? (
+                      <Visibility color="success" />
+                    ) : (
+                      <VisibilityOff color="primary" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            helperText="Enter Your New Password"
+            variant="standard"
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Stack>
+        <Stack
+          sx={{ width: "100%", maxWidth: 800, padding: "0px 10px" }}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <TextField
+            className={classes.root}
+            label="Verify Password"
+            type={showpassword ? "text" : "password"}
+            name="password"
+            autoComplete="new-password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  {newpassword.length === 0 ? (
+                    <PasswordIcon color="primary" />
+                  ) : passwordMatch ? (
+                    <CheckCircle color="success" />
                   ) : (
-                    <VisibilityOff color="primary" />
+                    <ErrorIcon color="error" />
                   )}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          helperText={
-            newpassword.length === 0
-              ? "Again Enter Password to Verify"
-              : passworderrorMsg
-          }
-          color={
-            newpassword.length === 0
-              ? "primary"
-              : passwordMatch
-              ? "success"
-              : "error"
-          }
-          variant="standard"
-          fullWidth
-          sx={{ fontSize: "12px" }}
-          value={newpassword}
-          onChange={handleVerifyPassword}
-        />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle-password-visibility"
+                    onClick={handleShowPassword}
+                    edge="end"
+                    size="small"
+                  >
+                    {showpassword ? (
+                      <Visibility color="success" />
+                    ) : (
+                      <VisibilityOff color="primary" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            helperText={
+              newpassword.length === 0
+                ? "Again Enter Password to Verify"
+                : passworderrorMsg
+            }
+            color={
+              newpassword.length === 0
+                ? "primary"
+                : passwordMatch
+                ? "success"
+                : "error"
+            }
+            variant="standard"
+            fullWidth
+            sx={{ fontSize: "12px" }}
+            value={newpassword}
+            onChange={handleVerifyPassword}
+          />
+        </Stack>
+        <LoadingButton
+          className={classes.root}
+          color="primary"
+          variant="contained"
+          loading={updateLoad}
+          endIcon={<UpdateIcon />}
+          loadingPosition="end"
+          onClick={handelUpdatePassword}
+        >
+          Update Password
+        </LoadingButton>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openbackdrop}
+          // onClick={() => setopenbackdrop(false)}
+        >
+          <CircularProgress color="primary" />
+          <Typography variant="h5" className={classes.root}>
+            Signing In...
+          </Typography>
+        </Backdrop>
       </Stack>
-      <LoadingButton
-        className={classes.root}
-        color="primary"
-        variant="contained"
-        loading={updateLoad}
-        endIcon={<UpdateIcon />}
-        loadingPosition="end"
-        onClick={handelUpdatePassword}
-      >
-        Update Password
-      </LoadingButton>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openbackdrop}
-        // onClick={() => setopenbackdrop(false)}
-      >
-        <CircularProgress color="primary" />
-        <Typography variant="h5" className={classes.root}>
-          Signing In...
-        </Typography>
-      </Backdrop>
-    </Stack>
+    </>
   );
 };
 export default ForgotPassword;

@@ -7,7 +7,7 @@ import axios from "../../axios";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
 // Wallet Components
 import Grid from "@mui/material/Grid";
@@ -17,13 +17,13 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Skeleton from "@mui/material/Skeleton";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/material/Alert";
 
 // icons
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
-import SendIcon from "@material-ui/icons/Send";
-import CreditIcon from "@material-ui/icons/CallMadeRounded";
-import DebitIcon from "@material-ui/icons/CallReceivedRounded";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import SendIcon from "@mui/icons-material/Send";
+import CreditIcon from "@mui/icons-material/CallMadeRounded";
+import DebitIcon from "@mui/icons-material/CallReceivedRounded";
 
 const stackStyle = {
   padding: "12px 15px",

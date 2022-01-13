@@ -1,46 +1,64 @@
-import { React } from "react";
-import "./Account.css";
-import Avatar from "@material-ui/core/Avatar";
+import React from "react";
 
-function Account(props) {
-  console.log(props);
+// Components
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
+// Icons
+import PersonIcon from "@mui/icons-material/PersonTwoTone";
+import EmailIcon from "@mui/icons-material/EmailTwoTone";
+import DateRangeIcon from "@mui/icons-material/DateRangeTwoTone";
+import RolesIcon from "@mui/icons-material/AccessibilityRounded";
+
+const Account = (props) => {
   return (
-    <div className="user-profile-container" id="user-profile-container">
-      <div className="user-profile-container-top">
-        <div className="user-profile-details">
-          <span>
-            <i className="fas fa-user"></i>
-            {props.user.name}
-          </span>
-          <span>
-            <i className="fas fa-envelope"></i>
-            {props.user.email}
-          </span>
-          <span>
-            <i className="fas fa-universal-access"></i>Customer Since :{" "}
-            {props.user.createdAt.substr(0, 4)}
-          </span>
-          <span>
-            <i className="fas fa-hat-cowboy"></i>Roles :{" "}
-            {props.user.roles.map((role, i) => (
-              <b key={i}>
-                {role.charAt(0).toUpperCase() + role.slice(1)}
-                {i === props.user.roles.length - 1 ? "" : " , "}
-              </b>
-            ))}
-          </span>
-        </div>
-        <div className="user-profile-img">
-          <Avatar
-            alt={props.user.name}
-            src="/images/user.png"
-            style={{ height: "150px", width: "150px" }}
-          />
-        </div>
-      </div>
-    </div>
+    <Stack justifyContent="center" alignItems="center">
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 500,
+          padding: "10px",
+          border: "1px solid rgba(0,0,0,0.4)",
+          borderRadius: "10px",
+        }}
+      >
+        <Stack direction="column" spacing={2}>
+          <Stack spacing={2} direction="row" alignItems="center">
+            <PersonIcon fontSize="small" />
+            <Typography variant="caption">
+              <strong>{props.user.name}</strong>
+            </Typography>
+          </Stack>
+          <Stack spacing={2} direction="row" alignItems="center">
+            <EmailIcon fontSize="small" />
+            <Typography variant="caption">
+              <strong>{props.user.email}</strong>
+            </Typography>
+          </Stack>
+          <Stack spacing={2} direction="row" alignItems="center">
+            <DateRangeIcon fontSize="small" />
+            <Typography variant="caption">
+              <strong>{props.user.createdAt.substr(0, 4)}</strong>
+            </Typography>
+          </Stack>
+          <Stack spacing={2} direction="row" alignItems="center">
+            <RolesIcon fontSize="small" />
+            <Stack spacing={1} direction="row" alignItems="center">
+              {props.user.roles.map((role, i) => (
+                <Chip
+                  key={i}
+                  label={role}
+                  variant="filled"
+                  size="small"
+                  sx={{ fontFamily: "PT sans" }}
+                />
+              ))}
+            </Stack>
+          </Stack>
+        </Stack>
+      </Box>
+    </Stack>
   );
-}
+};
 export default Account;
-
-//
