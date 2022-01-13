@@ -329,7 +329,6 @@ const ForgotPassword = () => {
           width: "100%",
           minHeight: "100vh",
         }}
-        justifyContent="center"
         alignItems="center"
         spacing={1}
       >

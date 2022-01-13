@@ -1,0 +1,5 @@
+.signUp-bg .Mui-disabled,
+.signUp-bg input.Mui-disabled {
+  color: rgba(255, 255, 255, 0.6) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
+}

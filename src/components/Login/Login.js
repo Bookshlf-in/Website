@@ -170,7 +170,6 @@ const Login = () => {
           width: "100%",
           minHeight: "100vh",
         }}
-        justifyContent="center"
         alignItems="center"
         spacing={1}
       >
@@ -336,7 +335,6 @@ const Login = () => {
             href="/Signup"
             color="secondary"
             variant="contained"
-            size="small"
             className={classes.root}
           >
             Create Account Instead ?

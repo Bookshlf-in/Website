@@ -10,6 +10,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import LinearProgress from "@mui/material/LinearProgress";
 
 // custom Components
 import "./SellerPanel.css";
@@ -19,7 +20,6 @@ import Address from "../AddressBook/Address";
 import Reviews from "./SellerReviews";
 import AddBook from "../Book/AddBook";
 import Register from "./SellerRegister";
-import LinearProgress from "@mui/material/LinearProgress";
 
 // icons
 import OrderIcon from "@material-ui/icons/LocalShipping";
@@ -39,6 +39,8 @@ const useStyles = makeStyles({
 const SellerPanel = () => {
   // context states
   const [user] = useContext(UserContext);
+
+  // Hooks Call
   const history = useHistory();
   const classes = useStyles();
   const params = useParams();

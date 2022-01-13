@@ -224,7 +224,7 @@ const Payment = () => {
           );
           setUser({ ...user, cartitems: 0 });
           setTimeout(() => {
-            history.push("/UserProfile/2");
+            history.push("/UserPanel/2");
           }, 3000);
         })
         .catch((error) => {});
@@ -239,7 +239,7 @@ const Payment = () => {
           setorderPlaced(true);
           setorderLoad(false);
           setTimeout(() => {
-            history.push("/UserProfile/2");
+            history.push("/UserPanel/2");
           }, 3000);
         })
         .catch((error) => {});

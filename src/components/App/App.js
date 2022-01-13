@@ -10,8 +10,7 @@ import Categories from "../Home/Categories";
 import Review from "../Reviews/CustomerReviews";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
-import UserSignup from "../Signup/UserSignup";
-import Verify from "../Signup/Verify";
+import Signup from "../Signup/Signup";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
@@ -42,8 +41,7 @@ const App = () => {
           <Route path="/PasswordRecovery">
             <ForgotPassword />
           </Route>
-          <Route path="/Signup" component={UserSignup} />
-          <Route path="/Verify/:Email" component={Verify} />
+          <Route path="/Signup" component={Signup} />
           <Route path="/About">
             <Navbar />
             <About />
@@ -64,7 +62,7 @@ const App = () => {
             <Navbar />
             <AddReviews />
           </Route>
-          <Route path="/UserProfile/:panel">
+          <Route path="/UserPanel/:panel">
             <Navbar />
             <UserProfile />
           </Route>
