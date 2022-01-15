@@ -22,7 +22,7 @@ const CommisionChartGrid = (props) => {
     {
       field: "priceLimit",
       headerName: "Price Limit",
-      minWidth: 60,
+      minWidth: 80,
       flex: 1,
       sortable: false,
     },

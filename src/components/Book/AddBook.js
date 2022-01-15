@@ -53,10 +53,9 @@ import HelpIcon from "@mui/icons-material/Help";
 const useStyles = makeStyles(() => ({
   root: {
     fontWeight: "bolder",
-    // fontFamily: "PT sans !important",
+    fontFamily: "PT sans !important",
     "& label": {
       fontFamily: "PT sans !important",
-      fontSize: "12px !important",
     },
     "& p": {
       fontFamily: "PT sans !important",
@@ -64,6 +63,26 @@ const useStyles = makeStyles(() => ({
     "& input": {
       fontFamily: "PT sans !important",
     },
+    "& textarea": {
+      fontFamily: "PT sans !important",
+    },
+  },
+  select: {
+    "& label": {
+      fontFamily: "PT sans !important",
+      paddingLeft: "5px",
+    },
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+    "& div": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+  },
+  adrMenu: {
+    fontFamily: "PT sans !important",
+    fontSize: "12px !important",
   },
 }));
 
@@ -402,7 +421,7 @@ const AddBook = (props) => {
         <title>Add Book | Bookshlf</title>
         <meta name="description" content="Add Your Book" />
       </Helmet>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} lg={8} md={12} sm={12}>
           <form className="add-book-form-lf">
             <fieldset>
@@ -410,6 +429,7 @@ const AddBook = (props) => {
               <Stack spacing={2}>
                 <div style={{ position: "relative" }}>
                   <TextField
+                    className={classes.root}
                     id="add-book-textfield"
                     label="Book Title"
                     helperText="Name of the Book"
@@ -472,6 +492,7 @@ const AddBook = (props) => {
                 </div>
 
                 <TextField
+                  className={classes.root}
                   id="add-book-textfield"
                   label="Book Details"
                   InputProps={{
@@ -495,6 +516,7 @@ const AddBook = (props) => {
                   justifyContent="space-between"
                 >
                   <TextField
+                    className={classes.root}
                     id="add-book-textfield"
                     label="Book Quantity"
                     helperText="Number Of Books You Have"
@@ -510,6 +532,7 @@ const AddBook = (props) => {
                     onChange={(e) => setQnty(e.target.value)}
                   />
                   <TextField
+                    className={classes.root}
                     id="add-book-textfield"
                     label="Book Selling Price"
                     helperText="Min Price Should be 100"
@@ -528,6 +551,7 @@ const AddBook = (props) => {
                     }}
                   />
                   <TextField
+                    className={classes.root}
                     id="add-book-textfield"
                     label="Your Earnings"
                     helperText="Total Earnings You Will Recieve. To Know More Click ↑"
@@ -590,6 +614,7 @@ const AddBook = (props) => {
                   ) : null}
                 </Stack>
                 <TextField
+                  className={classes.select}
                   select
                   label="Pickup Address"
                   value={Adr}
@@ -609,12 +634,20 @@ const AddBook = (props) => {
                   }}
                 >
                   {props.address.map((option) => (
-                    <MenuItem key={option._id} value={option._id}>
+                    <MenuItem
+                      key={option._id}
+                      value={option._id}
+                      className={classes.adrMenu}
+                    >
                       {option.address + ", " + option.zipCode}
                     </MenuItem>
                   ))}
                   {
-                    <MenuItem key={"NEWADR"} value={"NEWADR"}>
+                    <MenuItem
+                      key={"NEWADR"}
+                      value={"NEWADR"}
+                      className={classes.adrMenu}
+                    >
                       {"Add New Address"}
                     </MenuItem>
                   }
@@ -625,6 +658,7 @@ const AddBook = (props) => {
                 >
                   <div style={{ position: "relative" }}>
                     <TextField
+                      className={classes.root}
                       id="add-book-textfield"
                       label="Book Tags"
                       InputProps={{
@@ -661,6 +695,7 @@ const AddBook = (props) => {
                         }
                       }}
                       autoComplete="false"
+                      sx={{ minWidth: 200 }}
                     />
                     <ClickAwayListener
                       onClickAway={() => setOpenTagMenu(false)}
@@ -674,6 +709,7 @@ const AddBook = (props) => {
                               key={idx}
                               value={TAG.tag}
                               onClick={() => handelTagAdd(TAG.tag)}
+                              className={classes.adrMenu}
                             >
                               {TAG.tag}
                             </MenuItem>
@@ -692,9 +728,9 @@ const AddBook = (props) => {
                       lg: "row",
                       md: "row",
                     }}
-                    spacing={0.5}
                     alignItems="center"
                     justifyContent="flex-start"
+                    flexWrap="wrap"
                   >
                     {tags.map((TAG, idx) => (
                       <Chip
@@ -703,6 +739,7 @@ const AddBook = (props) => {
                         onDelete={() => handleTagDelete(TAG)}
                         color="primary"
                         size="small"
+                        sx={{ margin: "4px" }}
                       />
                     ))}
                   </Stack>
@@ -800,12 +837,13 @@ const AddBook = (props) => {
             style={{ fontFamily: "Pt sans" }}
           >
             <Button
+              fullWidth
               variant="contained"
               color="secondary"
               endIcon={collapse ? <CloseIcon /> : <OpenIcon />}
               onClick={() => setcollapse(!collapse)}
-              style={{
-                margin: "10px",
+              sx={{
+                marginTop: "22px",
                 fontFamily: "PT sans",
                 fontSize: "12px",
                 letterSpacing: "1px",
@@ -831,6 +869,7 @@ const AddBook = (props) => {
                     justifyContent="space-evenly"
                   >
                     <TextField
+                      className={classes.root}
                       id="add-book-textfield"
                       label="Book MRP"
                       InputProps={{
@@ -845,6 +884,7 @@ const AddBook = (props) => {
                       onChange={(e) => setMrp(e.target.value)}
                     />
                     <TextField
+                      className={classes.root}
                       id="add-book-textfield"
                       label="Book Edition Year"
                       InputProps={{
@@ -872,6 +912,7 @@ const AddBook = (props) => {
                     justifyContent="space-evenly"
                   >
                     <TextField
+                      className={classes.root}
                       id="add-book-textfield"
                       label="Book Author"
                       InputProps={{
@@ -886,6 +927,7 @@ const AddBook = (props) => {
                       onChange={(e) => setAuthor(e.target.value)}
                     />
                     <TextField
+                      className={classes.root}
                       id="add-book-textfield"
                       label="Book Weight in Grams"
                       InputProps={{
@@ -913,6 +955,7 @@ const AddBook = (props) => {
                     justifyContent="space-evenly"
                   >
                     <TextField
+                      className={classes.root}
                       id="add-book-textfield"
                       label="Book Language"
                       InputProps={{
@@ -927,6 +970,7 @@ const AddBook = (props) => {
                       onChange={(e) => setlang(e.target.value)}
                     />
                     <TextField
+                      className={classes.root}
                       id="add-book-textfield"
                       label="Book ISBN Number"
                       InputProps={{
@@ -941,23 +985,6 @@ const AddBook = (props) => {
                       onChange={(e) => setbookISBN(e.target.value)}
                     />
                   </Stack>
-                  {/* <TextField
-                  id="add-book-textfield"
-                  label="Embed Youtube Video Link of Book"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <YouTubeIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="standard"
-                  multiline
-                  maxRows={3}
-                  helperText="Make a video of book and Upload it to Youtube and share the video's embed Link"
-                  value={link}
-                  onChange={(e) => setlink(e.target.value)}
-                /> */}
                 </Stack>
               </fieldset>
             </form>
@@ -987,25 +1014,14 @@ const AddBook = (props) => {
             />
             <Link
               style={{ fontFamily: "pt sans" }}
-              to="/TermsofUse&PrivacyPolicy"
+              to={`/TermsofUse&PrivacyPolicy`}
               target="_blank"
             >
               I agree to Terms & Conditions
             </Link>
           </div>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={12}
-          md={12}
-          sm={12}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <Grid item xs={12} lg={4} md={4} sm={4}>
           <LoadingButton
             onClick={() => {
               uploadBook();
@@ -1015,6 +1031,7 @@ const AddBook = (props) => {
             loadingPosition="end"
             variant="contained"
             className={classes.root}
+            fullWidth
           >
             {sending ? "Submitting ..." : "Submit For Review"}
           </LoadingButton>
