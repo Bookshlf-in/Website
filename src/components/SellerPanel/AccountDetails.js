@@ -267,14 +267,14 @@ const AccountDetails = (props) => {
           <Stack spacing={2} direction="row" alignItems="center">
             <RatingIcon fontSize="small" />
             <Typography variant="caption">
-              <strong>Total Times Rated : {sellerDetails.Rating}</strong>
+              <strong>Total Times Rated : {sellerDetails.NoOfRatings}</strong>
             </Typography>
           </Stack>
           <Stack spacing={2} direction="row" alignItems="center">
             <ReviewsIcon fontSize="small" />
             <Typography variant="caption">
               <strong>
-                Total Reviews Recieved: {sellerDetails.NoOfBooksSold}
+                Total Reviews Recieved: {sellerDetails.NoOfReviews}
               </strong>
             </Typography>
           </Stack>

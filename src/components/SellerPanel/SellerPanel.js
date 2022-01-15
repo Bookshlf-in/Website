@@ -1,7 +1,7 @@
 import { React, useState, useContext, useEffect } from "react";
 import { UserContext } from "../../Context/userContext";
 import { useHistory, useParams } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // Components
@@ -22,11 +22,11 @@ import AddBook from "../Book/AddBook";
 import Register from "./SellerRegister";
 
 // icons
-import OrderIcon from "@material-ui/icons/LocalShipping";
-import ProfileIcon from "@material-ui/icons/AccountCircleRounded";
-import SellersIcon from "@material-ui/icons/ContactMailRounded";
-import ReviewIcon from "@material-ui/icons/RateReviewRounded";
-import BookIcon from "@material-ui/icons/MenuBookRounded";
+import OrderIcon from "@mui/icons-material/LocalShipping";
+import ProfileIcon from "@mui/icons-material/AccountCircleRounded";
+import SellersIcon from "@mui/icons-material/ContactMailRounded";
+import ReviewIcon from "@mui/icons-material/RateReviewRounded";
+import BookIcon from "@mui/icons-material/MenuBookRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -159,7 +159,7 @@ const SellerPanel = () => {
               />
               <Tab
                 iconPosition="start"
-                label="Orders"
+                label="Books"
                 icon={<OrderIcon />}
                 value="2"
                 className={classes.root}
@@ -197,7 +197,7 @@ const SellerPanel = () => {
             <Address address={Adr} />
           </TabPanel>
           <TabPanel value="4">
-            <Reviews reviews={sellerReview} />
+            <Reviews reviews={sellerReview} sellerId={sellerId} />
           </TabPanel>
           <TabPanel value="5">
             <AddBook address={Adr} commisionChart={commisionchart} />
