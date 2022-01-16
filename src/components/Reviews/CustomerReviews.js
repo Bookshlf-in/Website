@@ -97,7 +97,7 @@ const Reviews = () => {
           direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
           justifyContent="space-evenly"
           alignItems="center"
-          spacing={2}
+          spacing={1}
           sx={{ width: "100%" }}
         >
           {Loading ? (
@@ -114,16 +114,16 @@ const Reviews = () => {
             Reviews.map((review) => (
               <Box
                 sx={{
-                  backgroundColor: "#2d5a87",
-                  height: 250,
-                  width: 250,
-                  borderRadius: "10px",
+                  backgroundColor: "rgba(45, 90, 135,0.3)",
+                  height: 220,
+                  width: "100%",
+                  borderRadius: "5px",
                 }}
                 key={review._id}
               >
                 <Stack
                   sx={{ width: "100%", padding: "10px", height: "100%" }}
-                  spacing={2}
+                  spacing={1}
                   justifyContent="space-between"
                   alignItems="space-between"
                 >
