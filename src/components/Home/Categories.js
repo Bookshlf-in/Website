@@ -1,90 +1,112 @@
 import React from "react";
-import "./Categories.css";
 import { Link } from "react-router-dom";
+import "./Categories.css";
 
-function Categories() {
+// Components
+import { Stack, Avatar, Typography } from "@mui/material";
+
+const Categories = () => {
   return (
-    <div className="categories">
-      <div className="cont">
-        <div className="heading-wrapper">
-          <h1 className="heading">Featured Categories</h1>
-          <p className="heading-para">
-            <Link to="/SearchResult/tag:ALL">
-              All Categories&nbsp;
-              <i className="fas fa-angle-right" />
-            </Link>
-          </p>
-        </div>
-        <div className="item-wrapper">
-          <Link to="/SearchResult/tag:JEE Mains">
-            <div className="item i1 ">
-              <img
-                src="/images/categories/jee_logo.png"
-                className="item-image"
-                alt=""
-              />
-              <h6 className="item-h6">JEE MAINS</h6>
-              <p className="item-p">
-                <Link to="/SearchResult/tag:JEE Mains">Shop Now</Link>
-              </p>
-            </div>
+    <Stack className="categories">
+      <Stack
+        justifyContent="space-between"
+        alignItems="center"
+        direction="row"
+        sx={{ padding: "10px" }}
+      >
+        <Typography variant="h4">Featured Categories</Typography>
+        <Typography variant="h6">
+          <Link to="/SearchResult/tag:ALL">
+            All Categories&nbsp;
+            <i className="fas fa-angle-right" />
           </Link>
-          <Link to="/SearchResult/tag:JEE Advanced">
-            <div className="item i2">
-              <img
-                src="/images/categories/jee adv.png"
-                className="item-image"
-                alt=""
-              />
-              <h6 className="item-h6">JEE ADVANCED</h6>
-              <p className="item-p">
-                <Link to="/SearchResult/tag:JEE Advanced">Shop Now</Link>
-              </p>
-            </div>
-          </Link>
-          <Link to="/SearchResult/tag:CSBE">
-            <div className="item i3">
-              <img
-                src="/images/categories/cbse.png"
-                className="item-image"
-                alt=""
-              />
-              <h6 className="item-h6">CBSE</h6>
-              <p className="item-p">
-                <Link to="/SearchResult/tag:CBSE">Shop Now</Link>
-              </p>
-            </div>
-          </Link>
-          <Link to="/SearchResult/tag:NEET">
-            <div className="item i4">
-              <img
-                src="/images/categories/health.png"
-                className="item-image"
-                alt=""
-              />
-              <h6 className="item-h6">NEET UG</h6>
-              <p className="item-p">
-                <Link to="/SearchResult/tag:NEET">Shop Now</Link>
-              </p>
-            </div>
-          </Link>
-          <Link to="/SearchResult/tag:NOVELS">
-            <div className="item i5">
-              <img
-                src="/images/categories/biography.png"
-                className="item-image"
-                alt=""
-              />
-              <h6 className="item-h6">NOVELS</h6>
-              <p className="item-p">
-                <Link to="/SearchResult/tag:Novel">Shop Now</Link>
-              </p>
-            </div>
-          </Link>
-        </div>
-      </div>
-    </div>
+        </Typography>
+      </Stack>
+      <Stack
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="center"
+        className="item-wrapper"
+        spacing={1}
+        flexWrap="wrap"
+      >
+        <Link to="/SearchResult/tag:JEE Mains">
+          <div className="item i1 ">
+            <Avatar
+              src="/images/categories/jeemains-logo.png"
+              alt=""
+              sx={{ width: 56, height: 56 }}
+            />
+            <h6 className="item-h6">JEE MAINS</h6>
+            <Typography variant="body2">
+              <Link to="/SearchResult/tag:JEE Mains">
+                <strong>Shop Now</strong>
+              </Link>
+            </Typography>
+          </div>
+        </Link>
+        <Link to="/SearchResult/tag:JEE Advanced">
+          <div className="item i2">
+            <Avatar
+              src="/images/categories/JEE-Advance-Logo.png"
+              alt=""
+              sx={{ width: 56, height: 56 }}
+            />
+            <h6 className="item-h6">JEE ADVANCED</h6>
+            <Typography variant="body2">
+              <Link to="/SearchResult/tag:JEE Advanced">
+                <strong>Shop Now</strong>
+              </Link>
+            </Typography>
+          </div>
+        </Link>
+        <Link to="/SearchResult/tag:CSBE">
+          <div className="item i3">
+            <Avatar
+              src="/images/categories/cbse-logo.png"
+              alt=""
+              sx={{ width: 56, height: 56 }}
+            />
+            <h6 className="item-h6">CBSE</h6>
+            <Typography variant="body2">
+              <Link to="/SearchResult/tag:CBSE">
+                <strong>Shop Now</strong>
+              </Link>
+            </Typography>
+          </div>
+        </Link>
+        <Link to="/SearchResult/tag:NEET">
+          <div className="item i4">
+            <Avatar
+              src="/images/categories/neet-ug-logo.png"
+              sx={{ width: 56, height: 56 }}
+              alt=""
+            />
+            <h6 className="item-h6">NEET UG</h6>
+            <Typography variant="body2">
+              <Link to="/SearchResult/tag:NEET">
+                <strong>Shop Now</strong>
+              </Link>
+            </Typography>
+          </div>
+        </Link>
+        <Link to="/SearchResult/tag:NOVELS">
+          <div className="item i5">
+            <Avatar
+              src="/images/categories/novel-logo.jpg"
+              sx={{ width: 56, height: 56 }}
+              alt=""
+            />
+            <h6 className="item-h6">NOVELS</h6>
+            <Typography variant="body2">
+              <Link to="/SearchResult/tag:Novel">
+                <strong>Shop Now</strong>
+              </Link>
+            </Typography>
+          </div>
+        </Link>
+      </Stack>
+    </Stack>
   );
-}
-
+};
 export default Categories;

@@ -1,75 +1,14 @@
-.cont {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  font-family: "PT sans";
-}
-.heading-wrapper {
-  display: inline-block;
-  width: 100%;
-  padding: 10px;
-}
-.heading {
-  display: inline-block;
-  font-size: 20px;
-  font-family: "Staatliches";
-  letter-spacing: 2px;
-  color: rgba(0, 0, 0, 0.8);
-}
-.heading-para {
-  display: inline-block;
-  position: absolute;
-  right: 10px;
-  font-family: "Staatliches";
-  letter-spacing: 2px;
-}
-
-.heading-para a {
-  color: #506ef7;
-  text-decoration: none;
-  margin-bottom: 20px;
-}
-
-.heading-para a:hover {
-  color: #222222;
-  transition: 0.3s ease-out;
-  transition: all 0.2s ease-in-out;
-  background-position: 0 100%;
-  transform: translateX(5px);
-}
-
-.item-wrapper {
-  color: black;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  align-items: center;
-}
 .item {
   margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  height: 230px;
-  width: 240px;
+  padding: 10px;
+  height: 200px;
+  width: 200px;
   cursor: pointer;
 }
-
-.item-p a {
-  color: #000000;
-  text-decoration: none;
-  margin-bottom: 20px;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.item-p a:hover {
-  color: #013b88;
-}
-
 .i1 {
   background-color: rgb(238, 255, 238);
   border-radius: 15px;
@@ -127,38 +66,37 @@
   border-radius: 15px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
-.item-image {
-  width: 30%;
-}
 
 .item-h6 {
   font-size: 20px;
   margin: 20px 0px;
-  font-family: "PT Sans";
+  font-family: "Staatliches";
+  letter-spacing: 2px;
+  color: rgb(0, 0, 0);
 }
 
 @media screen and (max-width: 768px) {
-  .heading {
-    font-size: 25px;
-    align-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .categories h4 {
+    font-size: 16px !important;
+    font-weight: bolder !important;
   }
-  .heading-para {
-    display: flex;
-    position: static;
-    justify-content: center;
-    align-items: center;
+  .categories h6 {
+    font-size: 12px !important;
+    font-weight: bolder !important;
   }
-  .item-wrapper {
-    justify-content: center;
+  .categories .MuiAvatar-root {
+    height: 30px;
+    width: 30px;
+  }
+  .categories .MuiTypography-body2 {
+    font-size: 12px !important;
+    font-family: "PT sans", sans-serif;
   }
   .item {
-    height: 150px;
-    width: 150px;
+    height: 125px;
+    width: 125px;
   }
   .item-h6 {
-    font-size: 14px;
+    font-size: 12px !important;
   }
 }
