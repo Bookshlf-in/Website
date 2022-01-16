@@ -1,11 +1,17 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./CustomerReviews.css";
-import { FaStar } from "react-icons/fa";
-import axios from "../../axios";
 import { UserContext } from "../../Context/userContext";
-import Grid from "@material-ui/core/Grid";
-import Collapse from "@material-ui/core/Collapse";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import axios from "../../axios";
+
+// Components
+import { Box, Stack, Collapse, Button, TextField } from "@mui/material";
+import { Typography, Rating, CircularProgress } from "@mui/material";
+
+// Icons
+import StarIcon from "@mui/icons-material/StarRounded";
+import DownIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import UpIcon from "@mui/icons-material/KeyboardArrowUpRounded";
+import UpdateIcon from "@mui/icons-material/FileUploadTwoTone";
 
 const responses = [
   "Hated it",
@@ -14,296 +20,208 @@ const responses = [
   "Liked it",
   "Loved It",
 ];
-const Reviews = () => {
-  const [user] = useContext(UserContext);
-  const [Reviews, setReviews] = useState(null);
 
-  const [desc, setdesc] = useState("");
-  const [rating, setrating] = useState(null);
-  const [hover, sethover] = useState(null);
-  const [rate, setrate] = useState("Rating Required");
-  const [showreview, setshowreview] = useState(false);
-  const [load, setload] = useState(false);
+const Reviews = () => {
+  const history = useHistory();
+
+  // User Context
+  const [user] = useContext(UserContext);
+
+  //Funtionality States
+  const [Loading, setLoading] = useState(true);
+  const [updateLoad, setupdateLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [ratings, setRatings] = useState(5);
+  const [hover, sethover] = useState(5);
+  const [desc, setDesc] = useState("");
+  const [updated, setupdated] = useState(false);
+
+  // Data States
+  const [Reviews, setReviews] = useState([]);
+
+  // Getting Website Reviews
   useEffect(() => {
     const fetchData = async () => {
       axios
         .get("/getTopWebsiteReviews")
         .then((response) => {
           setReviews(response.data);
+          setLoading(false);
         })
         .catch((error) => {
-          // console.log(error.response);
-        });
-      axios
-        .get("/getWebsiteReview")
-        .then((response) => {
-          setdesc(response.data.review);
-          setrating(response.data.rating);
-          sethover(response.data.rating);
-          if (response.data.rating === 1) {
-            setrate(responses[0]);
-          }
-          if (response.data.rating === 2) {
-            setrate(responses[1]);
-          }
-          if (response.data.rating === 3) {
-            setrate(responses[2]);
-          }
-          if (response.data.rating === 4) {
-            setrate(responses[3]);
-          }
-          if (response.data.rating === 5) {
-            setrate(responses[4]);
-          }
-        })
-        .catch((error) => {
-          console.log(error?.response?.data);
+          setLoading(false);
         });
     };
     fetchData();
-  }, []);
+  }, [updated]);
 
+  // Adding Website Review
   const handelAddReview = () => {
-    setload(true);
+    setupdateLoading(true);
     axios
       .post("/updateWebsiteReview", {
-        rating: rating,
+        rating: ratings,
         review: desc,
       })
-      .then((response) => {})
-      .catch((error) => {});
+      .then((response) => {
+        setupdateLoading(false);
+        setupdated(true);
+        setTimeout(() => {
+          setupdated(false);
+        }, 5000);
+      })
+      .catch((error) => {
+        setupdateLoading(false);
+        // setupdated(true);
+      });
   };
   return (
-    <div>
-      <div className="reviews">
-        <p className="reviewed_by">What readers say about us?</p>
-
-        <p className="book_desc">
-          This book is concerned with creating typography and is essential for
-          professionals who regularly work for clients.
-        </p>
-        <Grid container>
-          <Grid item xs={12}>
-            <div className="reviews_wrapper">
-              {Reviews && Reviews.length > 0 ? (
-                <>
-                  {Reviews.map((TopReview, i) => (
-                    <div className="reviews_item" key={i}>
-                      <p className="rating_desc">{TopReview.review}</p>
-
-                      <h3 className="rating_value">
-                        - {TopReview.userName}
-                        {TopReview.rating <= 2 && TopReview.rating >= 1 ? (
-                          <>&#128545;</>
-                        ) : TopReview.rating <= 4 ? (
-                          <>&#128522;</>
-                        ) : (
-                          <>&#128525;</>
-                        )}
-                      </h3>
-
-                      <div className="ratings">
-                        {[...Array(TopReview.rating)].map((e, i) => {
-                          return (
-                            <FaStar
-                              size={20}
-                              color="#FDCC0D"
-                              key={i}
-                              style={{ margin: "0px 5px" }}
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-          </Grid>
-
-          <Grid item xs={12}>
-            <div
-              className="Add-Rvw-btn"
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
+    <Stack>
+      <Stack
+        className="reviews"
+        spacing={2}
+        sx={{ backgroundColor: "#0a2540", padding: "10px", color: "white" }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Typography variant="h4" align="center">
+          <strong>What readers say about us?</strong>
+        </Typography>
+        <Typography variant="caption" align="center">
+          <strong>
+            This book is concerned with creating typography and is essential for
+            professionals who regularly work for clients.
+          </strong>
+        </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+          justifyContent="space-evenly"
+          alignItems="center"
+          spacing={2}
+          sx={{ width: "100%" }}
+        >
+          {Loading ? (
+            <Stack
+              justifyContent="center"
+              alignItems="center"
+              spacing={2}
+              direction="row"
             >
-              <button className="Login">
-                <Link to="/Login">
-                  <i className="fas fa-exclamation-triangle" /> Please Login
-                  First
-                </Link>
-              </button>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (user) {
-                    setshowreview(!showreview);
-                  } else {
-                    e.target.style.display = "none";
-                    const Login = document.querySelector(".Login");
-                    Login.style.display = "block";
-                  }
+              <Typography variant="caption">Loading...</Typography>
+              <CircularProgress size={15} color="inherit" />
+            </Stack>
+          ) : (
+            Reviews.map((review) => (
+              <Box
+                sx={{
+                  backgroundColor: "#2d5a87",
+                  height: 250,
+                  width: 250,
+                  borderRadius: "10px",
                 }}
+                key={review._id}
               >
-                Add Your Reviews&nbsp;
-                <i
-                  className={
-                    showreview ? "fas fa-chevron-up" : "fas fa-chevron-down"
-                  }
-                />
-              </button>
-            </div>
-            <Collapse
-              in={showreview}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                className="addreview"
-                style={{
-                  maxWidth: "600px",
-                  border: "1px solid #fff",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "10px",
-                }}
-              >
-                <div className="main-rating">
-                  <div className="desc">
-                    <div className="rating">
-                      <div className="stars">
-                        {[...Array(5)].map((star, i) => {
-                          const ratingValue = i + 1;
-                          return (
-                            <label key={i}>
-                              <input
-                                type="radio"
-                                name="rating"
-                                value={ratingValue}
-                                id="ratingValue"
-                                onClick={() => {
-                                  setrating(ratingValue);
-                                  sethover(ratingValue);
-                                  // console.log(ratingValue);
-                                  if (ratingValue === 1) {
-                                    setrate("Hated it");
-                                  }
-                                  if (ratingValue === 2) {
-                                    setrate("Don't like it");
-                                  }
-                                  if (ratingValue === 3) {
-                                    setrate("Just OK");
-                                  }
-                                  if (ratingValue === 4) {
-                                    setrate("Liked it");
-                                  }
-                                  if (ratingValue === 5) {
-                                    setrate("Loved it");
-                                  }
-                                }}
-                                onChange={(e) => {
-                                  setrating(e.target.value);
-                                }}
-                              />
-                              <FaStar
-                                className="star"
-                                color={
-                                  ratingValue <= (hover || rating)
-                                    ? hover <= 2
-                                      ? "red"
-                                      : hover <= 4
-                                      ? "yellowgreen"
-                                      : "#66ff00"
-                                    : "#ffffff"
-                                }
-                                onMouseEnter={() => sethover(ratingValue)}
-                                onMouseLeave={() => sethover(ratingValue)}
-                              />
-                            </label>
-                          );
-                        })}
-                      </div>
-                      <p
-                        style={{
-                          color:
-                            rating <= 2
-                              ? "red"
-                              : rating <= 4
-                              ? "yellowgreen"
-                              : "#66ff00",
-                        }}
-                      >
-                        {rate}&nbsp;
-                        {rating <= 2 && rating >= 1 ? (
-                          <>&#128545;</>
-                        ) : rating <= 4 ? (
-                          <>&#128522;</>
-                        ) : (
-                          <>&#128525;</>
-                        )}
-                      </p>
-                    </div>
-                    <form className="desc-form">
-                      <textarea
-                        type="text"
-                        value={desc}
-                        onChange={(e) => {
-                          setdesc(e.target.value);
-                        }}
-                        className="desc-input"
-                        id="desc"
-                        placeholder="Your Reviews on Website..."
-                      />
-                      <p>
-                        <i className="fas fa-lightbulb"></i> Most helpful
-                        reviews have 100 words or more.
-                      </p>
-                    </form>
-                  </div>
-                </div>
-
-                <div className="btn">
-                  <i
-                    className="fas fa-circle-notch"
-                    style={{
-                      display: load ? "inline-block" : "none",
-                      animation: "spin 2s linear infinite",
-                    }}
+                <Stack
+                  sx={{ width: "100%", padding: "10px", height: "100%" }}
+                  spacing={2}
+                  justifyContent="space-between"
+                  alignItems="space-between"
+                >
+                  <Typography variant="caption">
+                    <strong>{review.userName}</strong>
+                  </Typography>
+                  <Typography variant="caption" align="justify">
+                    <strong>{review.review}</strong>
+                  </Typography>
+                  <Rating
+                    value={review.rating}
+                    readOnly
+                    emptyIcon={
+                      <StarIcon sx={{ opacity: 0.55 }} fontSize="inherit" />
+                    }
+                    icon={<StarIcon fontSize="inherit" />}
+                    size="large"
                   />
-                  &nbsp;
-                  <button
-                    type="submit"
-                    className="btn-submit"
-                    style={{
-                      fontSize: "14px",
-                      textAlign: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handelAddReview();
-                    }}
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </Collapse>
-          </Grid>
-        </Grid>
-      </div>
-    </div>
+                </Stack>
+              </Box>
+            ))
+          )}
+        </Stack>
+        <Button
+          variant="contained"
+          sx={{ maxWidth: 400 }}
+          endIcon={open ? <UpIcon /> : <DownIcon />}
+          onClick={() => {
+            if (user) setOpen((prev) => !prev);
+            else history.push("/Login");
+          }}
+          color="warning"
+        >
+          {user ? "Add Your Review" : "Login To Add Your Review"}
+        </Button>
+        <Collapse in={open} timeout={500} sx={{ width: "100%" }}>
+          <Stack
+            spacing={1}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              padding: "10px",
+              width: "100%",
+              backgroundColor: "rgba(0,0,0,0.1)",
+              borderRadius: "10px",
+              border: "1px solid rgba(255,255,255,0.4)",
+            }}
+          >
+            <Typography component="legend">Rating</Typography>
+            <Rating
+              defaultValue={ratings}
+              emptyIcon={<StarIcon sx={{ opacity: 0.9 }} fontSize="inherit" />}
+              icon={<StarIcon fontSize="inherit" />}
+              size="large"
+              onChange={(event, newValue) => {
+                setRatings(newValue);
+              }}
+              onChangeActive={(event, newHover) => {
+                sethover(newHover);
+              }}
+            />
+            <Typography component="legend">{responses[hover - 1]}</Typography>
+            <TextField
+              variant="standard"
+              label="Review"
+              color="warning"
+              fullWidth
+              sx={{
+                "& label": { fontFamily: "PT sans", color: "white" },
+                "& input": { color: "white" },
+              }}
+              onChange={(e) => setDesc(e.target.value)}
+              value={desc}
+            />
+            <Button
+              endIcon={
+                updateLoad ? (
+                  <CircularProgress size={15} color="inherit" />
+                ) : (
+                  <UpdateIcon />
+                )
+              }
+              disabled={updateLoad}
+              variant="contained"
+              color="warning"
+              onClick={handelAddReview}
+            >
+              Submit
+            </Button>
+            {updated ? (
+              <Typography variant="caption">
+                Review Updated SuccessFully!
+              </Typography>
+            ) : null}
+          </Stack>
+        </Collapse>
+      </Stack>
+    </Stack>
   );
 };
 export default Reviews;
