@@ -38,7 +38,7 @@ const BookDesc = (props) => {
   };
 
   return (
-    <Stack direction="column" spacing={2}>
+    <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
       <Typography variant="h5" align="center">
         <strong>{book.title}</strong>
       </Typography>
@@ -65,13 +65,13 @@ const BookDesc = (props) => {
       ) : null}
       <Divider flexItem />
       <Stack
-        spacing={2}
+        spacing={3}
         sx={{ width: "100%" }}
         justifyContent="center"
         direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
       >
         <Stack direction="column" spacing={3}>
-          <div>
+          <Stack>
             <Typography variant="body2" className={classes.root}>
               <strong>Selling Price</strong>
             </Typography>
@@ -83,10 +83,10 @@ const BookDesc = (props) => {
               size="small"
               className={classes.root}
             />
-          </div>
+          </Stack>
 
           {book?.MRP ? (
-            <div>
+            <Stack>
               <Typography variant="body2" className={classes.root}>
                 <strong>MRP</strong>
               </Typography>
@@ -98,12 +98,12 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </div>
+            </Stack>
           ) : null}
         </Stack>
         <Stack direction="column" spacing={3}>
           {book?.author ? (
-            <div>
+            <Stack>
               <Typography variant="body2" className={classes.root}>
                 <strong>Author</strong>
               </Typography>
@@ -114,11 +114,11 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </div>
+            </Stack>
           ) : null}
 
           {book?.author ? (
-            <div>
+            <Stack>
               <Typography variant="body2" className={classes.root}>
                 <strong>Edition Year</strong>
               </Typography>
@@ -129,12 +129,12 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </div>
+            </Stack>
           ) : null}
         </Stack>
         <Stack direction="column" spacing={3}>
           {book?.ISBN ? (
-            <div>
+            <Stack>
               <Typography variant="body2" className={classes.root}>
                 <strong>Book ISBN</strong>{" "}
               </Typography>
@@ -145,11 +145,11 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </div>
+            </Stack>
           ) : null}
 
           {book?.qty ? (
-            <div>
+            <Stack>
               <Typography variant="body2" className={classes.root}>
                 <strong>Book Quantity</strong>
               </Typography>
@@ -160,7 +160,7 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </div>
+            </Stack>
           ) : null}
         </Stack>
       </Stack>
@@ -221,7 +221,6 @@ const BookDesc = (props) => {
         alignItems="center"
         className="book-details-tag-stack"
         direction="row"
-        spacing={1}
       >
         {book.tags.map((tag, index) => (
           <Chip

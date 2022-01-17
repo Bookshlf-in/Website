@@ -9,8 +9,7 @@ import {
   Document,
   StyleSheet,
 } from "@react-pdf/renderer";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
+import { Button, CircularProgress } from "@mui/material";
 
 const styles = StyleSheet.create({
   page: {
