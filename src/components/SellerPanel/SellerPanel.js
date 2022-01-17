@@ -79,26 +79,18 @@ const SellerPanel = () => {
               });
               setAdr(response.data);
               axios
-                .get("/getBookList")
+                .get("/getSellerReviews", {
+                  params: sellerId,
+                })
                 .then((response) => {
-                  setbookDetails(response.data);
+                  setsellerReview(response.data);
                   axios
-                    .get("/getSellerReviews", {
+                    .get("/getCommissionChart", {
                       params: sellerId,
                     })
                     .then((response) => {
-                      setsellerReview(response.data);
-                      axios
-                        .get("/getCommissionChart", {
-                          params: sellerId,
-                        })
-                        .then((response) => {
-                          setcommisionchart(response.data);
-                          setLoading(false);
-                        })
-                        .catch((error) => {
-                          setLoading(false);
-                        });
+                      setcommisionchart(response.data);
+                      setLoading(false);
                     })
                     .catch((error) => {
                       setLoading(false);
@@ -191,7 +183,7 @@ const SellerPanel = () => {
             <AccountDetails seller={sellerDetails} />
           </TabPanel>
           <TabPanel value="2">
-            <Orders books={bookDetails} address={Adr} />
+            <Orders address={Adr} />
           </TabPanel>
           <TabPanel value="3">
             <Address address={Adr} />

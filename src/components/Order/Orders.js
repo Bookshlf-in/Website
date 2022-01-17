@@ -1,377 +1,319 @@
 import { React, useState, useEffect } from "react";
+import { makeStyles } from "@mui/styles";
+import { Helmet } from "react-helmet";
 import axios from "../../axios";
-import Alert from "@material-ui/lab/Alert";
-import Avatar from "@material-ui/core/Avatar";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
-const useStyles = makeStyles((theme) => ({
+// Components
+import {
+  Stack,
+  Chip,
+  Avatar,
+  Typography,
+  Button,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { DataGrid } from "@mui/x-data-grid";
+
+// Icon
+import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
+import ShippedIcon from "@mui/icons-material/LocalShippingRounded";
+import DeleteIcon from "@mui/icons-material/DeleteRounded";
+import PendingIcon from "@mui/icons-material/AccessTimeRounded";
+import ApprovedIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import UpdateIcon from "@mui/icons-material/CachedRounded";
+
+const useStyles = makeStyles(() => ({
   root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
+    fontFamily: "PT sans !important",
+    "& p": {
+      fontFamily: "PT sans !important",
     },
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingTop: "20px",
+    "& div": {
+      fontFamily: "PT sans !important",
+    },
+  },
+  stack: {
+    minHeight: "calc(100vh - 50px)",
+    width: "100%",
   },
 }));
 
-function EnhanceID(id) {
-  var EnhancedID = "";
-  for (let i = 0; i < 24; i++) {
-    if (i > 0 && i % 4 == 0) {
-      EnhancedID += " - ";
-    }
-    EnhancedID += id[i];
-    console.log(EnhancedID);
-  }
-  return EnhancedID;
-}
-const Orders = (props) => {
+const Orders = () => {
+  //Calling Hooks
   const classes = useStyles();
-  const [panel, setpanel] = useState("1");
-  const [alert, setalert] = useState({
-    show: false,
-    type: "success",
-    message: "",
-  });
-  const [Adr, setAdr] = useState(props.address);
-  const [bookDetails, setbookDetails] = useState(props.books);
-  const [sold, setsold] = useState([]);
-  const [approved, setapproved] = useState([]);
-  const [notsold, setnotsold] = useState([]);
-  const [update, setupdate] = useState(false);
-  const [bookprops, setbookprops] = useState({});
+
+  // Functionality States
+  const [Loading, setLoading] = useState(true);
+  const [filterChange, setFilterChange] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [books, setbooks] = useState([]);
+  const [filter, setFilter] = useState(1);
 
   useEffect(() => {
-    // sorting books on basis of sold, approved, not approved
-    const bookSorting = async (books, adr) => {
-      for (let i = 0; i < books.length; i++) {
-        let tmp = books[i].pickupAddressId;
-        for (let j = 0; j < adr.length; j++) {
-          if (adr[j]._id === tmp) {
-            books[i].addressVal = adr[j].address;
-            tmp = -1;
-            break;
-          }
-          if (tmp === -1) break;
-        }
-      }
-      console.log(books);
-      for (let i = 0; i < books.length; i++) {
-        if (books[i].isApproved === true) {
-          approved.push(books[i]);
-          setapproved(approved);
-        } else {
-          notsold.push(books[i]);
-          setnotsold(notsold);
-        }
-      }
-    };
-    bookSorting(props.books, props.address);
+    axios.get("/getBookList").then((response) => {
+      console.log(response.data);
+      setbooks(response.data);
+      setFilteredItems(
+        response.data.filter((book) => book.status === "Approval Pending")
+      );
+      setLoading(false);
+    });
   }, []);
 
-  // deleting books
-  const handelBookDelete = (e) => {
-    axios
-      .delete("/deleteBook", {
-        data: { bookId: e.target.id },
-      })
-      .then((response) => {
-        setalert({
-          show: true,
-          type: "success",
-          msg: response.data.msg,
-        });
-        setnotsold(notsold.filter((book) => e.target.id !== book._id));
-        setTimeout(() => {
-          setalert({
-            show: false,
-            type: "",
-            msg: "",
-          });
-        }, 4000);
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-      });
+  // changing Filter
+  const handelFilterChange = (e) => {
+    setFilterChange(true);
+    setFilter(e.target.value);
+    if (e.target.value == 1) {
+      setTimeout(() => {
+        setFilterChange(false);
+        setFilteredItems(
+          books.filter((book) => book.status === "Approval Pending")
+        );
+      }, 2000);
+    } else if (e.target.value == 2) {
+      setTimeout(() => {
+        setFilterChange(false);
+        setFilteredItems(books.filter((book) => book.status === "Approved"));
+      }, 2000);
+    } else if (e.target.value == 3) {
+      setTimeout(() => {
+        setFilterChange(false);
+        setFilteredItems(books.filter((book) => book.status === "Sold"));
+      }, 2000);
+    } else if (e.target.value == 4) {
+      setTimeout(() => {
+        setFilterChange(false);
+        setFilteredItems(
+          books.filter((book) => book.status === "Approval rejected")
+        );
+      }, 2000);
+    }
   };
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <div className="orders-bg">
-      <div className="orders-filter">
-        <form action="">
-          <div className="select-wrapper">
-            <select
-              className="select"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setpanel(e.target.value);
-              }}
+  const columns = [
+    {
+      field: "orderPhoto",
+      headerName: "Book Id",
+      minWidth: 200,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            sx={{ padding: "10px" }}
+            spacing={2}
+          >
+            <Avatar src={cellValue.value[0]} alt="" variant="rounded" />
+            <Chip
+              label={cellValue.value[1]}
+              size="small"
+              sx={{ fontSize: "9px" }}
+              className={classes.root}
+            />
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "bookTotal",
+      headerName: "Book Price",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Stack spacing={2}>
+            <Chip
+              icon={<RupeeIcon />}
+              label={cellValue.value[0]}
+              size="small"
+              className={classes.root}
+              color="primary"
+              variant="outlined"
+            />
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Typography sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}>
+                QTY
+              </Typography>
+              <Chip
+                label={cellValue.value[1]}
+                size="small"
+                className={classes.root}
+              />
+            </Stack>
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "bookDetails",
+      headerName: "Book Details",
+      minWidth: 200,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Stack sx={{ height: 100, overflowY: "auto" }}>
+            <Typography
+              className={classes.root}
+              sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}
             >
-              {/* <option value="1">Books Sold</option> */}
-              <option value="1">Book Approved</option>
-              <option value="2">Books Pending For Approval</option>
-            </select>
-          </div>
-        </form>
-      </div>
-      <div
-        className={classes.root}
-        style={{ display: alert.show ? "flex" : "none" }}
-      >
-        <Alert
-          variant="outlined"
-          severity={alert.type}
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-            color: alert.type === "success" ? "yellowgreen" : "red",
-            width: "250px",
-          }}
-        >
-          {alert.msg}
-        </Alert>
-      </div>
-      <div className="orders-details">
-        {panel === "1" ? (
-          <table className="active-orders-table">
-            <thead>
-              <tr>
-                <th>Book ID</th>
-                <th>Book Name</th>
-                <th>ISBN Number</th>
-                <th>Details</th>
-                <th>Selling Price</th>
-                <th>Quantity</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {approved && approved.length ? (
-                <>
-                  {approved.map((book, key) => (
-                    <tr key={{ key }}>
-                      <td
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontSize: "10px",
-                        }}
-                      >
-                        <Avatar
-                          alt={book.title}
-                          src={book.photos[0]}
-                          style={{ height: "150px", width: "150px" }}
-                        />
-                        <span className="enhanceBookID">
-                          {EnhanceID(book._id)}
-                        </span>
-                      </td>
-                      <td>{book.title}</td>
-                      <td>{book.ISBN}</td>
-                      <td>{book.description}</td>
-                      <td>
-                        <span className="book-selling-price">
-                          <b>
-                            <i className="fas fa-rupee-sign" /> {book.price}{" "}
-                            {"/-"}
-                          </b>
-                        </span>
-                      </td>
-                      <td>
-                        <span className="cart-item-price">
-                          <span className="avl-qty">
-                            <span>{book.qty}</span>
-                          </span>
-                        </span>
-                      </td>
-                      <td>
-                        <i
-                          className="fas fa-window-close"
-                          id={book._id}
-                          onClick={handelBookDelete}
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </>
+              {cellValue.value[0]}
+            </Typography>
+            <Typography
+              className={classes.root}
+              variant="caption"
+              sx={{ fontSize: "9px", whiteSpace: "pre-wrap", height: 80 }}
+            >
+              {cellValue.value[1]}
+            </Typography>
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "bookStatus",
+      headerName: "Book Status",
+      minWidth: 150,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Chip
+            icon={
+              cellValue.value === "Approval Pending" ? (
+                <PendingIcon />
+              ) : cellValue.value === "Approved" ? (
+                <ApprovedIcon />
+              ) : cellValue.value === "Approval rejected" ? (
+                <CancelIcon />
               ) : (
-                <></>
-              )}
-            </tbody>
-          </table>
-        ) : (
-          <table className="active-orders-table">
-            <thead>
-              <tr>
-                <th>Book ID</th>
-                <th>Name</th>
-                <th>Details</th>
-                <th>Price</th>
-                <th>Pickup Address</th>
-                <th>Status</th>
-                <th>Update</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {notsold && notsold.length > 0 ? (
-                <>
-                  {notsold.map((book, idx) => (
-                    <tr key={{ idx }}>
-                      <th>{book._id}</th>
-                      <th>{book.title}</th>
-                      <th>{book.description}</th>
-                      <th>&#8377;{" " + book.price + "/-"}</th>
-                      <th>{book.addressVal}</th>
-                      <th
-                        style={{
-                          color: "white",
-                          fontFamily: "PT Sans",
-                          fontWeight: "bold",
-                          backgroundColor: "red",
-                        }}
-                      >
-                        {book.status === "Approval rejected" ? (
-                          <>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={handleClickOpen}
-                            >
-                              <i className="far fa-comments" />
-                            </Button>
-                            <br />
-                            <br />
-                            <Dialog
-                              open={open}
-                              onClose={handleClose}
-                              aria-labelledby="alert-dialog-title"
-                              aria-describedby="alert-dialog-description"
-                            >
-                              <DialogTitle
-                                id="alert-dialog-title"
-                                style={{
-                                  fontFamily: "PT Sans",
-                                }}
-                              >
-                                {"Admin Message"}
-                              </DialogTitle>
-                              <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                  {book.adminMessage}
-                                </DialogContentText>
-                              </DialogContent>
-                              <DialogActions>
-                                <Button
-                                  onClick={handleClose}
-                                  color="primary"
-                                  style={{
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  OK
-                                </Button>
-                              </DialogActions>
-                            </Dialog>
-                            <i className="fas fa-times-circle" /> <br />
-                            Approval Rejected
-                          </>
-                        ) : (
-                          <>
-                            <i className="fas fa-info-circle" /> <br />
-                            Approval Pending
-                          </>
-                        )}
-                      </th>
-                      <th
-                        style={{
-                          color: "white",
-                          fontFamily: "PT Sans",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          backgroundColor: "yellowgreen",
-                        }}
-                        onClick={() => {
-                          if (book.status !== "Approval rejected") {
-                            setbookprops(book);
-                            setupdate(true);
-                          }
-                        }}
-                      >
-                        {book.status !== "Approval rejected" ? (
-                          <>
-                            <i className="fas fa-pen-alt"></i> <br />
-                            Update Details
-                          </>
-                        ) : (
-                          "---"
-                        )}
-                      </th>
-                      <th>
-                        <i
-                          className="fas fa-window-close"
-                          id={book._id}
-                          onClick={handelBookDelete}
-                        />
-                      </th>
-                    </tr>
-                  ))}
-                </>
-              ) : (
-                <tr>
-                  <td>No Books</td>
-                  <td>---</td>
-                  <td>---</td>
-                  <td>---</td>
-                  <td>---</td>
-                  <td>---</td>
-                  <td>---</td>
-                  <td>---</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        )}
-      </div>
-      {update ? (
-        <i
-          className="fas fa-window-close"
-          onClick={() => {
-            setupdate(false);
-          }}
-          style={{
-            position: "absolute",
-            float: "left",
-            zIndex: "102",
-            right: "20px",
-            fontSize: "20px",
-          }}
+                <ShippedIcon sx={{ height: 15, width: 15 }} />
+              )
+            }
+            label={cellValue.value}
+            size="small"
+            className={classes.root}
+            color={
+              cellValue.value === "Approval Pending"
+                ? "warning"
+                : cellValue.value === "Approved"
+                ? "success"
+                : cellValue.value === "Approval rejected"
+                ? "error"
+                : "primary"
+            }
+            variant="outlined"
+          />
+        );
+      },
+    },
+    {
+      field: "bookUpdate",
+      headerName: "Update Book",
+      minWidth: 150,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Button
+            startIcon={<UpdateIcon />}
+            // href={`/Track/${cellValue.value}`}
+            size="small"
+            className={classes.root}
+            variant="contained"
+          >
+            Update Book
+          </Button>
+        );
+      },
+    },
+    {
+      field: "bookDelete",
+      headerName: "Delete Book",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <IconButton className={classes.root} color="error">
+            {deleteId === cellValue.value ? (
+              <CircularProgress color="inherit" size={20} />
+            ) : (
+              <DeleteIcon />
+            )}
+          </IconButton>
+        );
+      },
+    },
+  ];
+  const rows = filteredItems.map((order) => {
+    return {
+      id: order._id,
+      orderPhoto: [order.photos[0], order._id],
+      bookTotal: [order.price, order.qty],
+      bookDetails: [order.title, order.description],
+      bookStatus: order.status,
+      bookUpdate: order._id,
+      bookDelete: order._id,
+    };
+  });
+
+  return (
+    <>
+      <Helmet>
+        <title>Your Books | Bookshlf</title>
+      </Helmet>
+      <Stack className={classes.stack} spacing={2}>
+        <FormControl fullWidth className={classes.root} color="success">
+          <InputLabel id="demo-simple-select-label" className={classes.root}>
+            Filter Books
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            value={filter}
+            label="Filter Books"
+            onChange={handelFilterChange}
+          >
+            <MenuItem value={1} className={classes.root}>
+              Books Pending For Approval
+            </MenuItem>
+            <MenuItem value={2} className={classes.root}>
+              Books Approved
+            </MenuItem>
+            <MenuItem value={3} className={classes.root}>
+              Books Sold
+            </MenuItem>
+            <MenuItem value={4} className={classes.root}>
+              Books Rejected
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={3}
+          rowBuffer={3}
+          className={classes.root}
+          loading={filteredItems === null || filterChange || Loading}
+          rowHeight={100}
+          rowsPerPageOptions={[3]}
+          disableColumnFilter
+          disableSelectionOnClick
+          disableColumnMenu
         />
-      ) : (
-        <></>
-      )}
-    </div>
+      </Stack>
+    </>
   );
 };
 export default Orders;
