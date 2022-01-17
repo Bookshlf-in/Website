@@ -71,8 +71,10 @@ const BookDesc = (props) => {
         direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
       >
         <Stack direction="column" spacing={3}>
-          <Typography variant="body2" className={classes.root}>
-            <strong>Selling Price :</strong>{" "}
+          <div>
+            <Typography variant="body2" className={classes.root}>
+              <strong>Selling Price</strong>
+            </Typography>
             <Chip
               icon={<RupeeIcon />}
               label={book.price}
@@ -81,10 +83,13 @@ const BookDesc = (props) => {
               size="small"
               className={classes.root}
             />
-          </Typography>
+          </div>
+
           {book?.MRP ? (
-            <Typography variant="body2" className={classes.root}>
-              <strong>MRP :</strong>{" "}
+            <div>
+              <Typography variant="body2" className={classes.root}>
+                <strong>MRP</strong>
+              </Typography>
               <Chip
                 icon={<RupeeIcon />}
                 label={book?.MRP}
@@ -93,13 +98,15 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </Typography>
+            </div>
           ) : null}
         </Stack>
         <Stack direction="column" spacing={3}>
           {book?.author ? (
-            <Typography variant="body2" className={classes.root}>
-              <strong>Author :</strong>{" "}
+            <div>
+              <Typography variant="body2" className={classes.root}>
+                <strong>Author</strong>
+              </Typography>
               <Chip
                 label={book?.author}
                 color="default"
@@ -107,12 +114,14 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </Typography>
+            </div>
           ) : null}
 
           {book?.author ? (
-            <Typography variant="body2" className={classes.root}>
-              <strong>Edition Year :</strong>{" "}
+            <div>
+              <Typography variant="body2" className={classes.root}>
+                <strong>Edition Year</strong>
+              </Typography>
               <Chip
                 label={book?.editionYear}
                 color="default"
@@ -120,13 +129,15 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </Typography>
+            </div>
           ) : null}
         </Stack>
         <Stack direction="column" spacing={3}>
           {book?.ISBN ? (
-            <Typography variant="body2" className={classes.root}>
-              <strong>Book ISBN :</strong>{" "}
+            <div>
+              <Typography variant="body2" className={classes.root}>
+                <strong>Book ISBN</strong>{" "}
+              </Typography>
               <Chip
                 label={book?.ISBN}
                 color="default"
@@ -134,12 +145,14 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </Typography>
+            </div>
           ) : null}
 
           {book?.qty ? (
-            <Typography variant="body2" className={classes.root}>
-              <strong>Book Quantity :</strong>{" "}
+            <div>
+              <Typography variant="body2" className={classes.root}>
+                <strong>Book Quantity</strong>
+              </Typography>
               <Chip
                 label={book?.qty}
                 color="default"
@@ -147,7 +160,7 @@ const BookDesc = (props) => {
                 size="small"
                 className={classes.root}
               />
-            </Typography>
+            </div>
           ) : null}
         </Stack>
       </Stack>

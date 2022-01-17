@@ -276,9 +276,6 @@ const BookDetails = () => {
             </Stack>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            <BookDesc bookdetails={book} />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Stack
               spacing={2}
               direction="column"
@@ -298,6 +295,9 @@ const BookDetails = () => {
                 <strong>Buy Now</strong>
               </LoadingButton>
             </Stack>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <BookDesc bookdetails={book} />
           </Grid>
         </Grid>
       ) : (

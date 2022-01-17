@@ -33,7 +33,7 @@ const Categories = () => {
         <Link to="/SearchResult/tag:JEE Mains">
           <div className="item i1 ">
             <Avatar
-              src="/images/categories/jeemains-logo.png"
+              src="/images/Categories/jeemains-logo.png"
               alt=""
               sx={{ width: 56, height: 56 }}
             />
@@ -48,7 +48,7 @@ const Categories = () => {
         <Link to="/SearchResult/tag:JEE Advanced">
           <div className="item i2">
             <Avatar
-              src="/images/categories/JEE-Advance-Logo.png"
+              src="/images/Categories/JEE-Advance-Logo.png"
               alt=""
               sx={{ width: 56, height: 56 }}
             />
@@ -63,7 +63,7 @@ const Categories = () => {
         <Link to="/SearchResult/tag:CSBE">
           <div className="item i3">
             <Avatar
-              src="/images/categories/cbse-logo.png"
+              src="/images/Categories/cbse-logo.png"
               alt=""
               sx={{ width: 56, height: 56 }}
             />
@@ -78,7 +78,7 @@ const Categories = () => {
         <Link to="/SearchResult/tag:NEET">
           <div className="item i4">
             <Avatar
-              src="/images/categories/neet-ug-logo.png"
+              src="/images/Categories/neet-ug-logo.png"
               sx={{ width: 56, height: 56 }}
               alt=""
             />
@@ -93,7 +93,7 @@ const Categories = () => {
         <Link to="/SearchResult/tag:NOVELS">
           <div className="item i5">
             <Avatar
-              src="/images/categories/novel-logo.jpg"
+              src="/images/Categories/novel-logo.jpg"
               sx={{ width: 56, height: 56 }}
               alt=""
             />

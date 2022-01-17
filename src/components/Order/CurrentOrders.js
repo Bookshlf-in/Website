@@ -1,11 +1,26 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // Components
-import { Stack, Chip, Avatar } from "@mui/material";
+import {
+  Stack,
+  Chip,
+  Avatar,
+  Typography,
+  Button,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+
+// Icon
+import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
+import PackedIcon from "@mui/icons-material/Inventory2Rounded";
+import ShippedIcon from "@mui/icons-material/LocalShippingRounded";
+import PlacedIcon from "@mui/icons-material/PlaylistAddCheckCircleRounded";
+import TrackIcon from "@mui/icons-material/BarChartRounded";
+import DeleteIcon from "@mui/icons-material/DeleteRounded";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -15,21 +30,40 @@ const useStyles = makeStyles(() => ({
     },
   },
   stack: {
-    minHeight: "calc(100vh - 100px)",
+    minHeight: "calc(100vh - 200px)",
     width: "100%",
   },
 }));
 
 const CurrentOrders = (props) => {
   const classes = useStyles();
-  console.log(props.orders);
+
+  const [deleteId, setdeleteId] = useState("");
   const [activeOrders, setactiveOrders] = useState(props.orders);
+  // cancel Order
+  const handelCancelOrder = (orderId) => {
+    setdeleteId(orderId);
+    axios
+      .delete("/cancelOrder", {
+        data: {
+          orderId: orderId,
+        },
+      })
+      .then((response) => {
+        setdeleteId("");
+        setactiveOrders(activeOrders.filter((order) => order._id !== orderId));
+      })
+      .catch((error) => {
+        setdeleteId("");
+      });
+  };
 
   const columns = [
     {
       field: "orderPhoto",
-      headerName: "Book",
-      width: 200,
+      headerName: "Book Id",
+      minWidth: 200,
+      flex: 2,
       sortable: false,
       renderCell: (cellValue) => {
         return (
@@ -39,7 +73,7 @@ const CurrentOrders = (props) => {
             sx={{ padding: "10px" }}
             spacing={2}
           >
-            <Avatar src={cellValue.value[0]} alt="" />
+            <Avatar src={cellValue.value[0]} alt="" variant="rounded" />
             <Chip
               label={cellValue.value[1]}
               size="small"
@@ -50,16 +84,128 @@ const CurrentOrders = (props) => {
         );
       },
     },
+    {
+      field: "orderTotal",
+      headerName: "Order Total",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Chip
+            icon={<RupeeIcon />}
+            label={cellValue.value}
+            size="small"
+            className={classes.root}
+            color="primary"
+            variant="outlined"
+          />
+        );
+      },
+    },
+    {
+      field: "orderTitle",
+      headerName: "Book",
+      minWidth: 200,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Typography
+            className={classes.root}
+            variant="body1"
+            sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}
+          >
+            {cellValue.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "orderStatus",
+      headerName: "Order Status",
+      minWidth: 150,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Chip
+            icon={
+              cellValue.value === "Order placed" ? (
+                <PlacedIcon />
+              ) : cellValue.value === "Packed" ? (
+                <PackedIcon sx={{ height: 15, width: 15 }} />
+              ) : (
+                <ShippedIcon sx={{ height: 15, width: 15 }} />
+              )
+            }
+            label={cellValue.value}
+            size="small"
+            className={classes.root}
+            color={
+              cellValue.value === "Order placed"
+                ? "warning"
+                : cellValue.value === "Packed"
+                ? "secondary"
+                : "success"
+            }
+            variant="outlined"
+          />
+        );
+      },
+    },
+    {
+      field: "trackOrder",
+      headerName: "Tracking",
+      minWidth: 150,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Button
+            startIcon={<TrackIcon />}
+            href={`/Track/${cellValue.value}`}
+            size="small"
+            className={classes.root}
+            variant="contained"
+          >
+            Track Order
+          </Button>
+        );
+      },
+    },
+    {
+      field: "deleteOrder",
+      headerName: "Cancel Order",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <IconButton
+            className={classes.root}
+            color="error"
+            onClick={() => handelCancelOrder(cellValue.value)}
+          >
+            {deleteId === cellValue.value ? (
+              <CircularProgress color="inherit" size={20} />
+            ) : (
+              <DeleteIcon />
+            )}
+          </IconButton>
+        );
+      },
+    },
   ];
-  const rows = props.orders.map((order) => {
+  const rows = activeOrders.map((order) => {
     return {
       id: order._id,
       orderPhoto: [order.photo, order._id],
       orderTotal: order.orderTotal,
       orderTitle: order.title,
-      seller: order.sellerName,
-      orderStatus: order.status,
+      orderStatus: order.status[order.status.length - 1],
       trackOrder: order._id,
+      deleteOrder: order._id,
     };
   });
 
@@ -68,27 +214,17 @@ const CurrentOrders = (props) => {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowBuffer={5}
+        pageSize={3}
+        rowBuffer={3}
         className={classes.root}
-        loading={!props.orders}
+        loading={activeOrders === null}
         rowHeight={100}
-        rowsPerPageOptions={[5]}
+        rowsPerPageOptions={[3]}
+        disableColumnFilter
+        disableSelectionOnClick
+        disableColumnMenu
       />
     </Stack>
   );
 };
 export default CurrentOrders;
-
-/*
-author: "National Council of Educational"
-bookId: "60f09d533a24d100229196af"
-orderTotal: 240
-photo: "https://firebasestorage.googleapis.com/v0/b/bookshlf.appspot.com/o/books%2Fr4jc_SnZJj12thphysicsNCERTpart1(1).jpg?alt=media&token=08c02bc0-06fc-4d20-8db5-3c2c464f33a9"
-price: 200
-purchaseQty: 1
-sellerName: "Awesome Sellers"
-status: ['Order placed']
-title: "Physics N.C.E.R.T class 12th"
-_id: "61db304b3bd15e0023ff79c5"
-*/
