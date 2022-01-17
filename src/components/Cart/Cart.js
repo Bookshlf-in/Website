@@ -173,87 +173,109 @@ const Cart = () => {
         />
       </Helmet>
       {user ? (
-        <Grid
-          container
-          sx={{ padding: "10px" }}
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        >
-          {cartLoading ? (
-            <>
-              <Grid item xs={12} sm={8} md={8} lg={8}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={8} md={8} lg={8}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={8} md={8} lg={8}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-            </>
-          ) : (
-            <>
-              <Grid item xs={12} sm={12} md={12} lg={12}>
-                <Stack
-                  direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
-                  justifyContent="space-evenly"
-                  spacing={2}
+        cartLoading ? (
+          <Grid
+            container
+            sx={{ padding: "10px" }}
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={12} sm={8} md={8} lg={8}>
+              <Skeleton variant="rectangle" height={100} width="100%" />
+            </Grid>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Skeleton variant="rectangle" height={100} width="100%" />
+            </Grid>
+            <Grid item xs={12} sm={8} md={8} lg={8}>
+              <Skeleton variant="rectangle" height={100} width="100%" />
+            </Grid>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Skeleton variant="rectangle" height={100} width="100%" />
+            </Grid>
+            <Grid item xs={12} sm={8} md={8} lg={8}>
+              <Skeleton variant="rectangle" height={100} width="100%" />
+            </Grid>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Skeleton variant="rectangle" height={100} width="100%" />
+            </Grid>
+          </Grid>
+        ) : (
+          <Grid
+            container
+            sx={{ padding: "10px" }}
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <Stack
+                direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+                justifyContent="space-evenly"
+                spacing={2}
+              >
+                <Button
+                  startIcon={<BackIcon />}
+                  variant="outlined"
+                  size="small"
+                  className={classes.Button}
+                  color="secondary"
+                  href="/SearchResult/tag:ALL"
                 >
-                  <Button
-                    startIcon={<BackIcon />}
-                    variant="outlined"
-                    size="small"
-                    className={classes.Button}
-                    color="secondary"
-                    href="/SearchResult/tag:ALL"
+                  Continue Shopping
+                </Button>
+                <Fab
+                  variant="extended"
+                  size="small"
+                  color="primary"
+                  aria-label="cart-total"
+                >
+                  <RupeeIcon sx={{ mr: 1, height: 20, width: 20 }} />
+                  <strong>{amount + " ( " + cart.length + " Item )"}</strong>
+                </Fab>
+                <LoadingButton
+                  loading={checkout}
+                  loadingPosition="end"
+                  endIcon={<CheckoutIcon />}
+                  variant="contained"
+                  size="small"
+                  color="warning"
+                  className={classes.Button}
+                  disabled={cart.length == 0}
+                  onClick={Checkout}
+                >
+                  Checkout
+                </LoadingButton>
+              </Stack>
+            </Grid>
+            {cart.length ? (
+              cart.map((product, index) => (
+                <Grid item xs={12} sm={12} md={12} lg={12} key={index}>
+                  <Stack
+                    className={classes.Stack}
+                    spacing={3}
+                    direction={{
+                      xs: "column",
+                      sm: "row",
+                      md: "row",
+                      lg: "row",
+                    }}
+                    justifyContent={{
+                      xs: "center",
+                      sm: "flex-start",
+                      md: "flex-start",
+                      lg: "flex-start",
+                    }}
+                    alignItems="center"
                   >
-                    Continue Shopping
-                  </Button>
-                  <Fab
-                    variant="extended"
-                    size="small"
-                    color="primary"
-                    aria-label="cart-total"
-                  >
-                    <RupeeIcon sx={{ mr: 1, height: 20, width: 20 }} />
-                    <strong>{amount + " ( " + cart.length + " Item )"}</strong>
-                  </Fab>
-                  <LoadingButton
-                    loading={checkout}
-                    loadingPosition="end"
-                    endIcon={<CheckoutIcon />}
-                    variant="contained"
-                    size="small"
-                    color="warning"
-                    className={classes.Button}
-                    disabled={cart.length == 0}
-                    onClick={Checkout}
-                  >
-                    Checkout
-                  </LoadingButton>
-                </Stack>
-              </Grid>
-              {cart.length ? (
-                cart.map((product, index) => (
-                  <Grid item xs={12} sm={12} md={12} lg={12} key={index}>
+                    <Avatar
+                      variant="rounded"
+                      src={product.photo}
+                      alt={product.title}
+                      sx={{ height: 100, width: 80 }}
+                    />
                     <Stack
-                      className={classes.Stack}
-                      spacing={3}
-                      direction={{
-                        xs: "column",
-                        sm: "row",
-                        md: "row",
-                        lg: "row",
-                      }}
+                      direction="column"
+                      spacing={1}
+                      sx={{ width: "100%" }}
                       justifyContent={{
                         xs: "center",
                         sm: "flex-start",
@@ -262,144 +284,125 @@ const Cart = () => {
                       }}
                       alignItems="center"
                     >
-                      <Avatar
-                        variant="rounded"
-                        src={product.photo}
-                        alt={product.title}
-                        sx={{ height: 100, width: 80 }}
-                      />
-                      <Stack
-                        direction="column"
-                        spacing={1}
-                        sx={{ width: "100%" }}
-                        justifyContent={{
-                          xs: "center",
-                          sm: "flex-start",
-                          md: "flex-start",
-                          lg: "flex-start",
-                        }}
-                        alignItems="center"
-                      >
-                        <Typography variant="body2">
-                          <strong>{product.title}</strong>
-                        </Typography>
-                        <Typography variant="caption">
-                          <strong>{product.author}</strong>
-                        </Typography>
-                        <div>
-                          <Chip
-                            icon={<SellerIcon />}
-                            label={product.sellerName}
-                            size="small"
-                            className={classes.root}
-                            color="primary"
-                            variant="outlined"
-                          />
-                        </div>
-                      </Stack>
-                      <Stack
-                        direction="column"
-                        spacing={1}
-                        alignItems="center"
-                        sx={{ width: "100%" }}
-                      >
+                      <Typography variant="body2">
+                        <strong>{product.title}</strong>
+                      </Typography>
+                      <Typography variant="caption">
+                        <strong>{product.author}</strong>
+                      </Typography>
+                      <div>
                         <Chip
-                          label={product.price * product.purchaseQty}
-                          icon={<RupeeIcon />}
-                          color="secondary"
+                          icon={<SellerIcon />}
+                          label={product.sellerName}
                           size="small"
                           className={classes.root}
-                        />
-                        <ButtonGroup
-                          disableElevation
+                          color="primary"
                           variant="outlined"
-                          size="small"
-                          color="info"
-                        >
-                          <IconButton
-                            color="primary"
-                            aria-label="Remove Item Quantity"
-                            component="span"
-                            disabled={product.purchaseQty <= 1}
-                            onClick={() => handelRemoveItem(product._id, index)}
-                          >
-                            <RemoveIcon color="error" />
-                          </IconButton>
-                          <Button
-                            aria-label="add Item Quantity"
-                            className={classes.root}
-                            sx={{ margin: "0px 6px" }}
-                          >
-                            {product.purchaseQty}
-                          </Button>
-                          <IconButton
-                            color="primary"
-                            aria-label="add Item Quantity"
-                            component="span"
-                            disabled={product.qty <= product.purchaseQty}
-                            onClick={() => handelAddItem(product._id, index)}
-                          >
-                            <AddIcon color="success" />
-                          </IconButton>
-                        </ButtonGroup>
-
-                        <Typography variant="caption" className={classes.root}>
-                          Available Qty : <strong>{product.qty}</strong>
-                        </Typography>
-                      </Stack>
-                      <Stack
-                        sx={{ width: "100%" }}
-                        justifyContent="center"
-                        direction="row"
-                      >
-                        <div>
-                          <Button
-                            variant="outlined"
-                            className={classes.Button}
-                            endIcon={<NextIcon />}
-                            color="primary"
-                            size="small"
-                            href={`/BookDetails/${product.bookId}`}
-                          >
-                            More Details
-                          </Button>
-                        </div>
-                      </Stack>
-                      <Stack
-                        sx={{ width: "100%" }}
-                        justifyContent="center"
-                        direction="row"
-                      >
-                        <Fab
-                          aria-label="remove-from-cart"
-                          size="small"
-                          sx={{ backgroundColor: "rgba(255,0,0,0.6)" }}
-                          onClick={() => handelCart(product.bookId)}
-                        >
-                          {removingId === product.bookId ? (
-                            <CircularProgress size="1rem" />
-                          ) : (
-                            <CancelIcon />
-                          )}
-                        </Fab>
-                      </Stack>
+                        />
+                      </div>
                     </Stack>
-                  </Grid>
-                ))
-              ) : (
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <Stack sx={{ width: "100%" }}>
-                    <Alert severity="info">
-                      <Typography variant="body1" className={classes.root}>
-                        Your Cart is Empty. Add Items to see them in Cart.
+                    <Stack
+                      direction="column"
+                      spacing={1}
+                      alignItems="center"
+                      sx={{ width: "100%" }}
+                    >
+                      <Chip
+                        label={product.price * product.purchaseQty}
+                        icon={<RupeeIcon />}
+                        color="secondary"
+                        size="small"
+                        className={classes.root}
+                      />
+                      <ButtonGroup
+                        disableElevation
+                        variant="outlined"
+                        size="small"
+                        color="info"
+                      >
+                        <IconButton
+                          color="primary"
+                          aria-label="Remove Item Quantity"
+                          component="span"
+                          disabled={product.purchaseQty <= 1}
+                          onClick={() => handelRemoveItem(product._id, index)}
+                        >
+                          <RemoveIcon color="error" />
+                        </IconButton>
+                        <Button
+                          aria-label="add Item Quantity"
+                          className={classes.root}
+                          sx={{ margin: "0px 6px" }}
+                        >
+                          {product.purchaseQty}
+                        </Button>
+                        <IconButton
+                          color="primary"
+                          aria-label="add Item Quantity"
+                          component="span"
+                          disabled={product.qty <= product.purchaseQty}
+                          onClick={() => handelAddItem(product._id, index)}
+                        >
+                          <AddIcon color="success" />
+                        </IconButton>
+                      </ButtonGroup>
+
+                      <Typography variant="caption" className={classes.root}>
+                        Available Qty : <strong>{product.qty}</strong>
                       </Typography>
-                    </Alert>
+                    </Stack>
+                    <Stack
+                      sx={{ width: "100%" }}
+                      justifyContent="center"
+                      direction="row"
+                    >
+                      <div>
+                        <Button
+                          variant="outlined"
+                          className={classes.Button}
+                          endIcon={<NextIcon />}
+                          color="primary"
+                          size="small"
+                          href={`/BookDetails/${product.bookId}`}
+                        >
+                          More Details
+                        </Button>
+                      </div>
+                    </Stack>
+                    <Stack
+                      sx={{ width: "100%" }}
+                      justifyContent="center"
+                      direction="row"
+                    >
+                      <Fab
+                        aria-label="remove-from-cart"
+                        size="small"
+                        sx={{ backgroundColor: "rgba(255,0,0,0.6)" }}
+                        onClick={() => handelCart(product.bookId)}
+                      >
+                        {removingId === product.bookId ? (
+                          <CircularProgress size="1rem" />
+                        ) : (
+                          <CancelIcon />
+                        )}
+                      </Fab>
+                    </Stack>
                   </Stack>
                 </Grid>
-              )}
-            </>
-          )}
-        </Grid>
+              ))
+            ) : (
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Stack sx={{ width: "100%" }}>
+                  <Alert severity="info">
+                    <Typography variant="body1" className={classes.root}>
+                      Your Cart is Empty. Add Items to see them in Cart.
+                    </Typography>
+                  </Alert>
+                </Stack>
+              </Grid>
+            )}
+          </Grid>
+        )
       ) : (
         <Alert severity="error">
           <Typography variant="body1" className={classes.root}>
