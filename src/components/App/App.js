@@ -18,7 +18,6 @@ import Checkout from "../Cart/Checkout";
 import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../Reviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
-import Receipt from "../Order/Receipt";
 import Sitemap from "../Sitemap/Sitemap";
 import Track from "../Order/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
@@ -105,9 +104,6 @@ const App = () => {
           </Route>
           <Route path="/Blog">
             <Blog />
-          </Route>
-          <Route path="/Receipt">
-            <Receipt />
           </Route>
           <Route path="/Sitemap">
             <Sitemap />
