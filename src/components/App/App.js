@@ -22,6 +22,7 @@ import Receipt from "../Order/Receipt";
 import Sitemap from "../Sitemap/Sitemap";
 import Track from "../Order/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
+import UpdateOrder from "../Order/UpdateOrder";
 import SearchResult from "../SearchResult/SearchPanel";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
@@ -69,6 +70,9 @@ const App = () => {
           <Route path="/SellerPanel/:panel">
             <Navbar />
             <SellerPanel />
+          </Route>
+          <Route path="/SellerBookUpdate/:bookId">
+            <UpdateOrder />
           </Route>
           <Route path="/SearchResult/:query">
             <Navbar />

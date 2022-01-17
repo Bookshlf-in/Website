@@ -28,6 +28,9 @@ import ApprovedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import UpdateIcon from "@mui/icons-material/CachedRounded";
 
+// Custom Components
+import UpdateBook from "./UpdateOrder";
+
 const useStyles = makeStyles(() => ({
   root: {
     fontFamily: "PT sans !important",
@@ -52,13 +55,15 @@ const Orders = () => {
   const [Loading, setLoading] = useState(true);
   const [filterChange, setFilterChange] = useState(false);
   const [deleteId, setdeleteId] = useState("");
+
+  // Data States
   const [filteredItems, setFilteredItems] = useState([]);
   const [books, setbooks] = useState([]);
   const [filter, setFilter] = useState(1);
 
   useEffect(() => {
     axios.get("/getBookList").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setbooks(response.data);
       setFilteredItems(
         response.data.filter((book) => book.status === "Approval Pending")
@@ -228,10 +233,12 @@ const Orders = () => {
         return (
           <Button
             startIcon={<UpdateIcon />}
-            // href={`/Track/${cellValue.value}`}
+            disabled={filter !== 1}
             size="small"
             className={classes.root}
             variant="contained"
+            href={`/SellerBookUpdate/${cellValue.value}`}
+            target="_blank"
           >
             Update Book
           </Button>
@@ -306,7 +313,7 @@ const Orders = () => {
           rowBuffer={3}
           className={classes.root}
           loading={filteredItems === null || filterChange || Loading}
-          rowHeight={100}
+          rowHeight={120}
           rowsPerPageOptions={[3]}
           disableColumnFilter
           disableSelectionOnClick
