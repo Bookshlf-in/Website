@@ -117,7 +117,7 @@ const BookDesc = (props) => {
             </Stack>
           ) : null}
 
-          {book?.author ? (
+          {book?.editionYear ? (
             <Stack>
               <Typography variant="body2" className={classes.root}>
                 <strong>Edition Year</strong>
@@ -189,16 +189,20 @@ const BookDesc = (props) => {
             size="small"
             onClick={handleClick}
           />
-          <Chip
-            label={
-              book.seller.isVerified ? "Verified Seller" : "Not Verified Seller"
-            }
-            className={classes.root}
-            icon={book.seller.isVerified ? <CheckIcon /> : <CancelIcon />}
-            color={book.seller.isVerified ? "success" : "error"}
-            variant="outlined"
-            size="small"
-          />
+          {book.seller.isVerified ? (
+            <Chip
+              label={
+                book.seller.isVerified
+                  ? "Verified Seller"
+                  : "Not Verified Seller"
+              }
+              className={classes.root}
+              icon={book.seller.isVerified ? <CheckIcon /> : <CancelIcon />}
+              color={book.seller.isVerified ? "success" : "error"}
+              variant="outlined"
+              size="small"
+            />
+          ) : null}
         </Stack>
 
         <Rating value={book.seller.rating} precision={0.5} readOnly />

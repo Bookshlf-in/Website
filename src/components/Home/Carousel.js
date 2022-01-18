@@ -10,26 +10,7 @@ import NotActiveIcon from "@mui/icons-material/FiberManualRecordOutlined";
 import LeftIcon from "@mui/icons-material/ChevronLeftRounded";
 import RightIcon from "@mui/icons-material/ChevronRightRounded";
 
-const images = [
-  {
-    url: "/images/CarouselBg/carousel_bg1.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg2.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg3.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg4.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg5.png",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg6.png",
-  },
-];
+const images = ["", "", "", "", "", ""];
 
 const totalImages = images.length;
 
