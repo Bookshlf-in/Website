@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   root: {
     width: "100%",
     padding: "10px",
-    minHeight: "calc(100vh - 56px)",
+    minHeight: "calc(100vh - 48px)",
     backgroundImage: `url(${IMR_URL})`,
     backgroundSize: "cover",
     backgroundPosition: "center",

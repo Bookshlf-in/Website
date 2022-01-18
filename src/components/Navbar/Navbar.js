@@ -1,5 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { UserContext } from "../../Context/userContext";
+import { useHistory } from "react-router-dom";
 import axios from "../../axios.js";
 
 // importing Navbar Components
@@ -38,6 +39,7 @@ const NotiBubble = {
 };
 
 const Navbar = () => {
+  const history = useHistory();
   const [user, setUser] = useContext(UserContext);
 
   // Functionality States
@@ -119,12 +121,12 @@ const Navbar = () => {
         >
           <NavbarSearch />
           <Stack direction="row" spacing={2} className="nav-desktop-item">
-            <IconButton>
+            <IconButton onClick={() => history.push("/Cart")}>
               <Badge badgeContent={cartCnt} color="secondary" sx={NotiBubble}>
                 <ShoppingCartIcon sx={NavIconStyle} />
               </Badge>
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => history.push("/Wishlist")}>
               <Badge
                 badgeContent={wishlistCnt}
                 color="secondary"
@@ -134,7 +136,7 @@ const Navbar = () => {
               </Badge>
             </IconButton>
             {user?.roles?.includes("seller") ? (
-              <IconButton>
+              <IconButton onClick={() => history.push("/Wallet")}>
                 <Badge
                   badgeContent={walletbalance}
                   color="warning"
