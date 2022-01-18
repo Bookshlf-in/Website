@@ -81,7 +81,9 @@ const Slider = () => {
         <div
           className="slider__image"
           style={{
-            backgroundImage: `url("${images[props.index].url}")`,
+            backgroundImage: `url("https://storage.googleapis.com/bookshlf-in/static/carousel/${
+              props.index + 1
+            }.png")`,
           }}
         ></div>
       </Slide>
@@ -170,14 +172,3 @@ const Slider = () => {
 };
 
 export default Slider;
-
-/*
-Taking
-
-currentRatings = CR
-booksSold = BS
-newRating = NR
-
-to Find New Average Rating = NAR
-NAR = (BS*CR+NR) / (BS+1)
-*/

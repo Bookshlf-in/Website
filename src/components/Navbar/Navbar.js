@@ -63,9 +63,19 @@ const Navbar = () => {
             setwalletbalance(balance.data.walletBalance);
             localStorage.setItem(
               "bookshlf_user",
-              JSON.stringify({ ...user, balance: balance.data.walletBalance })
+              JSON.stringify({
+                ...user,
+                cartitems: cart.data.count,
+                wishlist: wishlist.data.count,
+                balance: balance.data.walletBalance,
+              })
             );
-            setUser({ ...user, balance: balance.data.walletBalance });
+            setUser({
+              ...user,
+              cartitems: cart.data.count,
+              wishlist: wishlist.data.count,
+              balance: balance.data.walletBalance,
+            });
             // console.log(wishlist.data, cart.data, balance.data);
           });
         });

@@ -181,19 +181,23 @@ const SellerPanel = () => {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <AccountDetails seller={sellerDetails} />
+            <AccountDetails seller={sellerDetails} panel={panel} />
           </TabPanel>
           <TabPanel value="2">
-            <Orders address={Adr} />
+            <Orders address={Adr} panel={panel} />
           </TabPanel>
           <TabPanel value="3">
-            <Address address={Adr} />
+            <Address address={Adr} panel={panel} />
           </TabPanel>
           <TabPanel value="4">
-            <Reviews reviews={sellerReview} sellerId={sellerId} />
+            <Reviews reviews={sellerReview} sellerId={sellerId} panel={panel} />
           </TabPanel>
           <TabPanel value="5">
-            <AddBook address={Adr} commisionChart={commisionchart} />
+            <AddBook
+              address={Adr}
+              commisionChart={commisionchart}
+              panel={panel}
+            />
           </TabPanel>
         </TabContext>
       )}
