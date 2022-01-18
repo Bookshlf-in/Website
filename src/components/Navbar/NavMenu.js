@@ -1,9 +1,7 @@
 import { React, useState, useContext } from "react";
 import "./Navbar.css";
 import { useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import { Button, Menu, MenuItem } from "@mui/material";
 import { UserContext } from "../../Context/userContext";
 import { AddFormContext } from "../../Context/formContext";
 import axios from "../../axios.js";

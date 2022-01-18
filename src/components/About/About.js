@@ -17,9 +17,6 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
-// Images
-import img1 from "./AboutBG/aboutbg_1.jpg";
-
 // Links
 const GITHUB_URL = "https://github.com/Bookshlf-in";
 const WEBSITE_URL = "https://bookshlf.in";
@@ -28,12 +25,13 @@ const FACEBOOK_URL = "https://www.facebook.com/Bookshlf-109479771200918";
 const LINKEDIN_URL = "https://www.linkedin.com/in/bookshlf-by-aman-861073223/";
 const INSTAGRAM_URL = "https://twitter.com/BookshlfA";
 
+const IMR_URL = "/images/AboutBG/aboutbg_1.jpg";
 const useStyles = makeStyles({
   root: {
     width: "100%",
     padding: "10px",
     minHeight: "calc(100vh - 56px)",
-    backgroundImage: `url(${img1})`,
+    backgroundImage: `url(${IMR_URL})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "norepeat",

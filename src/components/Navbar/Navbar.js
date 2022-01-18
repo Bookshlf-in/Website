@@ -4,38 +4,23 @@ import { React, useState, useContext, useEffect } from "react";
 import "./Navbar.css";
 import NavbarMenu from "./NavMenu";
 import NavbarItems from "./NavbarItems";
-import NavbarSearch from "./NavbarSearch";
+// import NavbarSearch from "./NavbarSearch";
 import SideNav from "./Sidenav.js";
 
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 
 // importing Material UI components
-import Button from "@material-ui/core/Button";
-import Badge from "@material-ui/core/Badge";
-import { withStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
+import { Button, IconButton, Badge } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 import axios from "../../axios.js";
 
 const openNav = () => {
   document.getElementById("mySidenav").style.width = "300px";
 };
-
-const StyledBadge = withStyles((theme) => ({
-  badge: {
-    right: -3,
-    top: 3,
-    border: `1px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
-    fontWeight: "bolder",
-    fontSize: "11px",
-    fontFamily: "PT sans",
-  },
-}))(Badge);
 
 const Navbar = () => {
   const history = useHistory();
@@ -123,9 +108,7 @@ const Navbar = () => {
         <div className="navbar-right">
           <ul>
             <li>
-              <div className="navbar-items-chip">
-                <NavbarSearch />
-              </div>
+              <div className="navbar-items-chip">{/* <NavbarSearch /> */}</div>
             </li>
             {user ? (
               user.roles.includes("seller") ? (
@@ -133,13 +116,13 @@ const Navbar = () => {
                   <div className="navbar-items-chip">
                     <Link to="/Wallet" className="cart-icon">
                       <IconButton aria-label="wallet">
-                        <StyledBadge
+                        <Badge
                           badgeContent={walletbalance}
                           color="secondary"
                           max={2000}
                         >
                           <AccountBalanceWalletIcon />
-                        </StyledBadge>
+                        </Badge>
                       </IconButton>
                     </Link>
                   </div>
@@ -150,12 +133,9 @@ const Navbar = () => {
               <div className="navbar-items-chip">
                 <Link to="/Cart" className="cart-icon">
                   <IconButton aria-label="cart">
-                    <StyledBadge
-                      badgeContent={user?.cartitems}
-                      color="secondary"
-                    >
+                    <Badge badgeContent={user?.cartitems} color="secondary">
                       <ShoppingCartIcon />
-                    </StyledBadge>
+                    </Badge>
                   </IconButton>
                 </Link>
               </div>
@@ -164,12 +144,9 @@ const Navbar = () => {
               <div className="navbar-items-chip">
                 <Link to="/Wishlist" className="cart-icon">
                   <IconButton aria-label="cart">
-                    <StyledBadge
-                      badgeContent={user?.wishlist}
-                      color="secondary"
-                    >
+                    <Badge badgeContent={user?.wishlist} color="secondary">
                       <FavoriteIcon color="error" />
-                    </StyledBadge>
+                    </Badge>
                   </IconButton>
                 </Link>
               </div>
@@ -205,9 +182,9 @@ const Navbar = () => {
           <div className="navbar-items-chip">
             <Link to="/Cart" className="cart-icon">
               <IconButton aria-label="cart">
-                <StyledBadge badgeContent={user?.cartitems} color="secondary">
+                <Badge badgeContent={user?.cartitems} color="secondary">
                   <ShoppingCartIcon />
-                </StyledBadge>
+                </Badge>
               </IconButton>
             </Link>
           </div>

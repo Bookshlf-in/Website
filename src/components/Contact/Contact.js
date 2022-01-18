@@ -124,7 +124,10 @@ function Contact() {
         />
       </Helmet>
 
-      <div className="contact-main">
+      <div
+        className="contact-main"
+        style={{ backgroundImage: "url(/images/contact-bg.jpg)" }}
+      >
         <h1> Contact Us</h1>
         <div className="contact-map">
           <iframe

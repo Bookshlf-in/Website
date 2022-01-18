@@ -1,45 +1,62 @@
 import { React, useState, useEffect } from "react";
-import "./OrderTracking.css";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import DownloadReciept from "./DownloadReciept";
-import Button from "@material-ui/core/Button";
-import { DataGrid } from "@mui/x-data-grid";
 
-var orderID = {
-  color: "rgb(72, 72, 245)",
-  fontWeight: "bold",
+// components
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Alert from "@mui/material/Alert";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import LinearProgress from "@mui/material/LinearProgress";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListSubheader from "@mui/material/ListSubheader";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import ListItemButton from "@mui/material/ListItemButton";
+
+// icons
+import NextIcon from "@mui/icons-material/NavigateNextRounded";
+import CallIcon from "@mui/icons-material/CallRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import DownloadIcon from "@mui/icons-material/Download";
+
+// Custom Component
+// import DownloadReciept from "./DownloadReciept";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "PT sans !important",
+    "& span": {
+      fontFamily: "PT sans !important",
+      fontSize: "14px",
+    },
+    "& p": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+    },
+    "& label": {
+      fontFamily: "PT sans !important",
+    },
+  },
+});
+
+const getSteps = () => {
+  return ["Order Placed", "Order Shipped", "Order En Route", "Order Delivered"];
 };
 
-function getSteps() {
-  return ["Order Placed", "Order Shipped", "Order En Route", "Order Delivered"];
-}
-
-const COL = [
-  {
-    field: "bookDetails",
-    headerName: "Book Details",
-    minWidth: 200,
-    flex: 1,
-  },
-  {
-    field: "customerDetails",
-    headerName: "Customer Details",
-    minWidth: 200,
-    flex: 1,
-  },
-  {
-    field: "orderDetails",
-    headerName: "Order Details",
-    minWidth: 200,
-    flex: 1,
-  },
-];
-function getStepContent(stepIndex) {
+const getStepContent = (stepIndex) => {
   switch (stepIndex) {
     case 0:
       return "Your Order Has Been Received and is Currently Being Processed";
@@ -52,207 +69,460 @@ function getStepContent(stepIndex) {
     default:
       return "Unknown stepIndex";
   }
-}
+};
 
-function OrderTracking() {
+const OrderTracking = () => {
+  const classes = useStyles();
   const params = useParams();
-  const orderId = params.orderId;
-  const history = useHistory();
+  const steps = getSteps();
+
   const [order, setorder] = useState({});
   const [load, setload] = useState(false);
-  const [cls, setcls] = useState({
-    Cls: "fas fa-window-close",
-    msg: "Cancel Order",
-  });
-
-  const [downloadpdf, setDownloadpdf] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const steps = getSteps();
+  const [cancelLoad, setcancelLoad] = useState(false);
+  const [cancelled, setcancelled] = useState(false);
+  const [trackLink, settrackLink] = useState("");
+  const [downloadPdf, setdownloadPdf] = useState(false);
   useEffect(() => {
     const fetchdata = async () => {
       axios
-        .get(`/getOrderDetails?orderId=${orderId}`)
+        .get("/getOrderDetails", {
+          params: { orderId: params.orderId },
+        })
         .then((response) => {
+          setdownloadPdf(true);
           setorder(response.data);
+          settrackLink(response.data?.externalTrackingLink);
           // console.log(response.data);
           setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
-          setDownloadpdf(true);
         })
         .catch((error) => {});
     };
     fetchdata();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handelCancelOrder = (ORDERID) => {
-    setcls({
-      Cls: "fas fa-spinner",
-      msg: "Cancelling...",
-    });
+  const handelCancelOrder = () => {
+    setcancelLoad(true);
     axios
       .delete("/cancelOrder", {
-        data: { orderId: ORDERID },
+        data: { orderId: order._id },
       })
       .then((response) => {
-        setcls({
-          Cls: "fas fa-check-circle",
-          msg: "Cancelled",
-        });
-        // console.log(response.data);
-        setTimeout(() => {
-          history.push("/UserProfile/2");
-        }, 3000);
+        setcancelLoad(false);
+        setcancelled(true);
+      })
+      .catch((error) => {
+        // console.log(error.response.data);
       });
   };
-  // const handleReceipt = () => {
-  //   setDownloadpdf(true);
-  // };
 
   return (
-    <div className="order-tracking-container-body">
+    <>
       {load ? (
-        <div className="order-tracking-container">
-          <div className="order-description">
-            <div>
-              ORDER ID : <span style={orderID}>{order._id}</span>
-            </div>
-            {/* <div>
-              Expected Arrival :{" "}
-              <span style={ArrivalDate}>
-                {order.expectedDeliveryDate.substr(0, 10)}
-              </span>
-            </div> */}
-          </div>
-          <div className="order-details">
-            <img src={order.photo} alt="" height="250px" />
-          </div>
-
-          <DataGrid
-            style={{ width: "100%", minHeight: "350px", fontFamily: "PT sans" }}
-            columns={COL}
-            rows={[
-              {
-                id: 1,
-                bookDetails: order.title,
-                customerDetails: order.customerName,
-                orderDetails: order.price + " /-",
-              },
-              {
-                id: 2,
-                bookDetails: order.author,
-                customerDetails: `${
-                  order.customerAddress.address +
-                  ", " +
-                  order.customerAddress.city +
-                  ", " +
-                  order.customerAddress.state +
-                  " " +
-                  order.customerAddress.zipCode
-                }`,
-                orderDetails: order.shippingCharges + " /-",
-              },
-              {
-                id: 3,
-                bookDetails: order.sellerName,
-                customerDetails: order.customerAddress.phoneNo,
-                orderDetails: order.purchaseQty,
-              },
-              {
-                id: 4,
-                bookDetails: "",
-                customerDetails: "",
-                orderDetails:
-                  order.price +
-                  " x " +
-                  order.purchaseQty +
-                  " = " +
-                  order.orderTotal +
-                  " /-",
-              },
-            ]}
-          />
-
-          <div className="order-progress">
-            <Stepper
-              activeStep={activeStep}
-              alternativeLabel
-              style={{
-                backgroundColor: "aliceblue",
-                width: "100%",
-              }}
-            >
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <div>
-              {activeStep === steps.length ? (
-                <div></div>
-              ) : (
-                <div
-                  style={{
-                    padding: "10px",
-                    textAlign: "center",
-                    color: "#1dff02",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {getStepContent(activeStep)}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="order-tracking-buttons">
-            <div
-              className="cancel-order-button"
-              id={order._id}
-              onClick={(e) => {
-                if (order.progress < 100) handelCancelOrder(e.target.id);
-              }}
-            >
-              <i
-                className={cls.Cls}
-                style={{ fontSize: "16px", color: "white" }}
-              />
-              &nbsp;&nbsp;&nbsp;{cls.msg}
-            </div>
-            {/* <div className="download-receipt-button" onClick={handleReceipt}>
-              <i className="fas fa-download" />
-              &nbsp;&nbsp;Receipt
-            </div> */}
-            {downloadpdf ? (
-              <DownloadReciept orderDetails={order} />
-            ) : (
-              <Button
-                className="download-receipt-button"
-                // onClick={handleReceipt}
-                variant="contained"
-                color="primary"
-              >
-                Generating Invoice...
-              </Button>
-            )}
-          </div>
-        </div>
-      ) : (
-        <div
-          className="page-loader"
-          style={{ display: "flex", width: "calc(100% - 40px)" }}
+        <Stack
+          direction="column"
+          spacing={3}
+          sx={{ width: "100%", padding: "10px" }}
         >
-          <CircularProgress
-            style={{
-              height: "50px",
-              width: "50px",
-              color: "rgb(47, 218, 47)",
-            }}
-          />
-        </div>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Typography variant="body1" className={classes.root}>
+              ORDER ID :
+            </Typography>
+            <Chip label={order._id} color="primary" size="small" />
+          </Stack>
+          {/* ================= Book Details ===================== */}
+          <Stack direction="column" spacing={2} alignItems="center">
+            <Avatar
+              alt={order.title}
+              src={order.photo}
+              sx={{ height: 250, width: 200 }}
+              variant="rounded"
+            />
+            <List
+              subheader={
+                <ListSubheader className={classes.root}>
+                  Book Details
+                </ListSubheader>
+              }
+              sx={{ width: "100%" }}
+            >
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Book ID"
+                  secondary={order.bookId}
+                />
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Book Name"
+                  secondary={order.title}
+                />
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Book Author"
+                  secondary={order.author}
+                />
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Book Selling Price"
+                  secondary={
+                    <>
+                      <i className="fas fa-rupee-sign"></i> {order.price}
+                    </>
+                  }
+                />
+              </ListItem>
+            </List>
+            {/* ================================================= */}
+            <List
+              subheader={
+                <ListSubheader className={classes.root}>
+                  Customer Details
+                </ListSubheader>
+              }
+              sx={{ width: "100%" }}
+            >
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Customer ID"
+                  secondary={order.customerId}
+                />
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Customer Name"
+                  secondary={order.customerName}
+                />
+              </ListItem>
+              <Divider />
+            </List>
+            <List
+              subheader={
+                <ListSubheader className={classes.root}>
+                  Customer Address
+                </ListSubheader>
+              }
+              sx={{ width: "100%" }}
+            >
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Address"
+                  secondary={order.customerAddress.address}
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="State"
+                  secondary={order.customerAddress.state}
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="City"
+                  secondary={order.customerAddress.city}
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Zip Code"
+                  secondary={order.customerAddress.zipCode}
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemIcon>
+                  <NextIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.root}
+                  primary="Contact"
+                  secondary={
+                    <>
+                      <Chip
+                        label={order.customerAddress.phoneNo}
+                        size="small"
+                        icon={<CallIcon />}
+                        color="primary"
+                      />{" "}
+                      {order.customerAddress.altPhoneNo ? (
+                        <Chip
+                          label={order.customerAddress.altPhoneNo}
+                          size="small"
+                          icon={<CallIcon />}
+                          color="primary"
+                        />
+                      ) : null}
+                    </>
+                  }
+                />
+              </ListItem>
+            </List>
+            <List
+              subheader={
+                <ListSubheader className={classes.root}>
+                  Order Details
+                </ListSubheader>
+              }
+              sx={{ width: "100%" }}
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NextIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.root}
+                    primary="Item Price"
+                    secondary={
+                      <>
+                        <i className="fas fa-rupee-sign" /> {order.price}
+                      </>
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NextIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.root}
+                    primary="Purchase Quantity"
+                    secondary={order.purchaseQty}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NextIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.root}
+                    primary="Shipping Charges"
+                    secondary={
+                      <>
+                        <i className="fas fa-rupee-sign" />{" "}
+                        {order.shippingCharges}
+                      </>
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NextIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.root}
+                    primary="Order Total"
+                    secondary={
+                      <>
+                        <i className="fas fa-rupee-sign" /> {order.orderTotal}
+                      </>
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+            </List>
+            {/* ============================================================= */}
+            <List
+              subheader={
+                <ListSubheader className={classes.root}>
+                  Payment Details
+                </ListSubheader>
+              }
+              sx={{ width: "100%" }}
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NextIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.root}
+                    primary="Payment Mode"
+                    secondary={
+                      <Chip
+                        label={order.paymentMode}
+                        size="small"
+                        color="default"
+                      />
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NextIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.root}
+                    primary="Payment Status"
+                    secondary={
+                      <Chip
+                        label={order.paymentStatus}
+                        color={
+                          order.paymentStatus === "Pending"
+                            ? "warning"
+                            : "success"
+                        }
+                        size="small"
+                      />
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NextIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.root}
+                    primary="Order Total"
+                    secondary={
+                      <>
+                        <i className="fas fa-rupee-sign" /> {order.orderTotal}
+                      </>
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Stack>
+          {/* ==================================================================================== */}
+
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Button
+              endIcon={<NextIcon />}
+              variant="contained"
+              color="primary"
+              className={classes.root}
+              href={trackLink}
+              target="_blank"
+              size="small"
+              sx={{ maxWidth: 300 }}
+            >
+              Courier Track Link
+            </Button>
+            {/* <DownloadReciept orderDetails={order} /> */}
+          </Stack>
+          <Stepper
+            activeStep={activeStep}
+            alternativeLabel
+            className={classes.root}
+          >
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>
+                  <Typography>{label}</Typography>
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          {activeStep === steps.length ? null : (
+            <Typography
+              variant="caption"
+              align="center"
+              className={classes.root}
+              sx={{ color: "yellowgreen" }}
+            >
+              {getStepContent(activeStep)}
+            </Typography>
+          )}
+          {cancelled ? (
+            <Alert
+              severity="success"
+              color="error"
+              size="small"
+              className={classes.root}
+            >
+              Order Cancelled!
+            </Alert>
+          ) : null}
+          <Stack spacing={2} justifyContent="center" alignItems="center">
+            {activeStep < 4 ? (
+              <LoadingButton
+                loading={cancelLoad}
+                loadingPosition="end"
+                endIcon={<CancelIcon />}
+                variant="contained"
+                color="error"
+                className={classes.root}
+                onClick={handelCancelOrder}
+                disabled={order.status === "Cancelled" || cancelled}
+                sx={{ maxWidth: 300 }}
+              >
+                Cancel Order
+              </LoadingButton>
+            ) : null}
+          </Stack>
+        </Stack>
+      ) : (
+        <LinearProgress sx={{ width: "100%" }} />
       )}
-    </div>
+    </>
   );
-}
+};
 export default OrderTracking;

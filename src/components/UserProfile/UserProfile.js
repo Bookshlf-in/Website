@@ -65,14 +65,12 @@ const UserProfile = () => {
             })
           );
           setpastOrders(
-            response.data
-              .filter((order) => {
-                return (
-                  order.status[order.status.length - 1] === "Cancelled" ||
-                  order.status[order.status.length - 1] === "Delivered"
-                );
-              })
-              .reverse()
+            response.data.filter((order) => {
+              return (
+                order.status[order.status.length - 1] === "Cancelled" ||
+                order.status[order.status.length - 1] === "Delivered"
+              );
+            })
           );
           axios.get("/getAddressList").then((response) => {
             response.data.sort((a, b) => {

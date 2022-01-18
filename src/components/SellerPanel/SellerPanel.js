@@ -70,14 +70,15 @@ const SellerPanel = () => {
           axios
             .get("/getAddressList")
             .then((response) => {
-              response.data.sort((a, b) => {
-                return a.updatedAt < b.updatedAt
-                  ? 1
-                  : a.updatedAt > b.updatedAt
-                  ? -1
-                  : 0;
-              });
-              setAdr(response.data);
+              setAdr(
+                response.data.sort((a, b) => {
+                  return a.updatedAt < b.updatedAt
+                    ? 1
+                    : a.updatedAt > b.updatedAt
+                    ? -1
+                    : 0;
+                })
+              );
               axios
                 .get("/getSellerReviews", {
                   params: sellerId,

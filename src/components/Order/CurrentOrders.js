@@ -168,6 +168,7 @@ const CurrentOrders = (props) => {
             size="small"
             className={classes.root}
             variant="contained"
+            target="_blank"
           >
             Track Order
           </Button>
