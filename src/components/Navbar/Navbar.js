@@ -29,6 +29,14 @@ const NavIconStyle = {
   height: 20,
   width: 20,
 };
+
+const NotiBubble = {
+  "& span": {
+    fontFamily: "PT sans !important",
+    fontSize: "9px",
+  },
+};
+
 const Navbar = () => {
   const [user, setUser] = useContext(UserContext);
 
@@ -42,6 +50,30 @@ const Navbar = () => {
 
   // /countWishlistItems, /countCartItems, /getCurrentBalance
 
+  useEffect(() => {
+    // getting count of Items
+    const FetchCountAPI = () => {
+      axios.get("/countWishlistItems").then((wishlist) => {
+        axios.get("/countCartItems").then((cart) => {
+          axios.get("/getCurrentBalance").then((balance) => {
+            setCartCnt(cart.data.count);
+            setwishlistCnt(wishlist.data.count);
+            setwalletbalance(balance.data.walletBalance);
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({ ...user, balance: balance.data.walletBalance })
+            );
+            setUser({ ...user, balance: balance.data.walletBalance });
+            // console.log(wishlist.data, cart.data, balance.data);
+          });
+        });
+      });
+    };
+    if (user) {
+      FetchCountAPI();
+    }
+  }, []);
+
   return (
     <AppBar position="sticky" sx={NavStyle}>
       <Toolbar variant="dense">
@@ -53,7 +85,13 @@ const Navbar = () => {
             sx={{ mr: 1 }}
             onClick={() => setOpenSideNav((prev) => !prev)}
           >
-            <MenuIcon />
+            <Badge
+              variant="dot"
+              badgeContent={cartCnt + wishlistCnt}
+              color="warning"
+            >
+              <MenuIcon />
+            </Badge>
           </IconButton>
         </div>
         <div className="nav-mobile-item">
@@ -61,6 +99,7 @@ const Navbar = () => {
             ancher="left"
             open={openSideNav}
             onClose={() => setOpenSideNav((prev) => !prev)}
+            transitionDuration={500}
           >
             <SideNav />
           </Drawer>
@@ -81,20 +120,32 @@ const Navbar = () => {
           <NavbarSearch />
           <Stack direction="row" spacing={2} className="nav-desktop-item">
             <IconButton>
-              <Badge badgeContent={cartCnt} color="primary">
+              <Badge badgeContent={cartCnt} color="secondary" sx={NotiBubble}>
                 <ShoppingCartIcon sx={NavIconStyle} />
               </Badge>
             </IconButton>
             <IconButton>
-              <Badge badgeContent={wishlistCnt} color="primary">
+              <Badge
+                badgeContent={wishlistCnt}
+                color="secondary"
+                sx={NotiBubble}
+              >
                 <FavoriteIcon sx={NavIconStyle} />
               </Badge>
             </IconButton>
-            <IconButton>
-              <Badge badgeContent={walletbalance} color="primary">
-                <AccountBalanceWalletIcon sx={NavIconStyle} />
-              </Badge>
-            </IconButton>
+            {user?.roles?.includes("seller") ? (
+              <IconButton>
+                <Badge
+                  badgeContent={walletbalance}
+                  color="warning"
+                  max={9999}
+                  showZero={true}
+                  sx={NotiBubble}
+                >
+                  <AccountBalanceWalletIcon sx={NavIconStyle} />
+                </Badge>
+              </IconButton>
+            ) : null}
           </Stack>
 
           {user ? (

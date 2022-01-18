@@ -2,10 +2,8 @@ import { React, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 
-import "./Sidenav.css";
-
 // Components
-import { Stack, Divider } from "@mui/material";
+import { Stack, Divider, Chip } from "@mui/material";
 
 // Icons
 import HomeIcon from "@mui/icons-material/HomeRounded";
@@ -49,8 +47,24 @@ const MenuStack = (props) => {
       <Stack justifyContent="center" alignItems="center">
         {props.title ? <img src={props.icon} /> : props.icon}
       </Stack>
-      <Stack justifyContent="center" alignItems="center">
-        {props.label}
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        direction="row"
+        spacing={1}
+      >
+        <span>{props.label}</span>
+        {props.badge ? (
+          <Chip
+            label={props.Count}
+            size="small"
+            color="warning"
+            sx={{
+              height: "auto",
+              "& span": { fontSize: "12px", color: "white" },
+            }}
+          />
+        ) : null}
       </Stack>
     </Stack>
   );
@@ -77,15 +91,30 @@ const Sidenav = () => {
       </Link>
       <Divider orientation="horizontal" flexItem={true} />
       <Link to="/Cart">
-        <MenuStack icon={<CartIcon color="secondary" />} label="Cart" />
+        <MenuStack
+          icon={<CartIcon color="secondary" />}
+          label="Cart"
+          badge={true}
+          Count={user?.cartitems}
+        />
       </Link>
       <Divider orientation="horizontal" flexItem={true} />
       <Link to="/Wishlist">
-        <MenuStack icon={<WishlistIcon color="secondary" />} label="Wishlist" />
+        <MenuStack
+          icon={<WishlistIcon color="secondary" />}
+          label="Wishlist"
+          badge={true}
+          Count={user?.wishlist}
+        />
       </Link>
       <Divider orientation="horizontal" flexItem={true} />
       <Link to="/Wallet">
-        <MenuStack icon={<WalletIcon color="secondary" />} label="Wallet" />
+        <MenuStack
+          icon={<WalletIcon color="secondary" />}
+          label="Wallet"
+          badge={true}
+          Count={user?.balance}
+        />
       </Link>
       <Divider orientation="horizontal" flexItem={true} />
       <Link
@@ -109,102 +138,3 @@ const Sidenav = () => {
 };
 
 export default Sidenav;
-
-/*
- <div id="mySidenav" className="sidenav">
-        <span className="closebtn" onClick={closeNav}>
-          &times;
-        </span>
-        <div className="sidenav-searchbar Profile">
-          <input
-            type="text"
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={_handleKeyDown}
-          />
-          <SideNavLink
-            to={`/SearchResult/${Search === "" ? "books" : Search}`}
-            iconClass="fas fa-search"
-          />
-        </div>
-        <SideNavLink to="/" label="Home" iconClass="fas fa-home" />
-
-        {user ? (
-          <SideNavLink
-            to="/UserProfile/1"
-            label="Profile"
-            iconClass="fas fa-user-circle"
-            isProfile={true}
-          />
-        ) : (
-          <></>
-        )}
-
-        {user ? (
-          <SideNavLink to="/" iconClass="fas fa-sign-out-alt" label="Logout" />
-        ) : (
-          <SideNavLink
-            to="/Login"
-            iconClass="fas fa-sign-in-alt"
-            label="Login"
-          />
-        )}
-        {user ? (
-          <></>
-        ) : (
-          <SideNavLink
-            to="/Signup"
-            iconClass="fas fa-user-plus"
-            label="Create Account"
-          />
-        )}
-        {user ? (
-          user.roles.includes("seller") ? (
-            <SideNavLink
-              to="/Wallet"
-              iconClass="fas fa-wallet"
-              label="Wallet"
-            />
-          ) : null
-        ) : null}
-        {user ? (
-          <SideNavLink
-            to="/Cart"
-            iconClass="fas fa-shopping-cart"
-            label={CartItems}
-          />
-        ) : (
-          <></>
-        )}
-        {user ? (
-          <SideNavLink
-            to="/Wishlist"
-            iconClass="far fa-heart"
-            label="Wishlist"
-          />
-        ) : (
-          <></>
-        )}
-        <SideNavLink
-          to="/SearchResult/books"
-          label="All Categories"
-          iconClass="fas fa-angle-right"
-        />
-        {user ? (
-          <SideNavLink
-            to="/SellerPanel/5"
-            iconClass="fas fa-book"
-            label="Sell Your Books"
-          />
-        ) : (
-          <></>
-        )}
-        <SideNavLink
-          to="https://github.com/Bookshlf-in/Website"
-          iconClass="fas fa-hands-helping"
-          label="Contribute"
-        />
-        <SideNavLink to="/Blog" iconClass="fab fa-blogger" label="Blog" />
-        <SideNavLink to="/Contact" iconClass="fas fa-headset" label="Contact" />
-        <SideNavLink to="/About" iconClass="fas fa-info-circle" label="About" />
-      </div>
-*/

@@ -109,6 +109,7 @@ const Login = () => {
                 email: email,
                 cartitems: 0,
                 wishlist: 0,
+                balance: 0,
               })
             );
             setUser({
@@ -117,7 +118,9 @@ const Login = () => {
               email: email,
               cartitems: 0,
               wishlist: 0,
+              balance: 0,
             });
+
             setloginLoad(false);
             history.push("/");
           })
