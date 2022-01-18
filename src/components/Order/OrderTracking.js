@@ -25,12 +25,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 
 // icons
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
-import CallIcon from "@mui/icons-material/CallRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
-import DownloadIcon from "@mui/icons-material/Download";
 
 // Custom Component
-// import DownloadReciept from "./DownloadReciept";
+import Reciept from "./Reciept";
 
 const useStyles = makeStyles({
   root: {
@@ -289,20 +287,10 @@ const OrderTracking = () => {
                   primary="Contact"
                   secondary={
                     <>
-                      <Chip
-                        label={order.customerAddress.phoneNo}
-                        size="small"
-                        icon={<CallIcon />}
-                        color="primary"
-                      />{" "}
-                      {order.customerAddress.altPhoneNo ? (
-                        <Chip
-                          label={order.customerAddress.altPhoneNo}
-                          size="small"
-                          icon={<CallIcon />}
-                          color="primary"
-                        />
-                      ) : null}
+                      {order.customerAddress.phoneNo}{" "}
+                      {order.customerAddress.altPhoneNo
+                        ? order.customerAddress.altPhoneNo
+                        : null}
                     </>
                   }
                 />
@@ -398,13 +386,7 @@ const OrderTracking = () => {
                   <ListItemText
                     className={classes.root}
                     primary="Payment Mode"
-                    secondary={
-                      <Chip
-                        label={order.paymentMode}
-                        size="small"
-                        color="default"
-                      />
-                    }
+                    secondary={order.paymentMode}
                   />
                 </ListItemButton>
               </ListItem>
@@ -417,17 +399,7 @@ const OrderTracking = () => {
                   <ListItemText
                     className={classes.root}
                     primary="Payment Status"
-                    secondary={
-                      <Chip
-                        label={order.paymentStatus}
-                        color={
-                          order.paymentStatus === "Pending"
-                            ? "warning"
-                            : "success"
-                        }
-                        size="small"
-                      />
-                    }
+                    secondary={order.paymentStatus}
                   />
                 </ListItemButton>
               </ListItem>
@@ -452,7 +424,11 @@ const OrderTracking = () => {
           </Stack>
           {/* ==================================================================================== */}
 
-          <Stack direction="row" spacing={2} justifyContent="center">
+          <Stack
+            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+            spacing={2}
+            justifyContent="center"
+          >
             <Button
               endIcon={<NextIcon />}
               variant="contained"
@@ -465,7 +441,7 @@ const OrderTracking = () => {
             >
               Courier Track Link
             </Button>
-            {/* <DownloadReciept orderDetails={order} /> */}
+            {order.status !== "Cancelled" ? <Reciept order={order} /> : null}
           </Stack>
           <Stepper
             activeStep={activeStep}
