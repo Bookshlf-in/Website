@@ -28,9 +28,6 @@ import ApprovedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import UpdateIcon from "@mui/icons-material/CachedRounded";
 
-// Custom Components
-import UpdateBook from "./UpdateOrder";
-
 const useStyles = makeStyles(() => ({
   root: {
     fontFamily: "PT sans !important",
@@ -102,6 +99,24 @@ const Orders = () => {
       }, 2000);
     }
   };
+
+  // // cancel Order
+  // const handelCancelOrder = (orderId) => {
+  //   setdeleteId(orderId);
+  //   axios
+  //     .delete("/cancelOrder", {
+  //       data: {
+  //         orderId: orderId,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setdeleteId("");
+  //       setactiveOrders(activeOrders.filter((order) => order._id !== orderId));
+  //     })
+  //     .catch((error) => {
+  //       setdeleteId("");
+  //     });
+  // };
 
   const columns = [
     {
@@ -253,7 +268,11 @@ const Orders = () => {
       sortable: false,
       renderCell: (cellValue) => {
         return (
-          <IconButton className={classes.root} color="error">
+          <IconButton
+            className={classes.root}
+            color="error"
+            // onClick={() => handelCancelOrder(cellValue.value)}
+          >
             {deleteId === cellValue.value ? (
               <CircularProgress color="inherit" size={20} />
             ) : (
