@@ -1,62 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
+// Components
+import { Button, Stack } from "@mui/material";
+
+// Icons
+import HomeIcon from "@mui/icons-material/HomeRounded";
+import AllBookIcon from "@mui/icons-material/Language";
+import BookIcon from "@mui/icons-material/MenuBookRounded";
+import InfoIcon from "@mui/icons-material/InfoRounded";
+import SupportIcon from "@mui/icons-material/SupportAgentRounded";
+
+const NavButtonStyle = {
+  color: "white",
+  fontSize: "10px",
+  fontFamily: "PT sans",
+  "&:hover": {
+    backgroundColor: "rgba(255,255,255,0.2)",
+  },
+};
 
 const NavbarItems = () => {
   return (
-    <div className="navbar-items">
-      <ul>
-        <Link to="/">
-          <li>
-            <div className="navbar-items-chip">
-              <p>
-                <i className="fas fa-home" />
-                &nbsp;Home
-              </p>
-            </div>
-          </li>
-        </Link>
-        <Link to="/SearchResult/tag:ALL">
-          <li>
-            <div className="navbar-items-chip">
-              <p>
-                <i className="fas fa-globe"></i>
-                &nbsp;All Books
-              </p>
-            </div>
-          </li>
-        </Link>
-        <Link to="/SellerPanel/5">
-          <li>
-            <div className="navbar-items-chip">
-              <p>
-                <i className="fas fa-book" />
-                &nbsp;Sell Your Books
-              </p>
-            </div>
-          </li>
-        </Link>
-        <Link to="/About">
-          <li>
-            <div className="navbar-items-chip">
-              <p>
-                <i className="fas fa-info-circle" />
-                &nbsp;AboutUs
-              </p>
-            </div>
-          </li>
-        </Link>
-        <Link to="/Contact">
-          <li>
-            <div className="navbar-items-chip">
-              <p>
-                <i className="fas fa-headset" />
-                &nbsp;Contact Us
-              </p>
-            </div>
-          </li>
-        </Link>
-      </ul>
-    </div>
+    <Stack direction="row" spacing={2} sx={{ ml: 5 }}>
+      <Button startIcon={<HomeIcon />} href="/" sx={NavButtonStyle}>
+        Home
+      </Button>
+      <Button
+        startIcon={<AllBookIcon />}
+        href="/SearchResult/tag:ALL"
+        sx={NavButtonStyle}
+      >
+        All&nbsp;Books
+      </Button>
+      <Button
+        startIcon={<BookIcon />}
+        href="/SellerPanel/5"
+        sx={NavButtonStyle}
+      >
+        Sell&nbsp;Books
+      </Button>
+      <Button startIcon={<InfoIcon />} href="/About" sx={NavButtonStyle}>
+        About&nbsp;Us
+      </Button>
+      <Button startIcon={<SupportIcon />} href="/Contact" sx={NavButtonStyle}>
+        Contact&nbsp;Us
+      </Button>
+    </Stack>
   );
 };
 

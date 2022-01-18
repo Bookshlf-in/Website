@@ -163,7 +163,6 @@ const Payment = () => {
     const fetch = () => {
       // Getting Addresses
       axios.get("/getAddressList").then((response) => {
-        console.log(response.data);
         setAddress(
           response.data.sort((a, b) => {
             return a.updatedAt < b.updatedAt
@@ -180,7 +179,6 @@ const Payment = () => {
           ? "/checkoutCart"
           : `/checkoutBook?bookId=${checkoutType}`;
       axios.get(URL).then((response) => {
-        console.log(response.data);
         setCheckout(response.data);
         if (checkoutType === "cart") {
           for (let i = 0; i < response.data.items.length; i++) {
@@ -191,11 +189,12 @@ const Payment = () => {
           if (response.data.item.qty < response.data.item.purchaseQty)
             setstopCheckout(true);
         }
-
         setcheckoutLoading(false);
       });
     };
-    if (user) fetch();
+    if (user) {
+      fetch();
+    }
   }, []);
 
   // Going to Next Stage
@@ -362,7 +361,11 @@ const Payment = () => {
                       className={classes.root}
                     >
                       {address.map((adr) => (
-                        <MenuItem key={adr._id} value={adr._id}>
+                        <MenuItem
+                          key={adr._id}
+                          value={adr._id}
+                          className={classes.root}
+                        >
                           {adr.address}
                         </MenuItem>
                       ))}
@@ -373,11 +376,15 @@ const Payment = () => {
                     variant="contained"
                     size="small"
                     color="success"
-                    href="/UserProfile/4"
+                    href="/UserPanel/4"
+                    target="_blank"
                     className={classes.root}
                   >
                     Add New Address
                   </Button>
+                  <Alert severity="info" size="small" className={classes.root}>
+                    Kindly Reload Page If Updated Address but isn't Visible
+                  </Alert>
                   <Stack
                     direction="row"
                     justifyContent="flex-end"

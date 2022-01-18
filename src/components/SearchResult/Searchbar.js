@@ -18,22 +18,23 @@ const useStyles = makeStyles(() => ({
   },
   search: {
     position: "relative",
-    backgroundColor: "rgba(255,255,255,0.1)",
+    backgroundColor: "white",
+    border: "1px solid #dfe1e5",
     borderRadius: "5px",
     "&:hover": {
       boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
+      borderRadius: "5px 5px 0px 0px",
+      zIndex: 205,
     },
     marginLeft: 0,
     width: "100%",
-    maxWidth: 250,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     paddingRight: "10px",
-    color: "white",
   },
   searchIcon: {
-    padding: "5px",
+    padding: "10px",
     height: "100%",
     pointerEvents: "none",
     display: "flex",
@@ -43,33 +44,28 @@ const useStyles = makeStyles(() => ({
   inputRoot: {
     color: "inherit",
     width: "100%",
-    color: "white",
   },
   inputInput: {
-    padding: "5px",
+    padding: "10px",
     width: "100%",
-    fontSize: "12px !important",
+    fontSize: "16px !important",
     fontWeight: "bolder !important",
-    color: "white",
   },
   searchTitleResult: {
     position: "absolute",
     left: "0px",
-    top: "34px",
+    top: "44px",
     backgroundColor: "white",
     zIndex: 200,
     maxHeight: 300,
     overflowY: "auto",
-    overflowX: "hidden",
     boxShadow: "0 4px 6px rgb(32 33 36 / 28%)",
     borderRadius: "0px 0px 5px 5px",
     width: "100%",
-    paddingLeft: "34px",
+    paddingLeft: "44px",
   },
   Li: {
-    color: "rgb(40,40,40)",
-    fontFamily: "PT sans",
-    fontSize: "10px !important",
+    fontSize: "16px !important",
     fontWeight: "bolder !important",
     padding: "5px 0px !important",
     "@media screen and (max-width:600px)": {
@@ -158,7 +154,7 @@ const Searchbar = () => {
       </ClickAwayListener>
       {searchFieldChanges ? (
         <div>
-          <CircularProgress size={15} sx={{ color: "grey.500" }} />
+          <CircularProgress size={25} sx={{ color: "grey.500" }} />
         </div>
       ) : (
         <></>

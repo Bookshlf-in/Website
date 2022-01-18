@@ -1,6 +1,5 @@
 import { React, useState, useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { styled } from "@mui/material/styles";
+import { makeStyles, styled } from "@mui/styles";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
 import axios from "../../axios";
@@ -8,20 +7,18 @@ import axios from "../../axios";
 // Components
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Alert from "@material-ui/lab/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Avatar from "@material-ui/core/Avatar";
+import Alert from "@mui/material/Alert";
+import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
-import InputMask from "react-input-mask";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import IconButton from "@mui/material/IconButton";
 
 // icons
-import AddPhotoIcon from "@material-ui/icons/AddAPhotoRounded";
-import AddIcon from "@material-ui/icons/AddCircleOutlineRounded";
+import AddPhotoIcon from "@mui/icons-material/AddAPhotoRounded";
+import AddIcon from "@mui/icons-material/AddCircleOutlineRounded";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     fontFamily: "PT sans !important",
     "& input": {
@@ -52,7 +49,7 @@ export default function SellerRegister() {
   const [Name, setName] = useState("");
   const [Intro, setIntro] = useState("");
   const [load, setload] = useState(false);
-  const [Image, setImage] = useState("/images/user.png");
+  const [Image, setImage] = useState("");
   const [Photo, setPhoto] = useState(null);
   const [PhoneNo, setPhoneNo] = useState("");
   const [AltPhoneNo, setAltPhoneNo] = useState("");
@@ -67,104 +64,10 @@ export default function SellerRegister() {
     setImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  const FilterPhoneNumber = async (num) => {
-    num = num.replaceAll("(", "");
-    num = num.replaceAll(")", "");
-    num = num.replaceAll("-", "");
-    num = num.substr(3, 10);
-    return Number(num);
-  };
-
   // Image Size Validator
   const validateSize = () => {
     const fileSize = Photo.size / 1024 / 1024; // in MiB
-    if (fileSize > 5) return false;
-    else return true;
-  };
-
-  // uploading single image File
-  const uploadSingleImage = async (img) => {
-    const formData = new FormData();
-    formData.append("folder", "sellerProfile");
-    formData.append("file", img);
-
-    const result = await axios({
-      method: "post",
-      url: "/uploadFile",
-      data: formData,
-      headers: { "Content-Type": "multipart/form-data" },
-    })
-      .then((response) => {
-        return response.data.link;
-      })
-      .catch((error) => {
-        // console.log(error.response.data);
-      });
-
-    return result;
-  };
-
-  const handelRegister = async () => {
-    setload(true);
-    const num1 = await FilterPhoneNumber(PhoneNo);
-    const num2 = await FilterPhoneNumber(AltPhoneNo);
-    if (validateSize()) {
-      const imgURL = await uploadSingleImage(Photo);
-      axios
-        .post("/sellerRegister", {
-          name: Name,
-          phoneNo: num1,
-          altPhoneNo: num2,
-          intro: Intro,
-          photo: imgURL,
-        })
-        .then((response) => {
-          // console.log(response.data);
-          setload(false);
-          setalert({
-            show: true,
-            type: "success",
-            msg: "Registration Successfully Completed",
-          });
-          user.roles.push("seller");
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              wishlist: user.wishlist,
-              cartitems: user.cartitems,
-            })
-          );
-          setUser({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            wishlist: user.wishlist,
-            cartitems: user.cartitems,
-          });
-          setTimeout(() => {
-            history.go(0);
-          }, 3000);
-        })
-        .catch((error) => {
-          setload(false);
-          setalert({
-            show: true,
-            type: "error",
-            msg: "Registration Failed. Try Again",
-          });
-
-          setTimeout(() => {
-            setalert({
-              show: false,
-              type: "info",
-              msg: "",
-            });
-          }, 3000);
-        });
-    } else {
+    if (fileSize > 5) {
       setload(false);
       setalert({
         show: true,
@@ -178,6 +81,149 @@ export default function SellerRegister() {
           msg: "",
         });
       }, 3000);
+      return false;
+    } else return true;
+  };
+
+  // uploading single image File
+  const uploadSingleImage = async (img) => {
+    const formData = new FormData();
+    formData.append("folder", "sellerProfile");
+    formData.append("file", img);
+    const result = await axios({
+      method: "post",
+      url: "/uploadFile",
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => {
+        return response.data.link;
+      })
+      .catch((error) => {
+        // console.log(error.response.data);
+      });
+    return result;
+  };
+
+  // Redirecting
+  const Redirect = () => {
+    localStorage.setItem(
+      "bookshlf_user",
+      JSON.stringify({
+        ...user,
+        roles: [...Array.from(user.roles), "seller"],
+      })
+    );
+    setUser({
+      ...user,
+      roles: [...Array.from(user.roles), "seller"],
+    });
+    setTimeout(() => {
+      history.go(0);
+    }, 3000);
+  };
+
+  // registering Seller
+  const handelRegister = async () => {
+    setload(true);
+    if (Photo && validateSize()) {
+      if (PhoneNo.length >= 10 && PhoneNo.length <= 12) {
+        const imgURL = await uploadSingleImage(Photo);
+        axios
+          .post("/sellerRegister", {
+            name: Name,
+            phoneNo: Number(PhoneNo),
+            altPhoneNo: Number(AltPhoneNo),
+            intro: Intro,
+            photo: imgURL,
+          })
+          .then((response) => {
+            setload(false);
+            setalert({
+              show: true,
+              type: "success",
+              msg: "Registration Successfully Completed",
+            });
+            Redirect();
+          })
+          .catch((error) => {
+            setload(false);
+            setalert({
+              show: true,
+              type: "error",
+              msg: "Registration Failed. Try Again",
+            });
+            setTimeout(() => {
+              setalert({
+                show: false,
+                type: "info",
+                msg: "",
+              });
+            }, 3000);
+          });
+      } else {
+        setload(false);
+        setalert({
+          show: true,
+          type: "error",
+          msg: "Phone Number Invalid!",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            type: "info",
+            msg: "",
+          });
+        }, 3000);
+      }
+    } else {
+      if (PhoneNo.length >= 10 && PhoneNo.length <= 12) {
+        axios
+          .post("/sellerRegister", {
+            name: Name,
+            phoneNo: Number(PhoneNo),
+            altPhoneNo: Number(AltPhoneNo),
+            intro: Intro,
+          })
+          .then((response) => {
+            setload(false);
+            setalert({
+              show: true,
+              type: "success",
+              msg: "Registration Successfully Completed",
+            });
+            Redirect();
+          })
+          .catch((error) => {
+            setload(false);
+            setalert({
+              show: true,
+              type: "error",
+              msg: "Registration Failed. Try Again",
+            });
+            setTimeout(() => {
+              setalert({
+                show: false,
+                type: "info",
+                msg: "",
+              });
+            }, 3000);
+          });
+      } else {
+        setload(false);
+        setalert({
+          show: true,
+          type: "error",
+          msg: "Phone Number Invalid!",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            type: "info",
+            msg: "",
+          });
+        }, 3000);
+      }
     }
   };
 
@@ -190,12 +236,17 @@ export default function SellerRegister() {
       }}
     >
       {user ? (
-        <Stack spacing={2} direction="column">
+        <Stack spacing={1} direction="column">
           <Alert severity="error" className={classes.root}>
-            <AlertTitle className={classes.root}>Register As Seller</AlertTitle>
             Oops you are not registered. Please Register As Seller.
           </Alert>
-          <Stack direction="column" spacing={1} sx={{ padding: "10px" }}>
+          <Stack
+            direction="column"
+            spacing={1}
+            sx={{ padding: "10px" }}
+            justifyContent="center"
+            alignItems="center"
+          >
             <Stack
               spacing={1}
               direction="column"
@@ -226,13 +277,16 @@ export default function SellerRegister() {
             <TextField
               className={classes.root}
               label="Name"
-              variant="standard"
+              variant="filled"
+              fullWidth
               onChange={(e) => setName(e.target.value)}
               value={Name}
               helperText="Preferred Seller Name"
+              sx={{ maxWidth: 300 }}
             />
             <TextField
-              variant="standard"
+              variant="filled"
+              fullWidth
               label="About Yourself"
               helperText="Tell Others about Yourself. A short Insight Intro."
               multiline
@@ -240,39 +294,34 @@ export default function SellerRegister() {
               onChange={(e) => setIntro(e.target.value)}
               value={Intro}
               className={classes.root}
+              sx={{ maxWidth: 300 }}
             />
-            <Stack direction="column" spacing={1}>
-              <label
-                htmlFor="phone-no"
-                id="mobile-label"
-                className={classes.root}
-              >
-                Mobile Phone
-                <br />
-                <InputMask
-                  id="phone-no"
-                  mask="+\91-(999)-(999)-(9999)"
-                  alwaysShowMask={true}
-                  value={PhoneNo}
-                  onChange={(e) => setPhoneNo(e.target.value)}
-                />
-              </label>
-              <label
-                htmlFor="alt-phone-no"
-                id="mobile-label"
-                className={classes.root}
-              >
-                Alt Mobile Phone
-                <br />
-                <InputMask
-                  id="alt-phone-no"
-                  mask="+\91-(999)-(999)-(9999)"
-                  value={AltPhoneNo}
-                  alwaysShowMask={true}
-                  onChange={(e) => setAltPhoneNo(e.target.value)}
-                />
-              </label>
-            </Stack>
+
+            <TextField
+              className={classes.root}
+              label="Contact Number"
+              variant="filled"
+              fullWidth
+              value={PhoneNo}
+              onChange={(e) => setPhoneNo(e.target.value)}
+              type="number"
+              sx={{ maxWidth: 300 }}
+            />
+            <TextField
+              className={classes.root}
+              label="Alternate Contact Number"
+              variant="filled"
+              fullWidth
+              value={AltPhoneNo}
+              onChange={(e) => setAltPhoneNo(e.target.value)}
+              type="number"
+              sx={{ maxWidth: 300 }}
+            />
+            {alert.show ? (
+              <Alert severity={alert.type} className={classes.root}>
+                {alert.msg}
+              </Alert>
+            ) : null}
             <LoadingButton
               endIcon={<AddIcon />}
               loading={load}
@@ -280,19 +329,15 @@ export default function SellerRegister() {
               variant="contained"
               className={classes.root}
               onClick={handelRegister}
+              fullWidth
+              sx={{ maxWidth: 300 }}
             >
               Register
             </LoadingButton>
-            {alert.show ? (
-              <Alert severity={alert.type} className={classes.root}>
-                {alert.msg}
-              </Alert>
-            ) : null}
           </Stack>
         </Stack>
       ) : (
         <Alert severity="error" className={classes.root}>
-          <AlertTitle className={classes.root}> Please Login </AlertTitle>
           You are not Logged In. <br />
           <br />
           <Button

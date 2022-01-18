@@ -1,169 +1,231 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
-import { makeStyles } from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
-import "./CurrentOrders.css";
-const useStyles = makeStyles((theme) => ({
+
+// Components
+import {
+  Stack,
+  Chip,
+  Avatar,
+  Typography,
+  Button,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+
+// Icon
+import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
+import PackedIcon from "@mui/icons-material/Inventory2Rounded";
+import ShippedIcon from "@mui/icons-material/LocalShippingRounded";
+import PlacedIcon from "@mui/icons-material/PlaylistAddCheckCircleRounded";
+import TrackIcon from "@mui/icons-material/BarChartRounded";
+import DeleteIcon from "@mui/icons-material/DeleteRounded";
+
+const useStyles = makeStyles(() => ({
   root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
+    fontFamily: "PT sans !important",
+    "& p": {
+      fontFamily: "PT sans !important",
     },
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    padding: "20px",
+  },
+  stack: {
+    minHeight: "calc(100vh - 200px)",
+    width: "100%",
   },
 }));
 
-function CurrentOrders(props) {
-  // console.log(props.orders);
+const CurrentOrders = (props) => {
   const classes = useStyles();
-  const [alert, setalert] = useState({
-    Display: false,
-    Type: "success",
-    Color: "",
-    msg: "",
-  });
+
+  const [deleteId, setdeleteId] = useState("");
   const [activeOrders, setactiveOrders] = useState(props.orders);
-  const handelCancelOrder = (ORDERID) => {
+  // cancel Order
+  const handelCancelOrder = (orderId) => {
+    setdeleteId(orderId);
     axios
       .delete("/cancelOrder", {
-        data: { orderId: ORDERID },
+        data: {
+          orderId: orderId,
+        },
       })
       .then((response) => {
-        // console.log(response.data);
-        setalert({
-          Display: true,
-          Type: "success",
-          Color: "yellowgreen",
-          msg: "Order Cancelled Successfully",
-        });
-        axios
-          .get("/getOrderList")
-          .then((response) => {
-            if (response.data) {
-              setactiveOrders(
-                response.data.filter(
-                  (order) =>
-                    order.status[order.status.length - 1] !== "Cancelled" &&
-                    order.status[order.status.length - 1] !== "Delivered"
-                )
-              );
-            }
-          })
-          .catch((error) => {});
-        setTimeout(() => {
-          setalert({
-            Display: false,
-            Type: "",
-            Color: "",
-            msg: "",
-          });
-        }, 3000);
+        setdeleteId("");
+        setactiveOrders(activeOrders.filter((order) => order._id !== orderId));
       })
       .catch((error) => {
-        setalert({
-          Display: true,
-          Type: "error",
-          Color: "red",
-          msg: "Some Error Occured Try Again!",
-        });
-        setTimeout(() => {
-          setalert({
-            Display: false,
-            Type: "",
-            Color: "",
-            msg: "",
-          });
-        }, 3000);
+        setdeleteId("");
       });
   };
 
-  return (
-    <div className="user-current-orders" id="user-current-orders">
-      <div
-        className={classes.root}
-        style={{ display: alert.Display ? "flex" : "none" }}
-      >
-        <Alert
-          variant="outlined"
-          severity={alert.Type}
-          style={{
-            fontFamily: "PT Sans",
-            fontWeight: "bold",
-            color: alert.Color,
-            width: "500px",
-          }}
-        >
-          {alert.msg}
-        </Alert>
-      </div>
-      <table className="active-orders-table">
-        <thead>
-          <tr>
-            <th> Order ID </th>
-            <th> Details </th>
-            <th> Price </th>
-            <th> Tracking </th>
-            <th> Cancel </th>
-          </tr>
-        </thead>
-        {
-          <>
-            {activeOrders && activeOrders.length ? (
-              <tbody>
-                {activeOrders.map((order, idx) => (
-                  <tr key={idx}>
-                    <td>{order._id}</td>
-                    <td>
-                      <ul style={{ listStyle: "none" }}>
-                        <li>Book : {order.title}</li>
-                      </ul>
-                    </td>
-                    <td>
-                      <i className="fas fa-rupee-sign" />
-                      {" " + order.orderTotal + " "}/-
-                    </td>
-                    <td>
-                      <Link
-                        className="tracking-order-link"
-                        to={`/Track/${order._id}`}
-                        title="Track Order"
-                      >
-                        Track&nbsp;You&nbsp;Order
-                      </Link>
-                    </td>
-                    <td>
-                      <i
-                        className="fas fa-window-close"
-                        id={order._id}
-                        title="Cancel Order"
-                        onClick={(e) => {
-                          handelCancelOrder(e.target.id);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+  const columns = [
+    {
+      field: "orderPhoto",
+      headerName: "Book Id",
+      minWidth: 200,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            sx={{ padding: "10px" }}
+            spacing={2}
+          >
+            <Avatar src={cellValue.value[0]} alt="" variant="rounded" />
+            <Chip
+              label={cellValue.value[1]}
+              size="small"
+              sx={{ fontSize: "9px" }}
+              className={classes.root}
+            />
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "orderTotal",
+      headerName: "Order Total",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Chip
+            icon={<RupeeIcon />}
+            label={cellValue.value}
+            size="small"
+            className={classes.root}
+            color="primary"
+            variant="outlined"
+          />
+        );
+      },
+    },
+    {
+      field: "orderTitle",
+      headerName: "Book",
+      minWidth: 200,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Typography
+            className={classes.root}
+            variant="body1"
+            sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}
+          >
+            {cellValue.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "orderStatus",
+      headerName: "Order Status",
+      minWidth: 150,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Chip
+            icon={
+              cellValue.value === "Order placed" ? (
+                <PlacedIcon />
+              ) : cellValue.value === "Packed" ? (
+                <PackedIcon sx={{ height: 15, width: 15 }} />
+              ) : (
+                <ShippedIcon sx={{ height: 15, width: 15 }} />
+              )
+            }
+            label={cellValue.value}
+            size="small"
+            className={classes.root}
+            color={
+              cellValue.value === "Order placed"
+                ? "warning"
+                : cellValue.value === "Packed"
+                ? "secondary"
+                : "success"
+            }
+            variant="outlined"
+          />
+        );
+      },
+    },
+    {
+      field: "trackOrder",
+      headerName: "Tracking",
+      minWidth: 150,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Button
+            startIcon={<TrackIcon />}
+            href={`/Track/${cellValue.value}`}
+            size="small"
+            className={classes.root}
+            variant="contained"
+            target="_blank"
+          >
+            Track Order
+          </Button>
+        );
+      },
+    },
+    {
+      field: "deleteOrder",
+      headerName: "Cancel Order",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <IconButton
+            className={classes.root}
+            color="error"
+            onClick={() => handelCancelOrder(cellValue.value)}
+          >
+            {deleteId === cellValue.value ? (
+              <CircularProgress color="inherit" size={20} />
             ) : (
-              <tfoot>
-                <tr>
-                  <td>No Active Orders</td>
-                  <td>---</td>
-                  <td>---</td>
-                  <td>---</td>
-                  <td>---</td>
-                </tr>
-              </tfoot>
+              <DeleteIcon />
             )}
-          </>
-        }
-      </table>
-    </div>
+          </IconButton>
+        );
+      },
+    },
+  ];
+  const rows = activeOrders.map((order) => {
+    return {
+      id: order._id,
+      orderPhoto: [order.photo, order._id],
+      orderTotal: order.orderTotal,
+      orderTitle: order.title,
+      orderStatus: order.status[order.status.length - 1],
+      trackOrder: order._id,
+      deleteOrder: order._id,
+    };
+  });
+
+  return (
+    <Stack className={classes.stack}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={3}
+        rowBuffer={3}
+        className={classes.root}
+        loading={activeOrders === null}
+        rowHeight={100}
+        rowsPerPageOptions={[3]}
+        disableColumnFilter
+        disableSelectionOnClick
+        disableColumnMenu
+      />
+    </Stack>
   );
-}
+};
 export default CurrentOrders;

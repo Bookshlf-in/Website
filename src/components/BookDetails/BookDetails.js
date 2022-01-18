@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
     fontFamily: "PT sans !important",
   },
   Button: {
-    width: 250,
+    maxWidth: 280,
     backgroundColor: "rgb(235, 83, 52) !important",
     letterSpacing: "1px !important",
     padding: "12px 15px !important",
@@ -215,17 +215,20 @@ const BookDetails = () => {
 
       {/* Component */}
       {!bookLoading ? (
-        <Grid
-          container
+        <Stack
           spacing={2}
           sx={{ padding: "10px" }}
           justifyContent="center"
           alignItems="center"
         >
-          <Grid item xs={12} sm={9} md={9} lg={9}>
+          <Stack
+            sx={{ width: "100%" }}
+            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+            justifyContent="space-evenly"
+            alignItems="space-evenly"
+            spacing={2}
+          >
             <Booksnaps snaps={book.photos} />
-          </Grid>
-          <Grid item xs={12} sm={3} md={3} lg={3}>
             <Stack
               direction={{
                 xs: "row",
@@ -274,32 +277,30 @@ const BookDetails = () => {
                 <BuynowIcon sx={{ color: "rgb(235, 83, 52)" }} />
               </Fab>
             </Stack>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <BookDesc bookdetails={book} />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Stack
-              spacing={2}
-              direction="column"
-              sx={{ width: "100%" }}
-              justifyContent="center"
-              alignItems="center"
+          </Stack>
+
+          <Stack
+            spacing={2}
+            direction="column"
+            sx={{ width: "100%" }}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <LoadingButton
+              variant="contained"
+              fullWidth
+              className={classes.Button}
+              loading={false}
+              loadingPosition="end"
+              endIcon={<BuynowIcon />}
+              onClick={handelCheckout}
+              disabled={book.status === "Cancelled"}
             >
-              <LoadingButton
-                variant="contained"
-                className={classes.Button}
-                loading={false}
-                loadingPosition="end"
-                endIcon={<BuynowIcon />}
-                onClick={handelCheckout}
-                disabled={book.status === "Cancelled"}
-              >
-                <strong>Buy Now</strong>
-              </LoadingButton>
-            </Stack>
-          </Grid>
-        </Grid>
+              <strong>Buy Now</strong>
+            </LoadingButton>
+          </Stack>
+          <BookDesc bookdetails={book} />
+        </Stack>
       ) : (
         <Grid
           container

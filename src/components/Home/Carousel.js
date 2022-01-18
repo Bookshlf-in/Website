@@ -1,8 +1,8 @@
-import { React, useState, useEffect, useCallback } from "react";
+import { React, useState, useEffect, useRef, useCallback } from "react";
 import "./Home.css";
 
 // Components
-import { Typography, Button, IconButton } from "@mui/material";
+import { Button, IconButton, Slide } from "@mui/material";
 
 // Icons
 import ActiveIcon from "@mui/icons-material/FiberManualRecordRounded";
@@ -64,17 +64,63 @@ const slideLabel = [
 
 const Slider = () => {
   const [imageIndex, setImageIndex] = useState(0);
+  const [dir, setDir] = useState("left");
+  const containerRef = useRef(null);
 
-  const slideLeft = () => {
-    setImageIndex((imageIndex + totalImages - 1) % totalImages);
+  // Custom Image Slider
+  const ImageSlider = (props) => {
+    return (
+      <Slide
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={1000}
+        direction={props.dir}
+        container={props.Ref}
+      >
+        <div
+          className="slider__image"
+          style={{
+            backgroundImage: `url("${images[props.index].url}")`,
+          }}
+        ></div>
+      </Slide>
+    );
   };
 
+  // Custom Image Slider
+  const TitleSlider = (props) => {
+    return (
+      <Slide
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={1000}
+        direction={props.dir}
+        container={props.Ref}
+      >
+        <div>
+          {slideLabel[props.index].title}
+          <div className="slider__body">{slideLabel[props.index].body}</div>
+        </div>
+      </Slide>
+    );
+  };
+
+  // slidingLeft
+  const slideLeft = () => {
+    setImageIndex((imageIndex + totalImages - 1) % totalImages);
+    setDir("right");
+  };
+
+  // Sliding Right
   const slideRight = useCallback(() => {
     setImageIndex((imageIndex + 1) % totalImages);
+    setDir("left");
   }, [imageIndex]);
 
   useEffect(() => {
-    const myTimeout = setTimeout(slideRight, 5000);
+    const myTimeout = setTimeout(slideRight, 10000);
     return () => {
       clearTimeout(myTimeout);
     };
@@ -82,15 +128,8 @@ const Slider = () => {
 
   return (
     <div className="slider">
-      <div className="slider__imageContainer">
-        <a href={images[imageIndex].url}>
-          <div
-            className="slider__image"
-            style={{
-              backgroundImage: `url("${images[imageIndex].url}")`,
-            }}
-          ></div>
-        </a>
+      <div className="slider__imageContainer" ref={containerRef}>
+        <ImageSlider dir={dir} index={imageIndex} Ref={containerRef.current} />
       </div>
       <div className="slider__bulletContainer">
         {images.map((image, i) => (
@@ -103,9 +142,8 @@ const Slider = () => {
           </IconButton>
         ))}
       </div>
-      <div className="slider__title">
-        {slideLabel[imageIndex].title}
-        <div className="slider__body">{slideLabel[imageIndex].body}</div>
+      <div className="slider__title" ref={containerRef}>
+        <TitleSlider dir="down" index={imageIndex} Ref={containerRef.current} />
       </div>
 
       {imageIndex < 4 ? (
@@ -132,3 +170,14 @@ const Slider = () => {
 };
 
 export default Slider;
+
+/*
+Taking
+
+currentRatings = CR
+booksSold = BS
+newRating = NR
+
+to Find New Average Rating = NAR
+NAR = (BS*CR+NR) / (BS+1)
+*/

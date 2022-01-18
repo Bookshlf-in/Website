@@ -204,6 +204,7 @@ const Wishlist = () => {
                         <Fab
                           aria-label="Remove-from-Wishlist"
                           onClick={() => handelWishList(item.bookId)}
+                          size="small"
                         >
                           {removeId === item.bookId ? (
                             <CircularProgress size="1rem" color="warning" />

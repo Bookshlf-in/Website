@@ -6,7 +6,6 @@
   flex-direction: column;
   width: 100%;
   overflow-x: hidden;
-  background-image: url(./contact-bg.jpg);
 }
 .contact-main h1 {
   font-family: "Staatliches", sans-serif;

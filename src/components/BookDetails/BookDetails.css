@@ -8,6 +8,9 @@
   width: 400px !important;
   height: 450px !important;
 }
+.book-details-tag-stack div {
+  margin: 8px 8px 0px 8px !important;
+}
 
 @media screen and (max-width: 600px) {
   .book-details-snap .book-snapshots {

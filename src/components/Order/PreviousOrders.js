@@ -1,115 +1,212 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import axios from "../../axios";
+
+// Components
+import { Stack, Chip, Avatar, Typography, Button } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+
+// Icon
+import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import ReviewIcon from "@mui/icons-material/RateReviewRounded";
+import TrackIcon from "@mui/icons-material/BarChartRounded";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    fontFamily: "PT sans !important",
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+  },
+  stack: {
+    minHeight: "calc(100vh - 200px)",
+    width: "100%",
+  },
+}));
 
 const PreviousOrders = (props) => {
-  const [pastOrders, setpastOrders] = useState(props.orders);
-  // console.log(pastOrders);
-  return (
-    <div className="user-previous-orders" id="user-previous-orders">
-      <table className="active-orders-table">
-        <thead>
-          <tr>
-            <th> Order ID </th>
-            <th> Seller </th>
-            <th> Book Details </th>
-            <th> Order Total </th>
-            <th> Status</th>
-            <th> Reviews</th>
-          </tr>
-        </thead>
-        {pastOrders && pastOrders.length > 0 ? (
-          <tbody>
-            {pastOrders.map((order, idx) => (
-              <tr key={idx}>
-                <td> {order._id} </td>
-                <td>{order.sellerName}</td>
-                <td>
-                  <ul style={{ listStyle: "none" }}>
-                    <li>
-                      <b>Book</b> : {order.title}
-                    </li>
-                    <li>
-                      <b>QTY</b> : {order.purchaseQty}
-                    </li>
-                    <li>
-                      <b>Author</b> : {order.author}
-                    </li>
-                    <li>
-                      <b>Price</b> : <i className="fas fa-rupee-sign" />
-                      {" " + order.price + " /-"}
-                    </li>
-                  </ul>
-                </td>
-                <td>
-                  <i className="fas fa-rupee-sign" />
-                  {" " + order.orderTotal}&nbsp;/-
-                </td>
-                <td
-                  style={{
-                    backgroundColor:
-                      order.status[order.status.length - 1] === "Delivered"
-                        ? "yellowgreen"
-                        : order.status[order.status.length - 1] === "Cancelled"
-                        ? "red"
-                        : "rgb(255, 176, 48)",
-                    color: "white",
-                  }}
-                >
-                  {order.status[order.status.length - 1] === "Delivered" ? (
-                    <>
-                      <div style={{ marginBottom: "40px" }}>
-                        <i className="fas fa-check-circle" />
-                        &nbsp;&nbsp;
-                        {order.status[order.status.length - 1]}
-                      </div>
+  const classes = useStyles();
 
-                      <Link
-                        className="completed-order-details"
-                        to={`/Track/${order._id}`}
-                        title="Track Order"
-                      >
-                        View&nbsp;Details
-                      </Link>
-                    </>
-                  ) : order.status[order.status.length - 1] === "Cancelled" ? (
-                    <>
-                      <i className="fas fa-times-circle" />
-                      &nbsp;&nbsp;
-                      {order.status[order.status.length - 1]}
-                    </>
-                  ) : (
-                    order.status[order.status.length - 1]
-                  )}
-                </td>
-                <td>
-                  {order.status[order.status.length - 1] === "Delivered" ? (
-                    <Link
-                      className="tracking-order-link"
-                      to={`/AddReview/${order._id}`}
-                    >
-                      Review&nbsp;this&nbsp;Order
-                    </Link>
-                  ) : (
-                    "---"
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+  const [deleteId, setdeleteId] = useState("");
+  const [previousOrders, setpreviousOrders] = useState(props.orders);
+  // cancel Order
+  const handelCancelOrder = (orderId) => {
+    setdeleteId(orderId);
+    axios
+      .delete("/cancelOrder", {
+        data: {
+          orderId: orderId,
+        },
+      })
+      .then((response) => {
+        setdeleteId("");
+        setpreviousOrders(
+          previousOrders.filter((order) => order._id !== orderId)
+        );
+      })
+      .catch((error) => {
+        setdeleteId("");
+      });
+  };
+
+  const columns = [
+    {
+      field: "orderPhoto",
+      headerName: "Book Id",
+      minWidth: 200,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            sx={{ padding: "10px" }}
+            spacing={2}
+          >
+            <Avatar src={cellValue.value[0]} alt="" variant="rounded" />
+            <Chip
+              label={cellValue.value[1]}
+              size="small"
+              sx={{ fontSize: "9px" }}
+              className={classes.root}
+            />
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "orderTotal",
+      headerName: "Order Total",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Chip
+            icon={<RupeeIcon />}
+            label={cellValue.value}
+            size="small"
+            className={classes.root}
+            color="primary"
+            variant="outlined"
+          />
+        );
+      },
+    },
+    {
+      field: "orderTitle",
+      headerName: "Book",
+      minWidth: 200,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Typography
+            className={classes.root}
+            variant="body1"
+            sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}
+          >
+            {cellValue.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "orderStatus",
+      headerName: "Order Status",
+      minWidth: 150,
+      flex: 2,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Chip
+            icon={
+              cellValue.value === "Cancelled" ? <CancelIcon /> : <CheckIcon />
+            }
+            label={cellValue.value}
+            size="small"
+            className={classes.root}
+            color={cellValue.value === "Cancelled" ? "error" : "success"}
+            variant="outlined"
+          />
+        );
+      },
+    },
+    {
+      field: "trackOrder",
+      headerName: "Order Details",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Button
+            startIcon={<TrackIcon />}
+            href={`/Track/${cellValue.value}`}
+            size="small"
+            className={classes.root}
+            variant="outlined"
+          >
+            Details
+          </Button>
+        );
+      },
+    },
+    {
+      field: "reviewOrder",
+      headerName: "Review Order",
+      minWidth: 100,
+      flex: 1,
+      sortable: false,
+      renderCell: (cellValue) => {
+        return cellValue.value[0] === "Cancelled" ? (
+          <div></div>
         ) : (
-          <tfoot>
-            <tr>
-              <td>No Orders...</td>
-              <td>---</td>
-              <td>---</td>
-              <td>---</td>
-              <td>---</td>
-              <td>---</td>
-            </tr>
-          </tfoot>
-        )}
-      </table>
-    </div>
+          <Button
+            startIcon={<ReviewIcon />}
+            href={`/AddReview/${cellValue.value[1]}`}
+            size="small"
+            className={classes.root}
+            variant="contained"
+            color="success"
+          >
+            Review
+          </Button>
+        );
+      },
+    },
+  ];
+  const rows = previousOrders.map((order) => {
+    return {
+      id: order._id,
+      orderPhoto: [order.photo, order._id],
+      orderTotal: order.orderTotal,
+      orderTitle: order.title,
+      orderStatus: order.status[order.status.length - 1],
+      trackOrder: order._id,
+      reviewOrder: [order.status[order.status.length - 1], order._id],
+    };
+  });
+
+  return (
+    <Stack className={classes.stack}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={3}
+        rowBuffer={3}
+        className={classes.root}
+        loading={previousOrders === null}
+        rowHeight={100}
+        rowsPerPageOptions={[3]}
+        disableColumnFilter
+        disableSelectionOnClick
+        disableColumnMenu
+      />
+    </Stack>
   );
 };
 export default PreviousOrders;

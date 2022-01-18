@@ -1,98 +1,262 @@
-import { React, useEffect, useState } from "react";
-import "./SellerProfile.css";
+import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet";
 import axios from "../../axios";
-import Rating from "@material-ui/lab/Rating";
-import Avatar from "@material-ui/core/Avatar";
 
-const Verified = {
-  user: "verified-user",
-  tag: "Verified",
-};
-const nonVerified = {
-  user: "non-verified-user",
-  tag: "Not Verified",
-};
+// Components
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Rating from "@mui/material/Rating";
+import Alert from "@mui/material/Alert";
+import Skeleton from "@mui/lab/Skeleton";
+
+// Icons
+import PersonIcon from "@mui/icons-material/PersonTwoTone";
+import DateRangeIcon from "@mui/icons-material/DateRangeTwoTone";
+import InfoIcon from "@mui/icons-material/InfoTwoTone";
+import RatingIcon from "@mui/icons-material/GradeTwoTone";
+import BookSoldIcon from "@mui/icons-material/LocalShippingTwoTone";
+import ReviewsIcon from "@mui/icons-material/ReviewsTwoTone";
+import CheckIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/CancelRounded";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    fontFamily: "PT sans !important",
+    "& label": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
+    },
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+  },
+}));
 
 const SellerProfile = (props) => {
-  const params = useParams();
+  const classes = useStyles();
+  const sellerId = useParams().sellerId;
 
-  const [sellerName, setSellerName] = useState("");
-  const [sellerIntro, setSellerIntro] = useState("");
-  const [sellerPhoto, setSellerPhoto] = useState("");
-  const [noOfBooksSold, setNoOfBooksSold] = useState(0);
-  const [sellerRating, setSellerRating] = useState(0);
-  const [noOfRatings, setNoOfRatings] = useState(0);
-  const [noOfReviews, setNoOfReviews] = useState(0);
-  const [isVerified, setIsVerified] = useState(false);
+  // Functionality States
+  const [Load, setLoad] = useState(true);
+  const [err, setErr] = useState(false);
+
+  // Data States
+  const [seller, setseller] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      const url = `/getSellerProfile?sellerId=${params.sellerId}`;
-      axios.get(url).then((response) => {
-        const responseData = response.data;
-        setSellerName(responseData.name);
-        setSellerIntro(responseData.intro);
-        setSellerPhoto(responseData.photo);
-        setNoOfBooksSold(responseData.noOfBooksSold);
-        setSellerRating(responseData.rating);
-        setNoOfRatings(responseData.noOfRatings);
-        setNoOfReviews(responseData.noOfReviews);
-        setIsVerified(responseData.isVerified);
-      });
+    const Fetch = () => {
+      axios
+        .get("/getSellerProfile", {
+          params: {
+            sellerId: sellerId,
+          },
+        })
+        .then((response) => {
+          // console.log(response.data);
+          setseller(response.data);
+          setLoad(false);
+        })
+        .catch((error) => {
+          setErr(true);
+          setLoad(false);
+        });
     };
-    fetchData();
+    Fetch();
   }, []);
 
   return (
     <>
       <Helmet>
-        <title>{sellerName} | Bookshlf</title>
-        <meta name="description" content={sellerIntro} />
+        <title>{`${seller?.name}`} | Bookshlf</title>
       </Helmet>
-
-      <div className="sellerContainer">
-        <div className="verify-tag">
-          <p className={isVerified ? Verified.user : nonVerified.user}>
-            <b>{isVerified ? Verified.tag : nonVerified.tag}</b>
-          </p>
-        </div>
-
-        <div className="seller">
-          <span>
-            <i className="fas fa-user"></i>
-            {sellerName}
-          </span>
-
-          <span>
-            <i className="fas fa-info-circle" />
-            {sellerIntro}
-          </span>
-          <span className="rating-span">
-            <Rating name="read-only" value={sellerRating} readOnly />(
-            {sellerRating > 5 ? 5 : sellerRating})
-          </span>
-          <span>
-            <span className="books-sold">
-              {`${noOfBooksSold === 1 ? "Book" : "Books"}`}
-              Sold -
-            </span>
-            <span style={{ color: "rgb(44, 185, 25)", fontWeight: "600" }}>
-              {noOfBooksSold}
-            </span>
-          </span>
-        </div>
-        <div className="avatar-style">
-          <Avatar
-            alt="Profile"
-            src={sellerPhoto}
-            style={{ height: "150px", width: "150px" }}
-          />
-        </div>
-      </div>
+      {Load ? (
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          sx={{ padding: "24px" }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              padding: "10px",
+              border: "1px solid rgba(0,0,0,0.4)",
+              borderRadius: "10px",
+            }}
+          >
+            <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
+              <Stack
+                spacing={2}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Skeleton
+                  variant="circular"
+                  height={100}
+                  width={100}
+                  animation="wave"
+                />
+                <Skeleton
+                  variant="text"
+                  height={25}
+                  width={100}
+                  animation="wave"
+                />
+                <Skeleton
+                  variant="text"
+                  height={25}
+                  width={200}
+                  animation="wave"
+                />
+              </Stack>
+              <Stack spacing={2} direction="row" alignItems="center">
+                <Skeleton variant="circular" height={30} width={30} />
+                <Skeleton variant="text" width={200} animation="wave" />
+              </Stack>
+              <Stack spacing={2} direction="row" alignItems="center">
+                <Skeleton variant="circular" height={30} width={30} />
+                <Skeleton variant="text" width={200} animation="wave" />
+              </Stack>
+              <Stack spacing={2} direction="row" alignItems="center">
+                <Skeleton variant="circular" height={30} width={30} />
+                <Skeleton variant="text" width={200} animation="wave" />
+              </Stack>
+              <Stack spacing={2} direction="row" alignItems="center">
+                <Skeleton variant="circular" height={30} width={30} />
+                <Skeleton variant="text" width={200} animation="wave" />
+              </Stack>
+              <Stack spacing={2} direction="row" alignItems="center">
+                <Skeleton variant="circular" height={30} width={30} />
+                <Skeleton variant="text" width={200} animation="wave" />
+              </Stack>
+              <Stack spacing={2} direction="row" alignItems="center">
+                <Skeleton variant="circular" height={30} width={30} />
+                <Skeleton variant="text" width={200} animation="wave" />
+              </Stack>
+              <Stack spacing={2} direction="row" alignItems="center">
+                <Skeleton variant="circular" height={30} width={30} />
+                <Skeleton variant="text" width={200} animation="wave" />
+              </Stack>
+            </Stack>
+          </Box>
+        </Stack>
+      ) : (
+        <>
+          {!err ? (
+            <Stack
+              justifyContent="center"
+              alignItems="center"
+              sx={{ padding: "24px" }}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  padding: "10px",
+                  border: "1px solid rgba(0,0,0,0.4)",
+                  borderRadius: "10px",
+                }}
+              >
+                <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
+                  <Stack
+                    spacing={2}
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Avatar
+                      src={seller.photo}
+                      alt={seller.name}
+                      sx={{ height: 100, width: 100 }}
+                    />
+                    <Chip
+                      label={seller.isVerified ? "Verified" : "Not Verified"}
+                      color={seller.isVerified ? "success" : "error"}
+                      size="small"
+                      variant="outlined"
+                      icon={seller.isVerified ? <CheckIcon /> : <CancelIcon />}
+                      sx={{ fontFamily: "PT sans", letterSpacing: "1px" }}
+                    />
+                    <Chip
+                      label={seller._id}
+                      color="primary"
+                      size="small"
+                      variant="outlined"
+                      icon={
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            fontFamily: "PT sans",
+                            fontSize: "12px !important",
+                          }}
+                        >
+                          ID :{" "}
+                        </Typography>
+                      }
+                      sx={{ fontFamily: "PT sans", letterSpacing: "1px" }}
+                    />
+                  </Stack>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <PersonIcon fontSize="small" />
+                    <Typography variant="caption">
+                      <strong>{seller.name}</strong>
+                    </Typography>
+                  </Stack>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <InfoIcon fontSize="small" />
+                    <Typography variant="caption">
+                      <strong>{seller.intro}</strong>
+                    </Typography>
+                  </Stack>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <RatingIcon fontSize="small" />
+                    <Rating readOnly value={seller.rating} size="small" />
+                    <Typography variant="caption">
+                      <strong>{seller.rating}</strong>
+                    </Typography>
+                  </Stack>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <RatingIcon fontSize="small" />
+                    <Typography variant="caption">
+                      <strong>Total Times Rated : {seller.noOfRatings}</strong>
+                    </Typography>
+                  </Stack>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <ReviewsIcon fontSize="small" />
+                    <Typography variant="caption">
+                      <strong>
+                        Total Reviews Recieved: {seller.noOfReviews}
+                      </strong>
+                    </Typography>
+                  </Stack>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <BookSoldIcon fontSize="small" />
+                    <Typography variant="caption">
+                      <strong>Total Books Sold : {seller.noOfBooksSold}</strong>
+                    </Typography>
+                  </Stack>
+                  <Stack spacing={2} direction="row" alignItems="center">
+                    <DateRangeIcon fontSize="small" />
+                    <Typography variant="caption">
+                      <strong>{seller.createdAt?.substr(0, 4)}</strong>
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </Box>
+            </Stack>
+          ) : (
+            <Alert severity="error" className={classes.root}>
+              {" "}
+              Some Error Occured. Please Reload Again!
+            </Alert>
+          )}
+        </>
+      )}
     </>
   );
 };
-
 export default SellerProfile;

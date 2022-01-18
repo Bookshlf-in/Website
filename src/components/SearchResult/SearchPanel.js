@@ -1,62 +1,79 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./SearchPanel.css";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
+import { Helmet } from "react-helmet";
+import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import Fab from "@material-ui/core/Fab";
-import AlertTitle from "@mui/material/AlertTitle";
 
-// Alert
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+// Components
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import CircularProgress from "@mui/material/CircularProgress";
+import Pagination from "@mui/material/Pagination";
+
+// Icons
+import NextIcon from "@mui/icons-material/NavigateNextRounded";
+import RupeeIcon from "@mui/icons-material/CurrencyRupee";
+import AddCartIcon from "@mui/icons-material/AddShoppingCart";
+import FilledCartIcon from "@mui/icons-material/ShoppingCart";
+import FilledWishlistIcon from "@mui/icons-material/Favorite";
+import WishlistIcon from "@mui/icons-material/FavoriteBorder";
+
+// Custom Components
+import SearchBar from "./Searchbar";
+import { IconButton } from "@mui/material";
 
 // Use Styles
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
+    fontFamily: "PT sans !important",
+    "& li": {
+      "& button": {
+        fontFamily: "PT sans !important",
+      },
     },
   },
 }));
 
-const inCart = {
-  backgroundColor: "green",
-  color: "white",
-  borderRadius: "40px",
-};
-
-const AllCategories = () => {
+const Search = () => {
+  // Calling Hooks
   const classes = useStyles();
   const params = useParams();
   const history = useHistory();
+
+  // User Context
   const [user, setUser] = useContext(UserContext);
+
+  // Functionality States
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState("success");
   const [alert, setAlert] = useState("");
+  const [Loading, setLoading] = useState(false);
+  const [wishlistLoad, setwishlistLoad] = useState("");
+  const [cartLoad, setcartLoad] = useState("");
 
-  // states
-  const [search, setsearch] = useState("");
-  const [books, setbooks] = useState(null);
-  const [load, setload] = useState(false);
-  const [backload, setbackload] = useState(false);
+  // Data states
+  const [books, setbooks] = useState([]);
   const [page, setpage] = useState(1);
-  const [totalPages, settotalPages] = useState(null);
+  const [totalPages, settotalPages] = useState(1);
 
   useEffect(() => {
     const fetchdata = async () => {
-      // console.log(params.query);
-      setsearch(params.query);
-      setbooks(null);
+      setLoading(true);
       axios
-        .get(`/search?q=${params.query}`)
+        .get("/search", {
+          params: {
+            q: params.query,
+          },
+        })
         .then((response) => {
           // console.log(response.data);
           setbooks(
@@ -65,295 +82,174 @@ const AllCategories = () => {
             })
           );
           settotalPages(response.data.totalPages);
+          setLoading(false);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setLoading(false);
+        });
     };
     fetchdata();
   }, [params.query]);
 
-  const handelSearch = () => {
-    setpage(1);
-    if (search === "") {
-    } else {
-      history.push(`/SearchResult/${search}`);
-      setsearch(params.query);
-    }
+  // changing Page
+  const changePage = (pageNo) => {
+    setLoading(true);
+    setpage(pageNo);
+    axios
+      .get("/search", {
+        params: {
+          q: params.query,
+          page: pageNo,
+        },
+      })
+      .then((response) => {
+        // console.log(response.data);
+        setbooks(
+          response.data.data.sort((a, b) => {
+            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
+          })
+        );
+        settotalPages(response.data.totalPages);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
   };
 
-  const LoadMore = () => {
-    setload(true);
-    // console.log(totalPages);
-    if (page + 1 <= totalPages) {
-      const fetchdata = async () => {
-        // console.log(`/search?q=tag:ALL&page=${page + 1}`);
-        axios
-          .get(`/search`, {
-            params: {
-              q: params.query,
-              page: page + 1,
-            },
-          })
-          .then((response) => {
-            setpage(page + 1);
-            // console.log(books.concat(response.data.data));
-            setbooks(
-              response.data.data.sort((a, b) => {
-                return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-              })
-            );
-            settotalPages(response.data.totalPages);
-            setload(false);
-          })
-          .catch((error) => {});
-      };
-      fetchdata();
-    } else {
-      setload(false);
-    }
-  };
-
-  const GoBack = () => {
-    setbackload(true);
-    // console.log(totalPages);
-    if (page - 1 > 0) {
-      const fetchdata = async () => {
-        // console.log(`/search?q=tag:ALL&page=${page + 1}`);
-        axios
-          .get(`/search`, {
-            params: {
-              q: params.query,
-              page: page - 1,
-            },
-          })
-          .then((response) => {
-            setpage(page - 1);
-            // console.log(books.concat(response.data.data));
-            setbooks(
-              response.data.data.sort((a, b) => {
-                return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-              })
-            );
-            settotalPages(response.data.totalPages);
-            setbackload(false);
-          })
-          .catch((error) => {});
-      };
-      fetchdata();
-    } else {
-      setbackload(false);
-    }
-  };
-  // handeling wish list
-  const handelWishList = (e) => {
+  // Add to Cart
+  const handelCart = (bookId, inCart) => {
+    setcartLoad(bookId);
     if (user) {
-      if (e.target.title === "Added to Wishlist") {
-        e.target.className = "fas fa-circle-notch";
-        e.target.style.animation = "spin 2s linear infinite";
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems,
-            wishlist: user.wishlist - 1,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: user.cartitems,
-          wishlist: user.wishlist - 1,
-        });
-
-        axios
-          .delete("/deleteWishlistItem", {
-            data: { bookId: e.target.id },
-          })
-          .then((response) => {
-            // console.log(response.data);
-            e.target.className = "far fa-heart";
-            e.target.style.animation = "";
-            setOpen(true);
-            setSeverity("success");
-            setAlert(response.data.msg);
-            e.target.title = "Add to Wishlist";
-          })
-          .catch((err) => {
-            e.target.className = "far fa-heart";
-            e.target.style.animation = "";
-            // console.log(err.response.data);
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({
-                authHeader: user.authHeader,
-                roles: user.roles,
-                email: user.email,
-                cartitems: user.cartitems,
-                wishlist: user.wishlist + 1,
-              })
-            );
-            setUser({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: user.cartitems,
-              wishlist: user.wishlist + 1,
-            });
-          });
-      } else {
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems,
-            wishlist: user.wishlist + 1,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: user.cartitems,
-          wishlist: user.wishlist + 1,
-        });
-        e.target.className = "fas fa-circle-notch";
-        e.target.style.animation = "spin 2s linear infinite";
-        axios
-          .post("/addWishlistItem", {
-            bookId: e.target.id,
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setOpen(true);
-            setSeverity("success");
-            setAlert(response.data.msg);
-            e.target.className = "fas fa-heart";
-            e.target.style.animation = "";
-            e.target.title = "Added to Wishlist";
-          })
-          .catch((error) => {
-            e.target.className = "fas fa-heart";
-            e.target.style.animation = "";
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({
-                authHeader: user.authHeader,
-                roles: user.roles,
-                email: user.email,
-                cartitems: user.cartitems,
-                wishlist: user.wishlist - 1,
-              })
-            );
-            setUser({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: user.cartitems,
-              wishlist: user.wishlist - 1,
-            });
-          });
-      }
-    } else {
-      setOpen(true);
-      setSeverity("error");
-      setAlert("Please Login!");
-      setTimeout(() => {
-        setOpen(false);
-      }, 3000);
-    }
-  };
-
-  const handelCart = (e) => {
-    if (user) {
-      if (e.target.title === "F") {
-        e.target.innerHTML = "Adding...";
-        e.target.style.backgroundColor = "green";
-        e.target.style.color = "white";
-        e.target.style.borderRadius = "40px";
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems + 1,
-            wishlist: user.wishlist,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: user.cartitems + 1,
-          wishlist: user.wishlist,
-        });
-        axios
-          .post("/addCartItem", {
-            bookId: e.target.id,
-          })
-          .then((response) => {
-            setOpen(true);
-            setSeverity("success");
-            setAlert(response.data.msg);
-            e.target.innerHTML = "Added In Cart";
-            e.target.title = "T";
-          })
-          .catch(() => {
-            e.target.innerHTML = "Failed!";
-            setTimeout(() => {
-              e.target.innerHTML = "Add to Cart";
-            }, 2000);
-          });
-      } else {
-        e.target.innerHTML = "Removing...";
-        e.target.style = {};
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems - 1,
-            wishlist: user.wishlist,
-          })
-        );
-        setUser({
-          authHeader: user.authHeader,
-          roles: user.roles,
-          email: user.email,
-          cartitems: user.cartitems - 1,
-          wishlist: user.wishlist,
-        });
+      if (inCart) {
         axios
           .delete("/deleteCartItem", {
-            data: { bookId: e.target.id },
+            data: { bookId: bookId },
           })
           .then((response) => {
-            e.target.innerHTML = "Add to Cart";
-            setOpen(true);
             setSeverity("success");
-            setAlert(response.data.msg);
-
-            e.target.title = "F";
+            setOpen(true);
+            setAlert("Book Removed From Cart!");
+            setcartLoad(false);
+            setbooks(
+              books.map((book) =>
+                book._id === bookId ? { ...book, cart: false } : book
+              )
+            );
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({ ...user, cartitems: user.cartitems - 1 })
+            );
+            setUser({ ...user, cartitems: user.cartitems - 1 });
           })
-          .catch((err) => {
-            e.target.innerHTML = "Failed!";
-            setTimeout(() => {
-              e.target.innerHTML = "Add to Cart";
-            }, 2000);
+          .catch((error) => {
+            setOpen(true);
+            setAlert("Some Error Occured. Please Try Again!");
+            setSeverity("error");
+            setcartLoad(false);
+          });
+      } else {
+        axios
+          .post("/addCartItem", {
+            bookId: bookId,
+          })
+          .then((response) => {
+            setSeverity("success");
+            setOpen(true);
+            setAlert("Book Added To Cart!");
+            setcartLoad(false);
+            setbooks(
+              books.map((book) =>
+                book._id === bookId ? { ...book, cart: true } : book
+              )
+            );
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({ ...user, cartitems: user.cartitems + 1 })
+            );
+            setUser({ ...user, cartitems: user.cartitems + 1 });
+          })
+          .catch((error) => {
+            setOpen(true);
+            setAlert("Some Error Occured. Please Try Again!");
+            setSeverity("error");
+            setcartLoad(false);
           });
       }
     } else {
+      setcartLoad(false);
       setOpen(true);
+      setAlert("You are not Logged In!");
       setSeverity("error");
-      setAlert("Please Login!");
-      setTimeout(() => {
-        setOpen(false);
-      }, 3000);
+    }
+  };
+
+  // Add to Wishlist
+  const handelWishlist = (bookId, inWishlist) => {
+    setwishlistLoad(bookId);
+    if (user) {
+      if (inWishlist) {
+        axios
+          .delete("/deleteWishlistItem", {
+            data: { bookId: bookId },
+          })
+          .then((response) => {
+            setSeverity("success");
+            setOpen(true);
+            setAlert("Book Removed From Wishlist!");
+            setwishlistLoad("");
+            setbooks(
+              books.map((book) =>
+                book._id === bookId ? { ...book, wishlist: false } : book
+              )
+            );
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({ ...user, wishlist: user.wishlist - 1 })
+            );
+            setUser({ ...user, wishlist: user.wishlist - 1 });
+            setcartLoad("");
+          })
+          .catch((error) => {
+            setOpen(true);
+            setAlert("Some Error Occured. Please Try Again!");
+            setSeverity("error");
+            setwishlistLoad("");
+          });
+      } else {
+        axios
+          .post("/addWishlistItem", {
+            bookId: bookId,
+          })
+          .then((response) => {
+            setSeverity("success");
+            setOpen(true);
+            setAlert("Book Added To Wishlist!");
+            setcartLoad(false);
+            setbooks(
+              books.map((book) =>
+                book._id === bookId ? { ...book, wishlist: true } : book
+              )
+            );
+            localStorage.setItem(
+              "bookshlf_user",
+              JSON.stringify({ ...user, wishlist: user.wishlist + 1 })
+            );
+            setUser({ ...user, wishlist: user.wishlist + 1 });
+            setwishlistLoad("");
+          })
+          .catch((error) => {
+            setOpen(true);
+            setAlert("Some Error Occured. Please Try Again!");
+            setSeverity("error");
+            setwishlistLoad("");
+          });
+      }
+    } else {
+      setwishlistLoad("");
+      setOpen(true);
+      setAlert("You are not Logged In!");
+      setSeverity("error");
     }
   };
 
@@ -366,242 +262,230 @@ const AllCategories = () => {
   };
 
   return (
-    <div className="AllCategories">
-      <div className="AllCategories-cont">
-        <div className="AllCategories-search">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => {
-              setsearch(e.target.value);
-            }}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                // console.log("Start Search API");
-                handelSearch();
-              }
-            }}
-            placeholder="Search book by Tags..."
-            className="AllCategories-input"
-          />
-          <button
-            type="button"
-            className="Search-button"
-            onClick={(e) => {
-              e.preventDefault();
-              handelSearch();
-            }}
+    <>
+      <Helmet>
+        <title>Search | Bookshlf</title>
+      </Helmet>
+      <Stack
+        direction="column"
+        spacing={2}
+        sx={{
+          width: "100%",
+          padding: "10px",
+        }}
+        justifyContent="center"
+        alignItems="center"
+        className="search-book-container"
+      >
+        <SearchBar />
+        {!Loading ? (
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            sx={{ paddingRight: "16px" }}
           >
-            Search
-          </button>
-        </div>
-        {/* ================================================================== */}
-        <div className="bs-books">
-          {books ? (
-            <>
-              {books.length ? (
-                books.map((book, idx) => (
-                  // ==================================
-                  <div className="search-result-book" key={idx}>
-                    <div className="search-book">
-                      <div className="search-book-pic">
-                        <img
-                          src={book.photo}
-                          alt={book.title}
-                          title={book.title}
-                          height="100%"
-                          width="100%"
-                          className="bs-image"
-                        />
-                      </div>
-                      <div className="search-book-details">
-                        <p className="details-para1">{book.title}</p>
-                        <p className="details-para3">
-                          {book.author} Edition : {book.editionYear}
-                        </p>
-                        <p className="details-para4">
-                          <i className="fas fa-rupee-sign" />
-                          &nbsp;{book.price}&nbsp;/-
-                        </p>
-                        <div className="hidden-items">
-                          <p
-                            className="cart"
-                            id={book._id}
-                            onClick={(e) => {
-                              handelCart(e);
-                            }}
-                            title={book.cart ? "T" : "F"}
-                            style={book.cart ? inCart : {}}
-                          >
-                            {book.cart ? "Added In Cart" : "Add To Cart"}
-                          </p>
-                          <i className="fas fa-arrows-alt-h" />
-                          <i
-                            className={
-                              book.wishlist ? "fas fa-heart" : "far fa-heart"
-                            }
-                            title="Add to Wishlist"
-                            id={book._id}
-                            onClick={(e) => {
-                              handelWishList(e);
-                            }}
-                          />
-                        </div>
-                        <div
-                          title="View Book Details"
-                          className="book-more-details"
-                        >
-                          <Link to={`/BookDetails/${book._id}`}>
-                            More Details&nbsp;
-                            <i className="fas fa-angle-double-right" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  // ================================
-                ))
-              ) : (
-                <>
-                  <div style={{ padding: "10px" }}>
-                    <Alert
-                      severity="info"
-                      variant="outlined"
-                      style={{ fontFamily: "pt sans" }}
+            {books.length
+              ? books.map((book) => (
+                  <Grid item xs={12} sm={4} md={3} lg={2} key={book._id}>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        border: "0.5px solid rgba(99, 99, 99, 0.1)",
+                        height: 400,
+                        boxShadow:
+                          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        "&:hover": {
+                          boxShadow: "0 4px 6px rgb(32 33 36 / 28%)",
+                        },
+                      }}
                     >
-                      <AlertTitle style={{ fontFamily: "pt sans" }}>
-                        No Results Found
-                      </AlertTitle>
-                      If you are not able to find the book you want, then mail
-                      us at -{" "}
-                      <strong
+                      <Stack
+                        direction="column"
+                        sx={{ width: "100%", height: "100%" }}
+                        spacing={1}
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Avatar
+                          alt={book.title}
+                          src={book.photo}
+                          sx={{ height: 220, width: "100%" }}
+                          variant="rounded"
+                        />
+                        <Typography
+                          align="center"
+                          className={classes.root}
+                          variant="caption"
+                          sx={{ padding: "0px 10px" }}
+                        >
+                          {book.title}
+                        </Typography>
+
+                        <Stack
+                          justifyContent="flex-end"
+                          alignItems="flex-end"
+                          sx={{ width: "100%" }}
+                        >
+                          <Stack
+                            sx={{
+                              width: "100%",
+                              padding: "0px 10px",
+                            }}
+                          >
+                            <Chip
+                              icon={<RupeeIcon />}
+                              label={book.price}
+                              className={classes.root}
+                              color="primary"
+                              size="small"
+                            />
+                          </Stack>
+                          <Stack
+                            direction="row"
+                            justifyContent="space-between"
+                            sx={{
+                              width: "100%",
+                              padding: "0px 10px",
+                            }}
+                          >
+                            <IconButton
+                              onClick={() =>
+                                handelWishlist(book._id, book.wishlist)
+                              }
+                            >
+                              {wishlistLoad === book._id ? (
+                                <CircularProgress color="warning" size={25} />
+                              ) : book.wishlist ? (
+                                <FilledWishlistIcon
+                                  sx={{ color: "rgb(235, 52, 70)" }}
+                                />
+                              ) : (
+                                <WishlistIcon
+                                  sx={{ color: "rgb(235, 52, 70)" }}
+                                />
+                              )}
+                            </IconButton>
+                            <IconButton
+                              onClick={() => handelCart(book._id, book.cart)}
+                            >
+                              {cartLoad === book._id ? (
+                                <CircularProgress color="warning" size={25} />
+                              ) : book.cart ? (
+                                <FilledCartIcon color="success" />
+                              ) : (
+                                <AddCartIcon
+                                  sx={{ color: "rgb(235, 113, 52)" }}
+                                />
+                              )}
+                            </IconButton>
+                          </Stack>
+                          <Button
+                            endIcon={<NextIcon />}
+                            className={classes.root}
+                            color="primary"
+                            onClick={() => {
+                              history.push(`/BookDetails/${book._id}`);
+                            }}
+                            fullWidth
+                          >
+                            More Details
+                          </Button>
+                        </Stack>
+                      </Stack>
+                    </Box>
+                  </Grid>
+                ))
+              : null}
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <Stack
+                sx={{ width: "100%" }}
+                justifyContent="center"
+                alignItems="center"
+              >
+                {books.length ? (
+                  <Pagination
+                    variant="outlined"
+                    color="primary"
+                    size="large"
+                    page={page}
+                    count={totalPages}
+                    className={classes.root}
+                    showFirstButton
+                    showLastButton
+                    onChange={(e, pageNo) => changePage(pageNo)}
+                  />
+                ) : (
+                  <Alert
+                    severity="info"
+                    variant="outlined"
+                    style={{ fontFamily: "pt sans" }}
+                  >
+                    <AlertTitle style={{ fontFamily: "pt sans" }}>
+                      No Results Found
+                    </AlertTitle>
+                    If you are not able to find the book you want, then mail us
+                    at -{" "}
+                    <strong
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        backgroundColor: "rgba(0,0,0,0.06)",
+                        padding: "6px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <Link
+                        to={{
+                          pathname: "mailto:bookshlf.in@gmail.com",
+                        }}
+                        target="_blank"
+                      >
+                        bookshlf.in@gmail.com
+                      </Link>
+                    </strong>
+                    <br />
+                    <br />
+                    <center>
+                      OR
+                      <br />
+                      <br />
+                      <b
+                        onClick={() => {
+                          history.push("/Contact");
+                        }}
                         style={{
-                          color: "blue",
+                          color: "green",
                           cursor: "pointer",
                           backgroundColor: "rgba(0,0,0,0.06)",
                           padding: "6px",
                           borderRadius: "5px",
+                          boxShadow: "3px 2px 2px rgba(0,0,0,0.2)",
                         }}
                       >
-                        <Link
-                          to={{
-                            pathname: "mailto:bookshlf.in@gmail.com",
-                          }}
-                          target="_blank"
-                        >
-                          bookshlf.in@gmail.com
-                        </Link>
-                      </strong>
-                      <br />
-                      <br />
-                      <center>
-                        OR
-                        <br />
-                        <br />
-                        <b
-                          onClick={() => {
-                            history.push("/Contact");
-                          }}
-                          style={{
-                            color: "green",
-                            cursor: "pointer",
-                            backgroundColor: "rgba(0,0,0,0.06)",
-                            padding: "6px",
-                            borderRadius: "5px",
-                            boxShadow: "3px 2px 2px rgba(0,0,0,0.2)",
-                          }}
-                        >
-                          Contact Us
-                        </b>
-                      </center>
-                    </Alert>
-                  </div>
-                </>
-              )}
-            </>
-          ) : (
-            <CircularProgress style={{ height: "50px", width: "50px" }} />
-          )}
-        </div>
-        {/* ======================================================== */}
-
-        {/* more loading */}
-        {books ? (
-          <>
-            {books.length ? (
-              <div className="loadMore">
-                <button
-                  className="loadMore-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    GoBack();
-                  }}
-                >
-                  <CircularProgress
-                    style={{
-                      color: "black",
-                      height: "15px",
-                      width: "15px",
-                      display: backload ? "flex" : "none",
-                      color: "green",
-                    }}
-                  />
-                  <NavigateBeforeIcon />
-                  &nbsp;Prev
-                </button>
-                <Fab
-                  color="primary"
-                  aria-label="current-page"
-                  size="small"
-                  style={{
-                    backgroundColor: "orangered",
-                    fontFamily: "PT sans",
-                  }}
-                >
-                  {page}
-                </Fab>
-                <button
-                  className="loadMore-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    LoadMore();
-                  }}
-                >
-                  Next&nbsp;
-                  <NavigateNextIcon />
-                  <CircularProgress
-                    style={{
-                      color: "black",
-                      height: "15px",
-                      width: "15px",
-                      display: load ? "flex" : "none",
-                      color: "green",
-                    }}
-                  />
-                </button>
-              </div>
-            ) : (
-              <></>
-            )}
-          </>
+                        Contact Us
+                      </b>
+                    </center>
+                  </Alert>
+                )}
+              </Stack>
+            </Grid>
+          </Grid>
         ) : (
-          <></>
+          <CircularProgress />
         )}
-      </div>
-      {/* !!! do not change !!! */}
-      {/*  snackbar starts*/}
+      </Stack>
       <div className={classes.root}>
-        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity={severity}>
+        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={severity} variant="filled">
             {alert}
           </Alert>
         </Snackbar>
       </div>
-      {/* snackbar ends */}
-      {/* !!! do not change !!! */}
-    </div>
+    </>
   );
 };
 
-export default AllCategories;
+export default Search;

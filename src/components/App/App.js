@@ -1,8 +1,10 @@
-import React from "react";
+import { React, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.css";
 import { Helmet } from "react-helmet";
+import { UserContext } from "../../Context/userContext";
+import "./App.css";
 
+// Components
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Carousel from "../Home/Carousel";
@@ -18,10 +20,10 @@ import Checkout from "../Cart/Checkout";
 import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../Reviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
-import Receipt from "../Order/Receipt";
 import Sitemap from "../Sitemap/Sitemap";
 import Track from "../Order/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
+import UpdateOrder from "../Order/UpdateOrder";
 import SearchResult from "../SearchResult/SearchPanel";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
@@ -31,8 +33,25 @@ import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
+import axios from "axios";
 
 const App = () => {
+  const [user, setUser] = useContext(UserContext);
+  useEffect(() => {
+    axios
+      .get("/countCartItems")
+      .then((response) => {
+        // OK TESTED!
+        // User Logged In!
+      })
+      .catch(() => {
+        // Token Expired or Using Incognito
+        setUser(null);
+        localStorage.removeItem("bookshlf_user");
+        delete axios.defaults.headers.common["Authorization"];
+      });
+  }, []);
+
   return (
     <Router>
       <div className="App">
@@ -70,6 +89,9 @@ const App = () => {
             <Navbar />
             <SellerPanel />
           </Route>
+          <Route path="/SellerBookUpdate/:bookId">
+            <UpdateOrder />
+          </Route>
           <Route path="/SearchResult/:query">
             <Navbar />
             <SearchResult />
@@ -101,9 +123,6 @@ const App = () => {
           </Route>
           <Route path="/Blog">
             <Blog />
-          </Route>
-          <Route path="/Receipt">
-            <Receipt />
           </Route>
           <Route path="/Sitemap">
             <Sitemap />
