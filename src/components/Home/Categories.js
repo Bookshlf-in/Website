@@ -39,9 +39,7 @@ const Categories = () => {
             />
             <h6 className="item-h6">JEE MAINS</h6>
             <Typography variant="body2">
-              <Link to="/SearchResult/tag:JEE Mains">
-                <strong>Shop Now</strong>
-              </Link>
+              <strong>Shop Now</strong>
             </Typography>
           </div>
         </Link>
@@ -54,9 +52,7 @@ const Categories = () => {
             />
             <h6 className="item-h6">JEE ADVANCED</h6>
             <Typography variant="body2">
-              <Link to="/SearchResult/tag:JEE Advanced">
-                <strong>Shop Now</strong>
-              </Link>
+              <strong>Shop Now</strong>
             </Typography>
           </div>
         </Link>
@@ -69,9 +65,7 @@ const Categories = () => {
             />
             <h6 className="item-h6">CBSE</h6>
             <Typography variant="body2">
-              <Link to="/SearchResult/tag:CBSE">
-                <strong>Shop Now</strong>
-              </Link>
+              <strong>Shop Now</strong>
             </Typography>
           </div>
         </Link>
@@ -84,9 +78,7 @@ const Categories = () => {
             />
             <h6 className="item-h6">NEET UG</h6>
             <Typography variant="body2">
-              <Link to="/SearchResult/tag:NEET">
-                <strong>Shop Now</strong>
-              </Link>
+              <strong>Shop Now</strong>
             </Typography>
           </div>
         </Link>
@@ -99,9 +91,7 @@ const Categories = () => {
             />
             <h6 className="item-h6">NOVELS</h6>
             <Typography variant="body2">
-              <Link to="/SearchResult/tag:Novel">
-                <strong>Shop Now</strong>
-              </Link>
+              <strong>Shop Now</strong>
             </Typography>
           </div>
         </Link>
