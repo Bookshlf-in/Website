@@ -72,6 +72,7 @@ const MenuStack = (props) => {
 
 const Sidenav = () => {
   const [user] = useContext(UserContext);
+  console.log(user);
 
   return (
     <Stack className="main-sidenav" spacing={0} sx={{ minWidth: 200 }}>

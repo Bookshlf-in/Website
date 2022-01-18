@@ -301,6 +301,7 @@ const Search = () => {
                           boxShadow: "0 4px 6px rgb(32 33 36 / 28%)",
                         },
                       }}
+                      onClick={() => history.push(`/BookDetails/${book._id}`)}
                     >
                       <Stack
                         direction="column"

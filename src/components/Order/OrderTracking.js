@@ -467,7 +467,8 @@ const OrderTracking = () => {
               {getStepContent(activeStep)}
             </Typography>
           )}
-          {cancelled || order.status[order.status.length - 1] ? (
+          {cancelled ||
+          order.status[order.status.length - 1] === "Cancelled" ? (
             <Alert
               severity="success"
               color="error"

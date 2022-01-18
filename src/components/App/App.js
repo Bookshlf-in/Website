@@ -2,6 +2,7 @@ import { React, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
+import axios from "../../axios";
 import "./App.css";
 
 // Components
@@ -33,22 +34,28 @@ import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
-import axios from "axios";
 
 const App = () => {
   const [user, setUser] = useContext(UserContext);
   useEffect(() => {
     axios
-      .get("/countCartItems")
+      .get("/getUserProfile")
       .then((response) => {
-        // OK TESTED!
-        // User Logged In!
+        // User Registered
+        // Updating Roles
+        // console.log(response.data.roles);
+        localStorage.setItem(
+          "bookshlf_user",
+          JSON.stringify({ ...user, roles: response.data.roles })
+        );
+        setUser({ ...user, roles: response.data.roles });
       })
-      .catch(() => {
-        // Token Expired or Using Incognito
+      .catch((error) => {
+        // Token Expired or Using Incognito or Not Registered
         setUser(null);
         localStorage.removeItem("bookshlf_user");
         delete axios.defaults.headers.common["Authorization"];
+        // console.log(error.response.data);
       });
   }, []);
 

@@ -10,26 +10,7 @@ import NotActiveIcon from "@mui/icons-material/FiberManualRecordOutlined";
 import LeftIcon from "@mui/icons-material/ChevronLeftRounded";
 import RightIcon from "@mui/icons-material/ChevronRightRounded";
 
-const images = [
-  {
-    url: "/images/CarouselBg/carousel_bg1.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg2.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg3.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg4.jpg",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg5.png",
-  },
-  {
-    url: "/images/CarouselBg/carousel_bg6.png",
-  },
-];
+const images = ["", "", "", "", "", ""];
 
 const totalImages = images.length;
 
@@ -81,7 +62,9 @@ const Slider = () => {
         <div
           className="slider__image"
           style={{
-            backgroundImage: `url("${images[props.index].url}")`,
+            backgroundImage: `url("https://storage.googleapis.com/bookshlf-in/static/carousel/${
+              props.index + 1
+            }.png")`,
           }}
         ></div>
       </Slide>
@@ -170,14 +153,3 @@ const Slider = () => {
 };
 
 export default Slider;
-
-/*
-Taking
-
-currentRatings = CR
-booksSold = BS
-newRating = NR
-
-to Find New Average Rating = NAR
-NAR = (BS*CR+NR) / (BS+1)
-*/
