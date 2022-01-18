@@ -1,10 +1,5 @@
-import { React, useState, useEffect, useContext } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory,
-} from "react-router-dom";
+import { React, useEffect, useContext } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
 import "./App.css";
@@ -41,7 +36,6 @@ import Terms from "../Footer/Terms";
 import axios from "axios";
 
 const App = () => {
-  const history = useHistory();
   const [user, setUser] = useContext(UserContext);
   useEffect(() => {
     axios
@@ -50,14 +44,14 @@ const App = () => {
         // OK TESTED!
         // User Logged In!
       })
-      .catch((error) => {
+      .catch(() => {
+        // Token Expired or Using Incognito
         setUser(null);
         localStorage.removeItem("bookshlf_user");
         delete axios.defaults.headers.common["Authorization"];
-        setUser(null);
-        history.push("/");
       });
   }, []);
+
   return (
     <Router>
       <div className="App">

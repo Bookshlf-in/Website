@@ -120,7 +120,6 @@ const Login = () => {
               wishlist: 0,
               balance: 0,
             });
-
             setloginLoad(false);
             history.push("/");
           })
