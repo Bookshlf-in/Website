@@ -1,196 +1,122 @@
 import { React, useState, useContext, useEffect } from "react";
+import { UserContext } from "../../Context/userContext";
+import axios from "../../axios.js";
 
 // importing Navbar Components
 import "./Navbar.css";
 import NavbarMenu from "./NavMenu";
 import NavbarItems from "./NavbarItems";
-// import NavbarSearch from "./NavbarSearch";
 import SideNav from "./Sidenav.js";
-
-import { Link, useHistory } from "react-router-dom";
-import { UserContext } from "../../Context/userContext";
+import NavbarSearch from "./NavbarSearch";
 
 // importing Material UI components
+import { AppBar, Toolbar, Stack, Drawer } from "@mui/material";
 import { Button, IconButton, Badge } from "@mui/material";
+
+// Icons
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import MenuIcon from "@mui/icons-material/Menu";
 
-import axios from "../../axios.js";
-
-const openNav = () => {
-  document.getElementById("mySidenav").style.width = "300px";
+const NavStyle = {
+  background:
+    "linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%)",
 };
 
+const NavIconStyle = {
+  color: "white",
+  height: 20,
+  width: 20,
+};
 const Navbar = () => {
-  const history = useHistory();
   const [user, setUser] = useContext(UserContext);
+
+  // Functionality States
+  const [openSideNav, setOpenSideNav] = useState(false);
+
+  // Data States
+  const [cartCnt, setCartCnt] = useState(0);
+  const [wishlistCnt, setwishlistCnt] = useState(0);
   const [walletbalance, setwalletbalance] = useState(0);
 
-  useEffect(() => {
-    if (user) {
-      axios
-        .get("/countWishlistItems")
-        .then((response) => {
-          // console.log(response);
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: user.cartitems,
-              wishlist: response.data.count,
-            })
-          );
-          setUser({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: user.cartitems,
-            wishlist: response.data.count,
-          });
-        })
-        .catch((error) => {});
-      axios
-        .get("/countCartItems")
-        .then((response) => {
-          // console.log(response.data);
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({
-              authHeader: user.authHeader,
-              roles: user.roles,
-              email: user.email,
-              cartitems: response.data.count,
-              wishlist: user.wishlist,
-            })
-          );
-          setUser({
-            authHeader: user.authHeader,
-            roles: user.roles,
-            email: user.email,
-            cartitems: response.data.count,
-            wishlist: user.wishlist,
-          });
-        })
-        .catch((error) => {});
-      axios
-        .get("/getCurrentBalance")
-        .then((response) => {
-          // console.log(response.data);
-          setwalletbalance(response.data.walletBalance);
-        })
-        .catch((error) => {});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // /countWishlistItems, /countCartItems, /getCurrentBalance
 
   return (
-    <div className="main-navbar" id="main-navbar">
-      {/* navbar container starts */}
-      <div className="navbar-container">
-        <span onClick={(e) => openNav(e)} className="Sidenav-open">
-          <i className="fas fa-bars"></i>
-        </span>
-        <SideNav />
-        <div className="navbar-logo">
-          <img
-            src="/images/logo.png"
-            alt="Bookshlf"
-            height="25px"
-            onClick={() => {
-              history.push("/");
-            }}
-          />
+    <AppBar position="sticky" sx={NavStyle}>
+      <Toolbar variant="dense">
+        <div className="nav-mobile-item">
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 1 }}
+            onClick={() => setOpenSideNav((prev) => !prev)}
+          >
+            <MenuIcon />
+          </IconButton>
         </div>
-        <NavbarItems />
-        <div className="navbar-right">
-          <ul>
-            <li>
-              <div className="navbar-items-chip">{/* <NavbarSearch /> */}</div>
-            </li>
-            {user ? (
-              user.roles.includes("seller") ? (
-                <li>
-                  <div className="navbar-items-chip">
-                    <Link to="/Wallet" className="cart-icon">
-                      <IconButton aria-label="wallet">
-                        <Badge
-                          badgeContent={walletbalance}
-                          color="secondary"
-                          max={2000}
-                        >
-                          <AccountBalanceWalletIcon />
-                        </Badge>
-                      </IconButton>
-                    </Link>
-                  </div>
-                </li>
-              ) : null
-            ) : null}
-            <li>
-              <div className="navbar-items-chip">
-                <Link to="/Cart" className="cart-icon">
-                  <IconButton aria-label="cart">
-                    <Badge badgeContent={user?.cartitems} color="secondary">
-                      <ShoppingCartIcon />
-                    </Badge>
-                  </IconButton>
-                </Link>
-              </div>
-            </li>
-            <li>
-              <div className="navbar-items-chip">
-                <Link to="/Wishlist" className="cart-icon">
-                  <IconButton aria-label="cart">
-                    <Badge badgeContent={user?.wishlist} color="secondary">
-                      <FavoriteIcon color="error" />
-                    </Badge>
-                  </IconButton>
-                </Link>
-              </div>
-            </li>
-            <li>
-              <div className="navbar-items-chip">
-                {user === null ? (
-                  <div>
-                    <Button
-                      variant="contained"
-                      style={{
-                        fontFamily: "Roboto",
-                        fontWeight: "bold",
-                        fontSize: "12px",
-                        backgroundColor: "rgb(21, 168, 5)",
-                        color: "whitesmoke",
-                      }}
-                      onClick={() => {
-                        history.push("/Login");
-                      }}
-                    >
-                      Login
-                    </Button>
-                  </div>
-                ) : (
-                  <NavbarMenu />
-                )}
-              </div>
-            </li>
-          </ul>
+        <div className="nav-mobile-item">
+          <Drawer
+            ancher="left"
+            open={openSideNav}
+            onClose={() => setOpenSideNav((prev) => !prev)}
+          >
+            <SideNav />
+          </Drawer>
         </div>
-        <div className="mobile-cart">
-          <div className="navbar-items-chip">
-            <Link to="/Cart" className="cart-icon">
-              <IconButton aria-label="cart">
-                <Badge badgeContent={user?.cartitems} color="secondary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
-            </Link>
-          </div>
+        <div className="nav-desktop-item">
+          <img src="/images/logo.png" width="120px" />
         </div>
-      </div>
-    </div>
+        <div className="nav-desktop-item">
+          <NavbarItems />
+        </div>
+        <Stack
+          sx={{ width: "100%" }}
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          spacing={2}
+        >
+          <NavbarSearch />
+          <Stack direction="row" spacing={2} className="nav-desktop-item">
+            <IconButton>
+              <Badge badgeContent={cartCnt} color="primary">
+                <ShoppingCartIcon sx={NavIconStyle} />
+              </Badge>
+            </IconButton>
+            <IconButton>
+              <Badge badgeContent={wishlistCnt} color="primary">
+                <FavoriteIcon sx={NavIconStyle} />
+              </Badge>
+            </IconButton>
+            <IconButton>
+              <Badge badgeContent={walletbalance} color="primary">
+                <AccountBalanceWalletIcon sx={NavIconStyle} />
+              </Badge>
+            </IconButton>
+          </Stack>
+
+          {user ? (
+            <NavbarMenu />
+          ) : (
+            <Button
+              variant="contained"
+              size="small"
+              href="/Login"
+              color="success"
+              sx={{
+                fontFamily: "PT sans",
+                fontSize: "10px",
+                letterSpacing: "1px",
+              }}
+            >
+              Login
+            </Button>
+          )}
+        </Stack>
+      </Toolbar>
+    </AppBar>
   );
 };
 export default Navbar;

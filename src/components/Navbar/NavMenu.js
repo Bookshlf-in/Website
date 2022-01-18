@@ -1,81 +1,72 @@
 import { React, useState, useContext } from "react";
-import "./Navbar.css";
 import { useHistory } from "react-router-dom";
-import { Button, Menu, MenuItem } from "@mui/material";
 import { UserContext } from "../../Context/userContext";
-import { AddFormContext } from "../../Context/formContext";
 import axios from "../../axios.js";
 
-const MenuItemStyle = {
-  fontFamily: "Roboto",
-  fontWeight: "bold",
-  fontSize: "12px",
+// Components
+import { Stack, IconButton, Menu, MenuItem, Avatar } from "@mui/material";
+
+// Icons
+import AccountIcon from "@mui/icons-material/AccountCircleTwoTone";
+import OrderIcon from "@mui/icons-material/LocalShippingTwoTone";
+import AdminIcon from "@mui/icons-material/AdminPanelSettingsTwoTone";
+import WalletIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
+import CartIcon from "@mui/icons-material/ShoppingCartTwoTone";
+import WishlistIcon from "@mui/icons-material/FavoriteTwoTone";
+import BookIcon from "@mui/icons-material/MenuBookTwoTone";
+import LogoutIcon from "@mui/icons-material/ExitToAppTwoTone";
+
+// Custom Menu Item Stack
+const MenuStack = (props) => {
+  return (
+    <Stack
+      direction="row"
+      spacing={1}
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        "& svg": {
+          height: 15,
+          width: 15,
+        },
+        "& div": {
+          fontFamily: "PT sans",
+          fontSize: "12px",
+        },
+      }}
+    >
+      <Stack justifyContent="center" alignItems="center">
+        {props.icon}
+      </Stack>
+      <Stack justifyContent="center" alignItems="center">
+        {props.label}
+      </Stack>
+    </Stack>
+  );
 };
 
 const NavbarMenu = () => {
   const history = useHistory();
-  const [anchorEl, setAnchorEl] = useState(null);
+
   const [user, setUser] = useContext(UserContext);
-  const [, setAddForm] = useContext(AddFormContext);
-  const [, setLogged] = useState(user ? true : false);
-  const [alert, setalert] = useState({
-    show: false,
-    msg: "Unsubscribe",
-    color: "black",
-  });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [logLoad, setLogLoad] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (e) => {
-    if (e === "0") {
-      setAnchorEl(null);
-    }
-    if (e === "5") {
-      setalert({
-        show: true,
-        msg: "Unsubscribing...",
-        color: "blue",
-      });
-      axios
-        .post("/newsletterUnsubscribe", {
-          email: user.email,
-        })
-        .then(() => {
-          setalert({
-            show: false,
-            msg: "Unsubscribed!",
-            color: "green",
-          });
-          setTimeout(() => {
-            setalert({
-              show: false,
-              msg: "Unsubscribe",
-              color: "black",
-            });
-            setAnchorEl(null);
-          }, 5000);
-        })
-        .catch(() => {
-          setalert({
-            show: false,
-            msg: "Error Not Subscribed!",
-            color: "red",
-          });
-          setTimeout(() => {
-            setalert({
-              show: false,
-              msg: "Unsubscribe",
-              color: "black",
-            });
-            setAnchorEl(null);
-          }, 5000);
-        });
-    }
+  const handleClose = () => {
+    setAnchorEl(null);
   };
-  const logout = () => {
-    setLogged(false);
+
+  const handelNavigate = (path) => {
+    setAnchorEl(null);
+    history.push(path);
+  };
+
+  const handelLogout = () => {
+    setLogLoad(true);
     axios
       .get("/signOut")
       .then((response) => {
@@ -83,155 +74,62 @@ const NavbarMenu = () => {
         localStorage.removeItem("bookshlf_user_AddBook");
         delete axios.defaults.headers.common["Authorization"];
         setUser(null);
-        setAddForm(null);
-        setAnchorEl(null);
         history.go(0);
+        setLogLoad(false);
       })
       .catch((error) => {
-        console.log("Logout error", error);
+        setLogLoad(false);
       });
   };
 
   return (
-    <div>
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-        style={{ padding: "0px", borderRadius: "50%", minWidth: "0px" }}
-      >
-        <img
+    <Stack>
+      <IconButton onClick={handleClick} size="small">
+        <Avatar
           src="/images/user.png"
           alt="My Account"
-          height="25px"
-          width="25px"
+          sx={{ height: 20, width: 20 }}
         />
-      </Button>
+      </IconButton>
       <Menu
-        id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClick={() => {
-          handleClose("0");
-        }}
+        onClose={handleClose}
+        className="sidenav-menu"
       >
-        <MenuItem
-          style={MenuItemStyle}
-          onClick={() => {
-            history.push("/UserPanel/1");
-          }}
-        >
-          <i className="fas fa-user-alt" />
-          &nbsp;Profile
+        <MenuItem onClick={() => handelNavigate("/UserPanel/1")}>
+          <MenuStack icon={<AccountIcon color="primary" />} label="Profile" />
         </MenuItem>
-        {user ? (
-          <MenuItem
-            style={MenuItemStyle}
-            onClick={() => {
-              setAnchorEl(null);
-              history.push("/UserPanel/2");
-              history.go(0);
-            }}
-          >
-            <i className="fas fa-dolly"></i>
-            &nbsp;Orders
-          </MenuItem>
-        ) : (
-          <></>
-        )}
-        {user ? (
-          user.roles.includes("admin") ? (
-            <MenuItem
-              style={MenuItemStyle}
-              onClick={() => {
-                setAnchorEl(null);
-                history.push("/Admin/1");
-              }}
-            >
-              <i className="fas fa-user-cog" />
-              &nbsp;Admin Panel
-            </MenuItem>
-          ) : (
-            <></>
-          )
-        ) : (
-          <></>
-        )}
-        {user ? (
-          user.roles.includes("seller") ? (
-            <MenuItem
-              style={MenuItemStyle}
-              onClick={() => {
-                history.push("/Wallet");
-              }}
-            >
-              <i className="fas fa-wallet" />
-              &nbsp;Wallet
-            </MenuItem>
-          ) : (
-            <></>
-          )
-        ) : (
-          <></>
-        )}
-
-        <MenuItem
-          style={MenuItemStyle}
-          onClick={() => {
-            history.push("/Cart");
-          }}
-        >
-          <i className="fas fa-cart-arrow-down" />
-          &nbsp;Cart
+        <MenuItem onClick={() => handelNavigate("/UserPanel/2")}>
+          <MenuStack icon={<OrderIcon color="primary" />} label="Orders" />
         </MenuItem>
-        <MenuItem
-          style={MenuItemStyle}
-          onClick={() => {
-            history.push("/Wishlist");
-          }}
-        >
-          <i className="fas fa-heart" />
-          &nbsp;Wishlist
+        <MenuItem onClick={() => handelNavigate("/Admin/1")}>
+          <MenuStack icon={<AdminIcon color="error" />} label="Admin" />
         </MenuItem>
-
-        <MenuItem
-          style={MenuItemStyle}
-          onClick={() => {
-            history.push("/SellerPanel/4");
-          }}
-        >
-          <i className="fas fa-book" />
-          &nbsp;Sell Books
+        <MenuItem onClick={() => handelNavigate("/Wallet")}>
+          <MenuStack icon={<WalletIcon color="secondary" />} label="Wallet" />
         </MenuItem>
-        <MenuItem
-          style={{
-            fontFamily: "Roboto",
-            fontWeight: "bold",
-            fontSize: "12px",
-            color: alert.color,
-          }}
-          onClick={() => {
-            handleClose("5");
-          }}
-        >
-          <i className="fas fa-minus-circle" />
-          &nbsp;
-          {alert.msg}&nbsp;
-          <i
-            className="fas fa-circle-notch"
-            style={{
-              display: alert.show ? "inline-block" : "none",
-              animation: "spin 2s linear infinite",
-            }}
+        <MenuItem onClick={() => handelNavigate("/Cart")}>
+          <MenuStack icon={<CartIcon color="secondary" />} label="Cart" />
+        </MenuItem>
+        <MenuItem onClick={() => handelNavigate("/Wishlist")}>
+          <MenuStack
+            icon={<WishlistIcon color="secondary" />}
+            label="Wishlist"
           />
         </MenuItem>
-        <MenuItem style={MenuItemStyle} onClick={logout}>
-          <i className="fas fa-sign-out-alt" />
-          &nbsp;Logout
+        <MenuItem onClick={() => handelNavigate("/SellerPanel/4")}>
+          <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
+        </MenuItem>
+        <MenuItem onClick={handelLogout}>
+          <MenuStack
+            icon={<LogoutIcon color="error" />}
+            label={logLoad ? "Logging Out..." : "Logout"}
+          />
         </MenuItem>
       </Menu>
-    </div>
+    </Stack>
   );
 };
 export default NavbarMenu;
