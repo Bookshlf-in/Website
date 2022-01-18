@@ -1,8 +1,15 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.css";
+import { React, useState, useEffect, useContext } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { UserContext } from "../../Context/userContext";
+import "./App.css";
 
+// Components
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Carousel from "../Home/Carousel";
@@ -31,8 +38,26 @@ import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
+import axios from "axios";
 
 const App = () => {
+  const history = useHistory();
+  const [user, setUser] = useContext(UserContext);
+  useEffect(() => {
+    axios
+      .get("/countCartItems")
+      .then((response) => {
+        // OK TESTED!
+        // User Logged In!
+      })
+      .catch((error) => {
+        setUser(null);
+        localStorage.removeItem("bookshlf_user");
+        delete axios.defaults.headers.common["Authorization"];
+        setUser(null);
+        history.push("/");
+      });
+  }, []);
   return (
     <Router>
       <div className="App">
