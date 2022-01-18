@@ -80,7 +80,6 @@ const OrderTracking = () => {
   const [cancelLoad, setcancelLoad] = useState(false);
   const [cancelled, setcancelled] = useState(false);
   const [trackLink, settrackLink] = useState("");
-  const [downloadPdf, setdownloadPdf] = useState(false);
   useEffect(() => {
     const fetchdata = async () => {
       axios
@@ -88,10 +87,9 @@ const OrderTracking = () => {
           params: { orderId: params.orderId },
         })
         .then((response) => {
-          setdownloadPdf(true);
           setorder(response.data);
           settrackLink(response.data?.externalTrackingLink);
-          // console.log(response.data);
+          console.log(response.data);
           setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
         })
@@ -441,7 +439,9 @@ const OrderTracking = () => {
             >
               Courier Track Link
             </Button>
-            {order.status !== "Cancelled" ? <Reciept order={order} /> : null}
+            {order.status[order.status.length - 1] !== "Cancelled" ? (
+              <Reciept order={order} />
+            ) : null}
           </Stack>
           <Stepper
             activeStep={activeStep}
@@ -467,7 +467,7 @@ const OrderTracking = () => {
               {getStepContent(activeStep)}
             </Typography>
           )}
-          {cancelled ? (
+          {cancelled || order.status[order.status.length - 1] ? (
             <Alert
               severity="success"
               color="error"
@@ -487,7 +487,10 @@ const OrderTracking = () => {
                 color="error"
                 className={classes.root}
                 onClick={handelCancelOrder}
-                disabled={order.status === "Cancelled" || cancelled}
+                disabled={
+                  order.status[order.status.length - 1] === "Cancelled" ||
+                  cancelled
+                }
                 sx={{ maxWidth: 300 }}
               >
                 Cancel Order

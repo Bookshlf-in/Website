@@ -196,7 +196,7 @@ const Cart = () => {
               </Grid>
             </Grid>
           ) : (
-            <Stack sx={{ padding: "10px" }} spacing={1}>
+            <Stack sx={{ padding: "10px", width: "100%" }} spacing={1}>
               <Stack
                 direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
                 justifyContent="space-evenly"
