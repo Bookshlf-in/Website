@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     },
     "& label": {
       fontFamily: "PT sans !important",
-      fontSize: "12px",
     },
   },
 }));
@@ -73,6 +72,9 @@ const Search = () => {
         .get("/search", {
           params: {
             q: params.query,
+            noOfBooksInOnePage: 10,
+            page: page,
+            sortByPrice: "asc",
           },
         })
         .then((response) => {
@@ -96,6 +98,7 @@ const Search = () => {
       .get("/search", {
         params: {
           q: params.query,
+          noOfBooksInOnePage: 10,
           page: pageNo,
         },
       })
@@ -249,12 +252,87 @@ const Search = () => {
   // changing Filter
   const handelFilterChange = (e) => {
     setFilter(e.target.value);
+    setLoading(true);
     switch (e.target.value) {
       case 1:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByPrice: "asc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
         break;
       case 2:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByDate: "desc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
         break;
       case 3:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByPrice: "desc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
+        break;
+      case 4:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByDate: "asc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
         break;
     }
   };
@@ -284,7 +362,13 @@ const Search = () => {
         className="search-book-container"
       >
         <SearchBar />
-        <FormControl fullWidth className={classes.root} color="success">
+        <FormControl
+          fullWidth
+          className={classes.root}
+          color="success"
+          variant="standard"
+          size="small"
+        >
           <InputLabel id="demo-simple-select-label">Filter Books</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -300,6 +384,9 @@ const Search = () => {
             </MenuItem>
             <MenuItem value={3} className={classes.root}>
               Price High to Low
+            </MenuItem>
+            <MenuItem value={4} className={classes.root}>
+              Oldest
             </MenuItem>
           </Select>
         </FormControl>
