@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
+import { Helmet } from "react-helmet";
 import axios from "../../axios";
 
 // components
@@ -89,7 +90,7 @@ const OrderTracking = () => {
         .then((response) => {
           setorder(response.data);
           settrackLink(response.data?.externalTrackingLink);
-          console.log(response.data);
+          // console.log(response.data);
           setActiveStep(Math.round(response.data.progress / 25));
           setload(true);
         })
@@ -115,6 +116,9 @@ const OrderTracking = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Track | Bookshlf</title>
+      </Helmet>
       {load ? (
         <Stack
           direction="column"

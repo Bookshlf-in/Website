@@ -53,13 +53,30 @@ const Reciept = (props) => {
     doc.text(`${props.order.purchaseQty}`, 15, 215);
     doc.text("Shipping Charges", 15, 225);
     doc.text(`${props.order.shippingCharges}/-`, 15, 230);
-    doc.text("Ordet Total", 15, 240);
-    doc.text(`${props.order.orderTotal}/-`, 15, 245);
+    doc.text("Order Total", 15, 240);
+    doc.text(
+      `${
+        props.order.orderTotal +
+        "/-" +
+        " " +
+        "( Payment : " +
+        props.order.paymentStatus +
+        " )"
+      }`,
+      15,
+      245
+    );
+    doc.setFontSize(20);
+    doc.text("Order Status", 15, 260);
+    doc.setFontSize(14);
+    doc.setTextColor(0, 255, 0);
+    doc.text(`${props.order.status[props.order.status.length - 1]}`, 15, 270);
     doc.setTextColor(255, 0, 0);
-    doc.text("Your Order has Been Confirmed & will be Delivered Soon", 15, 280);
+    doc.text("Your Order Will Be Delivered Soon", 15, 280);
     doc.text("Thank You For Shopping with Bookshlf", 15, 285);
     doc.save(`Bookshlf_Invoice_${props.order._id}.pdf`);
   };
+  // order.status[order.status.length - 1]
   return (
     <Button
       endIcon={<DownloadIcon />}
