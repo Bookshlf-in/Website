@@ -296,12 +296,11 @@ const Search = () => {
                         boxShadow:
                           "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
                         borderRadius: "5px",
-                        cursor: "pointer",
+
                         "&:hover": {
                           boxShadow: "0 4px 6px rgb(32 33 36 / 28%)",
                         },
                       }}
-                      onClick={() => history.push(`/BookDetails/${book._id}`)}
                     >
                       <Stack
                         direction="column"
@@ -313,8 +312,11 @@ const Search = () => {
                         <Avatar
                           alt={book.title}
                           src={book.photo}
-                          sx={{ height: 220, width: "100%" }}
+                          sx={{ height: 220, width: "100%", cursor: "pointer" }}
                           variant="rounded"
+                          onClick={() =>
+                            history.push(`/BookDetails/${book._id}`)
+                          }
                         />
                         <Typography
                           align="center"

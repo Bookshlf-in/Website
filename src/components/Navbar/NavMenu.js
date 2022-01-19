@@ -104,23 +104,32 @@ const NavbarMenu = () => {
         <MenuItem onClick={() => handelNavigate("/UserPanel/2")}>
           <MenuStack icon={<OrderIcon color="primary" />} label="Orders" />
         </MenuItem>
+        <MenuItem onClick={() => handelNavigate("/SellerPanel/2")}>
+          <MenuStack icon={<BookIcon color="success" />} label="Your Books" />
+        </MenuItem>
+        <MenuItem onClick={() => handelNavigate("/SellerPanel/5")}>
+          <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
+        </MenuItem>
         <MenuItem onClick={() => handelNavigate("/Admin/1")}>
           <MenuStack icon={<AdminIcon color="error" />} label="Admin" />
         </MenuItem>
         <MenuItem onClick={() => handelNavigate("/Wallet")}>
-          <MenuStack icon={<WalletIcon color="secondary" />} label="Wallet" />
+          <MenuStack
+            icon={<WalletIcon color="secondary" />}
+            label={"Wallet (" + user?.balance + ")"}
+          />
         </MenuItem>
         <MenuItem onClick={() => handelNavigate("/Cart")}>
-          <MenuStack icon={<CartIcon color="secondary" />} label="Cart" />
+          <MenuStack
+            icon={<CartIcon color="secondary" />}
+            label={"Cart (" + user?.cartitems + ")"}
+          />
         </MenuItem>
         <MenuItem onClick={() => handelNavigate("/Wishlist")}>
           <MenuStack
             icon={<WishlistIcon color="secondary" />}
-            label="Wishlist"
+            label={"Wishlist (" + user?.wishlist + ")"}
           />
-        </MenuItem>
-        <MenuItem onClick={() => handelNavigate("/SellerPanel/4")}>
-          <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
         </MenuItem>
         <MenuItem onClick={handelLogout}>
           <MenuStack

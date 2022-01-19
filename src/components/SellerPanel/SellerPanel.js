@@ -53,7 +53,6 @@ const SellerPanel = () => {
   const [Loading, setLoading] = useState(true);
   const [sellerDetails, setsellerDetails] = useState(null);
   const [Adr, setAdr] = useState(null);
-  const [bookDetails, setbookDetails] = useState(null);
   const [sellerId, setsellerId] = useState(null);
   const [sellerReview, setsellerReview] = useState(null);
   const [commisionchart, setcommisionchart] = useState(null);
@@ -115,6 +114,10 @@ const SellerPanel = () => {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    setPanel(params.panel);
+  }, [params.panel]);
 
   const handleChange = (event, newValue) => {
     history.push(`/SellerPanel/${newValue}`);
