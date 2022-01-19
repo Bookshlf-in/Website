@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import axios from "../../axios";
 import { useHistory } from "react-router-dom";
 
@@ -64,6 +64,9 @@ const CircularProgressStyle = {
 
 const WithdrawGrid = (props) => {
   const history = useHistory();
+
+  const [Load, setLoad] = useState(false);
+  const [withdrawList, setwithdrawList] = useState(props.data);
   const [requesting, setrequesting] = useState("");
   const [msg, setmsg] = useState({
     color: "error",
@@ -103,97 +106,127 @@ const WithdrawGrid = (props) => {
     makeRequest();
   };
 
+  useEffect(() => {
+    setLoad(true);
+    axios
+      .get("/getWithdrawRequests")
+      .then((response) => {
+        // console.log(response.data);
+        setwithdrawList(response.data);
+        setLoad(false);
+      })
+      .catch((error) => {});
+  }, [props.update]);
+
   return (
     <>
-      {props.data.map((request, idx) => (
-        <Accordion key={idx} className="Wallet-Accordian">
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon style={iconStyle} />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <List
-              sx={{
-                width: "100%",
-                maxWidth: 360,
-                bgcolor: "background.paper",
-                overflowY: "auto",
-              }}
+      {Load ? (
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          sx={{ height: "100%", width: "100%" }}
+        >
+          <CircularProgress size={25} />
+        </Stack>
+      ) : (
+        withdrawList.map((request, idx) => (
+          <Accordion key={idx} className="Wallet-Accordian">
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon style={iconStyle} />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar style={avatarStyle}>
-                    {request.status === "INITIATED" ? (
-                      <PendingIcon style={PendingiconStyle} />
-                    ) : request.status === "CANCELLED" ? (
-                      <CancelIcon style={CanceliconStyle} />
-                    ) : (
-                      <CompleteIcon style={CompleteiconStyle} />
-                    )}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    <>
-                      <i className="fas fa-rupee-sign" /> {request.amount}
-                    </>
-                  }
-                />
-                <ListItemText
-                  primary={request.bankAccountDetails}
-                  secondary={
-                    request.createdAt.substr(0, 10) +
-                    " | " +
-                    request.createdAt.substr(11, 8)
-                  }
-                />
-                {request.status === "INITIATED" ? (
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                  bgcolor: "background.paper",
+                  overflowY: "auto",
+                }}
+              >
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar style={avatarStyle}>
+                      {request.status === "INITIATED" ? (
+                        <PendingIcon style={PendingiconStyle} />
+                      ) : request.status === "CANCELLED" ? (
+                        <CancelIcon style={CanceliconStyle} />
+                      ) : (
+                        <CompleteIcon style={CompleteiconStyle} />
+                      )}
+                    </Avatar>
+                  </ListItemAvatar>
                   <ListItemText
                     primary={
-                      <Chip
-                        label={requesting === request._id ? msg.data : "Cancel"}
-                        size="small"
-                        onClick={() => handleCancelWithdrawRequest(request._id)}
-                        onDelete={() =>
-                          handleCancelWithdrawRequest(request._id)
-                        }
-                        deleteIcon={
-                          requesting === request._id ? (
-                            msg.icon === "progress" ? (
-                              <CircularProgress style={CircularProgressStyle} />
-                            ) : (
-                              <CompleteIcon />
-                            )
-                          ) : (
-                            <DeleteIcon />
-                          )
-                        }
-                        color={requesting === request._id ? msg.color : "error"}
-                      />
+                      <>
+                        <i className="fas fa-rupee-sign" /> {request.amount}
+                      </>
                     }
                   />
+                  <ListItemText
+                    primary={request.bankAccountDetails}
+                    secondary={
+                      request.createdAt.substr(0, 10) +
+                      " | " +
+                      request.createdAt.substr(11, 8)
+                    }
+                  />
+                  {request.status === "INITIATED" ? (
+                    <ListItemText
+                      primary={
+                        <Chip
+                          label={
+                            requesting === request._id ? msg.data : "Cancel"
+                          }
+                          size="small"
+                          onClick={() =>
+                            handleCancelWithdrawRequest(request._id)
+                          }
+                          onDelete={() =>
+                            handleCancelWithdrawRequest(request._id)
+                          }
+                          deleteIcon={
+                            requesting === request._id ? (
+                              msg.icon === "progress" ? (
+                                <CircularProgress
+                                  style={CircularProgressStyle}
+                                />
+                              ) : (
+                                <CompleteIcon />
+                              )
+                            ) : (
+                              <DeleteIcon />
+                            )
+                          }
+                          color={
+                            requesting === request._id ? msg.color : "error"
+                          }
+                        />
+                      }
+                    />
+                  ) : null}
+                </ListItem>
+              </List>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Stack
+                direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
+                divider={<Divider orientation="vertical" flexItem />}
+                spacing={2}
+                justifyContent="space-evenly"
+              >
+                <Typography>{request.status}</Typography>
+                <Typography>
+                  Request ID : <b style={transactionIDStyle}>{request._id}</b>
+                </Typography>
+                {request.adminMessage ? (
+                  <Typography>Msg : {request.adminMessage}</Typography>
                 ) : null}
-              </ListItem>
-            </List>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Stack
-              direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
-              divider={<Divider orientation="vertical" flexItem />}
-              spacing={2}
-              justifyContent="space-evenly"
-            >
-              <Typography>{request.status}</Typography>
-              <Typography>
-                Request ID : <b style={transactionIDStyle}>{request._id}</b>
-              </Typography>
-              {request.adminMessage ? (
-                <Typography>Msg : {request.adminMessage}</Typography>
-              ) : null}
-            </Stack>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+              </Stack>
+            </AccordionDetails>
+          </Accordion>
+        ))
+      )}
     </>
   );
 };

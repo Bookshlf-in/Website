@@ -57,14 +57,14 @@ const Navbar = () => {
                 ...user,
                 cartitems: cart.data.count,
                 wishlist: wishlist.data.count,
-                balance: balance.data.walletBalance,
+                balance: Math.round(balance.data.walletBalance * 10) / 10,
               })
             );
             setUser({
               ...user,
               cartitems: cart.data.count,
               wishlist: wishlist.data.count,
-              balance: balance.data.walletBalance,
+              balance: Math.round(balance.data.walletBalance * 10) / 10,
             });
             // console.log(wishlist.data, cart.data, balance.data);
           });

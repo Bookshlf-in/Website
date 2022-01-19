@@ -1,17 +1,9 @@
-.rupee-custom-style {
-  padding: 6px 15px;
-  border-radius: 10px;
-  border: 1px solid white;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: rgb(255, 253, 253);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-}
-
 .wallet-stack-item {
   font-family: "PT sans";
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 8px;
 }
 .amount-icon {
   padding: 6px;
