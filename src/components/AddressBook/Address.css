@@ -8,3 +8,6 @@
 .address-datagrid-stack .MuiDataGrid-columnHeaderTitle {
   font-family: "PT sans" !important;
 }
+.address-datagrid-stack .MuiDataGrid-cell {
+  white-space: normal !important;
+}

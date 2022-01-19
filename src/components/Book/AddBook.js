@@ -238,9 +238,19 @@ const AddBook = (props) => {
   const UpdateFileList = (fileList) => {
     setImage(fileList);
   };
+  // Checking All Books Are Unique
+  const isUnique = (fileName, fileList) => {
+    for (let i = 0; i < fileList.length; i++) {
+      if (fileList[i].name === fileName) return false;
+    }
+    return true;
+  };
   const handelbookAdd = (e, uploadMultiple) => {
+    // console.log(e.target.files[0].name);
     if (Image.length > 0 && uploadMultiple) {
-      UpdateFileList([...Array.from(e.target.files), ...Image]);
+      if (isUnique(e.target.files[0].name, Image)) {
+        UpdateFileList([...Image, ...Array.from(e.target.files)]);
+      }
     } else {
       UpdateFileList(Array.from(e.target.files));
     }
@@ -284,10 +294,10 @@ const AddBook = (props) => {
             msg: "",
           });
           history.push("/SellerPanel/2");
-        }, 3000);
+        }, 1000);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
   };
 

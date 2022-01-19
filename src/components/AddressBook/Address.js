@@ -569,6 +569,8 @@ const Address = (props) => {
             columns={columns}
             pageSize={3}
             disableSelectionOnClick
+            rowHeight={80}
+            rowsPerPageOptions={[3]}
           />
         </Stack>
       </Stack>
