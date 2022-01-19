@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import ReactImageMagnify from "@blacklab/react-image-magnify";
 
 // Components
 import Stack from "@mui/material/Stack";
@@ -40,11 +41,31 @@ const Booksnaps = (props) => {
           : null}
       </Stack>
       <Stack alignItems="center" justifyContent="center">
-        <Avatar
-          src={props.snaps[snap]}
-          alt="book-large-snapshot"
+        <ReactImageMagnify
+          title="Hover Over to Zoom"
+          imageProps={{
+            alt: "Book Large Snap",
+            height: 200,
+            src: props.snaps[snap],
+            width: 200,
+          }}
+          magnifiedImageProps={{
+            height: 700,
+            src: props.snaps[snap],
+            width: 700,
+          }}
+          magnifyContainerProps={{
+            height: 350,
+            width: 350,
+          }}
+          onActivationChanged={function noRefCheck() {}}
+          onDetectedEnvironmentChanged={function noRefCheck() {}}
+          onPositionChanged={function noRefCheck() {}}
+          portalProps={{
+            horizontalOffset: 10,
+            id: "portal-test-id",
+          }}
           className="book-large-snapshot"
-          variant="rounded"
         />
       </Stack>
     </Stack>

@@ -26,10 +26,19 @@ import SearchBar from "./Searchbar";
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: "PT sans !important",
+    fontSize: "12px",
     "& li": {
       "& button": {
         fontFamily: "PT sans !important",
       },
+    },
+    "& div": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px",
+    },
+    "& label": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px",
     },
   },
 }));
@@ -53,7 +62,6 @@ const Search = () => {
 
   // Data states
   const [books, setbooks] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(1);
   const [filter, setFilter] = useState(1);
@@ -69,16 +77,7 @@ const Search = () => {
         })
         .then((response) => {
           // console.log(response.data);
-          setbooks(
-            response.data.data.sort((a, b) => {
-              return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-            })
-          );
-          setFilteredItems(
-            response.data.data.sort((a, b) => {
-              return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-            })
-          );
+          setbooks(response.data.data);
           settotalPages(response.data.totalPages);
           setLoading(false);
         })
@@ -102,11 +101,7 @@ const Search = () => {
       })
       .then((response) => {
         // console.log(response.data);
-        setbooks(
-          response.data.data.sort((a, b) => {
-            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-          })
-        );
+        setbooks(response.data.data);
         settotalPages(response.data.totalPages);
         setLoading(false);
       })
@@ -254,26 +249,13 @@ const Search = () => {
   // changing Filter
   const handelFilterChange = (e) => {
     setFilter(e.target.value);
-    if (e.target.value == 1) {
-      setTimeout(() => {
-        setFilteredItems(
-          books.filter((book) => book.status === "Approval Pending")
-        );
-      }, 2000);
-    } else if (e.target.value == 2) {
-      setTimeout(() => {
-        setFilteredItems(books.filter((book) => book.status === "Approved"));
-      }, 2000);
-    } else if (e.target.value == 3) {
-      setTimeout(() => {
-        setFilteredItems(books.filter((book) => book.status === "Sold"));
-      }, 2000);
-    } else if (e.target.value == 4) {
-      setTimeout(() => {
-        setFilteredItems(
-          books.filter((book) => book.status === "Approval rejected")
-        );
-      }, 2000);
+    switch (e.target.value) {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
     }
   };
 
@@ -303,9 +285,7 @@ const Search = () => {
       >
         <SearchBar />
         <FormControl fullWidth className={classes.root} color="success">
-          <InputLabel id="demo-simple-select-label" className={classes.root}>
-            Filter Books
-          </InputLabel>
+          <InputLabel id="demo-simple-select-label">Filter Books</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             value={filter}
@@ -313,16 +293,13 @@ const Search = () => {
             onChange={handelFilterChange}
           >
             <MenuItem value={1} className={classes.root}>
-              Books Pending For Approval
+              Price Low to High
             </MenuItem>
             <MenuItem value={2} className={classes.root}>
-              Books Approved
+              Newest
             </MenuItem>
             <MenuItem value={3} className={classes.root}>
-              Books Sold
-            </MenuItem>
-            <MenuItem value={4} className={classes.root}>
-              Books Rejected
+              Price High to Low
             </MenuItem>
           </Select>
         </FormControl>
