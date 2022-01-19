@@ -408,7 +408,7 @@ const Address = (props) => {
               <Select
                 labelId="address-type-label"
                 value={Label}
-                label="Age"
+                label="Address Type"
                 onChange={(e) => setLabel(e.target.value)}
               >
                 <MenuItem value="Home Address">Home Address</MenuItem>
@@ -559,7 +559,7 @@ const Address = (props) => {
           </Alert>
         ) : null}
         <Stack
-          sx={{ height: 300, width: "100%", padding: "10px" }}
+          sx={{ height: 400, width: "100%", padding: "10px" }}
           className="address-datagrid-stack"
         >
           <DataGrid
