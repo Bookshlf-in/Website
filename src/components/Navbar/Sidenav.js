@@ -87,6 +87,10 @@ const Sidenav = () => {
         <MenuStack icon={<AllBookIcon color="primary" />} label="All Books" />
       </Link>
       <Divider orientation="horizontal" flexItem={true} />
+      <Link to="/SellerPanel/2">
+        <MenuStack icon={<BookIcon color="success" />} label="Your Books" />
+      </Link>
+      <Divider orientation="horizontal" flexItem={true} />
       <Link to="/SellerPanel/5">
         <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
       </Link>

@@ -15,6 +15,8 @@ import LoadIcon from "@mui/icons-material/AutorenewRounded";
 import CheckIcon from "@mui/icons-material/CheckCircleRounded";
 import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 import CallIcon from "@mui/icons-material/CallRounded";
+import RupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +54,7 @@ const GetOrderDetails = () => {
         setorderLoad(false);
         setorderList(response.data.data);
         settotalPages(response.data.totalPages);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {});
   };
@@ -60,9 +62,25 @@ const GetOrderDetails = () => {
   const columns = [
     {
       field: "orderId",
-      headerName: "Order ID",
+      headerName: "Order Detail",
       width: 180,
       sortable: false,
+      renderCell: (cellValue) => {
+        return (
+          <Stack sx={{ whiteSpace: "normal" }}>
+            <Typography sx={{ fontSize: "10px", fontFamily: "PT sans" }}>
+              {cellValue.value[0]}
+            </Typography>
+            <Typography sx={{ fontSize: "10px", fontFamily: "PT sans" }}>
+              {cellValue.value[1]}
+            </Typography>
+            <Chip
+              sx={{ fontSize: "9px", fontFamily: "PT sans", height: "auto" }}
+              label={cellValue.value[2]}
+            />
+          </Stack>
+        );
+      },
     },
     {
       field: "orderTotal",
@@ -72,7 +90,7 @@ const GetOrderDetails = () => {
       renderCell: (price) => {
         return (
           <Chip
-            icon={<i className="fas fa-rupee-sign" />}
+            icon={<RupeeIcon />}
             label={price.value}
             size="small"
             variant="filled"
@@ -163,6 +181,7 @@ const GetOrderDetails = () => {
             className={classes.root}
             size="small"
             href={`/AdminTrack/${link.value}`}
+            target="_blank"
             variant="outlined"
           >
             Update & Track
@@ -175,7 +194,7 @@ const GetOrderDetails = () => {
   const rows = orderList.map((order) => {
     return {
       id: order._id,
-      orderId: order._id,
+      orderId: [order.title, order.customerName, order._id],
       orderTotal: order.orderTotal,
       payMode: order.paymentMode,
       status: order.paymentStatus,
@@ -191,7 +210,7 @@ const GetOrderDetails = () => {
       direction="column"
       spacing={2}
       sx={{
-        height: "123vh",
+        height: "1000px",
         width: "100%",
         padding: "10px",
       }}
@@ -229,6 +248,8 @@ const GetOrderDetails = () => {
         columns={columns}
         pageSize={10}
         rowBuffer={4}
+        rowHeight={80}
+        hideFooter
         hideFooterPagination
         className={classes.root}
         loading={orderLoad}

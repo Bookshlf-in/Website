@@ -1,29 +1,26 @@
 import { React, useState, useEffect, useContext } from "react";
-import "./Wallet.css";
-import TransactionTable from "./TransactionGrid";
-import WithdrawGrid from "./WithdrawGrid";
-
-import axios from "../../axios";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
+import axios from "../../axios";
+import "./Wallet.css";
 
 // Wallet Components
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
+import { Stack, Grid, TextField, Paper, InputAdornment } from "@mui/material";
+import { Skeleton, Alert, Chip, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Skeleton from "@mui/material/Skeleton";
-import Alert from "@mui/material/Alert";
 
 // icons
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SendIcon from "@mui/icons-material/Send";
 import CreditIcon from "@mui/icons-material/CallMadeRounded";
 import DebitIcon from "@mui/icons-material/CallReceivedRounded";
+import RupeeIcon from "@mui/icons-material/CurrencyRupee";
+
+// Custom Components
+import TransactionTable from "./TransactionGrid";
+import WithdrawGrid from "./WithdrawGrid";
 
 const stackStyle = {
   padding: "12px 15px",
@@ -35,16 +32,26 @@ const iconStyle = {
 
 const useStyles = makeStyles({
   root: {
-    fontFamily: "PT sans",
+    fontFamily: "PT sans !important",
     "& label": {
-      fontFamily: "PT Sans",
+      fontFamily: "PT sans !important",
     },
     "& input": {
-      fontFamily: "PT Sans",
+      fontFamily: "PT sans !important",
     },
     "& p": {
-      fontFamily: "PT sans",
+      fontFamily: "PT sans !important",
     },
+  },
+  H3: {
+    fontFamily: "Staatliches !important",
+  },
+  TransactionStack: {
+    maxHeight: "300px",
+    overflowY: "auto",
+    padding: "10px",
+    border: "1px solid rgba(0,0,0,0.1)",
+    borderRadius: "5px",
   },
 });
 
@@ -58,6 +65,7 @@ const Wallet = () => {
   const [withdrawRequest, setwithdrawRequest] = useState([]);
   const [transactionList, settransactionList] = useState([]);
   const [requesting, setrequesting] = useState(false);
+  const [updateTxn, setUpdateTxn] = useState(0);
   const [alert, setAlert] = useState({
     show: false,
     severity: "success",
@@ -77,7 +85,7 @@ const Wallet = () => {
         amount += debitList[i].amount;
       }
       if (i === debitList.length - 1) {
-        setdebitAmount(amount);
+        setdebitAmount(Math.round(amount * 100) / 100);
       }
     }
   };
@@ -90,7 +98,7 @@ const Wallet = () => {
         amount += creditList[i].amount;
       }
       if (i === creditList.length - 1) {
-        setcreditAmount(amount);
+        setcreditAmount(Math.round(amount * 100) / 100);
       }
     }
   };
@@ -112,7 +120,8 @@ const Wallet = () => {
             msg: response.data.msg,
             severity: "success",
           });
-          history.go(0);
+          // history.go(0);
+          setUpdateTxn((prev) => prev + 1);
           setTimeout(() => {
             setAlert({
               show: false,
@@ -125,7 +134,7 @@ const Wallet = () => {
         })
         .catch((error) => {
           setrequesting(false);
-          console.log(error.response.data.errors[0].error);
+          // console.log(error.response.data.errors[0].error);
           setAlert({
             show: true,
             msg: error.response.data.errors[0].error,
@@ -141,7 +150,7 @@ const Wallet = () => {
       axios
         .get("/getCurrentBalance")
         .then((response) => {
-          setwalletBalance(response.data.walletBalance);
+          setwalletBalance(Math.round(response.data.walletBalance * 100) / 100);
           axios
             .get("/getTransactionList")
             .then((response) => {
@@ -149,11 +158,13 @@ const Wallet = () => {
               handelDebitAmount(response.data);
               handelCreditAmount(response.data);
               settransactionList(response.data);
+
               axios
                 .get("/getWithdrawRequests")
                 .then((response) => {
                   // console.log(response.data);
                   setwithdrawRequest(response.data);
+                  setUpdateTxn(response.data.length);
                   setTimeout(() => {
                     setLoaded(true);
                   }, 1000);
@@ -203,45 +214,40 @@ const Wallet = () => {
                 <Paper elevation={2}>
                   <Stack direction="column" spacing={1} style={stackStyle}>
                     <Stack direction="row" justifyContent="space-between">
-                      <div className="wallet-stack-item">
-                        <h3>Balance</h3>
-                      </div>
-                      <div className="wallet-stack-item">
-                        <h3 className="rupee-custom-style">
-                          <i className="fas fa-rupee-sign" />
-                        </h3>
-                      </div>
+                      <Typography className={classes.H3} variant="h3">
+                        Balance
+                      </Typography>
+                      <Typography className={classes.H3} variant="h3">
+                        <RupeeIcon color="primary" />
+                      </Typography>
                     </Stack>
                     <Stack direction="row" spacing={3}>
-                      <div className="wallet-stack-item">
-                        <h2>
-                          <i className="fas fa-rupee-sign" />
-                        </h2>
-                      </div>
-                      <div className="wallet-stack-item">
-                        <h3 className="amount-icon">{walletBalance}</h3>
-                      </div>
+                      <Chip
+                        icon={<RupeeIcon />}
+                        label={walletBalance}
+                        className={classes.root}
+                      />
                     </Stack>
                     <Stack direction="row" spacing={5} justifyContent="center">
                       <div className="wallet-stack-item">
-                        <span className="amount-icon">
-                          <DebitIcon style={iconStyle} />
-                        </span>
-                        <span className="debit-amount">
-                          -&nbsp;
-                          <i className="fas fa-rupee-sign" />
-                          &nbsp;{debitAmount}
-                        </span>
+                        <Chip
+                          icon={<DebitIcon />}
+                          label={debitAmount}
+                          size="small"
+                          color="error"
+                          variant="filled"
+                          className={classes.root}
+                        />
                       </div>
                       <div className="wallet-stack-item">
-                        <span className="amount-icon">
-                          <CreditIcon style={iconStyle} />
-                        </span>
-                        <span className="credit-amount">
-                          +&nbsp;
-                          <i className="fas fa-rupee-sign" />
-                          &nbsp;{creditAmount}
-                        </span>
+                        <Chip
+                          icon={<CreditIcon />}
+                          label={creditAmount}
+                          size="small"
+                          color="success"
+                          variant="filled"
+                          className={classes.root}
+                        />
                       </div>
                     </Stack>
                   </Stack>
@@ -273,7 +279,7 @@ const Wallet = () => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <i className="fas fa-rupee-sign" />
+                            <RupeeIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -306,11 +312,7 @@ const Wallet = () => {
                       loading={requesting}
                       loadingPosition="end"
                       variant="contained"
-                      style={{
-                        fontFamily: "PT sans",
-                        fontSize: "12px",
-                        letterSpacing: "1px",
-                      }}
+                      className={classes.root}
                     >
                       Withdraw
                     </LoadingButton>
@@ -339,14 +341,12 @@ const Wallet = () => {
                 <Stack
                   direction="column"
                   spacing={1}
-                  style={{
-                    maxHeight: "300px",
-                    overflowY: "auto",
-                    padding: "10px",
-                  }}
+                  className={classes.TransactionStack}
                 >
-                  <b className="amount-icon"> Recent Widthdraw Requests </b>
-                  <WithdrawGrid data={withdrawRequest} />
+                  <Typography className={classes.H3} variant="h5">
+                    Recent Widthdraw Requests
+                  </Typography>
+                  <WithdrawGrid data={withdrawRequest} update={updateTxn} />
                 </Stack>
               )}
               {!loaded ? (
@@ -362,13 +362,11 @@ const Wallet = () => {
                 <Stack
                   direction="column"
                   spacing={1}
-                  style={{
-                    maxHeight: "300px",
-                    overflowY: "auto",
-                    padding: "10px",
-                  }}
+                  className={classes.TransactionStack}
                 >
-                  <b className="amount-icon"> Previous Transactions </b>
+                  <Typography className={classes.H3} variant="h5">
+                    Previous Transactions
+                  </Typography>
                   <TransactionTable data={transactionList} />
                 </Stack>
               )}

@@ -6,18 +6,10 @@ import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // Components
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
-import Button from "@mui/material/Button";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import CircularProgress from "@mui/material/CircularProgress";
-import Pagination from "@mui/material/Pagination";
+import { Grid, Stack, Box, Avatar, Chip } from "@mui/material";
+import { Typography, Button, Snackbar, Alert, AlertTitle } from "@mui/material";
+import { CircularProgress, Pagination, IconButton } from "@mui/material";
+import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 
 // Icons
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
@@ -29,16 +21,23 @@ import WishlistIcon from "@mui/icons-material/FavoriteBorder";
 
 // Custom Components
 import SearchBar from "./Searchbar";
-import { IconButton } from "@mui/material";
 
 // Use Styles
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: "PT sans !important",
+    fontSize: "12px",
     "& li": {
       "& button": {
         fontFamily: "PT sans !important",
       },
+    },
+    "& div": {
+      fontFamily: "PT sans !important",
+      fontSize: "12px",
+    },
+    "& label": {
+      fontFamily: "PT sans !important",
     },
   },
 }));
@@ -64,6 +63,7 @@ const Search = () => {
   const [books, setbooks] = useState([]);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(1);
+  const [filter, setFilter] = useState(1);
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -72,15 +72,14 @@ const Search = () => {
         .get("/search", {
           params: {
             q: params.query,
+            noOfBooksInOnePage: 10,
+            page: page,
+            sortByPrice: "asc",
           },
         })
         .then((response) => {
           // console.log(response.data);
-          setbooks(
-            response.data.data.sort((a, b) => {
-              return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-            })
-          );
+          setbooks(response.data.data);
           settotalPages(response.data.totalPages);
           setLoading(false);
         })
@@ -99,16 +98,13 @@ const Search = () => {
       .get("/search", {
         params: {
           q: params.query,
+          noOfBooksInOnePage: 10,
           page: pageNo,
         },
       })
       .then((response) => {
         // console.log(response.data);
-        setbooks(
-          response.data.data.sort((a, b) => {
-            return a.price < b.price ? 1 : a.price > b.price ? -1 : 0;
-          })
-        );
+        setbooks(response.data.data);
         settotalPages(response.data.totalPages);
         setLoading(false);
       })
@@ -253,6 +249,94 @@ const Search = () => {
     }
   };
 
+  // changing Filter
+  const handelFilterChange = (e) => {
+    setFilter(e.target.value);
+    setLoading(true);
+    switch (e.target.value) {
+      case 1:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByPrice: "asc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
+        break;
+      case 2:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByDate: "desc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
+        break;
+      case 3:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByPrice: "desc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
+        break;
+      case 4:
+        axios
+          .get("/search", {
+            params: {
+              q: params.query,
+              noOfBooksInOnePage: 10,
+              page: page,
+              sortByDate: "asc",
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            setbooks(response.data.data);
+            settotalPages(response.data.totalPages);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
+        break;
+    }
+  };
+
   // Handeling snackbar closing
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -278,6 +362,34 @@ const Search = () => {
         className="search-book-container"
       >
         <SearchBar />
+        <FormControl
+          fullWidth
+          className={classes.root}
+          color="success"
+          variant="standard"
+          size="small"
+        >
+          <InputLabel id="demo-simple-select-label">Filter Books</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            value={filter}
+            label="Filter Books"
+            onChange={handelFilterChange}
+          >
+            <MenuItem value={1} className={classes.root}>
+              Price Low to High
+            </MenuItem>
+            <MenuItem value={2} className={classes.root}>
+              Newest
+            </MenuItem>
+            <MenuItem value={3} className={classes.root}>
+              Price High to Low
+            </MenuItem>
+            <MenuItem value={4} className={classes.root}>
+              Oldest
+            </MenuItem>
+          </Select>
+        </FormControl>
         {!Loading ? (
           <Grid
             container
@@ -296,12 +408,11 @@ const Search = () => {
                         boxShadow:
                           "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
                         borderRadius: "5px",
-                        cursor: "pointer",
+
                         "&:hover": {
                           boxShadow: "0 4px 6px rgb(32 33 36 / 28%)",
                         },
                       }}
-                      onClick={() => history.push(`/BookDetails/${book._id}`)}
                     >
                       <Stack
                         direction="column"
@@ -313,8 +424,11 @@ const Search = () => {
                         <Avatar
                           alt={book.title}
                           src={book.photo}
-                          sx={{ height: 220, width: "100%" }}
+                          sx={{ height: 220, width: "100%", cursor: "pointer" }}
                           variant="rounded"
+                          onClick={() =>
+                            history.push(`/BookDetails/${book._id}`)
+                          }
                         />
                         <Typography
                           align="center"

@@ -39,6 +39,13 @@ const NavbarItems = () => {
       >
         Sell&nbsp;Books
       </Button>
+      <Button
+        startIcon={<SupportIcon />}
+        href="/SellerPanel/5"
+        sx={NavButtonStyle}
+      >
+        Your&nbsp;Books
+      </Button>
       <Button startIcon={<InfoIcon />} href="/About" sx={NavButtonStyle}>
         About&nbsp;Us
       </Button>

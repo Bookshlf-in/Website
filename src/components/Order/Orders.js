@@ -27,9 +27,8 @@ import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 import ApprovedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import UpdateIcon from "@mui/icons-material/CachedRounded";
-
-// Custom Components
-import UpdateBook from "./UpdateOrder";
+import { Filter } from "@mui/icons-material";
+import { Switch } from "react-router-dom/cjs/react-router-dom.min";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -70,37 +69,48 @@ const Orders = () => {
       );
       setLoading(false);
     });
-  }, []);
+  }, [books.length]);
 
   // changing Filter
   const handelFilterChange = (e) => {
-    setFilterChange(true);
     setFilter(e.target.value);
-    if (e.target.value == 1) {
-      setTimeout(() => {
-        setFilterChange(false);
+    switch (e.target.value) {
+      case 1:
         setFilteredItems(
           books.filter((book) => book.status === "Approval Pending")
         );
-      }, 2000);
-    } else if (e.target.value == 2) {
-      setTimeout(() => {
-        setFilterChange(false);
+        break;
+      case 2:
         setFilteredItems(books.filter((book) => book.status === "Approved"));
-      }, 2000);
-    } else if (e.target.value == 3) {
-      setTimeout(() => {
-        setFilterChange(false);
+        break;
+      case 3:
         setFilteredItems(books.filter((book) => book.status === "Sold"));
-      }, 2000);
-    } else if (e.target.value == 4) {
-      setTimeout(() => {
-        setFilterChange(false);
+        break;
+      case 4:
         setFilteredItems(
           books.filter((book) => book.status === "Approval rejected")
         );
-      }, 2000);
+        break;
     }
+  };
+
+  // Delete Book
+  const handelDeleteBook = async (bookId) => {
+    setdeleteId(bookId);
+    const request = await axios
+      .delete("/deleteBook", {
+        data: {
+          bookId: bookId,
+        },
+      })
+      .then((response) => {
+        setdeleteId("");
+        setbooks(books.filter((book) => book._id !== bookId));
+      })
+      .catch((error) => {
+        setdeleteId("");
+      });
+    return request;
   };
 
   const columns = [
@@ -253,7 +263,11 @@ const Orders = () => {
       sortable: false,
       renderCell: (cellValue) => {
         return (
-          <IconButton className={classes.root} color="error">
+          <IconButton
+            className={classes.root}
+            color="error"
+            onClick={() => handelDeleteBook(cellValue.value)}
+          >
             {deleteId === cellValue.value ? (
               <CircularProgress color="inherit" size={20} />
             ) : (
@@ -312,7 +326,7 @@ const Orders = () => {
           pageSize={3}
           rowBuffer={3}
           className={classes.root}
-          loading={filteredItems === null || filterChange || Loading}
+          loading={Loading}
           rowHeight={120}
           rowsPerPageOptions={[3]}
           disableColumnFilter

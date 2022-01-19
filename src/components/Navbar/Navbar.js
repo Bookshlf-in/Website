@@ -45,36 +45,26 @@ const Navbar = () => {
   // Functionality States
   const [openSideNav, setOpenSideNav] = useState(false);
 
-  // Data States
-  const [cartCnt, setCartCnt] = useState(0);
-  const [wishlistCnt, setwishlistCnt] = useState(0);
-  const [walletbalance, setwalletbalance] = useState(0);
-
-  // /countWishlistItems, /countCartItems, /getCurrentBalance
-
   useEffect(() => {
     // getting count of Items
     const FetchCountAPI = () => {
       axios.get("/countWishlistItems").then((wishlist) => {
         axios.get("/countCartItems").then((cart) => {
           axios.get("/getCurrentBalance").then((balance) => {
-            setCartCnt(cart.data.count);
-            setwishlistCnt(wishlist.data.count);
-            setwalletbalance(balance.data.walletBalance);
             localStorage.setItem(
               "bookshlf_user",
               JSON.stringify({
                 ...user,
                 cartitems: cart.data.count,
                 wishlist: wishlist.data.count,
-                balance: balance.data.walletBalance,
+                balance: Math.round(balance.data.walletBalance * 10) / 10,
               })
             );
             setUser({
               ...user,
               cartitems: cart.data.count,
               wishlist: wishlist.data.count,
-              balance: balance.data.walletBalance,
+              balance: Math.round(balance.data.walletBalance * 10) / 10,
             });
             // console.log(wishlist.data, cart.data, balance.data);
           });
@@ -99,7 +89,7 @@ const Navbar = () => {
           >
             <Badge
               variant="dot"
-              badgeContent={cartCnt + wishlistCnt}
+              badgeContent={user?.cartitems + user?.wishlist}
               color="warning"
             >
               <MenuIcon />
@@ -132,13 +122,17 @@ const Navbar = () => {
           <NavbarSearch />
           <Stack direction="row" spacing={2} className="nav-desktop-item">
             <IconButton onClick={() => history.push("/Cart")}>
-              <Badge badgeContent={cartCnt} color="secondary" sx={NotiBubble}>
+              <Badge
+                badgeContent={user?.cartitems}
+                color="secondary"
+                sx={NotiBubble}
+              >
                 <ShoppingCartIcon sx={NavIconStyle} />
               </Badge>
             </IconButton>
             <IconButton onClick={() => history.push("/Wishlist")}>
               <Badge
-                badgeContent={wishlistCnt}
+                badgeContent={user?.wishlist}
                 color="secondary"
                 sx={NotiBubble}
               >
@@ -148,7 +142,7 @@ const Navbar = () => {
             {user?.roles?.includes("seller") ? (
               <IconButton onClick={() => history.push("/Wallet")}>
                 <Badge
-                  badgeContent={walletbalance}
+                  badgeContent={user?.balance}
                   color="warning"
                   max={9999}
                   showZero={true}

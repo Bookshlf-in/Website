@@ -336,7 +336,7 @@ const Messages = () => {
         ))
       ) : (
         <Alert severity="error" className={classes.root} color="warning">
-          No Books in this Page
+          No Messages in this Page
         </Alert>
       )}
     </Stack>

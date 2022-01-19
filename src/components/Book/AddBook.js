@@ -2,7 +2,6 @@ import { React, useState, useContext } from "react";
 import "./AddBook.css";
 import axios from "../../axios";
 import { Link, useHistory } from "react-router-dom";
-import { AddFormContext } from "../../Context/formContext";
 import { Helmet } from "react-helmet";
 import { makeStyles } from "@mui/styles";
 import SellerCommisionChart from "./CommisionChartGrid";
@@ -89,7 +88,6 @@ const useStyles = makeStyles(() => ({
 const AddBook = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [addForm, setAddForm] = useContext(AddFormContext);
 
   // functionality states
 
@@ -126,7 +124,6 @@ const AddBook = (props) => {
   const [tag, setTag] = useState("");
   const [link, setlink] = useState("");
   const [lang, setlang] = useState("");
-  const [Photo, setPhoto] = useState([]);
   const [Image, setImage] = useState([]);
 
   // Checking if price string is currect
@@ -241,9 +238,19 @@ const AddBook = (props) => {
   const UpdateFileList = (fileList) => {
     setImage(fileList);
   };
+  // Checking All Books Are Unique
+  const isUnique = (fileName, fileList) => {
+    for (let i = 0; i < fileList.length; i++) {
+      if (fileList[i].name === fileName) return false;
+    }
+    return true;
+  };
   const handelbookAdd = (e, uploadMultiple) => {
+    // console.log(e.target.files[0].name);
     if (Image.length > 0 && uploadMultiple) {
-      UpdateFileList([...Array.from(e.target.files), ...Image]);
+      if (isUnique(e.target.files[0].name, Image)) {
+        UpdateFileList([...Image, ...Array.from(e.target.files)]);
+      }
     } else {
       UpdateFileList(Array.from(e.target.files));
     }
@@ -285,13 +292,12 @@ const AddBook = (props) => {
           setalert({
             show: false,
             msg: "",
-            type: "info",
           });
           history.push("/SellerPanel/2");
-        }, 3000);
+        }, 1000);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
   };
 
@@ -1024,9 +1030,7 @@ const AddBook = (props) => {
         </Grid>
         <Grid item xs={12} lg={4} md={4} sm={4}>
           <LoadingButton
-            onClick={() => {
-              uploadBook();
-            }}
+            onClick={uploadBook}
             endIcon={<SendIcon />}
             loading={sending}
             loadingPosition="end"
