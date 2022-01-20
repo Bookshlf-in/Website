@@ -113,8 +113,6 @@ git merge dev
 
 # Screenshots
 
-## Will be Uploaded Soon
-
 <img src="public/images/Readme/login.png" width = "800px"/>
 <img src="public/images/Readme/signup.png" width = "800px"/>
 <img src="public/images/Readme/recovery.png" width = "800px"/>
