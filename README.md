@@ -123,7 +123,7 @@ git merge dev
 #### To Make API Requests Possible, Follow below Steps after Locally Setting Up Project.
 
 - Create a File Named `.env` into Main Repository Folder eg : `...\Website\.env`.
-- See `Demo.env` for more clarity.
+- See `Demo.env.txt` for more clarity.
 - Inside `.env` File Recently Created Add Following lines of Code
 
 ```
