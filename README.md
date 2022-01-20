@@ -5,7 +5,7 @@
 
 Online Second Hand book store specially for Competitive Exams.
 
-We are a small team of students who are enthusiastic developers. We are trying to create a better viable platform for students who want to learn but due to financial issues can't afford new books. We also want to help those who want to sell thier books which they don't need. We hope that you will find this platform usefull. We are always trying to make this platform better and better.
+We are a small team of students who are enthusiastic developers. We are trying to create a better viable platform for students who want to learn but due to financial issues can't afford new books. We also want to help those who want to sell thier books which they don't need. We hope that you will find this platform usefull. We are always trying to make this platform better.
 
 # Built With
 
@@ -71,7 +71,7 @@ $ npm i
 - While you are still inside the cloned folder, write the following command to run the website locally.
 
 ```
-  $ npm run start
+  $ npm run start or npm start
 ```
 
 ## How to Contribute
@@ -114,6 +114,23 @@ git merge dev
 # Screenshots
 
 ## Will be Uploaded Soon
+
+<img src="public/images/Readme/login.png" width = "800px"/>
+<img src="public/images/Readme/signup.png" width = "800px"/>
+<img src="public/images/Readme/recovery.png" width = "800px"/>
+<img src="public/images/Readme/home1.png" width = "800px"/>
+<img src="public/images/Readme/home2.png" width = "800px"/>
+<img src="public/images/Readme/home3.png" width = "800px"/>
+<img src="public/images/Readme/home4.png" width = "800px"/>
+<img src="public/images/Readme/about.png" width = "800px"/>
+<img src="public/images/Readme/contact.png" width = "800px"/>
+<img src="public/images/Readme/cart.png" width = "800px"/>
+<img src="public/images/Readme/wishlist.png" width = "800px"/>
+<img src="public/images/Readme/wallet.png" width = "800px"/>
+<img src="public/images/Readme/order.png" width = "800px"/>
+<img src="public/images/Readme/search.png" width = "800px"/>
+<img src="public/images/Readme/bookdetails.png" width = "800px"/>
+<img src="public/images/Readme/checkout.png" width = "800px"/>
 
 ## Author
 

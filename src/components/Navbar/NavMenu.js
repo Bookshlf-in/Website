@@ -110,9 +110,11 @@ const NavbarMenu = () => {
         <MenuItem onClick={() => handelNavigate("/SellerPanel/5")}>
           <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
         </MenuItem>
-        <MenuItem onClick={() => handelNavigate("/Admin/1")}>
-          <MenuStack icon={<AdminIcon color="error" />} label="Admin" />
-        </MenuItem>
+        {user.roles.includes("admin") ? (
+          <MenuItem onClick={() => handelNavigate("/Admin/1")}>
+            <MenuStack icon={<AdminIcon color="error" />} label="Admin" />
+          </MenuItem>
+        ) : null}
         <MenuItem onClick={() => handelNavigate("/Wallet")}>
           <MenuStack
             icon={<WalletIcon color="secondary" />}
