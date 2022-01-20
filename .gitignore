@@ -16,6 +16,7 @@ firebase.json
 /.firebase
 
 #api keys
+.env
 
 # misc
 .DS_Store
