@@ -114,3 +114,15 @@ git merge dev
 # Screenshots
 
 ## Will be Uploaded Soon
+
+## Author
+
+**Abhishek Singh**
+
+- [github/Mrhb787](https://github.com/Mrhb787)
+
+## Copyright and License
+
+Copyright (c) 2022, Bookshlf.
+
+Bookshlf source code is licensed under the [MIT License](https://github.com/Bookshlf-in/Website/blob/main/LICENSE).
