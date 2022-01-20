@@ -9,8 +9,13 @@ We are a small team of students who are enthusiastic developers. We are trying t
 
 # Built With
 
-- [React](https://reactjs.org)
-- [Firebase](https://firebase.google.com/)
+- ### FrontEnd
+  - [React](https://reactjs.org)
+  - [Material UI](https://mui.com/)
+- ### Hosting
+  - [Firebase](https://firebase.google.com/)
+- ### API
+  - [axios](https://axios-http.com/)
 
 # Contributing
 
@@ -110,6 +115,23 @@ git merge dev
 **9.** On Github, create a pull request from your feature branch. Always make the PR against the dev branch! Make sure to summarize your changes you made, and if there's anything specific you want reviewed or tested, note that in the PR.
 
 **10.** When approved, your branch will be merged into master and you're done! Thanks for contributing! :)
+
+## API KEYS
+
+- _This is a Neccessary Step to make APIs Work._
+
+#### To Make API Requests Possible, Follow below Steps after Locally Setting Up Project.
+
+- Create a File Named `.env` into Main Repository Folder eg : `...\Website\.env`.
+- See `Demo.env` for more clarity.
+- Inside `.env` File Recently Created Add Following lines of Code
+
+```
+REACT_APP_BOOKSHLF=https://bookshlf.herokuapp.com/
+REACT_APP_NODE_ENV=development
+```
+
+- Save and Restart your Project (if already running) with `npm start` to make changes Appear.
 
 # Screenshots
 
