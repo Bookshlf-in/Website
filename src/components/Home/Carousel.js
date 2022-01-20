@@ -10,7 +10,14 @@ import NotActiveIcon from "@mui/icons-material/FiberManualRecordOutlined";
 import LeftIcon from "@mui/icons-material/ChevronLeftRounded";
 import RightIcon from "@mui/icons-material/ChevronRightRounded";
 
-const images = ["", "", "", "", "", ""];
+const images = [
+  "",
+  "",
+  "",
+  "",
+  { url: "/images/CarouselMobile/carousel_bg5.png" },
+  "",
+];
 
 const totalImages = images.length;
 
@@ -47,6 +54,11 @@ const Slider = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const [dir, setDir] = useState("left");
   const containerRef = useRef(null);
+  const [frameWidth, setFrameWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    setFrameWidth(window.innerWidth);
+  }, [window.innerWidth]);
 
   // Custom Image Slider
   const ImageSlider = (props) => {
@@ -62,9 +74,12 @@ const Slider = () => {
         <div
           className="slider__image"
           style={{
-            backgroundImage: `url("https://storage.googleapis.com/bookshlf-in/static/carousel/${
-              props.index + 1
-            }.png")`,
+            backgroundImage:
+              frameWidth <= 600 && props.index + 1 >= 5
+                ? `url("${images[props.index].url}")`
+                : `url("https://storage.googleapis.com/bookshlf-in/static/carousel/${
+                    props.index + 1
+                  }.png")`,
           }}
         ></div>
       </Slide>

@@ -4,19 +4,9 @@ import { Helmet } from "react-helmet";
 import axios from "../../axios";
 
 // Components
-import {
-  Stack,
-  Chip,
-  Avatar,
-  Typography,
-  Button,
-  IconButton,
-  CircularProgress,
-} from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import { Stack, Chip, Avatar, Typography, Popover } from "@mui/material";
+import { Button, IconButton, CircularProgress } from "@mui/material";
+import { InputLabel, FormControl, MenuItem, Select } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 // Icon
@@ -27,8 +17,6 @@ import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 import ApprovedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import UpdateIcon from "@mui/icons-material/CachedRounded";
-import { Filter } from "@mui/icons-material";
-import { Switch } from "react-router-dom/cjs/react-router-dom.min";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -52,13 +40,14 @@ const Orders = () => {
 
   // Functionality States
   const [Loading, setLoading] = useState(true);
-  const [filterChange, setFilterChange] = useState(false);
+  const [openPop, setOpenPop] = useState(null);
   const [deleteId, setdeleteId] = useState("");
 
   // Data States
   const [filteredItems, setFilteredItems] = useState([]);
   const [books, setbooks] = useState([]);
   const [filter, setFilter] = useState(1);
+  const [popmsg, setPopmsg] = useState("");
 
   useEffect(() => {
     axios.get("/getBookList").then((response) => {
@@ -240,18 +229,32 @@ const Orders = () => {
       flex: 2,
       sortable: false,
       renderCell: (cellValue) => {
-        return (
+        return filter === 1 ? (
           <Button
             startIcon={<UpdateIcon />}
-            disabled={filter !== 1}
             size="small"
             className={classes.root}
             variant="contained"
-            href={`/SellerBookUpdate/${cellValue.value}`}
+            href={`/SellerBookUpdate/${cellValue.value[0]}`}
             target="_blank"
           >
             Update Book
           </Button>
+        ) : filter === 4 ? (
+          <Button
+            startIcon={<UpdateIcon />}
+            size="small"
+            className={classes.root}
+            variant="contained"
+            onClick={(e) => {
+              setOpenPop(e.currentTarget);
+              setPopmsg(cellValue.value[1]);
+            }}
+          >
+            Admin Message
+          </Button>
+        ) : (
+          <></>
         );
       },
     },
@@ -285,7 +288,7 @@ const Orders = () => {
       bookTotal: [order.price, order.qty],
       bookDetails: [order.title, order.description],
       bookStatus: order.status,
-      bookUpdate: order._id,
+      bookUpdate: [order._id, order.adminMessage],
       bookDelete: order._id,
     };
   });
@@ -320,6 +323,33 @@ const Orders = () => {
             </MenuItem>
           </Select>
         </FormControl>
+        <Popover
+          open={Boolean(openPop)}
+          anchorEl={openPop}
+          onClose={() => setOpenPop(null)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "center",
+            horizontal: "center",
+          }}
+          sx={{ width: "100%", backgroundColor: "rgba(0,0,0,0.4)" }}
+        >
+          <Stack sx={{ padding: "10px" }} spacing={3}>
+            <Typography
+              color="error"
+              variant="h4"
+              sx={{ fontFamily: "PT sans" }}
+            >
+              Book Rejected!
+            </Typography>
+            <Typography variant="body2" sx={{ fontFamily: "PT sans" }}>
+              {popmsg}
+            </Typography>
+          </Stack>
+        </Popover>
         <DataGrid
           rows={rows}
           columns={columns}

@@ -40,7 +40,7 @@ const NavbarItems = () => {
         Sell&nbsp;Books
       </Button>
       <Button
-        startIcon={<SupportIcon />}
+        startIcon={<BookIcon />}
         href="/SellerPanel/5"
         sx={NavButtonStyle}
       >

@@ -5,12 +5,14 @@ import App from "./components/App/App";
 import reportWebVitals from "./reportWebVitals";
 import { CurrentUserProvider } from "./Context/userContext";
 import { CurrentFormProvider } from "./Context/formContext";
-
+import HttpsRedirect from "react-https-redirect";
 ReactDOM.render(
   <React.StrictMode>
     <CurrentUserProvider>
       <CurrentFormProvider>
-        <App />
+        <HttpsRedirect>
+          <App />
+        </HttpsRedirect>
       </CurrentFormProvider>
     </CurrentUserProvider>
   </React.StrictMode>,
