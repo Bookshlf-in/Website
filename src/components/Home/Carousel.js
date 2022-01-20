@@ -11,43 +11,28 @@ import LeftIcon from "@mui/icons-material/ChevronLeftRounded";
 import RightIcon from "@mui/icons-material/ChevronRightRounded";
 
 const images = [
-  "",
-  "",
-  "",
-  "",
+  { url: "/images/CarouselMobile/carousel_bg1.png" },
+  { url: "/images/CarouselMobile/carousel_bg2.png" },
+  { url: "/images/CarouselMobile/carousel_bg3.png" },
+  { url: "/images/CarouselMobile/carousel_bg4.png" },
   { url: "/images/CarouselMobile/carousel_bg5.png" },
-  "",
+  { url: "/images/CarouselMobile/carousel_bg6.png" },
 ];
 
 const totalImages = images.length;
 
 const slideLabel = [
+  {},
+  {},
+  {},
+  {},
+  {},
   {
-    title: "BUY USED BOOKS",
-    body: "Buy Used Books at Discounted Price at Bookshlf",
-    btn: "BUY NOW",
+    title: "Buy & Sell Used Books Now",
+    body: "What are you waiting for.",
+    btn: "Buy Now",
     link: "/SearchResult/tag:ALL",
   },
-  {
-    title: "SELL USED BOOKS",
-    body: "Sell Used Books on Bookshlf and get best Price for your Book",
-    btn: "SELL NOW",
-    link: "/SellerPanel/5",
-  },
-  {
-    title: "OLD BOOKS ARE LIKE OLD FRIENDS.",
-    body: "Full of memories and Emotions",
-    btn: "JOIN NOW",
-    link: "/Login",
-  },
-  {
-    title: "BEST JEE MAINS & ADVANCED BOOKS",
-    body: "Get Best Jee Mains, Advanced, Neet UG etc Books for discounted Prices",
-    btn: "BUY NOW",
-    link: "/SearchResult/tag:JEE",
-  },
-  { title: "", body: "", btn: "" },
-  { title: "", body: "", btn: "" },
 ];
 
 const Slider = () => {
@@ -75,7 +60,7 @@ const Slider = () => {
           className="slider__image"
           style={{
             backgroundImage:
-              frameWidth <= 600 && props.index + 1 >= 5
+              frameWidth <= 600
                 ? `url("${images[props.index].url}")`
                 : `url("https://storage.googleapis.com/bookshlf-in/static/carousel/${
                     props.index + 1
@@ -118,7 +103,7 @@ const Slider = () => {
   }, [imageIndex]);
 
   useEffect(() => {
-    const myTimeout = setTimeout(slideRight, 10000);
+    const myTimeout = setTimeout(slideRight, 5000);
     return () => {
       clearTimeout(myTimeout);
     };
@@ -144,7 +129,7 @@ const Slider = () => {
         <TitleSlider dir="down" index={imageIndex} Ref={containerRef.current} />
       </div>
 
-      {imageIndex < 4 ? (
+      {imageIndex === 5 ? (
         <div className="slider__btn">
           <Button variant="contained" href={slideLabel[imageIndex].link}>
             {slideLabel[imageIndex].btn}
