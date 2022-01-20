@@ -1,34 +1,22 @@
-import { React, useState, useContext } from "react";
-import "./AddBook.css";
-import axios from "../../axios";
+import { React, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { makeStyles } from "@mui/styles";
 import SellerCommisionChart from "./CommisionChartGrid";
+import "./AddBook.css";
+import axios from "../../axios";
 
-// form components
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
-import Chip from "@mui/material/Chip";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import Collapse from "@mui/material/Collapse";
-import Tooltip from "@mui/material/Tooltip";
-import Divider from "@mui/material/Divider";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
-import LoadingButton from "@mui/lab/LoadingButton";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+// Components
+// ======== From Core (Stable)
+import { Grid, Stack, Collapse, Popover } from "@mui/material";
+import { Button, Checkbox, TextField, IconButton } from "@mui/material";
+import { Alert, CircularProgress, ClickAwayListener } from "@mui/material";
+import { Chip, Tooltip, InputAdornment, Divider, Avatar } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { DialogContentText, DialogTitle } from "@mui/material";
+import { InputLabel, FormControl, Select, MenuItem } from "@mui/material";
+// ======== From Lab (Unstable)
+import { LoadingButton } from "@mui/lab";
 
 // Icons
 import CancelIcon from "@mui/icons-material/CancelTwoTone";
@@ -99,6 +87,7 @@ const AddBook = (props) => {
   const [openTagMenu, setOpenTagMenu] = useState(false);
   const [openTitleMenu, setOpenTitleMenu] = useState(false);
   const [openpriceChart, setopenpriceChart] = useState(false);
+  const [openPop, setOpenPop] = useState(null);
   const [alert, setalert] = useState({
     show: false,
     type: "info",
@@ -125,6 +114,7 @@ const AddBook = (props) => {
   const [link, setlink] = useState("");
   const [lang, setlang] = useState("");
   const [Image, setImage] = useState([]);
+  const [Address, setAddress] = useState(props.address);
 
   // Checking if price string is currect
   const CheckIfPriceFormat = (priceString) => {
@@ -422,6 +412,288 @@ const AddBook = (props) => {
     }
   };
 
+  // const Address Popover Component
+  const AddAddressPopOver = () => {
+    // Functionality States
+    const [loading, setloading] = useState(false);
+    const [alert, setalert] = useState({
+      show: false,
+      type: "warning",
+      msg: "",
+    });
+
+    // add address Data states
+    const [Label, setLabel] = useState("");
+    const [Address, setaddress] = useState("");
+    const [PhoneNo, setPhoneNo] = useState("");
+    const [AltPhoneNo, setAltPhoneNo] = useState("");
+    const [City, setCity] = useState("");
+    const [State, setState] = useState("");
+    const [ZipCode, setZipCode] = useState("");
+
+    // handeling address register request
+    const handelRegister = () => {
+      setloading(true);
+      if (
+        Label !== "Address Type" &&
+        Address.length > 0 &&
+        City !== "City" &&
+        State !== "State" &&
+        ZipCode.length === 6 &&
+        PhoneNo.length === 10
+      ) {
+        axios
+          .post("/addAddress", {
+            label: Label,
+            address: Address,
+            phoneNo: PhoneNo,
+            altPhoneNo: AltPhoneNo,
+            city: City,
+            state: State,
+            zipCode: ZipCode,
+          })
+          .then(() => {
+            axios
+              .get("/getAddressList")
+              .then((response) => {
+                setAddress(
+                  response.data.sort((a, b) => {
+                    return a.updatedAt < b.updatedAt
+                      ? 1
+                      : a.updatedAt > b.updatedAt
+                      ? -1
+                      : 0;
+                  })
+                );
+                setalert({
+                  show: true,
+                  type: "success",
+                  msg: response.data.msg,
+                });
+                setloading(false);
+                setTimeout(() => {
+                  setalert({
+                    show: false,
+                    type: "",
+                    msg: "",
+                  });
+                  setOpenPop(null);
+                }, 1000);
+              })
+              .catch((error) => {});
+          })
+          .catch((error) => {
+            if (error.response) {
+              setalert({
+                show: true,
+                type: "error",
+                msg: "Please Fill All Fields Correctly!",
+              });
+
+              setTimeout(() => {
+                setalert({
+                  show: false,
+                  type: "",
+                  msg: "",
+                });
+              }, 3000);
+            }
+            setloading(false);
+          });
+      } else {
+        setloading(false);
+        setalert({
+          show: true,
+          type: "error",
+          msg: "Please Fill All Fields Correctly!",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            type: "",
+            msg: "",
+          });
+        }, 3000);
+      }
+    };
+
+    return (
+      <Stack
+        spacing={1}
+        sx={{ padding: "10px", width: "100%" }}
+        className="address-form-stack"
+      >
+        <FormControl
+          fullWidth
+          variant="filled"
+          sx={{ minWidth: 200 }}
+          className={classes.root}
+          size="small"
+        >
+          <InputLabel id="address-type-label">Address Type</InputLabel>
+          <Select
+            labelId="address-type-label"
+            value={Label}
+            label="Address Type"
+            onChange={(e) => setLabel(e.target.value)}
+          >
+            <MenuItem
+              value="Home Address"
+              sx={{ fontFamily: "PT sans", fontSize: "12px" }}
+            >
+              Home Address
+            </MenuItem>
+            <MenuItem
+              value="Office Address"
+              sx={{ fontFamily: "PT sans", fontSize: "12px" }}
+            >
+              Office Address
+            </MenuItem>
+            <MenuItem
+              value="Temporary Address"
+              sx={{ fontFamily: "PT sans", fontSize: "12px" }}
+            >
+              Temporary Address
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          label="Full Address"
+          variant="filled"
+          value={Address}
+          onChange={(e) => setaddress(e.target.value)}
+          fullWidth
+          className={classes.root}
+          sx={{ minWidth: 250 }}
+        />
+
+        <FormControl
+          fullWidth
+          variant="filled"
+          className={classes.root}
+          sx={{ maxWidth: 300 }}
+        >
+          <InputLabel id="state-label">State</InputLabel>
+          <Select
+            className={classes.root}
+            size="small"
+            labelId="state-label"
+            value={State}
+            label="State"
+            onChange={(e) => setState(e.target.value)}
+          >
+            <MenuItem value="Andaman and Nicobar Islands">
+              Andaman and Nicobar Islands
+            </MenuItem>
+            <MenuItem value="Andhra Pradesh">Andhra Pradesh</MenuItem>
+            <MenuItem value="Arunachal Pradesh">Arunachal Pradesh</MenuItem>
+            <MenuItem value="Assam">Assam</MenuItem>
+            <MenuItem value="Bihar">Bihar</MenuItem>
+            <MenuItem value="Chandigarh">Chandigarh</MenuItem>
+            <MenuItem value="Chhattisgarh">Chhattisgarh</MenuItem>
+            <MenuItem value="Dadra and Nagar Haveli">
+              Dadra and Nagar Haveli
+            </MenuItem>
+            <MenuItem value="Daman and Diu">Daman and Diu</MenuItem>
+            <MenuItem value="Delhi">Delhi</MenuItem>
+            <MenuItem value="Goa">Goa</MenuItem>
+            <MenuItem value="Gujarat">Gujarat</MenuItem>
+            <MenuItem value="Haryana">Haryana</MenuItem>
+            <MenuItem value="Himachal Pradesh">Himachal Pradesh</MenuItem>
+            <MenuItem value="Jammu and Kashmir">Jammu and Kashmir</MenuItem>
+            <MenuItem value="Jharkhand">Jharkhand</MenuItem>
+            <MenuItem value="Karnataka">Karnataka</MenuItem>
+            <MenuItem value="Kerala">Kerala</MenuItem>
+            <MenuItem value="Ladakh">Ladakh</MenuItem>
+            <MenuItem value="Lakshadweep">Lakshadweep</MenuItem>
+            <MenuItem value="Madhya Pradesh">Madhya Pradesh</MenuItem>
+            <MenuItem value="Maharashtra">Maharashtra</MenuItem>
+            <MenuItem value="Manipur">Manipur</MenuItem>
+            <MenuItem value="Meghalaya">Meghalaya</MenuItem>
+            <MenuItem value="Mizoram">Mizoram</MenuItem>
+            <MenuItem value="Nagaland">Nagaland</MenuItem>
+            <MenuItem value="Odisha">Odisha</MenuItem>
+            <MenuItem value="Puducherry">Puducherry</MenuItem>
+            <MenuItem value="Punjab">Punjab</MenuItem>
+            <MenuItem value="Rajasthan">Rajasthan</MenuItem>
+            <MenuItem value="Sikkim">Sikkim</MenuItem>
+            <MenuItem value="Tamil Nadu">Tamil Nadu</MenuItem>
+            <MenuItem value="Telangana">Telangana</MenuItem>
+            <MenuItem value="Tripura">Tripura</MenuItem>
+            <MenuItem value="Uttar Pradesh">Uttar Pradesh</MenuItem>
+            <MenuItem value="Uttarakhand">Uttarakhand</MenuItem>
+            <MenuItem value="West Bengal">West Bengal</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          className={classes.root}
+          label="City"
+          variant="filled"
+          fullWidth
+          value={City}
+          onChange={(e) => setCity(e.target.value)}
+          sx={{ maxWidth: 300 }}
+        />
+        <TextField
+          className={classes.root}
+          label="Pincode"
+          variant="filled"
+          fullWidth
+          value={ZipCode}
+          onChange={(e) => setZipCode(e.target.value)}
+          type="number"
+          sx={{ maxWidth: 284 }}
+        />
+
+        <TextField
+          size="small"
+          className={classes.root}
+          label="Contact Number"
+          variant="filled"
+          fullWidth
+          value={PhoneNo}
+          onChange={(e) => setPhoneNo(e.target.value)}
+          type="number"
+          sx={{ maxWidth: 300 }}
+        />
+        <TextField
+          size="small"
+          className={classes.root}
+          label="Alternate Contact Number"
+          variant="filled"
+          fullWidth
+          value={AltPhoneNo}
+          onChange={(e) => setAltPhoneNo(e.target.value)}
+          type="number"
+          sx={{ maxWidth: 300 }}
+        />
+        <LoadingButton
+          size="small"
+          className={classes.root}
+          variant="contained"
+          fullWidth
+          color="success"
+          sx={{ maxWidth: 284, fontFamily: "PT sans" }}
+          onClick={handelRegister}
+          endIcon={<AddIcon />}
+          loading={loading}
+          loadingPosition="end"
+        >
+          Add Address
+        </LoadingButton>
+        {alert.show ? (
+          <Alert
+            severity={alert.type}
+            className={classes.root}
+            sx={{ fontFamily: "PT sans" }}
+          >
+            {alert.msg}
+          </Alert>
+        ) : null}
+      </Stack>
+    );
+  };
+
   return (
     <div className="add-book-bg">
       <Helmet>
@@ -537,6 +809,8 @@ const AddBook = (props) => {
                     variant="standard"
                     value={Qnty}
                     onChange={(e) => setQnty(e.target.value)}
+                    name="book-qty-field"
+                    autoComplete="off"
                   />
                   <TextField
                     className={classes.root}
@@ -556,6 +830,8 @@ const AddBook = (props) => {
                       setSP(FormatPrice(e.target.value));
                       handelCalculateEarnings(e.target.value);
                     }}
+                    name="selling-price-field"
+                    autoComplete="off"
                   />
                   <TextField
                     className={classes.root}
@@ -626,9 +902,10 @@ const AddBook = (props) => {
                   label="Pickup Address"
                   value={Adr}
                   onChange={(e) => {
-                    setAdr(e.target.value);
                     if (e.target.value === "NEWADR") {
-                      history.push("/SellerPanel/3");
+                      setOpenPop(e.target.value);
+                    } else {
+                      setAdr(e.target.value);
                     }
                   }}
                   helperText="Please select your address for Book Pickup"
@@ -640,15 +917,17 @@ const AddBook = (props) => {
                     ),
                   }}
                 >
-                  {props.address.map((option) => (
-                    <MenuItem
-                      key={option._id}
-                      value={option._id}
-                      className={classes.adrMenu}
-                    >
-                      {option.address + ", " + option.zipCode}
-                    </MenuItem>
-                  ))}
+                  {Address
+                    ? Address.map((option) => (
+                        <MenuItem
+                          key={option._id}
+                          value={option._id}
+                          className={classes.adrMenu}
+                        >
+                          {option.address + ", " + option.zipCode}
+                        </MenuItem>
+                      ))
+                    : null}
                   {
                     <MenuItem
                       key={"NEWADR"}
@@ -659,6 +938,23 @@ const AddBook = (props) => {
                     </MenuItem>
                   }
                 </TextField>
+                {/* =================== Add Address PopOver Form ============== */}
+                <Popover
+                  open={Boolean(openPop)}
+                  anchorEl={openPop}
+                  onClose={() => setOpenPop(null)}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "center",
+                    horizontal: "center",
+                  }}
+                  sx={{ width: "100%", background: "rgba(0,0,0,0.6)" }}
+                >
+                  <AddAddressPopOver />
+                </Popover>
                 <Stack
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
                   spacing={2}
@@ -791,6 +1087,7 @@ const AddBook = (props) => {
                     spacing={1}
                     alignItems="center"
                     justifyContent="flex-start"
+                    flexWrap="wrap"
                   >
                     {Image.map((file, idx) => (
                       <div className="uploaded-image-item" key={idx}>
