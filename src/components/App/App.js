@@ -52,12 +52,6 @@ const App = () => {
           JSON.stringify({ ...user, roles: response.data.roles })
         );
         setUser({ ...user, roles: response.data.roles });
-        if (sessionStorage.getItem("bookshlf_beta_notify")) {
-          setOpen(false);
-        } else {
-          sessionStorage.setItem("bookshlf_beta_notify", true);
-          setOpen(true);
-        }
       })
       .catch((error) => {
         // Token Expired or Using Incognito or Not Registered
@@ -66,6 +60,12 @@ const App = () => {
         delete axios.defaults.headers.common["Authorization"];
         // console.log(error.response.data);
       });
+    if (sessionStorage.getItem("bookshlf_beta_notify")) {
+      setOpen(false);
+    } else {
+      sessionStorage.setItem("bookshlf_beta_notify", true);
+      setOpen(true);
+    }
   }, []);
 
   return (
