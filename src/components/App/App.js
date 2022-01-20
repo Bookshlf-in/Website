@@ -1,4 +1,4 @@
-import { React, useEffect, useContext } from "react";
+import { React, useEffect, useContext, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
@@ -34,9 +34,12 @@ import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
+import BetaNotify from "./BetaNotify";
 
 const App = () => {
   const [user, setUser] = useContext(UserContext);
+
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     axios
       .get("/getUserProfile")
@@ -49,6 +52,12 @@ const App = () => {
           JSON.stringify({ ...user, roles: response.data.roles })
         );
         setUser({ ...user, roles: response.data.roles });
+        if (sessionStorage.getItem("bookshlf_beta_notify")) {
+          setOpen(false);
+        } else {
+          sessionStorage.setItem("bookshlf_beta_notify", true);
+          setOpen(true);
+        }
       })
       .catch((error) => {
         // Token Expired or Using Incognito or Not Registered
@@ -62,6 +71,9 @@ const App = () => {
   return (
     <Router>
       <div className="App">
+        {process.env.REACT_APP_NODE_ENV === "development" && open ? (
+          <BetaNotify />
+        ) : null}
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/PasswordRecovery">
