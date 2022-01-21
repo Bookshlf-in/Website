@@ -13,38 +13,38 @@ import RightIcon from "@mui/icons-material/ChevronRightRounded";
 const images = [
   {
     url: {
-      mobile: "/images/Carousel/CarouselMobile/carousel_bg1.png",
-      desktop: "/images/Carousel/CarouselDesktop/carousel_bg1.png",
+      mobile: "/images/Carousel/CarouselMobile/Carousel_bg1.png",
+      desktop: "/images/Carousel/CarouselDesktop/Carousel_bg1.png",
     },
   },
   {
     url: {
-      mobile: "/images/Carousel/CarouselMobile/carousel_bg2.png",
-      desktop: "/images/Carousel/CarouselDesktop/carousel_bg2.png",
+      mobile: "/images/Carousel/CarouselMobile/Carousel_bg2.png",
+      desktop: "/images/Carousel/CarouselDesktop/Carousel_bg2.png",
     },
   },
   {
     url: {
-      mobile: "/images/Carousel/CarouselMobile/carousel_bg3.png",
-      desktop: "/images/Carousel/CarouselDesktop/carousel_bg3.png",
+      mobile: "/images/Carousel/CarouselMobile/Carousel_bg3.png",
+      desktop: "/images/Carousel/CarouselDesktop/Carousel_bg3.png",
     },
   },
   {
     url: {
-      mobile: "/images/Carousel/CarouselMobile/carousel_bg4.png",
-      desktop: "/images/Carousel/CarouselDesktop/carousel_bg4.png",
+      mobile: "/images/Carousel/CarouselMobile/Carousel_bg4.png",
+      desktop: "/images/Carousel/CarouselDesktop/Carousel_bg4.png",
     },
   },
   {
     url: {
-      mobile: "/images/Carousel/CarouselMobile/carousel_bg5.png",
-      desktop: "/images/Carousel/CarouselDesktop/carousel_bg5.png",
+      mobile: "/images/Carousel/CarouselMobile/Carousel_bg5.png",
+      desktop: "/images/Carousel/CarouselDesktop/Carousel_bg5.png",
     },
   },
   {
     url: {
-      mobile: "/images/Carousel/CarouselMobile/carousel_bg6.png",
-      desktop: "/images/Carousel/CarouselDesktop/carousel_bg6.png",
+      mobile: "/images/Carousel/CarouselMobile/Carousel_bg6.png",
+      desktop: "/images/Carousel/CarouselDesktop/Carousel_bg6.png",
     },
   },
 ];
