@@ -8,12 +8,12 @@ import axios from "../../axios";
 
 // Components
 // ======== From Core (Stable)
-import { Grid, Stack, Collapse, Popover } from "@mui/material";
+import { Grid, Stack, Collapse, Popover, Backdrop } from "@mui/material";
 import { Button, Checkbox, TextField, IconButton } from "@mui/material";
 import { Alert, CircularProgress, ClickAwayListener } from "@mui/material";
 import { Chip, Tooltip, InputAdornment, Divider, Avatar } from "@mui/material";
 import { Dialog, DialogActions, DialogContent } from "@mui/material";
-import { DialogContentText, DialogTitle } from "@mui/material";
+import { DialogContentText, DialogTitle, Typography } from "@mui/material";
 import { InputLabel, FormControl, Select, MenuItem } from "@mui/material";
 // ======== From Lab (Unstable)
 import { LoadingButton } from "@mui/lab";
@@ -24,7 +24,7 @@ import CloseIcon from "@mui/icons-material/ArrowDropUpRounded";
 import OpenIcon from "@mui/icons-material/ArrowDropDownRounded";
 import BookIcon from "@mui/icons-material/MenuBookRounded";
 import BookDescIcon from "@mui/icons-material/DescriptionRounded";
-import BookQtyIcon from "@mui/icons-material/InboxRounded";
+// import BookQtyIcon from "@mui/icons-material/InboxRounded";
 import AddressIcon from "@mui/icons-material/ContactsRounded";
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
 import CameraIcon from "@mui/icons-material/AddAPhotoRounded";
@@ -115,6 +115,16 @@ const AddBook = (props) => {
   const [lang, setlang] = useState("");
   const [Image, setImage] = useState([]);
   const [Address, setAddress] = useState(props.address);
+  const [req, setReq] = useState("send");
+
+  window.addEventListener("beforeunload", (e) => {
+    e.preventDefault();
+    return (e.returnValue = "Changes May Not Be Saved?");
+  });
+
+  window.addEventListener("unload", (e) => {
+    setReq(null);
+  });
 
   // Checking if price string is currect
   const CheckIfPriceFormat = (priceString) => {
@@ -340,7 +350,7 @@ const AddBook = (props) => {
   // upload and Fetching URLs of Uploaded Books
   const uploadBook = async () => {
     setSending((prev) => !prev);
-    if (Image.length >= 3) {
+    if (Image.length >= 3 && Image.length <= 6) {
       // altleast 3 Images of Book
       if (checked) {
         // Agreed to Terms and Conditions
@@ -349,7 +359,9 @@ const AddBook = (props) => {
           if (sellingPrice >= 100) {
             // Selling Price of Book Should be Atleast 100
             const urls = await uploadImages(Image);
-            handelBookSubmitRequest(urls);
+            if (req) {
+              handelBookSubmitRequest(urls);
+            }
           } else {
             setSending((prev) => !prev);
             setalert({
@@ -399,7 +411,7 @@ const AddBook = (props) => {
       setSending((prev) => !prev);
       setalert({
         show: true,
-        msg: "Please Upload At Least 3 Images Of Book.",
+        msg: "Please Upload At Least 3 Images Of Book SET but not more than 6.",
         type: "error",
       });
       setTimeout(() => {
@@ -794,11 +806,11 @@ const AddBook = (props) => {
                   spacing={2}
                   justifyContent="space-between"
                 >
-                  <TextField
+                  {/* <TextField
                     className={classes.root}
                     id="add-book-textfield"
-                    label="Book Quantity"
-                    helperText="Number Of Books You Have"
+                    label="Book SET Quantity"
+                    helperText=" "
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -808,10 +820,11 @@ const AddBook = (props) => {
                     }}
                     variant="standard"
                     value={Qnty}
-                    onChange={(e) => setQnty(e.target.value)}
+                    // onChange={(e) => setQnty(e.target.value)}
                     name="book-qty-field"
                     autoComplete="off"
-                  />
+                    readOnly
+                  /> */}
                   <TextField
                     className={classes.root}
                     id="add-book-textfield"
@@ -825,6 +838,7 @@ const AddBook = (props) => {
                       ),
                     }}
                     variant="standard"
+                    fullWidth
                     value={SP}
                     onChange={(e) => {
                       setSP(FormatPrice(e.target.value));
@@ -859,6 +873,7 @@ const AddBook = (props) => {
                       ),
                       readOnly: true,
                     }}
+                    fullWidth
                     variant="standard"
                     value={earn}
                   />
@@ -1074,7 +1089,7 @@ const AddBook = (props) => {
                       </IconButton>
                     </label>
                     <Alert severity="info">
-                      Please Upload Atleast 3 Clear Images of Book
+                      Please Upload Atleast 3 Clear Images of Book SET
                     </Alert>
                   </div>
                   <Stack
@@ -1108,7 +1123,7 @@ const AddBook = (props) => {
                     {Image.length ? (
                       <label htmlFor="icon-button-file-2">
                         <input
-                          accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                          accept="image/*"
                           id="icon-button-file-2"
                           type="file"
                           style={{ display: "none" }}
@@ -1122,7 +1137,7 @@ const AddBook = (props) => {
                           aria-label="upload picture"
                           component="span"
                         >
-                          <AddIcon style={{ height: "2rem", width: "2rem" }} />
+                          <AddIcon sx={{ height: "2rem", width: "2rem" }} />
                         </IconButton>
                       </label>
                     ) : (
@@ -1339,6 +1354,20 @@ const AddBook = (props) => {
           </LoadingButton>
         </Grid>
       </Grid>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={sending}
+      >
+        <Stack spacing={2} sx={{ padding: "10px" }}>
+          <CircularProgress color="inherit" />
+          <Typography className={classes.root}>
+            Relax while we process your Request.
+          </Typography>
+          <Typography variant="caption" className={classes.root}>
+            This Might Take a Minute.
+          </Typography>
+        </Stack>
+      </Backdrop>
     </div>
   );
 };

@@ -69,13 +69,13 @@ const NavbarMenu = () => {
     setLogLoad(true);
     axios
       .get("/signOut")
-      .then((response) => {
+      .then(() => {
+        history.go(0);
+        setLogLoad(false);
+        setUser(null);
         localStorage.removeItem("bookshlf_user");
         localStorage.removeItem("bookshlf_user_AddBook");
         delete axios.defaults.headers.common["Authorization"];
-        setUser(null);
-        history.go(0);
-        setLogLoad(false);
       })
       .catch((error) => {
         setLogLoad(false);
@@ -110,17 +110,19 @@ const NavbarMenu = () => {
         <MenuItem onClick={() => handelNavigate("/SellerPanel/5")}>
           <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
         </MenuItem>
-        {user.roles.includes("admin") ? (
+        {user?.roles?.includes("admin") ? (
           <MenuItem onClick={() => handelNavigate("/Admin/1")}>
             <MenuStack icon={<AdminIcon color="error" />} label="Admin" />
           </MenuItem>
         ) : null}
-        <MenuItem onClick={() => handelNavigate("/Wallet")}>
-          <MenuStack
-            icon={<WalletIcon color="secondary" />}
-            label={"Wallet (" + user?.balance + ")"}
-          />
-        </MenuItem>
+        {user?.balance ? (
+          <MenuItem onClick={() => handelNavigate("/Wallet")}>
+            <MenuStack
+              icon={<WalletIcon color="secondary" />}
+              label={"Wallet (" + user?.balance + ")"}
+            />
+          </MenuItem>
+        ) : null}
         <MenuItem onClick={() => handelNavigate("/Cart")}>
           <MenuStack
             icon={<CartIcon color="secondary" />}

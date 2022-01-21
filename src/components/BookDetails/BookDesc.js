@@ -151,7 +151,7 @@ const BookDesc = (props) => {
           {book?.qty ? (
             <Stack>
               <Typography variant="body2" className={classes.root}>
-                <strong>Book Quantity</strong>
+                <strong>Book SET Quantity</strong>
               </Typography>
               <Chip
                 label={book?.qty}

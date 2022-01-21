@@ -44,9 +44,6 @@ const App = () => {
     axios
       .get("/getUserProfile")
       .then((response) => {
-        // User Registered
-        // Updating Roles
-        // console.log(response.data.roles);
         localStorage.setItem(
           "bookshlf_user",
           JSON.stringify({ ...user, roles: response.data.roles })
@@ -54,11 +51,9 @@ const App = () => {
         setUser({ ...user, roles: response.data.roles });
       })
       .catch((error) => {
-        // Token Expired or Using Incognito or Not Registered
         setUser(null);
         localStorage.removeItem("bookshlf_user");
         delete axios.defaults.headers.common["Authorization"];
-        // console.log(error.response.data);
       });
     if (sessionStorage.getItem("bookshlf_beta_notify")) {
       setOpen(false);

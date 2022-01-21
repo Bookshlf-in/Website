@@ -4,14 +4,19 @@ import ReactImageMagnify from "@blacklab/react-image-magnify";
 // Components
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+
 const Booksnaps = (props) => {
   // data States
   const [snap, setSnap] = useState(0);
+  const [showvideo, setShowvideo] = useState(false);
 
   // changing Snaps
   const handelClick = (snapNo) => {
     setSnap(snapNo);
+    setShowvideo(false);
   };
+  console.log(props.video);
   return (
     <Stack
       direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
@@ -39,34 +44,59 @@ const Booksnaps = (props) => {
               ))
             : null
           : null}
+        {props.video.length ? (
+          <Stack
+            sx={{ height: 100, width: 100, cursor: "pointer" }}
+            justifyContent="center"
+            alignItems="center"
+            onClick={() => setShowvideo((prev) => !prev)}
+          >
+            <YouTubeIcon color="error" sx={{ height: 80, width: 80 }} />
+          </Stack>
+        ) : (
+          <></>
+        )}
       </Stack>
       <Stack alignItems="center" justifyContent="center">
-        <ReactImageMagnify
-          title="Hover Over to Zoom"
-          imageProps={{
-            alt: "Book Large Snap",
-            height: 200,
-            src: props.snaps[snap],
-            width: 200,
-          }}
-          magnifiedImageProps={{
-            height: 700,
-            src: props.snaps[snap],
-            width: 700,
-          }}
-          magnifyContainerProps={{
-            height: 350,
-            width: 350,
-          }}
-          onActivationChanged={function noRefCheck() {}}
-          onDetectedEnvironmentChanged={function noRefCheck() {}}
-          onPositionChanged={function noRefCheck() {}}
-          portalProps={{
-            horizontalOffset: 10,
-            id: "portal-test-id",
-          }}
-          className="book-large-snapshot"
-        />
+        {!showvideo ? (
+          <ReactImageMagnify
+            title="Hover Over to Zoom"
+            imageProps={{
+              alt: "Book Large Snap",
+              height: 200,
+              src: props.snaps[snap],
+              width: 200,
+            }}
+            magnifiedImageProps={{
+              height: 700,
+              src: props.snaps[snap],
+              width: 700,
+            }}
+            magnifyContainerProps={{
+              height: 350,
+              width: 350,
+            }}
+            onActivationChanged={function noRefCheck() {}}
+            onDetectedEnvironmentChanged={function noRefCheck() {}}
+            onPositionChanged={function noRefCheck() {}}
+            portalProps={{
+              horizontalOffset: 10,
+              id: "portal-test-id",
+            }}
+            className="book-large-snapshot"
+          />
+        ) : null}
+        {showvideo ? (
+          <iframe
+            width="100%"
+            height="100%"
+            src={props.video}
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        ) : null}
       </Stack>
     </Stack>
   );

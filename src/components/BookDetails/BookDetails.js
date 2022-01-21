@@ -228,7 +228,7 @@ const BookDetails = () => {
             alignItems="space-evenly"
             spacing={2}
           >
-            <Booksnaps snaps={book.photos} />
+            <Booksnaps snaps={book.photos} video={book.embedVideo} />
             <Stack
               direction={{
                 xs: "row",
