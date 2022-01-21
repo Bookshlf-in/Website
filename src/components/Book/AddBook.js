@@ -118,8 +118,10 @@ const AddBook = (props) => {
   const [req, setReq] = useState("send");
 
   window.addEventListener("beforeunload", (e) => {
-    e.preventDefault();
-    return (e.returnValue = "Changes May Not Be Saved?");
+    if (sending) {
+      e.preventDefault();
+      return (e.returnValue = "Changes May Not Be Saved?");
+    }
   });
 
   window.addEventListener("unload", (e) => {

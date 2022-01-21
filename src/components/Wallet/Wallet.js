@@ -1,7 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/userContext";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 import "./Wallet.css";
@@ -24,10 +23,6 @@ import WithdrawGrid from "./WithdrawGrid";
 
 const stackStyle = {
   padding: "12px 15px",
-};
-
-const iconStyle = {
-  fontSize: "0.75rem",
 };
 
 const useStyles = makeStyles({
@@ -57,8 +52,7 @@ const useStyles = makeStyles({
 
 const Wallet = () => {
   const classes = useStyles();
-  const history = useHistory();
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   const [loaded, setLoaded] = useState(false);
   const [walletBalance, setwalletBalance] = useState(0);
