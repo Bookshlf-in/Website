@@ -11,12 +11,42 @@ import LeftIcon from "@mui/icons-material/ChevronLeftRounded";
 import RightIcon from "@mui/icons-material/ChevronRightRounded";
 
 const images = [
-  { url: "/images/CarouselMobile/carousel_bg1.png" },
-  { url: "/images/CarouselMobile/carousel_bg2.png" },
-  { url: "/images/CarouselMobile/carousel_bg3.png" },
-  { url: "/images/CarouselMobile/carousel_bg4.png" },
-  { url: "/images/CarouselMobile/carousel_bg5.png" },
-  { url: "/images/CarouselMobile/carousel_bg6.png" },
+  {
+    url: {
+      mobile: "/images/Carousel/CarouselMobile/carousel_bg1.png",
+      desktop: "/images/Carousel/CarouselDesktop/carousel_bg1.png",
+    },
+  },
+  {
+    url: {
+      mobile: "/images/Carousel/CarouselMobile/carousel_bg2.png",
+      desktop: "/images/Carousel/CarouselDesktop/carousel_bg2.png",
+    },
+  },
+  {
+    url: {
+      mobile: "/images/Carousel/CarouselMobile/carousel_bg3.png",
+      desktop: "/images/Carousel/CarouselDesktop/carousel_bg3.png",
+    },
+  },
+  {
+    url: {
+      mobile: "/images/Carousel/CarouselMobile/carousel_bg4.png",
+      desktop: "/images/Carousel/CarouselDesktop/carousel_bg4.png",
+    },
+  },
+  {
+    url: {
+      mobile: "/images/Carousel/CarouselMobile/carousel_bg5.png",
+      desktop: "/images/Carousel/CarouselDesktop/carousel_bg5.png",
+    },
+  },
+  {
+    url: {
+      mobile: "/images/Carousel/CarouselMobile/carousel_bg6.png",
+      desktop: "/images/Carousel/CarouselDesktop/carousel_bg6.png",
+    },
+  },
 ];
 
 const totalImages = images.length;
@@ -52,7 +82,7 @@ const Slider = () => {
         in={true}
         mountOnEnter
         unmountOnExit
-        timeout={1000}
+        timeout={500}
         direction={props.dir}
         container={props.Ref}
       >
@@ -61,10 +91,8 @@ const Slider = () => {
           style={{
             backgroundImage:
               frameWidth <= 600
-                ? `url("${images[props.index].url}")`
-                : `url("https://storage.googleapis.com/bookshlf-in/static/carousel/${
-                    props.index + 1
-                  }.png")`,
+                ? `url("${images[props.index].url.mobile}")`
+                : `url("${images[props.index].url.desktop}")`,
           }}
         ></div>
       </Slide>
