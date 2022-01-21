@@ -27,8 +27,11 @@ const Booksnaps = (props) => {
       <Stack
         direction={{ xs: "row", sm: "column", md: "column", lg: "column" }}
         spacing={{ xs: 1, sm: 2, md: 2, lg: 2 }}
-        sx={{ overflowX: "auto" }}
-        justifyContent="center"
+        sx={{
+          maxHeight: 500,
+          overflowY: "auto",
+          overflowX: "auto",
+        }}
       >
         {props.snaps
           ? props.snaps.length

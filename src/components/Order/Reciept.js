@@ -178,8 +178,11 @@ const Reciept = (props) => {
     </tbody>
     <tfooter>
     <tr>
-    <td colspan="2" style="font-size:14px;padding:30px 15px 0 15px;">
-    <strong style="display:block;margin:0 0 10px 0;">Regards</strong> Team Bookshlf<br> Kanpur UP, India<br><br>
+    <td colspan="2" style="font-size:14px;padding:10px">
+    <strong style="display:block;margin:0 0 10px 0; color:blue;">All Amount Will Be Refunded Back In Exchange of the Books iff ${
+      order.customerName
+    } gets into IIT/ AIIMS</strong>
+    <strong style="display:block;margin:0 0 5px 0;">Regards</strong> Team Bookshlf<br> Kanpur UP, India<br>
     <b>Phone:</b> +91 97926 66122<br>
     <b>Email:</b> bookshlf.in@gmail.com
     </td>

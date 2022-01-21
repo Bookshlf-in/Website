@@ -116,6 +116,7 @@ const AddBook = (props) => {
   const [Image, setImage] = useState([]);
   const [Address, setAddress] = useState(props.address);
   const [req, setReq] = useState("send");
+  const [panic, setpanic] = useState(false);
 
   window.addEventListener("beforeunload", (e) => {
     if (sending) {
@@ -352,7 +353,7 @@ const AddBook = (props) => {
   // upload and Fetching URLs of Uploaded Books
   const uploadBook = async () => {
     setSending((prev) => !prev);
-    if (Image.length >= 3 && Image.length <= 6) {
+    if (Image.length >= 3 && Image.length <= 15) {
       // altleast 3 Images of Book
       if (checked) {
         // Agreed to Terms and Conditions
@@ -360,6 +361,9 @@ const AddBook = (props) => {
           // Validating Image Sizes
           if (sellingPrice >= 100) {
             // Selling Price of Book Should be Atleast 100
+            setTimeout(() => {
+              setpanic(true);
+            }, 10000);
             const urls = await uploadImages(Image);
             if (req) {
               handelBookSubmitRequest(urls);
@@ -413,7 +417,7 @@ const AddBook = (props) => {
       setSending((prev) => !prev);
       setalert({
         show: true,
-        msg: "Please Upload At Least 3 Images Of Book SET but not more than 6.",
+        msg: "Please Upload At Least 3 Images Of Book SET but not more than 15.",
         type: "error",
       });
       setTimeout(() => {
@@ -1363,11 +1367,30 @@ const AddBook = (props) => {
         <Stack spacing={2} sx={{ padding: "10px" }}>
           <CircularProgress color="inherit" />
           <Typography className={classes.root}>
-            Relax while we process your Request.
+            Relax & Wait Patiently while we process your Request.
           </Typography>
-          <Typography variant="caption" className={classes.root}>
-            This Might Take a Minute.
+          <Typography
+            variant="caption"
+            className={classes.root}
+            color="secondary"
+          >
+            {panic
+              ? "This Might Take few minutes."
+              : "This won't take a minute."}
           </Typography>
+          {panic ? (
+            <Typography
+              variant="body2"
+              className={classes.root}
+              color="error"
+              sx={{ maxWidth: 300 }}
+              align="justify"
+            >
+              Please don't panic, It usually takes time. Your Request is being
+              processed correctly. Kindly don't Close or Change or reload
+              browser window otherwise request will get cancelled.
+            </Typography>
+          ) : null}
         </Stack>
       </Backdrop>
     </div>

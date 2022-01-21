@@ -38,23 +38,24 @@ import BetaNotify from "./BetaNotify";
 
 const App = () => {
   const [user, setUser] = useContext(UserContext);
-
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    axios
-      .get("/getUserProfile")
-      .then((response) => {
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({ ...user, roles: response.data.roles })
-        );
-        setUser({ ...user, roles: response.data.roles });
-      })
-      .catch((error) => {
-        setUser(null);
-        localStorage.removeItem("bookshlf_user");
-        delete axios.defaults.headers.common["Authorization"];
-      });
+    if (user) {
+      axios
+        .get("/getUserProfile")
+        .then((response) => {
+          localStorage.setItem(
+            "bookshlf_user",
+            JSON.stringify({ ...user, roles: response.data.roles })
+          );
+          setUser({ ...user, roles: response.data.roles });
+        })
+        .catch((error) => {
+          setUser(null);
+          localStorage.removeItem("bookshlf_user");
+          delete axios.defaults.headers.common["Authorization"];
+        });
+    }
     if (sessionStorage.getItem("bookshlf_beta_notify")) {
       setOpen(false);
     } else {

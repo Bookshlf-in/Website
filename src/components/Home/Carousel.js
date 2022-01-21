@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef, useCallback } from "react";
 import "./Home.css";
 
 // Components
-import { Button, IconButton, Slide } from "@mui/material";
+import { Button, IconButton, Fade } from "@mui/material";
 
 // Icons
 import ActiveIcon from "@mui/icons-material/FiberManualRecordRounded";
@@ -58,10 +58,10 @@ const slideLabel = [
   {},
   {},
   {
-    title: "Buy & Sell Used Books Now",
-    body: "What are you waiting for.",
-    btn: "Buy Now",
-    link: "/SearchResult/tag:ALL",
+    title: "",
+    body: "",
+    btn: "SELL Now",
+    link: "/SellerPanel/5",
   },
 ];
 
@@ -78,13 +78,14 @@ const Slider = () => {
   // Custom Image Slider
   const ImageSlider = (props) => {
     return (
-      <Slide
+      <Fade
         in={true}
-        mountOnEnter
-        unmountOnExit
-        timeout={500}
-        direction={props.dir}
+        // mountOnEnter
+        // unmountOnExit
+        // timeout={500}
+        // direction={props.dir}
         container={props.Ref}
+        timeout={0}
       >
         <div
           className="slider__image"
@@ -95,26 +96,26 @@ const Slider = () => {
                 : `url("${images[props.index].url.desktop}")`,
           }}
         ></div>
-      </Slide>
+      </Fade>
     );
   };
 
   // Custom Image Slider
   const TitleSlider = (props) => {
     return (
-      <Slide
+      <Fade
         in={true}
-        mountOnEnter
-        unmountOnExit
-        timeout={1000}
-        direction={props.dir}
+        // mountOnEnter
+        // unmountOnExit
+        // timeout={1000}
+        // direction={props.dir}
         container={props.Ref}
       >
         <div>
           {slideLabel[props.index].title}
           <div className="slider__body">{slideLabel[props.index].body}</div>
         </div>
-      </Slide>
+      </Fade>
     );
   };
 
