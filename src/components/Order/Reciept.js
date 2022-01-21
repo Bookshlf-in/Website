@@ -10,7 +10,8 @@ const Reciept = (props) => {
   // Creating Reciept
   const CreatReciept = () => {
     const my_window = window.open();
-    my_window.document.write(`
+    my_window.document.write(
+      `
     <!DOCTYPE html>
     <html>
     <head>
@@ -75,9 +76,10 @@ const Reciept = (props) => {
       }
     }
     </style>
+    
     <script>
-    var jsPrintAll = function () {
-      window.print();
+    function getPDF () {
+        window.print();
     }
     </script>
     </head>
@@ -91,8 +93,9 @@ const Reciept = (props) => {
     <p style="color:red; font-family:'courier'; text-align:center;">If Invoice Didn't Printed, Click to Print Again.</p>
     </div>
     <div class="no-print" >
-    <input class="input" type="button" id="btnPrint" onclick="jsPrintAll()" value="Print Again" />
+    <input class="input" type="button" id="btnPrint" onclick="getPDF()" value="Print Again" />
     </div>
+    <div id="pdf">
     <div class="print" style="background-color:#e2e1e0;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
     <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;">
     <thead>
@@ -153,8 +156,8 @@ const Reciept = (props) => {
     }</p>
     <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px; };">Payment Status</span> 
     <span style="color:${order.paymentStatus === "Paid" ? "green" : "red"}">${
-      order.paymentStatus
-    }</span></p>
+        order.paymentStatus
+      }</span></p>
     </td>
     </tr>
     <tr>
@@ -184,9 +187,11 @@ const Reciept = (props) => {
     </tfooter>
     </table>
     </div>
+    </div>
     </body>
     </html>
-`);
+`
+    );
     setTimeout(() => {
       my_window.print();
     }, 500);
