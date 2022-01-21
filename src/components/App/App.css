@@ -26,3 +26,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(201, 250, 65);
 }
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
