@@ -443,9 +443,9 @@ const OrderTracking = () => {
             >
               Courier Track Link
             </Button>
-            {/*order.status[order.status.length - 1] !== "Cancelled" ? (
+            {order.status[order.status.length - 1] !== "Cancelled" ? (
               <Reciept order={order} />
-            ) : null*/}
+            ) : null}
           </Stack>
           <Stepper
             activeStep={activeStep}
