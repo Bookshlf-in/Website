@@ -16,7 +16,7 @@ const Booksnaps = (props) => {
     setSnap(snapNo);
     setShowvideo(false);
   };
-  console.log(props.video);
+
   return (
     <Stack
       direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
@@ -31,6 +31,7 @@ const Booksnaps = (props) => {
           maxHeight: 500,
           overflowY: "auto",
           overflowX: "auto",
+          padding: "10px",
         }}
       >
         {props.snaps
@@ -71,13 +72,12 @@ const Booksnaps = (props) => {
               width: 200,
             }}
             magnifiedImageProps={{
-              height: 700,
+              height: 800,
+              width: 800,
               src: props.snaps[snap],
-              width: 700,
             }}
             magnifyContainerProps={{
-              height: 350,
-              width: 350,
+              scale: 1.08,
             }}
             onActivationChanged={function noRefCheck() {}}
             onDetectedEnvironmentChanged={function noRefCheck() {}}

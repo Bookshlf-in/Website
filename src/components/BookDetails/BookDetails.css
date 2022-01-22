@@ -11,7 +11,13 @@
 .book-details-tag-stack div {
   margin: 8px 8px 0px 8px !important;
 }
-
+.book-large-snapshot {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.book-large-snapshot img {
+  object-fit: contain;
+}
 @media screen and (max-width: 600px) {
   .book-details-snap .book-snapshots {
     width: 70px !important;
