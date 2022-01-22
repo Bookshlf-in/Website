@@ -7,6 +7,9 @@
   border-radius: 10px 10px 0px 0px;
   padding: 12px 15px;
 }
+.add-book-form-rt {
+  margin-top: 10px;
+}
 .add-book-form-lf fieldset legend {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
