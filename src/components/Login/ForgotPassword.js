@@ -588,7 +588,6 @@ const ForgotPassword = () => {
                   <IconButton
                     aria-label="toggle-password-visibility"
                     onClick={handleShowPassword}
-                    // onMouseDown={handleMouseDownPassword}
                     edge="end"
                     size="small"
                   >
@@ -683,12 +682,13 @@ const ForgotPassword = () => {
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={openbackdrop}
-          // onClick={() => setopenbackdrop(false)}
         >
-          <CircularProgress color="primary" />
-          <Typography variant="h5" className={classes.root}>
-            Signing In...
-          </Typography>
+          <Stack spacing={2}>
+            <CircularProgress color="inherit" />
+            <Typography variant="h5" className={classes.root}>
+              Signing In...
+            </Typography>
+          </Stack>
         </Backdrop>
       </Stack>
     </>

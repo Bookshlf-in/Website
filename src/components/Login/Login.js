@@ -273,7 +273,6 @@ const Login = () => {
                   <IconButton
                     aria-label="toggle-password-visibility"
                     onClick={handleShowPassword}
-                    // onMouseDown={handleMouseDownPassword}
                     edge="end"
                     size="small"
                   >
