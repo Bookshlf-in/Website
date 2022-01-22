@@ -53,7 +53,6 @@ const UserProfile = () => {
 
   useEffect(() => {
     const Fetch = () => {
-      console.log("called");
       axios.get("/getUserProfile").then((response) => {
         setuserprofile(response.data);
         axios.get("/getOrderList").then((response) => {
