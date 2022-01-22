@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
     },
     marginLeft: 0,
     width: "100%",
-    maxWidth: 250,
+    maxWidth: 230,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -43,7 +43,7 @@ const useStyles = makeStyles(() => ({
   inputRoot: {
     color: "inherit",
     width: "100%",
-    color: "white",
+    color: "white !important",
   },
   inputInput: {
     padding: "5px",

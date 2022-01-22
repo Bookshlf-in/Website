@@ -117,11 +117,11 @@ const Navbar = () => {
           direction="row"
           justifyContent="flex-end"
           alignItems="center"
-          spacing={2}
+          spacing={1}
         >
           <NavbarSearch />
-          <Stack direction="row" spacing={2} className="nav-desktop-item">
-            <IconButton onClick={() => history.push("/Cart")}>
+          <Stack direction="row" spacing={1} className="nav-desktop-item">
+            <IconButton onClick={() => history.push("/Cart")} size="small">
               <Badge
                 badgeContent={user?.cartitems}
                 color="secondary"
@@ -130,7 +130,7 @@ const Navbar = () => {
                 <ShoppingCartIcon sx={NavIconStyle} />
               </Badge>
             </IconButton>
-            <IconButton onClick={() => history.push("/Wishlist")}>
+            <IconButton onClick={() => history.push("/Wishlist")} size="small">
               <Badge
                 badgeContent={user?.wishlist}
                 color="secondary"
@@ -140,7 +140,7 @@ const Navbar = () => {
               </Badge>
             </IconButton>
             {user?.roles?.includes("seller") ? (
-              <IconButton onClick={() => history.push("/Wallet")}>
+              <IconButton onClick={() => history.push("/Wallet")} size="small">
                 <Badge
                   badgeContent={user?.balance}
                   color="warning"

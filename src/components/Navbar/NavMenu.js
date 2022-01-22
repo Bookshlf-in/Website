@@ -15,6 +15,8 @@ import CartIcon from "@mui/icons-material/ShoppingCartTwoTone";
 import WishlistIcon from "@mui/icons-material/FavoriteTwoTone";
 import BookIcon from "@mui/icons-material/MenuBookTwoTone";
 import LogoutIcon from "@mui/icons-material/ExitToAppTwoTone";
+import InfoIcon from "@mui/icons-material/InfoRounded";
+import SupportIcon from "@mui/icons-material/SupportAgentRounded";
 
 // Custom Menu Item Stack
 const MenuStack = (props) => {
@@ -88,7 +90,7 @@ const NavbarMenu = () => {
         <Avatar
           src="/images/user.png"
           alt="My Account"
-          sx={{ height: 20, width: 20 }}
+          sx={{ height: 30, width: 30 }}
         />
       </IconButton>
       <Menu
@@ -135,9 +137,21 @@ const NavbarMenu = () => {
             label={"Wishlist (" + user?.wishlist + ")"}
           />
         </MenuItem>
-        <MenuItem onClick={handelLogout}>
+        <MenuItem onClick={() => handelNavigate("/About")}>
+          <MenuStack icon={<InfoIcon />} label="About Us" />
+        </MenuItem>
+        <MenuItem onClick={() => handelNavigate("/Contact")}>
+          <MenuStack icon={<AccountIcon />} label="Contact Us" />
+        </MenuItem>
+        <MenuItem
+          onClick={handelLogout}
+          sx={{
+            backgroundColor: "rgb(211, 49, 49, 0.7) !important",
+            color: "white",
+          }}
+        >
           <MenuStack
-            icon={<LogoutIcon color="error" />}
+            icon={<LogoutIcon />}
             label={logLoad ? "Logging Out..." : "Logout"}
           />
         </MenuItem>
