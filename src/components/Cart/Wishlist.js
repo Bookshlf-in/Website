@@ -46,15 +46,14 @@ const Wishlist = () => {
         .get("/getWishlist")
         .then((response) => {
           setwishlist(response.data);
-          console.log(response.data);
           setwishlistLoading(false);
         })
         .catch(() => {
-          setwishlist([]);
           setwishlistLoading(false);
         });
     };
-    fetchData();
+    if (user) fetchData();
+    else setwishlistLoading(false);
   }, []);
 
   // handeling wish list

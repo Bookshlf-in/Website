@@ -66,7 +66,6 @@ const Cart = () => {
       axios
         .get("/getCartList")
         .then((response) => {
-          // console.log(response.data);
           setcart(response.data);
           setamount(0);
           for (let i = 0; i < response.data.length; i++) {
@@ -78,11 +77,11 @@ const Cart = () => {
           setcartLoading(false);
         })
         .catch((error) => {
-          setcart([]);
           setcartLoading(false);
         });
     };
-    fetchData();
+    if (user) fetchData();
+    else setcartLoading(false);
   }, []);
 
   // Increase Item Value
