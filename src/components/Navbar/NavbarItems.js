@@ -7,13 +7,14 @@ import { Button, Stack } from "@mui/material";
 import HomeIcon from "@mui/icons-material/HomeRounded";
 import AllBookIcon from "@mui/icons-material/Language";
 import BookIcon from "@mui/icons-material/MenuBookRounded";
-import InfoIcon from "@mui/icons-material/InfoRounded";
-import SupportIcon from "@mui/icons-material/SupportAgentRounded";
 
 const NavButtonStyle = {
   color: "white",
-  fontSize: "10px",
+  fontSize: "9px",
   fontFamily: "PT sans",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   "&:hover": {
     backgroundColor: "rgba(255,255,255,0.2)",
   },
@@ -21,36 +22,34 @@ const NavButtonStyle = {
 
 const NavbarItems = () => {
   return (
-    <Stack direction="row" spacing={2} sx={{ ml: 5 }}>
-      <Button startIcon={<HomeIcon />} href="/" sx={NavButtonStyle}>
+    <Stack direction="row" spacing={1} sx={{ ml: 3 }}>
+      <Button
+        startIcon={<HomeIcon sx={{ height: 15, width: 15 }} />}
+        href="/"
+        sx={NavButtonStyle}
+      >
         Home
       </Button>
       <Button
-        startIcon={<AllBookIcon />}
+        startIcon={<AllBookIcon sx={{ height: 15, width: 15 }} />}
         href="/SearchResult/tag:ALL"
         sx={NavButtonStyle}
       >
         All&nbsp;Books
       </Button>
       <Button
-        startIcon={<BookIcon />}
+        startIcon={<BookIcon sx={{ height: 15, width: 15 }} />}
         href="/SellerPanel/5"
         sx={NavButtonStyle}
       >
         Sell&nbsp;Books
       </Button>
       <Button
-        startIcon={<BookIcon />}
-        href="/SellerPanel/5"
+        startIcon={<BookIcon sx={{ height: 15, width: 15 }} />}
+        href="/SellerPanel/2"
         sx={NavButtonStyle}
       >
         Your&nbsp;Books
-      </Button>
-      <Button startIcon={<InfoIcon />} href="/About" sx={NavButtonStyle}>
-        About&nbsp;Us
-      </Button>
-      <Button startIcon={<SupportIcon />} href="/Contact" sx={NavButtonStyle}>
-        Contact&nbsp;Us
       </Button>
     </Stack>
   );

@@ -36,7 +36,7 @@ import WeightIcon from "@mui/icons-material/FitnessCenter";
 import LanguageIcon from "@mui/icons-material/Translate";
 import ISBNIcon from "@mui/icons-material/Language";
 import HelpIcon from "@mui/icons-material/Help";
-
+import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
 const useStyles = makeStyles(() => ({
   root: {
     fontWeight: "bolder",
@@ -839,7 +839,7 @@ const AddBook = (props) => {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <i className="fas fa-rupee-sign" />
+                          <RupeeIcon />
                         </InputAdornment>
                       ),
                     }}
@@ -857,11 +857,11 @@ const AddBook = (props) => {
                     className={classes.root}
                     id="add-book-textfield"
                     label="Your Earnings"
-                    helperText="Total Earnings You Will Recieve. To Know More Click ↑"
+                    helperText="Total earnings you will recieve"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <i className="fas fa-rupee-sign" />
+                          <RupeeIcon />
                         </InputAdornment>
                       ),
                       endAdornment: (
@@ -1011,7 +1011,7 @@ const AddBook = (props) => {
                       variant="standard"
                       value={tag}
                       onChange={(e) => handelTagSearch(e)}
-                      helperText="Press Enter key to Add the Tag"
+                      helperText="Press enter key to add the Tag"
                       onKeyPress={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault();
@@ -1200,7 +1200,7 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <i className="fas fa-rupee-sign" />
+                            <RupeeIcon />
                           </InputAdornment>
                         ),
                       }}

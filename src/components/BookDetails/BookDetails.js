@@ -63,7 +63,7 @@ const BookDetails = () => {
 
   // Fetching Book Details
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       axios
         .get("/getBookDetails", {
           params: {
@@ -78,7 +78,7 @@ const BookDetails = () => {
         });
     };
     fetchData();
-  }, [bookId]);
+  }, []);
 
   // Handeling snackbar closing
   const handleClose = (event, reason) => {
