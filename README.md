@@ -135,23 +135,6 @@ REACT_APP_NODE_ENV=development
 
 # Screenshots
 
-<img src="public/images/Readme/login.png" width = "800px"/>
-<img src="public/images/Readme/signup.png" width = "800px"/>
-<img src="public/images/Readme/recovery.png" width = "800px"/>
-<img src="public/images/Readme/home1.png" width = "800px"/>
-<img src="public/images/Readme/home2.png" width = "800px"/>
-<img src="public/images/Readme/home3.png" width = "800px"/>
-<img src="public/images/Readme/home4.png" width = "800px"/>
-<img src="public/images/Readme/about.png" width = "800px"/>
-<img src="public/images/Readme/contact.png" width = "800px"/>
-<img src="public/images/Readme/cart.png" width = "800px"/>
-<img src="public/images/Readme/wishlist.png" width = "800px"/>
-<img src="public/images/Readme/wallet.png" width = "800px"/>
-<img src="public/images/Readme/order.png" width = "800px"/>
-<img src="public/images/Readme/search.png" width = "800px"/>
-<img src="public/images/Readme/bookdetails.png" width = "800px"/>
-<img src="public/images/Readme/checkout.png" width = "800px"/>
-
 ## Author
 
 **Abhishek Singh**
