@@ -65,6 +65,8 @@ const UserSignup = () => {
   const [emailError, setemailError] = useState(false);
   const [emailErrorMsg, setemailErrorMsg] = useState("");
   const [nameError, setNameError] = useState(false);
+  const [passwordError, setpasswordError] = useState(false);
+  const [passwordErrorMsg, setpasswordErrorMsg] = useState("");
   const [passwordMatch, setpasswordMatch] = useState(false);
   const [showpassword, setshowPassword] = useState(false);
   const [signupLoad, setSignupLoad] = useState(false);
@@ -113,14 +115,7 @@ const UserSignup = () => {
             })
             .catch((error) => {
               setSignupLoad(false);
-              if (error.response.data.errors[0].param === "email") {
-                setemailError(true);
-                setemailErrorMsg(error.response.data.errors[0].error);
-                setTimeout(() => {
-                  setemailError(false);
-                  setemailErrorMsg("");
-                }, 5000);
-              }
+              handelSignupErrors(error);
             });
         }
       } else {
@@ -138,6 +133,29 @@ const UserSignup = () => {
       }, 5000);
     }
   };
+
+  // handeling signup Errors
+  const handelSignupErrors = (error) => {
+    for (let i = 0; i < error.response.data.errors.length; i++) {
+      if (error.response.data.errors[i].param === "email") {
+        setemailError(true);
+        setemailErrorMsg(error.response.data.errors[0].error);
+        setTimeout(() => {
+          setemailError(false);
+          setemailErrorMsg("");
+        }, 5000);
+      }
+      if (error.response.data.errors[i].param === "password") {
+        setpasswordError(true);
+        setpasswordErrorMsg(error.response.data.errors[i].error);
+        setTimeout(() => {
+          setpasswordError(false);
+          setpasswordErrorMsg("");
+        }, 5000);
+      }
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -316,12 +334,15 @@ const UserSignup = () => {
                       </InputAdornment>
                     ),
                   }}
-                  helperText="Create New Password"
+                  helperText={
+                    passwordError ? passwordErrorMsg : "Create New Password"
+                  }
                   variant="filled"
                   fullWidth
                   sx={{ fontSize: "12px" }}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  error={passwordError}
                 />
               </Stack>
               <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
