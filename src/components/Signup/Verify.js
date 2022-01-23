@@ -15,8 +15,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 
 // Icons
-import LockedIcon from "@mui/icons-material/LockRounded";
-import UnlockedIcon from "@mui/icons-material/LockOpenRounded";
 import EmailIcon from "@mui/icons-material/EmailRounded";
 import SendIcon from "@mui/icons-material/SendRounded";
 import CheckCircle from "@mui/icons-material/CheckCircleRounded";
@@ -67,8 +65,7 @@ const Verify = (props) => {
   const [otpLoad, setotpLoad] = useState(false);
   const [otpError, setotpError] = useState(false);
   const [otperrorMsg, setotperrorMsg] = useState("");
-  const [interval, setinterval] = useState(30);
-  const OTP = ["", "", "", "", "", ""];
+  const [counter, setCounter] = useState(60);
   const [verifyLoad, setverifyLoad] = useState(false);
   const [verified, setVerified] = useState(false);
   const [openbackdrop, setopenbackdrop] = useState(false);
@@ -79,10 +76,9 @@ const Verify = (props) => {
   const [otp, setOtp] = useState("");
 
   useEffect(() => {
-    OTPInput();
     setTimeout(() => {
       setOtpsentIcon(false);
-    }, 30000);
+    }, 60000);
   }, []);
 
   const redirect = () => {
@@ -123,20 +119,11 @@ const Verify = (props) => {
   };
 
   // OTP Countdown
-  const Clock = (props) => {
-    const [countdownTime, setcountdownTime] = useState(props.time);
-    const timer = () => setcountdownTime(countdownTime - 1);
-
-    useEffect(() => {
-      if (countdownTime <= 0) {
-        return;
-      }
-      const clock = setInterval(timer, 1000);
-      return () => clearInterval(clock);
-    }, [countdownTime]);
-
-    return <span>{countdownTime}</span>;
-  };
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
 
   // sending Otp
   const handelSendOtp = () => {
@@ -148,77 +135,50 @@ const Verify = (props) => {
       .then((response) => {
         setotpLoad(false);
         setOtpsentIcon(true);
-        setinterval(30);
+        setCounter(60);
         setTimeout(() => {
           setOtpsentIcon(false);
           setOtpsent(1);
-        }, 30000);
+        }, 60000);
       });
-  };
-
-  // handeling OTP input
-  const OTPInput = () => {
-    const inputs = document.querySelectorAll("#otp > *[id]");
-    inputs[0].focus();
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].addEventListener("keydown", function (event) {
-        if (event.key === "Backspace") {
-          inputs[i].value = "";
-          OTP[i] = "";
-          if (i !== 0) inputs[i - 1].focus();
-          LockOTP();
-        } else {
-          if (i === inputs.length - 1 && inputs[i].value !== "") {
-            return true;
-          } else if (event.keyCode > 47 && event.keyCode < 58) {
-            inputs[i].value = event.key;
-            OTP[i] = event.key;
-            LockOTP();
-            if (i !== inputs.length - 1) inputs[i + 1].focus();
-            event.preventDefault();
-          }
-        }
-      });
-    }
-  };
-  // const OTP completly full
-  const LockOTP = () => {
-    let cnt = 0,
-      tmp = "";
-    for (let i = 0; i < 6; i++) {
-      tmp += OTP[i];
-      if (OTP[i] !== "") cnt++;
-    }
-    if (cnt === 6) {
-      setOtp(tmp);
-    }
   };
 
   // verifying otp
-  const handelVerify = () => {
+  const handelVerify = (OTP) => {
     setverifyLoad(true);
-    axios
-      .post("/verifyEmail", {
-        email: email,
-        otp: otp,
-      })
-      .then((response) => {
-        setVerified(true);
-        setverifyLoad(false);
-        setTimeout(() => {
-          redirect();
-        }, 2000);
-      })
-      .catch((error) => {
-        setverifyLoad(false);
-        setotpError(true);
-        setotperrorMsg(error.response.data.errors[0].error);
-        setTimeout(() => {
-          setotpError(false);
-          setotperrorMsg("");
-        }, 5000);
-      });
+    if (OTP.length < 6) {
+      setverifyLoad(false);
+      setotpError(true);
+      setotperrorMsg("Invalid OTP!");
+      setTimeout(() => {
+        setotpError(false);
+        setotperrorMsg("");
+      }, 5000);
+    } else {
+      axios
+        .post("/verifyEmail", {
+          email: email,
+          otp: OTP,
+        })
+        .then((response) => {
+          setVerified(true);
+          setverifyLoad(false);
+          setTimeout(() => {
+            redirect();
+          }, 1000);
+        })
+        .catch((error) => {
+          setverifyLoad(false);
+          setotpError(true);
+          setotperrorMsg(error.response.data.errors[0].error);
+          setTimeout(() => {
+            setotpError(false);
+            setotperrorMsg("");
+          }, 5000);
+        });
+    }
   };
+
   return (
     <>
       <Stack
@@ -261,114 +221,101 @@ const Verify = (props) => {
           {otpsentIcon ? "OTP Sent" : otpsent === 0 ? "Send Otp" : "Send Again"}
         </LoadingButton>
         {otpsentIcon ? (
-          <Typography className={classes.root} variant="caption">
+          <Typography
+            className={classes.root}
+            variant="caption"
+            sx={{ fontSize: "10px" }}
+          >
             Resend&nbsp;OTP&nbsp;in&nbsp;
-            <Clock time={interval} />
+            <Typography
+              variant="caption"
+              sx={{
+                fontSize: "12px",
+                fontFamily: "Staatliches",
+                color: "#3aed1f",
+                letterSpacing: "2px",
+              }}
+            >
+              00:{counter}
+            </Typography>
             &nbsp;secs.
           </Typography>
+        ) : null}
+        {otpsent ? (
+          <Alert
+            severity="info"
+            variant="outlined"
+            sx={{
+              fontFamily: "PT sans",
+              fontSize: "10px",
+              padding: "0px 5px",
+              width: "100%",
+              maxWidth: 300,
+              color: "white",
+              letterSpacing: "0.08em",
+              "& svg": {
+                height: 15,
+                width: 15,
+              },
+            }}
+          >
+            Didn't Recieve OTP ? Check You Mail Spam!
+          </Alert>
         ) : null}
       </Stack>
       <Stack
         sx={{
           width: "100%",
           maxWidth: 300,
-          padding: "10px",
-          backgroundColor: "rgba(255,255,255,0.1)",
-          borderRadius: "10px",
+          marginTop: "20px !important",
         }}
         direction="row"
         justifyContent="center"
         alignItems="center"
       >
-        <Stack
-          id="otp"
-          direction="row"
-          spacing={1}
-          justifyContent="space-evenly"
-          sx={{ width: "100%" }}
-        >
+        <label htmlFor="otp-input-field" style={{ width: "100%" }}>
+          <Typography
+            sx={{
+              fontFamily: "PT sans",
+              fontSize: "10px",
+              color: "white",
+              marginBottom: "5px",
+            }}
+          >
+            Enter 6 Digit OTP sent to your Mail.
+          </Typography>
           <input
+            id="otp-input-field"
             className="otp-input-field"
             type="text"
-            id="first"
-            maxLength="1"
+            maxLength="6"
+            name="mobile-otp"
             autoComplete="off"
+            value={otp}
+            onChange={(e) => {
+              setOtp(e.target.value);
+              if (e.target.value.length === 6) {
+                handelVerify(e.target.value);
+              }
+            }}
           />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="second"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="third"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="fourth"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="fifth"
-            maxLength="1"
-            autoComplete="off"
-          />
-          <input
-            className="otp-input-field"
-            type="text"
-            id="sixth"
-            maxLength="1"
-            name="field"
-            autoComplete="nope"
-          />
-        </Stack>
-        <input
-          className="otp-input-field-mobile"
-          type="text"
-          maxLength="6"
-          placeholder="ENTER OTP"
-          name="mobile-otp"
-          autoComplete="off"
-          value={otp}
-          onChange={(e) => {
-            setOtp(e.target.value);
-          }}
-        />
+        </label>
       </Stack>
-      {otpsent ? (
-        <Alert
-          severity="info"
-          // variant="filled"
-          sx={{
-            fontFamily: "PT sans",
-            fontSize: "12px",
-            padding: "0px 10px",
-            width: "100%",
-            maxWidth: 300,
-          }}
-        >
-          Didn't Recieve OTP ? Check You Mail Spam!
-        </Alert>
-      ) : null}
+
       {verified ? (
         <Alert
           severity="success"
-          // variant="filled"
+          variant="filled"
           sx={{
             fontFamily: "PT sans",
-            fontSize: "12px",
+            fontSize: "14px",
             padding: "0px 10px",
             width: "100%",
             maxWidth: 300,
+            "& svg": {
+              height: 22,
+              width: 22,
+            },
           }}
         >
           OTP Verified Successfully!
@@ -377,14 +324,17 @@ const Verify = (props) => {
       {otpError ? (
         <Alert
           severity="error"
-          // variant="filled"
           size="small"
           sx={{
             fontFamily: "PT sans",
-            fontSize: "12px",
+            fontSize: "14px",
             padding: "0px 10px",
             width: "100%",
             maxWidth: 300,
+            "& svg": {
+              height: 22,
+              width: 22,
+            },
           }}
         >
           {otperrorMsg}
@@ -397,21 +347,37 @@ const Verify = (props) => {
         loading={verifyLoad}
         endIcon={<UpdateIcon />}
         loadingPosition="end"
-        onClick={handelVerify}
+        onClick={() => handelVerify(otp)}
         fullWidth
         sx={{ maxWidth: 300 }}
       >
         Verify
       </LoadingButton>
       <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: "rgba(255,255,255,0.2)",
+        }}
+        open={verifyLoad}
+      >
+        <Stack spacing={2}>
+          <CircularProgress color="primary" />
+          <Typography variant="caption" color="inherit">
+            <strong>Verifying...</strong>
+          </Typography>
+        </Stack>
+      </Backdrop>
+      <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={openbackdrop}
-        // onClick={() => setopenbackdrop(false)}
       >
-        <CircularProgress color="primary" />
-        <Typography variant="h5" className={classes.root}>
-          Signing In...
-        </Typography>
+        <Stack spacing={2}>
+          <CircularProgress color="primary" />
+          <Typography variant="h5">
+            <strong>Signing In...</strong>
+          </Typography>
+        </Stack>
       </Backdrop>
     </>
   );
