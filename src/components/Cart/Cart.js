@@ -28,7 +28,7 @@ import RemoveIcon from "@mui/icons-material/RemoveRounded";
 import BackIcon from "@mui/icons-material/ArrowBackIosRounded";
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
 import CheckoutIcon from "@mui/icons-material/RedoRounded";
-import CancelIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // Use Styles
 const useStyles = makeStyles(() => ({
@@ -42,7 +42,17 @@ const useStyles = makeStyles(() => ({
   Stack: {
     padding: "10px",
     borderRadius: "5px !important",
-    border: "1px solid rgba(0,0,0,0.06)",
+    border: "1px solid rgba(0,0,0,0.2)",
+    position: "relative",
+  },
+  DeleteButton: {
+    position: "absolute",
+    right: -1,
+    top: -1,
+    padding: "10px",
+    borderRadius: "0 5px 0 0",
+    margin: "0 !important",
+    cursor: "pointer",
   },
 }));
 
@@ -175,22 +185,16 @@ const Cart = () => {
         {user ? (
           cartLoading ? (
             <Grid container sx={{ padding: "10px" }} spacing={1}>
-              <Grid item xs={12} sm={8} md={8} lg={8}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Skeleton variant="rectangle" height={50} width="100%" />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
                 <Skeleton variant="rectangle" height={100} width="100%" />
               </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
                 <Skeleton variant="rectangle" height={100} width="100%" />
               </Grid>
-              <Grid item xs={12} sm={8} md={8} lg={8}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={8} md={8} lg={8}>
-                <Skeleton variant="rectangle" height={100} width="100%" />
-              </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
                 <Skeleton variant="rectangle" height={100} width="100%" />
               </Grid>
             </Grid>
@@ -234,13 +238,12 @@ const Cart = () => {
                   Checkout
                 </LoadingButton>
               </Stack>
-
               {cart.length ? (
                 cart.map((product, index) => (
                   <Stack
                     className={classes.Stack}
                     key={index}
-                    spacing={3}
+                    spacing={1}
                     direction={{
                       xs: "column",
                       sm: "row",
@@ -358,24 +361,17 @@ const Cart = () => {
                         </Button>
                       </div>
                     </Stack>
-                    <Stack
-                      sx={{ width: "100%" }}
-                      justifyContent="center"
-                      direction="row"
+                    <IconButton
+                      onClick={() => handelCart(product.bookId)}
+                      className={classes.DeleteButton}
+                      color="error"
                     >
-                      <Fab
-                        aria-label="remove-from-cart"
-                        size="small"
-                        sx={{ backgroundColor: "rgba(255,0,0,0.6)" }}
-                        onClick={() => handelCart(product.bookId)}
-                      >
-                        {removingId === product.bookId ? (
-                          <CircularProgress size="1rem" />
-                        ) : (
-                          <CancelIcon />
-                        )}
-                      </Fab>
-                    </Stack>
+                      {removingId === product.bookId ? (
+                        <CircularProgress size={22} color="inherit" />
+                      ) : (
+                        <DeleteIcon />
+                      )}
+                    </IconButton>
                   </Stack>
                 ))
               ) : (
