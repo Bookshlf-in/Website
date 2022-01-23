@@ -1,7 +1,7 @@
 import { React } from "react";
 
 // Mui Components
-import { Typography, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 
 const Reciept = (props) => {
