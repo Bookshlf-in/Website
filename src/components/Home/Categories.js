@@ -5,21 +5,39 @@ import "./Categories.css";
 // Components
 import { Stack, Avatar, Typography } from "@mui/material";
 
+const CategoryItem = (props) => {
+  return (
+    <Link to={props.url} target="_blank" className="item">
+      <Stack justifyContent="center" alignItems="center">
+        <Avatar
+          src={props.imgUrl}
+          alt={props.label}
+          sx={{ width: 56, height: 56 }}
+        />
+        <h6 className="item-h6">{props.label}</h6>
+        <Typography variant="caption">
+          <strong>Shop Now</strong>
+        </Typography>
+      </Stack>
+    </Link>
+  );
+};
+
 const Categories = () => {
   return (
     <Stack className="categories">
       <Stack
-        justifyContent="space-between"
+        justifyContent="center"
         alignItems="center"
         direction="row"
         sx={{ padding: "10px" }}
       >
-        <Typography variant="h4">Featured Categories</Typography>
-        <Typography variant="h6">
-          <Link to="/SearchResult/tag:ALL">
-            All Categories&nbsp;
-            <i className="fas fa-angle-right" />
-          </Link>
+        <Typography
+          variant="h4"
+          sx={{ fontFamily: "Staatliches" }}
+          align="center"
+        >
+          Featured Categories
         </Typography>
       </Stack>
       <Stack
@@ -30,71 +48,31 @@ const Categories = () => {
         spacing={1}
         flexWrap="wrap"
       >
-        <Link to="/SearchResult/tag:JEE Mains">
-          <div className="item i1 ">
-            <Avatar
-              src="/images/Categories/jeemains-logo.png"
-              alt=""
-              sx={{ width: 56, height: 56 }}
-            />
-            <h6 className="item-h6">JEE MAINS</h6>
-            <Typography variant="body2">
-              <strong>Shop Now</strong>
-            </Typography>
-          </div>
-        </Link>
-        <Link to="/SearchResult/tag:JEE Advanced">
-          <div className="item i2">
-            <Avatar
-              src="/images/Categories/JEE-Advance-Logo.png"
-              alt=""
-              sx={{ width: 56, height: 56 }}
-            />
-            <h6 className="item-h6">JEE ADVANCED</h6>
-            <Typography variant="body2">
-              <strong>Shop Now</strong>
-            </Typography>
-          </div>
-        </Link>
-        <Link to="/SearchResult/tag:CSBE">
-          <div className="item i3">
-            <Avatar
-              src="/images/Categories/cbse-logo.png"
-              alt=""
-              sx={{ width: 56, height: 56 }}
-            />
-            <h6 className="item-h6">CBSE</h6>
-            <Typography variant="body2">
-              <strong>Shop Now</strong>
-            </Typography>
-          </div>
-        </Link>
-        <Link to="/SearchResult/tag:NEET">
-          <div className="item i4">
-            <Avatar
-              src="/images/Categories/neet-ug-logo.png"
-              sx={{ width: 56, height: 56 }}
-              alt=""
-            />
-            <h6 className="item-h6">NEET UG</h6>
-            <Typography variant="body2">
-              <strong>Shop Now</strong>
-            </Typography>
-          </div>
-        </Link>
-        <Link to="/SearchResult/tag:NOVELS">
-          <div className="item i5">
-            <Avatar
-              src="/images/Categories/novel-logo.jpg"
-              sx={{ width: 56, height: 56 }}
-              alt=""
-            />
-            <h6 className="item-h6">NOVELS</h6>
-            <Typography variant="body2">
-              <strong>Shop Now</strong>
-            </Typography>
-          </div>
-        </Link>
+        <CategoryItem
+          url="/SearchResult/tag:JEE Mains"
+          imgUrl="/images/Categories/jeemains-logo.png"
+          label="JEE MAINS"
+        />
+        <CategoryItem
+          url="/SearchResult/tag:JEE Advanced"
+          imgUrl="/images/Categories/JEE-Advance-Logo.png"
+          label="JEE ADVANCED"
+        />
+        <CategoryItem
+          url="/SearchResult/tag:CSBE"
+          imgUrl="/images/Categories/cbse-logo.png"
+          label="CBSE"
+        />
+        <CategoryItem
+          url="/SearchResult/tag:NEET"
+          imgUrl="/images/Categories/neet-ug-logo.png"
+          label="NEET UG"
+        />
+        <CategoryItem
+          url="/SearchResult/tag:NOVELS"
+          imgUrl="/images/Categories/novel-logo.jpg"
+          label="NOVELS"
+        />
       </Stack>
     </Stack>
   );
