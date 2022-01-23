@@ -76,10 +76,6 @@ const ForgotPassword = () => {
   // context states
   const [, setUser] = useContext(UserContext);
 
-  useEffect(() => {
-    OTPInput();
-  }, []);
-
   // Functionality States
   const [otpsent, setOtpsent] = useState(0);
   const [otpsentIcon, setOtpsentIcon] = useState(false);
@@ -88,9 +84,7 @@ const ForgotPassword = () => {
   const [emailerrorMsg, setemailerrorMsg] = useState("");
   const [otpError, setotpError] = useState(false);
   const [otperrorMsg, setotperrorMsg] = useState("");
-  const [interval, setinterval] = useState(0);
-  const OTP = ["", "", "", "", "", ""];
-  const [lock, setlock] = useState(false);
+  const [counter, setCounter] = useState(60);
   const [showpassword, setshowPassword] = useState(false);
   const [passwordError, setpasswordError] = useState(false);
   const [passworderrorMsg, setpassworderrorMsg] = useState("");
@@ -154,20 +148,11 @@ const ForgotPassword = () => {
   };
 
   // OTP Countdown
-  const Clock = (props) => {
-    const [countdownTime, setcountdownTime] = useState(props.time);
-    const timer = () => setcountdownTime(countdownTime - 1);
-
-    useEffect(() => {
-      if (countdownTime <= 0) {
-        return;
-      }
-      const clock = setInterval(timer, 1000);
-      return () => clearInterval(clock);
-    }, [countdownTime]);
-
-    return <span>{countdownTime}</span>;
-  };
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
 
   // sending Otp
   const handelSendOtp = () => {
@@ -181,11 +166,11 @@ const ForgotPassword = () => {
           setotpLoad(false);
           setOtpsentIcon(true);
           setOtpsent(1);
-          setinterval(30);
+          setCounter(60);
           setTimeout(() => {
             setOtpsentIcon(false);
             setOtpsent(1);
-          }, 30000);
+          }, 60000);
         })
         .catch((error) => {
           setotpLoad(false);
@@ -204,45 +189,6 @@ const ForgotPassword = () => {
         setemailerrorMsg("");
       }, 5000);
     }
-  };
-
-  // handeling OTP input
-  const OTPInput = () => {
-    const inputs = document.querySelectorAll("#otp > *[id]");
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].addEventListener("keydown", function (event) {
-        if (event.key === "Backspace") {
-          inputs[i].value = "";
-          OTP[i] = "";
-          if (i !== 0) inputs[i - 1].focus();
-          LockOTP();
-        } else {
-          if (i === inputs.length - 1 && inputs[i].value !== "") {
-            return true;
-          } else if (event.keyCode > 47 && event.keyCode < 58) {
-            inputs[i].value = event.key;
-            OTP[i] = event.key;
-            LockOTP();
-            if (i !== inputs.length - 1) inputs[i + 1].focus();
-            event.preventDefault();
-          }
-        }
-      });
-    }
-  };
-  // const OTP completly full
-  const LockOTP = () => {
-    let cnt = 0,
-      tmp = "";
-    for (let i = 0; i < 6; i++) {
-      tmp += OTP[i];
-      if (OTP[i] !== "") cnt++;
-    }
-
-    if (cnt === 6) {
-      setlock(true);
-      setOtp(tmp);
-    } else setlock(false);
   };
 
   // checking if both input passwords are matching
@@ -276,13 +222,23 @@ const ForgotPassword = () => {
               })
               .catch((error) => {
                 setupdateLoad(false);
-                if (error.response.data.errors[0].param === "otp") {
-                  setotpError(true);
-                  setotperrorMsg(error.response.data.errors[0].error);
-                  setTimeout(() => {
-                    setotpError(false);
-                    setotperrorMsg("");
-                  }, 5000);
+                for (let i = 0; i < error.response.data.errors.length; i++) {
+                  if (error.response.data.errors[0].param === "otp") {
+                    setotpError(true);
+                    setotperrorMsg(error.response.data.errors[i].error);
+                    setTimeout(() => {
+                      setotpError(false);
+                      setotperrorMsg("");
+                    }, 5000);
+                  }
+                  if (error.response.data.errors[i].param === "password") {
+                    setpasswordError(true);
+                    setpassworderrorMsg(error.response.data.errors[i].error);
+                    setTimeout(() => {
+                      setpasswordError(false);
+                      setpassworderrorMsg("");
+                    }, 5000);
+                  }
                 }
               });
           } else {
@@ -328,6 +284,7 @@ const ForgotPassword = () => {
           backgroundColor: "rgb(35, 47, 62)",
           width: "100%",
           minHeight: "100vh",
+          paddingBottom: "10px",
         }}
         alignItems="center"
         spacing={1}
@@ -407,9 +364,8 @@ const ForgotPassword = () => {
           Password Recovery
         </Typography>
         <Stack
-          sx={{ width: "100%", maxWidth: 800, padding: " 0px 10px" }}
+          sx={{ width: "100%", maxWidth: 400, padding: " 0px 10px" }}
           spacing={2}
-          direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
           justifyContent="center"
           alignItems="center"
         >
@@ -457,100 +413,84 @@ const ForgotPassword = () => {
               : "Send Again"}
           </LoadingButton>
           {otpsentIcon ? (
-            <Typography className={classes.root} variant="caption">
+            <Typography
+              className={classes.root}
+              variant="caption"
+              sx={{ fontSize: "10px" }}
+            >
               Resend&nbsp;OTP&nbsp;in&nbsp;
-              <Clock time={interval} />
+              <Typography
+                variant="caption"
+                sx={{
+                  fontSize: "12px",
+                  fontFamily: "Staatliches",
+                  color: "#3aed1f",
+                  letterSpacing: "2px",
+                }}
+              >
+                00:{counter}
+              </Typography>
               &nbsp;secs.
             </Typography>
+          ) : null}
+          {otpsent ? (
+            <Alert
+              severity="info"
+              variant="outlined"
+              sx={{
+                fontFamily: "PT sans",
+                fontSize: "10px",
+                padding: "0px 5px",
+                width: "100%",
+                maxWidth: 300,
+                color: "white",
+                letterSpacing: "0.08em",
+                "& svg": {
+                  height: 15,
+                  width: 15,
+                },
+              }}
+            >
+              Didn't Recieve OTP ? Check You Mail Spam!
+            </Alert>
           ) : null}
         </Stack>
         <Stack
           sx={{
-            maxWidth: 800,
-            padding: "10px",
-            backgroundColor: "rgba(255,255,255,0.1)",
-            borderRadius: "10px",
+            maxWidth: 300,
+            width: "100%",
           }}
           spacing={1}
           direction="row"
           justifyContent="center"
           alignItems="center"
         >
-          <Typography>
-            {lock ? (
-              <LockedIcon color="success" sx={{ height: 32, width: 32 }} />
-            ) : (
-              <UnlockedIcon color="error" sx={{ height: 32, width: 32 }} />
-            )}
-          </Typography>
-
-          <Stack id="otp" direction="row" spacing={1} justifyContent="center">
+          <label htmlFor="otp-input-field" style={{ width: "100%" }}>
+            <Typography
+              sx={{
+                fontFamily: "PT sans",
+                fontSize: "10px",
+                color: "white",
+                marginBottom: "5px",
+              }}
+            >
+              Enter 6 Digit OTP sent to your Mail.
+            </Typography>
             <input
+              id="otp-input-field"
               className="otp-input-field"
               type="text"
-              id="first"
-              maxLength="1"
+              maxLength="6"
+              name="mobile-otp"
               autoComplete="off"
+              value={otp}
+              onChange={(e) => {
+                setOtp(e.target.value);
+              }}
             />
-            <input
-              className="otp-input-field"
-              type="text"
-              id="second"
-              maxLength="1"
-              autoComplete="off"
-            />
-            <input
-              className="otp-input-field"
-              type="text"
-              id="third"
-              maxLength="1"
-              autoComplete="off"
-            />
-            <input
-              className="otp-input-field"
-              type="text"
-              id="fourth"
-              maxLength="1"
-              autoComplete="off"
-            />
-            <input
-              className="otp-input-field"
-              type="text"
-              id="fifth"
-              maxLength="1"
-              autoComplete="off"
-            />
-            <input
-              className="otp-input-field"
-              type="text"
-              id="sixth"
-              maxLength="1"
-              name="field"
-              autoComplete="nope"
-            />
-          </Stack>
-          <input
-            className="otp-input-field-mobile"
-            type="text"
-            maxLength="6"
-            autoComplete="off"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
+          </label>
         </Stack>
-        {otpsent ? (
-          <Alert
-            severity="info"
-            variant="filled"
-            sx={{
-              fontFamily: "PT sans",
-              fontSize: "12px",
-              padding: "0px 10px",
-            }}
-          >
-            Didn't Recieve OTP ? Check You Mail Spam!
-          </Alert>
-        ) : null}
+
         {otpError ? (
           <Alert
             severity="error"
@@ -566,7 +506,7 @@ const ForgotPassword = () => {
           </Alert>
         ) : null}
         <Stack
-          sx={{ width: "100%", maxWidth: 800, padding: "0px 10px" }}
+          sx={{ width: "100%", maxWidth: 400, padding: "0px 10px" }}
           direction="row"
           justifyContent="center"
           alignItems="center"
@@ -600,16 +540,19 @@ const ForgotPassword = () => {
                 </InputAdornment>
               ),
             }}
-            helperText="Enter Your New Password"
+            helperText={
+              passwordError ? passworderrorMsg : "Enter Your New Password"
+            }
             variant="standard"
             fullWidth
             sx={{ fontSize: "12px" }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            error={passwordError}
           />
         </Stack>
         <Stack
-          sx={{ width: "100%", maxWidth: 800, padding: "0px 10px" }}
+          sx={{ width: "100%", maxWidth: 400, padding: "0px 10px" }}
           direction="row"
           justifyContent="center"
           alignItems="center"
@@ -685,8 +628,8 @@ const ForgotPassword = () => {
         >
           <Stack spacing={2}>
             <CircularProgress color="inherit" />
-            <Typography variant="h5" className={classes.root}>
-              Signing In...
+            <Typography variant="h5">
+              <strong>Signing In...</strong>
             </Typography>
           </Stack>
         </Backdrop>

@@ -116,7 +116,7 @@ const Reviews = () => {
               <Box
                 sx={{
                   backgroundColor: "rgba(45, 90, 135,0.3)",
-                  height: 220,
+                  height: 120,
                   width: "100%",
                   borderRadius: "5px",
                 }}
@@ -131,7 +131,11 @@ const Reviews = () => {
                   <Typography variant="caption">
                     <strong>{review.userName}</strong>
                   </Typography>
-                  <Typography variant="caption" align="justify">
+                  <Typography
+                    variant="caption"
+                    align="justify"
+                    sx={{ fontSize: "10px" }}
+                  >
                     <strong>{review.review}</strong>
                   </Typography>
                   <Rating
@@ -141,7 +145,7 @@ const Reviews = () => {
                       <StarIcon sx={{ opacity: 0.55 }} fontSize="inherit" />
                     }
                     icon={<StarIcon fontSize="inherit" />}
-                    size="large"
+                    size="medium"
                   />
                 </Stack>
               </Box>
@@ -151,34 +155,34 @@ const Reviews = () => {
         <Button
           variant="contained"
           sx={{ maxWidth: 400 }}
-          endIcon={open ? <UpIcon /> : <DownIcon />}
+          endIcon={user ? open ? <UpIcon /> : <DownIcon /> : <></>}
           onClick={() => {
             if (user) setOpen((prev) => !prev);
             else history.push("/Login");
           }}
           color="warning"
+          size="small"
         >
           {user ? "Add Your Review" : "Login To Add Your Review"}
         </Button>
-        <Collapse in={open} timeout={500} sx={{ width: "100%" }}>
+        <Collapse in={open} timeout={500} sx={{ width: "100%", maxWidth: 350 }}>
           <Stack
             spacing={1}
             justifyContent="center"
             alignItems="center"
             sx={{
               padding: "10px",
-              width: "100%",
               backgroundColor: "rgba(0,0,0,0.1)",
               borderRadius: "10px",
               border: "1px solid rgba(255,255,255,0.4)",
             }}
           >
-            <Typography component="legend">Rating</Typography>
+            <Typography variant="caption">Rating</Typography>
             <Rating
               defaultValue={ratings}
               emptyIcon={<StarIcon sx={{ opacity: 0.9 }} fontSize="inherit" />}
               icon={<StarIcon fontSize="inherit" />}
-              size="large"
+              size="small"
               onChange={(event, newValue) => {
                 setRatings(newValue);
               }}
@@ -186,18 +190,22 @@ const Reviews = () => {
                 sethover(newHover);
               }}
             />
-            <Typography component="legend">{responses[hover - 1]}</Typography>
+            <Typography variant="caption">
+              {responses[hover - 1] || responses[ratings - 1]}
+            </Typography>
             <TextField
-              variant="standard"
+              variant="filled"
               label="Review"
               color="warning"
               fullWidth
               sx={{
                 "& label": { fontFamily: "PT sans", color: "white" },
-                "& input": { color: "white" },
+                "& textarea": { color: "white", fontSize: "12px" },
               }}
               onChange={(e) => setDesc(e.target.value)}
               value={desc}
+              multiline
+              maxRows={5}
             />
             <Button
               endIcon={
@@ -209,7 +217,8 @@ const Reviews = () => {
               }
               disabled={updateLoad}
               variant="contained"
-              color="warning"
+              color="primary"
+              size="small"
               onClick={handelAddReview}
             >
               Submit

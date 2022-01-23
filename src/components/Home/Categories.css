@@ -6,73 +6,25 @@
   align-items: center;
   padding: 10px;
   height: 200px;
-  width: 200px;
+  width: 230px;
   cursor: pointer;
-}
-.i1 {
   background-color: rgb(238, 255, 238);
   border-radius: 15px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
-.i2 {
-  background-color: rgb(255, 255, 233);
-  border-radius: 15px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-}
-.i3 {
-  background-color: rgb(255, 241, 241);
-  border-radius: 15px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-}
-.i4 {
-  background-color: rgb(255, 251, 238);
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-}
-.i5 {
-  background-color: rgb(241, 248, 255);
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-}
-
-.i1:hover {
-  background-color: rgb(123, 248, 123);
+.item:hover {
+  background-color: rgb(123, 248, 206);
   transition: 0.3s;
   border-radius: 15px;
   border: none;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
-.i2:hover {
-  background-color: rgb(255, 255, 131);
-  transition: 0.5s;
-  border-radius: 15px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-}
-.i3:hover {
-  background-color: rgb(255, 177, 177);
-  transition: 0.5s;
-  border-radius: 15px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-}
-.i4:hover {
-  background-color: rgb(255, 229, 145);
-  transition: 0.5s;
-  border-radius: 15px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-}
-.i5:hover {
-  background-color: rgb(152, 203, 253);
-  transition: 0.5s;
-  border-radius: 15px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-}
-
 .item-h6 {
-  font-size: 20px;
+  font-size: 16px;
   margin: 20px 0px;
   font-family: "Staatliches";
   letter-spacing: 2px;
-  color: rgb(0, 0, 0);
+  color: rgb(36, 36, 36);
 }
 
 @media screen and (max-width: 768px) {
@@ -95,6 +47,9 @@
   .item {
     height: 125px;
     width: 125px;
+  }
+  .item {
+    margin-bottom: 10px !important;
   }
   .item-h6 {
     font-size: 12px !important;
