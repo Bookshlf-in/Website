@@ -2,27 +2,53 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
-import "./Footer.css";
 import * as EmailValidator from "email-validator";
+import "./Footer.css";
 
 // Components
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Stack, Snackbar, Alert, CircularProgress } from "@mui/material";
+import { TextField, Typography, Button, IconButton } from "@mui/material";
+
+// Icons
+import SubscribeIcon from "@mui/icons-material/MarkEmailRead";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
+// Links
+const YOUTUBE_URL = "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ";
+const FACEBOOK_URL = "https://www.facebook.com/Bookshlf-109479771200918";
+const LINKEDIN_URL = "https://www.linkedin.com/in/bookshlf-by-aman-861073223/";
+const INSTAGRAM_URL = "https://twitter.com/BookshlfA";
 
 // Use Styles
 const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
     fontFamily: "PT sans !important",
+    "& label": {
+      fontFamily: "PT sans !important",
+    },
+    "& p": {
+      fontFamily: "PT sans !important",
+    },
+    "& input": {
+      fontFamily: "PT sans !important",
+    },
   },
 }));
 
 // Footer App starts here
-function Footer() {
+const Footer = () => {
   const classes = useStyles();
 
   const Year = new Date().getFullYear();
+
+  // Opening Links
+  const OpenLink = (link) => {
+    window.open(link, "_blank").focus();
+  };
 
   // Alert Messages
   var messages = {
@@ -99,154 +125,165 @@ function Footer() {
   };
 
   return (
-    <div className="footer-container">
-      <section className="footer-subscription">
-        <p className="footer-subscription-heading">Join Our Newsletter</p>
-        <p className="footer-subscription-text">
-          Signup to be the first to hear about exclusive deals, special offers
-          and upcoming collections
-        </p>
-        <div className="input-areas">
-          <form action="">
-            <input
-              className="footer-subscription-input"
-              type="email"
-              name="email"
-              placeholder="Enter email for weekly newsletter"
-              onChange={(e) => changeEmail(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handelSubscription();
-                }
-              }}
-            />
-            <div className="footer-subscription-button-container">
-              <input
-                type="button"
-                className="footer-subscription-button"
-                onClick={handelSubscription}
-                value="Subscribe"
-              />
-              &nbsp;
-              <CircularProgress
-                style={{
-                  height: "15px",
-                  width: "15px",
-                  display: loading ? "inline-block" : "none",
-                }}
-                color="success"
-              />
-            </div>
-          </form>
-        </div>
-      </section>
-      <div className="footer-container2">
-        <section className="social-media">
-          <div className="social-media-wrap">
-            <div className="footer-logo">
-              <Link to="/" className="social-logo">
-                <img
-                  src="/images/logo.png"
-                  alt="bookhlf.in"
-                  height="25px"
-                  width="135px"
-                />
-              </Link>
-            </div>
-            <div className="footer-address">
-              <p className="footer-address-para">
-                IIIT Lucknow, Ahmamau 226002 UP, India
-              </p>
-            </div>
-            <div className="footer-contact">
-              <Link
-                to={{
-                  pathname: "mailto:bookshlf.in@gmail.com ",
-                }}
-                target="_blank"
-              >
-                bookshlf.in@gmail.com
-              </Link>
-              <br />
-              <Link to="/">+91 97926 66122</Link>
-            </div>
+    <Stack className="footer-container">
+      <Stack className="footer-subscription" alignItems="center">
+        <Typography align="center">
+          <strong>Join Our Newsletter </strong>
+        </Typography>
+        <Typography align="center" variant="caption">
+          <strong>
+            Signup to be the first to hear about exclusive deals, special offers
+            and upcoming collections
+          </strong>
+        </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+          sx={{ width: "100%" }}
+        >
+          <TextField
+            className={classes.root}
+            variant="outlined"
+            color="warning"
+            size="small"
+            type="email"
+            label="Email"
+            onChange={(e) => changeEmail(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handelSubscription();
+              }
+            }}
+            fullWidth
+            sx={{ maxWidth: 300 }}
+          />
+          <Button
+            endIcon={
+              loading ? (
+                <CircularProgress color="inherit" size={15} />
+              ) : (
+                <SubscribeIcon color="inherit" />
+              )
+            }
+            onClick={handelSubscription}
+            variant="contained"
+            color="success"
+          >
+            Subsribe
+          </Button>
+        </Stack>
+      </Stack>
+      <Stack
+        sx={{ padding: "0px 24px" }}
+        direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+        spacing={2}
+      >
+        <Stack
+          sx={{ padding: "10px 0px" }}
+          spacing={1}
+          justifyContent={{
+            xs: "center",
+            sm: "flex-start",
+            md: "flex-start",
+            lg: "flex-start",
+          }}
+          alignItems={{
+            xs: "center",
+            sm: "flex-start",
+            md: "flex-start",
+            lg: "flex-start",
+          }}
+        >
+          <img src="/images/logo.png" alt="bookhlf.in" width="120px" />
+          <Typography variant="caption" sx={{ color: "white" }}>
+            IIIT Lucknow, Ahmamau 226002 UP, India
+          </Typography>
+          <Typography variant="caption" sx={{ color: "white" }}>
+            +91 97926 66122
+          </Typography>
+          <Button
+            href="mailto:bookshlf.in@gmail.com "
+            target="_blank"
+            size="small"
+            sx={{
+              fontSize: "12px",
+              color: "white",
+              minWidth: 0,
+              padding: 0,
+              justifyContent: "flex-start",
+            }}
+          >
+            bookshlf.in@gmail.com
+          </Button>
+          <Stack spacing={1} direction="row">
+            <IconButton
+              aria-label="facebook"
+              onClick={() => OpenLink(FACEBOOK_URL)}
+              size="small"
+            >
+              <FacebookIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              size="small"
+              aria-label="instagram"
+              onClick={() => OpenLink(INSTAGRAM_URL)}
+            >
+              <InstagramIcon sx={{ color: "white" }} />
+            </IconButton>
+            <IconButton
+              size="small"
+              aria-label="youtube"
+              onClick={() => OpenLink(YOUTUBE_URL)}
+            >
+              <YouTubeIcon sx={{ color: "white" }} />
+            </IconButton>
 
-            <div className="social-icons">
-              <Link
-                className="social-icon-link facebook"
-                to={{
-                  pathname: "https://www.facebook.com/Bookshlf-109479771200918",
-                }}
-                target="_blank"
-                aria-label="Facebook"
-              >
-                <i className="fab fa-facebook-f"></i>
-              </Link>
-              <Link
-                className="social-icon-link instagram"
-                to={{
-                  pathname: "https://instagram.com/_bookshlf",
-                }}
-                target="_blank"
-                aria-label="Instagram"
-              >
-                <i className="fab fa-instagram"></i>
-              </Link>
-              <Link
-                className="social-icon-link twitter"
-                to={{
-                  pathname: "https://twitter.com/BookshlfA",
-                }}
-                target="_blank"
-                aria-label="Twitter"
-              >
-                <i className="fab fa-twitter"></i>
-              </Link>
-              <Link
-                className="social-icon-link linkedin"
-                to={{
-                  pathname:
-                    "https://www.linkedin.com/in/bookshlf-by-aman-861073223/",
-                }}
-                target="_blank"
-                aria-label="Linkedin"
-              >
-                <i className="fab fa-linkedin"></i>
-              </Link>
-              <Link
-                className="social-icon-link youtube"
-                to={{
-                  pathname:
-                    "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ",
-                }}
-                target="_blank"
-                aria-label="Youtube"
-              >
-                <i className="fab fa-youtube"></i>
-              </Link>
-            </div>
-          </div>
-        </section>
-        <div className="footer-links">
-          <div className="footer-link-wrapper">
-            <div className="footer-link-items">
+            <IconButton
+              size="small"
+              aria-label="linkedin"
+              onClick={() => OpenLink(LINKEDIN_URL)}
+            >
+              <LinkedInIcon sx={{ color: "white" }} />
+            </IconButton>
+          </Stack>
+        </Stack>
+        <Stack
+          direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
+          spacing={2}
+          sx={{ width: "100%", padding: "10px 0px" }}
+          justifyContent="space-evenly"
+        >
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="space-evenly"
+            sx={{ width: "100%" }}
+          >
+            <Stack className="footer-link-items">
               <h4>Explore</h4>
               <Link to="/About">About Us</Link>
               <Link to="/Sitemap">Sitemap</Link>
               <Link to="/Login">Sign in</Link>
               <Link to="/Signup">Join Us</Link>
-            </div>
-            <div className="footer-link-items">
+            </Stack>
+            <Stack className="footer-link-items">
               <h4>Customer Service</h4>
               <Link to="/">Returns</Link>
               <Link to="/Contact">Report Product</Link>
               <Link to="/">Accessibility</Link>
               <Link to="/Contact">Contact Us</Link>
-            </div>
-          </div>
-          <div className="footer-link-wrapper">
-            <div className="footer-link-items">
+            </Stack>
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="space-evenly"
+            sx={{ width: "100%" }}
+          >
+            <Stack className="footer-link-items">
               <h4>Policy</h4>
               <Link to="/">Return Policy</Link>
               <Link to="/TermsofUse&PrivacyPolicy" target="_blank">
@@ -254,8 +291,8 @@ function Footer() {
               </Link>
               <Link to="/">Security</Link>
               <Link to="/">Privacy</Link>
-            </div>
-            <div className="footer-link-items">
+            </Stack>
+            <Stack className="footer-link-items">
               <h4>Categories</h4>
               <Link to="/SearchResult/tag:JEE">JEE Mains</Link>
               <Link to="/SearchResult/tag:Neet">NEET PG</Link>
@@ -263,10 +300,10 @@ function Footer() {
               <Link to="/SearchResult/School">High School</Link>
               <Link to="/SearchResult/Programming">Programming</Link>
               <Link to="/SearchResult/tag:Novel">Novels</Link>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Stack>
       <div className="footer-container3">
         &copy; {Year} BookShlf. All Rights Reserved
       </div>
@@ -282,7 +319,7 @@ function Footer() {
           </Alert>
         </Snackbar>
       </div>
-    </div>
+    </Stack>
   );
-}
+};
 export default Footer;
