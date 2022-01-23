@@ -35,6 +35,7 @@ import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
 import BetaNotify from "./BetaNotify";
+import NotFoundPage from "../Home/NotFoundPage";
 
 const App = () => {
   const [user, setUser] = useContext(UserContext);
@@ -149,7 +150,7 @@ const App = () => {
             <Navbar />
             <Wallet />
           </Route>
-          <Route path="/">
+          <Route path="/" exact>
             <Helmet>
               <title>Home | Bookshlf</title>
               <meta
@@ -163,6 +164,7 @@ const App = () => {
             <Review />
             <Footer />
           </Route>
+          <Route component={NotFoundPage} />
         </Switch>
       </div>
     </Router>
