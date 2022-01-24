@@ -1,11 +1,33 @@
 {
   "short_name": "Bookshlf",
-  "name": "Bookshlf",
+  "name": "Bookshlf | The Bookstore which cares",
+  "description": "Buy and Sell second-hand books at your doorstep",
+  "manifest_version": 1,
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/images/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "/images/smallLogo.png",
+      "sizes": "181x149",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/smallLogoView.png",
+      "sizes": "229x202",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/logo.png",
+      "sizes": "804x149",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/logoView.png",
+      "sizes": "900x232",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
