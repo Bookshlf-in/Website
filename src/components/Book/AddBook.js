@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
 import SellerCommisionChart from "./CommisionChartGrid";
 import "./AddBook.css";

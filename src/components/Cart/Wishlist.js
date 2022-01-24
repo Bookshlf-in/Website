@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
 import { UserContext } from "../../Context/userContext";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 

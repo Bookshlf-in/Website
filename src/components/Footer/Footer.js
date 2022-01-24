@@ -171,6 +171,7 @@ const Footer = () => {
             onClick={handelSubscription}
             variant="contained"
             color="success"
+            disabled={loading}
           >
             Subsribe
           </Button>

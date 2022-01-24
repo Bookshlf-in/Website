@@ -1,6 +1,11 @@
 import { React, useEffect, useContext, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { UserContext } from "../../Context/userContext";
 import axios from "../../axios";
 import "./App.css";
@@ -40,6 +45,7 @@ import NotFoundPage from "../Home/NotFoundPage";
 const App = () => {
   const [user, setUser] = useContext(UserContext);
   const [open, setOpen] = useState(false);
+  const history = useHistory();
   useEffect(() => {
     if (user) {
       axios
@@ -55,6 +61,7 @@ const App = () => {
           setUser(null);
           localStorage.removeItem("bookshlf_user");
           delete axios.defaults.headers.common["Authorization"];
+          history.go(0);
         });
     }
     if (sessionStorage.getItem("bookshlf_beta_notify")) {
@@ -164,7 +171,7 @@ const App = () => {
             <Review />
             <Footer />
           </Route>
-          <Route component={NotFoundPage} />
+          <Route component={NotFoundPage} status={404} />
         </Switch>
       </div>
     </Router>

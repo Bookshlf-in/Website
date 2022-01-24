@@ -1,6 +1,6 @@
 import { React } from "react";
-import { Helmet } from "react-helmet";
-import { makeStyles } from "@mui/styles";
+import { Helmet } from "react-helmet-async";
+import "./About.css";
 
 // Components
 import Box from "@mui/material/Box";
@@ -25,26 +25,13 @@ const FACEBOOK_URL = "https://www.facebook.com/Bookshlf-109479771200918";
 const LINKEDIN_URL = "https://www.linkedin.com/in/bookshlf-by-aman-861073223/";
 const INSTAGRAM_URL = "https://twitter.com/BookshlfA";
 
-const IMR_URL = "/images/AboutBG/aboutbg_1.jpg";
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    padding: "10px",
-    minHeight: "calc(100vh - 48px)",
-    backgroundImage: `url(${IMR_URL})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "norepeat",
-  },
-});
-
 const About = () => {
-  const classes = useStyles();
   const Year = new Date().getFullYear();
   // Opening Links
   const OpenLink = (link) => {
     window.open(link, "_blank").focus();
   };
+
   return (
     <>
       <Helmet>
@@ -54,7 +41,7 @@ const About = () => {
           content="We are a team of students who are enthusiastic developers. We are trying to create a platform for students who cannot afford to buy books due to financial problems."
         />
       </Helmet>
-      <Box className={classes.root}>
+      <Box className="about-bg">
         <Stack
           sx={{ width: "100%", padding: "10px" }}
           direction="column"
@@ -71,13 +58,18 @@ const About = () => {
             variant="h1"
             sx={{
               fontFamily: "PT sans",
-              color: "rgba(0,0,0,0.6)",
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "2px",
               "@media screen and (max-width:600px)": { fontSize: "3em " },
             }}
           >
             BOOKSHLF
           </Typography>
-          <Typography variant="body1" align="center">
+          <Typography
+            variant="body1"
+            align="center"
+            sx={{ color: "rgba(255,255,255,0.9)" }}
+          >
             <strong>E-commerce platform to buy and sell used books</strong>
           </Typography>
           <Typography
@@ -86,7 +78,7 @@ const About = () => {
               maxWidth: 600,
               padding: "20px",
               textAlign: "justify",
-              backgroundColor: "rgba(255,255,255,0.4)",
+              backgroundColor: "rgba(255,255,255,0.6)",
               borderRadius: "10px",
             }}
           >
@@ -99,7 +91,11 @@ const About = () => {
               are always trying to make this platform better.
             </strong>
           </Typography>
-          <Typography variant="h4" align="center">
+          <Typography
+            variant="h4"
+            align="center"
+            sx={{ color: "rgba(255,255,255,0.9)" }}
+          >
             <strong>Reach Us</strong>
           </Typography>
           <Stack

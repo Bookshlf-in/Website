@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";

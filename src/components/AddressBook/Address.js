@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
 import "./Address.css";
 import axios from "../../axios";

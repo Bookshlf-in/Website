@@ -1,6 +1,6 @@
 import React from "react";
 import "./Sitemap.css";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 const routes = [
   { name: "Sell Old Books", path: "/SellerPanel/5" },
   { name: "Search for books", path: "/SearchResult/tag:ALL" },

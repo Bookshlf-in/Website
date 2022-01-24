@@ -26,12 +26,7 @@ const CategoryItem = (props) => {
 const Categories = () => {
   return (
     <Stack className="categories">
-      <Stack
-        justifyContent="center"
-        alignItems="center"
-        direction="row"
-        sx={{ padding: "10px" }}
-      >
+      <Stack justifyContent="center" alignItems="center" direction="row">
         <Typography
           variant="h4"
           sx={{ fontFamily: "Staatliches" }}
@@ -44,9 +39,9 @@ const Categories = () => {
         direction="row"
         justifyContent="space-evenly"
         alignItems="center"
-        className="item-wrapper"
         spacing={1}
         flexWrap="wrap"
+        sx={{ paddingBottom: "10px" }}
       >
         <CategoryItem
           url="/SearchResult/tag:JEE Mains"

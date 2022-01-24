@@ -2,7 +2,7 @@ import { React, useState, useContext, useEffect } from "react";
 import { UserContext } from "../../Context/userContext";
 import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import axios from "../../axios";
 import "./UserProfile.css";
 

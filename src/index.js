@@ -4,13 +4,13 @@ import "./index.css";
 import App from "./components/App/App";
 import reportWebVitals from "./reportWebVitals";
 import { CurrentUserProvider } from "./Context/userContext";
-import { CurrentFormProvider } from "./Context/formContext";
+import { HelmetProvider } from "react-helmet-async";
 ReactDOM.render(
   <React.StrictMode>
     <CurrentUserProvider>
-      <CurrentFormProvider>
+      <HelmetProvider>
         <App />
-      </CurrentFormProvider>
+      </HelmetProvider>
     </CurrentUserProvider>
   </React.StrictMode>,
   document.getElementById("root")

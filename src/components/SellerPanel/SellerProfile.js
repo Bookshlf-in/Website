@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import axios from "../../axios";
 
 // Components
@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Rating from "@mui/material/Rating";
 import Alert from "@mui/material/Alert";
-import Skeleton from "@mui/lab/Skeleton";
+import Skeleton from "@mui/material/Skeleton";
 
 // Icons
 import PersonIcon from "@mui/icons-material/PersonTwoTone";
