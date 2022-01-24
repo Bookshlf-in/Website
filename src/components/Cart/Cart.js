@@ -211,7 +211,7 @@ const Cart = () => {
                   size="small"
                   className={classes.Button}
                   color="secondary"
-                  href="/SearchResult/tag:ALL"
+                  onClick={() => history.push("/SearchResult/tag:ALL")}
                 >
                   Continue Shopping
                 </Button>
@@ -355,7 +355,9 @@ const Cart = () => {
                           endIcon={<NextIcon />}
                           color="primary"
                           size="small"
-                          href={`/BookDetails/${product.bookId}`}
+                          onClick={() =>
+                            history.push(`/BookDetails/${product.bookId}`)
+                          }
                         >
                           More Details
                         </Button>

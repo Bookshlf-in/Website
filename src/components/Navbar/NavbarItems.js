@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useHistory } from "react-router-dom";
 // Components
 import { Button, Stack } from "@mui/material";
 
@@ -21,32 +21,33 @@ const NavButtonStyle = {
 };
 
 const NavbarItems = () => {
+  const history = useHistory();
   return (
     <Stack direction="row" spacing={1} sx={{ ml: 3 }}>
       <Button
         startIcon={<HomeIcon sx={{ height: 15, width: 15 }} />}
-        href="/"
+        onClick={() => history.push("/")}
         sx={NavButtonStyle}
       >
         Home
       </Button>
       <Button
         startIcon={<AllBookIcon sx={{ height: 15, width: 15 }} />}
-        href="/SearchResult/tag:ALL"
+        onClick={() => history.push("/SearchResult/tag:ALL")}
         sx={NavButtonStyle}
       >
         All&nbsp;Books
       </Button>
       <Button
         startIcon={<BookIcon sx={{ height: 15, width: 15 }} />}
-        href="/SellerPanel/5"
+        onClick={() => history.push("/SellerPanel/5")}
         sx={NavButtonStyle}
       >
         Sell&nbsp;Books
       </Button>
       <Button
         startIcon={<BookIcon sx={{ height: 15, width: 15 }} />}
-        href="/SellerPanel/2"
+        onClick={() => history.push("/SellerPanel/2")}
         sx={NavButtonStyle}
       >
         Your&nbsp;Books

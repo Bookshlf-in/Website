@@ -4,17 +4,10 @@ import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // Components
-import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import Avatar from "@mui/material/Avatar";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Alert from "@mui/material/Alert";
+import { Stack, ClickAwayListener, Chip, Avatar, Alert } from "@mui/material";
+import { TextField, MenuItem, Typography, InputAdornment } from "@mui/material";
+import { LinearProgress, CircularProgress } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import MenuItem from "@mui/material/MenuItem";
-import LinearProgress from "@mui/material/LinearProgress";
-import CircularProgress from "@mui/material/CircularProgress";
 
 // Icons
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
@@ -211,6 +204,8 @@ const BookDetails = () => {
                 padding: "10px",
               }}
             >
+              <Chip label={book.sellerName} className={classes.root} />
+              <Chip label={book.sellerId} className={classes.root} />
               <TextField
                 label="Book Title"
                 variant="standard"

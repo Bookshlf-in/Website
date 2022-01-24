@@ -300,7 +300,7 @@ const Login = () => {
           direction="row"
         >
           <Button
-            href="/PasswordRecovery"
+            onClick={() => history.push("/PasswordRecovery")}
             size="small"
             sx={{
               letterSpacing: "1px",
@@ -331,7 +331,7 @@ const Login = () => {
             Login
           </LoadingButton>
           <Button
-            href="/Signup"
+            onClick={() => history.push("/Signup")}
             color="secondary"
             variant="contained"
             className={classes.root}

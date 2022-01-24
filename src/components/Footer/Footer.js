@@ -184,7 +184,7 @@ const Footer = () => {
       >
         <Stack
           sx={{ padding: "10px 0px" }}
-          spacing={1}
+          spacing={0}
           justifyContent={{
             xs: "center",
             sm: "flex-start",
@@ -198,56 +198,61 @@ const Footer = () => {
             lg: "flex-start",
           }}
         >
-          <img src="/images/logo.png" alt="bookhlf.in" width="120px" />
+          <Typography variant="body1" sx={{ color: "white" }}>
+            Contact
+          </Typography>
           <Typography variant="caption" sx={{ color: "white" }}>
             IIIT Lucknow, Ahmamau 226002 UP, India
           </Typography>
-          <Typography variant="caption" sx={{ color: "white" }}>
+          <Typography
+            variant="caption"
+            color="primary"
+            sx={{ cursor: "pointer" }}
+            onClick={() => OpenLink("tel:9792666122")}
+          >
             +91 97926 66122
           </Typography>
-          <Button
-            href="mailto:bookshlf.in@gmail.com "
-            target="_blank"
-            size="small"
-            sx={{
-              fontSize: "12px",
-              color: "white",
-              minWidth: 0,
-              padding: 0,
-              justifyContent: "flex-start",
-            }}
+          <Typography
+            variant="caption"
+            color="primary"
+            onClick={() => OpenLink("mailto:bookshlf.in@gmail.com")}
+            sx={{ cursor: "pointer" }}
           >
             bookshlf.in@gmail.com
-          </Button>
+          </Typography>
           <Stack spacing={1} direction="row">
             <IconButton
               aria-label="facebook"
               onClick={() => OpenLink(FACEBOOK_URL)}
               size="small"
+              color="primary"
             >
-              <FacebookIcon sx={{ color: "white" }} />
+              <FacebookIcon sx={{ height: 16, width: 16 }} />
             </IconButton>
             <IconButton
               size="small"
               aria-label="instagram"
               onClick={() => OpenLink(INSTAGRAM_URL)}
+              color="primary"
             >
-              <InstagramIcon sx={{ color: "white" }} />
+              <InstagramIcon sx={{ height: 16, width: 16 }} />
             </IconButton>
             <IconButton
               size="small"
               aria-label="youtube"
               onClick={() => OpenLink(YOUTUBE_URL)}
+              color="primary"
             >
-              <YouTubeIcon sx={{ color: "white" }} />
+              <YouTubeIcon sx={{ height: 16, width: 16 }} />
             </IconButton>
 
             <IconButton
               size="small"
               aria-label="linkedin"
               onClick={() => OpenLink(LINKEDIN_URL)}
+              color="primary"
             >
-              <LinkedInIcon sx={{ color: "white" }} />
+              <LinkedInIcon sx={{ height: 16, width: 16 }} />
             </IconButton>
           </Stack>
         </Stack>
