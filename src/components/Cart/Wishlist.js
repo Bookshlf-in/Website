@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
@@ -32,6 +33,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Wishlist = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [user, setUser] = useContext(UserContext);
 
@@ -196,7 +198,9 @@ const Wishlist = () => {
                           color="warning"
                           variant="outlined"
                           className={classes.root}
-                          href={`/BookDetails/${item.bookId}`}
+                          onClick={() =>
+                            history.push(`/BookDetails/${item.bookId}`)
+                          }
                         >
                           More Details
                         </Button>
