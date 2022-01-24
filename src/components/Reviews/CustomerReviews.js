@@ -1,17 +1,27 @@
-import { React, useState, useEffect, useContext } from "react";
+import {
+  React,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
 import axios from "../../axios";
 
 // Components
 import { Box, Stack, Collapse, Button, TextField } from "@mui/material";
-import { Typography, Rating, CircularProgress } from "@mui/material";
+import { Typography, Rating, CircularProgress, Slide } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 // Icons
 import StarIcon from "@mui/icons-material/StarRounded";
 import DownIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import UpIcon from "@mui/icons-material/KeyboardArrowUpRounded";
 import UpdateIcon from "@mui/icons-material/FileUploadTwoTone";
+import ActiveIcon from "@mui/icons-material/FiberManualRecordRounded";
+import NotActiveIcon from "@mui/icons-material/FiberManualRecordOutlined";
 
 const responses = [
   "Hated it",
@@ -37,7 +47,10 @@ const Reviews = () => {
   const [updated, setupdated] = useState(false);
 
   // Data States
+  const containerRef = useRef(null);
   const [Reviews, setReviews] = useState([]);
+  const [ReviewIndex, setReviewIndex] = useState(0);
+  const [ReviewLength, setReviewLength] = useState(1);
 
   // Getting Website Reviews
   useEffect(() => {
@@ -47,6 +60,7 @@ const Reviews = () => {
         .then((response) => {
           // console.log(response.data);
           setReviews(response.data);
+          setReviewLength(response.data.length);
           setLoading(false);
         })
         .catch((error) => {
@@ -76,6 +90,68 @@ const Reviews = () => {
         // setupdated(true);
       });
   };
+  // Custom Review Slider
+  const ReviewSlider = (props) => {
+    return (
+      <Slide
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+        direction={"left"}
+        container={props.Ref}
+      >
+        <Box
+          sx={{
+            backgroundColor: "rgba(45, 90, 135,0.3)",
+            height: 180,
+            width: "100%",
+            maxWidth: 300,
+            borderRadius: "5px",
+            border: "1px solid rgba(255,255,255,0.7)",
+          }}
+        >
+          <Stack
+            sx={{ width: "100%", padding: "10px", height: "100%" }}
+            spacing={1}
+            justifyContent="space-between"
+            alignItems="space-between"
+          >
+            <Typography variant="caption" sx={{ color: "yellow" }}>
+              <strong>{Reviews[props.index]?.userName}</strong>
+            </Typography>
+            <Typography
+              variant="caption"
+              align="justify"
+              sx={{ fontSize: "12px", color: "lemonchiffon" }}
+            >
+              <strong>{Reviews[props.index]?.review}</strong>
+            </Typography>
+            <Rating
+              value={Reviews[props.index]?.rating}
+              readOnly
+              emptyIcon={<StarIcon sx={{ opacity: 0.55 }} fontSize="inherit" />}
+              icon={<StarIcon fontSize="inherit" />}
+              size="medium"
+            />
+          </Stack>
+        </Box>
+      </Slide>
+    );
+  };
+
+  // Sliding Right
+  const slideRight = useCallback(() => {
+    setReviewIndex((ReviewIndex + 1) % ReviewLength);
+  }, [ReviewIndex]);
+
+  useEffect(() => {
+    const myTimeout = setTimeout(slideRight, 5000);
+    return () => {
+      clearTimeout(myTimeout);
+    };
+  }, [slideRight]);
+
   return (
     <Stack>
       <Stack
@@ -95,11 +171,12 @@ const Reviews = () => {
           </strong>
         </Typography>
         <Stack
-          direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+          direction="column"
           justifyContent="space-evenly"
           alignItems="center"
           spacing={1}
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", overflowX: "hidden" }}
+          ref={containerRef}
         >
           {Loading ? (
             <Stack
@@ -112,44 +189,22 @@ const Reviews = () => {
               <CircularProgress size={15} color="inherit" />
             </Stack>
           ) : (
-            Reviews.map((review) => (
-              <Box
-                sx={{
-                  backgroundColor: "rgba(45, 90, 135,0.3)",
-                  height: 120,
-                  width: "100%",
-                  borderRadius: "5px",
-                }}
-                key={review._id}
-              >
-                <Stack
-                  sx={{ width: "100%", padding: "10px", height: "100%" }}
-                  spacing={1}
-                  justifyContent="space-between"
-                  alignItems="space-between"
-                >
-                  <Typography variant="caption">
-                    <strong>{review.userName}</strong>
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    align="justify"
-                    sx={{ fontSize: "10px" }}
-                  >
-                    <strong>{review.review}</strong>
-                  </Typography>
-                  <Rating
-                    value={review.rating}
-                    readOnly
-                    emptyIcon={
-                      <StarIcon sx={{ opacity: 0.55 }} fontSize="inherit" />
-                    }
-                    icon={<StarIcon fontSize="inherit" />}
-                    size="medium"
-                  />
-                </Stack>
-              </Box>
-            ))
+            <>
+              <ReviewSlider index={ReviewIndex} Ref={containerRef.current} />
+              <Stack direction="row" spacing={1}>
+                {Reviews.map((review, i) => (
+                  <IconButton key={i}>
+                    {ReviewIndex === i ? (
+                      <ActiveIcon
+                        sx={{ height: 12, width: 12, color: "whitesmoke" }}
+                      />
+                    ) : (
+                      <NotActiveIcon sx={{ height: 10, width: 10 }} />
+                    )}
+                  </IconButton>
+                ))}
+              </Stack>
+            </>
           )}
         </Stack>
         <Button

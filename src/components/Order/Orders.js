@@ -131,7 +131,7 @@ const Orders = () => {
     {
       field: "bookTotal",
       headerName: "Book Price",
-      minWidth: 100,
+      minWidth: 150,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -146,13 +146,14 @@ const Orders = () => {
               variant="outlined"
             />
             <Stack direction="row" spacing={2} alignItems="center">
-              <Typography sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}>
-                QTY
+              <Typography sx={{ fontSize: "10px", whiteSpace: "pre-wrap" }}>
+                Your Earnings
               </Typography>
               <Chip
                 label={cellValue.value[1]}
                 size="small"
                 className={classes.root}
+                sx={{ fontSize: "10px", whiteSpace: "pre-wrap" }}
               />
             </Stack>
           </Stack>
@@ -162,7 +163,7 @@ const Orders = () => {
     {
       field: "bookDetails",
       headerName: "Book Details",
-      minWidth: 200,
+      minWidth: 240,
       flex: 2,
       sortable: false,
       renderCell: (cellValue) => {
@@ -189,7 +190,7 @@ const Orders = () => {
       field: "bookStatus",
       headerName: "Book Status",
       minWidth: 150,
-      flex: 2,
+      flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
         return (
@@ -226,7 +227,7 @@ const Orders = () => {
       field: "bookUpdate",
       headerName: "Update Book",
       minWidth: 150,
-      flex: 2,
+      flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
         return filter === 1 ? (
@@ -260,8 +261,8 @@ const Orders = () => {
     },
     {
       field: "bookDelete",
-      headerName: "Delete Book",
-      minWidth: 100,
+      headerName: "Delete",
+      minWidth: 70,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -285,7 +286,7 @@ const Orders = () => {
     return {
       id: order._id,
       orderPhoto: [order.photos[0], order._id],
-      bookTotal: [order.price, order.qty],
+      bookTotal: [order.price, "Adding Soon"],
       bookDetails: [order.title, order.description],
       bookStatus: order.status,
       bookUpdate: [order._id, order.adminMessage],
