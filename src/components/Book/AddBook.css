@@ -1,10 +1,6 @@
-.add-book-form-lf,
-.add-book-form-rt {
-  padding: 10px;
-}
 .add-book-form-lf fieldset,
 .add-book-form-rt fieldset {
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 5px;
   padding: 12px 15px;
 }
 .add-book-form-rt {
@@ -25,7 +21,8 @@
 }
 .uploaded-image-item {
   position: relative;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
 }
 .uploaded-image-item .image-delete {
   position: absolute;
@@ -35,15 +32,16 @@
   cursor: pointer;
 }
 .uploaded-image-item:hover {
-  border: 2px solid orangered;
+  border: 1px solid orangered;
 }
 .add-book-form-lf .searchTagresult {
   position: absolute;
-  left: 24px;
+  left: 36px;
   top: 42px;
   background-color: rgba(255, 255, 255, 0.95);
   z-index: 200;
   max-height: 200px;
+  width: calc(100% - 36px);
   overflow-y: auto;
   box-shadow: 6px 3px 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
