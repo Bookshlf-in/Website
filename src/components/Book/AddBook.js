@@ -11,7 +11,7 @@ import axios from "../../axios";
 import { Grid, Stack, Collapse, Popover, Backdrop } from "@mui/material";
 import { Button, Checkbox, TextField, IconButton } from "@mui/material";
 import { Alert, CircularProgress, ClickAwayListener } from "@mui/material";
-import { Chip, Tooltip, InputAdornment, Divider, Avatar } from "@mui/material";
+import { Chip, Tooltip, InputAdornment, Avatar } from "@mui/material";
 import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import { DialogContentText, DialogTitle, Typography } from "@mui/material";
 import { InputLabel, FormControl, Select, MenuItem } from "@mui/material";
@@ -24,7 +24,6 @@ import CloseIcon from "@mui/icons-material/ArrowDropUpRounded";
 import OpenIcon from "@mui/icons-material/ArrowDropDownRounded";
 import BookIcon from "@mui/icons-material/MenuBookRounded";
 import BookDescIcon from "@mui/icons-material/DescriptionRounded";
-// import BookQtyIcon from "@mui/icons-material/InboxRounded";
 import AddressIcon from "@mui/icons-material/ContactsRounded";
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
 import CameraIcon from "@mui/icons-material/AddAPhotoRounded";
@@ -46,30 +45,36 @@ const useStyles = makeStyles(() => ({
     },
     "& p": {
       fontFamily: "PT sans !important",
+      fontSize: "10px !important",
     },
     "& input": {
       fontFamily: "PT sans !important",
+      fontSize: "12px !important",
     },
     "& textarea": {
       fontFamily: "PT sans !important",
+      fontSize: "12px !important",
     },
   },
   select: {
     "& label": {
       fontFamily: "PT sans !important",
-      paddingLeft: "5px",
+      fontSize: "14px",
+      left: "3px",
+      top: "1px",
     },
     "& p": {
       fontFamily: "PT sans !important",
+      fontSize: "10px !important",
     },
     "& div": {
       fontFamily: "PT sans !important",
-      fontSize: "12px !important",
+      fontSize: "10px !important",
     },
   },
   adrMenu: {
     fontFamily: "PT sans !important",
-    fontSize: "12px !important",
+    fontSize: "10px !important",
   },
 }));
 
@@ -78,7 +83,6 @@ const AddBook = (props) => {
   const history = useHistory();
 
   // functionality states
-
   const [checked, setChecked] = useState(false);
   const [collapse, setcollapse] = useState(false);
   const [sending, setSending] = useState(false);
@@ -88,6 +92,8 @@ const AddBook = (props) => {
   const [openTitleMenu, setOpenTitleMenu] = useState(false);
   const [openpriceChart, setopenpriceChart] = useState(false);
   const [openPop, setOpenPop] = useState(null);
+  const [errorField, setErrorField] = useState(0);
+  const [earnLoad, setEarnLoad] = useState(0);
   const [alert, setalert] = useState({
     show: false,
     type: "info",
@@ -98,7 +104,6 @@ const AddBook = (props) => {
   const [bookName, setbookName] = useState("");
   const [bookISBN, setbookISBN] = useState("");
   const [SP, setSP] = useState("");
-  const [sellingPrice, setsellingPrice] = useState("");
   const [earn, setearn] = useState("");
   const [mrp, setMrp] = useState("");
   const [bookDesc, setbookDesc] = useState("");
@@ -129,50 +134,16 @@ const AddBook = (props) => {
     setReq(null);
   });
 
-  // Checking if price string is currect
-  const CheckIfPriceFormat = (priceString) => {
-    for (let i = 0; i < priceString.length; i++) {
-      if (
-        ("0" <= priceString[i] && priceString[i] <= "9") ||
-        priceString[i] === ","
-      ) {
-        continue;
-      } else {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  // Price Formatting
-  const FormatPrice = (priceString) => {
-    var FormattedpriceString = "";
-    if (CheckIfPriceFormat(priceString)) {
-      priceString = priceString.replaceAll(",", "");
-      setsellingPrice(Number(priceString));
-      for (let i = priceString.length - 1; i >= 0; i -= 3) {
-        for (let j = i; j >= 0 && j > i - 3; j--) {
-          FormattedpriceString = priceString[j] + FormattedpriceString;
-          if (j === i - 2 && j > 0) {
-            FormattedpriceString = "," + FormattedpriceString;
-          }
-        }
-      }
-    } else {
-      FormattedpriceString = SP;
-    }
-    return FormattedpriceString;
-  };
-
   // calculating seller Earnings
   const handelCalculateEarnings = (priceString) => {
-    if (CheckIfPriceFormat(priceString)) {
-      priceString = priceString.replaceAll(",", "");
+    if (!isNaN(priceString) && Number(priceString) >= 100) {
       const fetchdata = async () => {
+        setEarnLoad(true);
         axios
-          .get(`/getSellerEarning?price=${Number(priceString)}`)
+          .get(`/getSellerEarning?price=${priceString}`)
           .then((response) => {
             setearn(response.data.sellerEarning);
+            setEarnLoad(false);
           })
           .catch((error) => {
             setearn("");
@@ -180,6 +151,8 @@ const AddBook = (props) => {
           });
       };
       fetchdata();
+    } else {
+      setearn("");
     }
   };
 
@@ -270,7 +243,7 @@ const AddBook = (props) => {
       .post("/addBook", {
         title: bookName,
         MRP: mrp,
-        price: sellingPrice,
+        price: SP,
         editionYear: Edition,
         author: author,
         ISBN: bookISBN,
@@ -359,75 +332,58 @@ const AddBook = (props) => {
         // Agreed to Terms and Conditions
         if (validateSize()) {
           // Validating Image Sizes
-          if (sellingPrice >= 100) {
-            // Selling Price of Book Should be Atleast 100
-            setTimeout(() => {
-              setpanic(true);
-            }, 10000);
-            const urls = await uploadImages(Image);
-            if (req) {
-              handelBookSubmitRequest(urls);
+          if (Adr !== "") {
+            // checking if Address is selected
+            if (bookName !== "") {
+              if (!isNaN(SP) && Number(SP) >= 100) {
+                // Selling Price of Book Should be Atleast 100
+                setTimeout(() => {
+                  setpanic(true);
+                }, 10000);
+                const urls = await uploadImages(Image);
+                if (req) {
+                  handelBookSubmitRequest(urls);
+                }
+              } else {
+                ShowError("Enter Valid Selling Price", 2);
+              }
+            } else {
+              ShowError("Please Enter Valid Book Name", 1);
             }
           } else {
-            setSending((prev) => !prev);
-            setalert({
-              show: true,
-              msg: "Selling Price Cannot be Less than 100",
-              type: "error",
-            });
-            setTimeout(() => {
-              setalert({
-                show: false,
-                msg: "",
-                type: "info",
-              });
-            }, 6000);
+            ShowError("Please Select pickup Address", 3);
           }
         } else {
-          setSending((prev) => !prev);
-          setalert({
-            show: true,
-            msg: "Images Should Not Exceed 5MB Size",
-            type: "error",
-          });
-          setTimeout(() => {
-            setalert({
-              show: false,
-              msg: "",
-              type: "info",
-            });
-          }, 6000);
+          ShowError("Images Should Not Exceed 5MB Size", 5);
         }
       } else {
-        setSending((prev) => !prev);
-        setalert({
-          show: true,
-          msg: "Please Check the Box",
-          type: "error",
-        });
-        setTimeout(() => {
-          setalert({
-            show: false,
-            msg: "",
-            type: "info",
-          });
-        }, 6000);
+        ShowError("Please Check the Box", 4);
       }
     } else {
-      setSending((prev) => !prev);
-      setalert({
-        show: true,
-        msg: "Please Upload At Least 3 Images Of Book SET but not more than 15.",
-        type: "error",
-      });
-      setTimeout(() => {
-        setalert({
-          show: false,
-          msg: "",
-          type: "info",
-        });
-      }, 6000);
+      ShowError(
+        "Please upload at least 3 images of BOOK-SET but not more than 15.",
+        5
+      );
     }
+  };
+
+  // Const handel Add Book Form preChecks Errors
+  const ShowError = (msg, i) => {
+    setSending((prev) => !prev);
+    setErrorField(i);
+    setalert({
+      show: true,
+      msg: msg,
+      type: "error",
+    });
+    setTimeout(() => {
+      setErrorField(0);
+      setalert({
+        show: false,
+        msg: "",
+        type: "info",
+      });
+    }, 6000);
   };
 
   // const Address Popover Component
@@ -699,15 +655,14 @@ const AddBook = (props) => {
         >
           Add Address
         </LoadingButton>
-        {alert.show ? (
-          <Alert
-            severity={alert.type}
-            className={classes.root}
-            sx={{ fontFamily: "PT sans" }}
-          >
-            {alert.msg}
-          </Alert>
-        ) : null}
+
+        <Alert
+          severity={alert.type}
+          className={classes.root}
+          sx={{ fontFamily: "PT sans", visibility: alert.show ? 1 : 0 }}
+        >
+          {alert.msg}
+        </Alert>
       </Stack>
     );
   };
@@ -718,7 +673,7 @@ const AddBook = (props) => {
         <title>Add Book | Bookshlf</title>
         <meta name="description" content="Add Your Book" />
       </Helmet>
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={1} justifyContent="center">
         <Grid item xs={12} lg={8} md={12} sm={12}>
           <form className="add-book-form-lf">
             <fieldset>
@@ -733,19 +688,16 @@ const AddBook = (props) => {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <BookIcon />
+                          <BookIcon sx={{ height: 16, weight: 16 }} />
                         </InputAdornment>
                       ),
                       endAdornment: (
                         <InputAdornment position="end">
                           {titleFieldChanges ? (
                             <CircularProgress
-                              style={{
-                                color: "rgba(0,0,0,0.6)",
-                                height: "15px",
-                                width: "15px",
-                                marginRight: "15px",
-                              }}
+                              size={16}
+                              color="inherit"
+                              sx={{ mr: 1 }}
                             />
                           ) : (
                             <></>
@@ -753,7 +705,7 @@ const AddBook = (props) => {
                         </InputAdornment>
                       ),
                     }}
-                    variant="standard"
+                    variant="filled"
                     value={bookName}
                     fullWidth
                     onChange={(e) => handelBookTitleSearch(e)}
@@ -763,6 +715,9 @@ const AddBook = (props) => {
                         handelTitleAdd(e.target.value);
                       }
                     }}
+                    size="small"
+                    error={errorField === 1}
+                    focused={errorField === 1}
                   />
 
                   <ClickAwayListener
@@ -795,21 +750,21 @@ const AddBook = (props) => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <BookDescIcon />
+                        <BookDescIcon sx={{ height: 16, weight: 16 }} />
                       </InputAdornment>
                     ),
                   }}
                   variant="standard"
                   multiline
-                  maxRows={3}
+                  rows={2}
                   helperText="Your Experience About the Book"
                   value={bookDesc}
                   onChange={(e) => setbookDesc(e.target.value)}
+                  size="small"
                 />
                 <Stack
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
-                  divider={<Divider orientation="vertical" flexItem />}
-                  spacing={2}
+                  spacing={1}
                   justifyContent="space-between"
                 >
                   {/* <TextField
@@ -824,7 +779,7 @@ const AddBook = (props) => {
                         </InputAdornment>
                       ),
                     }}
-                    variant="standard"
+                    variant="filled"
                     value={Qnty}
                     // onChange={(e) => setQnty(e.target.value)}
                     name="book-qty-field"
@@ -835,23 +790,25 @@ const AddBook = (props) => {
                     className={classes.root}
                     id="add-book-textfield"
                     label="Book Selling Price"
-                    helperText="Min Price Should be 100"
+                    helperText="Min Price Should be 100. Numbers Only"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <RupeeIcon />
+                          <RupeeIcon sx={{ height: 16, width: 16 }} />
                         </InputAdornment>
                       ),
                     }}
-                    variant="standard"
+                    variant="filled"
                     fullWidth
                     value={SP}
                     onChange={(e) => {
-                      setSP(FormatPrice(e.target.value));
+                      setSP(e.target.value);
                       handelCalculateEarnings(e.target.value);
                     }}
                     name="selling-price-field"
                     autoComplete="off"
+                    size="small"
+                    error={errorField === 2}
                   />
                   <TextField
                     className={classes.root}
@@ -861,55 +818,62 @@ const AddBook = (props) => {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <RupeeIcon />
+                          {earnLoad ? (
+                            <CircularProgress color="inherit" size={16} />
+                          ) : (
+                            <RupeeIcon
+                              color="success"
+                              sx={{ height: 16, width: 16 }}
+                            />
+                          )}
                         </InputAdornment>
                       ),
                       endAdornment: (
                         <InputAdornment position="end">
                           <HelpIcon
-                            style={{
+                            sx={{
                               cursor: "pointer",
-                              color: "yellowgreen",
                             }}
                             onClick={() => {
                               setopenpriceChart(true);
                             }}
+                            color="info"
                           />
                         </InputAdornment>
                       ),
                       readOnly: true,
                     }}
                     fullWidth
-                    variant="standard"
+                    variant="filled"
                     value={earn}
+                    color="success"
+                    focused={Boolean(earn)}
+                    size="small"
                   />
                   {openpriceChart ? (
                     <Dialog
                       open={openpriceChart}
                       onClose={() => setopenpriceChart(false)}
-                      aria-labelledby="alert-dialog-title"
-                      aria-describedby="alert-dialog-description"
                     >
                       <DialogTitle
-                        id="alert-dialog-title"
-                        style={{ fontFamily: "pt sans", fontSize: "16px" }}
+                        sx={{
+                          fontFamily: "pt sans",
+                          fontSize: "12px",
+                          padding: "10px",
+                        }}
                       >
                         {"Detailed Chart for Seller Earnings & Commission"}
                       </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText
-                          id="alert-dialog-description"
-                          sx={{ height: 400 }}
-                        >
-                          <SellerCommisionChart grid={props.commisionChart} />
-                        </DialogContentText>
+                      <DialogContent sx={{ height: 400, padding: "0px 10px" }}>
+                        <SellerCommisionChart grid={props.commisionChart} />
                       </DialogContent>
                       <DialogActions>
                         <Button
                           onClick={() => setopenpriceChart(false)}
-                          variant="contained"
+                          variant="outlined"
                           color="primary"
                           style={{ fontFamily: "pt sans", fontSize: "12px" }}
+                          size="small"
                         >
                           close
                         </Button>
@@ -920,6 +884,8 @@ const AddBook = (props) => {
                 <TextField
                   className={classes.select}
                   select
+                  error={errorField === 3}
+                  size="small"
                   label="Pickup Address"
                   value={Adr}
                   onChange={(e) => {
@@ -933,7 +899,7 @@ const AddBook = (props) => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <AddressIcon />
+                        <AddressIcon sx={{ height: 16, width: 16 }} />
                       </InputAdornment>
                     ),
                   }}
@@ -988,19 +954,16 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <TagIcon />
+                            <TagIcon sx={{ height: 16, width: 16 }} />
                           </InputAdornment>
                         ),
                         endAdornment: (
                           <InputAdornment position="end">
                             {tagFieldChanges ? (
                               <CircularProgress
-                                style={{
-                                  color: "rgba(0,0,0,0.6)",
-                                  height: "15px",
-                                  width: "15px",
-                                  marginRight: "15px",
-                                }}
+                                sx={{ mr: 1 }}
+                                size={16}
+                                color="inherit"
                               />
                             ) : (
                               <></>
@@ -1008,7 +971,7 @@ const AddBook = (props) => {
                           </InputAdornment>
                         ),
                       }}
-                      variant="standard"
+                      variant="filled"
                       value={tag}
                       onChange={(e) => handelTagSearch(e)}
                       helperText="Press enter key to add the Tag"
@@ -1020,6 +983,7 @@ const AddBook = (props) => {
                       }}
                       autoComplete="false"
                       sx={{ minWidth: 200 }}
+                      size="small"
                     />
                     <ClickAwayListener
                       onClickAway={() => setOpenTagMenu(false)}
@@ -1082,20 +1046,20 @@ const AddBook = (props) => {
                         type="file"
                         style={{ display: "none" }}
                         onChange={(e) => {
-                          handelbookAdd(e, false);
+                          handelbookAdd(e, true);
                         }}
                         multiple
                       />
                       <IconButton
-                        color="primary"
+                        color={errorField === 5 ? "error" : "primary"}
                         aria-label="upload picture"
                         component="span"
                       >
                         <CameraIcon />
                       </IconButton>
                     </label>
-                    <Alert severity="info">
-                      Please Upload Atleast 3 Clear Images of Book SET
+                    <Alert severity={errorField === 5 ? "error" : "info"}>
+                      Please Upload Atleast 3 Clear Images of BOOK-SET
                     </Alert>
                   </div>
                   <Stack
@@ -1121,8 +1085,8 @@ const AddBook = (props) => {
                         <Avatar
                           alt={file.name}
                           src={URL.createObjectURL(file)}
-                          sx={{ width: 150, height: 150 }}
-                          variant="square"
+                          sx={{ width: 120, height: 120 }}
+                          variant="rounded"
                         />
                       </div>
                     ))}
@@ -1139,7 +1103,7 @@ const AddBook = (props) => {
                           multiple
                         />
                         <IconButton
-                          color="primary"
+                          color={errorField === 5 ? "error" : "primary"}
                           aria-label="upload picture"
                           component="span"
                         >
@@ -1163,12 +1127,12 @@ const AddBook = (props) => {
           >
             <Button
               fullWidth
-              variant="contained"
+              variant="outlined"
               color="secondary"
               endIcon={collapse ? <CloseIcon /> : <OpenIcon />}
               onClick={() => setcollapse(!collapse)}
               sx={{
-                marginTop: "22px",
+                marginTop: "12px",
                 fontFamily: "PT sans",
                 fontSize: "12px",
                 letterSpacing: "1px",
@@ -1181,7 +1145,7 @@ const AddBook = (props) => {
           <Collapse in={collapse}>
             <form className="add-book-form-rt">
               <fieldset>
-                <Stack spacing={2}>
+                <Stack spacing={1}>
                   <Stack
                     direction={{
                       xs: "column",
@@ -1189,8 +1153,7 @@ const AddBook = (props) => {
                       lg: "row",
                       md: "row",
                     }}
-                    divider={<Divider orientation="vertical" flexItem />}
-                    spacing={2}
+                    spacing={1}
                     justifyContent="space-evenly"
                   >
                     <TextField
@@ -1200,13 +1163,14 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <RupeeIcon />
+                            <RupeeIcon sx={{ height: 16, weight: 16 }} />
                           </InputAdornment>
                         ),
                       }}
-                      variant="standard"
+                      variant="filled"
                       value={mrp}
                       onChange={(e) => setMrp(e.target.value)}
+                      size="small"
                     />
                     <TextField
                       className={classes.root}
@@ -1215,13 +1179,14 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <EditionIcon />
+                            <EditionIcon sx={{ height: 16, weight: 16 }} />
                           </InputAdornment>
                         ),
                       }}
-                      variant="standard"
+                      variant="filled"
                       value={Edition}
                       onChange={(e) => setEdition(e.target.value)}
+                      size="small"
                     />
                   </Stack>
 
@@ -1232,8 +1197,7 @@ const AddBook = (props) => {
                       lg: "row",
                       md: "row",
                     }}
-                    divider={<Divider orientation="vertical" flexItem />}
-                    spacing={2}
+                    spacing={1}
                     justifyContent="space-evenly"
                   >
                     <TextField
@@ -1243,13 +1207,14 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <AuthorIcon />
+                            <AuthorIcon sx={{ height: 16, weight: 16 }} />
                           </InputAdornment>
                         ),
                       }}
-                      variant="standard"
+                      variant="filled"
                       value={author}
                       onChange={(e) => setAuthor(e.target.value)}
+                      size="small"
                     />
                     <TextField
                       className={classes.root}
@@ -1258,13 +1223,14 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <WeightIcon />
+                            <WeightIcon sx={{ height: 16, weight: 16 }} />
                           </InputAdornment>
                         ),
                       }}
-                      variant="standard"
+                      variant="filled"
                       value={Weight}
                       onChange={(e) => setWeight(e.target.value)}
+                      size="small"
                     />
                   </Stack>
 
@@ -1275,8 +1241,7 @@ const AddBook = (props) => {
                       lg: "row",
                       md: "row",
                     }}
-                    divider={<Divider orientation="vertical" flexItem />}
-                    spacing={2}
+                    spacing={1}
                     justifyContent="space-evenly"
                   >
                     <TextField
@@ -1286,13 +1251,14 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <LanguageIcon />
+                            <LanguageIcon sx={{ height: 16, weight: 16 }} />
                           </InputAdornment>
                         ),
                       }}
-                      variant="standard"
+                      variant="filled"
                       value={lang}
                       onChange={(e) => setlang(e.target.value)}
+                      size="small"
                     />
                     <TextField
                       className={classes.root}
@@ -1301,13 +1267,14 @@ const AddBook = (props) => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <ISBNIcon />
+                            <ISBNIcon sx={{ height: 16, weight: 16 }} />
                           </InputAdornment>
                         ),
                       }}
-                      variant="standard"
+                      variant="filled"
                       value={bookISBN}
                       onChange={(e) => setbookISBN(e.target.value)}
+                      size="small"
                     />
                   </Stack>
                 </Stack>
@@ -1328,25 +1295,33 @@ const AddBook = (props) => {
             flexDirection: "column",
           }}
         >
-          {alert.show ? <Alert severity={alert.type}>{alert.msg}</Alert> : null}
-          <div>
+          {alert.show ? (
+            <Alert severity={alert.type} size="small">
+              <Typography variant="caption" className={classes.root}>
+                {alert.msg}
+              </Typography>
+            </Alert>
+          ) : null}
+          <Stack direction="row" justifyContent="center" alignItems="center">
             <Checkbox
               checked={checked}
               onChange={() => {
                 setChecked(!checked);
               }}
-              inputProps={{ "aria-label": "controlled" }}
+              size="small"
             />
             <Link
               style={{ fontFamily: "pt sans" }}
               to={`/TermsofUse&PrivacyPolicy`}
               target="_blank"
             >
-              I agree to Terms & Conditions
+              <Typography variant="caption">
+                <strong>I Agree to Terms & Conditions</strong>
+              </Typography>
             </Link>
-          </div>
+          </Stack>
         </Grid>
-        <Grid item xs={12} lg={4} md={4} sm={4}>
+        <Grid item xs={12} lg={2} md={3} sm={4}>
           <LoadingButton
             onClick={uploadBook}
             endIcon={<SendIcon />}
@@ -1355,13 +1330,18 @@ const AddBook = (props) => {
             variant="contained"
             className={classes.root}
             fullWidth
+            size="small"
           >
             {sending ? "Submitting ..." : "Submit For Review"}
           </LoadingButton>
         </Grid>
       </Grid>
       <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: "rgba(0,0,0,0.9)",
+        }}
         open={sending}
       >
         <Stack spacing={2} sx={{ padding: "10px" }}>
@@ -1380,15 +1360,15 @@ const AddBook = (props) => {
           </Typography>
           {panic ? (
             <Typography
-              variant="body2"
+              variant="caption"
               className={classes.root}
               color="error"
-              sx={{ maxWidth: 300 }}
               align="justify"
+              sx={{ maxWidth: 350 }}
             >
               Please don't panic, It usually takes time. Your Request is being
-              processed correctly. Kindly don't Close or Change or reload
-              browser window otherwise request will get cancelled.
+              processed correctly. Kindly don't Close, Change, Reload browser
+              window otherwise request will get Cancelled.
             </Typography>
           ) : null}
         </Stack>

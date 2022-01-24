@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles(() => ({
   root: {
     fontFamily: "PT sans",
-    width: 320,
+    width: 240,
     "& p": {
       fontFamily: "PT sans !important",
       fontSize: "10px",
@@ -13,6 +13,18 @@ const useStyles = makeStyles(() => ({
     "& div": {
       fontFamily: "PT sans !important",
       fontSize: "9px",
+    },
+    "& .MuiDataGrid-columnHeader": {
+      padding: " 0px 6px",
+    },
+    "& .MuiDataGrid-columnHeaderTitleContainer": {
+      padding: "0px",
+    },
+    "& .MuiDataGrid-footerContainer": {
+      minHeight: 0,
+    },
+    "& .MuiTablePagination-toolbar": {
+      minHeight: 0,
     },
   },
 }));
@@ -22,22 +34,19 @@ const CommisionChartGrid = (props) => {
     {
       field: "priceLimit",
       headerName: "Price Limit",
-      minWidth: 80,
-      flex: 1,
+      width: 62,
       sortable: false,
     },
     {
       field: "percentageCommission",
       headerName: "Commission (%)",
-      minWidth: 80,
-      flex: 3,
+      width: 78,
       sortable: false,
     },
     {
       field: "fixedCommission",
       headerName: "Commission (Fixed)",
-      minWidth: 80,
-      flex: 3,
+      width: 90,
       sortable: false,
     },
   ];
@@ -59,6 +68,7 @@ const CommisionChartGrid = (props) => {
       disableSelectionOnClick
       disableColumnMenu
       density="compact"
+      rowsPerPageOptions={[10]}
     />
   );
 };
