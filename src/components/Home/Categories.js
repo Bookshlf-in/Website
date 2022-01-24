@@ -7,7 +7,7 @@ import { Stack, Avatar, Typography } from "@mui/material";
 
 const CategoryItem = (props) => {
   return (
-    <Link to={props.url} target="_blank" className="item">
+    <Link to={props.url} className="item">
       <Stack justifyContent="center" alignItems="center">
         <Avatar
           src={props.imgUrl}
