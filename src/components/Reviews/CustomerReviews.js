@@ -143,7 +143,6 @@ const Reviews = () => {
   // Sliding Right
   const slideRight = useCallback(() => {
     setReviewIndex((ReviewIndex + 1) % ReviewLength);
-    console.log(ReviewIndex);
   }, [ReviewIndex]);
 
   useEffect(() => {
