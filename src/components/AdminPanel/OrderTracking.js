@@ -77,6 +77,7 @@ const OrderTracking = () => {
   const [next, setnext] = useState(false);
   const [cancelLoad, setcancelLoad] = useState(false);
   const [paid, setpaid] = useState(false);
+  const [paidAmt, setPaidAmt] = useState(0);
   const [trackLink, settrackLink] = useState("");
   const [payload, setpayload] = useState(false);
 
@@ -90,9 +91,14 @@ const OrderTracking = () => {
           setorder(response.data);
           setpaid(response.data.isSellerPaid);
           settrackLink(response.data?.externalTrackingLink);
-          console.log(response.data);
+          // console.log(response.data);
           setActiveStep(Math.round(response.data.progress / 25));
-          setload(true);
+          axios
+            .get(`/getSellerEarning?price=${Number(response.data.price)}`)
+            .then((earnings) => {
+              setload(true);
+              setPaidAmt(earnings.data.sellerEarning);
+            });
         })
         .catch((error) => {});
     };
@@ -109,7 +115,7 @@ const OrderTracking = () => {
         setcancelLoad(false);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
   };
 
@@ -202,7 +208,7 @@ const OrderTracking = () => {
         setpaid(true);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
   };
 
@@ -216,11 +222,11 @@ const OrderTracking = () => {
       })
       .then((response) => {
         setTrackLoad(false);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         setTrackLoad(false);
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
   };
   return (
@@ -793,7 +799,7 @@ const OrderTracking = () => {
               onClick={sendSellerPay}
               disabled={paid}
             >
-              {paid ? "Paid To Seller" : "Send Payment to Seller"}
+              {paid ? "Paid To Seller" : "Send Payment to Seller"} ({paidAmt})
             </LoadingButton>
             {paid ? (
               <Typography variant="body2" className={classes.root}>
@@ -809,11 +815,3 @@ const OrderTracking = () => {
   );
 };
 export default OrderTracking;
-
-/*
-expectedDeliveryDate: "2022-01-03T15:47:14.978Z"
-isSellerPaid: false
-progress: 0
-status: ['Order placed']
-weightInGrams: 2400
-*/

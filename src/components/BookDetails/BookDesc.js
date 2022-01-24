@@ -225,6 +225,7 @@ const BookDesc = (props) => {
         alignItems="center"
         className="book-details-tag-stack"
         direction="row"
+        flexWrap="wrap"
       >
         {book.tags.map((tag, index) => (
           <Chip

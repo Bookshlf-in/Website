@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import { AddFormContext } from "../../Context/formContext";
 import { makeStyles } from "@mui/styles";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import axios from "../../axios";
 import * as EmailValidator from "email-validator";
 import "./Login.css";

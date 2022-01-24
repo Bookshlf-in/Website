@@ -322,13 +322,13 @@ const Wallet = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setwithdrawLoad(false);
         setwithdrawRequests(response.data.data);
         settotalPages(response.data.totalPages);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
         setwithdrawLoad(false);
       });
   };
@@ -378,9 +378,6 @@ const Wallet = () => {
   const MakeMarkRequest = () => {
     setopenDialog(false);
     if (markLoad) {
-      console.log(rejectDialog.id);
-      console.log(txnNumber);
-      console.log(rejectMsg);
       axios
         .post("/admin-withdrawRequestMarkComplete", {
           requestId: rejectDialog.id,
@@ -404,7 +401,7 @@ const Wallet = () => {
           }, 5000);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          // console.log(error.response.data);
           setmarkLoad(false);
         });
     } else {
@@ -430,7 +427,7 @@ const Wallet = () => {
           }, 5000);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          // console.log(error.response.data);
           setcancelLoad(true);
         });
     }
@@ -448,7 +445,7 @@ const Wallet = () => {
       .then((response) => {
         setsellerLoad(false);
         setsellerTransactionList(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         setsellerLoad(false);
@@ -552,6 +549,7 @@ const Wallet = () => {
             hideFooter
             className={classes.root}
             loading={withdrawLoad}
+            rowsPerPageOptions={[3, 5, 10]}
           />
         </Stack>
       </Stack>
@@ -835,6 +833,7 @@ const Wallet = () => {
           rowBuffer={5}
           className={classes.root}
           loading={sellerLoad}
+          rowsPerPageOptions={[5]}
         />
       </Stack>
 

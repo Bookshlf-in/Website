@@ -62,7 +62,7 @@ const Sellers = () => {
     axios
       .get(`/admin-getSellerList?page=${pageNo}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setsellersload(false);
         settotalPages(response.data.totalPages);
         setseller(response.data.data);

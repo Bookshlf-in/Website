@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import axios from "../../axios";
 import "./Contact.css";
 

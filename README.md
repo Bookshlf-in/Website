@@ -128,7 +128,6 @@ git merge dev
 
 ```
 REACT_APP_BOOKSHLF=https://bookshlf.herokuapp.com/
-REACT_APP_BOOKSHLF_STORAGE=bookshlf_user
 REACT_APP_NODE_ENV=development
 ```
 

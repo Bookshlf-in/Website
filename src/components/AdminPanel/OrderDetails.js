@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import { makeStyles } from "@mui/styles";
+import { useHistory } from "react-router-dom";
 import axios from "../../axios";
 
 // components
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GetOrderDetails = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   // functionality States
   const [orderLoad, setorderLoad] = useState(false);
@@ -180,8 +182,7 @@ const GetOrderDetails = () => {
           <Button
             className={classes.root}
             size="small"
-            href={`/AdminTrack/${link.value}`}
-            target="_blank"
+            onClick={() => history.push(`/AdminTrack/${link.value}`)}
             variant="outlined"
           >
             Update & Track
