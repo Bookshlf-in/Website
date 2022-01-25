@@ -73,7 +73,6 @@ const Search = () => {
             q: params.query,
             noOfBooksInOnePage: 10,
             page: page,
-            sortByPrice: "asc",
           },
         })
         .then((response) => {
