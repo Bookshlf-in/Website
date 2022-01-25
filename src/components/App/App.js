@@ -1,12 +1,5 @@
-import { React, useEffect, useContext, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory,
-} from "react-router-dom";
-import { UserContext } from "../../Context/userContext";
-import axios from "../../axios";
+import { React, useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 // Components
@@ -38,28 +31,8 @@ import BetaNotify from "./BetaNotify";
 import NotFoundPage from "../Home/NotFoundPage";
 
 const App = () => {
-  const history = useHistory();
-  const [user, setUser] = useContext(UserContext);
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
-    if (user) {
-      axios
-        .get("/getUserProfile")
-        .then((response) => {
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({ ...user, roles: response.data.roles })
-          );
-          setUser({ ...user, roles: response.data.roles });
-        })
-        .catch((error) => {
-          setUser(null);
-          localStorage.removeItem("bookshlf_user");
-          delete axios.defaults.headers.common["Authorization"];
-          history.go(0);
-        });
-    }
     if (sessionStorage.getItem("bookshlf_beta_notify")) {
       setOpen(false);
     } else {
@@ -74,7 +47,7 @@ const App = () => {
         {process.env.REACT_APP_NODE_ENV === "development" && open ? (
           <BetaNotify />
         ) : null}
-        <Navbar />
+
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/PasswordRecovery">
@@ -82,39 +55,51 @@ const App = () => {
           </Route>
           <Route path="/Signup" component={Signup} />
           <Route path="/About">
+            <Navbar />
             <About />
           </Route>
           <Route path="/Contact">
+            <Navbar />
             <Contact />
           </Route>
           <Route path="/Cart">
+            <Navbar />
             <Cart />
           </Route>
           <Route path="/Track/:orderId">
+            <Navbar />
             <Track />
           </Route>
           <Route path="/AddReview/:orderId">
+            <Navbar />
             <AddReviews />
           </Route>
           <Route path="/UserPanel/:panel">
+            <Navbar />
             <UserProfile />
           </Route>
           <Route path="/SellerPanel/:panel">
+            <Navbar />
             <SellerPanel />
           </Route>
           <Route path="/SellerBookUpdate/:bookId">
+            <Navbar />
             <UpdateOrder />
           </Route>
           <Route path="/SearchResult/:query">
+            <Navbar />
             <SearchResult />
           </Route>
           <Route path="/BookDetails/:bookId">
+            <Navbar />
             <BookDetails />
           </Route>
           <Route path="/Wishlist">
+            <Navbar />
             <Wishlist />
           </Route>
           <Route path="/Checkout/:type">
+            <Navbar />
             <Checkout />
           </Route>
           <Route path="/AdminBook/:bookId">
@@ -127,15 +112,18 @@ const App = () => {
             <Admin />
           </Route>
           <Route path="/SellerProfile/:sellerId">
+            <Navbar />
             <SellerProfile />
           </Route>
           <Route path="/Blog">
+            <Navbar />
             <Blog />
           </Route>
           <Route path="/TermsofUsePrivacyPolicy">
             <Terms />
           </Route>
           <Route path="/Wallet">
+            <Navbar />
             <Wallet />
           </Route>
           <Route path="/" component={Home} exact />

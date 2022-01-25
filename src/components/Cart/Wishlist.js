@@ -67,10 +67,6 @@ const Wishlist = () => {
       })
       .then((response) => {
         setwishlist(wishlist.filter((item) => ID !== item.bookId));
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({ ...user, wishlist: user.wishlist - 1 })
-        );
         setUser({ ...user, wishlist: user.wishlist - 1 });
         setremoveId("");
       })
@@ -212,7 +208,13 @@ const Wishlist = () => {
                           {removeId === item.bookId ? (
                             <CircularProgress size="1rem" color="warning" />
                           ) : (
-                            <FavoriteIcon sx={{ color: "rgb(235, 52, 70)" }} />
+                            <FavoriteIcon
+                              sx={{
+                                color: "rgb(235, 52, 70)",
+                                height: 16,
+                                width: 16,
+                              }}
+                            />
                           )}
                         </Fab>
                       </Stack>

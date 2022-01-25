@@ -40,41 +40,10 @@ const NotiBubble = {
 
 const Navbar = () => {
   const history = useHistory();
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   // Functionality States
   const [openSideNav, setOpenSideNav] = useState(false);
-
-  useEffect(() => {
-    // getting count of Items
-    const FetchCountAPI = () => {
-      axios.get("/countWishlistItems").then((wishlist) => {
-        axios.get("/countCartItems").then((cart) => {
-          axios.get("/getCurrentBalance").then((balance) => {
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({
-                ...user,
-                cartitems: cart.data.count,
-                wishlist: wishlist.data.count,
-                balance: Math.round(balance.data.walletBalance * 10) / 10,
-              })
-            );
-            setUser({
-              ...user,
-              cartitems: cart.data.count,
-              wishlist: wishlist.data.count,
-              balance: Math.round(balance.data.walletBalance * 10) / 10,
-            });
-            // console.log(wishlist.data, cart.data, balance.data);
-          });
-        });
-      });
-    };
-    if (user) {
-      FetchCountAPI();
-    }
-  }, []);
 
   return (
     <AppBar position="sticky" sx={NavStyle}>
@@ -89,7 +58,7 @@ const Navbar = () => {
           >
             <Badge
               variant="dot"
-              badgeContent={user?.cartitems + user?.wishlist}
+              badgeContent={user?.cartitems + user?.wishlist > 0 ? 1 : 0}
               color="warning"
             >
               <MenuIcon />

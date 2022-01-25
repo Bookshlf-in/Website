@@ -141,7 +141,7 @@ const NavbarMenu = () => {
           <MenuStack icon={<InfoIcon />} label="About Us" />
         </MenuItem>
         <MenuItem onClick={() => handelNavigate("/Contact")}>
-          <MenuStack icon={<AccountIcon />} label="Contact Us" />
+          <MenuStack icon={<SupportIcon />} label="Contact Us" />
         </MenuItem>
         <MenuItem
           onClick={handelLogout}

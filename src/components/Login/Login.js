@@ -103,11 +103,6 @@ const Login = () => {
               "bookshlf_user",
               JSON.stringify({
                 authHeader: `Bearer ${response.data.token}`,
-                roles: response.data.roles,
-                email: email,
-                cartitems: 0,
-                wishlist: 0,
-                balance: 0,
               })
             );
             setUser({

@@ -148,29 +148,31 @@ const Wallet = () => {
           axios
             .get("/getTransactionList")
             .then((response) => {
-              // console.log(response.data);
               handelDebitAmount(response.data);
               handelCreditAmount(response.data);
               settransactionList(response.data);
-
               axios
                 .get("/getWithdrawRequests")
                 .then((response) => {
-                  // console.log(response.data);
                   setwithdrawRequest(response.data);
                   setUpdateTxn(response.data.length);
-                  setTimeout(() => {
-                    setLoaded(true);
-                  }, 1000);
+                  setLoaded(true);
                 })
-                .catch((error) => {});
+                .catch((error) => {
+                  setLoaded(true);
+                });
             })
-            .catch((error) => {});
+            .catch((error) => {
+              setLoaded(true);
+            });
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setLoaded(true);
+        });
     };
     fetchdata();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (user && user.roles.includes("admin")) fetchdata();
+    else setLoaded(true);
   }, []);
 
   return (
@@ -255,7 +257,6 @@ const Wallet = () => {
                     height={100}
                     sx={{ bgcolor: "grey.500" }}
                   ></Skeleton>
-
                   <Skeleton
                     variant="rectangular"
                     width="100%"
