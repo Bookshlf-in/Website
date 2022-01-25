@@ -92,12 +92,23 @@ const Reviews = () => {
   };
   // Custom Review Slider
   const ReviewSlider = (props) => {
+    // Sliding Right
+    const slideRight = useCallback(() => {
+      setReviewIndex((ReviewIndex + 1) % ReviewLength);
+    }, []);
+
+    useEffect(() => {
+      const myTimeout = setTimeout(slideRight, 5000);
+      return () => {
+        clearTimeout(myTimeout);
+      };
+    }, [slideRight]);
     return (
       <Slide
         in={true}
         mountOnEnter
         unmountOnExit
-        timeout={500}
+        timeout={1000}
         direction={"left"}
         container={props.Ref}
       >
@@ -139,18 +150,6 @@ const Reviews = () => {
       </Slide>
     );
   };
-
-  // Sliding Right
-  const slideRight = useCallback(() => {
-    setReviewIndex((ReviewIndex + 1) % ReviewLength);
-  }, [ReviewIndex]);
-
-  useEffect(() => {
-    const myTimeout = setTimeout(slideRight, 5000);
-    return () => {
-      clearTimeout(myTimeout);
-    };
-  }, [slideRight]);
 
   return (
     <Stack>

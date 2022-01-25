@@ -271,7 +271,9 @@ const Footer = () => {
             <Stack className="footer-link-items">
               <h4>Explore</h4>
               <Link to="/About">About Us</Link>
-              <Link to="/Sitemap">Sitemap</Link>
+              <Link to="/sitemap.xml" target="_blank">
+                Sitemap
+              </Link>
               <Link to="/Login">Sign in</Link>
               <Link to="/Signup">Join Us</Link>
             </Stack>
@@ -292,7 +294,7 @@ const Footer = () => {
             <Stack className="footer-link-items">
               <h4>Policy</h4>
               <Link to="/">Return Policy</Link>
-              <Link to="/TermsofUse&PrivacyPolicy" target="_blank">
+              <Link to="/TermsofUsePrivacyPolicy" target="_blank">
                 Terms Of Use
               </Link>
               <Link to="/">Security</Link>

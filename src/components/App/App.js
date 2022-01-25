@@ -5,17 +5,13 @@ import {
   Route,
   useHistory,
 } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { UserContext } from "../../Context/userContext";
 import axios from "../../axios";
 import "./App.css";
 
 // Components
 import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
-import Carousel from "../Home/Carousel";
-import Categories from "../Home/Categories";
-import Review from "../Reviews/CustomerReviews";
+import Home from "../Home/Home";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
 import Signup from "../Signup/Signup";
@@ -26,7 +22,6 @@ import Checkout from "../Cart/Checkout";
 import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../Reviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
-import Sitemap from "../Sitemap/Sitemap";
 import Track from "../Order/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
 import UpdateOrder from "../Order/UpdateOrder";
@@ -43,9 +38,10 @@ import BetaNotify from "./BetaNotify";
 import NotFoundPage from "../Home/NotFoundPage";
 
 const App = () => {
+  const history = useHistory();
   const [user, setUser] = useContext(UserContext);
   const [open, setOpen] = useState(false);
-  const history = useHistory();
+
   useEffect(() => {
     if (user) {
       axios
@@ -78,6 +74,7 @@ const App = () => {
         {process.env.REACT_APP_NODE_ENV === "development" && open ? (
           <BetaNotify />
         ) : null}
+        <Navbar />
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/PasswordRecovery">
@@ -85,50 +82,39 @@ const App = () => {
           </Route>
           <Route path="/Signup" component={Signup} />
           <Route path="/About">
-            <Navbar />
             <About />
           </Route>
           <Route path="/Contact">
-            <Navbar />
             <Contact />
           </Route>
           <Route path="/Cart">
-            <Navbar />
             <Cart />
           </Route>
           <Route path="/Track/:orderId">
-            <Navbar />
             <Track />
           </Route>
           <Route path="/AddReview/:orderId">
-            <Navbar />
             <AddReviews />
           </Route>
           <Route path="/UserPanel/:panel">
-            <Navbar />
             <UserProfile />
           </Route>
           <Route path="/SellerPanel/:panel">
-            <Navbar />
             <SellerPanel />
           </Route>
           <Route path="/SellerBookUpdate/:bookId">
             <UpdateOrder />
           </Route>
           <Route path="/SearchResult/:query">
-            <Navbar />
             <SearchResult />
           </Route>
           <Route path="/BookDetails/:bookId">
-            <Navbar />
             <BookDetails />
           </Route>
           <Route path="/Wishlist">
-            <Navbar />
             <Wishlist />
           </Route>
           <Route path="/Checkout/:type">
-            <Navbar />
             <Checkout />
           </Route>
           <Route path="/AdminBook/:bookId">
@@ -141,36 +127,18 @@ const App = () => {
             <Admin />
           </Route>
           <Route path="/SellerProfile/:sellerId">
-            <Navbar />
             <SellerProfile />
           </Route>
           <Route path="/Blog">
             <Blog />
           </Route>
-          <Route path="/Sitemap">
-            <Sitemap />
-          </Route>
-          <Route path="/TermsofUse&PrivacyPolicy">
+          <Route path="/TermsofUsePrivacyPolicy">
             <Terms />
           </Route>
           <Route path="/Wallet">
-            <Navbar />
             <Wallet />
           </Route>
-          <Route path="/" exact>
-            <Helmet>
-              <title>Home | Bookshlf</title>
-              <meta
-                name="description"
-                content="Bookshlf is a platform for students where you can buy secondhand books at low prices and sell books."
-              />
-            </Helmet>
-            <Navbar />
-            <Carousel />
-            <Categories />
-            <Review />
-            <Footer />
-          </Route>
+          <Route path="/" component={Home} exact />
           <Route component={NotFoundPage} status={404} />
         </Switch>
       </div>

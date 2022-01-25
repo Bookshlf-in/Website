@@ -17,6 +17,7 @@ import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 import ApprovedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import UpdateIcon from "@mui/icons-material/CachedRounded";
+import InfoIcon from "@mui/icons-material/InfoTwoTone";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -51,7 +52,6 @@ const Orders = () => {
 
   useEffect(() => {
     axios.get("/getBookList").then((response) => {
-      // console.log(response.data);
       setbooks(response.data);
       setFilteredItems(
         response.data.filter((book) => book.status === "Approval Pending")
@@ -130,30 +130,47 @@ const Orders = () => {
     },
     {
       field: "bookTotal",
-      headerName: "Book Price",
+      headerName: "Pricing",
       minWidth: 150,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack spacing={2}>
-            <Chip
-              icon={<RupeeIcon />}
-              label={cellValue.value[0]}
-              size="small"
-              className={classes.root}
-              color="primary"
-              variant="outlined"
-            />
-            <Stack direction="row" spacing={2} alignItems="center">
+            <Stack direction="column" spacing={1} alignItems="center">
+              <Typography sx={{ fontSize: "10px", whiteSpace: "pre-wrap" }}>
+                Book Selling Price
+              </Typography>
+              <Chip
+                icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                label={cellValue.value[0]}
+                size="small"
+                className={classes.root}
+                color="primary"
+                variant="outlined"
+                sx={{
+                  fontSize: "10px",
+                  whiteSpace: "pre-wrap",
+                  height: "auto",
+                }}
+              />
+            </Stack>
+
+            <Stack direction="column" spacing={1} alignItems="center">
               <Typography sx={{ fontSize: "10px", whiteSpace: "pre-wrap" }}>
                 Your Earnings
               </Typography>
               <Chip
-                label={cellValue.value[1]}
+                icon={<RupeeIcon sx={{ height: 12, width: 12 }} />}
+                label={cellValue.value[1] > 0 ? cellValue.value[1] : 0}
                 size="small"
                 className={classes.root}
-                sx={{ fontSize: "10px", whiteSpace: "pre-wrap" }}
+                sx={{
+                  fontSize: "10px",
+                  whiteSpace: "pre-wrap",
+                  height: "auto",
+                }}
+                color="success"
               />
             </Stack>
           </Stack>
@@ -255,7 +272,17 @@ const Orders = () => {
             Admin Message
           </Button>
         ) : (
-          <></>
+          <Chip
+            icon={<InfoIcon sx={{ height: 16, width: 16 }} />}
+            label={"Contact Admin for Updates"}
+            size="small"
+            className={classes.root}
+            color="warning"
+            sx={{
+              fontSize: "10px",
+              whiteSpace: "pre-wrap",
+            }}
+          />
         );
       },
     },
@@ -286,7 +313,7 @@ const Orders = () => {
     return {
       id: order._id,
       orderPhoto: [order.photos[0], order._id],
-      bookTotal: [order.price, "Adding Soon"],
+      bookTotal: [order.price, order.sellerEarning],
       bookDetails: [order.title, order.description],
       bookStatus: order.status,
       bookUpdate: [order._id, order.adminMessage],
@@ -300,7 +327,12 @@ const Orders = () => {
         <title>Your Books | Bookshlf</title>
       </Helmet>
       <Stack className={classes.stack} spacing={2}>
-        <FormControl fullWidth className={classes.root} color="success">
+        <FormControl
+          fullWidth
+          className={classes.root}
+          color="success"
+          size="small"
+        >
           <InputLabel id="demo-simple-select-label" className={classes.root}>
             Filter Books
           </InputLabel>
