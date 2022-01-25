@@ -15,6 +15,7 @@ import CartIcon from "@mui/icons-material/ShoppingCart";
 import WishlistIcon from "@mui/icons-material/Favorite";
 import WalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import SellBookIcon from "@mui/icons-material/ShoppingBag";
 
 // Custom Menu Item Stack
 const MenuStack = (props) => {
@@ -91,7 +92,7 @@ const Sidenav = () => {
       </Link>
       <Divider orientation="horizontal" flexItem={true} />
       <Link to="/SellerPanel/5">
-        <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
+        <MenuStack icon={<SellBookIcon color="success" />} label="Sell Books" />
       </Link>
       <Divider orientation="horizontal" flexItem={true} />
       <Link to="/Cart">

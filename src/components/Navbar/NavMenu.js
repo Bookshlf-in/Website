@@ -17,6 +17,7 @@ import BookIcon from "@mui/icons-material/MenuBookTwoTone";
 import LogoutIcon from "@mui/icons-material/ExitToAppTwoTone";
 import InfoIcon from "@mui/icons-material/InfoRounded";
 import SupportIcon from "@mui/icons-material/SupportAgentRounded";
+import SellBookIcon from "@mui/icons-material/ShoppingBag";
 
 // Custom Menu Item Stack
 const MenuStack = (props) => {
@@ -110,7 +111,10 @@ const NavbarMenu = () => {
           <MenuStack icon={<BookIcon color="success" />} label="Your Books" />
         </MenuItem>
         <MenuItem onClick={() => handelNavigate("/SellerPanel/5")}>
-          <MenuStack icon={<BookIcon color="success" />} label="Sell Books" />
+          <MenuStack
+            icon={<SellBookIcon color="success" />}
+            label="Sell Books"
+          />
         </MenuItem>
         {user?.roles?.includes("admin") ? (
           <MenuItem onClick={() => handelNavigate("/Admin/1")}>
