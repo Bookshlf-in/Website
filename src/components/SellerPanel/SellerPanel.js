@@ -47,7 +47,6 @@ const SellerPanel = () => {
 
   // component states
   const [panel, setPanel] = useState(params.panel);
-  const [role, setRole] = useState(false);
 
   // loader states
   const [Loading, setLoading] = useState(true);
@@ -65,7 +64,6 @@ const SellerPanel = () => {
         .then((response) => {
           setsellerDetails(response.data);
           setsellerId(response.data._id);
-          if (user.roles.includes("seller")) setRole(true);
           axios
             .get("/getAddressList")
             .then((response) => {
@@ -135,7 +133,7 @@ const SellerPanel = () => {
     >
       {Loading ? (
         <LinearProgress sx={{ width: "100%" }} />
-      ) : role === false || user === null ? (
+      ) : !user?.roles?.includes("seller") || !user ? (
         <Register />
       ) : (
         <TabContext value={panel}>

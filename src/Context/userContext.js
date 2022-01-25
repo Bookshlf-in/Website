@@ -12,32 +12,42 @@ export const CurrentUserProvider = (props) => {
   useEffect(() => {
     // getting count of Items
     const FetchCountAPI = () => {
-      axios.get("/countWishlistItems").then((wishlist) => {
-        axios.get("/countCartItems").then((cart) => {
-          axios
-            .get("/getCurrentBalance")
-            .then((balance) => {
-              setUser({
-                ...user,
-                cartitems: cart.data.count,
-                wishlist: wishlist.data.count,
-                balance: Math.round(balance.data.walletBalance * 10) / 10,
-              });
-              // console.log(wishlist.data, cart.data, balance.data);
-            })
-            .catch((error) => {
-              setUser({
-                ...user,
-                cartitems: cart.data.count,
-                wishlist: wishlist.data.count,
-              });
-            });
-        });
-      });
       axios
         .get("/getUserProfile")
         .then((response) => {
-          setUser({ ...user, roles: response.data.roles });
+          axios.get("/countWishlistItems").then((wishlist) => {
+            axios.get("/countCartItems").then((cart) => {
+              if (response.data.roles.includes("seller")) {
+                axios
+                  .get("/getCurrentBalance")
+                  .then((balance) => {
+                    setUser({
+                      ...user,
+                      roles: response.data.roles,
+                      cartitems: cart.data.count,
+                      wishlist: wishlist.data.count,
+                      balance: Math.round(balance.data.walletBalance * 10) / 10,
+                    });
+                  })
+                  .catch((error) => {
+                    setUser({
+                      ...user,
+                      roles: response.data.roles,
+                      cartitems: cart.data.count,
+                      wishlist: wishlist.data.count,
+                      balance: 0,
+                    });
+                  });
+              } else {
+                setUser({
+                  ...user,
+                  roles: response.data.roles,
+                  cartitems: cart.data.count,
+                  wishlist: wishlist.data.count,
+                });
+              }
+            });
+          });
         })
         .catch((error) => {
           setUser(null);
