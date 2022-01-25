@@ -171,7 +171,7 @@ const Wallet = () => {
         });
     };
     fetchdata();
-    if (user && user.roles.includes("admin")) fetchdata();
+    if (user && user?.roles?.includes("seller")) fetchdata();
     else setLoaded(true);
   }, []);
 
@@ -181,7 +181,7 @@ const Wallet = () => {
         <title>Wallet | Bookshlf</title>
         <meta name="description" content="Seller Wallet Bookshlf" />
       </Helmet>
-      {user ? (
+      {user && user?.roles?.includes("seller") ? (
         <Grid container spacing={2} style={{ padding: "10px" }}>
           <Grid item xs={12} lg={6} md={12} sm={12}>
             <Stack direction="column" spacing={2}>
@@ -370,7 +370,7 @@ const Wallet = () => {
         </Grid>
       ) : (
         <Alert severity="error" className={classes.root}>
-          Please Login
+          Please Login or Register As Seller
         </Alert>
       )}
     </>
