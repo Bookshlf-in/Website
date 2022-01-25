@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://bookshlf.in</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+  <url>
+    <loc>https://bookshlf.in/SearchResult/tag:ALL</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+  <url>
+    <loc>https://bookshlf.in/Login</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+  <url>
+    <loc>https://bookshlf.in/Signup</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+  <url>
+    <loc>https://bookshlf.in/PasswordRecovery</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+  <url>
+    <loc>https://bookshlf.in/About</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+  <url>
+    <loc>https://bookshlf.in/Contact</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+  <url>
+    <loc>https://bookshlf.in/TermsofUsePrivacyPolicy</loc>
+    <lastmod>2022-01-25</lastmod>
+  </url>
+</urlset>

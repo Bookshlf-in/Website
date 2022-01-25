@@ -130,10 +130,6 @@ const Cart = () => {
               cart[cart.findIndex((f) => f.bookId === bookId)].purchaseQty
         );
         setcart(cart.filter((item) => bookId !== item.bookId));
-        localStorage.setItem(
-          "bookshlf_user",
-          JSON.stringify({ ...user, cartitems: user.cartitems - 1 })
-        );
         setUser({ ...user, cartitems: user.cartitems - 1 });
       })
       .catch((err) => {});

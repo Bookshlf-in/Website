@@ -1,21 +1,10 @@
-import { React, useEffect, useContext, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory,
-} from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { UserContext } from "../../Context/userContext";
-import axios from "../../axios";
+import { React, useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 // Components
 import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
-import Carousel from "../Home/Carousel";
-import Categories from "../Home/Categories";
-import Review from "../Reviews/CustomerReviews";
+import Home from "../Home/Home";
 import Login from "../Login/Login";
 import ForgotPassword from "../Login/ForgotPassword";
 import Signup from "../Signup/Signup";
@@ -26,7 +15,6 @@ import Checkout from "../Cart/Checkout";
 import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../Reviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
-import Sitemap from "../Sitemap/Sitemap";
 import Track from "../Order/OrderTracking";
 import SellerPanel from "../SellerPanel/SellerPanel";
 import UpdateOrder from "../Order/UpdateOrder";
@@ -43,27 +31,8 @@ import BetaNotify from "./BetaNotify";
 import NotFoundPage from "../Home/NotFoundPage";
 
 const App = () => {
-  const [user, setUser] = useContext(UserContext);
   const [open, setOpen] = useState(false);
-  const history = useHistory();
   useEffect(() => {
-    if (user) {
-      axios
-        .get("/getUserProfile")
-        .then((response) => {
-          localStorage.setItem(
-            "bookshlf_user",
-            JSON.stringify({ ...user, roles: response.data.roles })
-          );
-          setUser({ ...user, roles: response.data.roles });
-        })
-        .catch((error) => {
-          setUser(null);
-          localStorage.removeItem("bookshlf_user");
-          delete axios.defaults.headers.common["Authorization"];
-          history.go(0);
-        });
-    }
     if (sessionStorage.getItem("bookshlf_beta_notify")) {
       setOpen(false);
     } else {
@@ -78,6 +47,7 @@ const App = () => {
         {process.env.REACT_APP_NODE_ENV === "development" && open ? (
           <BetaNotify />
         ) : null}
+
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/PasswordRecovery">
@@ -113,6 +83,7 @@ const App = () => {
             <SellerPanel />
           </Route>
           <Route path="/SellerBookUpdate/:bookId">
+            <Navbar />
             <UpdateOrder />
           </Route>
           <Route path="/SearchResult/:query">
@@ -145,32 +116,17 @@ const App = () => {
             <SellerProfile />
           </Route>
           <Route path="/Blog">
+            <Navbar />
             <Blog />
           </Route>
-          <Route path="/Sitemap">
-            <Sitemap />
-          </Route>
-          <Route path="/TermsofUse&PrivacyPolicy">
+          <Route path="/TermsofUsePrivacyPolicy">
             <Terms />
           </Route>
           <Route path="/Wallet">
             <Navbar />
             <Wallet />
           </Route>
-          <Route path="/" exact>
-            <Helmet>
-              <title>Home | Bookshlf</title>
-              <meta
-                name="description"
-                content="Bookshlf is a platform for students where you can buy secondhand books at low prices and sell books."
-              />
-            </Helmet>
-            <Navbar />
-            <Carousel />
-            <Categories />
-            <Review />
-            <Footer />
-          </Route>
+          <Route path="/" component={Home} exact />
           <Route component={NotFoundPage} status={404} />
         </Switch>
       </div>

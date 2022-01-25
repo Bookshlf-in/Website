@@ -1312,7 +1312,7 @@ const AddBook = (props) => {
             />
             <Link
               style={{ fontFamily: "pt sans" }}
-              to={`/TermsofUse&PrivacyPolicy`}
+              to={`/TermsofUsePrivacyPolicy`}
               target="_blank"
             >
               <Typography variant="caption">

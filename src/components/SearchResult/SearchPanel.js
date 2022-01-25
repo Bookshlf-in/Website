@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     },
     "& div": {
       fontFamily: "PT sans !important",
-      fontSize: "12px",
     },
     "& label": {
       fontFamily: "PT sans !important",
@@ -132,10 +131,6 @@ const Search = () => {
                 book._id === bookId ? { ...book, cart: false } : book
               )
             );
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({ ...user, cartitems: user.cartitems - 1 })
-            );
             setUser({ ...user, cartitems: user.cartitems - 1 });
           })
           .catch((error) => {
@@ -158,10 +153,6 @@ const Search = () => {
               books.map((book) =>
                 book._id === bookId ? { ...book, cart: true } : book
               )
-            );
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({ ...user, cartitems: user.cartitems + 1 })
             );
             setUser({ ...user, cartitems: user.cartitems + 1 });
           })
@@ -199,10 +190,7 @@ const Search = () => {
                 book._id === bookId ? { ...book, wishlist: false } : book
               )
             );
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({ ...user, wishlist: user.wishlist - 1 })
-            );
+
             setUser({ ...user, wishlist: user.wishlist - 1 });
             setcartLoad("");
           })
@@ -227,10 +215,7 @@ const Search = () => {
                 book._id === bookId ? { ...book, wishlist: true } : book
               )
             );
-            localStorage.setItem(
-              "bookshlf_user",
-              JSON.stringify({ ...user, wishlist: user.wishlist + 1 })
-            );
+
             setUser({ ...user, wishlist: user.wishlist + 1 });
             setwishlistLoad("");
           })
