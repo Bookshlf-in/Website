@@ -63,6 +63,15 @@ const Search = () => {
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(1);
   const [filter, setFilter] = useState(1);
+  const [booksperPage, setbooksperPage] = useState(
+    window.innerWidth <= 400
+      ? 5
+      : window.innerWidth <= 800
+      ? 9
+      : window.innerWidth <= 1200
+      ? 12
+      : 18
+  );
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -71,7 +80,7 @@ const Search = () => {
         .get("/search", {
           params: {
             q: params.query,
-            noOfBooksInOnePage: 10,
+            noOfBooksInOnePage: booksperPage,
             page: page,
           },
         })
@@ -96,7 +105,7 @@ const Search = () => {
       .get("/search", {
         params: {
           q: params.query,
-          noOfBooksInOnePage: 10,
+          noOfBooksInOnePage: booksperPage,
           page: pageNo,
         },
       })
@@ -408,7 +417,11 @@ const Search = () => {
                         <Avatar
                           alt={book.title}
                           src={book.photo}
-                          sx={{ height: 220, width: "100%", cursor: "pointer" }}
+                          sx={{
+                            height: 220,
+                            width: "100%",
+                            cursor: "pointer",
+                          }}
                           variant="rounded"
                           onClick={() =>
                             history.push(`/BookDetails/${book._id}`)
@@ -420,7 +433,9 @@ const Search = () => {
                           variant="caption"
                           sx={{ padding: "0px 10px" }}
                         >
-                          {book.title}
+                          {book.title.length <= 75
+                            ? book.title
+                            : book.title.substr(0, 75) + "..."}
                         </Typography>
 
                         <Stack

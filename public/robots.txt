@@ -1,5 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
 
-Sitemap: https://bookshlf.in/sitemap.xml
+Sitemap: https://rohit-kumar.me/sitemap.xml

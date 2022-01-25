@@ -15,7 +15,8 @@ const Home = () => {
         <title>Bookshlf | The Bookstore which cares</title>
         {/* <!-- Search Engine --> */}
         <script className="structured-data-list" type="application/ld+json">
-          {` 
+          {`
+          { 
           "@context": "https://schema.org",
           "@type": "Corporation",
           "name": "Bookshlf",
@@ -49,7 +50,8 @@ const Home = () => {
                 "addressRegion": "Lucknow, U.P",
                 "postalCode": "226002",
                 "addressCountry": "IN"
-                }`}
+                }
+           }`}
         </script>
       </Helmet>
       <Navbar />
