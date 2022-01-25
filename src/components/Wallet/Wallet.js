@@ -171,7 +171,7 @@ const Wallet = () => {
         });
     };
     fetchdata();
-    if (user && user.roles.includes("admin")) fetchdata();
+    if (user && user?.roles?.includes("seller")) fetchdata();
     else setLoaded(true);
   }, []);
 
