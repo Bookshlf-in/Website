@@ -32,6 +32,11 @@ const useStyles = makeStyles({
       color: "black !important",
       backgroundColor: "skyblue",
     },
+    "&.MuiTab-root": {
+      padding: "10px",
+      minHeight: 0,
+      fontSize: "12px",
+    },
   },
 });
 
@@ -58,58 +63,65 @@ const AdminNavbar = () => {
             onChange={handleChange}
             aria-label="admin-tabList"
             variant="fullWidth"
+            sx={{ minHeight: 0 }}
           >
             <Tab
               label="Orders"
-              icon={<OrderIcon />}
+              icon={<OrderIcon sx={{ height: 16, width: 16 }} />}
+              iconPosition="start"
               value="1"
               className={classes.root}
             />
             <Tab
               label="Find Profile"
-              icon={<ProfileIcon />}
+              icon={<ProfileIcon sx={{ height: 16, width: 16 }} />}
+              iconPosition="start"
               value="2"
               className={classes.root}
             />
             <Tab
               label="Messages"
-              icon={<ChatIcon />}
+              icon={<ChatIcon sx={{ height: 16, width: 16 }} />}
+              iconPosition="start"
               value="3"
               className={classes.root}
             />
             <Tab
               label="Sellers Verification"
-              icon={<SellersIcon />}
+              icon={<SellersIcon sx={{ height: 16, width: 16 }} />}
+              iconPosition="start"
               value="4"
               className={classes.root}
             />
             <Tab
               label="Wallet"
-              icon={<WalletIcon />}
+              icon={<WalletIcon sx={{ height: 16, width: 16 }} />}
+              iconPosition="start"
               value="5"
               className={classes.root}
             />
             <Tab
               label="Home"
-              icon={<HomeIcon />}
+              icon={<HomeIcon sx={{ height: 16, width: 16 }} />}
+              iconPosition="start"
               value="6"
               className={classes.root}
             />
           </TabList>
         </Box>
-        <TabPanel value="1">
+        <TabPanel value="1" sx={{ padding: "12px" }}>
           <Orders />
         </TabPanel>
-        <TabPanel value="2">
+        <TabPanel value="2" sx={{ padding: "12px" }}>
           <Profile />
         </TabPanel>
-        <TabPanel value="3">
+        <TabPanel value="3" sx={{ padding: "12px" }}>
           <Messages />
         </TabPanel>
-        <TabPanel value="4">
+        <TabPanel value="4" sx={{ padding: "12px" }}>
           <Seller />
         </TabPanel>
-        <TabPanel value="5">
+        <TabPanel value="5" sx={{ padding: "12px" }}>
           <Wallet />
         </TabPanel>
       </TabContext>

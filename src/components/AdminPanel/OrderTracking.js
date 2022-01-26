@@ -29,6 +29,7 @@ import NextIcon from "@mui/icons-material/NavigateNextRounded";
 import CheckIcon from "@mui/icons-material/CheckCircleRounded";
 import CallIcon from "@mui/icons-material/CallRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
+import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -70,16 +71,24 @@ const getStepContent = (stepIndex) => {
 const OrderTracking = () => {
   const classes = useStyles();
   const params = useParams();
-  const [order, setorder] = useState({});
-  const [load, setload] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
+
+  // functional Components
   const [next, setnext] = useState(false);
+  const [load, setload] = useState(false);
   const [cancelLoad, setcancelLoad] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const [payload, setpayload] = useState(false);
+  const [trackLoad, setTrackLoad] = useState(false);
+
+  // Data States
+  const [order, setorder] = useState({});
   const [paid, setpaid] = useState(false);
   const [paidAmt, setPaidAmt] = useState(0);
   const [trackLink, settrackLink] = useState("");
-  const [payload, setpayload] = useState(false);
+  const [trackDetails, settrackDetails] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState("");
+  const [deliveryCharge, setDeliveryCharge] = useState(40);
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -91,10 +100,17 @@ const OrderTracking = () => {
           setorder(response.data);
           setpaid(response.data.isSellerPaid);
           settrackLink(response.data?.externalTrackingLink);
+          settrackDetails(response.data?.externalTrackingDetails);
+          setDeliveryDate(response.data?.expectedDeliveryDate);
+          setDeliveryCharge(response.data?.adminDeliveryExpense);
           // console.log(response.data);
           setActiveStep(Math.round(response.data.progress / 25));
           axios
-            .get(`/getSellerEarning?price=${Number(response.data.price)}`)
+            .get(
+              `/getSellerEarning?price=${Number(
+                response.data.price * response.data.purchaseQty
+              )}`
+            )
             .then((earnings) => {
               setload(true);
               setPaidAmt(earnings.data.sellerEarning);
@@ -212,21 +228,21 @@ const OrderTracking = () => {
       });
   };
 
-  const [trackLoad, setTrackLoad] = useState(false);
   const updateOrder = () => {
     setTrackLoad(true);
     axios
       .post("/admin-updateOrder", {
         orderId: params.orderId,
         externalTrackingLink: trackLink,
+        externalTrackingDetails: trackDetails,
+        expectedDeliveryDate: deliveryDate,
+        adminDeliveryExpense: deliveryCharge,
       })
       .then((response) => {
         setTrackLoad(false);
-        // console.log(response.data);
       })
       .catch((error) => {
         setTrackLoad(false);
-        // console.log(error.response.data);
       });
   };
   return (
@@ -537,9 +553,12 @@ const OrderTracking = () => {
                     className={classes.root}
                     primary="Item Price"
                     secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" /> {order.price}
-                      </>
+                      <Chip
+                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                        label={order.price}
+                        size="small"
+                        color="default"
+                      />
                     }
                   />
                 </ListItemButton>
@@ -553,7 +572,13 @@ const OrderTracking = () => {
                   <ListItemText
                     className={classes.root}
                     primary="Purchase Quantity"
-                    secondary={order.purchaseQty}
+                    secondary={
+                      <Chip
+                        label={order.purchaseQty}
+                        size="small"
+                        color="default"
+                      />
+                    }
                   />
                 </ListItemButton>
               </ListItem>
@@ -567,10 +592,12 @@ const OrderTracking = () => {
                     className={classes.root}
                     primary="Shipping Charges"
                     secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" />{" "}
-                        {order.shippingCharges}
-                      </>
+                      <Chip
+                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                        label={order.shippingCharges}
+                        size="small"
+                        color="default"
+                      />
                     }
                   />
                 </ListItemButton>
@@ -585,9 +612,12 @@ const OrderTracking = () => {
                     className={classes.root}
                     primary="Order Total"
                     secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" /> {order.orderTotal}
-                      </>
+                      <Chip
+                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                        label={order.orderTotal}
+                        size="small"
+                        color="default"
+                      />
                     }
                   />
                 </ListItemButton>
@@ -661,7 +691,12 @@ const OrderTracking = () => {
                   />
                 </ListItemButton>
               </ListItem>
-              <Divider />
+            </List>
+            <List
+              subheader={
+                <ListSubheader className={classes.root}>Earnings</ListSubheader>
+              }
+            >
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -669,11 +704,14 @@ const OrderTracking = () => {
                   </ListItemIcon>
                   <ListItemText
                     className={classes.root}
-                    primary="Order Total"
+                    primary="Total Earnings in This Order"
                     secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" /> {order.orderTotal}
-                      </>
+                      <Chip
+                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                        label={order.orderTotal - paidAmt - deliveryCharge}
+                        size="small"
+                        color="success"
+                      />
                     }
                   />
                 </ListItemButton>
@@ -681,18 +719,52 @@ const OrderTracking = () => {
             </List>
           </Stack>
 
-          <Typography variant="h4">
-            <strong>Tracking Details</strong>
+          <Typography variant="h4" align="center">
+            <strong>External Tracking Details</strong>
           </Typography>
-          <Stack direction="row" spacing={5}>
+          <Stack justifyContent="center" alignItems="center">
             <TextField
               className={classes.root}
               label="External Order Tracking Link"
-              variant="standard"
+              variant="filled"
               sx={{ width: 400 }}
               onChange={(e) => settrackLink(e.target.value)}
               value={trackLink}
-              focused
+              size="small"
+            />
+          </Stack>
+          <Stack spacing={2} justifyContent="center" alignItems="center">
+            <TextField
+              className={classes.root}
+              label="External Order Tracking Details"
+              variant="filled"
+              sx={{ width: 400 }}
+              onChange={(e) => settrackDetails(e.target.value)}
+              value={trackDetails}
+              size="small"
+            />
+            <label for="admin-expected-delivery-date">
+              <Typography className={classes.root} color="primary">
+                Expected Delivery date
+              </Typography>
+            </label>
+            <input
+              type="date"
+              id="admin-expected-delivery-date"
+              name="expected-delivery-date"
+              value={deliveryDate}
+              min="2022-01-01"
+              max="2025-12-31"
+              onChange={(e) => setDeliveryDate(e.target.value)}
+            />
+            <TextField
+              className={classes.root}
+              label="Real Delivery Expense for this Order"
+              variant="filled"
+              sx={{ width: 400 }}
+              onChange={(e) => setDeliveryCharge(e.target.value)}
+              value={deliveryCharge}
+              size="small"
             />
             <LoadingButton
               loading={trackLoad}
@@ -704,7 +776,7 @@ const OrderTracking = () => {
               onClick={updateOrder}
               size="small"
             >
-              Add Link
+              Update Details
             </LoadingButton>
           </Stack>
           <Stepper
@@ -749,17 +821,11 @@ const OrderTracking = () => {
               color="primary"
               onClick={() => handleNextStep(order._id)}
               disabled={activeStep === 4}
+              size="small"
             >
               {next ? (
                 <>
-                  <CircularProgress
-                    style={{
-                      color: "white",
-                      height: "15px",
-                      width: "15px",
-                      fontWeight: "bold",
-                    }}
-                  />
+                  <CircularProgress size={16} color="inherit" />
                   &nbsp;&nbsp;
                 </>
               ) : (
@@ -785,6 +851,7 @@ const OrderTracking = () => {
                 className={classes.root}
                 onClick={handelCancelOrder}
                 disabled={order.status === "Cancelled"}
+                size="small"
               >
                 Cancel Order
               </LoadingButton>
@@ -798,6 +865,7 @@ const OrderTracking = () => {
               className={classes.root}
               onClick={sendSellerPay}
               disabled={paid}
+              size="small"
             >
               {paid ? "Paid To Seller" : "Send Payment to Seller"} ({paidAmt})
             </LoadingButton>

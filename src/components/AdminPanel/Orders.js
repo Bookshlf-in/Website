@@ -22,6 +22,11 @@ const useStyles = makeStyles({
       color: "black !important",
       backgroundColor: "skyblue",
     },
+    "&.MuiTab-root": {
+      padding: "10px",
+      minHeight: 0,
+      fontSize: "12px",
+    },
   },
 });
 
@@ -39,6 +44,7 @@ const Orders = () => {
             onChange={handleChange}
             aria-label="admin-tabList"
             variant="fullWidth"
+            sx={{ minHeight: 0 }}
           >
             <Tab label="Book Verification" value="1" className={classes.root} />
             <Tab label="Order Details" value="2" className={classes.root} />
