@@ -269,20 +269,34 @@ const Footer = () => {
             sx={{ width: "100%" }}
           >
             <Stack className="footer-link-items">
-              <h4>Explore</h4>
-              <Link to="/About">About Us</Link>
-              <Link to="/sitemap.xml" target="_blank">
-                Sitemap
+              <Typography variant="h6">Explore</Typography>
+              <Link to="/About" className="cool-link">
+                <Typography variant="caption">About Us</Typography>
               </Link>
-              <Link to="/Login">Sign in</Link>
-              <Link to="/Signup">Join Us</Link>
+              <Link to="/sitemap.xml" target="_blank" className="cool-link">
+                <Typography variant="caption">Sitemap</Typography>
+              </Link>
+              <Link to="/Login" className="cool-link">
+                <Typography variant="caption">Sign in</Typography>
+              </Link>
+              <Link to="/Signup" className="cool-link">
+                <Typography variant="caption">Join Us</Typography>
+              </Link>
             </Stack>
             <Stack className="footer-link-items">
-              <h4>Customer Service</h4>
-              <Link to="/">Returns</Link>
-              <Link to="/Contact">Report Product</Link>
-              <Link to="/">Accessibility</Link>
-              <Link to="/Contact">Contact Us</Link>
+              <Typography variant="h6">Customer Service</Typography>
+              <Link to="/" className="cool-link">
+                <Typography variant="caption">Returns</Typography>
+              </Link>
+              <Link to="/Contact" className="cool-link">
+                <Typography variant="caption">Report Product</Typography>
+              </Link>
+              <Link to="/" className="cool-link">
+                <Typography variant="caption">Accessibility</Typography>
+              </Link>
+              <Link to="/Contact" className="cool-link">
+                <Typography variant="caption">Contact Us</Typography>
+              </Link>
             </Stack>
           </Stack>
           <Stack
@@ -292,29 +306,59 @@ const Footer = () => {
             sx={{ width: "100%" }}
           >
             <Stack className="footer-link-items">
-              <h4>Policy</h4>
-              <Link to="/">Return Policy</Link>
-              <Link to="/TermsofUsePrivacyPolicy" target="_blank">
-                Terms Of Use
+              <Typography variant="h6">Policy</Typography>
+              <Link to="/" className="cool-link">
+                <Typography variant="caption">Return Policy</Typography>
               </Link>
-              <Link to="/">Security</Link>
-              <Link to="/">Privacy</Link>
+              <Link
+                to="/TermsofUsePrivacyPolicy"
+                target="_blank"
+                className="cool-link"
+              >
+                <Typography variant="caption">Terms Of Use</Typography>
+              </Link>
+              <Link to="/" className="cool-link">
+                <Typography variant="caption">Security</Typography>
+              </Link>
+              <Link to="/" className="cool-link">
+                <Typography variant="caption">Privacy</Typography>
+              </Link>
             </Stack>
             <Stack className="footer-link-items">
-              <h4>Categories</h4>
-              <Link to="/SearchResult/tag:JEE">JEE Mains</Link>
-              <Link to="/SearchResult/tag:Neet">NEET PG</Link>
-              <Link to="/SearchResult/tag:Jee Advanced">JEE Advanced</Link>
-              <Link to="/SearchResult/School">High School</Link>
-              <Link to="/SearchResult/Programming">Programming</Link>
-              <Link to="/SearchResult/tag:Novel">Novels</Link>
+              <Typography variant="h6">Categories</Typography>
+              <Link to="/SearchResult/tag:JEE" className="cool-link">
+                <Typography variant="caption">JEE Mains</Typography>
+              </Link>
+              <Link to="/SearchResult/tag:Neet" className="cool-link">
+                <Typography variant="caption">NEET PG</Typography>
+              </Link>
+              <Link to="/SearchResult/tag:Jee Advanced" className="cool-link">
+                <Typography variant="caption">JEE Advanced</Typography>
+              </Link>
+              <Link to="/SearchResult/School" className="cool-link">
+                <Typography variant="caption">High School</Typography>
+              </Link>
+              <Link to="/SearchResult/Programming" className="cool-link">
+                <Typography variant="caption">Programming</Typography>
+              </Link>
+              <Link to="/SearchResult/tag:Novel" className="cool-link">
+                <Typography variant="caption">Novels</Typography>
+              </Link>
             </Stack>
           </Stack>
         </Stack>
       </Stack>
-      <div className="footer-container3">
-        &copy; {Year} BookShlf. All Rights Reserved
-      </div>
+      <Stack
+        className="footer-container3"
+        direction="row"
+        spacing={1}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Typography variant="caption">&copy; {Year} BookShlf</Typography>
+        <img src="/images/india.png" height="16px" />
+        <Typography variant="caption">All Rights Reserved</Typography>
+      </Stack>
       <div className={classes.root}>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert
