@@ -1,6 +1,7 @@
 import { React, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
+import { AdminContext } from "../../Context/adminContext";
 import axios from "../../axios.js";
 
 // Components
@@ -52,6 +53,8 @@ const NavbarMenu = () => {
   const history = useHistory();
 
   const [user, setUser] = useContext(UserContext);
+  const [admin, setAdmin] = useContext(AdminContext);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [logLoad, setLogLoad] = useState(false);
 
@@ -76,6 +79,7 @@ const NavbarMenu = () => {
         history.go(0);
         setLogLoad(false);
         setUser(null);
+        setAdmin(null);
         localStorage.removeItem("bookshlf_user");
         localStorage.removeItem("bookshlf_user_AddBook");
         delete axios.defaults.headers.common["Authorization"];

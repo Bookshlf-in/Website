@@ -33,20 +33,21 @@ import Reciept from "./Reciept";
 
 const useStyles = makeStyles({
   root: {
-    fontFamily: "PT sans !important",
+    fontFamily: "Staatliches !important",
     "& span": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Staatliches !important",
       fontSize: "14px",
     },
     "& p": {
-      fontFamily: "PT sans !important",
+      fontFamily: "courier !important",
       fontSize: "12px",
+      fontWeight: "bolder !important",
     },
     "& input": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Staatliches !important",
     },
     "& label": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Staatliches !important",
     },
   },
 });
@@ -135,6 +136,26 @@ const OrderTracking = () => {
               ORDER ID :
             </Typography>
             <Chip label={order._id} color="primary" size="small" />
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Typography
+              variant="body1"
+              className={classes.root}
+              sx={{ color: "green" }}
+            >
+              Expected Delivery Date :
+            </Typography>
+            <Chip
+              label={order?.expectedDeliveryDate?.substr(0, 10)}
+              color="success"
+              size="small"
+              className={classes.root}
+            />
           </Stack>
           {/* ================= Book Details ===================== */}
           <Stack direction="column" spacing={2} alignItems="center">
@@ -447,6 +468,16 @@ const OrderTracking = () => {
               <Reciept order={order} />
             ) : null}
           </Stack>
+          {order?.externalTrackingDetails?.length ? (
+            <Typography
+              variant="caption"
+              align="center"
+              color="primary"
+              className={classes.root}
+            >
+              {order.externalTrackingDetails}
+            </Typography>
+          ) : null}
           <Stepper
             activeStep={activeStep}
             alternativeLabel
@@ -461,7 +492,8 @@ const OrderTracking = () => {
             ))}
           </Stepper>
 
-          {activeStep === steps.length ? null : (
+          {activeStep === steps.length ||
+          order?.externalTrackingDetails?.length ? null : (
             <Typography
               variant="caption"
               align="center"

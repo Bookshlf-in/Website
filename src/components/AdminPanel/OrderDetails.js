@@ -1,6 +1,7 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
+import { AdminContext } from "../../Context/adminContext";
 import axios from "../../axios";
 
 // components
@@ -39,24 +40,36 @@ const GetOrderDetails = () => {
   const classes = useStyles();
   const history = useHistory();
 
+  const [admin, setAdmin] = useContext(AdminContext);
   // functionality States
   const [orderLoad, setorderLoad] = useState(false);
 
   // data States
-  const [orderList, setorderList] = useState([]);
-  const [page, setpage] = useState(1);
-  const [totalPages, settotalPages] = useState(0);
+  const [orderList, setorderList] = useState(admin.orderDetails.data);
+  const [page, setpage] = useState(admin.orderDetails.page);
+  const [totalPages, settotalPages] = useState(admin.orderDetails.totalPages);
 
   const GetOrderList = (pageNo) => {
     setorderLoad(true);
     setpage(pageNo);
     axios
-      .get(`/admin-getOrderList?page=${pageNo}`)
+      .get("/admin-getOrderList", {
+        params: {
+          page: pageNo,
+        },
+      })
       .then((response) => {
+        setAdmin({
+          ...admin,
+          orderDetails: {
+            data: response.data.data,
+            page: pageNo,
+            totalPages: response.data.totalPages,
+          },
+        });
         setorderLoad(false);
         setorderList(response.data.data);
         settotalPages(response.data.totalPages);
-        // console.log(response.data);
       })
       .catch((error) => {});
   };
@@ -224,6 +237,7 @@ const GetOrderDetails = () => {
         loadingPosition="start"
         startIcon={<LoadIcon />}
         variant="contained"
+        size="small"
         className={classes.root}
         color="success"
         onClick={() => GetOrderList(1)}
