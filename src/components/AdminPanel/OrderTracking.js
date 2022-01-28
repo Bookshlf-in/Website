@@ -23,6 +23,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/ListItemButton";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 
 // icons
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
@@ -30,6 +31,8 @@ import CheckIcon from "@mui/icons-material/CheckCircleRounded";
 import CallIcon from "@mui/icons-material/CallRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
+import CopyIcon from "@mui/icons-material/ContentCopy";
+import CopiedIcon from "@mui/icons-material/FileCopy";
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +42,7 @@ const useStyles = makeStyles({
     },
     "& p": {
       fontFamily: "PT sans !important",
+      fontSize: "12px !important",
     },
     "& input": {
       fontFamily: "PT sans !important",
@@ -101,9 +105,12 @@ const OrderTracking = () => {
           setpaid(response.data.isSellerPaid);
           settrackLink(response.data?.externalTrackingLink);
           settrackDetails(response.data?.externalTrackingDetails);
-          setDeliveryDate(response.data?.expectedDeliveryDate);
-          setDeliveryCharge(response.data?.adminDeliveryExpense);
-          // console.log(response.data);
+          setDeliveryDate(response.data?.expectedDeliveryDate.substr(0, 10));
+          setDeliveryCharge(
+            !isNaN(response.data?.adminDeliveryExpense)
+              ? response.data?.adminDeliveryExpense
+              : 0
+          );
           setActiveStep(Math.round(response.data.progress / 25));
           axios
             .get(
@@ -245,6 +252,64 @@ const OrderTracking = () => {
         setTrackLoad(false);
       });
   };
+
+  // Custom Copy Component
+  const CopyableText = (props) => {
+    const [copied, setcopied] = useState(false);
+
+    const CopyText = () => {
+      navigator.clipboard.writeText(props.text);
+      setcopied(true);
+      setTimeout(() => {
+        setcopied(false);
+      }, 3000);
+    };
+
+    return (
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{ cursor: "pointer" }}
+        alignItems="center"
+      >
+        <Typography
+          variant="caption"
+          className={classes.root}
+          color={copied ? "primary" : "default"}
+        >
+          {props.text}
+        </Typography>
+        <Tooltip
+          arrow
+          title="Click to Copy"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="caption" onClick={CopyText}>
+            {!copied ? (
+              <CopyIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            ) : (
+              <CopiedIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            )}
+          </Typography>
+        </Tooltip>
+
+        {copied ? (
+          <Typography
+            sx={{ fontSize: "9px" }}
+            className={classes.root}
+            color="primary"
+          >
+            Copied!
+          </Typography>
+        ) : null}
+      </Stack>
+    );
+  };
+
   return (
     <>
       {load ? (
@@ -257,7 +322,7 @@ const OrderTracking = () => {
             <Typography variant="body1" className={classes.root}>
               ORDER ID :
             </Typography>
-            <Chip label={order._id} color="primary" size="small" />
+            <CopyableText text={order._id} />
           </Stack>
           {/* ================= Book Details ===================== */}
           <Stack direction="row" spacing={5}>
@@ -281,7 +346,7 @@ const OrderTracking = () => {
                 <ListItemText
                   className={classes.root}
                   primary="Book ID"
-                  secondary={order.bookId}
+                  secondary={<CopyableText text={order.bookId} />}
                 />
               </ListItem>
               <Divider />
@@ -315,9 +380,12 @@ const OrderTracking = () => {
                   className={classes.root}
                   primary="Book Selling Price"
                   secondary={
-                    <>
-                      <i className="fas fa-rupee-sign"></i> {order.price}
-                    </>
+                    <Chip
+                      icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                      label={order.price}
+                      size="small"
+                      color="default"
+                    />
                   }
                 />
               </ListItem>
@@ -337,7 +405,7 @@ const OrderTracking = () => {
                 <ListItemText
                   className={classes.root}
                   primary="Customer ID"
-                  secondary={order.customerId}
+                  secondary={<CopyableText text={order.customerId} />}
                 />
               </ListItem>
               <Divider />
@@ -409,17 +477,27 @@ const OrderTracking = () => {
                     secondary={
                       <>
                         <Chip
-                          label={order.customerAddress.phoneNo}
+                          label={
+                            <CopyableText
+                              text={order.customerAddress.phoneNo}
+                            />
+                          }
                           size="small"
                           icon={<CallIcon />}
                           color="primary"
+                          variant="outlined"
                         />{" "}
                         {order.customerAddress.altPhoneNo ? (
                           <Chip
-                            label={order.customerAddress.altPhoneNo}
+                            label={
+                              <CopyableText
+                                text={order.customerAddress.altPhoneNo}
+                              />
+                            }
                             size="small"
                             icon={<CallIcon />}
-                            color="primary"
+                            color="secondary"
+                            variant="outlined"
                           />
                         ) : null}
                       </>
@@ -443,7 +521,7 @@ const OrderTracking = () => {
                 <ListItemText
                   className={classes.root}
                   primary="Seller ID"
-                  secondary={order.sellerId}
+                  secondary={<CopyableText text={order.sellerId} />}
                 />
               </ListItem>
               <Divider />
@@ -515,17 +593,25 @@ const OrderTracking = () => {
                     secondary={
                       <>
                         <Chip
-                          label={order.sellerAddress.phoneNo}
+                          label={
+                            <CopyableText text={order.sellerAddress.phoneNo} />
+                          }
                           size="small"
                           icon={<CallIcon />}
                           color="primary"
+                          variant="outlined"
                         />{" "}
                         {order.sellerAddress.altPhoneNo ? (
                           <Chip
-                            label={order.sellerAddress.altPhoneNo}
+                            label={
+                              <CopyableText
+                                text={order.sellerAddress.altPhoneNo}
+                              />
+                            }
                             size="small"
                             icon={<CallIcon />}
-                            color="primary"
+                            color="secondary"
+                            variant="outlined"
                           />
                         ) : null}
                       </>
@@ -743,7 +829,7 @@ const OrderTracking = () => {
               value={trackDetails}
               size="small"
             />
-            <label for="admin-expected-delivery-date">
+            <label htmlFor="admin-expected-delivery-date">
               <Typography className={classes.root} color="primary">
                 Expected Delivery date
               </Typography>
