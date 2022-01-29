@@ -1,4 +1,5 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 
 // Components
@@ -32,8 +33,12 @@ const useStyles = makeStyles({
 
 const Orders = () => {
   const classes = useStyles();
-  const [panel, setpanel] = useState("1");
+  const params = useParams();
+  const history = useHistory();
+  const [panel, setpanel] = useState(params.subpanel);
+
   const handleChange = (event, newValue) => {
+    history.push(`/Admin/1/${newValue}`);
     setpanel(newValue);
   };
   return (
