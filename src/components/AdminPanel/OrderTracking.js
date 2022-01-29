@@ -697,7 +697,11 @@ const OrderTracking = () => {
                 body={
                   <Chip
                     icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
-                    label={order.orderTotal - paidAmt - deliveryCharge}
+                    label={
+                      Math.round(
+                        (order.orderTotal - paidAmt - deliveryCharge) * 10
+                      ) / 10
+                    }
                     size="small"
                     color="success"
                     className={classes.root}
