@@ -50,7 +50,7 @@ const AdminNavbar = () => {
     if (newValue === "6") {
       history.push("/");
     } else {
-      history.push(`/Admin/${newValue}`);
+      history.push(`/Admin/${newValue}/1`);
       setpanel(newValue);
     }
   };

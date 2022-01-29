@@ -108,7 +108,7 @@ const App = () => {
           <Route path="/AdminTrack/:orderId">
             <AdminTrack />
           </Route>
-          <Route path="/Admin/:panel">
+          <Route path="/Admin/:panel/:subpanel">
             <Admin />
           </Route>
           <Route path="/SellerProfile/:sellerId">

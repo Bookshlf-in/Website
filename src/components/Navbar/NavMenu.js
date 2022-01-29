@@ -121,7 +121,7 @@ const NavbarMenu = () => {
           />
         </MenuItem>
         {user?.roles?.includes("admin") ? (
-          <MenuItem onClick={() => handelNavigate("/Admin/1")}>
+          <MenuItem onClick={() => handelNavigate("/Admin/1/1")}>
             <MenuStack icon={<AdminIcon color="error" />} label="Admin" />
           </MenuItem>
         ) : null}
