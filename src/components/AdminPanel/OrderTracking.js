@@ -4,19 +4,11 @@ import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
-import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Stack, Chip, Avatar, Typography } from "@mui/material";
+import { Stepper, Step, StepLabel } from "@mui/material";
+import { LinearProgress, CircularProgress } from "@mui/material";
+import { TextField, Button, Tooltip, Alert, AlertTitle } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import CircularProgress from "@mui/material/CircularProgress";
-import LinearProgress from "@mui/material/LinearProgress";
-import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
 
 // icons
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
@@ -829,12 +821,18 @@ const OrderTracking = () => {
               endIcon={
                 next ? (
                   <CircularProgress size={16} color="inherit" />
+                ) : activeStep === 4 ? (
+                  <CheckIcon />
                 ) : (
                   <NextIcon />
                 )
               }
             >
-              {activeStep === steps.length - 1 ? "Finish" : "Next Step"}
+              {activeStep === steps.length - 1
+                ? "Finish"
+                : activeStep === 4
+                ? "Order Completed"
+                : "Next Step"}
             </Button>
             <Stack
               direction="row"
@@ -856,25 +854,31 @@ const OrderTracking = () => {
                   Cancel Order
                 </LoadingButton>
               ) : null}
-              <LoadingButton
-                loading={payload}
-                loadingPosition="end"
-                startIcon={<RupeeIcon />}
-                endIcon={paid ? <CheckIcon /> : <NextIcon />}
-                variant="outlined"
-                color="success"
-                className={classes.root}
-                onClick={sendSellerPay}
-                disabled={paid}
-              >
-                {paidAmt}
-                {paid ? " (Paid To Seller)" : " (Send Payment to Seller)"}
-              </LoadingButton>
+              {!paid ? (
+                <LoadingButton
+                  loading={payload}
+                  loadingPosition="end"
+                  startIcon={<RupeeIcon />}
+                  endIcon={paid ? <CheckIcon /> : <NextIcon />}
+                  variant="outlined"
+                  color="success"
+                  className={classes.root}
+                  onClick={sendSellerPay}
+                  disabled={paid}
+                >
+                  {paidAmt + " (Send Payment to Seller)"}
+                </LoadingButton>
+              ) : null}
               {paid ? (
-                <Typography variant="body2" className={classes.root}>
-                  Successfully Paid to Seller. Amount Transfered to Seller
-                  Wallet.
-                </Typography>
+                <Alert>
+                  <AlertTitle className={classes.root}>
+                    {paidAmt} (Paid To Seller)
+                  </AlertTitle>
+                  <Typography variant="caption" className={classes.root}>
+                    Successfully Paid to Seller. Amount Transfered to Seller
+                    Wallet.
+                  </Typography>
+                </Alert>
               ) : null}
             </Stack>
           </Stack>
