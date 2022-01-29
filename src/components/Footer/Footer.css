@@ -25,7 +25,7 @@
   color: #ff4208;
   font-weight: bolder !important;
 }
-.cool-link::after {
+.footer-link-items .cool-link::after {
   content: "";
   display: block;
   width: 0;
@@ -34,7 +34,7 @@
   transition: width 0.3s;
 }
 
-.cool-link:hover::after {
+.footer-link-items .cool-link:hover::after {
   width: 100%;
   background: #ff4208;
 }
