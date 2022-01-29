@@ -4,32 +4,20 @@ import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
-import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Stack, Chip, Avatar, Typography } from "@mui/material";
+import { Stepper, Step, StepLabel } from "@mui/material";
+import { LinearProgress, CircularProgress } from "@mui/material";
+import { TextField, Button, Tooltip, Alert, AlertTitle } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import CircularProgress from "@mui/material/CircularProgress";
-import LinearProgress from "@mui/material/LinearProgress";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListSubheader from "@mui/material/ListSubheader";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import ListItemButton from "@mui/material/ListItemButton";
-import TextField from "@mui/material/TextField";
 
 // icons
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
 import CheckIcon from "@mui/icons-material/CheckCircleRounded";
-import CallIcon from "@mui/icons-material/CallRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
+import CopyIcon from "@mui/icons-material/ContentCopy";
+import CopiedIcon from "@mui/icons-material/FileCopy";
+import WeightIcon from "@mui/icons-material/FitnessCenter";
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +27,7 @@ const useStyles = makeStyles({
     },
     "& p": {
       fontFamily: "PT sans !important",
+      fontSize: "12px !important",
     },
     "& input": {
       fontFamily: "PT sans !important",
@@ -97,13 +86,17 @@ const OrderTracking = () => {
           params: { orderId: params.orderId },
         })
         .then((response) => {
+          console.log(response.data);
           setorder(response.data);
           setpaid(response.data.isSellerPaid);
           settrackLink(response.data?.externalTrackingLink);
           settrackDetails(response.data?.externalTrackingDetails);
-          setDeliveryDate(response.data?.expectedDeliveryDate);
-          setDeliveryCharge(response.data?.adminDeliveryExpense);
-          // console.log(response.data);
+          setDeliveryDate(response.data?.expectedDeliveryDate.substr(0, 10));
+          setDeliveryCharge(
+            !isNaN(response.data?.adminDeliveryExpense)
+              ? response.data?.adminDeliveryExpense
+              : 0
+          );
           setActiveStep(Math.round(response.data.progress / 25));
           axios
             .get(
@@ -245,635 +238,649 @@ const OrderTracking = () => {
         setTrackLoad(false);
       });
   };
+
+  // Custom Copy Component
+  const CopyableText = (props) => {
+    const [copied, setcopied] = useState(false);
+
+    const CopyText = () => {
+      navigator.clipboard.writeText(props.text);
+      setcopied(true);
+      setTimeout(() => {
+        setcopied(false);
+      }, 3000);
+    };
+
+    return (
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          cursor: "pointer",
+          padding: "5px 10px",
+          borderRadius: "5px",
+          border: "1px solid rgba(0,0,0,0.2)",
+        }}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography
+          variant="caption"
+          className={classes.root}
+          color={copied ? "primary" : "default"}
+        >
+          {props.text}
+        </Typography>
+        <Tooltip
+          arrow
+          title="Click to Copy"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="caption" onClick={CopyText}>
+            {!copied ? (
+              <CopyIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            ) : (
+              <CopiedIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            )}
+          </Typography>
+        </Tooltip>
+
+        {copied ? (
+          <Typography
+            sx={{ fontSize: "9px" }}
+            className={classes.root}
+            color="primary"
+          >
+            Copied!
+          </Typography>
+        ) : null}
+      </Stack>
+    );
+  };
+
+  // Custom List Component
+  const ListItem = (props) => {
+    return (
+      <Stack
+        spacing={1}
+        // alignItems="center"
+        justifyContent="center"
+        sx={{
+          width: "100%",
+          minWidth: 200,
+          padding: "10px 16px",
+          borderBottom: "1px solid rgba(0,0,0,0.2)",
+          "&:hover": {
+            backgroundColor: "rgba(0,0,0,0.05)",
+            borderBottom: "1px solid rgba(0,0,0,0.5)",
+            transition: "0.3s",
+          },
+        }}
+      >
+        <div>{props.title}</div>
+        <div>{props.body}</div>
+      </Stack>
+    );
+  };
+
+  const ListTitle = (props) => {
+    return (
+      <Typography
+        variant="h6"
+        sx={{ fontWeight: "bolder", padding: "0px 16px" }}
+      >
+        {props.content}
+      </Typography>
+    );
+  };
+
+  const ListHead = (props) => {
+    return (
+      <Typography sx={{ fontSize: "13px", fontFamily: "PT sans" }}>
+        {props.content}
+      </Typography>
+    );
+  };
+
+  const ListBody = (props) => {
+    return (
+      <Typography sx={{ fontSize: "11px", fontWeight: "bolder" }}>
+        {props.content}
+      </Typography>
+    );
+  };
+
   return (
     <>
       {load ? (
         <Stack
           direction="column"
-          spacing={3}
+          spacing={1}
           sx={{ width: "100%", padding: "10px" }}
         >
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Typography variant="body1" className={classes.root}>
-              ORDER ID :
-            </Typography>
-            <Chip label={order._id} color="primary" size="small" />
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <ListTitle content="ORDER ID : " />
+            <CopyableText text={order._id} />
           </Stack>
           {/* ================= Book Details ===================== */}
-          <Stack direction="row" spacing={5}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              width: "100%",
+              padding: "5px",
+              borderRadius: "5px",
+            }}
+          >
             <Avatar
               alt={order.title}
               src={order.photo}
-              sx={{ height: 500, width: 300 }}
+              sx={{
+                height: 350,
+                width: 280,
+              }}
               variant="rounded"
             />
-            <List
-              subheader={
-                <ListSubheader className={classes.root}>
-                  Book Details
-                </ListSubheader>
-              }
+            <Stack
+              spacing={0}
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
             >
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Book ID"
-                  secondary={order.bookId}
-                />
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Book Name"
-                  secondary={order.title}
-                />
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Book Author"
-                  secondary={order.author}
-                />
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Book Selling Price"
-                  secondary={
-                    <>
-                      <i className="fas fa-rupee-sign"></i> {order.price}
-                    </>
-                  }
-                />
-              </ListItem>
-            </List>
-            {/* ================================================= */}
-            <List
-              subheader={
-                <ListSubheader className={classes.root}>
-                  Customer Details
-                </ListSubheader>
-              }
-            >
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Customer ID"
-                  secondary={order.customerId}
-                />
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Customer Name"
-                  secondary={order.customerName}
-                />
-              </ListItem>
-              <Divider />
-              <List
-                subheader={
-                  <ListSubheader className={classes.root}>
-                    Customer Address
-                  </ListSubheader>
+              <ListTitle content="Book Details" />
+              <ListItem
+                title={<ListHead content="Book ID" />}
+                body={<CopyableText text={order.bookId} />}
+              />
+              <ListItem
+                title={<ListHead content="Book Name" />}
+                body={<ListBody content={order.title} />}
+              />
+              <ListItem
+                title={<ListHead content="Book Author" />}
+                body={<ListBody content={order.author} />}
+              />
+              <ListItem
+                title={<ListHead content="Book Selling Price" />}
+                body={
+                  <Chip
+                    icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                    label={order.price}
+                    size="small"
+                    color="default"
+                    className={classes.root}
+                  />
                 }
-              >
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Address"
-                    secondary={order.customerAddress.address}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="State"
-                    secondary={order.customerAddress.state}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="City"
-                    secondary={order.customerAddress.city}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Zip Code"
-                    secondary={order.customerAddress.zipCode}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Contact"
-                    secondary={
-                      <>
-                        <Chip
-                          label={order.customerAddress.phoneNo}
-                          size="small"
-                          icon={<CallIcon />}
-                          color="primary"
-                        />{" "}
-                        {order.customerAddress.altPhoneNo ? (
-                          <Chip
-                            label={order.customerAddress.altPhoneNo}
-                            size="small"
-                            icon={<CallIcon />}
-                            color="primary"
-                          />
-                        ) : null}
-                      </>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </List>
+              />
+            </Stack>
             {/* ================================================= */}
-            <List
-              subheader={
-                <ListSubheader className={classes.root}>
-                  Seller Details
-                </ListSubheader>
-              }
+            <Stack
+              spacing={0}
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
             >
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Seller ID"
-                  secondary={order.sellerId}
-                />
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemIcon>
-                  <NextIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.root}
-                  primary="Seller Name"
-                  secondary={order.sellerName}
-                />
-              </ListItem>
-              <Divider />
-              <List
-                subheader={
-                  <ListSubheader className={classes.root}>
-                    Seller Address
-                  </ListSubheader>
-                }
-              >
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Address"
-                    secondary={order.sellerAddress.address}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="State"
-                    secondary={order.sellerAddress.state}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="City"
-                    secondary={order.sellerAddress.city}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Zip Code"
-                    secondary={order.sellerAddress.zipCode}
-                  />
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Contact"
-                    secondary={
-                      <>
-                        <Chip
-                          label={order.sellerAddress.phoneNo}
-                          size="small"
-                          icon={<CallIcon />}
-                          color="primary"
-                        />{" "}
-                        {order.sellerAddress.altPhoneNo ? (
-                          <Chip
-                            label={order.sellerAddress.altPhoneNo}
-                            size="small"
-                            icon={<CallIcon />}
-                            color="primary"
-                          />
-                        ) : null}
-                      </>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </List>
+              <ListTitle content="Customer Details" />
+              <ListItem
+                title={<ListHead content="Customer ID" />}
+                body={<CopyableText text={order.customerId} />}
+              />
+              <ListItem
+                title={<ListHead content="Customer Name" />}
+                body={<ListBody content={order.customerName} />}
+              />
+            </Stack>
+            {/* ================================================= */}
+            <Stack
+              spacing={0}
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
+            >
+              <ListTitle content="Seller Details" />
+              <ListItem
+                title={<ListHead content="Seller ID" />}
+                body={<CopyableText text={order.sellerId} />}
+              />
+              <ListItem
+                title={<ListHead content="Seller Name" />}
+                body={<ListBody content={order.sellerName} />}
+              />
+            </Stack>
           </Stack>
           {/* ==================================================================================== */}
-          <Stack direction="row" spacing={5} justifyContent="center">
-            <List
-              subheader={
-                <ListSubheader className={classes.root}>
-                  Order Details
-                </ListSubheader>
-              }
-            >
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Item Price"
-                    secondary={
-                      <Chip
-                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
-                        label={order.price}
-                        size="small"
-                        color="default"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Purchase Quantity"
-                    secondary={
-                      <Chip
-                        label={order.purchaseQty}
-                        size="small"
-                        color="default"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Shipping Charges"
-                    secondary={
-                      <Chip
-                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
-                        label={order.shippingCharges}
-                        size="small"
-                        color="default"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Order Total"
-                    secondary={
-                      <Chip
-                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
-                        label={order.orderTotal}
-                        size="small"
-                        color="default"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            {/* ============================================================= */}
-            <List
-              subheader={
-                <ListSubheader className={classes.root}>
-                  Payment Details
-                </ListSubheader>
-              }
-            >
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Payment Mode"
-                    secondary={
-                      <Chip
-                        label={order.paymentMode}
-                        size="small"
-                        color="default"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Payment Status"
-                    secondary={
-                      <Chip
-                        label={order.paymentStatus}
-                        color={
-                          order.paymentStatus === "Pending"
-                            ? "warning"
-                            : "success"
-                        }
-                        size="small"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Paid To Seller"
-                    secondary={
-                      <Chip
-                        label={order.isSellerPaid ? "YES" : "NO"}
-                        color={order.isSellerPaid ? "success" : "error"}
-                        size="small"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List
-              subheader={
-                <ListSubheader className={classes.root}>Earnings</ListSubheader>
-              }
-            >
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NextIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.root}
-                    primary="Total Earnings in This Order"
-                    secondary={
-                      <Chip
-                        icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
-                        label={order.orderTotal - paidAmt - deliveryCharge}
-                        size="small"
-                        color="success"
-                      />
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </Stack>
-
-          <Typography variant="h4" align="center">
-            <strong>External Tracking Details</strong>
-          </Typography>
-          <Stack justifyContent="center" alignItems="center">
-            <TextField
-              className={classes.root}
-              label="External Order Tracking Link"
-              variant="filled"
-              sx={{ width: 400 }}
-              onChange={(e) => settrackLink(e.target.value)}
-              value={trackLink}
-              size="small"
-            />
-          </Stack>
-          <Stack spacing={2} justifyContent="center" alignItems="center">
-            <TextField
-              className={classes.root}
-              label="External Order Tracking Details"
-              variant="filled"
-              sx={{ width: 400 }}
-              onChange={(e) => settrackDetails(e.target.value)}
-              value={trackDetails}
-              size="small"
-            />
-            <label for="admin-expected-delivery-date">
-              <Typography className={classes.root} color="primary">
-                Expected Delivery date
-              </Typography>
-            </label>
-            <input
-              type="date"
-              id="admin-expected-delivery-date"
-              name="expected-delivery-date"
-              value={deliveryDate}
-              min="2022-01-01"
-              max="2025-12-31"
-              onChange={(e) => setDeliveryDate(e.target.value)}
-            />
-            <TextField
-              className={classes.root}
-              label="Real Delivery Expense for this Order"
-              variant="filled"
-              sx={{ width: 400 }}
-              onChange={(e) => setDeliveryCharge(e.target.value)}
-              value={deliveryCharge}
-              size="small"
-            />
-            <LoadingButton
-              loading={trackLoad}
-              loadingPosition="end"
-              endIcon={<NextIcon />}
-              variant="contained"
-              color="primary"
-              className={classes.root}
-              onClick={updateOrder}
-              size="small"
-            >
-              Update Details
-            </LoadingButton>
-          </Stack>
-          <Stepper
-            activeStep={activeStep}
-            alternativeLabel
-            className={classes.root}
-          >
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <div>
-            {activeStep === steps.length ? (
-              <div></div>
-            ) : (
-              <div
-                style={{
-                  padding: "10px",
-                  textAlign: "center",
-                  color: "#1dff02",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                }}
-              >
-                {getStepContent(activeStep)}
-              </div>
-            )}
-          </div>
-          <div
-            style={{
+          <Stack
+            spacing={2}
+            direction="row"
+            justifyContent="center"
+            sx={{
               width: "100%",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-              display: "flex",
+              padding: "5px",
+              borderRadius: "5px",
             }}
           >
-            <Button
-              className={classes.root}
-              variant="contained"
-              color="primary"
-              onClick={() => handleNextStep(order._id)}
-              disabled={activeStep === 4}
-              size="small"
+            <Stack
+              spacing={0}
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
             >
-              {next ? (
-                <>
-                  <CircularProgress size={16} color="inherit" />
-                  &nbsp;&nbsp;
-                </>
-              ) : (
-                <></>
-              )}
-              {activeStep === steps.length - 1 ? "Finish" : "Next Step"}
-            </Button>
-          </div>
+              <ListTitle content="Customer Address" />
+              <ListItem
+                title={<ListHead content="Address" />}
+                body={<ListBody content={order.customerAddress.address} />}
+              />
+              <ListItem
+                title={<ListHead content="State" />}
+                body={<ListBody content={order.customerAddress.state} />}
+              />
+              <ListItem
+                title={<ListHead content="City" />}
+                body={<ListBody content={order.customerAddress.city} />}
+              />
+              <ListItem
+                title={<ListHead content="Zip Code" />}
+                body={<ListBody content={order.customerAddress.zipCode} />}
+              />
+              <ListItem
+                title={<ListHead content="Contact" />}
+                body={
+                  <Stack direction="row" spacing={1}>
+                    <CopyableText text={order.customerAddress.phoneNo} />
+                    {order.customerAddress?.altPhoneNo ? (
+                      <CopyableText text={order.customerAddress.altPhoneNo} />
+                    ) : null}
+                  </Stack>
+                }
+              />
+            </Stack>
+            <Stack
+              spacing={0}
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
+            >
+              <ListTitle content="Seller Address" />
+              <ListItem
+                title={<ListHead content="Address" />}
+                body={<ListBody content={order.sellerAddress.address} />}
+              />
+              <ListItem
+                title={<ListHead content="State" />}
+                body={<ListBody content={order.sellerAddress.state} />}
+              />
+              <ListItem
+                title={<ListHead content="City" />}
+                body={<ListBody content={order.sellerAddress.city} />}
+              />
+              <ListItem
+                title={<ListHead content="Zip Code" />}
+                body={<ListBody content={order.sellerAddress.zipCode} />}
+              />
+              <ListItem
+                title={<ListHead content="Contact" />}
+                body={
+                  <Stack direction="row" spacing={1}>
+                    <CopyableText text={order.sellerAddress.phoneNo} />
+                    {order.sellerAddress?.altPhoneNo ? (
+                      <CopyableText text={order.sellerAddress.altPhoneNo} />
+                    ) : null}
+                  </Stack>
+                }
+              />
+            </Stack>
+          </Stack>
 
           <Stack
             direction="row"
-            spacing={5}
+            spacing={2}
+            justifyContent="center"
+            sx={{
+              width: "100%",
+
+              padding: "5px",
+              borderRadius: "5px",
+            }}
+          >
+            <Stack
+              spacing={0}
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
+            >
+              <ListTitle content="Order Details" />
+              <ListItem
+                title={<ListHead content="Item Price" />}
+                body={
+                  <Chip
+                    icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                    label={order.price}
+                    size="small"
+                    color="info"
+                    className={classes.root}
+                  />
+                }
+              />
+              <ListItem
+                title={<ListHead content="Weight In Grams" />}
+                body={
+                  <Chip
+                    icon={<WeightIcon sx={{ height: 16, width: 16 }} />}
+                    label={order.weightInGrams}
+                    size="small"
+                    color="default"
+                    className={classes.root}
+                  />
+                }
+              />
+              <ListItem
+                title={<ListHead content="Purchase Quantity" />}
+                body={
+                  <Chip
+                    label={order.purchaseQty}
+                    size="small"
+                    color="info"
+                    className={classes.root}
+                    variant="outlined"
+                  />
+                }
+              />
+              <ListItem
+                title={<ListHead content="Shipping Charges" />}
+                body={
+                  <Chip
+                    icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                    label={order.shippingCharges}
+                    size="small"
+                    color="secondary"
+                    variant="outlined"
+                    className={classes.root}
+                  />
+                }
+              />
+              <ListItem
+                title={<ListHead content="Order Total" />}
+                body={
+                  <Chip
+                    icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                    label={order.orderTotal}
+                    size="small"
+                    color="secondary"
+                    className={classes.root}
+                  />
+                }
+              />
+            </Stack>
+            {/* ============================================================= */}
+            <Stack
+              spacing={0}
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
+            >
+              <ListTitle content="Payment Details" />
+              <ListItem
+                title={<ListHead content="Payment Mode" />}
+                body={
+                  <Chip
+                    label={order.paymentMode}
+                    size="small"
+                    color="default"
+                    className={classes.root}
+                  />
+                }
+              />
+              <ListItem
+                title={<ListHead content="Payment Status" />}
+                body={
+                  <Chip
+                    label={order.paymentStatus}
+                    color={
+                      order.paymentStatus === "Pending" ? "warning" : "success"
+                    }
+                    size="small"
+                    className={classes.root}
+                  />
+                }
+              />
+              <ListItem
+                title={<ListHead content="Paid To Seller" />}
+                body={
+                  <Chip
+                    label={order.isSellerPaid ? "YES" : "NO"}
+                    color={order.isSellerPaid ? "success" : "error"}
+                    size="small"
+                    className={classes.root}
+                  />
+                }
+              />
+              <ListItem
+                title={<ListHead content="Total Earnings in This Order" />}
+                body={
+                  <Chip
+                    icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
+                    label={
+                      Math.round(
+                        (order.orderTotal - paidAmt - deliveryCharge) * 10
+                      ) / 10
+                    }
+                    size="small"
+                    color="success"
+                    className={classes.root}
+                  />
+                }
+              />
+            </Stack>
+          </Stack>
+          <Stack
+            sx={{
+              width: "100%",
+
+              padding: "5px",
+              borderRadius: "5px",
+            }}
             justifyContent="center"
             alignItems="center"
           >
-            {activeStep < 4 ? (
-              <LoadingButton
-                loading={cancelLoad}
-                loadingPosition="end"
-                endIcon={<CancelIcon />}
-                variant="contained"
-                color="error"
-                className={classes.root}
-                onClick={handelCancelOrder}
-                disabled={order.status === "Cancelled"}
-                size="small"
-              >
-                Cancel Order
-              </LoadingButton>
-            ) : null}
-            <LoadingButton
-              loading={payload}
-              loadingPosition="end"
-              endIcon={paid ? <CheckIcon /> : <NextIcon />}
-              variant="outlined"
-              color="success"
-              className={classes.root}
-              onClick={sendSellerPay}
-              disabled={paid}
-              size="small"
+            <Stack
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.2)",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
             >
-              {paid ? "Paid To Seller" : "Send Payment to Seller"} ({paidAmt})
-            </LoadingButton>
-            {paid ? (
-              <Typography variant="body2" className={classes.root}>
-                Successfully Paid to Seller. Amount Transfered to Seller Wallet.
-              </Typography>
-            ) : null}
+              <ListTitle content="External Tracking" />
+              <TextField
+                className={classes.root}
+                label="External Order Tracking Link"
+                variant="filled"
+                size="small"
+                fullWidth
+                sx={{ maxWidth: 600 }}
+                onChange={(e) => settrackLink(e.target.value)}
+                value={trackLink}
+              />
+              <TextField
+                className={classes.root}
+                label="External Order Tracking Details"
+                variant="filled"
+                size="small"
+                fullWidth
+                sx={{ maxWidth: 600 }}
+                onChange={(e) => settrackDetails(e.target.value)}
+                value={trackDetails}
+              />
+              <TextField
+                className={classes.root}
+                label="Real Delivery Expense for this Order"
+                variant="filled"
+                size="small"
+                fullWidth
+                sx={{ maxWidth: 600 }}
+                onChange={(e) => setDeliveryCharge(e.target.value)}
+                value={deliveryCharge}
+              />
+              <label htmlFor="admin-expected-delivery-date">
+                <Typography
+                  className={classes.root}
+                  color="primary"
+                  variant="body2"
+                >
+                  Expected Delivery date
+                </Typography>
+                <input
+                  type="date"
+                  id="admin-expected-delivery-date"
+                  name="expected-delivery-date"
+                  value={deliveryDate}
+                  min="2022-01-01"
+                  max="2025-12-31"
+                  onChange={(e) => setDeliveryDate(e.target.value)}
+                />
+              </label>
+              <LoadingButton
+                loading={trackLoad}
+                loadingPosition="end"
+                endIcon={<NextIcon />}
+                variant="contained"
+                color="warning"
+                className={classes.root}
+                onClick={updateOrder}
+              >
+                Update Details
+              </LoadingButton>
+            </Stack>
+          </Stack>
+          <Stack
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              width: "100%",
+              border: "1px solid rgba(0,0,0,0.2)",
+              padding: "5px",
+              borderRadius: "5px",
+            }}
+          >
+            <ListTitle content="Order Status" />
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              className={classes.root}
+              sx={{ width: "100%" }}
+            >
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            {activeStep === steps.length ? null : (
+              <ListBody content={getStepContent(activeStep)} />
+            )}
+            <Button
+              className={classes.root}
+              variant="outlined"
+              color="primary"
+              onClick={() => handleNextStep(order._id)}
+              disabled={activeStep === 4}
+              endIcon={
+                next ? (
+                  <CircularProgress size={16} color="inherit" />
+                ) : activeStep === 4 ? (
+                  <CheckIcon />
+                ) : (
+                  <NextIcon />
+                )
+              }
+            >
+              {activeStep === steps.length - 1
+                ? "Finish"
+                : activeStep === 4
+                ? "Order Completed"
+                : "Next Step"}
+            </Button>
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
+              {activeStep < 4 ? (
+                <LoadingButton
+                  loading={cancelLoad}
+                  loadingPosition="end"
+                  endIcon={<CancelIcon />}
+                  variant="outlined"
+                  color="error"
+                  className={classes.root}
+                  onClick={handelCancelOrder}
+                  disabled={order.status === "Cancelled"}
+                >
+                  Cancel Order
+                </LoadingButton>
+              ) : null}
+              {!paid ? (
+                <LoadingButton
+                  loading={payload}
+                  loadingPosition="end"
+                  startIcon={<RupeeIcon />}
+                  endIcon={paid ? <CheckIcon /> : <NextIcon />}
+                  variant="outlined"
+                  color="success"
+                  className={classes.root}
+                  onClick={sendSellerPay}
+                  disabled={paid}
+                >
+                  {paidAmt + " (Send Payment to Seller)"}
+                </LoadingButton>
+              ) : null}
+              {paid ? (
+                <Alert>
+                  <AlertTitle className={classes.root}>
+                    {paidAmt} (Paid To Seller)
+                  </AlertTitle>
+                  <Typography variant="caption" className={classes.root}>
+                    Successfully Paid to Seller. Amount Transfered to Seller
+                    Wallet.
+                  </Typography>
+                </Alert>
+              ) : null}
+            </Stack>
           </Stack>
         </Stack>
       ) : (
