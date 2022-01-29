@@ -67,7 +67,6 @@ const GetOrderDetails = () => {
             totalPages: response.data.totalPages,
           },
         });
-        console.log(response.data);
         setorderLoad(false);
         setorderList(response.data.data);
         settotalPages(response.data.totalPages);
