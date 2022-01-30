@@ -46,9 +46,7 @@ const useStyles = makeStyles({
         width: 12,
       },
       fontSize: "9px !important",
-      color: "whitesmoke",
-      backgroundColor: "rgba(0,0,0,0.9) !important",
-      borderRight: "1px solid whitesmoke",
+      backgroundColor: "rgba(0,0,0,0.2) !important",
     },
   },
 });

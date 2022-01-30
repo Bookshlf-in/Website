@@ -42,11 +42,8 @@
 .filepond--wrapper {
   width: 100% !important;
 }
-.filepond--credits {
-  display: none !important;
-}
 .filepond--drop-label {
-  min-height: 2em !important;
+  min-height: 4em !important;
 }
 @media (min-width: 30em) {
   .filepond--item {
