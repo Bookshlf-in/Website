@@ -1023,7 +1023,6 @@ const AddBook = (props) => {
                   <FilePond
                     acceptedFileTypes={["image/jpeg"]}
                     name="bookImages"
-                    itemInsertLocation="after"
                     dropOnPage={true}
                     dropValidation={true}
                     allowReorder={true}
