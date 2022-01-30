@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles(() => ({
   root: {
     fontFamily: "PT sans",
-    width: 240,
+    width: "100%",
     "& p": {
       fontFamily: "PT sans !important",
       fontSize: "10px",
@@ -19,6 +19,7 @@ const useStyles = makeStyles(() => ({
     },
     "& .MuiDataGrid-columnHeaderTitleContainer": {
       padding: "0px",
+      whiteSpace: "normal !important",
     },
     "& .MuiDataGrid-footerContainer": {
       minHeight: 0,
@@ -33,29 +34,32 @@ const CommisionChartGrid = (props) => {
   const columns = [
     {
       field: "priceLimit",
-      headerName: "Price Limit",
-      width: 62,
+      headerName: "Amount",
+      minWidth: 52,
+      flex: 1,
       sortable: false,
     },
     {
       field: "percentageCommission",
-      headerName: "Commission (%)",
-      width: 78,
+      headerName: "Commission(%)",
+      minWidth: 78,
+      flex: 1,
       sortable: false,
     },
     {
       field: "fixedCommission",
-      headerName: "Commission (Fixed)",
-      width: 90,
+      headerName: "Pickup & Processing Charges",
+      minWidth: 130,
+      flex: 1,
       sortable: false,
     },
   ];
   const rows = props.grid.map((row) => {
     return {
       id: row._id,
-      priceLimit: row.priceLimit,
-      percentageCommission: row.percentCommission,
-      fixedCommission: row.fixedCommission,
+      priceLimit: `Rs. ${row.priceLimit}/-`,
+      percentageCommission: `${row.percentCommission}%`,
+      fixedCommission: `Rs. ${row.fixedCommission}/-`,
     };
   });
 

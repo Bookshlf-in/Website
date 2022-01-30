@@ -9,31 +9,29 @@ import axios from "../../axios";
 // Components
 // ======== From MUI Core (Stable)
 import { Grid, Stack, Collapse, Popover, Backdrop } from "@mui/material";
-import { Button, Checkbox, TextField, IconButton } from "@mui/material";
+import { Button, Checkbox, TextField } from "@mui/material";
 import { Alert, CircularProgress, ClickAwayListener } from "@mui/material";
-import { Chip, Tooltip, InputAdornment, Avatar } from "@mui/material";
+import { Chip, Tooltip, InputAdornment } from "@mui/material";
 import { Dialog, DialogActions, DialogContent } from "@mui/material";
-import { DialogContentText, DialogTitle, Typography } from "@mui/material";
+import { DialogTitle, Typography } from "@mui/material";
 import { InputLabel, FormControl, Select, MenuItem } from "@mui/material";
 // ======== From MUI Lab (Unstable)
 import { LoadingButton } from "@mui/lab";
 
 // FilePond Components for image Uploading
-import { FilePond, File, registerPlugin } from "react-filepond";
+import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 // Icons
-import CancelIcon from "@mui/icons-material/CancelTwoTone";
 import CloseIcon from "@mui/icons-material/ArrowDropUpRounded";
 import OpenIcon from "@mui/icons-material/ArrowDropDownRounded";
 import BookIcon from "@mui/icons-material/MenuBookRounded";
 import BookDescIcon from "@mui/icons-material/DescriptionRounded";
 import AddressIcon from "@mui/icons-material/ContactsRounded";
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
-import CameraIcon from "@mui/icons-material/AddAPhotoRounded";
 import SendIcon from "@mui/icons-material/SendRounded";
 import AddIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import EditionIcon from "@mui/icons-material/Timelapse";
@@ -222,31 +220,12 @@ const AddBook = (props) => {
     setTags(tags.filter((tag) => tagname !== tag));
   };
 
-  // adding book images in form
-  const UpdateFileList = (fileList) => {
-    setImage(fileList);
-  };
   // Checking All Books Are Unique
   const isUnique = (fileName, fileList) => {
     for (let i = 0; i < fileList.length; i++) {
       if (fileList[i].name === fileName) return false;
     }
     return true;
-  };
-  const handelbookAdd = (e, uploadMultiple) => {
-    // console.log(e.target.files[0].name);
-    if (Image.length > 0 && uploadMultiple) {
-      if (isUnique(e.target.files[0].name, Image)) {
-        UpdateFileList([...Image, ...Array.from(e.target.files)]);
-      }
-    } else {
-      UpdateFileList(Array.from(e.target.files));
-    }
-  };
-
-  // deleting book images from form
-  const handleImageDelete = (filename) => {
-    setImage(Image.filter((file) => file.name !== filename));
   };
 
   // submitting book for review
@@ -779,25 +758,6 @@ const AddBook = (props) => {
                   spacing={1}
                   justifyContent="space-between"
                 >
-                  {/* <TextField
-                    className={classes.root}
-                    id="add-book-textfield"
-                    label="Book SET Quantity"
-                    helperText=" "
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <BookQtyIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="filled"
-                    value={Qnty}
-                    // onChange={(e) => setQnty(e.target.value)}
-                    name="book-qty-field"
-                    autoComplete="off"
-                    readOnly
-                  /> */}
                   <TextField
                     className={classes.root}
                     id="add-book-textfield"
@@ -866,6 +826,12 @@ const AddBook = (props) => {
                     <Dialog
                       open={openpriceChart}
                       onClose={() => setopenpriceChart(false)}
+                      sx={{
+                        "& .MuiDialog-paper": {
+                          margin: "32px 10px !important",
+                          width: "100%",
+                        },
+                      }}
                     >
                       <DialogTitle
                         sx={{
@@ -876,15 +842,21 @@ const AddBook = (props) => {
                       >
                         {"Detailed Chart for Seller Earnings & Commission"}
                       </DialogTitle>
-                      <DialogContent sx={{ height: 400, padding: "0px 10px" }}>
+                      <DialogContent
+                        sx={{
+                          height: 400,
+                          width: "100%",
+                          padding: "0px 10px",
+                        }}
+                      >
                         <SellerCommisionChart grid={props.commisionChart} />
                       </DialogContent>
                       <DialogActions>
                         <Button
                           onClick={() => setopenpriceChart(false)}
                           variant="outlined"
-                          color="primary"
-                          style={{ fontFamily: "pt sans", fontSize: "12px" }}
+                          color="error"
+                          style={{ fontFamily: "pt sans", fontSize: "11px" }}
                           size="small"
                         >
                           close
@@ -1043,22 +1015,34 @@ const AddBook = (props) => {
                     ))}
                   </Stack>
                 </Stack>
+                {/* ======================= Book Image Upload ======================== */}
                 <Stack direction="column" spacing={1} sx={{ width: "100%" }}>
                   <Alert severity={errorField === 5 ? "error" : "info"}>
                     Please Upload Atleast 3-15 Clear Images of BOOK-SET
                   </Alert>
                   <FilePond
-                    name="Book Image"
-                    files={Image}
+                    acceptedFileTypes={["image/jpeg"]}
+                    name="bookImages"
+                    itemInsertLocation="after"
+                    dropOnPage={true}
+                    dropValidation={true}
                     allowReorder={true}
                     allowMultiple={true}
                     maxFiles={15}
-                    onupdatefiles={setImage}
-                    dropOnPage
-                    dropValidation
+                    files={Image}
+                    beforeAddFile={(file) => {
+                      if (isUnique(file.file.name, Image)) return true;
+                      return false;
+                    }}
+                    onupdatefiles={(fileItems) => {
+                      setImage(fileItems.map((fileItem) => fileItem.file));
+                    }}
                     labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                    credits={false}
+                    styleButtonRemoveItemPosition="right"
                   />
                 </Stack>
+                {/* ============================================================== */}
               </Stack>
             </fieldset>
           </form>
