@@ -287,7 +287,7 @@ const Wallet = () => {
                     <TextField
                       className={classes.root}
                       label="Account Details"
-                      helperText="Please Provide Bank Account Details (Account Number & branch ISBN Code ) or UPI ID or Phone Number "
+                      helperText="Please Provide Bank Account Details (Account Number and branch IFSC Code ) or UPI ID or Phone Number "
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -309,7 +309,7 @@ const Wallet = () => {
                       variant="contained"
                       className={classes.root}
                     >
-                      Withdraw
+                      Request Withdraw
                     </LoadingButton>
                     {alert.show ? (
                       <Alert severity={alert.severity} className={classes.root}>

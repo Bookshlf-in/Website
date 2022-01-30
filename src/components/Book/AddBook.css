@@ -19,21 +19,6 @@
   justify-content: center;
   align-items: center;
 }
-.uploaded-image-item {
-  position: relative;
-  border: 1px solid transparent;
-  border-radius: 5px;
-}
-.uploaded-image-item .image-delete {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  z-index: 100;
-  cursor: pointer;
-}
-.uploaded-image-item:hover {
-  border: 1px solid orangered;
-}
 .add-book-form-lf .searchTagresult {
   position: absolute;
   left: 36px;
@@ -51,6 +36,27 @@
 }
 .add-book-bg .MuiAlert-message {
   font-family: "PT sans" !important;
+}
+
+/* Filepond custom css */
+.filepond--wrapper {
+  width: 100% !important;
+}
+.filepond--credits {
+  display: none !important;
+}
+.filepond--drop-label {
+  min-height: 2em !important;
+}
+@media (min-width: 30em) {
+  .filepond--item {
+    width: calc(50% - 0.5em);
+  }
+}
+@media (min-width: 50em) {
+  .filepond--item {
+    width: calc(25% - 0.5em);
+  }
 }
 
 @media screen and (max-width: 400px) {

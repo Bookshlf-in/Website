@@ -373,7 +373,7 @@ const Orders = () => {
           <Stack sx={{ padding: "10px" }} spacing={3}>
             <Typography
               color="error"
-              variant="h4"
+              variant="h6"
               sx={{ fontFamily: "PT sans" }}
             >
               Book Rejected!

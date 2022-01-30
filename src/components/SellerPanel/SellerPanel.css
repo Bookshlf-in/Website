@@ -1,15 +1,3 @@
 .sellerPanel-container .MuiTabs-flexContainer {
   height: 100% !important;
 }
-
-@media (max-width: 560px) {
-  .sellerPanel-container .MuiTabs-flexContainer {
-    padding: 9px !important;
-    flex-direction: column;
-  }
-  .sellerPanel-container .MuiTab-root {
-    padding: 16px !important;
-    justify-content: flex-start;
-    font-size: 14px !important;
-  }
-}

@@ -7,7 +7,7 @@ import "./AddBook.css";
 import axios from "../../axios";
 
 // Components
-// ======== From Core (Stable)
+// ======== From MUI Core (Stable)
 import { Grid, Stack, Collapse, Popover, Backdrop } from "@mui/material";
 import { Button, Checkbox, TextField, IconButton } from "@mui/material";
 import { Alert, CircularProgress, ClickAwayListener } from "@mui/material";
@@ -15,8 +15,15 @@ import { Chip, Tooltip, InputAdornment, Avatar } from "@mui/material";
 import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import { DialogContentText, DialogTitle, Typography } from "@mui/material";
 import { InputLabel, FormControl, Select, MenuItem } from "@mui/material";
-// ======== From Lab (Unstable)
+// ======== From MUI Lab (Unstable)
 import { LoadingButton } from "@mui/lab";
+
+// FilePond Components for image Uploading
+import { FilePond, File, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 // Icons
 import CancelIcon from "@mui/icons-material/CancelTwoTone";
@@ -36,6 +43,10 @@ import LanguageIcon from "@mui/icons-material/Translate";
 import ISBNIcon from "@mui/icons-material/Language";
 import HelpIcon from "@mui/icons-material/Help";
 import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
+
+// Register the plugins
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
 const useStyles = makeStyles(() => ({
   root: {
     fontWeight: "bolder",
@@ -75,6 +86,7 @@ const useStyles = makeStyles(() => ({
   adrMenu: {
     fontFamily: "PT sans !important",
     fontSize: "10px !important",
+    minHeight: "0 !important",
   },
 }));
 
@@ -316,7 +328,7 @@ const AddBook = (props) => {
   const uploadImages = async (arrImg) => {
     return await Promise.all(
       arrImg.map(async (img) => {
-        const imgUrl = await uploadSingleImage(img);
+        const imgUrl = await uploadSingleImage(img.file);
         // console.log(imgUrl);
         return imgUrl;
       })
@@ -1008,7 +1020,6 @@ const AddBook = (props) => {
                       )}
                     </ClickAwayListener>
                   </div>
-
                   <Stack
                     direction={{
                       xs: "column",
@@ -1032,88 +1043,21 @@ const AddBook = (props) => {
                     ))}
                   </Stack>
                 </Stack>
-                <Stack
-                  direction="column"
-                  spacing={1}
-                  alignItems="flex-start"
-                  justifyContent="flex-start"
-                >
-                  <div style={{ display: "flex" }}>
-                    <label htmlFor="icon-button-file">
-                      <input
-                        accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
-                        id="icon-button-file"
-                        type="file"
-                        style={{ display: "none" }}
-                        onChange={(e) => {
-                          handelbookAdd(e, true);
-                        }}
-                        multiple
-                      />
-                      <IconButton
-                        color={errorField === 5 ? "error" : "primary"}
-                        aria-label="upload picture"
-                        component="span"
-                      >
-                        <CameraIcon />
-                      </IconButton>
-                    </label>
-                    <Alert severity={errorField === 5 ? "error" : "info"}>
-                      Please Upload Atleast 3 Clear Images of BOOK-SET
-                    </Alert>
-                  </div>
-                  <Stack
-                    direction={{
-                      xs: "column",
-                      sm: "row",
-                      lg: "row",
-                      md: "row",
-                    }}
-                    spacing={1}
-                    alignItems="center"
-                    justifyContent="flex-start"
-                    flexWrap="wrap"
-                  >
-                    {Image.map((file, idx) => (
-                      <div className="uploaded-image-item" key={idx}>
-                        <span
-                          className="image-delete"
-                          onClick={() => handleImageDelete(file.name)}
-                        >
-                          <CancelIcon />
-                        </span>
-                        <Avatar
-                          alt={file.name}
-                          src={URL.createObjectURL(file)}
-                          sx={{ width: 120, height: 120 }}
-                          variant="rounded"
-                        />
-                      </div>
-                    ))}
-                    {Image.length ? (
-                      <label htmlFor="icon-button-file-2">
-                        <input
-                          accept="image/*"
-                          id="icon-button-file-2"
-                          type="file"
-                          style={{ display: "none" }}
-                          onChange={(e) => {
-                            handelbookAdd(e, true);
-                          }}
-                          multiple
-                        />
-                        <IconButton
-                          color={errorField === 5 ? "error" : "primary"}
-                          aria-label="upload picture"
-                          component="span"
-                        >
-                          <AddIcon sx={{ height: "2rem", width: "2rem" }} />
-                        </IconButton>
-                      </label>
-                    ) : (
-                      <></>
-                    )}
-                  </Stack>
+                <Stack direction="column" spacing={1} sx={{ width: "100%" }}>
+                  <Alert severity={errorField === 5 ? "error" : "info"}>
+                    Please Upload Atleast 3-15 Clear Images of BOOK-SET
+                  </Alert>
+                  <FilePond
+                    name="Book Image"
+                    files={Image}
+                    allowReorder={true}
+                    allowMultiple={true}
+                    maxFiles={15}
+                    onupdatefiles={setImage}
+                    dropOnPage
+                    dropValidation
+                    labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                  />
                 </Stack>
               </Stack>
             </fieldset>

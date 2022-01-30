@@ -6,6 +6,7 @@ import axios from "../../axios";
 
 // components
 import { Stack, Button, Pagination, Chip } from "@mui/material";
+import { Typography, Tooltip } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -15,11 +16,9 @@ import CheckIcon from "@mui/icons-material/CheckCircleRounded";
 import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 import CallIcon from "@mui/icons-material/CallRounded";
 import RupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { Typography, Tooltip } from "@mui/material";
-
-// Icons
 import CopyIcon from "@mui/icons-material/ContentCopy";
 import CopiedIcon from "@mui/icons-material/FileCopy";
+
 const useStyles = makeStyles(() => ({
   root: {
     fontFamily: "PT sans !important",
