@@ -31,8 +31,25 @@ import BookIcon from "@mui/icons-material/MenuBookRounded";
 const useStyles = makeStyles({
   root: {
     fontFamily: "PT sans !important",
-    fontSize: "12px !important",
+    fontSize: "11px !important",
     minHeight: "0px !important",
+  },
+  Button: {
+    fontFamily: "PT sans !important",
+    fontSize: "11px !important",
+    minHeight: "0px !important",
+    minWidth: "0px !important",
+    padding: "0px !important",
+    "@media screen and (max-width:600px)": {
+      "& svg": {
+        height: 12,
+        width: 12,
+      },
+      fontSize: "9px !important",
+      color: "whitesmoke",
+      backgroundColor: "rgba(0,0,0,0.9) !important",
+      borderRight: "1px solid whitesmoke",
+    },
   },
 });
 
@@ -145,39 +162,39 @@ const SellerPanel = () => {
               selectionFollowsFocus
             >
               <Tab
-                iconPosition="start"
+                iconPosition="top"
                 label="Profile"
-                icon={<ProfileIcon />}
+                icon={<ProfileIcon sx={{ height: 16, width: 16 }} />}
                 value="1"
-                className={classes.root}
+                className={classes.Button}
               />
               <Tab
-                iconPosition="start"
+                iconPosition="top"
                 label="Books"
-                icon={<OrderIcon />}
+                icon={<OrderIcon sx={{ height: 16, width: 16 }} />}
                 value="2"
-                className={classes.root}
+                className={classes.Button}
               />
               <Tab
-                iconPosition="start"
+                iconPosition="top"
                 label="Address"
-                icon={<SellersIcon />}
+                icon={<SellersIcon sx={{ height: 16, width: 16 }} />}
                 value="3"
-                className={classes.root}
+                className={classes.Button}
               />
               <Tab
-                iconPosition="start"
+                iconPosition="top"
                 label="Reviews"
-                icon={<ReviewIcon />}
+                icon={<ReviewIcon sx={{ height: 16, width: 16 }} />}
                 value="4"
-                className={classes.root}
+                className={classes.Button}
               />
               <Tab
-                iconPosition="start"
+                iconPosition="top"
                 label="Add Book"
-                icon={<BookIcon />}
+                icon={<BookIcon sx={{ height: 16, width: 16 }} />}
                 value="5"
-                className={classes.root}
+                className={classes.Button}
               />
             </TabList>
           </Box>

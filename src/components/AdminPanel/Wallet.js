@@ -3,31 +3,15 @@ import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
-import Stack from "@mui/material/Stack";
-import Alert from "@mui/material/Alert";
-import Chip from "@mui/material/Chip";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import Pagination from "@mui/material/Pagination";
-import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListSubheader from "@mui/material/ListSubheader";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import { Stack, Alert, Chip, Button, Tooltip, Typography } from "@mui/material";
+import { Pagination, Divider, Select, InputAdornment } from "@mui/material";
+import { InputLabel, FormControl, TextField, MenuItem } from "@mui/material";
+import { List, ListItem, ListSubheader, ListItemIcon } from "@mui/material";
+import { ListItemText, ListItemButton } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { DialogContentText, DialogTitle } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 // icons
 import LoadIcon from "@mui/icons-material/AutorenewRounded";
@@ -40,6 +24,9 @@ import DebitIcon from "@mui/icons-material/CallReceivedRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import CompleteIcon from "@mui/icons-material/CheckCircleRounded";
 import PendingIcon from "@mui/icons-material/AccessTimeRounded";
+import CopyIcon from "@mui/icons-material/ContentCopy";
+import CopiedIcon from "@mui/icons-material/FileCopy";
+import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
 
 const useStyles = makeStyles({
   root: {
@@ -108,17 +95,10 @@ const Wallet = () => {
     {
       field: "requestId",
       headerName: "Request ID",
-      width: 200,
+      width: 220,
       sortable: false,
       renderCell: (id) => {
-        return (
-          <Chip
-            label={id.value}
-            size="small"
-            variant="filled"
-            color="default"
-          />
-        );
+        return <CopyableText text={id.value} />;
       },
     },
     {
@@ -159,12 +139,9 @@ const Wallet = () => {
       sortable: false,
       renderCell: (account) => {
         return (
-          <Chip
-            label={account.value}
-            size="small"
-            variant="outlined"
-            color="default"
-          />
+          <Typography sx={{ whiteSpace: "normal", fontSize: "12px" }}>
+            {account.value}
+          </Typography>
         );
       },
     },
@@ -176,7 +153,8 @@ const Wallet = () => {
       renderCell: (balance) => {
         return (
           <Chip
-            label={balance.value}
+            icon={<RupeeIcon />}
+            label={Math.round(balance.value * 10) / 10}
             size="small"
             variant="outlined"
             color="primary"
@@ -187,17 +165,10 @@ const Wallet = () => {
     {
       field: "sellerId",
       headerName: "Seller ID",
-      width: 200,
+      width: 220,
       sortable: false,
       renderCell: (id) => {
-        return (
-          <Chip
-            label={id.value}
-            size="small"
-            variant="filled"
-            color="default"
-          />
-        );
+        return <CopyableText text={id.value} />;
       },
     },
   ];
@@ -238,6 +209,7 @@ const Wallet = () => {
       renderCell: (amt) => {
         return (
           <Chip
+            icon={<RupeeIcon />}
             label={amt.value}
             size="small"
             variant="filled"
@@ -452,6 +424,65 @@ const Wallet = () => {
       });
   };
 
+  // Custom Copy Component
+  const CopyableText = (props) => {
+    const [copied, setcopied] = useState(false);
+
+    const CopyText = () => {
+      navigator.clipboard.writeText(props.text);
+      setcopied(true);
+      setTimeout(() => {
+        setcopied(false);
+      }, 3000);
+    };
+
+    return (
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          cursor: "pointer",
+          padding: "5px",
+          borderRadius: "5px",
+          border: "1px solid rgba(0,0,0,0.2)",
+        }}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography
+          variant="caption"
+          color={copied ? "primary" : "default"}
+          sx={{ fontSize: "12px", fontFamily: "pt sans" }}
+        >
+          {props.text}
+        </Typography>
+        <Tooltip
+          arrow
+          title="Click to Copy"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="caption" onClick={CopyText}>
+            {!copied ? (
+              <CopyIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            ) : (
+              <CopiedIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            )}
+          </Typography>
+        </Tooltip>
+
+        {copied ? (
+          <Typography sx={{ fontSize: "9px" }} color="primary">
+            Copied!
+          </Typography>
+        ) : null}
+      </Stack>
+    );
+  };
+
   return (
     <Stack
       direction="column"
@@ -565,7 +596,6 @@ const Wallet = () => {
               </InputAdornment>
             ),
           }}
-          sx={{ maxWidth: 500 }}
           variant="standard"
           value={withdrawRequestId}
           onChange={(e) => setwithdrawRequestId(e.target.value)}
@@ -589,7 +619,6 @@ const Wallet = () => {
               Withdraw Request Details
             </ListSubheader>
           }
-          sx={{ maxWidth: 500 }}
         >
           <ListItem disablePadding>
             <ListItemButton>
@@ -599,7 +628,7 @@ const Wallet = () => {
               <ListItemText
                 className={classes.root}
                 primary="Request ID"
-                secondary={<Chip label={withdrawRequest?._id} size="small" />}
+                secondary={<CopyableText text={withdrawRequest?._id} />}
               />
             </ListItemButton>
           </ListItem>
@@ -612,9 +641,7 @@ const Wallet = () => {
               <ListItemText
                 className={classes.root}
                 primary="Seller ID"
-                secondary={
-                  <Chip label={withdrawRequest?.sellerId} size="small" />
-                }
+                secondary={<CopyableText text={withdrawRequest?.sellerId} />}
               />
             </ListItemButton>
           </ListItem>
@@ -629,7 +656,10 @@ const Wallet = () => {
                 primary="Account Balance"
                 secondary={
                   <Chip
-                    label={withdrawRequest?.currentBalance}
+                    icon={<RupeeIcon />}
+                    label={
+                      Math.round(withdrawRequest?.currentBalance * 10) / 10
+                    }
                     color="primary"
                     variant="filled"
                     size="small"
@@ -648,12 +678,9 @@ const Wallet = () => {
                 className={classes.root}
                 primary="Account Details"
                 secondary={
-                  <Chip
-                    label={withdrawRequest?.bankAccountDetails}
-                    color="primary"
-                    variant="outlined"
-                    size="small"
-                  />
+                  <Typography variant="caption">
+                    {withdrawRequest?.bankAccountDetails}
+                  </Typography>
                 }
               />
             </ListItemButton>
@@ -675,6 +702,7 @@ const Wallet = () => {
                 primary="Withdraw Amount Requested"
                 secondary={
                   <Chip
+                    icon={<RupeeIcon />}
                     label={withdrawRequest?.amount}
                     color={
                       withdrawRequest.status === "INITIATED"
@@ -823,7 +851,7 @@ const Wallet = () => {
         Get Seller Transaction List
       </LoadingButton>
       <Stack
-        sx={{ height: 300, width: "100%" }}
+        sx={{ height: 400, width: "100%" }}
         className="datagrid-stack-wallet"
       >
         <DataGrid

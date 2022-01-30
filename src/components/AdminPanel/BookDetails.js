@@ -5,13 +5,16 @@ import axios from "../../axios";
 
 // Components
 import { Stack, ClickAwayListener, Chip, Avatar, Alert } from "@mui/material";
-import { TextField, MenuItem, Typography, InputAdornment } from "@mui/material";
+import { TextField, MenuItem, InputAdornment } from "@mui/material";
 import { LinearProgress, CircularProgress } from "@mui/material";
+import { Typography, Tooltip } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 // Icons
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
 import SendIcon from "@mui/icons-material/SendRounded";
+import CopyIcon from "@mui/icons-material/ContentCopy";
+import CopiedIcon from "@mui/icons-material/FileCopy";
 
 const useStyles = makeStyles({
   root: {
@@ -101,7 +104,11 @@ const BookDetails = () => {
     setOpenTagMenu(true);
     const fetchdata = async () => {
       axios
-        .get(`/searchTag?q=${e.target.value}`)
+        .get("/searchTag", {
+          params: {
+            q: e.target.value,
+          },
+        })
         .then((response) => {
           setresultTags(response.data);
           settagFieldChanges(false);
@@ -144,7 +151,7 @@ const BookDetails = () => {
         qty: Qnty,
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setupdating(false);
         setalert({
           show: true,
@@ -161,8 +168,67 @@ const BookDetails = () => {
       })
       .catch((error) => {
         setupdating(false);
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
+  };
+
+  // Custom Copy Component
+  const CopyableText = (props) => {
+    const [copied, setcopied] = useState(false);
+
+    const CopyText = () => {
+      navigator.clipboard.writeText(props.text);
+      setcopied(true);
+      setTimeout(() => {
+        setcopied(false);
+      }, 3000);
+    };
+
+    return (
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          cursor: "pointer",
+          padding: "5px",
+          borderRadius: "5px",
+          border: "1px solid rgba(0,0,0,0.2)",
+        }}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography
+          variant="caption"
+          color={copied ? "primary" : "default"}
+          sx={{ fontSize: "12px", fontFamily: "pt sans" }}
+        >
+          {props.text}
+        </Typography>
+        <Tooltip
+          arrow
+          title="Click to Copy"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="caption" onClick={CopyText}>
+            {!copied ? (
+              <CopyIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            ) : (
+              <CopiedIcon color="inhert" sx={{ height: 12, width: 12 }} />
+            )}
+          </Typography>
+        </Tooltip>
+
+        {copied ? (
+          <Typography sx={{ fontSize: "9px" }} color="primary">
+            Copied!
+          </Typography>
+        ) : null}
+      </Stack>
+    );
   };
 
   return (
@@ -205,7 +271,7 @@ const BookDetails = () => {
               }}
             >
               <Chip label={book.sellerName} className={classes.root} />
-              <Chip label={book.sellerId} className={classes.root} />
+              <CopyableText text={book.sellerId} />
               <TextField
                 label="Book Title"
                 variant="standard"
@@ -345,9 +411,10 @@ const BookDetails = () => {
                   lg: "row",
                   md: "row",
                 }}
-                spacing={0.5}
+                spacing={1}
                 alignItems="center"
                 justifyContent="flex-start"
+                flexWrap="wrap"
               >
                 {tags.map((TAG, idx) => (
                   <Chip
