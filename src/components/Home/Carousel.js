@@ -78,15 +78,7 @@ const Slider = () => {
   // Custom Image Slider
   const ImageSlider = (props) => {
     return (
-      <Fade
-        in={true}
-        // mountOnEnter
-        // unmountOnExit
-        // timeout={500}
-        // direction={props.dir}
-        container={props.Ref}
-        timeout={0}
-      >
+      <Fade in={true} container={props.Ref} timeout={0}>
         <div
           className="slider__image"
           style={{
@@ -103,14 +95,7 @@ const Slider = () => {
   // Custom Image Slider
   const TitleSlider = (props) => {
     return (
-      <Fade
-        in={true}
-        // mountOnEnter
-        // unmountOnExit
-        // timeout={1000}
-        // direction={props.dir}
-        container={props.Ref}
-      >
+      <Fade in={true} container={props.Ref}>
         <div>
           {slideLabel[props.index].title}
           <div className="slider__body">{slideLabel[props.index].body}</div>

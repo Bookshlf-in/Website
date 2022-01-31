@@ -1,5 +1,5 @@
 .slider {
-  height: 75vh;
+  height: calc(100vh - 120px);
   background-color: #28282865;
   position: relative;
 }
