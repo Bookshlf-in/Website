@@ -49,7 +49,6 @@ const useStyles = makeStyles(() => ({
     padding: "5px",
     width: "100%",
     fontSize: "12px !important",
-    fontWeight: "bolder !important",
     color: "white",
   },
   searchTitleResult: {
@@ -68,9 +67,8 @@ const useStyles = makeStyles(() => ({
   },
   Li: {
     color: "rgb(40,40,40)",
-    fontFamily: "PT sans",
+    fontFamily: "Montserrat",
     fontSize: "10px !important",
-    fontWeight: "bolder !important",
     padding: "5px 0px !important",
     "@media screen and (max-width:600px)": {
       fontSize: "10px !important",

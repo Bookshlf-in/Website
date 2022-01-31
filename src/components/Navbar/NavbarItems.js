@@ -12,7 +12,7 @@ import SellBookIcon from "@mui/icons-material/ShoppingBag";
 const NavButtonStyle = {
   color: "white",
   fontSize: "9px",
-  fontFamily: "PT sans",
+  fontFamily: "Montserrat",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -20,6 +20,7 @@ const NavButtonStyle = {
     backgroundColor: "rgba(255,255,255,0.2)",
   },
   lineHeight: 1,
+  letterSpacing: "0.08em",
 };
 
 const NavbarItems = () => {
