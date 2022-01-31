@@ -46,7 +46,7 @@ const Navbar = () => {
   const [openSideNav, setOpenSideNav] = useState(false);
 
   return (
-    <AppBar position="sticky" sx={NavStyle}>
+    <AppBar position="static" sx={NavStyle}>
       <Toolbar variant="dense">
         <div className="nav-mobile-item">
           <IconButton
@@ -67,7 +67,7 @@ const Navbar = () => {
         </div>
         <div className="nav-mobile-item">
           <Drawer
-            ancher="left"
+            anchor="left"
             open={openSideNav}
             onClose={() => setOpenSideNav((prev) => !prev)}
             transitionDuration={500}

@@ -326,8 +326,10 @@ const Footer = () => {
               <Typography variant="h6" className={classes.root}>
                 Policy
               </Typography>
-              <Link to="/" className="cool-link" className={classes.root}>
-                <Typography variant="caption">Return Policy</Typography>
+              <Link to="/" className="cool-link">
+                <Typography variant="caption" className={classes.root}>
+                  Return Policy
+                </Typography>
               </Link>
               <Link
                 to="/TermsofUsePrivacyPolicy"
@@ -368,12 +370,12 @@ const Footer = () => {
                   JEE Advanced
                 </Typography>
               </Link>
-              <Link to="/SearchResult/School" className="cool-link">
+              <Link to="/SearchResult/tag:CBSE" className="cool-link">
                 <Typography variant="caption" className={classes.root}>
                   High School
                 </Typography>
               </Link>
-              <Link to="/SearchResult/Programming" className="cool-link">
+              <Link to="/SearchResult/tag:Programming" className="cool-link">
                 <Typography variant="caption" className={classes.root}>
                   Programming
                 </Typography>

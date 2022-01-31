@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
     },
     "& p": {
       fontFamily: "Roboto !important",
-      fontSize: "10px !important",
+      fontSize: "12px !important",
     },
     "& input": {
       fontFamily: "Roboto !important",
@@ -67,9 +67,9 @@ const useStyles = makeStyles(() => ({
   select: {
     "& label": {
       fontFamily: "Roboto !important",
-      fontSize: "14px",
-      left: "3px",
-      top: "1px",
+      fontSize: "12px",
+      left: "7px",
+      top: "3px",
     },
     "& p": {
       fontFamily: "Roboto !important",
@@ -732,7 +732,6 @@ const AddBook = (props) => {
                     )}
                   </ClickAwayListener>
                 </div>
-
                 <TextField
                   className={classes.root}
                   id="add-book-textfield"
@@ -752,6 +751,7 @@ const AddBook = (props) => {
                   onChange={(e) => setbookDesc(e.target.value)}
                   size="small"
                 />
+
                 <Stack
                   direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
                   spacing={1}
@@ -864,6 +864,9 @@ const AddBook = (props) => {
                     </Dialog>
                   ) : null}
                 </Stack>
+                <Alert severity="info" color="warning">
+                  High Selling Prices will decrease Chances of book getting Sold
+                </Alert>
                 <TextField
                   className={classes.select}
                   select
@@ -1115,7 +1118,6 @@ const AddBook = (props) => {
                       size="small"
                     />
                   </Stack>
-
                   <Stack
                     direction={{
                       xs: "column",
@@ -1159,7 +1161,6 @@ const AddBook = (props) => {
                       size="small"
                     />
                   </Stack>
-
                   <Stack
                     direction={{
                       xs: "column",
