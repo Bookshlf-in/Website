@@ -28,7 +28,6 @@ import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
 import BetaNotify from "./BetaNotify";
-import TopNotification from "./TopNotification";
 import NotFoundPage from "../Home/NotFoundPage";
 
 const App = () => {
@@ -38,7 +37,6 @@ const App = () => {
         {process.env.REACT_APP_NODE_ENV === "development" ? (
           <BetaNotify />
         ) : null}
-        <TopNotification />
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/PasswordRecovery">
