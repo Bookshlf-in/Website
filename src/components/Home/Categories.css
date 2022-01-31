@@ -1,37 +1,65 @@
-.card {
-  width: 300px;
-  min-height: 400px;
-  background-color: rgb(245, 245, 245);
+.item {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 200px;
+  width: 230px;
+  cursor: pointer;
+  background-color: rgb(238, 255, 238);
   border-radius: 15px;
-  box-shadow: 0 30 50 rgba(0, 0, 0, 0.2);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.item:hover {
+  background-color: rgb(123, 248, 206);
+  transition: 0.3s;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.item-h6 {
+  font-size: 16px;
+  font-size: 14px;
+  margin: 20px 0px;
+  font-family: "Staatliches";
   font-family: "Montserrat", sans-serif;
-}
-
-.card__header {
-  padding: 15px;
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
-  color: #fff;
-}
-.card__category {
-  display: block;
-  font-size: 10px;
-  color: #aeaeae;
-  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgb(36, 36, 36);
   text-align: center;
 }
 
-@media screen and (max-width: 400px) {
-  .categories h2 {
-    font-size: 2em !important;
+@media screen and (max-width: 768px) {
+  .categories h4 {
+    font-size: 16px !important;
+    font-weight: bolder !important;
+    font-size: 24px !important;
   }
-  .categories .card {
-    width: 250px;
-    min-height: 200px;
+  .categories h6 {
+    font-size: 12px !important;
+    font-weight: bolder !important;
+    font-size: 10px !important;
+  }
+  .categories .MuiAvatar-root {
+    height: 30px;
+    width: 30px;
+  }
+  .categories .MuiTypography-body2 {
+    font-size: 12px !important;
+    font-family: "PT sans", sans-serif;
+  }
+  .categories .MuiTypography-caption {
+    font-size: 9px;
+  }
+  .item {
+    height: 125px;
+    width: 125px;
+  }
+  .item {
+    margin-bottom: 10px !important;
+  }
+  .item-h6 {
+    font-size: 12px !important;
   }
 }

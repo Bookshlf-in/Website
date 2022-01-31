@@ -306,8 +306,7 @@ const AddBook = (props) => {
   const uploadImages = async (arrImg) => {
     return await Promise.all(
       arrImg.map(async (img) => {
-        const imgUrl = await uploadSingleImage(img.file);
-        // console.log(imgUrl);
+        const imgUrl = await uploadSingleImage(img);
         return imgUrl;
       })
     );
@@ -327,13 +326,13 @@ const AddBook = (props) => {
             if (bookName !== "") {
               if (!isNaN(SP) && Number(SP) >= 100) {
                 // Selling Price of Book Should be Atleast 100
-                setTimeout(() => {
-                  setpanic(true);
-                }, 10000);
                 const urls = await uploadImages(Image);
                 if (req) {
                   handelBookSubmitRequest(urls);
                 }
+                setTimeout(() => {
+                  setpanic(true);
+                }, 10000);
               } else {
                 ShowError("Enter Valid Selling Price", 2);
               }
