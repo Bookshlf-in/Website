@@ -26,33 +26,23 @@ const Account = (props) => {
         <Stack direction="column" spacing={2}>
           <Stack spacing={2} direction="row" alignItems="center">
             <PersonIcon fontSize="small" />
-            <Typography variant="caption">
-              <strong>{props.user.name}</strong>
-            </Typography>
+            <Typography variant="caption">{props.user.name}</Typography>
           </Stack>
           <Stack spacing={2} direction="row" alignItems="center">
             <EmailIcon fontSize="small" />
-            <Typography variant="caption">
-              <strong>{props.user.email}</strong>
-            </Typography>
+            <Typography variant="caption">{props.user.email}</Typography>
           </Stack>
           <Stack spacing={2} direction="row" alignItems="center">
             <DateRangeIcon fontSize="small" />
             <Typography variant="caption">
-              <strong>{props.user.createdAt.substr(0, 4)}</strong>
+              {props.user.createdAt.substr(0, 4)}
             </Typography>
           </Stack>
           <Stack spacing={2} direction="row" alignItems="center">
             <RolesIcon fontSize="small" />
             <Stack spacing={1} direction="row" alignItems="center">
               {props.user.roles.map((role, i) => (
-                <Chip
-                  key={i}
-                  label={role}
-                  variant="filled"
-                  size="small"
-                  sx={{ fontFamily: "PT sans" }}
-                />
+                <Chip key={i} label={role} variant="filled" size="small" />
               ))}
             </Stack>
           </Stack>

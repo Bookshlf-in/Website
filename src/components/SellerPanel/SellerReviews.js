@@ -21,7 +21,6 @@ import LeftIcon from "@mui/icons-material/ChevronLeftRounded";
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontFamily: "PT sans !important",
     "& label": {
       fontFamily: "PT sans !important",
       fontSize: "12px !important",
@@ -36,7 +35,7 @@ const useStyles = makeStyles(() => ({
     },
   },
   review: {
-    fontWeight: "bolder !important",
+    fontFamily: "Montserrat",
     color: "whitesmoke !important",
   },
 }));

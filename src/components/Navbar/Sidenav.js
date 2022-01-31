@@ -32,15 +32,15 @@ const MenuStack = (props) => {
         padding: "10px 16px",
         width: "100%",
         "& svg": {
-          height: 25,
-          width: 25,
+          height: 16,
+          width: 16,
         },
         "& img": {
-          height: 25,
+          height: 20,
         },
         "& div": {
-          fontFamily: "PT sans",
-          fontSize: "14px",
+          fontFamily: "Roboto",
+          fontSize: "12px",
           color: "rgba(0,0,0,0.8)",
         },
       }}
@@ -60,9 +60,14 @@ const MenuStack = (props) => {
             label={props.Count}
             size="small"
             color="warning"
+            variant="outlined"
             sx={{
               height: "auto",
-              "& span": { fontSize: "12px", color: "white" },
+              "& span": {
+                fontSize: "10px",
+                fontWeight: "bolder",
+                letterSpacing: "0.1em",
+              },
             }}
           />
         ) : null}

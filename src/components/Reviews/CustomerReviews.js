@@ -129,14 +129,17 @@ const Reviews = () => {
             alignItems="space-between"
           >
             <Typography variant="caption" sx={{ color: "yellow" }}>
-              <strong>{Reviews[props.index]?.userName}</strong>
+              {Reviews[props.index]?.userName}
             </Typography>
             <Typography
               variant="caption"
               align="justify"
-              sx={{ fontSize: "12px", color: "lemonchiffon" }}
+              sx={{
+                fontSize: "12px",
+                color: "lemonchiffon",
+              }}
             >
-              <strong>{Reviews[props.index]?.review}</strong>
+              {Reviews[props.index]?.review}
             </Typography>
             <Rating
               value={Reviews[props.index]?.rating}
@@ -161,13 +164,7 @@ const Reviews = () => {
         alignItems="center"
       >
         <Typography variant="h4" align="center">
-          <strong>What readers say about us?</strong>
-        </Typography>
-        <Typography variant="caption" align="center">
-          <strong>
-            This book is concerned with creating typography and is essential for
-            professionals who regularly work for clients.
-          </strong>
+          <strong>What Customers say about us?</strong>
         </Typography>
         <Stack
           direction="column"

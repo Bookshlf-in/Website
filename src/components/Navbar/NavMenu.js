@@ -34,7 +34,8 @@ const MenuStack = (props) => {
           width: 15,
         },
         "& div": {
-          fontFamily: "PT sans",
+          fontFamily: "Roboto",
+          fontWeight: "bold",
           fontSize: "12px",
         },
       }}
@@ -156,6 +157,7 @@ const NavbarMenu = () => {
           sx={{
             backgroundColor: "rgb(211, 49, 49, 0.7) !important",
             color: "white",
+            letterSpacing: "0.08em",
           }}
         >
           <MenuStack

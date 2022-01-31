@@ -31,17 +31,15 @@ import TempIcon from "@mui/icons-material/NotListedLocationRounded";
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontWeight: "bolder",
-    // fontFamily: "PT sans !important",
+    fontFamily: "Roboto !important",
     "& label": {
-      fontFamily: "PT sans !important",
-      fontSize: "12px !important",
+      fontFamily: "Roboto !important",
     },
     "& p": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
     },
     "& input": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
     },
   },
 }));
@@ -168,7 +166,6 @@ const Address = (props) => {
             color="primary"
             label={phone.value}
             size="small"
-            className={classes.root}
           />
         );
       },
@@ -186,7 +183,6 @@ const Address = (props) => {
             color="primary"
             label={phone.value ? phone.value : "Not Provided"}
             size="small"
-            className={classes.root}
           />
         );
       },
@@ -559,7 +555,7 @@ const Address = (props) => {
           </Alert>
         ) : null}
         <Stack
-          sx={{ height: 400, width: "100%", padding: "10px" }}
+          sx={{ height: 400, width: "100%" }}
           className="address-datagrid-stack"
         >
           <DataGrid

@@ -15,13 +15,13 @@ import TrackIcon from "@mui/icons-material/BarChartRounded";
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontFamily: "PT sans !important",
+    fontFamily: "Roboto !important",
     "& p": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
     },
   },
   stack: {
-    minHeight: "calc(100vh - 200px)",
+    minHeight: "calc(100vh - 100px)",
     width: "100%",
   },
 }));
@@ -80,7 +80,7 @@ const PreviousOrders = (props) => {
     {
       field: "orderTotal",
       headerName: "Order Total",
-      minWidth: 100,
+      minWidth: 120,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -137,8 +137,8 @@ const PreviousOrders = (props) => {
     },
     {
       field: "trackOrder",
-      headerName: "Order Details",
-      minWidth: 100,
+      headerName: "Details",
+      minWidth: 120,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -157,8 +157,8 @@ const PreviousOrders = (props) => {
     },
     {
       field: "reviewOrder",
-      headerName: "Review Order",
-      minWidth: 100,
+      headerName: "Review",
+      minWidth: 120,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {

@@ -33,7 +33,7 @@ const NavIconStyle = {
 
 const NotiBubble = {
   "& span": {
-    fontFamily: "PT sans !important",
+    fontFamily: "Roboto !important",
     fontSize: "9px",
   },
 };
@@ -132,7 +132,7 @@ const Navbar = () => {
               href="/Login"
               color="success"
               sx={{
-                fontFamily: "PT sans",
+                fontFamily: "Montserrat",
                 fontSize: "10px",
                 letterSpacing: "1px",
               }}

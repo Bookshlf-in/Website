@@ -48,8 +48,7 @@ const useStyles = makeStyles(() => ({
   inputInput: {
     padding: "10px",
     width: "100%",
-    fontSize: "16px !important",
-    fontWeight: "bolder !important",
+    fontSize: "14px !important",
   },
   searchTitleResult: {
     position: "absolute",
@@ -65,8 +64,7 @@ const useStyles = makeStyles(() => ({
     paddingLeft: "44px",
   },
   Li: {
-    fontSize: "16px !important",
-    fontWeight: "bolder !important",
+    fontSize: "14px !important",
     padding: "5px 0px !important",
     "@media screen and (max-width:600px)": {
       fontSize: "10px !important",

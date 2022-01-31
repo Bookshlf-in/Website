@@ -4,7 +4,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet-async";
 import axios from "../../axios";
-import "./UserProfile.css";
 
 // Components
 import Box from "@mui/material/Box";
@@ -28,9 +27,25 @@ import BookIcon from "@mui/icons-material/MenuBookRounded";
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontFamily: "PT sans !important",
-    fontSize: "12px !important",
+    fontFamily: "Montserrat !important",
+    fontSize: "10px !important",
     minHeight: "0px !important",
+  },
+  Button: {
+    fontFamily: "Roboto !important",
+    fontWeight: "bold",
+    fontSize: "10px !important",
+    minHeight: "0px !important",
+    minWidth: "0px !important",
+    padding: "5px 0px !important",
+    "@media screen and (max-width:600px)": {
+      "& svg": {
+        height: 12,
+        width: 12,
+      },
+      fontSize: "9px !important",
+      backgroundColor: "rgba(0,0,0,0.2) !important",
+    },
   },
 }));
 
@@ -121,47 +136,58 @@ const UserProfile = () => {
                   aria-label="user-tabList"
                   variant="fullWidth"
                   selectionFollowsFocus
+                  className={classes.root}
                 >
                   <Tab
-                    iconPosition="start"
+                    iconPosition="top"
                     label="Profile"
-                    icon={<ProfileIcon />}
+                    icon={<ProfileIcon sx={{ height: 16, width: 16 }} />}
                     value="1"
-                    className={classes.root}
+                    className={classes.Button}
                   />
                   <Tab
-                    iconPosition="start"
+                    iconPosition="top"
                     label="Active Orders"
-                    icon={<OrderIcon color="warning" />}
+                    icon={
+                      <OrderIcon
+                        color="warning"
+                        sx={{ height: 16, width: 16 }}
+                      />
+                    }
                     value="2"
-                    className={classes.root}
+                    className={classes.Button}
                   />
                   <Tab
-                    iconPosition="start"
+                    iconPosition="top"
                     label="Past Orders"
-                    icon={<OrderIcon color="success" />}
+                    icon={
+                      <OrderIcon
+                        color="success"
+                        sx={{ height: 16, width: 16 }}
+                      />
+                    }
                     value="3"
-                    className={classes.root}
+                    className={classes.Button}
                   />
                   <Tab
-                    iconPosition="start"
+                    iconPosition="top"
                     label="Address Book"
-                    icon={<BookIcon />}
+                    icon={<BookIcon sx={{ height: 16, width: 16 }} />}
                     value="4"
-                    className={classes.root}
+                    className={classes.Button}
                   />
                 </TabList>
               </Box>
               <TabPanel value="1">
                 <Account user={userprofile} />
               </TabPanel>
-              <TabPanel value="2">
+              <TabPanel value="2" sx={{ padding: "15px 10px" }}>
                 <CurrentOrder orders={activeOrders} />
               </TabPanel>
-              <TabPanel value="3">
+              <TabPanel value="3" sx={{ padding: "15px 10px" }}>
                 <PreviousOrder orders={pastOrders} />
               </TabPanel>
-              <TabPanel value="4">
+              <TabPanel value="4" sx={{ padding: "15px 10px" }}>
                 <Address address={Adr} />
               </TabPanel>
             </TabContext>

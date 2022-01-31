@@ -39,12 +39,12 @@ const useStyles = makeStyles({
       fontSize: "14px",
     },
     "& p": {
-      fontFamily: "courier !important",
+      fontFamily: "Roboto !important",
       fontSize: "12px",
       fontWeight: "bolder !important",
     },
     "& input": {
-      fontFamily: "Staatliches !important",
+      fontFamily: "Roboto !important",
     },
     "& label": {
       fontFamily: "Staatliches !important",
@@ -154,7 +154,6 @@ const OrderTracking = () => {
               label={order?.expectedDeliveryDate?.substr(0, 10)}
               color="success"
               size="small"
-              className={classes.root}
             />
           </Stack>
           {/* ================= Book Details ===================== */}
@@ -213,11 +212,7 @@ const OrderTracking = () => {
                 <ListItemText
                   className={classes.root}
                   primary="Book Selling Price"
-                  secondary={
-                    <>
-                      <i className="fas fa-rupee-sign"></i> {order.price}
-                    </>
-                  }
+                  secondary={order.price + "/-"}
                 />
               </ListItem>
             </List>
@@ -335,11 +330,7 @@ const OrderTracking = () => {
                   <ListItemText
                     className={classes.root}
                     primary="Item Price"
-                    secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" /> {order.price}
-                      </>
-                    }
+                    secondary={order.price + "/-"}
                   />
                 </ListItemButton>
               </ListItem>
@@ -365,12 +356,7 @@ const OrderTracking = () => {
                   <ListItemText
                     className={classes.root}
                     primary="Shipping Charges"
-                    secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" />{" "}
-                        {order.shippingCharges}
-                      </>
-                    }
+                    secondary={order.shippingCharges + "/-"}
                   />
                 </ListItemButton>
               </ListItem>
@@ -383,11 +369,7 @@ const OrderTracking = () => {
                   <ListItemText
                     className={classes.root}
                     primary="Order Total"
-                    secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" /> {order.orderTotal}
-                      </>
-                    }
+                    secondary={order.orderTotal + "/-"}
                   />
                 </ListItemButton>
               </ListItem>
@@ -435,11 +417,7 @@ const OrderTracking = () => {
                   <ListItemText
                     className={classes.root}
                     primary="Order Total"
-                    secondary={
-                      <>
-                        <i className="fas fa-rupee-sign" /> {order.orderTotal}
-                      </>
-                    }
+                    secondary={order.orderTotal + "/-"}
                   />
                 </ListItemButton>
               </ListItem>
@@ -452,18 +430,20 @@ const OrderTracking = () => {
             spacing={2}
             justifyContent="center"
           >
-            <Button
-              endIcon={<NextIcon />}
-              variant="contained"
-              color="primary"
-              className={classes.root}
-              href={trackLink}
-              target="_blank"
-              size="small"
-              sx={{ maxWidth: 300 }}
-            >
-              Courier Track Link
-            </Button>
+            {order.status[order.status.length - 1] !== "Cancelled" ? (
+              <Button
+                endIcon={<NextIcon />}
+                variant="outlined"
+                color="primary"
+                className={classes.root}
+                href={trackLink}
+                target="_blank"
+                size="small"
+                sx={{ maxWidth: 300 }}
+              >
+                Courier Track Link
+              </Button>
+            ) : null}
             {order.status[order.status.length - 1] !== "Cancelled" ? (
               <Reciept order={order} />
             ) : null}
@@ -478,19 +458,22 @@ const OrderTracking = () => {
               {order.externalTrackingDetails}
             </Typography>
           ) : null}
-          <Stepper
-            activeStep={activeStep}
-            alternativeLabel
-            className={classes.root}
-          >
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>
-                  <Typography>{label}</Typography>
-                </StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+          {!cancelled &&
+          order.status[order.status.length - 1] !== "Cancelled" ? (
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              className={classes.root}
+            >
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>
+                    <Typography>{label}</Typography>
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          ) : null}
 
           {activeStep === steps.length ||
           order?.externalTrackingDetails?.length ? null : (

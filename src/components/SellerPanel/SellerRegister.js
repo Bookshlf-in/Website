@@ -1,5 +1,5 @@
 import { React, useState, useContext } from "react";
-import { makeStyles, styled } from "@mui/styles";
+import { styled } from "@mui/styles";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
 import axios from "../../axios";
@@ -18,30 +18,11 @@ import IconButton from "@mui/material/IconButton";
 import AddPhotoIcon from "@mui/icons-material/AddAPhotoRounded";
 import AddIcon from "@mui/icons-material/AddCircleOutlineRounded";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    fontFamily: "PT sans !important",
-    "& input": {
-      fontFamily: "PT sans !important",
-    },
-    "& textarea": {
-      fontFamily: "PT sans !important",
-    },
-    "& label": {
-      fontFamily: "PT sans !important",
-    },
-    "& p": {
-      fontFamily: "PT sans !important",
-    },
-  },
-}));
-
 const Input = styled("input")({
   display: "none",
 });
 
 export default function SellerRegister() {
-  const classes = useStyles();
   const history = useHistory();
   const [user, setUser] = useContext(UserContext);
 
@@ -237,13 +218,13 @@ export default function SellerRegister() {
     >
       {user ? (
         <Stack spacing={1} direction="column">
-          <Alert severity="error" className={classes.root}>
+          <Alert severity="error">
             Oops you are not registered. Please Register As Seller.
           </Alert>
           <Stack
             direction="column"
             spacing={1}
-            sx={{ padding: "10px" }}
+            sx={{ padding: "0px 10px" }}
             justifyContent="center"
             alignItems="center"
           >
@@ -275,7 +256,6 @@ export default function SellerRegister() {
             </Stack>
 
             <TextField
-              className={classes.root}
               label="Name"
               variant="filled"
               fullWidth
@@ -293,12 +273,10 @@ export default function SellerRegister() {
               maxRows={2}
               onChange={(e) => setIntro(e.target.value)}
               value={Intro}
-              className={classes.root}
               sx={{ maxWidth: 300 }}
             />
 
             <TextField
-              className={classes.root}
               label="Contact Number"
               variant="filled"
               fullWidth
@@ -308,7 +286,6 @@ export default function SellerRegister() {
               sx={{ maxWidth: 300 }}
             />
             <TextField
-              className={classes.root}
               label="Alternate Contact Number"
               variant="filled"
               fullWidth
@@ -318,16 +295,13 @@ export default function SellerRegister() {
               sx={{ maxWidth: 300 }}
             />
             {alert.show ? (
-              <Alert severity={alert.type} className={classes.root}>
-                {alert.msg}
-              </Alert>
+              <Alert severity={alert.type}>{alert.msg}</Alert>
             ) : null}
             <LoadingButton
               endIcon={<AddIcon />}
               loading={load}
               loadingPosition="end"
               variant="contained"
-              className={classes.root}
               onClick={handelRegister}
               fullWidth
               sx={{ maxWidth: 300 }}
@@ -337,12 +311,11 @@ export default function SellerRegister() {
           </Stack>
         </Stack>
       ) : (
-        <Alert severity="error" className={classes.root}>
+        <Alert severity="error">
           You are not Logged In. <br />
           <br />
           <Button
             size="small"
-            className={classes.root}
             color="primary"
             variant="outlined"
             href={"/Login"}

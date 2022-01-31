@@ -431,7 +431,7 @@ const Search = () => {
                           align="center"
                           className={classes.root}
                           variant="caption"
-                          sx={{ padding: "0px 10px" }}
+                          sx={{ padding: "0px 10px", fontFamily: "Montserrat" }}
                         >
                           {book.title.length <= 75
                             ? book.title

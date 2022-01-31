@@ -20,15 +20,6 @@ import UpdateIcon from "@mui/icons-material/CachedRounded";
 import InfoIcon from "@mui/icons-material/InfoTwoTone";
 
 const useStyles = makeStyles(() => ({
-  root: {
-    fontFamily: "PT sans !important",
-    "& p": {
-      fontFamily: "PT sans !important",
-    },
-    "& div": {
-      fontFamily: "PT sans !important",
-    },
-  },
   stack: {
     minHeight: "calc(100vh - 50px)",
     width: "100%",
@@ -106,8 +97,8 @@ const Orders = () => {
     {
       field: "orderPhoto",
       headerName: "Book Id",
-      minWidth: 200,
-      flex: 2,
+      minWidth: 150,
+      flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
         return (
@@ -121,8 +112,7 @@ const Orders = () => {
             <Chip
               label={cellValue.value[1]}
               size="small"
-              sx={{ fontSize: "9px" }}
-              className={classes.root}
+              sx={{ fontSize: "10px" }}
             />
           </Stack>
         );
@@ -131,21 +121,26 @@ const Orders = () => {
     {
       field: "bookTotal",
       headerName: "Pricing",
-      minWidth: 150,
+      minWidth: 120,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack spacing={2}>
             <Stack direction="column" spacing={1} alignItems="center">
-              <Typography sx={{ fontSize: "10px", whiteSpace: "pre-wrap" }}>
+              <Typography
+                sx={{
+                  fontSize: "10px",
+                  whiteSpace: "pre-wrap",
+                  fontWeight: "bold",
+                }}
+              >
                 Book Selling Price
               </Typography>
               <Chip
                 icon={<RupeeIcon sx={{ height: 16, width: 16 }} />}
                 label={cellValue.value[0]}
                 size="small"
-                className={classes.root}
                 color="primary"
                 variant="outlined"
                 sx={{
@@ -155,16 +150,20 @@ const Orders = () => {
                 }}
               />
             </Stack>
-
             <Stack direction="column" spacing={1} alignItems="center">
-              <Typography sx={{ fontSize: "10px", whiteSpace: "pre-wrap" }}>
+              <Typography
+                sx={{
+                  fontSize: "10px",
+                  whiteSpace: "pre-wrap",
+                  fontWeight: "bold",
+                }}
+              >
                 Your Earnings
               </Typography>
               <Chip
                 icon={<RupeeIcon sx={{ height: 12, width: 12 }} />}
                 label={cellValue.value[1] > 0 ? cellValue.value[1] : 0}
                 size="small"
-                className={classes.root}
                 sx={{
                   fontSize: "10px",
                   whiteSpace: "pre-wrap",
@@ -181,21 +180,17 @@ const Orders = () => {
       field: "bookDetails",
       headerName: "Book Details",
       minWidth: 240,
-      flex: 2,
+      flex: 3,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack sx={{ height: 100, overflowY: "auto" }}>
-            <Typography
-              className={classes.root}
-              sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}
-            >
-              {cellValue.value[0]}
+            <Typography sx={{ fontSize: "12px", whiteSpace: "pre-wrap" }}>
+              <strong>{cellValue.value[0]}</strong>
             </Typography>
             <Typography
-              className={classes.root}
               variant="caption"
-              sx={{ fontSize: "9px", whiteSpace: "pre-wrap", height: 80 }}
+              sx={{ fontSize: "10px", whiteSpace: "pre-wrap", height: 80 }}
             >
               {cellValue.value[1]}
             </Typography>
@@ -206,7 +201,7 @@ const Orders = () => {
     {
       field: "bookStatus",
       headerName: "Book Status",
-      minWidth: 150,
+      minWidth: 120,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -225,7 +220,6 @@ const Orders = () => {
             }
             label={cellValue.value}
             size="small"
-            className={classes.root}
             color={
               cellValue.value === "Approval Pending"
                 ? "warning"
@@ -251,7 +245,6 @@ const Orders = () => {
           <Button
             startIcon={<UpdateIcon />}
             size="small"
-            className={classes.root}
             variant="contained"
             href={`/SellerBookUpdate/${cellValue.value[0]}`}
             target="_blank"
@@ -262,7 +255,6 @@ const Orders = () => {
           <Button
             startIcon={<UpdateIcon />}
             size="small"
-            className={classes.root}
             variant="contained"
             onClick={(e) => {
               setOpenPop(e.currentTarget);
@@ -276,7 +268,6 @@ const Orders = () => {
             icon={<InfoIcon sx={{ height: 16, width: 16 }} />}
             label={"Contact Admin for Updates"}
             size="small"
-            className={classes.root}
             color="warning"
             sx={{
               fontSize: "10px",
@@ -295,7 +286,6 @@ const Orders = () => {
       renderCell: (cellValue) => {
         return (
           <IconButton
-            className={classes.root}
             color="error"
             onClick={() => handelDeleteBook(cellValue.value)}
           >
@@ -327,33 +317,18 @@ const Orders = () => {
         <title>Your Books | Bookshlf</title>
       </Helmet>
       <Stack className={classes.stack} spacing={2}>
-        <FormControl
-          fullWidth
-          className={classes.root}
-          color="success"
-          size="small"
-        >
-          <InputLabel id="demo-simple-select-label" className={classes.root}>
-            Filter Books
-          </InputLabel>
+        <FormControl fullWidth color="success" size="small">
+          <InputLabel id="demo-simple-select-label">Filter Books</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             value={filter}
             label="Filter Books"
             onChange={handelFilterChange}
           >
-            <MenuItem value={1} className={classes.root}>
-              Books Pending For Approval
-            </MenuItem>
-            <MenuItem value={2} className={classes.root}>
-              Books Approved
-            </MenuItem>
-            <MenuItem value={3} className={classes.root}>
-              Books Sold
-            </MenuItem>
-            <MenuItem value={4} className={classes.root}>
-              Books Rejected
-            </MenuItem>
+            <MenuItem value={1}>Books Pending For Approval</MenuItem>
+            <MenuItem value={2}>Books Approved</MenuItem>
+            <MenuItem value={3}>Books Sold</MenuItem>
+            <MenuItem value={4}>Books Rejected</MenuItem>
           </Select>
         </FormControl>
         <Popover
@@ -388,7 +363,6 @@ const Orders = () => {
           columns={columns}
           pageSize={3}
           rowBuffer={3}
-          className={classes.root}
           loading={Loading}
           rowHeight={120}
           rowsPerPageOptions={[3]}

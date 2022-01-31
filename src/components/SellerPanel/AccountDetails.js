@@ -209,9 +209,9 @@ const AccountDetails = (props) => {
           borderRadius: "10px",
         }}
       >
-        <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
+        <Stack direction="column" spacing={1} sx={{ width: "100%" }}>
           <Stack
-            spacing={2}
+            spacing={1}
             direction="column"
             alignItems="center"
             justifyContent="center"
@@ -227,22 +227,13 @@ const AccountDetails = (props) => {
               size="small"
               variant="outlined"
               icon={sellerDetails.IsVerified ? <CheckIcon /> : <CancelIcon />}
-              sx={{ fontFamily: "PT sans", letterSpacing: "1px" }}
+              sx={{ fontFamily: "Roboto" }}
             />
             <Chip
               label={sellerDetails.ID}
               color="primary"
               size="small"
               variant="outlined"
-              icon={
-                <Typography
-                  variant="caption"
-                  sx={{ fontFamily: "PT sans", fontSize: "12px !important" }}
-                >
-                  ID :{" "}
-                </Typography>
-              }
-              sx={{ fontFamily: "PT sans", letterSpacing: "1px" }}
             />
           </Stack>
           <Stack spacing={2} direction="row" alignItems="center">
