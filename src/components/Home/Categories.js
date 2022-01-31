@@ -40,7 +40,7 @@ const Categories = () => {
   }, [imageIndex]);
 
   useEffect(() => {
-    const myTimeout = setTimeout(Next, 8000);
+    const myTimeout = setTimeout(Next, 5000);
     return () => {
       clearTimeout(myTimeout);
     };

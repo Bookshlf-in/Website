@@ -26,8 +26,9 @@
   background-color: rgba(255, 255, 255, 0.95);
   z-index: 200;
   max-height: 200px;
-  width: calc(100% - 36px);
+  width: 165px;
   overflow-y: auto;
+  overflow-x: hidden;
   box-shadow: 6px 3px 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
