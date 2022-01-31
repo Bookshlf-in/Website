@@ -330,7 +330,7 @@ const Footer = () => {
                 <Typography variant="caption">JEE Mains</Typography>
               </Link>
               <Link to="/SearchResult/tag:Neet" className="cool-link">
-                <Typography variant="caption">NEET PG</Typography>
+                <Typography variant="caption">NEET UG</Typography>
               </Link>
               <Link to="/SearchResult/tag:Jee Advanced" className="cool-link">
                 <Typography variant="caption">JEE Advanced</Typography>
