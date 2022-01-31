@@ -1,4 +1,4 @@
-import { React, useRef } from "react";
+import { React } from "react";
 import { Helmet } from "react-helmet-async";
 import "./About.css";
 
@@ -101,7 +101,6 @@ const TEAM_DATA = [
 ];
 
 const About = () => {
-  const Scroll = useRef(null);
   const Year = new Date().getFullYear();
   // Opening Links
   const OpenLink = (link) => {
@@ -317,28 +316,13 @@ const About = () => {
             sx={{
               color: "rgba(255,255,255,0.9)",
               letterSpacing: "5px",
-              cursor: "pointer",
-              padding: "10px 16px",
-              borderRadius: "10px",
-              "&:hover": {
-                backgroundColor: "rgba(255,255,255,0.2)",
-              },
-            }}
-            onClick={() => {
-              if (Scroll && Scroll.current) {
-                Scroll.current.scrollIntoView({
-                  behavior: "smooth",
-                  block: "end",
-                  inline: "nearest",
-                });
-              }
             }}
           >
             TEAM&nbsp;
             <DownIcon className="updown" />
           </Typography>
         </Stack>
-        <Stack spacing={2} sx={{ padding: "16px 10px" }} ref={Scroll}>
+        <Stack spacing={2} sx={{ padding: "16px 10px" }}>
           <Stack
             direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
             spacing={2}

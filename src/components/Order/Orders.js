@@ -97,7 +97,7 @@ const Orders = () => {
     {
       field: "orderPhoto",
       headerName: "Book Id",
-      minWidth: 150,
+      minWidth: 180,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -179,7 +179,7 @@ const Orders = () => {
     {
       field: "bookDetails",
       headerName: "Book Details",
-      minWidth: 240,
+      minWidth: 220,
       flex: 3,
       sortable: false,
       renderCell: (cellValue) => {
@@ -201,7 +201,7 @@ const Orders = () => {
     {
       field: "bookStatus",
       headerName: "Book Status",
-      minWidth: 120,
+      minWidth: 150,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -280,7 +280,7 @@ const Orders = () => {
     {
       field: "bookDelete",
       headerName: "Delete",
-      minWidth: 70,
+      minWidth: 90,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
