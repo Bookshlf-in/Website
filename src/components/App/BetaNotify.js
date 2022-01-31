@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Components
@@ -54,8 +54,15 @@ const Styles = {
   },
 };
 const BetaNotify = () => {
-  const [open, setOpen] = useState(true);
-
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (sessionStorage.getItem("bookshlf_beta_notify")) {
+      setOpen(false);
+    } else {
+      sessionStorage.setItem("bookshlf_beta_notify", true);
+      setOpen(true);
+    }
+  }, []);
   const handleClose = () => {
     setOpen(false);
   };

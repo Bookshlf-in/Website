@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -28,26 +28,17 @@ import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
 import BetaNotify from "./BetaNotify";
+import TopNotification from "./TopNotification";
 import NotFoundPage from "../Home/NotFoundPage";
 
 const App = () => {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (sessionStorage.getItem("bookshlf_beta_notify")) {
-      setOpen(false);
-    } else {
-      sessionStorage.setItem("bookshlf_beta_notify", true);
-      setOpen(true);
-    }
-  }, []);
-
   return (
     <Router>
       <div className="App">
-        {process.env.REACT_APP_NODE_ENV === "development" && open ? (
+        {process.env.REACT_APP_NODE_ENV === "development" ? (
           <BetaNotify />
         ) : null}
-
+        <TopNotification />
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/PasswordRecovery">
