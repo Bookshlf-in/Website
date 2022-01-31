@@ -31,12 +31,13 @@ import BookIcon from "@mui/icons-material/MenuBookRounded";
 const useStyles = makeStyles({
   root: {
     fontFamily: "PT sans !important",
-    fontSize: "11px !important",
+    fontSize: "10px !important",
     minHeight: "0px !important",
   },
   Button: {
-    fontFamily: "PT sans !important",
-    fontSize: "11px !important",
+    fontFamily: "Roboto !important",
+    fontWeight: "bold",
+    fontSize: "10px !important",
     minHeight: "0px !important",
     minWidth: "0px !important",
     padding: "0px !important",
@@ -196,19 +197,19 @@ const SellerPanel = () => {
               />
             </TabList>
           </Box>
-          <TabPanel value="1">
+          <TabPanel value="1" sx={{ padding: "15px 10px" }}>
             <AccountDetails seller={sellerDetails} panel={panel} />
           </TabPanel>
-          <TabPanel value="2">
+          <TabPanel value="2" sx={{ padding: "15px 10px" }}>
             <Orders address={Adr} panel={panel} />
           </TabPanel>
-          <TabPanel value="3">
+          <TabPanel value="3" sx={{ padding: "15px 10px" }}>
             <Address address={Adr} panel={panel} />
           </TabPanel>
-          <TabPanel value="4">
+          <TabPanel value="4" sx={{ padding: "15px 10px" }}>
             <Reviews reviews={sellerReview} sellerId={sellerId} panel={panel} />
           </TabPanel>
-          <TabPanel value="5">
+          <TabPanel value="5" sx={{ padding: "15px 10px" }}>
             <AddBook
               address={Adr}
               commisionChart={commisionchart}

@@ -20,29 +20,27 @@
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 .item-h6 {
-  font-size: 16px;
+  font-size: 14px;
   margin: 20px 0px;
-  font-family: "Staatliches";
+  font-family: "Montserrat", sans-serif;
   letter-spacing: 2px;
   color: rgb(36, 36, 36);
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {
   .categories h4 {
-    font-size: 16px !important;
-    font-weight: bolder !important;
+    font-size: 24px !important;
   }
   .categories h6 {
-    font-size: 12px !important;
-    font-weight: bolder !important;
+    font-size: 10px !important;
   }
   .categories .MuiAvatar-root {
     height: 30px;
     width: 30px;
   }
-  .categories .MuiTypography-body2 {
-    font-size: 12px !important;
-    font-family: "PT sans", sans-serif;
+  .categories .MuiTypography-caption {
+    font-size: 9px;
   }
   .item {
     height: 125px;
@@ -50,8 +48,5 @@
   }
   .item {
     margin-bottom: 10px !important;
-  }
-  .item-h6 {
-    font-size: 12px !important;
   }
 }

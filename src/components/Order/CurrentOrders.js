@@ -24,13 +24,13 @@ import DeleteIcon from "@mui/icons-material/DeleteRounded";
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontFamily: "PT sans !important",
+    fontFamily: "Roboto !important",
     "& p": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
     },
   },
   stack: {
-    minHeight: "calc(100vh - 200px)",
+    minHeight: "calc(100vh - 100px)",
     width: "100%",
   },
 }));
@@ -62,7 +62,7 @@ const CurrentOrders = (props) => {
     {
       field: "orderPhoto",
       headerName: "Book Id",
-      minWidth: 200,
+      minWidth: 190,
       flex: 2,
       sortable: false,
       renderCell: (cellValue) => {
@@ -87,7 +87,7 @@ const CurrentOrders = (props) => {
     {
       field: "orderTotal",
       headerName: "Order Total",
-      minWidth: 100,
+      minWidth: 120,
       flex: 1,
       sortable: false,
       renderCell: (cellValue) => {
@@ -105,7 +105,7 @@ const CurrentOrders = (props) => {
     },
     {
       field: "orderTitle",
-      headerName: "Book",
+      headerName: "Book Details",
       minWidth: 200,
       flex: 2,
       sortable: false,
@@ -177,7 +177,7 @@ const CurrentOrders = (props) => {
     },
     {
       field: "deleteOrder",
-      headerName: "Cancel Order",
+      headerName: "Cancel",
       minWidth: 100,
       flex: 1,
       sortable: false,

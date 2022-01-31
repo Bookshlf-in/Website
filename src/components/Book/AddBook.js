@@ -47,42 +47,41 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontWeight: "bolder",
-    fontFamily: "PT sans !important",
+    fontFamily: "Roboto !important",
     "& label": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
     },
     "& p": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
       fontSize: "10px !important",
     },
     "& input": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
       fontSize: "12px !important",
     },
     "& textarea": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
       fontSize: "12px !important",
     },
   },
   select: {
     "& label": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
       fontSize: "14px",
       left: "3px",
       top: "1px",
     },
     "& p": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
       fontSize: "10px !important",
     },
     "& div": {
-      fontFamily: "PT sans !important",
+      fontFamily: "Roboto !important",
       fontSize: "10px !important",
     },
   },
   adrMenu: {
-    fontFamily: "PT sans !important",
+    fontFamily: "Roboto !important",
     fontSize: "10px !important",
     minHeight: "0 !important",
   },
@@ -504,19 +503,19 @@ const AddBook = (props) => {
           >
             <MenuItem
               value="Home Address"
-              sx={{ fontFamily: "PT sans", fontSize: "12px" }}
+              sx={{ fontFamily: "Roboto", fontSize: "12px" }}
             >
               Home Address
             </MenuItem>
             <MenuItem
               value="Office Address"
-              sx={{ fontFamily: "PT sans", fontSize: "12px" }}
+              sx={{ fontFamily: "Roboto", fontSize: "12px" }}
             >
               Office Address
             </MenuItem>
             <MenuItem
               value="Temporary Address"
-              sx={{ fontFamily: "PT sans", fontSize: "12px" }}
+              sx={{ fontFamily: "Roboto", fontSize: "12px" }}
             >
               Temporary Address
             </MenuItem>
@@ -638,7 +637,7 @@ const AddBook = (props) => {
           variant="contained"
           fullWidth
           color="success"
-          sx={{ maxWidth: 284, fontFamily: "PT sans" }}
+          sx={{ maxWidth: 284, fontFamily: "Roboto" }}
           onClick={handelRegister}
           endIcon={<AddIcon />}
           loading={loading}
@@ -650,7 +649,7 @@ const AddBook = (props) => {
         <Alert
           severity={alert.type}
           className={classes.root}
-          sx={{ fontFamily: "PT sans", visibility: alert.show ? 1 : 0 }}
+          sx={{ fontFamily: "Roboto", visibility: alert.show ? 1 : 0 }}
         >
           {alert.msg}
         </Alert>
@@ -1060,7 +1059,7 @@ const AddBook = (props) => {
               onClick={() => setcollapse(!collapse)}
               sx={{
                 marginTop: "12px",
-                fontFamily: "PT sans",
+                fontFamily: "Roboto",
                 fontSize: "12px",
                 letterSpacing: "1px",
               }}

@@ -15,9 +15,7 @@ const CategoryItem = (props) => {
           sx={{ width: 56, height: 56 }}
         />
         <h6 className="item-h6">{props.label}</h6>
-        <Typography variant="caption">
-          <strong>Shop Now</strong>
-        </Typography>
+        <Typography variant="caption">Shop Now</Typography>
       </Stack>
     </Link>
   );

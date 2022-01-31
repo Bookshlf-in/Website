@@ -182,7 +182,6 @@ const SellerProfile = (props) => {
                         icon={
                           seller.isVerified ? <CheckIcon /> : <CancelIcon />
                         }
-                        sx={{ fontFamily: "PT sans", letterSpacing: "1px" }}
                       />
                     ) : null}
                     <Chip
@@ -190,18 +189,6 @@ const SellerProfile = (props) => {
                       color="primary"
                       size="small"
                       variant="outlined"
-                      icon={
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            fontFamily: "PT sans",
-                            fontSize: "12px !important",
-                          }}
-                        >
-                          ID :{" "}
-                        </Typography>
-                      }
-                      sx={{ fontFamily: "PT sans", letterSpacing: "1px" }}
                     />
                   </Stack>
                   <Stack spacing={2} direction="row" alignItems="center">

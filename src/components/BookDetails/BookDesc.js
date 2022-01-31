@@ -20,7 +20,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontFamily: "PT sans !important",
+    fontFamily: "Montserrat !important",
   },
 }));
 
@@ -50,15 +50,11 @@ const BookDesc = (props) => {
         >
           <Alert severity="warning" sx={{ width: 300 }}>
             <AlertTitle>
-              <Typography variant="body1">
-                <strong>Book Not Available</strong>
-              </Typography>
+              <Typography variant="body2">Book Not Available</Typography>
             </AlertTitle>
             <Typography variant="caption">
-              <strong>
-                This Book is Currently Not Available & May Remain Same for Not
-                Known Period of time
-              </strong>
+              This Book is Currently Not Available & May Remain Same for Not
+              Known Period of time
             </Typography>
           </Alert>
         </Stack>
@@ -169,8 +165,8 @@ const BookDesc = (props) => {
         <Typography variant="h5" className={classes.root}>
           Book Description
         </Typography>
-        <Typography variant="body1" align="justify" sx={{ maxWidth: 400 }}>
-          <strong>{book?.description}</strong>
+        <Typography variant="body2" align="justify" sx={{ maxWidth: 400 }}>
+          {book?.description}
         </Typography>
       </Stack>
       <Stack
