@@ -87,3 +87,13 @@
   color: white;
   letter-spacing: 0.08em;
 }
+@media screen and (max-width: 600px) {
+  .card-container {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 300px) {
+  .card-container {
+    width: 250px;
+  }
+}

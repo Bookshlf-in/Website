@@ -258,7 +258,7 @@ const About = () => {
           >
             TEAM
           </Typography>
-          <Stack spacing={2} sx={{ padding: "16px 10px" }}>
+          <Stack spacing={2} sx={{ padding: "16px 0px" }}>
             <Stack
               direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
               spacing={2}
