@@ -1022,7 +1022,7 @@ const AddBook = (props) => {
                     Please Upload Atleast 3-15 Clear Images of BOOK-SET
                   </Alert>
                   <FilePond
-                    acceptedFileTypes={["image/jpeg"]}
+                    acceptedFileTypes={["image/*"]}
                     name="bookImages"
                     dropOnPage={true}
                     dropValidation={true}
@@ -1040,6 +1040,7 @@ const AddBook = (props) => {
                     labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                     credits={false}
                     styleButtonRemoveItemPosition="right"
+                    imagePreviewHeight={200}
                   />
                 </Stack>
                 {/* ============================================================== */}
