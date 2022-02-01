@@ -4,7 +4,7 @@ import "./About.css";
 
 // Components
 import { Box, Stack, Typography, Avatar } from "@mui/material";
-import { IconButton, Grow, Button } from "@mui/material";
+import { IconButton, Button } from "@mui/material";
 
 // Icons
 import WebsiteIcon from "@mui/icons-material/Language";
@@ -108,15 +108,6 @@ const About = () => {
   };
 
   // custom component that appears on scroll
-  const Appear = (props) => {
-    return (
-      <Grow in={true} style={{ transformOrigin: "0 0 0" }} timeout={1000}>
-        {props.content}
-      </Grow>
-    );
-  };
-
-  // custom component that appears on scroll
   const ProfileCard = (props) => {
     return (
       <div className="card-container">
@@ -189,128 +180,75 @@ const About = () => {
           sx={{
             width: "100%",
             padding: "10px",
-            minHeight: "calc(100vh - 56px)",
+            minHeight: "calc(100vh - 66px)",
           }}
           direction="column"
           justifyContent="space-between"
           alignItems="center"
         >
-          <Appear
-            content={
-              <Avatar
-                src="/images/smallLogo.svg"
-                alt="bookhlf.in"
-                variant="rounded"
-                sx={{ height: 67, width: 80 }}
-              />
-            }
+          <Avatar
+            src="/images/smallLogo.svg"
+            alt="bookhlf.in"
+            variant="rounded"
+            sx={{ height: 67, width: 80 }}
           />
-          <Appear
-            content={
-              <Typography
-                variant="h1"
-                sx={{
-                  fontFamily: "PT sans",
-                  color: "rgba(255,255,255,0.9)",
-                  letterSpacing: "2px",
-                  fontWeight: "bolder",
-                  "@media screen and (max-width:600px)": { fontSize: "3em " },
-                }}
+          <Typography
+            variant="h2"
+            sx={{
+              fontFamily: "PT sans",
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "2px",
+              fontWeight: "bolder",
+              "@media screen and (max-width:600px)": { fontSize: "3em " },
+            }}
+          >
+            BOOKSHLF
+          </Typography>
+          <Stack
+            spacing={2}
+            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+          >
+            <Stack spacing={2} direction="row">
+              <IconButton
+                aria-label="github"
+                onClick={() => OpenLink(GITHUB_URL)}
               >
-                BOOKSHLF
-              </Typography>
-            }
-          />
-          <Appear
-            content={
-              <div>
-                <Typography
-                  variant="body1"
-                  align="center"
-                  sx={{ color: "rgba(255,255,255,0.9)" }}
-                >
-                  E-commerce platform to buy and sell used books
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    maxWidth: 600,
-                    padding: "20px",
-                    textAlign: "justify",
-                    backgroundColor: "rgba(255,255,255,0.6)",
-                    borderRadius: "10px",
-                  }}
-                >
-                  We are a small team of students who are enthusiastic
-                  developers. We are trying to create a better viable platform
-                  for students who want to learn but due to financial issues
-                  can't afford new books. We also want to help those who want to
-                  sell thier books which they don't need. We hope that you will
-                  find this platform usefull. We are always trying to make this
-                  platform better.
-                </Typography>
-              </div>
-            }
-          />
-          <Appear
-            content={
-              <div>
-                <Typography
-                  variant="h4"
-                  align="center"
-                  sx={{ color: "rgba(255,255,255,0.9)" }}
-                >
-                  Reach Us
-                </Typography>
-                <Stack
-                  spacing={2}
-                  direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
-                >
-                  <Stack spacing={2} direction="row">
-                    <IconButton
-                      aria-label="github"
-                      onClick={() => OpenLink(GITHUB_URL)}
-                    >
-                      <GitHubIcon sx={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton
-                      aria-label="website"
-                      onClick={() => OpenLink(WEBSITE_URL)}
-                    >
-                      <WebsiteIcon sx={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton
-                      aria-label="website"
-                      onClick={() => OpenLink(YOUTUBE_URL)}
-                    >
-                      <YouTubeIcon sx={{ color: "white" }} />
-                    </IconButton>
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <IconButton
-                      aria-label="website"
-                      onClick={() => OpenLink(INSTAGRAM_URL)}
-                    >
-                      <InstagramIcon sx={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton
-                      aria-label="website"
-                      onClick={() => OpenLink(FACEBOOK_URL)}
-                    >
-                      <FacebookIcon sx={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton
-                      aria-label="website"
-                      onClick={() => OpenLink(LINKEDIN_URL)}
-                    >
-                      <LinkedInIcon sx={{ color: "white" }} />
-                    </IconButton>
-                  </Stack>
-                </Stack>
-              </div>
-            }
-          />
-
+                <GitHubIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(WEBSITE_URL)}
+              >
+                <WebsiteIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(YOUTUBE_URL)}
+              >
+                <YouTubeIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Stack>
+            <Stack spacing={2} direction="row">
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(INSTAGRAM_URL)}
+              >
+                <InstagramIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(FACEBOOK_URL)}
+              >
+                <FacebookIcon sx={{ color: "white" }} />
+              </IconButton>
+              <IconButton
+                aria-label="website"
+                onClick={() => OpenLink(LINKEDIN_URL)}
+              >
+                <LinkedInIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Stack>
+          </Stack>
           <Typography
             variant="h4"
             sx={{
@@ -318,33 +256,32 @@ const About = () => {
               letterSpacing: "5px",
             }}
           >
-            TEAM&nbsp;
-            <DownIcon className="updown" />
+            TEAM
           </Typography>
-        </Stack>
-        <Stack spacing={2} sx={{ padding: "16px 10px" }}>
-          <Stack
-            direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
-            spacing={2}
-            justifyContent="space-evenly"
-            alignItems="center"
-          >
-            {TEAM_DATA.map((person) => (
-              <ProfileCard
-                imgURL={person.ProfileImg}
-                Name={person.Name}
-                Location={person.Location}
-                About={person.About}
-                skills={person.Skills}
-                profileLink={person.profileLink}
-                Github={person.Github}
-                Linkedin={person.Linkedin}
-              />
-            ))}
+          <Stack spacing={2} sx={{ padding: "16px 10px" }}>
+            <Stack
+              direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
+              spacing={2}
+              justifyContent="space-evenly"
+              alignItems="center"
+            >
+              {TEAM_DATA.map((person) => (
+                <ProfileCard
+                  imgURL={person.ProfileImg}
+                  Name={person.Name}
+                  Location={person.Location}
+                  About={person.About}
+                  skills={person.Skills}
+                  profileLink={person.profileLink}
+                  Github={person.Github}
+                  Linkedin={person.Linkedin}
+                />
+              ))}
+            </Stack>
           </Stack>
 
           <Typography
-            variant="h4"
+            variant="h6"
             sx={{ color: "rgba(255,255,255,0.4)", letterSpacing: "5px" }}
             align="center"
           >
