@@ -87,18 +87,13 @@
   color: white;
   letter-spacing: 0.08em;
 }
-.updown {
-  -webkit-animation: MoveUpDown 2s alternate infinite linear;
-  animation: MoveUpDown 2s alternate infinite linear;
-  left: 0;
-  bottom: 0;
-}
-@keyframes MoveUpDown {
-  0%,
-  100% {
-    transform: translateY(0);
+@media screen and (max-width: 600px) {
+  .card-container {
+    width: 300px;
   }
-  50% {
-    transform: translateY(-20px);
+}
+@media screen and (max-width: 300px) {
+  .card-container {
+    width: 250px;
   }
 }
