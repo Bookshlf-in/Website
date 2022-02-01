@@ -49,7 +49,7 @@ const Categories = () => {
           label="JEE ADVANCED"
         />
         <CategoryItem
-          url="/SearchResult/tag:CSBE"
+          url="/SearchResult/tag:CBSE"
           imgUrl="/images/Categories/cbse-logo.png"
           label="CBSE"
         />
@@ -59,7 +59,7 @@ const Categories = () => {
           label="NEET UG"
         />
         <CategoryItem
-          url="/SearchResult/tag:NOVELS"
+          url="/SearchResult/tag:NOVEL"
           imgUrl="/images/Categories/novel-logo.jpg"
           label="NOVELS"
         />
