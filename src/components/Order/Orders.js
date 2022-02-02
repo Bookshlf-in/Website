@@ -108,7 +108,12 @@ const Orders = () => {
             sx={{ padding: "10px" }}
             spacing={2}
           >
-            <Avatar src={cellValue.value[0]} alt="" variant="rounded" />
+            <Avatar
+              src={cellValue.value[0]}
+              alt=""
+              variant="rounded"
+              sx={{ height: 56, width: 56 }}
+            />
             <Chip
               label={cellValue.value[1]}
               size="small"

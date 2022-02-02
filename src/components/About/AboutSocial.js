@@ -17,7 +17,7 @@ const WEBSITE_URL = "https://bookshlf.in";
 const YOUTUBE_URL = "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ";
 const FACEBOOK_URL = "https://www.facebook.com/Bookshlf-109479771200918";
 const LINKEDIN_URL = "https://www.linkedin.com/in/bookshlf-by-aman-861073223/";
-const INSTAGRAM_URL = "https://twitter.com/BookshlfA";
+const INSTAGRAM_URL = "https://instagram.com/_bookshlf";
 
 const AboutSocial = () => {
   // Opening Links

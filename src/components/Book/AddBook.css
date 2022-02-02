@@ -45,6 +45,22 @@
 }
 .filepond--drop-label {
   min-height: 4em !important;
+  background-color: cornflowerblue;
+  color: whitesmoke;
+  border-radius: 5px;
+}
+.filepond--drop-label {
+  color: whitesmoke !important;
+}
+
+.filepond--label-action {
+  background-color: #333;
+  padding: 6px 10px;
+  text-decoration: none !important;
+  border-radius: 5px;
+}
+.filepond--list.filepond--list {
+  top: 10px !important;
 }
 @media (min-width: 30em) {
   .filepond--item {
