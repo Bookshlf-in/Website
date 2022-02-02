@@ -523,7 +523,7 @@ const Search = () => {
                   <Pagination
                     variant="outlined"
                     color="primary"
-                    size="large"
+                    size="small"
                     page={page}
                     count={totalPages}
                     className={classes.root}
