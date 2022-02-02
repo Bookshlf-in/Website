@@ -1,60 +1,45 @@
 import { React, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { makeStyles } from "@mui/styles";
-import "./Address.css";
 import axios from "../../axios";
 
 // Components
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import IconButton from "@mui/material/IconButton";
+import { Box, Stack, Typography, Alert, Button } from "@mui/material";
+import { TextField, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, Dialog } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { DataGrid } from "@mui/x-data-grid";
-import Chip from "@mui/material/Chip";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
 
 // Icons
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/AddCircleRounded";
-import CallIcon from "@mui/icons-material/CallRounded";
-import PinIcon from "@mui/icons-material/FiberPinRounded";
-import HomeIcon from "@mui/icons-material/HomeRounded";
-import OfficeIcon from "@mui/icons-material/ApartmentRounded";
-import TempIcon from "@mui/icons-material/NotListedLocationRounded";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    fontFamily: "Roboto !important",
-    "& label": {
-      fontFamily: "Roboto !important",
-    },
-    "& p": {
-      fontFamily: "Roboto !important",
-    },
-    "& input": {
-      fontFamily: "Roboto !important",
-    },
+// Address Components
+import AddressList from "./AddressList";
+
+const Style = {
+  "& label": {
+    fontSize: "12px",
   },
-}));
+  "& input": {
+    fontSize: "12px",
+  },
+  "& div": {
+    fontSize: "12px",
+  },
+};
+const MenuItemStyle = {
+  fontSize: "11px",
+  fontFamily: "Roboto",
+  minHeight: 0,
+};
 
 const Address = (props) => {
-  const classes = useStyles();
-
   // functionality states
   const [loading, setloading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [alert, setalert] = useState({
     show: false,
     type: "warning",
     msg: "",
   });
-  const [deleteAdr, setdeleteAdr] = useState("");
 
   // add address state object
   const [Label, setLabel] = useState("");
@@ -66,182 +51,19 @@ const Address = (props) => {
   const [ZipCode, setZipCode] = useState("");
   const [Adr, setAdr] = useState(props.address);
 
-  const columns = [
-    {
-      field: "type",
-      headerName: "Type",
-      minWidth: 150,
-      flex: 1,
-      sortable: false,
-      renderCell: (type) => {
-        return (
-          <Chip
-            icon={
-              type.value === "Home Address" ? (
-                <HomeIcon />
-              ) : type.value === "Office Address" ? (
-                <OfficeIcon />
-              ) : (
-                <TempIcon />
-              )
-            }
-            color="default"
-            label={type.value}
-            size="small"
-            className={classes.root}
-          />
-        );
-      },
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      minWidth: 180,
-      flex: 2,
-      sortable: false,
-      renderCell: (adr) => {
-        return (
-          <Typography variant="caption">
-            <strong>{adr.value}</strong>
-          </Typography>
-        );
-      },
-    },
-    {
-      field: "city",
-      headerName: "City",
-      minWidth: 150,
-      flex: 1,
-      sortable: false,
-      renderCell: (city) => {
-        return (
-          <Typography variant="caption">
-            <strong>{city.value}</strong>
-          </Typography>
-        );
-      },
-    },
-    {
-      field: "state",
-      headerName: "State",
-      minWidth: 150,
-      flex: 1,
-      sortable: false,
-      renderCell: (state) => {
-        return (
-          <Typography variant="caption">
-            <strong>{state.value}</strong>
-          </Typography>
-        );
-      },
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      minWidth: 150,
-      flex: 1,
-      sortable: false,
-      renderCell: (zip) => {
-        return (
-          <Chip
-            icon={<PinIcon />}
-            color="default"
-            label={zip.value}
-            size="small"
-            className={classes.root}
-          />
-        );
-      },
-    },
-    {
-      field: "phoneNo",
-      headerName: "Phone No",
-      minWidth: 150,
-      flex: 1,
-      sortable: false,
-      renderCell: (phone) => {
-        return (
-          <Chip
-            icon={<CallIcon />}
-            color="primary"
-            label={phone.value}
-            size="small"
-          />
-        );
-      },
-    },
-    {
-      field: "altphoneNo",
-      headerName: "Alt Phone No",
-      flex: 1,
-      minWidth: 150,
-      sortable: false,
-      renderCell: (phone) => {
-        return (
-          <Chip
-            icon={<CallIcon />}
-            color="primary"
-            label={phone.value ? phone.value : "Not Provided"}
-            size="small"
-          />
-        );
-      },
-    },
-    {
-      field: "Remove Address",
-      minWidth: 150,
-      flex: 1,
-      sortable: false,
-      renderCell: (cellValues) => {
-        return (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <IconButton
-              aria-label="delete"
-              onClick={() => handelDeleteAddress(cellValues.id)}
-            >
-              {deleteAdr !== cellValues.id ? (
-                <DeleteIcon color="error" />
-              ) : (
-                <CircularProgress color="error" size={25} />
-              )}
-            </IconButton>
-          </Box>
-        );
-      },
-    },
-  ];
-
-  const rows = Adr.map((adr) => {
-    return {
-      id: adr._id,
-      type: adr.label,
-      address: adr.address,
-      city: adr.city,
-      state: adr.state,
-      zipCode: adr.zipCode,
-      phoneNo: adr.phoneNo,
-      altphoneNo: adr.AltPhoneNo,
-    };
-  });
-
-  // handeling address register request
+  const PreVerify = () => {
+    return (
+      (Label !== "Address Type") &
+      (Address.length > 0) &
+      (City !== "City") &
+      (State !== "State") &
+      (ZipCode.length >= 6) &
+      (PhoneNo.length === 10)
+    );
+  };
   const handelRegister = () => {
     setloading(true);
-    if (
-      Label !== "Address Type" &&
-      Address.length > 0 &&
-      City !== "City" &&
-      State !== "State" &&
-      ZipCode.length === 6 &&
-      PhoneNo.length === 10
-    ) {
+    if (PreVerify()) {
       axios
         .post("/addAddress", {
           label: Label,
@@ -260,101 +82,53 @@ const Address = (props) => {
             msg: response.data.msg,
           });
           setloading(false);
+          setLabel("");
+          setAddress("");
+          setPhoneNo("");
+          setAltPhoneNo("");
+          setCity("");
+          setState("");
+          setZipCode("");
           setTimeout(() => {
+            setOpen(false);
             setalert({
               show: false,
               type: "",
               msg: "",
             });
-          }, 3000);
-          axios
-            .get("/getAddressList")
-            .then((response) => {
-              response.data.sort((a, b) => {
-                return a.updatedAt < b.updatedAt
-                  ? 1
-                  : a.updatedAt > b.updatedAt
-                  ? -1
-                  : 0;
-              });
-              setAdr(response.data);
-            })
-            .catch((error) => {});
+          }, 1000);
+          axios.get("/getAddressList").then((response) => {
+            response.data.sort((a, b) => {
+              return a.updatedAt < b.updatedAt
+                ? 1
+                : a.updatedAt > b.updatedAt
+                ? -1
+                : 0;
+            });
+            setAdr(response.data);
+          });
         })
         .catch((error) => {
-          if (error.response) {
-            setalert({
-              show: true,
-              type: "error",
-              msg: "Please Fill All Fields Correctly!",
-            });
-
-            setTimeout(() => {
-              setalert({
-                show: false,
-                type: "",
-                msg: "",
-              });
-            }, 3000);
-          }
-          setloading(false);
+          RegisterError();
         });
     } else {
-      setloading(false);
-      setalert({
-        show: true,
-        type: "error",
-        msg: "Please Fill All Fields Correctly!",
-      });
-      setTimeout(() => {
-        setalert({
-          show: false,
-          type: "",
-          msg: "",
-        });
-      }, 3000);
+      RegisterError();
     }
   };
-
-  // const deleting the address
-  const handelDeleteAddress = (id) => {
-    // console.log(e.target.id);
-    setdeleteAdr(id);
-    axios
-      .delete("/deleteAddress", {
-        data: { addressId: id },
-      })
-      .then((response) => {
-        // console.log(response.data);
-        setalert({
-          show: true,
-          type: "success",
-          msg: response.data.msg,
-        });
-        setTimeout(() => {
-          setalert({
-            show: false,
-            type: "",
-            msg: "",
-          });
-        }, 3000);
-        setAdr(Adr.filter((address) => address._id !== id));
-      })
-      .catch((error) => {
-        // console.log(error.response.data.errors);
-        setalert({
-          show: true,
-          Type: "error",
-          msg: error.response.data.error,
-        });
-        setTimeout(() => {
-          setalert({
-            show: false,
-            type: "",
-            msg: "",
-          });
-        }, 5000);
+  const RegisterError = () => {
+    setloading(false);
+    setalert({
+      show: true,
+      type: "error",
+      msg: "Please Fill All Fields Correctly!",
+    });
+    setTimeout(() => {
+      setalert({
+        show: false,
+        type: "",
+        msg: "",
       });
+    }, 3000);
   };
 
   return (
@@ -371,35 +145,28 @@ const Address = (props) => {
           content="Your Address Book. All Your addresses are stored here."
         />
       </Helmet>
-      <Stack
-        spacing={2}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Stack spacing={2} direction="column">
         <Typography variant="h5">
-          <strong>Your Address Book</strong>
+          <strong>My Addresses</strong>
         </Typography>
-
-        <Stack
-          spacing={2}
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          className="address-form-stack"
+        <Button
+          color="primary"
+          sx={{ maxWidth: 200 }}
+          variant="outlined"
+          onClick={() => setOpen(true)}
+          size="small"
         >
+          + Add Address
+        </Button>
+        <AddressList address={Adr} />
+        <Dialog onClose={() => setOpen((prev) => !prev)} open={open} fullWidth>
           <Stack
-            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
-            spacing={2}
-            sx={{ width: "100%" }}
+            spacing={1}
             justifyContent="center"
+            alignItems="center"
+            sx={{ width: "100%", padding: "10px 16px" }}
           >
-            <FormControl
-              fullWidth
-              variant="filled"
-              sx={{ maxWidth: 300 }}
-              className={classes.root}
-            >
+            <FormControl fullWidth variant="filled" size="small" sx={Style}>
               <InputLabel id="address-type-label">Address Type</InputLabel>
               <Select
                 labelId="address-type-label"
@@ -407,33 +174,27 @@ const Address = (props) => {
                 label="Address Type"
                 onChange={(e) => setLabel(e.target.value)}
               >
-                <MenuItem value="Home Address">Home Address</MenuItem>
-                <MenuItem value="Office Address">Office Address</MenuItem>
-                <MenuItem value="Temporary Address">Temporary Address</MenuItem>
+                <MenuItem value="Home Address" sx={MenuItemStyle}>
+                  Home Address
+                </MenuItem>
+                <MenuItem value="Office Address" sx={MenuItemStyle}>
+                  Office Address
+                </MenuItem>
+                <MenuItem value="Temporary Address" sx={MenuItemStyle}>
+                  Temporary Address
+                </MenuItem>
               </Select>
             </FormControl>
             <TextField
               label="Full Address"
               variant="filled"
+              fullWidth
+              size="small"
               value={Address}
               onChange={(e) => setAddress(e.target.value)}
-              fullWidth
-              className={classes.root}
-              sx={{ maxWidth: 600 }}
+              sx={Style}
             />
-          </Stack>
-          <Stack
-            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
-            spacing={2}
-            sx={{ width: "100%" }}
-            justifyContent="center"
-          >
-            <FormControl
-              fullWidth
-              variant="filled"
-              className={classes.root}
-              sx={{ maxWidth: 300 }}
-            >
+            <FormControl fullWidth variant="filled" size="small" sx={Style}>
               <InputLabel id="state-label">State</InputLabel>
               <Select
                 labelId="state-label"
@@ -441,134 +202,180 @@ const Address = (props) => {
                 label="State"
                 onChange={(e) => setState(e.target.value)}
               >
-                <MenuItem value="Andaman and Nicobar Islands">
+                <MenuItem
+                  value="Andaman and Nicobar Islands"
+                  sx={MenuItemStyle}
+                >
                   Andaman and Nicobar Islands
                 </MenuItem>
-                <MenuItem value="Andhra Pradesh">Andhra Pradesh</MenuItem>
-                <MenuItem value="Arunachal Pradesh">Arunachal Pradesh</MenuItem>
-                <MenuItem value="Assam">Assam</MenuItem>
-                <MenuItem value="Bihar">Bihar</MenuItem>
-                <MenuItem value="Chandigarh">Chandigarh</MenuItem>
-                <MenuItem value="Chhattisgarh">Chhattisgarh</MenuItem>
-                <MenuItem value="Dadra and Nagar Haveli">
+                <MenuItem value="Andhra Pradesh" sx={MenuItemStyle}>
+                  Andhra Pradesh
+                </MenuItem>
+                <MenuItem value="Arunachal Pradesh" sx={MenuItemStyle}>
+                  Arunachal Pradesh
+                </MenuItem>
+                <MenuItem value="Assam" sx={MenuItemStyle}>
+                  Assam
+                </MenuItem>
+                <MenuItem value="Bihar" sx={MenuItemStyle}>
+                  Bihar
+                </MenuItem>
+                <MenuItem value="Chandigarh" sx={MenuItemStyle}>
+                  Chandigarh
+                </MenuItem>
+                <MenuItem value="Chhattisgarh" sx={MenuItemStyle}>
+                  Chhattisgarh
+                </MenuItem>
+                <MenuItem value="Dadra and Nagar Haveli" sx={MenuItemStyle}>
                   Dadra and Nagar Haveli
                 </MenuItem>
-                <MenuItem value="Daman and Diu">Daman and Diu</MenuItem>
-                <MenuItem value="Delhi">Delhi</MenuItem>
-                <MenuItem value="Goa">Goa</MenuItem>
-                <MenuItem value="Gujarat">Gujarat</MenuItem>
-                <MenuItem value="Haryana">Haryana</MenuItem>
-                <MenuItem value="Himachal Pradesh">Himachal Pradesh</MenuItem>
-                <MenuItem value="Jammu and Kashmir">Jammu and Kashmir</MenuItem>
-                <MenuItem value="Jharkhand">Jharkhand</MenuItem>
-                <MenuItem value="Karnataka">Karnataka</MenuItem>
-                <MenuItem value="Kerala">Kerala</MenuItem>
-                <MenuItem value="Ladakh">Ladakh</MenuItem>
-                <MenuItem value="Lakshadweep">Lakshadweep</MenuItem>
-                <MenuItem value="Madhya Pradesh">Madhya Pradesh</MenuItem>
-                <MenuItem value="Maharashtra">Maharashtra</MenuItem>
-                <MenuItem value="Manipur">Manipur</MenuItem>
-                <MenuItem value="Meghalaya">Meghalaya</MenuItem>
-                <MenuItem value="Mizoram">Mizoram</MenuItem>
-                <MenuItem value="Nagaland">Nagaland</MenuItem>
-                <MenuItem value="Odisha">Odisha</MenuItem>
-                <MenuItem value="Puducherry">Puducherry</MenuItem>
-                <MenuItem value="Punjab">Punjab</MenuItem>
-                <MenuItem value="Rajasthan">Rajasthan</MenuItem>
-                <MenuItem value="Sikkim">Sikkim</MenuItem>
-                <MenuItem value="Tamil Nadu">Tamil Nadu</MenuItem>
-                <MenuItem value="Telangana">Telangana</MenuItem>
-                <MenuItem value="Tripura">Tripura</MenuItem>
-                <MenuItem value="Uttar Pradesh">Uttar Pradesh</MenuItem>
-                <MenuItem value="Uttarakhand">Uttarakhand</MenuItem>
-                <MenuItem value="West Bengal">West Bengal</MenuItem>
+                <MenuItem value="Daman and Diu" sx={MenuItemStyle}>
+                  Daman and Diu
+                </MenuItem>
+                <MenuItem value="Delhi" sx={MenuItemStyle}>
+                  Delhi
+                </MenuItem>
+                <MenuItem value="Goa" sx={MenuItemStyle}>
+                  Goa
+                </MenuItem>
+                <MenuItem value="Gujarat" sx={MenuItemStyle}>
+                  Gujarat
+                </MenuItem>
+                <MenuItem value="Haryana" sx={MenuItemStyle}>
+                  Haryana
+                </MenuItem>
+                <MenuItem value="Himachal Pradesh" sx={MenuItemStyle}>
+                  Himachal Pradesh
+                </MenuItem>
+                <MenuItem value="Jammu and Kashmir" sx={MenuItemStyle}>
+                  Jammu and Kashmir
+                </MenuItem>
+                <MenuItem value="Jharkhand" sx={MenuItemStyle}>
+                  Jharkhand
+                </MenuItem>
+                <MenuItem value="Karnataka" sx={MenuItemStyle}>
+                  Karnataka
+                </MenuItem>
+                <MenuItem value="Kerala" sx={MenuItemStyle}>
+                  Kerala
+                </MenuItem>
+                <MenuItem value="Ladakh" sx={MenuItemStyle}>
+                  Ladakh
+                </MenuItem>
+                <MenuItem value="Lakshadweep" sx={MenuItemStyle}>
+                  Lakshadweep
+                </MenuItem>
+                <MenuItem value="Madhya Pradesh" sx={MenuItemStyle}>
+                  Madhya Pradesh
+                </MenuItem>
+                <MenuItem value="Maharashtra" sx={MenuItemStyle}>
+                  Maharashtra
+                </MenuItem>
+                <MenuItem value="Manipur" sx={MenuItemStyle}>
+                  Manipur
+                </MenuItem>
+                <MenuItem value="Meghalaya" sx={MenuItemStyle}>
+                  Meghalaya
+                </MenuItem>
+                <MenuItem value="Mizoram" sx={MenuItemStyle}>
+                  Mizoram
+                </MenuItem>
+                <MenuItem value="Nagaland" sx={MenuItemStyle}>
+                  Nagaland
+                </MenuItem>
+                <MenuItem value="Odisha" sx={MenuItemStyle}>
+                  Odisha
+                </MenuItem>
+                <MenuItem value="Puducherry" sx={MenuItemStyle}>
+                  Puducherry
+                </MenuItem>
+                <MenuItem value="Punjab" sx={MenuItemStyle}>
+                  Punjab
+                </MenuItem>
+                <MenuItem value="Rajasthan" sx={MenuItemStyle}>
+                  Rajasthan
+                </MenuItem>
+                <MenuItem value="Sikkim" sx={MenuItemStyle}>
+                  Sikkim
+                </MenuItem>
+                <MenuItem value="Tamil Nadu" sx={MenuItemStyle}>
+                  Tamil Nadu
+                </MenuItem>
+                <MenuItem value="Telangana" sx={MenuItemStyle}>
+                  Telangana
+                </MenuItem>
+                <MenuItem value="Tripura" sx={MenuItemStyle}>
+                  Tripura
+                </MenuItem>
+                <MenuItem value="Uttar Pradesh" sx={MenuItemStyle}>
+                  Uttar Pradesh
+                </MenuItem>
+                <MenuItem value="Uttarakhand" sx={MenuItemStyle}>
+                  Uttarakhand
+                </MenuItem>
+                <MenuItem value="West Bengal" sx={MenuItemStyle}>
+                  West Bengal
+                </MenuItem>
               </Select>
             </FormControl>
             <TextField
-              className={classes.root}
               label="City"
               variant="filled"
               fullWidth
+              size="small"
               value={City}
               onChange={(e) => setCity(e.target.value)}
-              sx={{ maxWidth: 300 }}
+              sx={Style}
             />
             <TextField
-              className={classes.root}
               label="Pincode"
               variant="filled"
               fullWidth
+              size="small"
               value={ZipCode}
               onChange={(e) => setZipCode(e.target.value)}
               type="number"
-              sx={{ maxWidth: 284 }}
+              sx={Style}
             />
-          </Stack>
-          <Stack
-            direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
-            spacing={2}
-            sx={{ width: "100%" }}
-            justifyContent="center"
-          >
+
             <TextField
-              className={classes.root}
               label="Contact Number"
               variant="filled"
               fullWidth
+              size="small"
               value={PhoneNo}
               onChange={(e) => setPhoneNo(e.target.value)}
               type="number"
-              sx={{ maxWidth: 300 }}
+              sx={Style}
             />
             <TextField
-              className={classes.root}
               label="Alternate Contact Number"
               variant="filled"
               fullWidth
+              size="small"
               value={AltPhoneNo}
               onChange={(e) => setAltPhoneNo(e.target.value)}
               type="number"
-              sx={{ maxWidth: 300 }}
+              sx={Style}
             />
             <LoadingButton
-              className={classes.root}
               variant="contained"
               fullWidth
               color="success"
-              sx={{ maxWidth: 284, fontFamily: "PT sans" }}
+              sx={{ maxWidth: 250, fontFamily: "Montserrat" }}
               onClick={handelRegister}
               endIcon={<AddIcon />}
               loading={loading}
               loadingPosition="end"
+              size="small"
             >
               Add Address
             </LoadingButton>
+            {alert.show ? (
+              <Alert severity={alert.type}>{alert.msg}</Alert>
+            ) : null}
           </Stack>
-        </Stack>
-        {alert.show ? (
-          <Alert
-            severity={alert.type}
-            className={classes.root}
-            sx={{ fontFamily: "PT sans" }}
-          >
-            {alert.msg}
-          </Alert>
-        ) : null}
-        <Stack
-          sx={{ height: 400, width: "100%" }}
-          className="address-datagrid-stack"
-        >
-          <DataGrid
-            loading={loading}
-            className={classes.root}
-            rows={rows}
-            columns={columns}
-            pageSize={3}
-            disableSelectionOnClick
-            rowHeight={80}
-            rowsPerPageOptions={[3]}
-          />
-        </Stack>
+        </Dialog>
       </Stack>
     </Box>
   );

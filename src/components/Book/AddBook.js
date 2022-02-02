@@ -863,7 +863,7 @@ const AddBook = (props) => {
                     </Dialog>
                   ) : null}
                 </Stack>
-                <Alert severity="info" color="warning">
+                <Alert severity="info" color="warning" variant="outlined">
                   High Selling Prices will decrease Chances of book getting Sold
                 </Alert>
                 <TextField
@@ -1018,7 +1018,10 @@ const AddBook = (props) => {
                 </Stack>
                 {/* ======================= Book Image Upload ======================== */}
                 <Stack direction="column" spacing={1} sx={{ width: "100%" }}>
-                  <Alert severity={errorField === 5 ? "error" : "info"}>
+                  <Alert
+                    severity={errorField === 5 ? "error" : "info"}
+                    variant="outlined"
+                  >
                     Please Upload Atleast 3-15 Clear Images of BOOK-SET
                   </Alert>
                   <FilePond
@@ -1037,7 +1040,7 @@ const AddBook = (props) => {
                     onupdatefiles={(fileItems) => {
                       setImage(fileItems.map((fileItem) => fileItem.file));
                     }}
-                    labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                    labelIdle='Drag & Drop your Book Images or <span class="filepond--label-action">Browse</span>'
                     credits={false}
                     styleButtonRemoveItemPosition="right"
                     imagePreviewHeight={200}

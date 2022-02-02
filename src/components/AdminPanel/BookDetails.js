@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
+import SellerProfile from "./SellerProfile";
 
 // Components
 import { Stack, ClickAwayListener, Chip, Alert } from "@mui/material";
@@ -59,7 +60,6 @@ const BookDetails = () => {
   const [tagFieldChanges, settagFieldChanges] = useState(false);
   const [openTagMenu, setOpenTagMenu] = useState(false);
   const [updating, setupdating] = useState(false);
-  const [openImg, setOpenImg] = useState(false);
   const [alert, setalert] = useState({
     show: false,
     type: "info",
@@ -82,8 +82,8 @@ const BookDetails = () => {
   const [link, setlink] = useState("");
   const [lang, setlang] = useState("");
   const [avl, setAvl] = useState(true);
-  const [photos, setPhotos] = useState([]);
   const [Image, setImage] = useState([]);
+  const [seller, setseller] = useState({});
 
   // Loading Book Details
   useEffect(() => {
@@ -93,22 +93,37 @@ const BookDetails = () => {
           params: { bookId: bookId },
         })
         .then((response) => {
+          console.log(response.data);
           setbook(response.data);
           setbookName(response.data.title);
           setbookDesc(response.data?.description);
           setAuthor(response.data?.author);
-          setEdition(response.data?.editionYear);
+          setEdition(
+            response.data?.editionYear ? response.data.editionYear : ""
+          );
           setbookISBN(response.data?.ISBN);
           setSP(response.data?.price);
-          setMrp(response.data?.MRP);
+          setMrp(response.data.MRP ? response.data.MRP : "");
           setQnty(response.data?.qty);
           setlang(response.data?.language);
-          setWeight(response.data?.weightInGrams);
+          setWeight(
+            response.data?.weightInGrams ? response.data.weightInGrams : ""
+          );
           setlink(response.data?.embedVideo);
           setTags(response.data?.tags);
           setAvl(response.data.isAvailable);
           setImage(response.data.photos);
-          setload(false);
+          axios
+            .get("/admin-getSellerProfile", {
+              params: { sellerId: response.data.sellerId },
+            })
+            .then((profile) => {
+              setseller(profile.data);
+              setload(false);
+            })
+            .catch((error) => {
+              setload(false);
+            });
         })
         .catch((error) => {});
     };
@@ -369,6 +384,7 @@ const BookDetails = () => {
           alignItems="center"
         >
           <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
+            <Typography variant="h5"> Book Images</Typography>
             <Alert severity="info" color="error">
               <Typography variant="body2">
                 Image At 1st Position will be used as main Image in Search
@@ -423,8 +439,9 @@ const BookDetails = () => {
                 padding: "10px",
               }}
             >
-              <Chip label={book.sellerName} className={classes.root} />
-              <CopyableText text={book.sellerId} />
+              <Typography variant="h5"> Seller Details</Typography>
+              <SellerProfile data={seller} />
+              <Typography variant="h5"> Book Details</Typography>
               <TextField
                 label="Book Title"
                 variant="standard"
