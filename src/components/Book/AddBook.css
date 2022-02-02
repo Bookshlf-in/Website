@@ -39,7 +39,7 @@
   font-family: "PT sans" !important;
 }
 
-/* Filepond custom css */
+/* ========= Filepond custom css =========== */
 .filepond--wrapper {
   width: 100% !important;
 }
@@ -52,7 +52,6 @@
 .filepond--drop-label {
   color: whitesmoke !important;
 }
-
 .filepond--label-action {
   background-color: #333;
   padding: 6px 10px;
@@ -72,6 +71,7 @@
     width: calc(25% - 0.5em);
   }
 }
+/* ========= ============ =========== */
 
 @media screen and (max-width: 400px) {
   .add-book-form-lf,
