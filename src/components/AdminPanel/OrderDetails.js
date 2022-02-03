@@ -209,8 +209,19 @@ const GetOrderDetails = () => {
           <Chip
             label={status.value[status.value.length - 1]}
             size="small"
-            variant="outlined"
-            color="secondary"
+            variant={
+              status.value[status.value.length - 1] === "Cancelled" ||
+              status.value[status.value.length - 1] === "Delivered"
+                ? "filled"
+                : "outlined"
+            }
+            color={
+              status.value[status.value.length - 1] === "Cancelled"
+                ? "error"
+                : status.value[status.value.length - 1] === "Delivered"
+                ? "success"
+                : "secondary"
+            }
           />
         );
       },
@@ -256,15 +267,28 @@ const GetOrderDetails = () => {
       sortable: false,
       renderCell: (link) => {
         return (
-          <Button
-            className={classes.root}
-            size="small"
-            onClick={() => history.push(`/AdminTrack/${link.value}`)}
-            variant="contained"
-            sx={{ fontSize: "10px" }}
-          >
-            {`Update & Track`}
-          </Button>
+          <Stack spacing={2}>
+            <Button
+              className={classes.root}
+              size="small"
+              onClick={() => history.push(`/AdminTrack/${link.value[0]}`)}
+              variant="contained"
+              sx={{ fontSize: "10px" }}
+            >
+              {`Update & Track`}
+            </Button>
+            <Button
+              className={classes.root}
+              size="small"
+              href={link.value[1]}
+              target="_blank"
+              variant="outlined"
+              sx={{ fontSize: "10px" }}
+              color="secondary"
+            >
+              {`External Track`}
+            </Button>
+          </Stack>
         );
       },
     },
@@ -287,7 +311,7 @@ const GetOrderDetails = () => {
         order.sellerId,
         order.sellerAddress.phoneNo,
       ],
-      trackOrder: order._id,
+      trackOrder: [order._id, order.externalTrackingLink],
     };
   });
 
