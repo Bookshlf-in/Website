@@ -112,7 +112,7 @@ const BookDetails = () => {
           setlink(response.data?.embedVideo);
           setTags(response.data?.tags);
           setAvl(response.data.isAvailable);
-          setImage(response.data.photos);
+          setImage(response.data.photos ? response.data.photos : []);
           axios
             .get("/admin-getSellerProfile", {
               params: { sellerId: response.data.sellerId },
@@ -125,7 +125,9 @@ const BookDetails = () => {
               setload(false);
             });
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setload(false);
+        });
     };
     fetchData();
   }, []);
