@@ -311,7 +311,7 @@ const GetOrderDetails = () => {
         order.sellerId,
         order.sellerAddress.phoneNo,
       ],
-      trackOrder: [order._id, order.externalTrackingLink],
+      trackOrder: [order._id, order?.externalTrackingLink],
     };
   });
 
