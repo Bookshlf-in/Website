@@ -5,8 +5,9 @@ import { Stack, Typography, Avatar } from "@mui/material";
 
 const Styles = {
   Container: {
-    padding: "10px",
+    padding: "36px 10px",
     paddingTop: 0,
+    backgroundColor: "whitsmoke",
   },
   Heading: {
     fontSize: "2.2em",

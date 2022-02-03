@@ -36,10 +36,11 @@ const CategoryItem = (props) => {
           bottom: 10,
           padding: "10px 16px",
           borderRadius: "5px",
-          border: "1px solid darkcyan",
-          color: "darkcyan",
+          border: "1px solid rgba(255,255,255,0.5)",
+          color: "rgba(255,255,255,0.5)",
           "&:hover": {
             backgroundColor: "#fff",
+            color: "darkcyan",
             transition: "0.3s",
           },
         }}

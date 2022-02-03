@@ -1,5 +1,7 @@
 .categories {
   padding-top: 10px;
+  background-color: #0a2540;
+  color: whitesmoke;
 }
 .item {
   display: flex;
@@ -11,17 +13,16 @@
   width: 100%;
   max-width: 350px;
   cursor: pointer;
-  background-color: rgb(238, 255, 238);
+  background-color: rgba(45, 90, 135, 0.3);
   border-radius: 15px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
   position: relative;
+  border: 0.5px solid rgba(255, 255, 255, 0);
 }
 .item:hover {
-  background-color: rgb(123, 248, 206);
+  background-color: rgba(45, 90, 135, 0.8);
   transition: 0.3s;
-  border-radius: 15px;
-  border: none;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
 }
 .item-h6 {
   font-size: 1em;
@@ -29,7 +30,6 @@
   font-family: "Montserrat", sans-serif;
   letter-spacing: 2px;
   color: rgb(255, 255, 255);
-  color: darkcyan;
   text-align: center;
 }
 
