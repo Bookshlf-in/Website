@@ -93,7 +93,6 @@ const BookDetails = () => {
           params: { bookId: bookId },
         })
         .then((response) => {
-          console.log(response.data);
           setbook(response.data);
           setbookName(response.data.title);
           setbookDesc(response.data?.description);
@@ -112,7 +111,11 @@ const BookDetails = () => {
           setlink(response.data?.embedVideo);
           setTags(response.data?.tags);
           setAvl(response.data.isAvailable);
-          setImage(response.data.photos ? response.data.photos : []);
+          setImage(
+            response.data.photos && !response.data.photos.includes(null)
+              ? response.data.photos
+              : []
+          );
           axios
             .get("/admin-getSellerProfile", {
               params: { sellerId: response.data.sellerId },
