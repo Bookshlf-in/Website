@@ -1,116 +1,92 @@
-import { React, useState, useEffect, useContext } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
-import { UserContext } from "../../Context/userContext";
+import { React, useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // Components
-import { Grid, Stack, Box, Avatar, Chip } from "@mui/material";
-import { Typography, Button, Snackbar, Alert, AlertTitle } from "@mui/material";
-import { CircularProgress, Pagination, IconButton } from "@mui/material";
-import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
-
-// Icons
-import NextIcon from "@mui/icons-material/NavigateNextRounded";
-import RupeeIcon from "@mui/icons-material/CurrencyRupee";
-import AddCartIcon from "@mui/icons-material/AddShoppingCart";
-import FilledCartIcon from "@mui/icons-material/ShoppingCart";
-import FilledWishlistIcon from "@mui/icons-material/Favorite";
-import WishlistIcon from "@mui/icons-material/FavoriteBorder";
+import { Grid, Stack, Typography, Select } from "@mui/material";
+import { Alert, AlertTitle, Pagination } from "@mui/material";
+import { InputLabel, MenuItem, FormControl } from "@mui/material";
 
 // Custom Components
 import SearchBar from "./Searchbar";
+import BookshlfLoader from "../MicroComponents/BookshlfLoader";
+import SearchBook from "./SearchBook";
 
 // Use Styles
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    fontFamily: "PT sans !important",
     fontSize: "12px",
     "& li": {
+      marginLeft: "3px",
       "& button": {
         fontFamily: "PT sans !important",
       },
     },
     "& div": {
-      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
     },
     "& label": {
-      fontFamily: "PT sans !important",
+      fontSize: "12px !important",
     },
   },
 }));
+
+const booksperpage =
+  window.innerWidth <= 400
+    ? 5
+    : window.innerWidth <= 800
+    ? 9
+    : window.innerWidth <= 1200
+    ? 12
+    : 18;
 
 const Search = () => {
   // Calling Hooks
   const classes = useStyles();
   const params = useParams();
-  const history = useHistory();
-
-  // User Context
-  const [user, setUser] = useContext(UserContext);
 
   // Functionality States
-  const [open, setOpen] = useState(false);
-  const [severity, setSeverity] = useState("success");
-  const [alert, setAlert] = useState("");
   const [Loading, setLoading] = useState(false);
-  const [wishlistLoad, setwishlistLoad] = useState("");
-  const [cartLoad, setcartLoad] = useState("");
 
   // Data states
   const [books, setbooks] = useState([]);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(1);
   const [filter, setFilter] = useState(1);
-  const [booksperPage, setbooksperPage] = useState(
-    window.innerWidth <= 400
-      ? 5
-      : window.innerWidth <= 800
-      ? 9
-      : window.innerWidth <= 1200
-      ? 12
-      : 18
-  );
+  const [filterParams, setFilterParams] = useState({
+    q: params.query,
+    noOfBooksInOnePage: booksperpage,
+    page: page,
+  });
 
   useEffect(() => {
     const fetchdata = async () => {
       setLoading(true);
-      axios
-        .get("/search", {
-          params: {
-            q: params.query,
-            noOfBooksInOnePage: booksperPage,
-            page: page,
-          },
-        })
-        .then((response) => {
-          // console.log(response.data);
-          setbooks(response.data.data);
-          settotalPages(response.data.totalPages);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setLoading(false);
-        });
+      const newQuery = { ...filterParams, q: params.query };
+      delete newQuery?.sortByDate;
+      delete newQuery?.sortByPrice;
+      makeRequest(newQuery);
     };
     fetchdata();
   }, [params.query]);
 
-  // changing Page
-  const changePage = (pageNo) => {
-    setLoading(true);
-    setpage(pageNo);
+  useEffect(() => {
+    const fetchdata = async () => {
+      setLoading(true);
+      makeRequest(filterParams);
+    };
+    fetchdata();
+  }, [filterParams]);
+
+  const makeRequest = (params) => {
+    setFilterParams(params);
     axios
       .get("/search", {
-        params: {
-          q: params.query,
-          noOfBooksInOnePage: booksperPage,
-          page: pageNo,
-        },
+        params: params,
       })
       .then((response) => {
-        // console.log(response.data);
         setbooks(response.data.data);
         settotalPages(response.data.totalPages);
         setLoading(false);
@@ -120,222 +96,45 @@ const Search = () => {
       });
   };
 
-  // Add to Cart
-  const handelCart = (bookId, inCart) => {
-    setcartLoad(bookId);
-    if (user) {
-      if (inCart) {
-        axios
-          .delete("/deleteCartItem", {
-            data: { bookId: bookId },
-          })
-          .then((response) => {
-            setSeverity("success");
-            setOpen(true);
-            setAlert("Book Removed From Cart!");
-            setcartLoad(false);
-            setbooks(
-              books.map((book) =>
-                book._id === bookId ? { ...book, cart: false } : book
-              )
-            );
-            setUser({ ...user, cartitems: user.cartitems - 1 });
-          })
-          .catch((error) => {
-            setOpen(true);
-            setAlert("Some Error Occured. Please Try Again!");
-            setSeverity("error");
-            setcartLoad(false);
-          });
-      } else {
-        axios
-          .post("/addCartItem", {
-            bookId: bookId,
-          })
-          .then((response) => {
-            setSeverity("success");
-            setOpen(true);
-            setAlert("Book Added To Cart!");
-            setcartLoad(false);
-            setbooks(
-              books.map((book) =>
-                book._id === bookId ? { ...book, cart: true } : book
-              )
-            );
-            setUser({ ...user, cartitems: user.cartitems + 1 });
-          })
-          .catch((error) => {
-            setOpen(true);
-            setAlert("Some Error Occured. Please Try Again!");
-            setSeverity("error");
-            setcartLoad(false);
-          });
-      }
-    } else {
-      setcartLoad(false);
-      setOpen(true);
-      setAlert("You are not Logged In!");
-      setSeverity("error");
-    }
-  };
-
-  // Add to Wishlist
-  const handelWishlist = (bookId, inWishlist) => {
-    setwishlistLoad(bookId);
-    if (user) {
-      if (inWishlist) {
-        axios
-          .delete("/deleteWishlistItem", {
-            data: { bookId: bookId },
-          })
-          .then((response) => {
-            setSeverity("success");
-            setOpen(true);
-            setAlert("Book Removed From Wishlist!");
-            setwishlistLoad("");
-            setbooks(
-              books.map((book) =>
-                book._id === bookId ? { ...book, wishlist: false } : book
-              )
-            );
-
-            setUser({ ...user, wishlist: user.wishlist - 1 });
-            setcartLoad("");
-          })
-          .catch((error) => {
-            setOpen(true);
-            setAlert("Some Error Occured. Please Try Again!");
-            setSeverity("error");
-            setwishlistLoad("");
-          });
-      } else {
-        axios
-          .post("/addWishlistItem", {
-            bookId: bookId,
-          })
-          .then((response) => {
-            setSeverity("success");
-            setOpen(true);
-            setAlert("Book Added To Wishlist!");
-            setcartLoad(false);
-            setbooks(
-              books.map((book) =>
-                book._id === bookId ? { ...book, wishlist: true } : book
-              )
-            );
-
-            setUser({ ...user, wishlist: user.wishlist + 1 });
-            setwishlistLoad("");
-          })
-          .catch((error) => {
-            setOpen(true);
-            setAlert("Some Error Occured. Please Try Again!");
-            setSeverity("error");
-            setwishlistLoad("");
-          });
-      }
-    } else {
-      setwishlistLoad("");
-      setOpen(true);
-      setAlert("You are not Logged In!");
-      setSeverity("error");
-    }
+  // changing Page
+  const changePage = (pageNo) => {
+    setpage(pageNo);
+    setFilterParams({ ...filterParams, page: pageNo });
   };
 
   // changing Filter
   const handelFilterChange = (e) => {
     setFilter(e.target.value);
-    setLoading(true);
     switch (e.target.value) {
       case 1:
-        axios
-          .get("/search", {
-            params: {
-              q: params.query,
-              noOfBooksInOnePage: 10,
-              page: page,
-              sortByPrice: "asc",
-            },
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setbooks(response.data.data);
-            settotalPages(response.data.totalPages);
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-          });
+        setFilterParams((prev) => {
+          const Filter = { ...prev, sortByPrice: "asc" };
+          delete Filter?.sortByDate;
+          return Filter;
+        });
         break;
       case 2:
-        axios
-          .get("/search", {
-            params: {
-              q: params.query,
-              noOfBooksInOnePage: 10,
-              page: page,
-              sortByDate: "desc",
-            },
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setbooks(response.data.data);
-            settotalPages(response.data.totalPages);
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-          });
+        setFilterParams((prev) => {
+          const Filter = { ...prev, sortByDate: "desc" };
+          delete Filter?.sortByPrice;
+          return Filter;
+        });
         break;
       case 3:
-        axios
-          .get("/search", {
-            params: {
-              q: params.query,
-              noOfBooksInOnePage: 10,
-              page: page,
-              sortByPrice: "desc",
-            },
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setbooks(response.data.data);
-            settotalPages(response.data.totalPages);
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-          });
+        setFilterParams((prev) => {
+          const Filter = { ...prev, sortByPrice: "desc" };
+          delete Filter?.sortByDate;
+          return Filter;
+        });
         break;
       case 4:
-        axios
-          .get("/search", {
-            params: {
-              q: params.query,
-              noOfBooksInOnePage: 10,
-              page: page,
-              sortByDate: "asc",
-            },
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setbooks(response.data.data);
-            settotalPages(response.data.totalPages);
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-          });
+        setFilterParams((prev) => {
+          const Filter = { ...prev, sortByDate: "asc" };
+          delete Filter?.sortByPrice;
+          return Filter;
+        });
         break;
     }
-  };
-
-  // Handeling snackbar closing
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
   };
 
   return (
@@ -393,123 +192,7 @@ const Search = () => {
             {books.length
               ? books.map((book) => (
                   <Grid item xs={12} sm={4} md={3} lg={2} key={book._id}>
-                    <Box
-                      sx={{
-                        width: "100%",
-                        border: "0.5px solid rgba(99, 99, 99, 0.1)",
-                        height: 400,
-                        boxShadow:
-                          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                        borderRadius: "5px",
-
-                        "&:hover": {
-                          boxShadow: "0 4px 6px rgb(32 33 36 / 28%)",
-                        },
-                      }}
-                    >
-                      <Stack
-                        direction="column"
-                        sx={{ width: "100%", height: "100%" }}
-                        spacing={1}
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Avatar
-                          alt={book.title}
-                          src={book.photo}
-                          sx={{
-                            height: 220,
-                            width: "100%",
-                            cursor: "pointer",
-                          }}
-                          variant="rounded"
-                          onClick={() =>
-                            history.push(`/BookDetails/${book._id}`)
-                          }
-                        />
-                        <Typography
-                          align="center"
-                          className={classes.root}
-                          variant="caption"
-                          sx={{ padding: "0px 10px", fontFamily: "Montserrat" }}
-                        >
-                          {book.title.length <= 75
-                            ? book.title
-                            : book.title.substr(0, 75) + "..."}
-                        </Typography>
-
-                        <Stack
-                          justifyContent="flex-end"
-                          alignItems="flex-end"
-                          sx={{ width: "100%" }}
-                        >
-                          <Stack
-                            sx={{
-                              width: "100%",
-                              padding: "0px 10px",
-                            }}
-                          >
-                            <Chip
-                              icon={<RupeeIcon />}
-                              label={book.price}
-                              className={classes.root}
-                              color="primary"
-                              size="small"
-                            />
-                          </Stack>
-                          <Stack
-                            direction="row"
-                            justifyContent="space-between"
-                            sx={{
-                              width: "100%",
-                              padding: "0px 10px",
-                            }}
-                          >
-                            <IconButton
-                              onClick={() =>
-                                handelWishlist(book._id, book.wishlist)
-                              }
-                            >
-                              {wishlistLoad === book._id ? (
-                                <CircularProgress color="warning" size={25} />
-                              ) : book.wishlist ? (
-                                <FilledWishlistIcon
-                                  sx={{ color: "rgb(235, 52, 70)" }}
-                                />
-                              ) : (
-                                <WishlistIcon
-                                  sx={{ color: "rgb(235, 52, 70)" }}
-                                />
-                              )}
-                            </IconButton>
-                            <IconButton
-                              onClick={() => handelCart(book._id, book.cart)}
-                            >
-                              {cartLoad === book._id ? (
-                                <CircularProgress color="warning" size={25} />
-                              ) : book.cart ? (
-                                <FilledCartIcon color="success" />
-                              ) : (
-                                <AddCartIcon
-                                  sx={{ color: "rgb(235, 113, 52)" }}
-                                />
-                              )}
-                            </IconButton>
-                          </Stack>
-                          <Button
-                            endIcon={<NextIcon />}
-                            className={classes.root}
-                            color="primary"
-                            onClick={() => {
-                              history.push(`/BookDetails/${book._id}`);
-                            }}
-                            fullWidth
-                          >
-                            More Details
-                          </Button>
-                        </Stack>
-                      </Stack>
-                    </Box>
+                    <SearchBook book={book} />
                   </Grid>
                 ))
               : null}
@@ -522,7 +205,7 @@ const Search = () => {
                 {books.length ? (
                   <Pagination
                     variant="outlined"
-                    color="primary"
+                    color="warning"
                     size="small"
                     page={page}
                     count={totalPages}
@@ -532,72 +215,37 @@ const Search = () => {
                     onChange={(e, pageNo) => changePage(pageNo)}
                   />
                 ) : (
-                  <Alert
-                    severity="info"
-                    variant="outlined"
-                    style={{ fontFamily: "pt sans" }}
-                  >
-                    <AlertTitle style={{ fontFamily: "pt sans" }}>
-                      No Results Found
+                  <Alert severity="info">
+                    <AlertTitle>
+                      <strong>No Results Found</strong>
                     </AlertTitle>
-                    If you are not able to find the book you want, then mail us
-                    at -{" "}
-                    <strong
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        backgroundColor: "rgba(0,0,0,0.06)",
-                        padding: "6px",
-                        borderRadius: "5px",
-                      }}
-                    >
+                    <Stack>
+                      <Typography variant="caption">
+                        If you are not able to find the book you want, then mail
+                        us at -
+                      </Typography>
                       <Link
                         to={{
                           pathname: "mailto:bookshlf.in@gmail.com",
                         }}
                         target="_blank"
                       >
-                        bookshlf.in@gmail.com
+                        <strong>bookshlf.in@gmail.com</strong>
                       </Link>
-                    </strong>
-                    <br />
-                    <br />
-                    <center>
-                      OR
-                      <br />
-                      <br />
-                      <b
-                        onClick={() => {
-                          history.push("/Contact");
-                        }}
-                        style={{
-                          color: "green",
-                          cursor: "pointer",
-                          backgroundColor: "rgba(0,0,0,0.06)",
-                          padding: "6px",
-                          borderRadius: "5px",
-                          boxShadow: "3px 2px 2px rgba(0,0,0,0.2)",
-                        }}
-                      >
-                        Contact Us
-                      </b>
-                    </center>
+                      <Typography variant="caption">OR</Typography>
+                      <Link to="/Contact">
+                        <strong>Contact Us</strong>
+                      </Link>
+                    </Stack>
                   </Alert>
                 )}
               </Stack>
             </Grid>
           </Grid>
         ) : (
-          <CircularProgress />
+          <BookshlfLoader sx={{ height: 56, width: "auto" }} />
         )}
       </Stack>
-      <div className={classes.root}>
-        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity={severity} variant="filled">
-            {alert}
-          </Alert>
-        </Snackbar>
-      </div>
     </>
   );
 };
