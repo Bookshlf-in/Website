@@ -86,7 +86,6 @@ const OrderTracking = () => {
           params: { orderId: params.orderId },
         })
         .then((response) => {
-          console.log(response.data);
           setorder(response.data);
           setpaid(response.data.isSellerPaid);
           settrackLink(response.data?.externalTrackingLink);
@@ -107,9 +106,14 @@ const OrderTracking = () => {
             .then((earnings) => {
               setload(true);
               setPaidAmt(earnings.data.sellerEarning);
+            })
+            .catch(() => {
+              setload(true);
             });
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setload(true);
+        });
     };
     fetchdata();
   }, []);
@@ -559,12 +563,7 @@ const OrderTracking = () => {
             direction="row"
             spacing={2}
             justifyContent="center"
-            sx={{
-              width: "100%",
-
-              padding: "5px",
-              borderRadius: "5px",
-            }}
+            sx={{ width: "100%" }}
           >
             <Stack
               spacing={0}
@@ -703,87 +702,76 @@ const OrderTracking = () => {
             </Stack>
           </Stack>
           <Stack
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
             sx={{
               width: "100%",
-
+              border: "1px solid rgba(0,0,0,0.2)",
               padding: "5px",
               borderRadius: "5px",
             }}
-            justifyContent="center"
-            alignItems="center"
           >
-            <Stack
-              spacing={2}
-              justifyContent="center"
-              alignItems="center"
-              sx={{
-                width: "100%",
-                border: "1px solid rgba(0,0,0,0.2)",
-                padding: "5px",
-                borderRadius: "5px",
-              }}
-            >
-              <ListTitle content="External Tracking" />
-              <TextField
+            <ListTitle content="External Tracking" />
+            <TextField
+              className={classes.root}
+              label="External Order Tracking Link"
+              variant="filled"
+              size="small"
+              fullWidth
+              sx={{ maxWidth: 600 }}
+              onChange={(e) => settrackLink(e.target.value)}
+              value={trackLink}
+            />
+            <TextField
+              className={classes.root}
+              label="External Order Tracking Details"
+              variant="filled"
+              size="small"
+              fullWidth
+              sx={{ maxWidth: 600 }}
+              onChange={(e) => settrackDetails(e.target.value)}
+              value={trackDetails}
+            />
+            <TextField
+              className={classes.root}
+              label="Real Delivery Expense for this Order"
+              variant="filled"
+              size="small"
+              fullWidth
+              sx={{ maxWidth: 600 }}
+              onChange={(e) => setDeliveryCharge(e.target.value)}
+              value={deliveryCharge}
+            />
+            <label htmlFor="admin-expected-delivery-date">
+              <Typography
                 className={classes.root}
-                label="External Order Tracking Link"
-                variant="filled"
-                size="small"
-                fullWidth
-                sx={{ maxWidth: 600 }}
-                onChange={(e) => settrackLink(e.target.value)}
-                value={trackLink}
-              />
-              <TextField
-                className={classes.root}
-                label="External Order Tracking Details"
-                variant="filled"
-                size="small"
-                fullWidth
-                sx={{ maxWidth: 600 }}
-                onChange={(e) => settrackDetails(e.target.value)}
-                value={trackDetails}
-              />
-              <TextField
-                className={classes.root}
-                label="Real Delivery Expense for this Order"
-                variant="filled"
-                size="small"
-                fullWidth
-                sx={{ maxWidth: 600 }}
-                onChange={(e) => setDeliveryCharge(e.target.value)}
-                value={deliveryCharge}
-              />
-              <label htmlFor="admin-expected-delivery-date">
-                <Typography
-                  className={classes.root}
-                  color="primary"
-                  variant="body2"
-                >
-                  Expected Delivery date
-                </Typography>
-                <input
-                  type="date"
-                  id="admin-expected-delivery-date"
-                  name="expected-delivery-date"
-                  value={deliveryDate}
-                  min="2022-01-01"
-                  max="2025-12-31"
-                  onChange={(e) => setDeliveryDate(e.target.value)}
-                />
-              </label>
-              <LoadingButton
-                loading={trackLoad}
-                loadingPosition="end"
-                endIcon={<NextIcon />}
-                variant="contained"
-                color="warning"
-                className={classes.root}
-                onClick={updateOrder}
+                color="primary"
+                variant="body2"
               >
-                Update Details
-              </LoadingButton>
-            </Stack>
+                Expected Delivery date
+              </Typography>
+              <input
+                type="date"
+                id="admin-expected-delivery-date"
+                name="expected-delivery-date"
+                value={deliveryDate}
+                min="2022-01-01"
+                max="2025-12-31"
+                onChange={(e) => setDeliveryDate(e.target.value)}
+              />
+            </label>
+            <LoadingButton
+              loading={trackLoad}
+              loadingPosition="end"
+              endIcon={<NextIcon />}
+              variant="contained"
+              color="warning"
+              className={classes.root}
+              onClick={updateOrder}
+            >
+              Update Details
+            </LoadingButton>
           </Stack>
           <Stack
             spacing={2}
@@ -797,63 +785,76 @@ const OrderTracking = () => {
             }}
           >
             <ListTitle content="Order Status" />
-            <Stepper
-              activeStep={activeStep}
-              alternativeLabel
-              className={classes.root}
-              sx={{ width: "100%" }}
-            >
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
+            {order.status[order.status.length - 1] !== "Cancelled" ? (
+              <Stepper
+                activeStep={activeStep}
+                alternativeLabel
+                className={classes.root}
+                sx={{ width: "100%" }}
+              >
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            ) : null}
             {activeStep === steps.length ? null : (
               <ListBody content={getStepContent(activeStep)} />
             )}
-            <Button
-              className={classes.root}
-              variant="outlined"
-              color="primary"
-              onClick={() => handleNextStep(order._id)}
-              disabled={activeStep === 4}
-              endIcon={
-                next ? (
-                  <CircularProgress size={16} color="inherit" />
-                ) : activeStep === 4 ? (
-                  <CheckIcon />
-                ) : (
-                  <NextIcon />
-                )
-              }
-            >
-              {activeStep === steps.length - 1
-                ? "Finish"
-                : activeStep === 4
-                ? "Order Completed"
-                : "Next Step"}
-            </Button>
+            {order.status[order.status.length - 1] !== "Cancelled" ? (
+              <Button
+                className={classes.root}
+                variant="outlined"
+                color="primary"
+                onClick={() => handleNextStep(order._id)}
+                disabled={activeStep === 4}
+                endIcon={
+                  next ? (
+                    <CircularProgress size={16} color="inherit" />
+                  ) : activeStep === 4 ? (
+                    <CheckIcon />
+                  ) : (
+                    <NextIcon />
+                  )
+                }
+              >
+                {activeStep === steps.length - 1
+                  ? "Finish"
+                  : activeStep === 4
+                  ? "Order Completed"
+                  : "Next Step"}
+              </Button>
+            ) : null}
+            {order.status[order.status.length - 1] === "Cancelled" ? (
+              <Alert severity="error">
+                <AlertTitle className={classes.root}>
+                  <strong>Order Cancelled</strong>
+                </AlertTitle>
+                <Typography variant="caption" className={classes.root}>
+                  Order has been cancelled.
+                </Typography>
+              </Alert>
+            ) : null}
             <Stack
               direction="row"
               spacing={2}
               justifyContent="center"
               alignItems="center"
             >
-              {activeStep < 4 ? (
-                <LoadingButton
-                  loading={cancelLoad}
-                  loadingPosition="end"
-                  endIcon={<CancelIcon />}
-                  variant="outlined"
-                  color="error"
-                  className={classes.root}
-                  onClick={handelCancelOrder}
-                  disabled={order.status === "Cancelled"}
-                >
-                  Cancel Order
-                </LoadingButton>
-              ) : null}
+              <LoadingButton
+                loading={cancelLoad}
+                loadingPosition="end"
+                endIcon={<CancelIcon />}
+                variant="outlined"
+                color="error"
+                className={classes.root}
+                onClick={handelCancelOrder}
+                disabled={order.status[order.status.length - 1] === "Cancelled"}
+              >
+                Cancel Order
+              </LoadingButton>
+
               {!paid ? (
                 <LoadingButton
                   loading={payload}
@@ -864,7 +865,11 @@ const OrderTracking = () => {
                   color="success"
                   className={classes.root}
                   onClick={sendSellerPay}
-                  disabled={paid}
+                  disabled={
+                    paid ||
+                    order.status[order.status.length - 1] === "Cancelled" ||
+                    activeStep < 4
+                  }
                 >
                   {paidAmt + " (Send Payment to Seller)"}
                 </LoadingButton>
