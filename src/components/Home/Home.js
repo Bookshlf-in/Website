@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "../Navbar/Navbar";
 import Carousel from "./Carousel";
 import Categories from "./Categories";
+import Benefits from "./Benefits";
 import Reviews from "../Reviews/CustomerReviews";
 import Footer from "../Footer/Footer";
 
@@ -57,6 +58,7 @@ const Home = () => {
       <Navbar />
       <Carousel />
       <Categories />
+      <Benefits />
       <Reviews />
       <Footer />
     </>
