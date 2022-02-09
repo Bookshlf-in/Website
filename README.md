@@ -24,8 +24,11 @@ Online E-Commerce Store for Selling & Purchasing Used Books. Specially for Compe
 # Built With
 
 [ <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />](https://reactjs.org)
+
 [<img src="	https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" />](https://mui.com/)
+
 [<img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" />](https://firebase.google.com/)
+
 [<img src="https://img.shields.io/badge/AXIOS-109989?style=for-the-badge&logo=FASTAPI&logoColor=white" />](https://axios-http.com/)
 
 ## Requirements
