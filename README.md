@@ -1,35 +1,35 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/Bookshlf-in/Website/main/public/images/logoView.png" width="350" />
-  <h1 align="center">Bookshlf</h1>
 </p>
 
-Online Second Hand book store specially for Competitive Exams.
+# [Bookshlf](https://bookshlf.in)
 
-We are a small team of students who are enthusiastic developers. We are trying to create a better viable platform for students who want to learn but due to financial issues can't afford new books. We also want to help those who want to sell thier books which they don't need. We hope that you will find this platform usefull. We are always trying to make this platform better.
+Online E-Commerce Store for Selling & Purchasing Used Books. Specially for Competitive Exams.
+
+- It Is a Student Oriented Platform.
+- Bookshlf Pickups Books from Partnered Seller and sells to the buyer in any corner of India.
+- Under Bookshlf Partnership Program the Partner is eligible for upto 60% of the profit earned by selling thier books.
+
+# Index
+
+|  #  |                         Title                          |                                    |                               |
+| :-: | :----------------------------------------------------: | :--------------------------------: | :---------------------------: |
+|  1  |                  [Built](#built-with)                  |
+|  2  |             [Requirements](#requirements)              |
+|  3  | [Setup Locally](#how-to-set-up-your-local-environment) |
+|  4  |              [Contribute](#contributing)               |   [Contributing](#contributing)    | [Contributers](#contributors) |
+|  5  |                 [API Keys](#api-keys)                  |
+|  6  |             [Sample Screens](#screenshots)             | [Visit Store](https://bookshlf.in) |
 
 # Built With
 
-- ### FrontEnd
-  - [React](https://reactjs.org)
-  - [Material UI](https://mui.com/)
-- ### Hosting
-  - [Firebase](https://firebase.google.com/)
-- ### API
-  - [axios](https://axios-http.com/)
+[ <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />](https://reactjs.org)
 
-# Contributing
+[<img src="	https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" />](https://mui.com/)
 
-Love the project and want to get involved? You’re in the right place!
+[<img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" />](https://firebase.google.com/)
 
-# Contributors
-
-<a href="https://github.com/Bookshlf-in/Website/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Bookshlf-in/Website" />
-</a>
-
-Made with [contributors-img](https://contrib.rocks).
-
-> Don't forget to ⭐ this repository !!
+[<img src="https://img.shields.io/badge/AXIOS-109989?style=for-the-badge&logo=FASTAPI&logoColor=white" />](https://axios-http.com/)
 
 ## Requirements
 
@@ -79,6 +79,10 @@ $ npm i
   $ npm run start or npm start
 ```
 
+# Contributing
+
+Love the project and want to get involved? You’re in the right place!
+
 ## How to Contribute
 
 To start contributing, follow the below guidelines:
@@ -116,9 +120,19 @@ git merge dev
 
 **10.** When approved, your branch will be merged into master and you're done! Thanks for contributing! :)
 
-## API KEYS
+## Contributors
 
-- _This is a Neccessary Step to make APIs Work._
+<a href="https://github.com/Bookshlf-in/Website/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Bookshlf-in/Website" />
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
+
+> Don't forget to ⭐ this repository !!
+
+# API KEYS
+
+- This is a Neccessary Step to make APIs Work.
 
 #### To Make API Requests Possible, Follow below Steps after Locally Setting Up Project.
 
