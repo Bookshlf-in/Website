@@ -8,7 +8,7 @@ import SellerProfile from "./SellerProfile";
 import { Stack, ClickAwayListener, Chip, Alert } from "@mui/material";
 import { TextField, MenuItem, InputAdornment } from "@mui/material";
 import { LinearProgress, CircularProgress } from "@mui/material";
-import { Typography, Tooltip } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 import { FormLabel, FormControl } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -16,8 +16,6 @@ import LoadingButton from "@mui/lab/LoadingButton";
 // Icons
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
 import SendIcon from "@mui/icons-material/SendRounded";
-import CopyIcon from "@mui/icons-material/ContentCopy";
-import CopiedIcon from "@mui/icons-material/FileCopy";
 
 // FilePond Components for image Uploading
 import { FilePond, registerPlugin } from "react-filepond";
@@ -133,7 +131,7 @@ const BookDetails = () => {
         });
     };
     fetchData();
-  }, []);
+  }, [bookId]);
 
   // tag searching on input
   const handelTagSearch = (e) => {
@@ -168,65 +166,6 @@ const BookDetails = () => {
   // Deleting Tags of Book
   const handleTagDelete = (tagname) => {
     setTags(tags.filter((tag) => tagname !== tag));
-  };
-
-  // Custom Copy Component
-  const CopyableText = (props) => {
-    const [copied, setcopied] = useState(false);
-
-    const CopyText = () => {
-      navigator.clipboard.writeText(props.text);
-      setcopied(true);
-      setTimeout(() => {
-        setcopied(false);
-      }, 3000);
-    };
-
-    return (
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          cursor: "pointer",
-          padding: "5px",
-          borderRadius: "5px",
-          border: "1px solid rgba(0,0,0,0.2)",
-        }}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography
-          variant="caption"
-          color={copied ? "primary" : "default"}
-          sx={{ fontSize: "12px", fontFamily: "pt sans" }}
-        >
-          {props.text}
-        </Typography>
-        <Tooltip
-          arrow
-          title="Click to Copy"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="caption" onClick={CopyText}>
-            {!copied ? (
-              <CopyIcon color="inhert" sx={{ height: 12, width: 12 }} />
-            ) : (
-              <CopiedIcon color="inhert" sx={{ height: 12, width: 12 }} />
-            )}
-          </Typography>
-        </Tooltip>
-
-        {copied ? (
-          <Typography sx={{ fontSize: "9px" }} color="primary">
-            Copied!
-          </Typography>
-        ) : null}
-      </Stack>
-    );
   };
 
   const UpdateBook = async () => {

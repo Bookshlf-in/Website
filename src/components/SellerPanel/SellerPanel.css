@@ -1,3 +1,70 @@
 .sellerPanel-container .MuiTabs-flexContainer {
   height: 100% !important;
 }
+.seller-register-banner {
+  width: 100%;
+  min-height: calc(100vh - 48px);
+  background-color: rgba(27, 16, 95, 255);
+  color: aliceblue;
+  padding: 16px 24px;
+}
+.seller-register-banner-img {
+  height: auto;
+  width: 500px;
+}
+.seller-register-banner h2 {
+  font-family: "Staatliches", sans-serif;
+  letter-spacing: 0.05em;
+}
+.seller-register-banner span {
+  font-family: "Montserrat", sans-serif;
+  text-transform: capitalize;
+  color: rgb(255, 255, 255, 0.8);
+}
+.seller-register-form {
+  padding: 16px 24px;
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 48px);
+  background-color: rgba(27, 16, 95, 255);
+}
+.seller-register-form .MuiOutlinedInput-root,
+.seller-register-form .MuiFormHelperText-root,
+.seller-register-form .MuiInputLabel-root {
+  color: rgb(219, 219, 219) !important;
+}
+.seller-register-form .MuiOutlinedInput-notchedOutline {
+  border-color: inherit;
+}
+.seller-register-form-back {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+@media screen and (max-width: 850px) {
+  .seller-register-banner-img {
+    height: auto;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .seller-register-banner-img {
+    height: auto;
+    width: 300px;
+  }
+  .seller-register-banner h2 {
+    font-size: 2em;
+  }
+}
+@media screen and (max-width: 400px) {
+  .seller-register-banner-img {
+    height: auto;
+    width: 150px;
+  }
+  .seller-register-banner h2 {
+    font-size: 16px;
+  }
+  .seller-register-banner span {
+    font-size: 9px;
+  }
+}

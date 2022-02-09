@@ -5,18 +5,14 @@ import { useHistory } from "react-router-dom";
 import axios from "../../axios";
 
 // Components
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Alert from "@mui/material/Alert";
-import Avatar from "@mui/material/Avatar";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { Box, Stack, Typography, Alert } from "@mui/material";
+import { Avatar, TextField, Button, IconButton } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import IconButton from "@mui/material/IconButton";
 
 // icons
 import AddPhotoIcon from "@mui/icons-material/AddAPhotoRounded";
 import AddIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import BackIcon from "@mui/icons-material/ArrowBackRounded";
 
 const Input = styled("input")({
   display: "none",
@@ -27,6 +23,7 @@ export default function SellerRegister() {
   const [user, setUser] = useContext(UserContext);
 
   // states
+  const [step, setStep] = useState(0);
   const [Name, setName] = useState("");
   const [Intro, setIntro] = useState("");
   const [load, setload] = useState(false);
@@ -118,43 +115,20 @@ export default function SellerRegister() {
             intro: Intro,
             photo: imgURL,
           })
-          .then((response) => {
-            setload(false);
-            setalert({
-              show: true,
-              type: "success",
-              msg: "Registration Successfully Completed",
-            });
+          .then(() => {
+            Showalert(true, "success", "Registration Successfully Completed");
             Redirect();
           })
-          .catch((error) => {
-            setload(false);
-            setalert({
-              show: true,
-              type: "error",
-              msg: "Registration Failed. Try Again",
-            });
+          .catch(() => {
+            Showalert(true, "error", "Registration Failed. Try Again");
             setTimeout(() => {
-              setalert({
-                show: false,
-                type: "info",
-                msg: "",
-              });
+              Showalert(false, "info", "");
             }, 3000);
           });
       } else {
-        setload(false);
-        setalert({
-          show: true,
-          type: "error",
-          msg: "Phone Number Invalid!",
-        });
+        Showalert(true, "error", "Phone Number Invalid!");
         setTimeout(() => {
-          setalert({
-            show: false,
-            type: "info",
-            msg: "",
-          });
+          Showalert(false, "info", "");
         }, 3000);
       }
     } else {
@@ -166,106 +140,122 @@ export default function SellerRegister() {
             altPhoneNo: Number(AltPhoneNo),
             intro: Intro,
           })
-          .then((response) => {
-            setload(false);
-            setalert({
-              show: true,
-              type: "success",
-              msg: "Registration Successfully Completed",
-            });
+          .then(() => {
+            Showalert(true, "success", "Registration Successfully Completed");
             Redirect();
           })
-          .catch((error) => {
-            setload(false);
-            setalert({
-              show: true,
-              type: "error",
-              msg: "Registration Failed. Try Again",
-            });
+          .catch(() => {
+            Showalert(true, "error", "Registration Failed. Try Again");
             setTimeout(() => {
-              setalert({
-                show: false,
-                type: "info",
-                msg: "",
-              });
+              Showalert(false, "info", "");
             }, 3000);
           });
       } else {
-        setload(false);
-        setalert({
-          show: true,
-          type: "error",
-          msg: "Phone Number Invalid!",
-        });
+        Showalert(true, "error", "Phone Number Invalid!");
         setTimeout(() => {
-          setalert({
-            show: false,
-            type: "info",
-            msg: "",
-          });
+          Showalert(false, "info", "");
         }, 3000);
       }
     }
+  };
+
+  // Alert Show
+  const Showalert = (show, type, msg) => {
+    setload(false);
+    setalert({
+      show: show,
+      type: type,
+      msg: msg,
+    });
+  };
+
+  const RegisterBanner = () => {
+    return (
+      <Stack
+        className="seller-register-banner"
+        direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
+        <img
+          src="/images/partner.svg"
+          alt="Bookshlf Partnership Program"
+          className="seller-register-banner-img"
+        />
+        <Stack spacing={2}>
+          <Typography variant="h2" align="center">
+            Bookshlf Partnership Program
+          </Typography>
+          <Typography variant="caption" align="justify">
+            Bookshlf takes responsibility of picking up of your books and
+            delivering it safely to the buyer based in corner of India.
+          </Typography>
+          <Typography variant="caption" align="justify">
+            As a Bookshlf Partner you will be eligible for upto 60% of the
+            profit earned by selling your books.
+          </Typography>
+          <Button variant="outlined" color="warning" onClick={() => setStep(1)}>
+            Register Now
+          </Button>
+        </Stack>
+      </Stack>
+    );
   };
 
   return (
     <Box
       sx={{
         width: "100%",
-        typography: "body1",
-        minHeight: "calc(100vh - 56px)",
+        minHeight: "calc(100vh - 48px)",
       }}
     >
       {user ? (
-        <Stack spacing={1} direction="column">
-          <Alert severity="error">
-            Oops you are not registered. Please Register As Seller.
-          </Alert>
+        step === 0 ? (
+          <RegisterBanner />
+        ) : (
           <Stack
-            direction="column"
             spacing={1}
-            sx={{ padding: "0px 10px" }}
+            direction="column"
             justifyContent="center"
             alignItems="center"
+            className="seller-register-form"
           >
-            <Stack
-              spacing={1}
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
+            <IconButton
+              className="seller-register-form-back"
+              onClick={() => setStep(0)}
+              color="warning"
             >
-              <Avatar
-                alt="Profile"
-                src={Image}
-                style={{ height: "100px", width: "100px" }}
+              <BackIcon />
+            </IconButton>
+            <Avatar alt="Profile" src={Image} sx={{ height: 80, width: 80 }} />
+            <label>
+              <Input
+                accept="image/*"
+                type="file"
+                onChange={(e) => handelUpload(e)}
               />
-              <label>
-                <Input
-                  accept="image/*"
-                  type="file"
-                  onChange={(e) => handelUpload(e)}
-                />
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                >
-                  <AddPhotoIcon />
-                </IconButton>
-              </label>
-            </Stack>
-
+              <IconButton
+                color="warning"
+                aria-label="upload picture"
+                component="span"
+              >
+                <AddPhotoIcon />
+              </IconButton>
+            </label>
             <TextField
               label="Name"
-              variant="filled"
+              variant="outlined"
               fullWidth
               onChange={(e) => setName(e.target.value)}
               value={Name}
               helperText="Preferred Seller Name"
               sx={{ maxWidth: 300 }}
+              size="small"
+              color="warning"
             />
             <TextField
-              variant="filled"
+              variant="outlined"
               fullWidth
               label="About Yourself"
               helperText="Tell Others about Yourself. A short Insight Intro."
@@ -274,42 +264,52 @@ export default function SellerRegister() {
               onChange={(e) => setIntro(e.target.value)}
               value={Intro}
               sx={{ maxWidth: 300 }}
+              size="small"
+              color="warning"
             />
-
             <TextField
               label="Contact Number"
-              variant="filled"
+              variant="outlined"
               fullWidth
               value={PhoneNo}
               onChange={(e) => setPhoneNo(e.target.value)}
               type="number"
               sx={{ maxWidth: 300 }}
+              size="small"
+              color="warning"
+              helperText="Preferred 10 Digit Contact Number"
             />
             <TextField
               label="Alternate Contact Number"
-              variant="filled"
+              variant="outlined"
               fullWidth
               value={AltPhoneNo}
               onChange={(e) => setAltPhoneNo(e.target.value)}
               type="number"
               sx={{ maxWidth: 300 }}
+              size="small"
+              color="warning"
             />
             {alert.show ? (
-              <Alert severity={alert.type}>{alert.msg}</Alert>
+              <Alert severity={alert.type} variant="outlined">
+                {alert.msg}
+              </Alert>
             ) : null}
             <LoadingButton
               endIcon={<AddIcon />}
               loading={load}
               loadingPosition="end"
-              variant="contained"
+              variant="outlined"
               onClick={handelRegister}
               fullWidth
               sx={{ maxWidth: 300 }}
+              size="small"
+              color="warning"
             >
               Register
             </LoadingButton>
           </Stack>
-        </Stack>
+        )
       ) : (
         <Alert severity="error">
           You are not Logged In. <br />

@@ -46,6 +46,36 @@ const Terms = () => {
         referring to same.
       </p>
       <h3>
+        <strong>Book Selling</strong>
+      </h3>
+      <p>
+        You declare that books you are going to sell are used books not new
+        books, it means you must have bought the books from online/offline
+        market.
+      </p>
+      <p>
+        If you have study material of premium coachings ( like Aakash, FIITJEE,
+        Resonance, Bansal, Allen etc) then you can list it on our website
+        Bookshlf.in but then you must have paid for the package to respective
+        coaching institute, failing to do so and trying to sell a new unpaid
+        package on our website will be a criminal offence
+      </p>
+      <p>
+        You Can Sell Your books by becoming registering yourself as a partner
+      </p>
+      <p>
+        Bookshlf Partnership Program provides 60% of revenue on the selling
+        price you set while uploading the books.
+      </p>
+      <p>
+        You will have to pack the books by yourself and make the books ready for
+        the pickup
+      </p>
+      <p>
+        Money will be transferred to your Bookshlf wallet and you can withdraw
+        it from there after books are delivered.
+      </p>
+      <h3>
         <strong>Cookies</strong>
       </h3>
       <p>

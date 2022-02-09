@@ -37,18 +37,9 @@ const Styles = {
     left: 0,
     height: "100%",
     width: "100%",
-    "&:hover": {
-      top: -5,
-      left: -5,
-      transition: "0.3s ease-out",
-    },
     "@media screen and (max-width:600px)": {
-      paddingRight: "20px",
-      paddingBottom: "20px",
-      "&:hover": {
-        paddingBottom: "30px",
-        transition: "0.3s",
-      },
+      paddingRight: 0,
+      paddingBottom: 0,
     },
   },
   BenefitLogoImg: {
@@ -56,6 +47,10 @@ const Styles = {
     width: 40,
     marginTop: "-15px",
     marginLeft: "-15px",
+    "@media screen and (max-width:600px)": {
+      marginTop: "-15px",
+      marginLeft: "25px",
+    },
   },
 };
 
@@ -99,7 +94,7 @@ const Benefit = (props) => {
 };
 const Benefits = () => {
   return (
-    <Stack sx={Styles.Container}>
+    <Stack sx={Styles.Container} spacing={2}>
       <Typography sx={Styles.Heading} align="center">
         Benefits
       </Typography>
