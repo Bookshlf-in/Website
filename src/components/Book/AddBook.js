@@ -2,9 +2,8 @@ import { React, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
-import SellerCommisionChart from "./CommisionChartGrid";
-import "./AddBook.css";
 import axios from "../../axios";
+import "./AddBook.css";
 
 // Components
 // ======== From MUI Core (Stable)
@@ -73,7 +72,7 @@ const useStyles = makeStyles(() => ({
     },
     "& p": {
       fontFamily: "Roboto !important",
-      fontSize: "10px !important",
+      fontSize: "12px !important",
     },
     "& div": {
       fontFamily: "Roboto !important",
@@ -742,7 +741,7 @@ const AddBook = (props) => {
                       </InputAdornment>
                     ),
                   }}
-                  variant="standard"
+                  variant="filled"
                   multiline
                   rows={2}
                   helperText="Your Experience About the Book"
@@ -760,7 +759,7 @@ const AddBook = (props) => {
                     className={classes.root}
                     id="add-book-textfield"
                     label="Book Selling Price"
-                    helperText="Min Price Should be 100. Numbers Only"
+                    helperText="This is the Price At Which The Book Will Be Sold, Min Price Should be 100."
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -784,7 +783,7 @@ const AddBook = (props) => {
                     className={classes.root}
                     id="add-book-textfield"
                     label="Your Earnings"
-                    helperText="Total earnings you will recieve"
+                    helperText="This Is The Price Which You Will Get When Book Is Sold"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -831,30 +830,29 @@ const AddBook = (props) => {
                         },
                       }}
                     >
-                      <DialogTitle
-                        sx={{
-                          fontFamily: "pt sans",
-                          fontSize: "12px",
-                          padding: "10px",
-                        }}
-                      >
-                        {"Detailed Chart for Seller Earnings & Commission"}
-                      </DialogTitle>
-                      <DialogContent
-                        sx={{
-                          height: 400,
-                          width: "100%",
-                          padding: "0px 10px",
-                        }}
-                      >
-                        <SellerCommisionChart grid={props.commisionChart} />
+                      <DialogTitle>Your Earnings & Commission</DialogTitle>
+                      <DialogContent>
+                        <Alert severity="info">
+                          <Typography variant="caption">
+                            As a Bookshlf Partner You Will Be Eligible For Upto
+                            <b> 60% </b>of the Profit Earned By Selling Your
+                            Books.
+                          </Typography>
+                        </Alert>
+                        <br />
+                        <Alert severity="info">
+                          <Typography variant="caption">
+                            Bookshlf Takes Responsibility Of Picking Up Of Your
+                            Books & Delivering It Safely To the Buyer Based In
+                            Any Corner Of India.
+                          </Typography>
+                        </Alert>
                       </DialogContent>
                       <DialogActions>
                         <Button
                           onClick={() => setopenpriceChart(false)}
                           variant="outlined"
                           color="error"
-                          style={{ fontFamily: "pt sans", fontSize: "11px" }}
                           size="small"
                         >
                           close

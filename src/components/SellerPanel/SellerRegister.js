@@ -189,7 +189,7 @@ export default function SellerRegister() {
           </Typography>
           <Typography variant="caption" align="justify">
             Bookshlf takes responsibility of picking up of your books and
-            delivering it safely to the buyer based in corner of India.
+            delivering it safely to the buyer based in any corner of India.
           </Typography>
           <Typography variant="caption" align="justify">
             As a Bookshlf Partner you will be eligible for upto 60% of the
