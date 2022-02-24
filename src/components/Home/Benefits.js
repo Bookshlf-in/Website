@@ -20,7 +20,6 @@ const Styles = {
     maxWidth: 100,
     position: "relative",
     borderRadius: "15px",
-    boxShadow: "2px 3px 3px rgba(0,0,0,0.3)",
     cursor: "pointer",
   },
   BenefitLabel: {
@@ -136,7 +135,7 @@ const Benefits = () => {
             bg={3}
           />
           <Benefit
-            label="Free Delivery For Books Over 500/-"
+            label="Free Delivery For Books Over 1000/-"
             Icon="/images/Benefits/free-delivery.png"
             bg={4}
           />

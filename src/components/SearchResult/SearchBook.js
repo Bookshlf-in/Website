@@ -1,5 +1,5 @@
 import { React, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import axios from "../../axios";
 
@@ -35,8 +35,6 @@ const Styles = {
   },
 };
 const SearchBook = (props) => {
-  const history = useHistory();
-
   // User Context
   const [user, setUser] = useContext(UserContext);
 
@@ -174,7 +172,6 @@ const SearchBook = (props) => {
           src={book.photo}
           sx={Styles.Avatar}
           variant="rounded"
-          onClick={() => history.push(`/BookDetails/${book._id}`)}
         />
         <Typography
           align="center"
@@ -242,17 +239,16 @@ const SearchBook = (props) => {
               )}
             </IconButton>
           </Stack>
-          <Button
-            endIcon={<NextIcon />}
-            color="primary"
-            onClick={() => {
-              history.push(`/BookDetails/${book._id}`);
-            }}
-            fullWidth
-            size="small"
-          >
-            More Details
-          </Button>
+          <Link to={`/BookDetails/${book._id}`} style={{ width: "100%" }}>
+            <Button
+              endIcon={<NextIcon />}
+              color="primary"
+              fullWidth
+              size="small"
+            >
+              More Details
+            </Button>
+          </Link>
         </Stack>
       </Stack>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 // Components
 import { Button, Stack } from "@mui/material";
 
@@ -24,37 +24,40 @@ const NavButtonStyle = {
 };
 
 const NavbarItems = () => {
-  const history = useHistory();
   return (
     <Stack direction="row" spacing={1} sx={{ ml: 3 }}>
-      <Button
-        startIcon={<HomeIcon sx={{ height: 15, width: 15 }} />}
-        onClick={() => history.push("/")}
-        sx={NavButtonStyle}
-      >
-        Home
-      </Button>
-      <Button
-        startIcon={<AllBookIcon sx={{ height: 15, width: 15 }} />}
-        onClick={() => history.push("/SearchResult/tag:ALL")}
-        sx={NavButtonStyle}
-      >
-        All&nbsp;Books
-      </Button>
-      <Button
-        startIcon={<SellBookIcon sx={{ height: 15, width: 15 }} />}
-        onClick={() => history.push("/SellerPanel/5")}
-        sx={NavButtonStyle}
-      >
-        Sell&nbsp;Books
-      </Button>
-      <Button
-        startIcon={<BookIcon sx={{ height: 15, width: 15 }} />}
-        onClick={() => history.push("/SellerPanel/2")}
-        sx={NavButtonStyle}
-      >
-        Your&nbsp;Books
-      </Button>
+      <Link to="/">
+        <Button
+          startIcon={<HomeIcon sx={{ height: 15, width: 15 }} />}
+          sx={NavButtonStyle}
+        >
+          Home
+        </Button>
+      </Link>
+      <Link to="/SearchResult/tag:ALL">
+        <Button
+          startIcon={<AllBookIcon sx={{ height: 15, width: 15 }} />}
+          sx={NavButtonStyle}
+        >
+          All&nbsp;Books
+        </Button>
+      </Link>
+      <Link to="/SellerPanel/5">
+        <Button
+          startIcon={<SellBookIcon sx={{ height: 15, width: 15 }} />}
+          sx={NavButtonStyle}
+        >
+          Sell&nbsp;Books
+        </Button>
+      </Link>
+      <Link to="/SellerPanel/2">
+        <Button
+          startIcon={<BookIcon sx={{ height: 15, width: 15 }} />}
+          sx={NavButtonStyle}
+        >
+          Your&nbsp;Books
+        </Button>
+      </Link>
     </Stack>
   );
 };

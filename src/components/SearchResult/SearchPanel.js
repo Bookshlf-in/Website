@@ -64,7 +64,8 @@ const Search = () => {
   useEffect(() => {
     const fetchdata = async () => {
       setLoading(true);
-      const newQuery = { ...filterParams, q: params.query };
+      setpage(1);
+      const newQuery = { ...filterParams, q: params.query, page: 1 };
       delete newQuery?.sortByDate;
       delete newQuery?.sortByPrice;
       makeRequest(newQuery);
@@ -82,6 +83,7 @@ const Search = () => {
 
   const makeRequest = (params) => {
     setFilterParams(params);
+    console.log(params);
     axios
       .get("/search", {
         params: params,
