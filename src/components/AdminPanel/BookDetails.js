@@ -91,6 +91,7 @@ const BookDetails = () => {
           params: { bookId: bookId },
         })
         .then((response) => {
+          console.log(response.data);
           setbook(response.data);
           setbookName(response.data.title);
           setbookDesc(response.data?.description);

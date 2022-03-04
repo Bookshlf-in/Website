@@ -678,9 +678,7 @@ const Wallet = () => {
                 className={classes.root}
                 primary="Account Details"
                 secondary={
-                  <Typography variant="caption">
-                    {withdrawRequest?.bankAccountDetails}
-                  </Typography>
+                  <CopyableText text={withdrawRequest?.bankAccountDetails} />
                 }
               />
             </ListItemButton>

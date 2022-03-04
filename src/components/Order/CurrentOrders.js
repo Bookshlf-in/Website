@@ -38,25 +38,25 @@ const useStyles = makeStyles(() => ({
 const CurrentOrders = (props) => {
   const classes = useStyles();
 
-  const [deleteId, setdeleteId] = useState("");
+  // const [deleteId, setdeleteId] = useState("");
   const [activeOrders, setactiveOrders] = useState(props.orders);
-  // cancel Order
-  const handelCancelOrder = (orderId) => {
-    setdeleteId(orderId);
-    axios
-      .delete("/cancelOrder", {
-        data: {
-          orderId: orderId,
-        },
-      })
-      .then((response) => {
-        setdeleteId("");
-        setactiveOrders(activeOrders.filter((order) => order._id !== orderId));
-      })
-      .catch((error) => {
-        setdeleteId("");
-      });
-  };
+  // // cancel Order
+  // const handelCancelOrder = (orderId) => {
+  //   setdeleteId(orderId);
+  //   axios
+  //     .delete("/cancelOrder", {
+  //       data: {
+  //         orderId: orderId,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setdeleteId("");
+  //       setactiveOrders(activeOrders.filter((order) => order._id !== orderId));
+  //     })
+  //     .catch((error) => {
+  //       setdeleteId("");
+  //     });
+  // };
 
   const columns = [
     {
@@ -175,28 +175,28 @@ const CurrentOrders = (props) => {
         );
       },
     },
-    {
-      field: "deleteOrder",
-      headerName: "Cancel",
-      minWidth: 100,
-      flex: 1,
-      sortable: false,
-      renderCell: (cellValue) => {
-        return (
-          <IconButton
-            className={classes.root}
-            color="error"
-            onClick={() => handelCancelOrder(cellValue.value)}
-          >
-            {deleteId === cellValue.value ? (
-              <CircularProgress color="inherit" size={20} />
-            ) : (
-              <DeleteIcon />
-            )}
-          </IconButton>
-        );
-      },
-    },
+    // {
+    //   field: "deleteOrder",
+    //   headerName: "Cancel",
+    //   minWidth: 100,
+    //   flex: 1,
+    //   sortable: false,
+    //   renderCell: (cellValue) => {
+    //     return (
+    //       <IconButton
+    //         className={classes.root}
+    //         color="error"
+    //         onClick={() => handelCancelOrder(cellValue.value)}
+    //       >
+    //         {deleteId === cellValue.value ? (
+    //           <CircularProgress color="inherit" size={20} />
+    //         ) : (
+    //           <DeleteIcon />
+    //         )}
+    //       </IconButton>
+    //     );
+    //   },
+    // },
   ];
   const rows = activeOrders.map((order) => {
     return {
