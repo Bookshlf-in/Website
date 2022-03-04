@@ -91,8 +91,8 @@ const Reviews = () => {
                 color: "lemonchiffon",
               }}
             >
-              {Reviews[props.index]?.review.length > 250
-                ? Reviews[props.index]?.review.substr(0, 250) + "..."
+              {Reviews[props.index]?.review.length > 200
+                ? Reviews[props.index]?.review.substr(0, 200) + "..."
                 : Reviews[props.index]?.review}
             </Typography>
             <Rating

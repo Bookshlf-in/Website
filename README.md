@@ -168,6 +168,16 @@ REACT_APP_NODE_ENV=development
 ![wallet](https://user-images.githubusercontent.com/56078689/150652172-513d9463-a27d-4cbb-ba35-8216c7791140.png)
 ![wishlist](https://user-images.githubusercontent.com/56078689/150652173-88c351ed-76d0-4b31-8861-1a44fcab88e3.png)
 
+## Future Plans
+
+- Adding Next Js Framework for Server Side Rendering.
+- Adding React Redux for States centeralization and better API Syncronization.
+- Adding Theme Provider of mui.
+- Full Fledged Admin Panel with Analytics.
+- Adding Night Mode.
+
+> Note : These are not mandatory upcoming changes. More changes can be introduced later.
+
 ## Author
 
 **Abhishek Singh**
