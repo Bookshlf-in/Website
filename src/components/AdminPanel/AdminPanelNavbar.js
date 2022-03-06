@@ -22,6 +22,7 @@ import Seller from "./Sellers";
 import Orders from "./Orders";
 import Messages from "./Messages";
 import Profile from "./FindProfile";
+import Users from "./Users";
 import Wallet from "./Wallet";
 
 const useStyles = makeStyles({
@@ -47,7 +48,7 @@ const AdminNavbar = () => {
   const [panel, setpanel] = useState(params.panel);
 
   const handleChange = (event, newValue) => {
-    if (newValue === "6") {
+    if (newValue === "7") {
       history.push("/");
     } else {
       history.push(`/Admin/${newValue}/1`);
@@ -94,17 +95,24 @@ const AdminNavbar = () => {
               className={classes.root}
             />
             <Tab
+              label="Users"
+              icon={<ProfileIcon sx={{ height: 16, width: 16 }} />}
+              iconPosition="start"
+              value="5"
+              className={classes.root}
+            />
+            <Tab
               label="Wallet"
               icon={<WalletIcon sx={{ height: 16, width: 16 }} />}
               iconPosition="start"
-              value="5"
+              value="6"
               className={classes.root}
             />
             <Tab
               label="Home"
               icon={<HomeIcon sx={{ height: 16, width: 16 }} />}
               iconPosition="start"
-              value="6"
+              value="7"
               className={classes.root}
             />
           </TabList>
@@ -122,6 +130,9 @@ const AdminNavbar = () => {
           <Seller />
         </TabPanel>
         <TabPanel value="5" sx={{ padding: "12px" }}>
+          <Users />
+        </TabPanel>
+        <TabPanel value="6" sx={{ padding: "12px" }}>
           <Wallet />
         </TabPanel>
       </TabContext>
