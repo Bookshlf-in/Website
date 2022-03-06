@@ -302,6 +302,9 @@ const UserSignup = () => {
                   sx={{ fontSize: "12px" }}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onPaste={(e) => setEmail(e.target.value)}
+                  name="signup-email"
+                  autoComplete="off"
                 />
               </Stack>
               <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
