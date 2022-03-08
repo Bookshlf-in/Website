@@ -999,7 +999,6 @@ const Payment = () => {
                       variant="contained"
                       className={classes.root}
                       sx={{ letterSpacing: "1px", fontSize: "12px" }}
-                      onClick={NextPanel}
                       size="small"
                       color="success"
                       onClick={handelPlaceOrder}
