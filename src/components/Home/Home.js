@@ -13,14 +13,17 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Bookshlf | The Bookstore which cares</title>
+        <title>
+          Bookshlf | Buy and Sell Used Books, Second Hand Books Online
+        </title>
         {/* <!-- Search Engine --> */}
         <script className="structured-data-list" type="application/ld+json">
           {`
           { 
           "@context": "https://schema.org",
           "@type": "Corporation",
-          "name": "Bookshlf",
+          "name": "Bookshlf | Buy and Sell Used Books, Second Hand Books Online",
+          "description": "Buy and Sell second-hand books at your doorstep | Specifically for competitive exams like JEE, NEET | Get a 100% refund if you get admission to IIT/AIIMS",
           "url": "https://bookshlf.in",
           "logo": "https://bookshlf.in/images/logo.png",
           "potentialAction": {

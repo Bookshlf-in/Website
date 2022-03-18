@@ -22,6 +22,7 @@ import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 // Icons
@@ -42,49 +43,49 @@ import HelpIcon from "@mui/icons-material/Help";
 import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
 
 // Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType
+);
 
 const useStyles = makeStyles(() => ({
   root: {
-    fontFamily: "Roboto !important",
-    "& label": {
-      fontFamily: "Roboto !important",
-    },
     "& p": {
-      fontFamily: "Roboto !important",
       fontSize: "12px !important",
     },
     "& input": {
-      fontFamily: "Roboto !important",
       fontSize: "12px !important",
     },
     "& textarea": {
-      fontFamily: "Roboto !important",
       fontSize: "12px !important",
     },
   },
   select: {
     "& label": {
-      fontFamily: "Roboto !important",
-      fontSize: "12px",
+      fontSize: "14px",
       left: "7px",
       top: "3px",
     },
     "& p": {
-      fontFamily: "Roboto !important",
       fontSize: "12px !important",
     },
     "& div": {
-      fontFamily: "Roboto !important",
-      fontSize: "10px !important",
+      fontSize: "12px !important",
     },
   },
   adrMenu: {
-    fontFamily: "Roboto !important",
-    fontSize: "10px !important",
+    fontSize: "12px !important",
     minHeight: "0 !important",
   },
 }));
+
+const Flexible = {
+  xs: "column",
+  sm: "row",
+  lg: "row",
+  md: "row",
+};
 
 const AddBook = (props) => {
   const classes = useStyles();
@@ -323,7 +324,7 @@ const AddBook = (props) => {
           if (Adr !== "") {
             // checking if Address is selected
             if (bookName !== "") {
-              if (!isNaN(SP) && Number(SP) >= 100) {
+              if (!isNaN(SP) && Number(SP) >= 300) {
                 // Selling Price of Book Should be Atleast 100
                 const urls = await uploadImages(Image);
                 if (req) {
@@ -371,7 +372,7 @@ const AddBook = (props) => {
         msg: "",
         type: "info",
       });
-    }, 6000);
+    }, 10000);
   };
 
   // const Address Popover Component
@@ -751,7 +752,7 @@ const AddBook = (props) => {
                 />
 
                 <Stack
-                  direction={{ xs: "column", sm: "row", lg: "row", md: "row" }}
+                  direction={Flexible}
                   spacing={1}
                   justifyContent="space-between"
                 >
@@ -759,7 +760,7 @@ const AddBook = (props) => {
                     className={classes.root}
                     id="add-book-textfield"
                     label="Book Selling Price"
-                    helperText="This is the Price At Which The Book Will Be Sold, Min Price Should be 100."
+                    helperText="Price At Which The Book Will Be Sold, Min Price Should be 300."
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -992,12 +993,7 @@ const AddBook = (props) => {
                     </ClickAwayListener>
                   </div>
                   <Stack
-                    direction={{
-                      xs: "column",
-                      sm: "row",
-                      lg: "row",
-                      md: "row",
-                    }}
+                    direction={Flexible}
                     alignItems="center"
                     justifyContent="flex-start"
                     flexWrap="wrap"
@@ -1030,6 +1026,7 @@ const AddBook = (props) => {
                     allowReorder={true}
                     allowMultiple={true}
                     maxFiles={15}
+                    checkValidity={true}
                     files={Image}
                     beforeAddFile={(file) => {
                       if (isUnique(file.file.name, Image)) return true;
@@ -1053,7 +1050,6 @@ const AddBook = (props) => {
           <Tooltip
             title="Fill Extra Details about book. However these fields are not Necessary"
             arrow
-            style={{ fontFamily: "Pt sans" }}
           >
             <Button
               fullWidth
@@ -1061,28 +1057,17 @@ const AddBook = (props) => {
               color="secondary"
               endIcon={collapse ? <CloseIcon /> : <OpenIcon />}
               onClick={() => setcollapse(!collapse)}
-              sx={{
-                marginTop: "12px",
-                fontFamily: "Roboto",
-                fontSize: "12px",
-                letterSpacing: "1px",
-              }}
+              sx={{ marginTop: "12px" }}
             >
               More Details
             </Button>
           </Tooltip>
-
           <Collapse in={collapse}>
             <form className="add-book-form-rt">
               <fieldset>
                 <Stack spacing={1}>
                   <Stack
-                    direction={{
-                      xs: "column",
-                      sm: "row",
-                      lg: "row",
-                      md: "row",
-                    }}
+                    direction={Flexible}
                     spacing={1}
                     justifyContent="space-evenly"
                   >
@@ -1101,6 +1086,7 @@ const AddBook = (props) => {
                       value={mrp}
                       onChange={(e) => setMrp(e.target.value)}
                       size="small"
+                      helperText="Original Price of Book"
                     />
                     <TextField
                       className={classes.root}
@@ -1117,15 +1103,12 @@ const AddBook = (props) => {
                       value={Edition}
                       onChange={(e) => setEdition(e.target.value)}
                       size="small"
+                      type="number"
+                      helperText="Year Of Purchase/Published"
                     />
                   </Stack>
                   <Stack
-                    direction={{
-                      xs: "column",
-                      sm: "row",
-                      lg: "row",
-                      md: "row",
-                    }}
+                    direction={Flexible}
                     spacing={1}
                     justifyContent="space-evenly"
                   >
@@ -1144,6 +1127,7 @@ const AddBook = (props) => {
                       value={author}
                       onChange={(e) => setAuthor(e.target.value)}
                       size="small"
+                      helperText="Original Author Of Book"
                     />
                     <TextField
                       className={classes.root}
@@ -1160,15 +1144,11 @@ const AddBook = (props) => {
                       value={Weight}
                       onChange={(e) => setWeight(e.target.value)}
                       size="small"
+                      helperText="eg : 5000"
                     />
                   </Stack>
                   <Stack
-                    direction={{
-                      xs: "column",
-                      sm: "row",
-                      lg: "row",
-                      md: "row",
-                    }}
+                    direction={Flexible}
                     spacing={1}
                     justifyContent="space-evenly"
                   >
@@ -1187,6 +1167,7 @@ const AddBook = (props) => {
                       value={lang}
                       onChange={(e) => setlang(e.target.value)}
                       size="small"
+                      helperText="example : English, Hindi etc."
                     />
                     <TextField
                       className={classes.root}
@@ -1203,6 +1184,7 @@ const AddBook = (props) => {
                       value={bookISBN}
                       onChange={(e) => setbookISBN(e.target.value)}
                       size="small"
+                      helperText="A unique 10/13 Digit Code"
                     />
                   </Stack>
                 </Stack>
@@ -1216,7 +1198,7 @@ const AddBook = (props) => {
           lg={12}
           md={12}
           sm={12}
-          style={{
+          sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

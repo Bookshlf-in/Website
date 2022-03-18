@@ -7,6 +7,7 @@ import "./Contact.css";
 
 // Components
 import Alert from "@mui/material/Alert";
+import { Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,47 +141,15 @@ function Contact() {
           <h3 style={{ fontSize: "12px" }}>
             We will try our best to answer your questions as soon as possible.
           </h3>
-          <br />
-          <div className="social-icons">
-            <Link
-              to={{
-                pathname: "https://www.facebook.com/Bookshlf-109479771200918",
-              }}
-              target="_blank"
-            >
-              <i className="fab fa-facebook-f" />
-            </Link>
-            <Link
-              to={{ pathname: "https://www.instagram.com/_bookshlf/" }}
-              target="_blank"
-            >
-              <i className="fab fa-instagram" />
-            </Link>
-            <Link
-              to={{ pathname: "https://twitter.com/BookshlfA" }}
-              target="_blank"
-            >
-              <i className="fab fa-twitter" />
-            </Link>
-            <Link
-              to={{
-                pathname:
-                  "https://www.linkedin.com/in/bookshlf-by-aman-861073223/",
-              }}
-              target="_blank"
-            >
-              <i className="fab fa-linkedin" />
-            </Link>
-            <Link
-              to={{
-                pathname:
-                  "https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ",
-              }}
-              target="_blank"
-            >
-              <i className="fab fa-youtube" />
-            </Link>
-          </div>
+          <Link to={{ pathname: "tel:9792666122" }} target="_blank">
+            <Typography variant="caption">+91 97926 66122</Typography>
+          </Link>
+          <Link
+            to={{ pathname: "mailto:bookshlf.in@gmail.com" }}
+            target="_blank"
+          >
+            <Typography variant="caption">bookshlf.in@gmail.com</Typography>
+          </Link>
           <h1> Get In Touch</h1>
           <div className="contactForm">
             <form action="">

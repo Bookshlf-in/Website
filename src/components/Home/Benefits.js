@@ -135,7 +135,7 @@ const Benefits = () => {
             bg={3}
           />
           <Benefit
-            label="Free Delivery For Books Over 1000/-"
+            label="Free Delivery For Books Over 500/-"
             Icon="/images/Benefits/free-delivery.png"
             bg={4}
           />

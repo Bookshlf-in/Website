@@ -54,7 +54,7 @@ const Search = () => {
   const [books, setbooks] = useState([]);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(1);
-  const [filter, setFilter] = useState(1);
+  const [filter, setFilter] = useState(0);
   const [filterParams, setFilterParams] = useState({
     q: params.query,
     noOfBooksInOnePage: booksperpage,
@@ -83,7 +83,6 @@ const Search = () => {
 
   const makeRequest = (params) => {
     setFilterParams(params);
-    console.log(params);
     axios
       .get("/search", {
         params: params,
@@ -108,6 +107,14 @@ const Search = () => {
   const handelFilterChange = (e) => {
     setFilter(e.target.value);
     switch (e.target.value) {
+      case 0:
+        setFilterParams((prev) => {
+          const Filter = { ...prev };
+          delete Filter?.sortByDate;
+          delete Filter?.sortByPrice;
+          return Filter;
+        });
+        break;
       case 1:
         setFilterParams((prev) => {
           const Filter = { ...prev, sortByPrice: "asc" };
@@ -170,6 +177,9 @@ const Search = () => {
             label="Filter Books"
             onChange={handelFilterChange}
           >
+            <MenuItem value={0} className={classes.root}>
+              Default
+            </MenuItem>
             <MenuItem value={1} className={classes.root}>
               Price Low to High
             </MenuItem>
