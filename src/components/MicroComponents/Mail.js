@@ -15,7 +15,7 @@ const Btn = (props) => {
         type: "SEND_MULTIPLE",
         emailData: {
           to: props.to,
-          from: "hello@bookshlf.in",
+          from: "shipment@bookshlf.in",
           cc: props.cc,
           bcc: "bookshlf.in@gmail.com",
           subject: props.subject,
