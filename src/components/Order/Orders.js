@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import axios from "../../axios";
 
 // Components
@@ -17,7 +18,6 @@ import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 import ApprovedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import UpdateIcon from "@mui/icons-material/CachedRounded";
-import InfoIcon from "@mui/icons-material/InfoTwoTone";
 
 const useStyles = makeStyles(() => ({
   stack: {
@@ -211,31 +211,36 @@ const Orders = () => {
       sortable: false,
       renderCell: (cellValue) => {
         return (
-          <Chip
-            icon={
-              cellValue.value === "Approval Pending" ? (
-                <PendingIcon />
-              ) : cellValue.value === "Approved" ? (
-                <ApprovedIcon />
-              ) : cellValue.value === "Approval rejected" ? (
-                <CancelIcon />
-              ) : (
-                <ShippedIcon sx={{ height: 15, width: 15 }} />
-              )
-            }
-            label={cellValue.value}
-            size="small"
-            color={
-              cellValue.value === "Approval Pending"
-                ? "warning"
-                : cellValue.value === "Approved"
-                ? "success"
-                : cellValue.value === "Approval rejected"
-                ? "error"
-                : "primary"
-            }
-            variant="outlined"
-          />
+          <Stack spacing={2}>
+            <Chip
+              icon={
+                cellValue.value[1] === "Approval Pending" ? (
+                  <PendingIcon />
+                ) : cellValue.value[1] === "Approved" ? (
+                  <ApprovedIcon />
+                ) : cellValue.value[1] === "Approval rejected" ? (
+                  <CancelIcon />
+                ) : (
+                  <ShippedIcon sx={{ height: 15, width: 15 }} />
+                )
+              }
+              label={cellValue.value[1]}
+              size="small"
+              color={
+                cellValue.value[1] === "Approval Pending"
+                  ? "warning"
+                  : cellValue.value[1] === "Approved"
+                  ? "success"
+                  : cellValue.value[1] === "Approval rejected"
+                  ? "error"
+                  : "primary"
+              }
+              variant="outlined"
+            />
+            {cellValue.value[1] === "Approved" ? (
+              <Link to={`/Bookdetails/${cellValue.value[0]}`}>View Book</Link>
+            ) : null}
+          </Stack>
         );
       },
     },
@@ -269,16 +274,26 @@ const Orders = () => {
             Admin Message
           </Button>
         ) : (
-          <Chip
-            icon={<InfoIcon sx={{ height: 16, width: 16 }} />}
-            label={"Contact Admin for Updates"}
-            size="small"
+          <Typography
+            variant="caption"
+            sx={{ whiteSpace: "normal" }}
             color="warning"
-            sx={{
-              fontSize: "10px",
-              whiteSpace: "pre-wrap",
-            }}
-          />
+          >
+            To Update Book Details, Contact Admin
+            <Link to={{ pathname: "tel:97926 66122" }} target="_blank">
+              <Chip
+                label="+91 97926 66122"
+                size="small"
+                sx={{ fontSize: "10px" }}
+              />
+            </Link>
+            <Link
+              to={{ pathname: "mailto:bookshlf.in@gmail.com" }}
+              target="_blank"
+            >
+              bookshlf.in@gmail.com
+            </Link>
+          </Typography>
         );
       },
     },
@@ -310,7 +325,7 @@ const Orders = () => {
       orderPhoto: [order.photos[0], order._id],
       bookTotal: [order.price, order.sellerEarning],
       bookDetails: [order.title, order.description],
-      bookStatus: order.status,
+      bookStatus: [order._id, order.status],
       bookUpdate: [order._id, order.adminMessage],
       bookDelete: order._id,
     };

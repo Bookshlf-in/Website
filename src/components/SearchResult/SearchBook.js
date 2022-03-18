@@ -20,7 +20,7 @@ const Styles = {
   Box: {
     width: "100%",
     border: "0.5px solid rgba(99, 99, 99, 0.1)",
-    height: 400,
+    height: 440,
     boxShadow:
       "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
     borderRadius: "5px",
@@ -29,7 +29,7 @@ const Styles = {
     },
   },
   Avatar: {
-    height: 220,
+    height: 240,
     width: "100%",
     cursor: "pointer",
   },
@@ -167,12 +167,15 @@ const SearchBook = (props) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Avatar
-          alt={book.title}
-          src={book.photo}
-          sx={Styles.Avatar}
-          variant="rounded"
-        />
+        <Link to={`/BookDetails/${book._id}`} style={{ width: "100%" }}>
+          <Avatar
+            alt={book.title}
+            src={book.photo}
+            sx={Styles.Avatar}
+            variant="rounded"
+          />
+        </Link>
+
         <Typography
           align="center"
           variant="caption"

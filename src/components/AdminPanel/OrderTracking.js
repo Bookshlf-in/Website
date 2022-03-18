@@ -19,6 +19,9 @@ import CopyIcon from "@mui/icons-material/ContentCopy";
 import CopiedIcon from "@mui/icons-material/FileCopy";
 import WeightIcon from "@mui/icons-material/FitnessCenter";
 
+// Micro Components
+import SendMail from "../MicroComponents/Mail";
+
 const useStyles = makeStyles({
   root: {
     fontFamily: "PT sans !important",
@@ -78,6 +81,14 @@ const OrderTracking = () => {
   const [trackDetails, settrackDetails] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryCharge, setDeliveryCharge] = useState(40);
+  const [sellerMail, setSellerMail] = useState("");
+  const SellerTemplate = `<html> <head> <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet"/> <style type="text/css"> html, body{margin: 0; padding: 0; font-family: "Roboto"; box-sizing: border-box;}a{text-decoration: none; color:white !important;}.main{padding: 15px 24px;}.img-title{border-radius: 5px;}.tracking-number{color: grey; letter-spacing: 2px;}.order-track-btn{background-color: #f7a614; padding: 15px; border-radius: 10px; color: white !important;}table, th, td{border: 1px solid grey; border-collapse: collapse;}th{background-color: #616161; letter-spacing: 1px; color: whitesmoke;}th, td{padding: 15px 24px;}.contact-btn{background-color: #f75c14; padding: 15px; color: white !important;}</style> </head> <body> <div class="main"> <img src="https://i.ibb.co/B3Kdb9v/image-6.png" alt="bookshlf.in" height="50px" class="img-title"/> <h1>Your Book is Ready To be Picked Up.</h1> <h2>Order Tracking Number</h2> <h4 class="tracking-number">${trackLink
+    ?.split("=")
+    ?.at(
+      1
+    )}</h4> <br/> <a href=${trackLink} class="order-track-btn" target="_blank"> Track Your Order </a> <br/> <br/> <br/> <table> <thead> <th>Order Id</th> <th>Shipping Details</th> </thead> <tbody> <tr> <td>${
+    params.orderId
+  }</td><td>${trackDetails}</td></tr></tbody> </table> <br/> <h3>For Any Queries related to Order</h3> <br/> <a href="https://bookshlf.in/Contact" class="contact-btn" target="_blank"> Contact Us </a> <br/> <br/> <br/> <a href="tel:9792666122" class="contact-btn" target="_blank"> +91 97926 66122 </a> <br/> <br/> <br/> <a href="mailto:bookshlf.in@gmail.com" class="contact-btn" target="_blank" > bookshlf.in@gmail.com </a> <br/> <br/><br/> <p style="color: #616161"> Regards <br/> <b>Team Bookshlf</b> </p></div></body></html>`;
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -104,8 +115,27 @@ const OrderTracking = () => {
               )}`
             )
             .then((earnings) => {
-              setload(true);
               setPaidAmt(earnings.data.sellerEarning);
+              axios
+                .get("/admin-getSellerProfile", {
+                  params: { sellerId: response.data.sellerId },
+                })
+                .then((seller) => {
+                  axios
+                    .get("/admin-getUserProfile", {
+                      params: { userId: seller.data.userId },
+                    })
+                    .then((user) => {
+                      setSellerMail(user.data.email);
+                      setload(true);
+                    })
+                    .catch(() => {
+                      setload(true);
+                    });
+                })
+                .catch(() => {
+                  setload(true);
+                });
             })
             .catch(() => {
               setload(true);
@@ -121,13 +151,15 @@ const OrderTracking = () => {
   const handelCancelOrder = () => {
     setcancelLoad(true);
     axios
-      .delete("/admin-markOrderAsCancelled", {
-        data: { orderId: order._id },
+      .post("/admin-markOrderAsCancelled", {
+        orderId: order._id,
       })
       .then((response) => {
         setcancelLoad(false);
+        setorder({ ...order, status: order.status.concat("Cancelled") });
       })
       .catch((error) => {
+        setcancelLoad(false);
         // console.log(error.response.data);
       });
   };
@@ -467,6 +499,24 @@ const OrderTracking = () => {
               <ListItem
                 title={<ListHead content="Seller Name" />}
                 body={<ListBody content={order.sellerName} />}
+              />
+              <ListItem
+                title={
+                  <ListHead content="Send Mail to Seller (Mail will be sent with External Tracking Details, Order Status etc.)" />
+                }
+                body={
+                  <SendMail
+                    type="button"
+                    variant="outlined"
+                    color="error"
+                    label="Send Mail"
+                    size="small"
+                    to={[sellerMail]}
+                    cc="vaman5629@gmail.com"
+                    subject="Your Book Is Ready For Pickup. You Can Track Your Order Now."
+                    template={SellerTemplate}
+                  />
+                }
               />
             </Stack>
           </Stack>

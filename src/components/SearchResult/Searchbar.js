@@ -1,10 +1,10 @@
 import { React, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // Components
-import { Stack, InputBase, MenuItem } from "@mui/material";
+import { Stack, InputBase, MenuItem, Chip } from "@mui/material";
 import { ClickAwayListener, CircularProgress } from "@mui/material";
 
 // Icons
@@ -98,6 +98,7 @@ const useStyles = makeStyles(() => ({
 const Searchbar = () => {
   const classes = useStyles();
   const history = useHistory();
+  const params = useParams();
 
   // functionality states
   const [searchFieldChanges, setsearchFieldChanges] = useState(false);
@@ -106,7 +107,7 @@ const Searchbar = () => {
   const [openTagMenu, setOpenTagMenu] = useState(false);
 
   // Data States
-  const [Search, setSearch] = useState("");
+  const [Search, setSearch] = useState(params.query);
   const [resulttitles, setresultTitles] = useState([]);
   const [resulttags, setresultTags] = useState([]);
 
@@ -137,7 +138,7 @@ const Searchbar = () => {
   // tag searching on input
   const handelTagSearch = (e) => {
     settagFieldChanges(true);
-    setSearch("tag:" + e.target.value);
+    setSearch(e.target.value);
     setOpenTagMenu(true);
     const fetchdata = async () => {
       axios
@@ -154,12 +155,14 @@ const Searchbar = () => {
   // Searching Title
   const handelTitleAdd = (titlename) => {
     setOpenTitleMenu(false);
+    setSearch(titlename);
     history.push(`/SearchResult/${titlename === "" ? "tag:ALL" : titlename}`);
   };
 
   // Searching Tags
   const handelTagAdd = (tagname) => {
     setOpenTagMenu(false);
+    setSearch(tagname);
     history.push(`/SearchResult/tag:${tagname}`);
   };
 
@@ -179,6 +182,7 @@ const Searchbar = () => {
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
+          value={Search}
           onChange={(e) => handelBookTitleSearch(e)}
           onKeyPress={handleKeyPress}
           inputProps={{ "aria-label": "search" }}
@@ -220,6 +224,7 @@ const Searchbar = () => {
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
+          value={Search}
           onChange={(e) => handelTagSearch(e)}
           onKeyPress={handleKeyPress}
           inputProps={{ "aria-label": "search" }}
@@ -235,7 +240,11 @@ const Searchbar = () => {
                   onClick={() => handelTagAdd(Tag.tag)}
                   className={classes.Li}
                 >
-                  {Tag.tag}
+                  <Chip
+                    label={Tag.tag}
+                    size="small"
+                    sx={{ cursor: "pointer", fontSize: "11px" }}
+                  />
                 </MenuItem>
               ))}
             </div>
