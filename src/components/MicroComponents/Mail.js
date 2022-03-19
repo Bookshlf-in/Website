@@ -10,6 +10,7 @@ const Btn = (props) => {
 
   const SendMail = () => {
     setLoad(true);
+    // console.log(props.template);
     axios
       .post("/admin-sendEmail", {
         type: "SEND_MULTIPLE",
@@ -29,7 +30,7 @@ const Btn = (props) => {
       })
       .catch((err) => {
         setLoad(false);
-        console.log(err.response.data);
+        // console.log(err.response.data);
       });
   };
   return (
