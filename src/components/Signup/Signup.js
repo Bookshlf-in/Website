@@ -87,12 +87,16 @@ const UserSignup = () => {
   };
 
   // checking if both input passwords are matching
-  const handleVerifyPassword = (e) => {
-    setVerifyPassword(e.target.value);
-    if (password.length > 0 && password !== e.target.value) {
+  const handleVerifyPassword = (password, verifyPassword) => {
+    setPassword(password);
+    setVerifyPassword(verifyPassword);
+
+    if (password.length > 0 && password !== verifyPassword) {
       setpasswordMatch(false);
-    } else if (password.length > 0 && password === e.target.value) {
+      setpasswordError(true);
+    } else if (password.length > 0 && password === verifyPassword) {
       setpasswordMatch(true);
+      setpasswordError(false);
     }
   };
 
@@ -100,15 +104,15 @@ const UserSignup = () => {
   const handelSignup = () => {
     setSignupLoad(true);
     if (name.length) {
-      if (EmailValidator.validate(email)) {
+      if (EmailValidator.validate(email.trim())) {
         if (passwordMatch) {
           axios
             .post("/signUp", {
               name: name,
-              email: email,
+              email: email.trim(),
               password: password,
             })
-            .then((response) => {
+            .then((res) => {
               setSignupLoad(false);
               setpanel(2);
               setchangeMail(false);
@@ -120,7 +124,7 @@ const UserSignup = () => {
         }
       } else {
         setSignupLoad(false);
-        setemailError(false);
+        setemailError(true);
         setTimeout(() => {
           setemailError(false);
         }, 5000);
@@ -344,7 +348,9 @@ const UserSignup = () => {
                   fullWidth
                   sx={{ fontSize: "12px" }}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) =>
+                    handleVerifyPassword(e.target.value, verifyPassword)
+                  }
                   error={passwordError}
                 />
               </Stack>
@@ -402,7 +408,9 @@ const UserSignup = () => {
                   }
                   sx={{ fontSize: "12px" }}
                   value={verifyPassword}
-                  onChange={handleVerifyPassword}
+                  onChange={(e) =>
+                    handleVerifyPassword(password, e.target.value)
+                  }
                 />
               </Stack>
               <Stack
