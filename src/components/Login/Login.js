@@ -33,18 +33,14 @@ import ErrorIcon from "@mui/icons-material/Error";
 
 const useStyles = makeStyles({
   root: {
-    fontFamily: "PT sans !important",
     color: "whitesmoke !important",
     "& p": {
-      fontFamily: "PT sans !important",
       color: "whitesmoke",
     },
     "& label": {
-      fontFamily: "PT sans !important",
       color: "whitesmoke !important",
     },
     "& input": {
-      fontFamily: "PT sans !important",
       color: "whitesmoke !important",
       fontSize: "14px !important",
       letterSpacing: "0.8px !important",
@@ -247,7 +243,7 @@ const Login = () => {
             fullWidth
             sx={{ fontSize: "12px" }}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.trim())}
           />
         </Stack>
         <Stack sx={{ width: "100%", maxWidth: 420, padding: "0px 10px" }}>
