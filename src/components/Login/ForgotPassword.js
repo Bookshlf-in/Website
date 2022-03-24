@@ -392,7 +392,7 @@ const ForgotPassword = () => {
             fullWidth
             sx={{ fontSize: "12px" }}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.trim())}
           />
           <LoadingButton
             className={classes.root}

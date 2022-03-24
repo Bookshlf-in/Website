@@ -104,12 +104,12 @@ const UserSignup = () => {
   const handelSignup = () => {
     setSignupLoad(true);
     if (name.length) {
-      if (EmailValidator.validate(email.trim())) {
+      if (EmailValidator.validate(email)) {
         if (passwordMatch) {
           axios
             .post("/signUp", {
               name: name,
-              email: email.trim(),
+              email: email,
               password: password,
             })
             .then((res) => {
@@ -305,8 +305,8 @@ const UserSignup = () => {
                   fullWidth
                   sx={{ fontSize: "12px" }}
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onPaste={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value.trim())}
+                  onPaste={(e) => setEmail(e.target.value.trim())}
                   name="signup-email"
                   autoComplete="off"
                 />
