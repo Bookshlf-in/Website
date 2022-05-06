@@ -6,6 +6,8 @@ import Navbar from "../Navbar/Navbar";
 import Carousel from "./Carousel";
 import Categories from "./Categories";
 import Benefits from "./Benefits";
+import BestSelling from "./BestSelling";
+import Recommend from "./Recommendation";
 import Reviews from "../Reviews/CustomerReviews";
 import Footer from "../Footer/Footer";
 
@@ -62,6 +64,8 @@ const Home = () => {
       <Carousel />
       <Categories />
       <Benefits />
+      <BestSelling />
+      <Recommend />
       <Reviews />
       <Footer />
     </>

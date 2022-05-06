@@ -8,6 +8,7 @@ import axios from "../../axios";
 // Custom Components
 import Booksnaps from "./Booksnaps";
 import BookDesc from "./BookDesc";
+import BookRecommendation from "./BookRecommendation";
 import "./BookDetails.css";
 
 // Components
@@ -340,6 +341,7 @@ const BookDetails = () => {
           </Grid>
         </Grid>
       )}
+      <BookRecommendation bookId={bookId} />
       <div className={classes.root}>
         <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity} variant="filled">
