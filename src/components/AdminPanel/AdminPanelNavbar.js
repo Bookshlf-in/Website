@@ -16,8 +16,6 @@ import ProfileIcon from "@mui/icons-material/AccountCircleRounded";
 import SellersIcon from "@mui/icons-material/ContactMailRounded";
 import HomeIcon from "@mui/icons-material/HomeRounded";
 import WalletIcon from "@mui/icons-material/AccountBalanceWalletRounded";
-// temporary
-import InsightsIcon from "@mui/icons-material/Insights";
 
 // custom components
 import Seller from "./Sellers";
@@ -27,8 +25,6 @@ import Profile from "./FindProfile";
 import Users from "./Users";
 import Wallet from "./Wallet";
 
-// temporary
-import Analytics from "./Analytics";
 const useStyles = makeStyles({
   root: {
     fontFamily: "PT sans !important",
@@ -52,7 +48,7 @@ const AdminNavbar = () => {
   const [panel, setpanel] = useState(params.panel);
 
   const handleChange = (event, newValue) => {
-    if (newValue === "8") {
+    if (newValue === "7") {
       history.push("/");
     } else {
       history.push(`/Admin/${newValue}/1`);
@@ -113,17 +109,10 @@ const AdminNavbar = () => {
               className={classes.root}
             />
             <Tab
-              label="Analytics"
-              icon={<InsightsIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="7"
-              className={classes.root}
-            />
-            <Tab
               label="Home"
               icon={<HomeIcon sx={{ height: 16, width: 16 }} />}
               iconPosition="start"
-              value="8"
+              value="7"
               className={classes.root}
             />
           </TabList>
@@ -145,9 +134,6 @@ const AdminNavbar = () => {
         </TabPanel>
         <TabPanel value="6" sx={{ padding: "12px" }}>
           <Wallet />
-        </TabPanel>
-        <TabPanel value="7" sx={{ padding: "12px" }}>
-          <Analytics />
         </TabPanel>
       </TabContext>
     </Box>
