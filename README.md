@@ -175,6 +175,10 @@ REACT_APP_NODE_ENV=development
 - Adding Theme Provider of mui.
 - Full Fledged Admin Panel with Analytics.
 - Adding Night Mode.
+- Ecorrierz API Integration
+- Online Payments (Card / UPI)
+- Coupons
+- Enhanced Search with Recommendations
 
 > Note : These are not mandatory upcoming changes. More changes can be introduced later.
 
