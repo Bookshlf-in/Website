@@ -14,7 +14,7 @@ const TEAM_DATA = [
     ProfileImg: "https://i.ibb.co/GvxckCq/abhishek-img.jpg",
     About: [
       "Frontend Developer Bookshlf.in",
-      "Btech Prefinal Year Student @IIIT Lucknow",
+      "Btech Final Year Student @IIIT Lucknow",
     ],
     Skills: [
       "C",
@@ -39,7 +39,7 @@ const TEAM_DATA = [
     ProfileImg: "https://i.ibb.co/m6hvrCB/rohit-img.jpg",
     About: [
       "Backend Developer Bookshlf.in",
-      "Btech Prefinal Year Student @IIIT Lucknow",
+      "Btech Final Year Student @IIIT Lucknow",
     ],
     Skills: [
       "C",
@@ -64,10 +64,7 @@ const TEAM_DATA = [
     Name: "Aman Verma",
     Location: "Kanpur, India",
     ProfileImg: "https://i.ibb.co/QKSRdM1/aman-img.jpg",
-    About: [
-      "Maintainer Bookshlf.in",
-      "Btech Prefinal Year Student @IIIT Lucknow",
-    ],
+    About: ["Maintainer Bookshlf.in", "Btech Final Year Student @IIIT Lucknow"],
     Skills: [
       "Ms Excel",
       "Ms Word",

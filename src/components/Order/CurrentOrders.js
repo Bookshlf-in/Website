@@ -1,17 +1,8 @@
 import { React, useState } from "react";
 import { makeStyles } from "@mui/styles";
-import axios from "../../axios";
 
 // Components
-import {
-  Stack,
-  Chip,
-  Avatar,
-  Typography,
-  Button,
-  IconButton,
-  CircularProgress,
-} from "@mui/material";
+import { Stack, Chip, Avatar, Typography, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 // Icon
@@ -20,7 +11,6 @@ import PackedIcon from "@mui/icons-material/Inventory2Rounded";
 import ShippedIcon from "@mui/icons-material/LocalShippingRounded";
 import PlacedIcon from "@mui/icons-material/PlaylistAddCheckCircleRounded";
 import TrackIcon from "@mui/icons-material/BarChartRounded";
-import DeleteIcon from "@mui/icons-material/DeleteRounded";
 
 const useStyles = makeStyles(() => ({
   root: {

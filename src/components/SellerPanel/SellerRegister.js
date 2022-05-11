@@ -198,6 +198,16 @@ export default function SellerRegister() {
           <Button variant="outlined" color="warning" onClick={() => setStep(1)}>
             Register Now
           </Button>
+          <div className="iframe-container">
+            <iframe
+              className="responsive-iframe"
+              src="https://www.youtube.com/embed/yXejJDG8nrk"
+              title="How to Sell Books on Bookshlf"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
         </Stack>
       </Stack>
     );
@@ -228,7 +238,11 @@ export default function SellerRegister() {
             >
               <BackIcon />
             </IconButton>
-            <Avatar alt="Profile" src={Image} sx={{ height: 80, width: 80 }} />
+            <Avatar
+              alt="Profile"
+              src={Image}
+              sx={{ height: 100, width: 100 }}
+            />
             <label>
               <Input
                 accept="image/*"
@@ -250,8 +264,7 @@ export default function SellerRegister() {
               onChange={(e) => setName(e.target.value)}
               value={Name}
               helperText="Preferred Seller Name"
-              sx={{ maxWidth: 300 }}
-              size="small"
+              sx={{ maxWidth: 350 }}
               color="warning"
             />
             <TextField
@@ -263,8 +276,7 @@ export default function SellerRegister() {
               maxRows={2}
               onChange={(e) => setIntro(e.target.value)}
               value={Intro}
-              sx={{ maxWidth: 300 }}
-              size="small"
+              sx={{ maxWidth: 350 }}
               color="warning"
             />
             <TextField
@@ -274,8 +286,7 @@ export default function SellerRegister() {
               value={PhoneNo}
               onChange={(e) => setPhoneNo(e.target.value)}
               type="number"
-              sx={{ maxWidth: 300 }}
-              size="small"
+              sx={{ maxWidth: 350 }}
               color="warning"
               helperText="Preferred 10 Digit Contact Number"
             />
@@ -286,8 +297,7 @@ export default function SellerRegister() {
               value={AltPhoneNo}
               onChange={(e) => setAltPhoneNo(e.target.value)}
               type="number"
-              sx={{ maxWidth: 300 }}
-              size="small"
+              sx={{ maxWidth: 350 }}
               color="warning"
             />
             {alert.show ? (
@@ -302,8 +312,7 @@ export default function SellerRegister() {
               variant="outlined"
               onClick={handelRegister}
               fullWidth
-              sx={{ maxWidth: 300 }}
-              size="small"
+              sx={{ maxWidth: 350 }}
               color="warning"
             >
               Register
