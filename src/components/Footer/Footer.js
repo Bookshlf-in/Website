@@ -124,7 +124,7 @@ const Footer = () => {
           Signup to be the first to hear about exclusive deals, special offers
           and upcoming collections
         </Typography>
-        <Stack
+        {/* <Stack
           direction={{ xs: "column", sm: "row", md: "row", lg: "row" }}
           spacing={2}
           justifyContent="center"
@@ -163,7 +163,7 @@ const Footer = () => {
           >
             Subsribe
           </Button>
-        </Stack>
+        </Stack> */}
       </Stack>
       <Stack
         sx={{ padding: "0px 24px" }}

@@ -92,8 +92,9 @@ const Searchbar = () => {
 
   // Search on Enter
   const handleKeyPress = (event) => {
-    event.preventDefault();
-    if (event.keyCode === 13) {
+    // event.preventDefault();
+    if (event.key === "Enter") {
+      event.preventDefault();
       history.push(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
     }
   };
