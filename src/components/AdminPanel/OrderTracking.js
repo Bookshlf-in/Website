@@ -9,6 +9,7 @@ import { Stepper, Step, StepLabel } from "@mui/material";
 import { LinearProgress, CircularProgress } from "@mui/material";
 import { TextField, Button, Tooltip, Alert, AlertTitle } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Nimbuspost from "./Nimbuspost";
 
 // icons
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
@@ -758,6 +759,7 @@ const OrderTracking = () => {
               />
             </Stack>
           </Stack>
+          <Nimbuspost order={order} />
           <Stack
             spacing={2}
             justifyContent="center"
