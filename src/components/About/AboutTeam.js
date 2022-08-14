@@ -31,7 +31,7 @@ const TEAM_DATA = [
     ],
     profileLink: "https://hblord787.me/",
     Github: "https://github.com/Mrhb787",
-    Linkedin: "https://www.linkedin.com/in/abhishek-singh-90a854192/",
+    Linkedin: "https://www.linkedin.com/in/abhishekworks787/",
   },
   {
     Name: "Rohit Kumar",
@@ -63,7 +63,8 @@ const TEAM_DATA = [
   {
     Name: "Aman Verma",
     Location: "Kanpur, India",
-    ProfileImg: "https://i.ibb.co/QKSRdM1/aman-img.jpg",
+    ProfileImg:
+      "https://lh3.googleusercontent.com/drive-viewer/AJc5JmT6h8EBxlVT7EP02n97IxyOUYDTmfd2jd4xRNSFS9zIadUMwuNPY4Sjn65KRJxbB3NBtxyfwAQ=w1366-h768",
     About: ["Maintainer Bookshlf.in", "Btech Final Year Student @IIIT Lucknow"],
     Skills: [
       "Ms Excel",

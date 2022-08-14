@@ -106,6 +106,7 @@ const OrderTracking = () => {
         })
         .then((response) => {
           setorder(response.data);
+          console.log(response.data);
           setpaid(response.data.isSellerPaid);
           settrackLink(response.data?.externalTrackingLink);
           settrackDetails(response.data?.externalTrackingDetails);
