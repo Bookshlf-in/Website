@@ -488,6 +488,17 @@ const OrderTracking = () => {
                 title={<ListHead content="Customer Name" />}
                 body={<ListBody content={order.customerName} />}
               />
+              <ListItem
+                body={
+                  <Button
+                    variant="outlined"
+                    href={`https://web.whatsapp.com/send?phone=91${order.customerAddress.phoneNo}&text=Hi+${order.customerName}%0A%0AThis+is+Aman+Verma+from+Bookshlf.in%0A%0AYou+ordered+%E2%80%9C${order.title}%E2%80%9D+book+from+Bookshlf.in%0AOrder+Id+%3D+${order._id}%0A%0AYour+books+will+be+delivered+within+2+weeks+if+you+want+to+confirm+the+order+then+just+type+%E2%80%9CYES%E2%80%9D&type=phone_number&app_absent=0`}
+                    target="_blank"
+                  >
+                    Whatsapp
+                  </Button>
+                }
+              />
             </Stack>
             {/* ================================================= */}
             <Stack
@@ -524,6 +535,17 @@ const OrderTracking = () => {
                     subject="Your Book Is Ready For Pickup. You Can Track Your Order Now."
                     template={SellerTemplate}
                   />
+                }
+              />
+              <ListItem
+                body={
+                  <Button
+                    variant="outlined"
+                    href={`https://web.whatsapp.com/send?phone=91${order.sellerAddress.phoneNo}&text=Hi+${order.sellerName}%0A%0AThis+is+Aman+Verma+from+Bookshlf.in%0A%0AYour+book+%22${order.title}%22+got+sold+out+and+now+here%E2%80%99s+the+further+process+to+send+your+books+to+the+buyer%0A%0APlease+watch+this+video+for+complete+information%0Ahttps%3A%2F%2Fyoutu.be%2FZ-H8aQhg3yM%0A%0A%28If+link+is+not+showing+up+then+just+save+our+contact+as+Bookshlf%2C+then+it+will+work%29%0A%0AYou+can+call+us+anytime+for+further+queries.&type=phone_number&app_absent=0`}
+                    target="_blank"
+                  >
+                    Whatsapp
+                  </Button>
                 }
               />
             </Stack>
