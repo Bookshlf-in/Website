@@ -8,6 +8,7 @@ import axios from "../../axios";
 import { Stack, Button, Pagination, Chip } from "@mui/material";
 import { Typography, Tooltip } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 // icons
@@ -39,6 +40,7 @@ const GetOrderDetails = () => {
   const history = useHistory();
 
   const [admin, setAdmin] = useContext(AdminContext);
+
   // functionality States
   const [orderLoad, setorderLoad] = useState(false);
 
@@ -46,14 +48,16 @@ const GetOrderDetails = () => {
   const [orderList, setorderList] = useState(admin.orderDetails.data);
   const [page, setpage] = useState(admin.orderDetails.page);
   const [totalPages, settotalPages] = useState(admin.orderDetails.totalPages);
+  const [orderstatus, setOrderStatus] = useState("Order Placed");
 
-  const GetOrderList = (pageNo) => {
+  const GetOrderList = (pageNo, orderStatus) => {
     setorderLoad(true);
     setpage(pageNo);
     axios
       .get("/admin-getOrderList", {
         params: {
           page: pageNo,
+          status: orderStatus,
         },
       })
       .then((response) => {
@@ -63,13 +67,17 @@ const GetOrderDetails = () => {
             data: response.data.data,
             page: pageNo,
             totalPages: response.data.totalPages,
+            status: orderstatus,
           },
         });
         setorderLoad(false);
         setorderList(response.data.data);
         settotalPages(response.data.totalPages);
+        setOrderStatus(orderStatus);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   };
 
   const columns = [
@@ -399,15 +407,36 @@ const GetOrderDetails = () => {
         size="small"
         className={classes.root}
         color="success"
-        onClick={() => GetOrderList(1)}
+        onClick={() => GetOrderList(1, orderstatus)}
       >
         Fetch Order List
       </LoadingButton>
+      <FormControl variant="filled" sx={{ m: 1, minWidth: 150 }} size="small">
+        <InputLabel id="order-status" className={classes.root}>
+          Order Status
+        </InputLabel>
+        <Select
+          labelId="order-status"
+          value={orderstatus}
+          onChange={(e) => {
+            GetOrderList(page, e.target.value);
+          }}
+          label="Order Status"
+          className={classes.root}
+        >
+          <MenuItem value="Order placed">Placed</MenuItem>
+          <MenuItem value="Packed">Packed</MenuItem>
+          <MenuItem value="Shipped">Shipped</MenuItem>
+          <MenuItem value="Delivered">Delivered</MenuItem>
+          <MenuItem value="RTO">RTO</MenuItem>
+          <MenuItem value="Cancelled">Cancelled</MenuItem>
+        </Select>
+      </FormControl>
       <Pagination
         count={totalPages}
         page={page}
         onChange={(e, pageNo) => {
-          GetOrderList(pageNo);
+          GetOrderList(pageNo, orderstatus);
         }}
         color="primary"
         className={classes.root}
