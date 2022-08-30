@@ -48,7 +48,59 @@ const GetOrderDetails = () => {
   const [orderList, setorderList] = useState(admin.orderDetails.data);
   const [page, setpage] = useState(admin.orderDetails.page);
   const [totalPages, settotalPages] = useState(admin.orderDetails.totalPages);
-  const [orderstatus, setOrderStatus] = useState("Order Placed");
+  const [orderstatus, setOrderStatus] = useState("Order placed");
+
+  const [orderRevenue, setOrderRevenue] = useState(0);
+  const [orderProfit, setOrderProfit] = useState(0);
+  const [statsLoad, setStatsLoad] = useState(false);
+
+  const getOneSellerEarning = async (orderPrice) => {
+    const result = axios
+      .get("/getSellerEarning", {
+        params: {
+          price: orderPrice,
+        },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+    return result;
+  };
+  const getAllSellerEarnings = async (orders) => {
+    return await Promise.all(
+      orders.map(async (order) => {
+        const sellerEarning = await getOneSellerEarning(Number(order.price));
+        return sellerEarning;
+      })
+    );
+  };
+
+  // Calculating Stats for each page
+  const CalculateStats = async (orders) => {
+    setStatsLoad(true);
+    setOrderProfit(0);
+    setOrderRevenue(0);
+    const earnings = await getAllSellerEarnings(orders);
+    for (let i = 0; i < earnings.length; i++) {
+      setOrderRevenue((prev) => {
+        return prev + orders[i].orderTotal;
+      });
+      setOrderProfit((prev) => {
+        return (
+          prev +
+          orders[i].orderTotal -
+          (earnings[i].sellerEarning +
+            (orders[i].adminDeliveryExpense
+              ? orders[i].adminDeliveryExpense
+              : 0))
+        );
+      });
+    }
+    setStatsLoad(false);
+  };
 
   const GetOrderList = (pageNo, orderStatus) => {
     setorderLoad(true);
@@ -399,39 +451,66 @@ const GetOrderDetails = () => {
       alignItems="center"
       className="admin-orders"
     >
-      <LoadingButton
-        loading={orderLoad}
-        loadingPosition="start"
-        startIcon={<LoadIcon />}
-        variant="contained"
-        size="small"
-        className={classes.root}
-        color="success"
-        onClick={() => GetOrderList(1, orderstatus)}
-      >
-        Fetch Order List
-      </LoadingButton>
-      <FormControl variant="filled" sx={{ m: 1, minWidth: 150 }} size="small">
-        <InputLabel id="order-status" className={classes.root}>
-          Order Status
-        </InputLabel>
-        <Select
-          labelId="order-status"
-          value={orderstatus}
-          onChange={(e) => {
-            GetOrderList(page, e.target.value);
-          }}
-          label="Order Status"
+      <Stack direction="row" spacing={2}>
+        <LoadingButton
+          loading={orderLoad}
+          loadingPosition="start"
+          startIcon={<LoadIcon />}
+          variant="contained"
+          size="small"
           className={classes.root}
+          color="success"
+          onClick={() => GetOrderList(1, orderstatus)}
         >
-          <MenuItem value="Order placed">Placed</MenuItem>
-          <MenuItem value="Packed">Packed</MenuItem>
-          <MenuItem value="Shipped">Shipped</MenuItem>
-          <MenuItem value="Delivered">Delivered</MenuItem>
-          <MenuItem value="RTO">RTO</MenuItem>
-          <MenuItem value="Cancelled">Cancelled</MenuItem>
-        </Select>
-      </FormControl>
+          Fetch Order List
+        </LoadingButton>
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 150 }} size="small">
+          <InputLabel id="order-status" className={classes.root}>
+            Order Status
+          </InputLabel>
+          <Select
+            labelId="order-status"
+            value={orderstatus}
+            onChange={(e) => {
+              GetOrderList(page, e.target.value);
+            }}
+            label="Order Status"
+            className={classes.root}
+            size="small"
+          >
+            <MenuItem value="Order placed">Placed</MenuItem>
+            <MenuItem value="Packed">Packed</MenuItem>
+            <MenuItem value="Shipped">Shipped</MenuItem>
+            <MenuItem value="Delivered">Delivered</MenuItem>
+            <MenuItem value="RTO">RTO</MenuItem>
+            <MenuItem value="Returned">Returned</MenuItem>
+            <MenuItem value="Cancelled">Cancelled</MenuItem>
+          </Select>
+        </FormControl>
+        {/* ======================= Stats ====================== */}
+        <LoadingButton
+          loading={statsLoad}
+          loadingPosition="start"
+          startIcon={<LoadIcon />}
+          variant="contained"
+          size="small"
+          className={classes.root}
+          color="primary"
+          onClick={() => CalculateStats(orderList)}
+        >
+          Calculate Statistics
+        </LoadingButton>
+        <Stack spacing={1}>
+          <Typography sx={{ fontSize: "11px" }}>
+            <strong>Revenue : </strong>
+            {orderRevenue}
+          </Typography>
+          <Typography sx={{ fontSize: "11px" }}>
+            <strong>Profit : </strong> {orderProfit}
+          </Typography>
+        </Stack>
+        {/* ====================================================== */}
+      </Stack>
       <Pagination
         count={totalPages}
         page={page}

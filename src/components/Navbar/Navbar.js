@@ -76,7 +76,7 @@ const Navbar = () => {
           </Drawer>
         </div>
         <div className="nav-desktop-item">
-          <img src="/images/bookshlf-2022-independence.gif" width="200px" />
+          <img src="/images/logo.png" width="130px" />
         </div>
         <div className="nav-desktop-item">
           <NavbarItems />

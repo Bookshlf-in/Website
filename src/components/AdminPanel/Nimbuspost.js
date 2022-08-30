@@ -18,6 +18,8 @@ import {
 } from "@mui/material";
 
 const Nimbuspost = ({ order }) => {
+  const NimbusURL = "/proxy/https://api.nimbuspost.com/v1/users/login";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showLogin, setShowLogin] = useState(true);
@@ -30,6 +32,7 @@ const Nimbuspost = ({ order }) => {
   const [courierId, setCourierId] = useState(0);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
   useEffect(() => {
     const nimbuspostToken = sessionStorage.getItem("nimbuspost_token");
     if (nimbuspostToken) {
@@ -40,7 +43,7 @@ const Nimbuspost = ({ order }) => {
 
   const login = () => {
     axios
-      .post("/proxy/https://api.nimbuspost.com/v1/users/login", {
+      .post(NimbusURL, {
         email,
         password,
       })
