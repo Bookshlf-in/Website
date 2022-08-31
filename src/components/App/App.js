@@ -30,6 +30,10 @@ import Terms from "../Footer/Terms";
 import BetaNotify from "./BetaNotify";
 import NotFoundPage from "../Home/NotFoundPage";
 
+// external courier integrations
+import ICarry from "../AdminPanel/CourierIntegrations/iCarry";
+import Nimbuspost from "../AdminPanel/CourierIntegrations/Nimbuspost";
+
 const App = () => {
   return (
     <Router>
@@ -99,6 +103,12 @@ const App = () => {
           </Route>
           <Route path="/Admin/:panel/:subpanel">
             <Admin />
+          </Route>
+          <Route path="/AdminCourier/Icarry/:orderId">
+            <ICarry />
+          </Route>
+          <Route path="/AdminCourier/Nimbuspost/:orderId">
+            <Nimbuspost />
           </Route>
           <Route path="/SellerProfile/:sellerId">
             <Navbar />

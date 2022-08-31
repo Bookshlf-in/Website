@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
@@ -9,7 +9,6 @@ import { Stepper, Step, StepLabel } from "@mui/material";
 import { LinearProgress, CircularProgress } from "@mui/material";
 import { TextField, Button, Tooltip, Alert, AlertTitle } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Nimbuspost from "./Nimbuspost";
 
 // icons
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
@@ -782,7 +781,31 @@ const OrderTracking = () => {
               />
             </Stack>
           </Stack>
-          <Nimbuspost order={order} />
+          {/* Enternal Courier Integrations */}
+          <Stack
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              width: "100%",
+              border: "1px solid rgba(0,0,0,0.2)",
+              padding: "5px",
+              borderRadius: "5px",
+            }}
+          >
+            <Typography> External Courier Integrations</Typography>
+            <Link
+              to={`/AdminCourier/Nimbuspost/${params.orderId}`}
+              target="_blank"
+            >
+              <Button variant="contained"> Nimbuspost </Button>
+            </Link>
+            <Link to={`/AdminCourier/iCarry/${params.orderId}`} target="_blank">
+              <Button variant="contained"> iCarry</Button>
+            </Link>
+          </Stack>
+
+          {/* ============================= */}
           <Stack
             spacing={2}
             justifyContent="center"

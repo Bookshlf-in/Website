@@ -1,25 +1,21 @@
 import { React, useState, useEffect } from "react";
-import axios from "../../axios";
+import { useParams } from "react-router-dom";
+import axios from "../../../axios";
 
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import { Radio, RadioGroup, FormControlLabel, Divider } from "@mui/material";
+import { TextField, Button, Alert, AlertTitle, Stack } from "@mui/material";
+import { Typography, Tooltip, FormLabel, FormControl } from "@mui/material";
+import { Grid, Chip, CircularProgress } from "@mui/material";
 
-import {
-  TextField,
-  Button,
-  Alert,
-  AlertTitle,
-  Stack,
-  Typography,
-  Tooltip,
-} from "@mui/material";
+// MUi Icons
+import LoginIcon from "@mui/icons-material/Login";
+import RupeeIcon from "@mui/icons-material/CurrencyRupee";
 
-const Nimbuspost = ({ order }) => {
+const Nimbuspost = () => {
+  const params = useParams();
   const NimbusURL = "/proxy/https://api.nimbuspost.com/v1/users/login";
 
+  const [order, setOrder] = useState({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showLogin, setShowLogin] = useState(true);
@@ -33,15 +29,37 @@ const Nimbuspost = ({ order }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
+  // Loaders
+  const [loginLoad, setLoginLoad] = useState(false);
+  const [servicesLoad, setServicesLoad] = useState(false);
+  const [shipmentLoad, setShipmentLoad] = useState(false);
+
   useEffect(() => {
     const nimbuspostToken = sessionStorage.getItem("nimbuspost_token");
     if (nimbuspostToken) {
       setToken(nimbuspostToken);
       setShowLogin(false);
     }
+    console.log("reload happened nimbus");
   }, [order, setShowLogin]);
 
+  useEffect(() => {
+    axios
+      .get("/admin-getOrderDetails", {
+        params: { orderId: params.orderId },
+      })
+      .then((res) => {
+        setOrder(res.data);
+        setWeight(res.weightInGrams);
+        console.log("reload happened");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }, []);
+
   const login = () => {
+    setLoginLoad(true);
     axios
       .post(NimbusURL, {
         email,
@@ -53,11 +71,14 @@ const Nimbuspost = ({ order }) => {
           sessionStorage.setItem("nimbuspost_token", response.data.data);
           setShowLogin(false);
           setErrorMsg("");
+          console.log("logged In");
         } else {
           setErrorMsg(response.data.message);
         }
+        setLoginLoad(false);
       })
       .catch((error) => {
+        setLoginLoad(false);
         setErrorMsg("Some error occurred");
         console.log("Error occurred in nimbuspost", error);
       });
@@ -71,6 +92,7 @@ const Nimbuspost = ({ order }) => {
   };
 
   const fetchServices = () => {
+    setServicesLoad(true);
     setCourierList([]);
     setErrorMsg("");
     const obj = {
@@ -94,9 +116,10 @@ const Nimbuspost = ({ order }) => {
         }
       )
       .then((response) => {
+        setServicesLoad(false);
         console.log(response.data);
         if (response.data.status) {
-          response.data.data.sort(function (a, b) {
+          response.data.data.sort((a, b) => {
             return a.total_charges - b.total_charges;
           });
           setCourierList(response.data.data);
@@ -105,6 +128,7 @@ const Nimbuspost = ({ order }) => {
         }
       })
       .catch((error) => {
+        setServicesLoad(false);
         setErrorMsg("Some error occurred");
         console.log("Error occurred in nimbuspost", error);
       });
@@ -115,6 +139,7 @@ const Nimbuspost = ({ order }) => {
   };
 
   const createShipment = () => {
+    setShipmentLoad(true);
     const obj = {
       order_number: order._id.substr(0, 20),
       shipping_charges: order.shippingCharges,
@@ -154,6 +179,7 @@ const Nimbuspost = ({ order }) => {
       courier_id: courierId,
       is_insurance: "0",
     };
+    console.log(obj);
     axios
       .post("/proxy/https://api.nimbuspost.com/v1/shipments", obj, {
         headers: {
@@ -161,16 +187,18 @@ const Nimbuspost = ({ order }) => {
         },
       })
       .then((response) => {
+        setShipmentLoad(false);
         console.log(response.data);
         if (response.data.status) {
           const data = response.data.data;
-          setSuccessMsg("Order Placed");
+          setSuccessMsg("Order Placed Successfully!");
           updateOrder(data);
         } else {
           setErrorMsg(response.data.message);
         }
       })
       .catch((error) => {
+        setShipmentLoad(false);
         setErrorMsg("Some error occurred");
         console.log("Error occurred in nimbuspost", error);
       });
@@ -211,51 +239,100 @@ const Nimbuspost = ({ order }) => {
       justifyContent="center"
       alignItems="center"
       sx={{
-        width: "100%",
         border: "1px solid rgba(0,0,0,0.2)",
         padding: "20px",
         borderRadius: "5px",
+        margin: "10px 24px",
       }}
+      divider={<Divider orientation="horizontal" flexItem />}
     >
-      <Typography variant="caption">Nimbuspost</Typography>
+      <Stack
+        direction="row"
+        spacing={2}
+        divider={<Divider orientation="vertical" flexItem />}
+      >
+        <img src="/images/smallLogo.png" height="43px" alt="Bookshlf" />
+        <img
+          src="https://nimbuspost.com/wp-content/uploads/2020/10/Logo.jpg"
+          height="43px"
+          alt="Nimbus Post"
+        />
+      </Stack>
+
+      {!showLogin ? (
+        <Stack direction="row" justifyContent="space-between">
+          <Button variant="contained" onClick={logout} color="error">
+            Logout
+          </Button>
+        </Stack>
+      ) : null}
+
       {showLogin ? (
-        <Stack direction="row" spacing={2}>
+        <Stack
+          spacing={2}
+          sx={{
+            padding: "10px",
+            border: "1px solid rgba(0,0,0,0.2)",
+            borderRadius: "10px",
+          }}
+        >
+          <Typography variant="h4" sx={{ fontFamily: "Staatliches" }}>
+            Login
+          </Typography>
           <TextField
             label="Email"
             variant="outlined"
-            size="small"
             fullWidth
             type="email"
-            sx={{ maxWidth: 200 }}
+            sx={{ minWidth: 400 }}
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
           <TextField
             label="Password"
             variant="outlined"
-            size="small"
             fullWidth
             type="password"
-            sx={{ maxWidth: 200 }}
+            sx={{ minWidth: 400 }}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <Button variant="outlined" onClick={login}>
+          <Button
+            disabled={loginLoad}
+            variant="contained"
+            sx={{ maxWidth: 200 }}
+            onClick={login}
+            color="success"
+            endIcon={
+              loginLoad ? (
+                <CircularProgress size={15} color="inherit" />
+              ) : (
+                <LoginIcon />
+              )
+            }
+          >
             Login
           </Button>
         </Stack>
       ) : (
         <>
-          <Button variant="filled" onClick={logout}>
-            Logout
-          </Button>
-          <Stack direction="row" spacing={2}>
+          <Stack
+            spacing={2}
+            sx={{
+              padding: "10px",
+              border: "1px solid rgba(0,0,0,0.2)",
+              borderRadius: "10px",
+            }}
+          >
+            <Typography variant="h6" sx={{ fontFamily: "Staatliches" }}>
+              Courier Dimensions
+            </Typography>
             <TextField
               label="Weight in grams"
               variant="outlined"
               size="small"
               fullWidth
-              sx={{ maxWidth: 200 }}
+              sx={{ maxWidth: 150 }}
               onChange={(e) => setWeight(e.target.value)}
               value={weight}
             />
@@ -264,7 +341,7 @@ const Nimbuspost = ({ order }) => {
               variant="outlined"
               size="small"
               fullWidth
-              sx={{ maxWidth: 200 }}
+              sx={{ maxWidth: 150 }}
               onChange={(e) => setLength(e.target.value)}
               value={length}
             />
@@ -273,7 +350,7 @@ const Nimbuspost = ({ order }) => {
               variant="outlined"
               size="small"
               fullWidth
-              sx={{ maxWidth: 200 }}
+              sx={{ maxWidth: 150 }}
               onChange={(e) => setBreadth(e.target.value)}
               value={breadth}
             />
@@ -282,47 +359,109 @@ const Nimbuspost = ({ order }) => {
               variant="outlined"
               size="small"
               fullWidth
-              sx={{ maxWidth: 200 }}
+              sx={{ maxWidth: 150 }}
               onChange={(e) => setHeight(e.target.value)}
               value={height}
             />
           </Stack>
-          <Button variant="outlined" onClick={fetchServices}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={fetchServices}
+            disabled={servicesLoad}
+            endIcon={
+              servicesLoad ? (
+                <CircularProgress color="inherit" size={15} />
+              ) : null
+            }
+          >
             Fetch Services
           </Button>
 
           {courierList.length > 0 && (
             <FormControl>
-              <FormLabel id="shipment-services">Available services</FormLabel>
+              <FormLabel id="shipment-services" sx={{ marginBottom: "10px" }}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontFamily: "staatliches" }}
+                  textAlign="center"
+                >
+                  Available services
+                </Typography>
+              </FormLabel>
               <RadioGroup
                 aria-labelledby="shipment-services"
                 name="radio-buttons-group"
                 default="1"
               >
-                {courierList.map((e) => (
-                  <Tooltip
-                    key={e.id}
-                    title={
-                      "MinWeight: " +
-                      e.min_weight +
-                      " --- ChargeableWeight: " +
-                      e.chargeable_weight
-                    }
-                  >
-                    <FormControlLabel
-                      value={e.id}
-                      control={<Radio />}
-                      onClick={handleRadioChange}
-                      label={e.total_charges + " --- " + e.name}
-                    />
-                  </Tooltip>
-                ))}
+                <Grid container spacing={2}>
+                  {courierList.map((e) => (
+                    <Grid item xs={6} sm={4} md={4} lg={3}>
+                      <Tooltip
+                        key={e.id}
+                        title={
+                          "MinWeight: " +
+                          e.min_weight +
+                          " --- ChargeableWeight: " +
+                          e.chargeable_weight
+                        }
+                        sx={{
+                          padding: "10px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "10px",
+                          height: "100%",
+                          width: "100%",
+                        }}
+                      >
+                        <FormControlLabel
+                          value={e.id}
+                          control={<Radio size="small" />}
+                          onClick={handleRadioChange}
+                          label={
+                            <Stack
+                              direction="row"
+                              spacing={1}
+                              divider={
+                                <Divider orientation="vertical" flexItem />
+                              }
+                            >
+                              <Chip
+                                size="small"
+                                variant="outlined"
+                                color="success"
+                                icon={<RupeeIcon sx={{ height: 12 }} />}
+                                label={e.total_charges}
+                                sx={{ minWidth: 100 }}
+                              />
+                              <Typography
+                                variant="caption"
+                                sx={{ fontSize: "11px" }}
+                              >
+                                {e.name}
+                              </Typography>
+                            </Stack>
+                          }
+                        />
+                      </Tooltip>
+                    </Grid>
+                  ))}
+                </Grid>
               </RadioGroup>
             </FormControl>
           )}
 
           {courierId > 0 && (
-            <Button variant="outlined" onClick={createShipment}>
+            <Button
+              variant="contained"
+              onClick={createShipment}
+              disabled={shipmentLoad}
+              endIcon={
+                shipmentLoad ? (
+                  <CircularProgress color="inherit" size={15} />
+                ) : null
+              }
+              color="info"
+            >
               Create Shipment
             </Button>
           )}
@@ -338,10 +477,9 @@ const Nimbuspost = ({ order }) => {
       )}
       {successMsg !== "" && (
         <Alert severity="success">
-          <AlertTitle>
-            <strong>Success</strong>
-          </AlertTitle>
-          <Typography variant="caption">{successMsg}</Typography>
+          <Typography variant="caption">
+            {"Order Placed Successfully!"}
+          </Typography>
         </Alert>
       )}
     </Stack>

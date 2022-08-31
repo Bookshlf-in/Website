@@ -547,7 +547,7 @@ const GetOrderDetails = () => {
           className={classes.root}
           color="primary"
           onClick={() => CalculateStats(orderList)}
-          disabled={orderstatus != "Delivered"}
+          disabled={orderstatus !== "Delivered"}
         >
           Calculate Statistics
         </LoadingButton>
