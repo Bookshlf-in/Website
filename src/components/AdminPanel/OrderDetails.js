@@ -132,6 +132,48 @@ const GetOrderDetails = () => {
       });
   };
 
+  // Date Converter
+  const handleDate = (date) => {
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const dayNames = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+    const d = new Date(date);
+    const newdate = d.getDate();
+    const day = d.getDay();
+    const month = d.getMonth();
+    const year = d.getFullYear();
+    const newDate =
+      newdate +
+      " " +
+      monthNames[month] +
+      ", " +
+      year +
+      " (" +
+      dayNames[day] +
+      ")";
+    return newDate;
+  };
+
   const columns = [
     {
       field: "orderDetail",
@@ -147,6 +189,9 @@ const GetOrderDetails = () => {
             <CopyableText text={cellValue.value[1]} />
             <Typography sx={{ fontSize: "11px" }} align="justify">
               {"Weight : " + cellValue.value[2] + " g"}
+            </Typography>
+            <Typography sx={{ fontSize: "11px" }} align="justify">
+              {"Date : " + handleDate(cellValue.value[3])}
             </Typography>
           </Stack>
         );
@@ -356,7 +401,12 @@ const GetOrderDetails = () => {
   const rows = orderList.map((order) => {
     return {
       id: order._id,
-      orderDetail: [order.title, order._id, order.weightInGrams],
+      orderDetail: [
+        order.title,
+        order._id,
+        order.weightInGrams,
+        order.createdAt,
+      ],
       orderTotal: [order.price, order.shippingCharges, order.orderTotal],
       payment: [order.paymentMode, order.paymentStatus, order.isSellerPaid],
       orderStatus: order.status,
@@ -497,16 +547,23 @@ const GetOrderDetails = () => {
           className={classes.root}
           color="primary"
           onClick={() => CalculateStats(orderList)}
+          disabled={orderstatus != "Delivered"}
         >
           Calculate Statistics
         </LoadingButton>
-        <Stack spacing={1}>
-          <Typography sx={{ fontSize: "11px" }}>
+        <Stack
+          sx={{
+            border: "1px solid rgba(0,0,0,0.2)",
+            borderRadius: "5px",
+            padding: "5px 10px",
+          }}
+        >
+          <Typography sx={{ fontSize: "11px", fontFamily: "Monospace" }}>
             <strong>Revenue : </strong>
             {orderRevenue}
           </Typography>
-          <Typography sx={{ fontSize: "11px" }}>
-            <strong>Profit : </strong> {orderProfit}
+          <Typography sx={{ fontSize: "11px", fontFamily: "Monospace" }}>
+            <strong>Profits : </strong> {orderProfit}
           </Typography>
         </Stack>
         {/* ====================================================== */}
@@ -521,7 +578,7 @@ const GetOrderDetails = () => {
         className={classes.root}
       />
       <DataGrid
-        style={{
+        sx={{
           fontFamily: "PT Sans",
           width: "100%",
           padding: "10px",

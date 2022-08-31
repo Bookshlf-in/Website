@@ -2,10 +2,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto");
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans");
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
+
 html,
 body {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -14,13 +17,12 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgb(247, 224, 189);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgb(255, 182, 73);
-  border-radius: 10px;
 }
 
 /* Handle on hover */
