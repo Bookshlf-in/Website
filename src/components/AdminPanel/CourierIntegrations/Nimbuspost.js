@@ -40,7 +40,6 @@ const Nimbuspost = () => {
       setToken(nimbuspostToken);
       setShowLogin(false);
     }
-    console.log("reload happened nimbus");
   }, [order, setShowLogin]);
 
   useEffect(() => {
@@ -50,16 +49,15 @@ const Nimbuspost = () => {
       })
       .then((res) => {
         setOrder(res.data);
-        setWeight(res.weightInGrams);
-        console.log("reload happened");
       })
       .catch((err) => {
         console.log(err.response.data);
       });
-  }, []);
+  }, [params.orderId, setShowLogin]);
 
   const login = () => {
     setLoginLoad(true);
+    setWeight(order.weightInGrams);
     axios
       .post(NimbusURL, {
         email,
@@ -71,6 +69,7 @@ const Nimbuspost = () => {
           sessionStorage.setItem("nimbuspost_token", response.data.data);
           setShowLogin(false);
           setErrorMsg("");
+          setWeight(order.weightInGrams);
           console.log("logged In");
         } else {
           setErrorMsg(response.data.message);
@@ -161,7 +160,7 @@ const Nimbuspost = () => {
         phone: order.customerAddress.phoneNo,
       },
       pickup: {
-        warehouse_name: order.sellerName,
+        warehouse_name: order.sellerName.substr(0, 20),
         name: order.sellerName,
         address: order.sellerAddress.address,
         city: order.sellerAddress.city,

@@ -783,26 +783,41 @@ const OrderTracking = () => {
           </Stack>
           {/* Enternal Courier Integrations */}
           <Stack
-            spacing={2}
+            spacing={1}
             justifyContent="center"
             alignItems="center"
             sx={{
               width: "100%",
               border: "1px solid rgba(0,0,0,0.2)",
-              padding: "5px",
+              padding: "10px",
               borderRadius: "5px",
             }}
           >
-            <Typography> External Courier Integrations</Typography>
-            <Link
-              to={`/AdminCourier/Nimbuspost/${params.orderId}`}
-              target="_blank"
+            <Typography variant="h6"> External Courier Integrations</Typography>
+            <Stack
+              direction="row"
+              flexWrap="wrap"
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
             >
-              <Button variant="contained"> Nimbuspost </Button>
-            </Link>
-            <Link to={`/AdminCourier/iCarry/${params.orderId}`} target="_blank">
-              <Button variant="contained"> iCarry</Button>
-            </Link>
+              <Link
+                to={`/AdminCourier/Nimbuspost/${params.orderId}`}
+                target="_blank"
+              >
+                <Button variant="contained" sx={{ minWidth: 200 }}>
+                  Nimbuspost
+                </Button>
+              </Link>
+              <Link
+                to={`/AdminCourier/iCarry/${params.orderId}`}
+                target="_blank"
+              >
+                <Button variant="contained" sx={{ minWidth: 200 }}>
+                  iCarry
+                </Button>
+              </Link>
+            </Stack>
           </Stack>
 
           {/* ============================= */}
