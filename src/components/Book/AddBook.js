@@ -25,6 +25,9 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
+//  Image Compression
+import imageCompression from "browser-image-compression";
+
 // Icons
 import CloseIcon from "@mui/icons-material/ArrowDropUpRounded";
 import OpenIcon from "@mui/icons-material/ArrowDropDownRounded";
@@ -172,12 +175,16 @@ const AddBook = (props) => {
     setOpenTitleMenu(true);
     const fetchdata = async () => {
       axios
-        .get(`/searchTitle?q=${e.target.value}`)
+        .get("/searchTitle", { params: { q: e.target.value } })
         .then((response) => {
+          console.log(response.data);
           setresultTitles(response.data);
           settitleFieldChanges(false);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error.response.data);
+          settitleFieldChanges(false);
+        });
     };
     fetchdata();
   };
@@ -189,12 +196,14 @@ const AddBook = (props) => {
     setOpenTagMenu(true);
     const fetchdata = async () => {
       axios
-        .get(`/searchTag?q=${e.target.value}`)
+        .get("/searchTag", { params: { q: e.target.value } })
         .then((response) => {
           setresultTags(response.data);
           settagFieldChanges(false);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          settagFieldChanges(false);
+        });
     };
     fetchdata();
   };
@@ -267,6 +276,25 @@ const AddBook = (props) => {
       });
   };
 
+  // Image Compression before Book Image Upload
+  const handleImageCompress = async (imgFile) => {
+    // console.log("originalFile instanceof Blob", imgFile instanceof Blob); // true
+    // console.log(`originalFile size ${imgFile.size / 1024 / 1024} MB`);
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1080,
+      useWebWorker: true,
+    };
+    const res = await imageCompression(imgFile, options)
+      .then((compressedFile) => {
+        return compressedFile;
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    return res;
+  };
+
   // uploading images to google cloud server
 
   // Image Size Validator
@@ -306,10 +334,20 @@ const AddBook = (props) => {
   const uploadImages = async (arrImg) => {
     return await Promise.all(
       arrImg.map(async (img) => {
-        const imgUrl = await uploadSingleImage(img);
+        const reducedImg = await handleImageCompress(img);
+        const imgUrl = await uploadSingleImage(reducedImg);
         return imgUrl;
       })
     );
+  };
+
+  const validateUrls = async (urls) => {
+    let cnt = 0;
+    for (let i = 0; i < urls.length; i++) {
+      if (urls[i] === undefined) return false;
+      else cnt++;
+      if (cnt == urls.length) return true;
+    }
   };
 
   // upload and Fetching URLs of Uploaded Books
@@ -327,8 +365,15 @@ const AddBook = (props) => {
               if (!isNaN(SP) && Number(SP) >= 300) {
                 // Selling Price of Book Should be Atleast 100
                 const urls = await uploadImages(Image);
-                if (req) {
+                const checkUrls = await validateUrls(urls);
+
+                if (checkUrls && req) {
                   handelBookSubmitRequest(urls);
+                } else {
+                  ShowError(
+                    "Some Error Occoured. Book Coudn't Upload. Please Try Again!",
+                    6
+                  );
                 }
                 setTimeout(() => {
                   setpanic(true);
@@ -713,10 +758,10 @@ const AddBook = (props) => {
                     onClickAway={() => setOpenTitleMenu(false)}
                   >
                     {openTitleMenu ? (
-                      <div className="searchTagresult">
+                      <div className="searchTitleresult">
                         {resulttitles.map((Title, idx) => (
                           <MenuItem
-                            id="result-tag"
+                            id="result-title"
                             title={Title.title}
                             key={idx}
                             value={Title.title}

@@ -3,9 +3,11 @@
   border-radius: 5px;
   padding: 12px 15px;
 }
+
 .add-book-form-rt {
   margin-top: 10px;
 }
+
 .add-book-form-lf fieldset legend {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
@@ -19,6 +21,22 @@
   justify-content: center;
   align-items: center;
 }
+
+.add-book-form-lf .searchTitleresult {
+  position: absolute;
+  left: 36px;
+  top: 42px;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 200;
+  max-height: 200px;
+  width: 100%;
+  max-width: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 6px 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
 .add-book-form-lf .searchTagresult {
   position: absolute;
   left: 36px;
@@ -32,9 +50,16 @@
   box-shadow: 6px 3px 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
+
+.searchTitleresult #result-title {
+  padding: 6px;
+  font-size: 12px;
+}
+
 .searchTagresult #result-tag {
   padding: 6px;
 }
+
 .add-book-bg .MuiAlert-message {
   font-family: "PT sans" !important;
 }
@@ -43,37 +68,45 @@
 .filepond--wrapper {
   width: 100% !important;
 }
+
 .filepond--drop-label {
   min-height: 4em !important;
   background-color: cornflowerblue;
   color: whitesmoke;
   border-radius: 5px;
 }
+
 .filepond--drop-label {
   color: whitesmoke !important;
 }
+
 .filepond--label-action {
   background-color: #333;
   padding: 6px 10px;
   text-decoration: none !important;
   border-radius: 5px;
 }
+
 .filepond--list.filepond--list {
   top: 10px !important;
 }
+
 @media (min-width: 30em) {
   .filepond--item {
     width: calc(50% - 0.5em);
   }
 }
+
 @media (min-width: 50em) {
   .filepond--item {
     width: calc(25% - 0.5em);
   }
 }
+
 /* ========= ============ =========== */
 
 @media screen and (max-width: 400px) {
+
   .add-book-form-lf,
   .add-book-form-rt {
     padding: 0px;
