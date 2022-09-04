@@ -284,6 +284,7 @@ const AddBook = (props) => {
       maxSizeMB: 1,
       maxWidthOrHeight: 1080,
       useWebWorker: true,
+      fileType: "image/png",
     };
     const res = await imageCompression(imgFile, options)
       .then((compressedFile) => {
