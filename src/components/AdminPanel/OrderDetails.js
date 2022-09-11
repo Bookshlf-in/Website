@@ -493,7 +493,7 @@ const GetOrderDetails = () => {
       direction="column"
       spacing={2}
       sx={{
-        height: "1700px",
+        height: "1660px",
         width: "100%",
         padding: "10px",
       }}
@@ -579,7 +579,6 @@ const GetOrderDetails = () => {
       />
       <DataGrid
         sx={{
-          fontFamily: "PT Sans",
           width: "100%",
           padding: "10px",
         }}
@@ -587,7 +586,7 @@ const GetOrderDetails = () => {
         columns={columns}
         pageSize={10}
         rowBuffer={4}
-        rowHeight={150}
+        rowHeight={145}
         className={classes.root}
         loading={orderLoad}
         hideFooter

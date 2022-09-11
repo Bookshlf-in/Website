@@ -207,6 +207,7 @@ const Reciept = (props) => {
       variant="outlined"
       sx={{ fontFamily: "PT sans" }}
       onClick={CreatReciept}
+      size="small"
     >
       Download Invoice
     </Button>

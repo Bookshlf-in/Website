@@ -33,6 +33,7 @@ import NotFoundPage from "../Home/NotFoundPage";
 // external courier integrations
 import ICarry from "../AdminPanel/CourierIntegrations/iCarry";
 import Nimbuspost from "../AdminPanel/CourierIntegrations/Nimbuspost";
+import EnviaShipping from "../AdminPanel/CourierIntegrations/enviaShipping";
 
 const App = () => {
   return (
@@ -109,6 +110,9 @@ const App = () => {
           </Route>
           <Route path="/AdminCourier/Nimbuspost/:orderId">
             <Nimbuspost />
+          </Route>
+          <Route path="/AdminCourier/EnviaShipping/:orderId">
+            <EnviaShipping />
           </Route>
           <Route path="/SellerProfile/:sellerId">
             <Navbar />
