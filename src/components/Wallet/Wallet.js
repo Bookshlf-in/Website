@@ -66,7 +66,7 @@ const Wallet = () => {
     msg: "",
   });
 
-  const [widthdrawAmount, setwithdrawAmount] = useState(10);
+  const [widthdrawAmount, setwithdrawAmount] = useState(0);
   const [accountDetails, setaccountDetails] = useState("");
   const [debitAmount, setdebitAmount] = useState(0);
   const [creditAmount, setcreditAmount] = useState(0);
@@ -145,6 +145,9 @@ const Wallet = () => {
         .get("/getCurrentBalance")
         .then((response) => {
           setwalletBalance(Math.round(response.data.walletBalance * 100) / 100);
+          setwithdrawAmount(
+            Math.round(response.data.walletBalance * 100) / 100
+          );
           axios
             .get("/getTransactionList")
             .then((response) => {
@@ -219,7 +222,7 @@ const Wallet = () => {
                     </Stack>
                     <Stack direction="row" spacing={3}>
                       <Chip
-                        icon={<RupeeIcon />}
+                        icon={<RupeeIcon sx={{ fontSize: "16px" }} />}
                         label={walletBalance}
                         className={classes.root}
                       />

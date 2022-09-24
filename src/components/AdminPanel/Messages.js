@@ -1,12 +1,9 @@
 import { React, useState } from "react";
-import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
+import { Box, Stack, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
 import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -19,46 +16,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 // icons
 import LoadIcon from "@mui/icons-material/AutorenewRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
 import CheckIcon from "@mui/icons-material/CheckCircleRounded";
 import CheckCircleIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 
-const useStyles = makeStyles({
-  root: {
-    fontFamily: "PT sans !important",
-    "& label": {
-      fontFamily: "PT sans !important",
-    },
-    "& input": {
-      fontFamily: "PT sans !important",
-      fontSize: "12px !important",
-    },
-    "& textarea": {
-      fontFamily: "PT sans !important",
-      fontSize: "12px !important",
-    },
-    "& button": {
-      "&:hover": {
-        color: "black !important",
-      },
-    },
-    "& span": {
-      fontFamily: "PT sans !important",
-      fontSize: "12px",
-    },
-    "& ul": {
-      "& li": {
-        "& button": {
-          fontFamily: "PT sans !important",
-        },
-      },
-    },
-  },
-});
-
 const Messages = () => {
-  const classes = useStyles();
-
   // functionality States
   const [shownotseen, setshownotseen] = useState(false);
   const [msgload, setmsgload] = useState(false);
@@ -76,7 +37,7 @@ const Messages = () => {
     setmsgload(true);
     setpage(pageNo);
     axios
-      .get(`/admin-getMessageList?page=${pageNo}&noOfMessagesInOnePage=3`)
+      .get(`/admin-getMessageList?page=${pageNo}&noOfMessagesInOnePage=6`)
       .then((response) => {
         setTotalPages(response.data.totalPages);
         setmessages(response.data.data);
@@ -191,13 +152,13 @@ const Messages = () => {
           loadingPosition="start"
           startIcon={<LoadIcon />}
           variant="contained"
-          className={classes.root}
           onClick={() => handelgetMessages(1)}
+          size="small"
         >
           Fetch Messages
         </LoadingButton>
 
-        <FormGroup>
+        <FormGroup size="small">
           <FormControlLabel
             control={
               <Switch
@@ -206,12 +167,11 @@ const Messages = () => {
                   setshownotseen((prev) => !prev);
                   handelfilterMessages(value);
                 }}
-                color="error"
+                color="success"
               />
             }
             label="Show Not Seen Messages"
-            labelPlacement="bottom"
-            className={classes.root}
+            labelPlacement="right"
           />
         </FormGroup>
       </Stack>
@@ -231,114 +191,117 @@ const Messages = () => {
               handelgetMessages(pageNo);
             }}
             color="primary"
-            className={classes.root}
           />
         </Stack>
       ) : null}
-      {filteredMessages.length > 0 ? (
-        filteredMessages.map((message, index) => (
-          <Box
-            sx={{
-              width: [300, 400, 800],
-              boxShadow: "2px 3px 5px rgba(0,0,0,0.3)",
-              borderRadius: "10px",
-              cursor: "pointer",
-              padding: "10px",
-            }}
-            key={index}
-          >
-            <Stack direction="column" spacing={2} sx={{ width: "100%" }}>
-              <Stack
-                direction="row"
-                sx={{ width: "100%" }}
-                justifyContent="space-between"
-                spacing={5}
+      <Grid container spacing={2}>
+        {filteredMessages.length > 0 ? (
+          filteredMessages.map((message, index) => (
+            <Grid
+              Item
+              lg={4}
+              md={4}
+              sm={6}
+              xs={12}
+              sx={{ padding: "10px", height: 300 }}
+              key={message._id}
+            >
+              <Box
+                sx={{
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                  padding: "10px",
+                  height: "100%",
+                }}
               >
-                <TextField
-                  className={classes.root}
-                  label="Email"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <FileCopyIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  fullWidth
-                  readOnly
-                  variant="filled"
-                  value={message.email}
-                />
-                <IconButton
-                  aria-label="delete"
-                  color="error"
-                  className={classes.root}
-                  onClick={() => handelDeleteMessages(message._id)}
-                >
-                  {message._id === msgdeleteId ? (
-                    <CircularProgress size="1em" color="inherit" />
-                  ) : (
-                    <DeleteIcon fontSize="inherit" />
-                  )}
-                </IconButton>
-              </Stack>
-              <Stack
-                direction="row"
-                spacing={5}
-                sx={{ width: "100%" }}
-                justifyContent="space-evenly"
-              >
-                <TextField
-                  className={classes.root}
-                  label="Subject"
-                  fullWidth
-                  readOnly
-                  variant="filled"
-                  value={message.subject}
-                />
-                <IconButton
-                  aria-label="delete"
-                  color="success"
-                  className={classes.root}
-                  onClick={() => {
-                    console.log(message.read);
-                    handelReadMessages(message._id, message.read);
-                  }}
-                >
-                  {msgreadId === message._id ? (
-                    <CircularProgress size="1em" color="inherit" />
-                  ) : message.read ? (
-                    <CheckIcon />
-                  ) : (
-                    <CheckCircleIcon />
-                  )}
-                </IconButton>
-              </Stack>
-              <Stack
-                direction="row"
-                spacing={5}
-                sx={{ width: "100%" }}
-                justifyContent="space-evenly"
-              >
-                <TextField
-                  className={classes.root}
-                  label="Message"
-                  fullWidth
-                  readOnly
-                  multiline
-                  maxRows={4}
-                  variant="filled"
-                  value={message.message}
-                />
-              </Stack>
-            </Stack>
-          </Box>
-        ))
-      ) : (
-        <Alert severity="error" className={classes.root} color="warning">
-          No Messages in this Page
-        </Alert>
-      )}
+                <Stack direction="column" spacing={1} sx={{ width: "100%" }}>
+                  <Stack
+                    direction="row"
+                    sx={{ width: "100%" }}
+                    justifyContent="space-between"
+                    spacing={2}
+                  >
+                    <TextField
+                      label="Email"
+                      fullWidth
+                      readOnly
+                      variant="filled"
+                      value={message.email}
+                      size="small"
+                      sx={{ input: { fontSize: "12px" } }}
+                    />
+                    <IconButton
+                      aria-label="delete"
+                      color="error"
+                      onClick={() => handelDeleteMessages(message._id)}
+                      size="small"
+                    >
+                      {message._id === msgdeleteId ? (
+                        <CircularProgress size={15} color="inherit" />
+                      ) : (
+                        <DeleteIcon fontSize="inherit" />
+                      )}
+                    </IconButton>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ width: "100%" }}
+                    justifyContent="space-evenly"
+                  >
+                    <TextField
+                      label="Subject"
+                      fullWidth
+                      readOnly
+                      variant="filled"
+                      value={message.subject}
+                      sx={{ input: { fontSize: "12px" } }}
+                    />
+                    <IconButton
+                      aria-label="delete"
+                      color="success"
+                      onClick={() => {
+                        handelReadMessages(message._id, message.read);
+                      }}
+                      size="small"
+                    >
+                      {msgreadId === message._id ? (
+                        <CircularProgress size={15} color="inherit" />
+                      ) : message.read ? (
+                        <CheckIcon fontSize="inherit" />
+                      ) : (
+                        <CheckCircleIcon fontSize="inherit" />
+                      )}
+                    </IconButton>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ width: "100%" }}
+                    justifyContent="space-evenly"
+                  >
+                    <TextField
+                      label="Message"
+                      fullWidth
+                      readOnly
+                      multiline
+                      maxRows={6}
+                      variant="filled"
+                      value={message.message}
+                      sx={{ textarea: { fontSize: "11px" } }}
+                    />
+                  </Stack>
+                </Stack>
+              </Box>
+            </Grid>
+          ))
+        ) : (
+          <Alert severity="error" color="warning">
+            No Messages in this Page
+          </Alert>
+        )}
+      </Grid>
     </Stack>
   );
 };
