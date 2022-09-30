@@ -1,13 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
 // components
 import { Stack, Chip, Avatar, Typography } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import { LinearProgress, CircularProgress } from "@mui/material";
-import { TextField, Button, Tooltip, Alert, AlertTitle } from "@mui/material";
+import { TextField, Button, Alert, AlertTitle } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 // icons
@@ -15,31 +15,11 @@ import NextIcon from "@mui/icons-material/NavigateNextRounded";
 import CheckIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
-import CopyIcon from "@mui/icons-material/ContentCopy";
-import CopiedIcon from "@mui/icons-material/FileCopy";
 import WeightIcon from "@mui/icons-material/FitnessCenter";
 
 // Micro Components
 import SendMail from "../MicroComponents/Mail";
-
-const useStyles = makeStyles({
-  root: {
-    fontFamily: "PT sans !important",
-    "& span": {
-      fontFamily: "PT sans !important",
-    },
-    "& p": {
-      fontFamily: "PT sans !important",
-      fontSize: "12px !important",
-    },
-    "& input": {
-      fontFamily: "PT sans !important",
-    },
-    "& label": {
-      fontFamily: "PT sans !important",
-    },
-  },
-});
+import CopyableText from "../MicroComponents/customCopyText";
 
 const getSteps = () => {
   return ["Order Placed", "Order Shipped", "Order En Route", "Order Delivered"];
@@ -61,7 +41,6 @@ const getStepContent = (stepIndex) => {
 };
 
 const OrderTracking = () => {
-  const classes = useStyles();
   const params = useParams();
   const steps = getSteps();
 
@@ -72,6 +51,7 @@ const OrderTracking = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [payload, setpayload] = useState(false);
   const [trackLoad, setTrackLoad] = useState(false);
+  const [orderstatusLoad, setorderstatusLoad] = useState(false);
 
   // Data States
   const [order, setorder] = useState({});
@@ -82,6 +62,7 @@ const OrderTracking = () => {
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryCharge, setDeliveryCharge] = useState(40);
   const [sellerMail, setSellerMail] = useState("");
+  const [orderstatus, setOrderStatus] = useState("");
 
   // ================= Mail Template ==============================
   const SellerTemplate = `<html> <head> <meta name="viewport" content="width=device-width, initial-scale=1"/> <style type="text/css"> html, body{margin: 0; padding: 0; font-family: "Roboto", sans-serif; box-sizing: border-box;}.container{padding: 10px 15px;}.row{display: flex; flex-direction: row; gap: 20px; align-items: center; margin-bottom: 5px;}small{display: block; color: #616161;}.img-title{height: 50px; margin: 10px 0px; border-radius: 5px;}.img-check{height: 30px; margin: 10px 0px; border-radius: 5px;}.order-track-btn{outline: none; border: none; padding: 10px 24px; background-color: rgb(255, 184, 54); color: white; font-size: 20px; min-width: 200px; border-radius: 5px; font-weight: bold; letter-spacing: 1px;}.table{margin-top: 10px; min-width: 300px; overflow-x: auto;}table, td{border-collapse: collapse; border-spacing: 0; border: 1px solid black;}td{padding: 10px;}.th{background-color: #616161;color:white;}</style> </head> <body> <div class="container"> <div class="row"> <div class="col-sm"> <center> <img src="https://i.ibb.co/B3Kdb9v/image-6.png" alt="bookshlf.in" class="img-title shadowed"/> </center> </div></div><div class="row"> <div class="col-sm-10 col-md-10 col-lg-11"> <h2>Your Shippment Has Been Confirmed.</h2> </div><div class="col-sm"> <center> <img src="https://i.postimg.cc/W3Rt0mwH/1538471.png" alt="bookshlf.in" class="img-check"/> </center> </div></div><div class="row"> <div class="col-sm"> <h2> Order Tracking Number <small class="tracking-number"> ${trackLink
@@ -283,67 +264,27 @@ const OrderTracking = () => {
       });
   };
 
-  // Custom Copy Component
-  const CopyableText = (props) => {
-    const [copied, setcopied] = useState(false);
+  const updateOrderStatus = (e) => {
+    setorderstatusLoad(true);
+    setOrderStatus(e.target.value);
+    axios
+      .post("/admin-updateOrder", {
+        orderId: params.orderId,
+        status: [...order.status, e.target.value],
+      })
+      .then((response) => {
+        setorderstatusLoad(false);
+        setorder({ ...order, status: [...order.status, e.target.value] });
+      })
+      .catch((error) => {
+        setTrackLoad(false);
+      });
+  };
 
-    const CopyText = () => {
-      navigator.clipboard.writeText(props.text);
-      setcopied(true);
-      setTimeout(() => {
-        setcopied(false);
-      }, 3000);
-    };
-
-    return (
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          cursor: "pointer",
-          padding: "5px 10px",
-          borderRadius: "5px",
-          border: "1px solid rgba(0,0,0,0.2)",
-        }}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography
-          variant="caption"
-          className={classes.root}
-          color={copied ? "primary" : "default"}
-        >
-          {props.text}
-        </Typography>
-        <Tooltip
-          arrow
-          title="Click to Copy"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="caption" onClick={CopyText}>
-            {!copied ? (
-              <CopyIcon color="inhert" sx={{ height: 12, width: 12 }} />
-            ) : (
-              <CopiedIcon color="inhert" sx={{ height: 12, width: 12 }} />
-            )}
-          </Typography>
-        </Tooltip>
-
-        {copied ? (
-          <Typography
-            sx={{ fontSize: "9px" }}
-            className={classes.root}
-            color="primary"
-          >
-            Copied!
-          </Typography>
-        ) : null}
-      </Stack>
-    );
+  const isValidStatus = (status) => {
+    if (status !== "Cancelled" && status !== "RTO" && status !== "Returned")
+      return true;
+    return false;
   };
 
   // Custom List Component
@@ -464,7 +405,6 @@ const OrderTracking = () => {
                     label={order.price}
                     size="small"
                     color="default"
-                    className={classes.root}
                   />
                 }
               />
@@ -679,7 +619,6 @@ const OrderTracking = () => {
                     label={order.price}
                     size="small"
                     color="info"
-                    className={classes.root}
                   />
                 }
               />
@@ -691,7 +630,6 @@ const OrderTracking = () => {
                     label={order.weightInGrams}
                     size="small"
                     color="default"
-                    className={classes.root}
                   />
                 }
               />
@@ -702,7 +640,6 @@ const OrderTracking = () => {
                     label={order.purchaseQty}
                     size="small"
                     color="info"
-                    className={classes.root}
                     variant="outlined"
                   />
                 }
@@ -716,7 +653,6 @@ const OrderTracking = () => {
                     size="small"
                     color="secondary"
                     variant="outlined"
-                    className={classes.root}
                   />
                 }
               />
@@ -728,7 +664,6 @@ const OrderTracking = () => {
                     label={order.orderTotal}
                     size="small"
                     color="secondary"
-                    className={classes.root}
                   />
                 }
               />
@@ -751,7 +686,6 @@ const OrderTracking = () => {
                     label={order.paymentMode}
                     size="small"
                     color="default"
-                    className={classes.root}
                   />
                 }
               />
@@ -764,7 +698,6 @@ const OrderTracking = () => {
                       order.paymentStatus === "Pending" ? "warning" : "success"
                     }
                     size="small"
-                    className={classes.root}
                   />
                 }
               />
@@ -775,7 +708,6 @@ const OrderTracking = () => {
                     label={order.isSellerPaid ? "YES" : "NO"}
                     color={order.isSellerPaid ? "success" : "error"}
                     size="small"
-                    className={classes.root}
                   />
                 }
               />
@@ -791,7 +723,6 @@ const OrderTracking = () => {
                     }
                     size="small"
                     color="success"
-                    className={classes.root}
                   />
                 }
               />
@@ -858,7 +789,6 @@ const OrderTracking = () => {
           >
             <ListTitle content="External Tracking" />
             <TextField
-              className={classes.root}
               label="External Order Tracking Link"
               variant="filled"
               size="small"
@@ -868,7 +798,6 @@ const OrderTracking = () => {
               value={trackLink}
             />
             <TextField
-              className={classes.root}
               label="External Order Tracking Details"
               variant="filled"
               size="small"
@@ -878,7 +807,6 @@ const OrderTracking = () => {
               value={trackDetails}
             />
             <TextField
-              className={classes.root}
               label="Real Delivery Expense for this Order"
               variant="filled"
               size="small"
@@ -888,11 +816,7 @@ const OrderTracking = () => {
               value={deliveryCharge}
             />
             <label htmlFor="admin-expected-delivery-date">
-              <Typography
-                className={classes.root}
-                color="primary"
-                variant="body2"
-              >
+              <Typography color="primary" variant="body2">
                 Expected Delivery date
               </Typography>
               <input
@@ -911,7 +835,6 @@ const OrderTracking = () => {
               endIcon={<NextIcon />}
               variant="contained"
               color="warning"
-              className={classes.root}
               onClick={updateOrder}
             >
               Update Details
@@ -929,11 +852,57 @@ const OrderTracking = () => {
             }}
           >
             <ListTitle content="Order Status" />
-            {order.status[order.status.length - 1] !== "Cancelled" ? (
+            <ListItem
+              title={<ListHead content="Current Order Status" />}
+              body={
+                <Chip
+                  label={order.status[order.status.length - 1]}
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                />
+              }
+            />
+            <ListItem
+              title={<ListHead content="Update Order Status" />}
+              body={
+                <Stack spacing={2} direction="row" alignItems="center">
+                  <FormControl
+                    variant="filled"
+                    sx={{ m: 1, minWidth: 250 }}
+                    size="small"
+                  >
+                    <InputLabel id="order-status">
+                      Update Order Status
+                    </InputLabel>
+                    <Select
+                      labelId="order-status"
+                      value={orderstatus}
+                      onChange={(e) => {
+                        updateOrderStatus(e);
+                      }}
+                      label="Update Order Status"
+                      size="small"
+                    >
+                      <MenuItem value="Order Confirmed">
+                        Order Confirmed
+                      </MenuItem>
+                      <MenuItem value="Packed">Packed</MenuItem>
+                      <MenuItem value="RTO">RTO</MenuItem>
+                      <MenuItem value="Returned">Returned</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {orderstatusLoad ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : null}
+                </Stack>
+              }
+            />
+
+            {isValidStatus(order.status[order.status.length - 1]) ? (
               <Stepper
                 activeStep={activeStep}
                 alternativeLabel
-                className={classes.root}
                 sx={{ width: "100%" }}
               >
                 {steps.map((label) => (
@@ -943,12 +912,12 @@ const OrderTracking = () => {
                 ))}
               </Stepper>
             ) : null}
-            {activeStep === steps.length ? null : (
+            {!isValidStatus(order.status[order.status.length - 1]) ||
+            activeStep === steps.length ? null : (
               <ListBody content={getStepContent(activeStep)} />
             )}
-            {order.status[order.status.length - 1] !== "Cancelled" ? (
+            {isValidStatus(order.status[order.status.length - 1]) ? (
               <Button
-                className={classes.root}
                 variant="outlined"
                 color="primary"
                 onClick={() => handleNextStep(order._id)}
@@ -972,10 +941,10 @@ const OrderTracking = () => {
             ) : null}
             {order.status[order.status.length - 1] === "Cancelled" ? (
               <Alert severity="error">
-                <AlertTitle className={classes.root}>
+                <AlertTitle>
                   <strong>Order Cancelled</strong>
                 </AlertTitle>
-                <Typography variant="caption" className={classes.root}>
+                <Typography variant="caption">
                   Order has been cancelled.
                 </Typography>
               </Alert>
@@ -992,9 +961,8 @@ const OrderTracking = () => {
                 endIcon={<CancelIcon />}
                 variant="outlined"
                 color="error"
-                className={classes.root}
                 onClick={handelCancelOrder}
-                disabled={order.status[order.status.length - 1] === "Cancelled"}
+                disabled={!isValidStatus(order.status[order.status.length - 1])}
               >
                 Cancel Order
               </LoadingButton>
@@ -1007,11 +975,10 @@ const OrderTracking = () => {
                   endIcon={paid ? <CheckIcon /> : <NextIcon />}
                   variant="outlined"
                   color="success"
-                  className={classes.root}
                   onClick={sendSellerPay}
                   disabled={
                     paid ||
-                    order.status[order.status.length - 1] === "Cancelled" ||
+                    !isValidStatus(order.status[order.status.length - 1]) ||
                     activeStep < 4
                   }
                 >
@@ -1020,10 +987,8 @@ const OrderTracking = () => {
               ) : null}
               {paid ? (
                 <Alert>
-                  <AlertTitle className={classes.root}>
-                    {paidAmt} (Paid To Seller)
-                  </AlertTitle>
-                  <Typography variant="caption" className={classes.root}>
+                  <AlertTitle>{paidAmt} (Paid To Seller)</AlertTitle>
+                  <Typography variant="caption">
                     Successfully Paid to Seller. Amount Transfered to Seller
                     Wallet.
                   </Typography>
