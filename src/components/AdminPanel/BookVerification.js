@@ -297,7 +297,7 @@ const BookVerification = () => {
       <Grid container spacing={2}>
         {books.length > 0 ? (
           books.map((book, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={2} key={index}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <Box
                 sx={{
                   width: "100%",

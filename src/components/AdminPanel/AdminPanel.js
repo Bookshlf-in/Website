@@ -1,9 +1,12 @@
 import { React, useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import { Helmet } from "react-helmet-async";
+
+// Custom CSS
 import "./AdminPanel.css";
 
 // Components
+import { Box } from "@mui/material";
 import AdminNavbar from "./AdminPanelNavbar";
 import { Alert, AlertTitle } from "@mui/material";
 
@@ -14,23 +17,19 @@ const AdminPanel = () => {
       <Helmet>
         <title>Admin Panel | Bookshlf</title>
       </Helmet>
-      <div className="adminpanel-container">
+      <Box>
         {user && user.roles?.includes("admin") ? (
           <AdminNavbar />
         ) : (
-          <Alert
-            severity="error"
-            style={{ fontFamily: "PT sans", width: "100%" }}
-          >
-            <AlertTitle style={{ fontFamily: "PT sans" }}>
-              Access Denied
+          <Alert severity="error">
+            <AlertTitle>
+              <strong>Access Denied</strong>
             </AlertTitle>
-            You are Unauthorized to Access this Domain.
-            <br />
-            Contact Admin for More Details
+            You are Unauthorized to Access this Domain. Contact Admin for More
+            Details
           </Alert>
         )}
-      </div>
+      </Box>
     </>
   );
 };

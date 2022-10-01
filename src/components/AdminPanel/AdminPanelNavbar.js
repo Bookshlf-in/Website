@@ -1,13 +1,9 @@
 import { React, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { makeStyles } from "@mui/styles";
 
 // Components
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
+import { Stack, Paper, Divider } from "@mui/material";
+import { Typography } from "@mui/material";
 
 // icons
 import OrderIcon from "@mui/icons-material/LocalShipping";
@@ -25,118 +21,150 @@ import Profile from "./FindProfile";
 import Users from "./Users";
 import Wallet from "./Wallet";
 
-const useStyles = makeStyles({
-  root: {
-    fontFamily: "PT sans !important",
-    backgroundColor: "rgba(0,0,0,0.06) !important",
-    "&:hover": {
-      color: "black !important",
-      backgroundColor: "skyblue",
-    },
-    "&.MuiTab-root": {
-      padding: "10px",
-      minHeight: 0,
-      fontSize: "12px",
-    },
-  },
-});
+// Custom Admin Sidebar Navbutton
+const AdminNavButton = ({ Panel, setPanel, btnText, btnIcon, value }) => {
+  const handleClick = () => {
+    setPanel(value);
+  };
+
+  const activeClass = "adminPanel-navButton adminPanel-navButton-active";
+  const nonActiveClass = "adminPanel-navButton";
+
+  return (
+    <Stack
+      alignItems="center"
+      direction="row"
+      spacing={2}
+      className={Panel === value ? activeClass : nonActiveClass}
+      onClick={handleClick}
+    >
+      {btnIcon}
+      <Typography variant="body1">{btnText}</Typography>
+    </Stack>
+  );
+};
+
+// Admin Left Sidebar for Navigation
+const AdminSidebar = ({ Panel, setPanel }) => {
+  return (
+    <Paper className="adminPanel-sidebar">
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        divider={
+          <Divider
+            className="adminPanel-sidebar-divider"
+            orientation="horizontal"
+            flexItem
+          />
+        }
+      >
+        <Stack
+          className="adminPanel-sidebar-logo"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <img
+            src="/images/logo.png"
+            alt="bookshlf"
+            height="100%"
+            width="auto"
+          />
+        </Stack>
+        <Stack className="adminPanel-sidebar-Nav" spacing={1}>
+          <AdminNavButton
+            btnIcon={<OrderIcon sx={{ fontSize: "1em" }} />}
+            btnText="Orders"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={0}
+          />
+          <AdminNavButton
+            btnIcon={<ProfileIcon sx={{ fontSize: "1em" }} />}
+            btnText="Find Profile"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={1}
+          />
+          <AdminNavButton
+            btnIcon={<ChatIcon sx={{ fontSize: "1em" }} />}
+            btnText="Messages"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={2}
+          />
+          <AdminNavButton
+            btnIcon={<SellersIcon sx={{ fontSize: "1em" }} />}
+            btnText="Seller"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={3}
+          />
+          <AdminNavButton
+            btnIcon={<ProfileIcon sx={{ fontSize: "1em" }} />}
+            btnText="User"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={4}
+          />
+          <AdminNavButton
+            btnIcon={<WalletIcon sx={{ fontSize: "1em" }} />}
+            btnText="Billing"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={5}
+          />
+          <AdminNavButton
+            btnIcon={<HomeIcon sx={{ fontSize: "1em" }} />}
+            btnText="Home"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={6}
+          />
+        </Stack>
+      </Stack>
+    </Paper>
+  );
+};
+
+const AdminContentPanel = ({ Panel, setPanel, history }) => {
+  if (Panel === 6) history.push("/");
+  return (
+    <Stack className="adminPanel-content">
+      <Stack className="adminPanel-content-float">
+        {Panel === 0 ? (
+          <Orders />
+        ) : Panel === 1 ? (
+          <Profile />
+        ) : Panel === 2 ? (
+          <Messages />
+        ) : Panel === 3 ? (
+          <Seller />
+        ) : Panel === 4 ? (
+          <Users />
+        ) : (
+          <Wallet />
+        )}
+      </Stack>
+    </Stack>
+  );
+};
 
 const AdminNavbar = () => {
   const history = useHistory();
-  const classes = useStyles();
   const params = useParams();
-  const [panel, setpanel] = useState(params.panel);
-
-  const handleChange = (event, newValue) => {
-    if (newValue === "7") {
-      history.push("/");
-    } else {
-      history.push(`/Admin/${newValue}/1`);
-      setpanel(newValue);
-    }
-  };
+  const [Panel, setPanel] = useState(params.panel);
 
   return (
-    <Box sx={{ width: "100%", typography: "body1" }}>
-      <TabContext value={panel}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList
-            onChange={handleChange}
-            aria-label="admin-tabList"
-            variant="fullWidth"
-            sx={{ minHeight: 0 }}
-          >
-            <Tab
-              label="Orders"
-              icon={<OrderIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="1"
-              className={classes.root}
-            />
-            <Tab
-              label="Find Profile"
-              icon={<ProfileIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="2"
-              className={classes.root}
-            />
-            <Tab
-              label="Messages"
-              icon={<ChatIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="3"
-              className={classes.root}
-            />
-            <Tab
-              label="Sellers Verification"
-              icon={<SellersIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="4"
-              className={classes.root}
-            />
-            <Tab
-              label="Users"
-              icon={<ProfileIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="5"
-              className={classes.root}
-            />
-            <Tab
-              label="Wallet"
-              icon={<WalletIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="6"
-              className={classes.root}
-            />
-            <Tab
-              label="Home"
-              icon={<HomeIcon sx={{ height: 16, width: 16 }} />}
-              iconPosition="start"
-              value="7"
-              className={classes.root}
-            />
-          </TabList>
-        </Box>
-        <TabPanel value="1" sx={{ padding: "12px" }}>
-          <Orders />
-        </TabPanel>
-        <TabPanel value="2" sx={{ padding: "12px" }}>
-          <Profile />
-        </TabPanel>
-        <TabPanel value="3" sx={{ padding: "12px" }}>
-          <Messages />
-        </TabPanel>
-        <TabPanel value="4" sx={{ padding: "12px" }}>
-          <Seller />
-        </TabPanel>
-        <TabPanel value="5" sx={{ padding: "12px" }}>
-          <Users />
-        </TabPanel>
-        <TabPanel value="6" sx={{ padding: "12px" }}>
-          <Wallet />
-        </TabPanel>
-      </TabContext>
-    </Box>
+    <Stack
+      spacing={2}
+      direction="row"
+      className="adminPanel-container"
+      justifyContent="flex-end"
+    >
+      <AdminSidebar Panel={Panel} setPanel={setPanel} />
+      <AdminContentPanel Panel={Panel} setPanel={setPanel} history={history} />
+    </Stack>
   );
 };
 export default AdminNavbar;
