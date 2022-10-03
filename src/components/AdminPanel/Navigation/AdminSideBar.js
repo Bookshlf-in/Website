@@ -1,5 +1,4 @@
-import { React, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // Components
 import { Stack, Paper, Divider } from "@mui/material";
@@ -13,18 +12,21 @@ import SellersIcon from "@mui/icons-material/ContactMailRounded";
 import HomeIcon from "@mui/icons-material/HomeRounded";
 import WalletIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 
-// custom components
-import Seller from "./Sellers";
-import Orders from "./Orders";
-import Messages from "./Messages";
-import Profile from "./FindProfile";
-import Users from "./Users";
-import Wallet from "./Wallet";
-
 // Custom Admin Sidebar Navbutton
-const AdminNavButton = ({ Panel, setPanel, btnText, btnIcon, value }) => {
+const AdminNavButton = ({
+  Panel,
+  setPanel,
+  btnText,
+  btnIcon,
+  value,
+  openSideBar,
+  setOpenSideBar,
+}) => {
+  const history = useHistory();
   const handleClick = () => {
     setPanel(value);
+    history.push(`/Admin/${value}/1`);
+    setOpenSideBar(false);
   };
 
   const activeClass = "adminPanel-navButton adminPanel-navButton-active";
@@ -45,7 +47,7 @@ const AdminNavButton = ({ Panel, setPanel, btnText, btnIcon, value }) => {
 };
 
 // Admin Left Sidebar for Navigation
-const AdminSidebar = ({ Panel, setPanel }) => {
+const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
   return (
     <Paper className="adminPanel-sidebar">
       <Stack
@@ -78,6 +80,8 @@ const AdminSidebar = ({ Panel, setPanel }) => {
             Panel={Panel}
             setPanel={setPanel}
             value={0}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
             btnIcon={<ProfileIcon sx={{ fontSize: "1em" }} />}
@@ -85,6 +89,8 @@ const AdminSidebar = ({ Panel, setPanel }) => {
             Panel={Panel}
             setPanel={setPanel}
             value={1}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
             btnIcon={<ChatIcon sx={{ fontSize: "1em" }} />}
@@ -92,6 +98,8 @@ const AdminSidebar = ({ Panel, setPanel }) => {
             Panel={Panel}
             setPanel={setPanel}
             value={2}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
             btnIcon={<SellersIcon sx={{ fontSize: "1em" }} />}
@@ -99,6 +107,8 @@ const AdminSidebar = ({ Panel, setPanel }) => {
             Panel={Panel}
             setPanel={setPanel}
             value={3}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
             btnIcon={<ProfileIcon sx={{ fontSize: "1em" }} />}
@@ -106,6 +116,8 @@ const AdminSidebar = ({ Panel, setPanel }) => {
             Panel={Panel}
             setPanel={setPanel}
             value={4}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
             btnIcon={<WalletIcon sx={{ fontSize: "1em" }} />}
@@ -113,6 +125,8 @@ const AdminSidebar = ({ Panel, setPanel }) => {
             Panel={Panel}
             setPanel={setPanel}
             value={5}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
             btnIcon={<HomeIcon sx={{ fontSize: "1em" }} />}
@@ -120,6 +134,8 @@ const AdminSidebar = ({ Panel, setPanel }) => {
             Panel={Panel}
             setPanel={setPanel}
             value={6}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
           />
         </Stack>
       </Stack>
@@ -127,44 +143,4 @@ const AdminSidebar = ({ Panel, setPanel }) => {
   );
 };
 
-const AdminContentPanel = ({ Panel, setPanel, history }) => {
-  if (Panel === 6) history.push("/");
-  return (
-    <Stack className="adminPanel-content">
-      <Stack className="adminPanel-content-float">
-        {Panel === 0 ? (
-          <Orders />
-        ) : Panel === 1 ? (
-          <Profile />
-        ) : Panel === 2 ? (
-          <Messages />
-        ) : Panel === 3 ? (
-          <Seller />
-        ) : Panel === 4 ? (
-          <Users />
-        ) : (
-          <Wallet />
-        )}
-      </Stack>
-    </Stack>
-  );
-};
-
-const AdminNavbar = () => {
-  const history = useHistory();
-  const params = useParams();
-  const [Panel, setPanel] = useState(params.panel);
-
-  return (
-    <Stack
-      spacing={2}
-      direction="row"
-      className="adminPanel-container"
-      justifyContent="flex-end"
-    >
-      <AdminSidebar Panel={Panel} setPanel={setPanel} />
-      <AdminContentPanel Panel={Panel} setPanel={setPanel} history={history} />
-    </Stack>
-  );
-};
-export default AdminNavbar;
+export default AdminSideBar;

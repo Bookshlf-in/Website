@@ -7,8 +7,8 @@ import "./AdminPanel.css";
 
 // Components
 import { Box } from "@mui/material";
-import AdminNavbar from "./AdminPanelNavbar";
 import { Alert, AlertTitle } from "@mui/material";
+import Navigation from "./Navigation/AdminPanelNavbar";
 
 const AdminPanel = () => {
   const [user] = useContext(UserContext);
@@ -19,7 +19,7 @@ const AdminPanel = () => {
       </Helmet>
       <Box>
         {user && user.roles?.includes("admin") ? (
-          <AdminNavbar />
+          <Navigation />
         ) : (
           <Alert severity="error">
             <AlertTitle>
