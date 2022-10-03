@@ -5,6 +5,7 @@ import { Stack, Paper, Divider } from "@mui/material";
 import { Typography } from "@mui/material";
 
 // icons
+import BookIcon from "@mui/icons-material/Book";
 import OrderIcon from "@mui/icons-material/LocalShipping";
 import ChatIcon from "@mui/icons-material/ChatRounded";
 import ProfileIcon from "@mui/icons-material/AccountCircleRounded";
@@ -25,7 +26,7 @@ const AdminNavButton = ({
   const history = useHistory();
   const handleClick = () => {
     setPanel(value);
-    history.push(`/Admin/${value}/1`);
+    history.push(`/Admin/${value}`);
     setOpenSideBar(false);
   };
 
@@ -75,11 +76,20 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
         </Stack>
         <Stack className="adminPanel-sidebar-Nav" spacing={1}>
           <AdminNavButton
+            btnIcon={<BookIcon sx={{ fontSize: "1em" }} />}
+            btnText="Books"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={0}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
+          />
+          <AdminNavButton
             btnIcon={<OrderIcon sx={{ fontSize: "1em" }} />}
             btnText="Orders"
             Panel={Panel}
             setPanel={setPanel}
-            value={0}
+            value={1}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -88,7 +98,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Find Profile"
             Panel={Panel}
             setPanel={setPanel}
-            value={1}
+            value={2}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -97,7 +107,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Messages"
             Panel={Panel}
             setPanel={setPanel}
-            value={2}
+            value={3}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -106,7 +116,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Seller"
             Panel={Panel}
             setPanel={setPanel}
-            value={3}
+            value={4}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -115,7 +125,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="User"
             Panel={Panel}
             setPanel={setPanel}
-            value={4}
+            value={5}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -124,7 +134,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Billing"
             Panel={Panel}
             setPanel={setPanel}
-            value={5}
+            value={6}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -133,7 +143,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Home"
             Panel={Panel}
             setPanel={setPanel}
-            value={6}
+            value={7}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />

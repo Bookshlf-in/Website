@@ -2,6 +2,7 @@
 import { Stack } from "@mui/material";
 
 // Other Components
+import Books from "../Book/Book";
 import Seller from "../Sellers";
 import Orders from "../Orders";
 import Messages from "../Messages";
@@ -10,23 +11,25 @@ import Users from "../Users";
 import Wallet from "../Billing/Wallet";
 
 const AdminContentPanel = ({ Panel, setPanel, history }) => {
-  if (Panel === 6) history.push("/");
+  if (Panel === 7) history.push("/");
   return (
     <Stack className="adminPanel-content">
       <Stack className="adminPanel-content-float">
-        {Panel === 5 ? (
-          <Wallet />
+        {Panel === 0 ? (
+          <Books />
         ) : Panel === 1 ? (
-          <Profile />
-        ) : Panel === 2 ? (
-          <Messages />
-        ) : Panel === 3 ? (
-          <Seller />
-        ) : Panel === 4 ? (
-          <Users />
-        ) : (
           <Orders />
-        )}
+        ) : Panel === 2 ? (
+          <Profile />
+        ) : Panel === 3 ? (
+          <Messages />
+        ) : Panel === 4 ? (
+          <Seller />
+        ) : Panel === 5 ? (
+          <Users />
+        ) : Panel === 6 ? (
+          <Wallet />
+        ) : null}
       </Stack>
     </Stack>
   );

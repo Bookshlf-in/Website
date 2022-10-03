@@ -20,7 +20,7 @@ const AdminNavbar = () => {
   const [openSideBar, setOpenSideBar] = useState(false);
 
   return (
-    <Stack spacing={2} className="adminPanel-container">
+    <Stack className="adminPanel-container">
       <AdminAppBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
       <Drawer
         anchor="left"

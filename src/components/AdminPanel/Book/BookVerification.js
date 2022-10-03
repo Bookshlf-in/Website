@@ -1,28 +1,17 @@
 import { React, useState, useContext } from "react";
-import { makeStyles } from "@mui/styles";
-import { AdminContext } from "../../Context/adminContext";
-import axios from "../../axios";
+import { AdminContext } from "../../../Context/adminContext";
 
-// components
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import Avatar from "@mui/material/Avatar";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
+// API
+import axios from "../../../axios";
+
+// MUI Components
+import { Grid, Stack, Box, Chip } from "@mui/material";
+import { Avatar, Alert, Button, Switch } from "@mui/material";
+import { Pagination, TextField, Typography } from "@mui/material";
+import { FormGroup, FormControlLabel } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { DialogContentText, DialogTitle } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Pagination from "@mui/material/Pagination";
-import Switch from "@mui/material/Switch";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 // icons
 import LoadIcon from "@mui/icons-material/AutorenewRounded";
@@ -32,32 +21,8 @@ import CancelIcon from "@mui/icons-material/CancelRounded";
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
 import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
 
-const useStyles = makeStyles({
-  root: {
-    fontFamily: "PT sans !important",
-    "& span": {
-      fontFamily: "PT sans !important",
-      fontSize: "12px",
-    },
-    "& label": {
-      fontFamily: "PT sans !important",
-    },
-    "& input": {
-      fontFamily: "PT sans !important",
-      fontSize: "12px !important",
-    },
-    "& ul": {
-      "& li": {
-        "& button": {
-          fontFamily: "PT sans !important",
-        },
-      },
-    },
-  },
-});
-
 const BookVerification = () => {
-  const classes = useStyles();
+  // Admin Context
   const [admin, setAdmin] = useContext(AdminContext);
 
   // functionality States
@@ -217,28 +182,19 @@ const BookVerification = () => {
   return (
     <Stack
       direction="column"
-      spacing={2}
-      sx={{
-        width: "100%",
-        padding: "10px",
-      }}
-      justifyContent="center"
+      spacing={1}
       alignItems="center"
-      className="admin-book-verify-container"
+      className="AdminBookVerification"
+      sx={{ padding: "0px 16px 10px 0px" }}
     >
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{ width: "100%" }}
-        justifyContent="space-evenly"
-      >
+      <Stack direction="row" spacing={2}>
         <LoadingButton
           loading={load}
           loadingPosition="start"
           startIcon={<LoadIcon />}
           size="small"
-          variant="contained"
-          className={classes.root}
+          variant="outlined"
+          color="secondary"
           onClick={() => getBooks(1, false)}
         >
           Fetch Books
@@ -257,7 +213,6 @@ const BookVerification = () => {
             }
             label="Show Not Approved Books"
             labelPlacement="bottom"
-            className={classes.root}
           />
         </FormGroup>
         <FormGroup>
@@ -274,30 +229,22 @@ const BookVerification = () => {
             }
             label="Show Approved Books"
             labelPlacement="bottom"
-            className={classes.root}
           />
         </FormGroup>
       </Stack>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{ width: "100%" }}
-        justifyContent="space-evenly"
-      >
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={(e, pageNo) => {
-            getBooks(pageNo, showverify);
-          }}
-          color="primary"
-          className={classes.root}
-        />
-      </Stack>
+      <Pagination
+        count={totalPages}
+        page={page}
+        onChange={(e, pageNo) => {
+          getBooks(pageNo, showverify);
+        }}
+        color="primary"
+        size="small"
+      />
       <Grid container spacing={2}>
         {books.length > 0 ? (
           books.map((book, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+            <Grid item xs={12} sm={6} md={4} lg={2} key={index}>
               <Box
                 sx={{
                   width: "100%",
@@ -312,7 +259,7 @@ const BookVerification = () => {
               >
                 <Stack
                   direction="column"
-                  sx={{ width: "100%", padding: "10px", height: "100%" }}
+                  sx={{ padding: "5px", height: "100%" }}
                   spacing={1}
                   justifyContent="center"
                   alignItems="center"
@@ -323,11 +270,7 @@ const BookVerification = () => {
                     sx={{ height: 120, width: 100 }}
                     variant="rounded"
                   />
-                  <Typography
-                    align="center"
-                    className={classes.root}
-                    variant="caption"
-                  >
+                  <Typography align="center" variant="caption">
                     {book.title.length <= 75
                       ? book.title
                       : book.title.substr(0, 75) + "..."}
@@ -340,20 +283,17 @@ const BookVerification = () => {
                     <Chip
                       icon={<RupeeIcon />}
                       label={book.price}
-                      className={classes.root}
                       size="small"
                     />
                     <Chip
                       icon={showverify ? <CheckIcon /> : <CancelIcon />}
                       label={showverify ? "Approved" : "Not Approved"}
-                      className={classes.root}
                       color={showverify ? "success" : "error"}
                       size="small"
                     />
                     <Button
                       variant="outlined"
                       endIcon={<NextIcon />}
-                      className={classes.root}
                       color="primary"
                       href={`/AdminBook/${book._id}`}
                       target="_blank"
@@ -369,7 +309,6 @@ const BookVerification = () => {
                           loadingPosition="start"
                           startIcon={<CheckIcon />}
                           variant="outlined"
-                          className={classes.root}
                           onClick={() => ApproveBook(book._id)}
                           color="success"
                           size="small"
@@ -387,7 +326,6 @@ const BookVerification = () => {
                           loadingPosition="start"
                           startIcon={<CancelIcon />}
                           variant="outlined"
-                          className={classes.root}
                           onClick={() => RejectBook(book, book._id)}
                           color="warning"
                           size="small"
@@ -407,7 +345,6 @@ const BookVerification = () => {
                       loadingPosition="start"
                       startIcon={<DeleteIcon />}
                       variant="contained"
-                      className={classes.root}
                       onClick={() => {
                         handelDeleteBook(book._id);
                       }}
@@ -424,18 +361,14 @@ const BookVerification = () => {
           ))
         ) : (
           <Grid item sm={12} md={12} lg={12} xs={12}>
-            <Alert severity="error" className={classes.root} color="warning">
+            <Alert severity="error" color="warning">
               No Books in this Page
             </Alert>
           </Grid>
         )}
       </Grid>
-      <Dialog
-        open={rejectOpen}
-        onClose={() => setrejectOpen(false)}
-        className={classes.root}
-      >
-        <DialogTitle className={classes.root}>{bookReject.title}</DialogTitle>
+      <Dialog open={rejectOpen} onClose={() => setrejectOpen(false)}>
+        <DialogTitle>{bookReject.title}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <Avatar
@@ -445,9 +378,7 @@ const BookVerification = () => {
               variant="rounded"
             />
           </DialogContentText>
-          <DialogContentText className={classes.root}>
-            {bookReject.content}
-          </DialogContentText>
+          <DialogContentText>{bookReject.content}</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -455,7 +386,6 @@ const BookVerification = () => {
             type="text"
             fullWidth
             variant="standard"
-            className={classes.root}
             value={rejectMsg}
             onChange={(e) => setrejectMsg(e.target.value)}
           />
@@ -464,7 +394,6 @@ const BookVerification = () => {
           <Button
             onClick={() => setrejectOpen(false)}
             variant="outlined"
-            className={classes.root}
             color="error"
             size="small"
           >
@@ -473,7 +402,6 @@ const BookVerification = () => {
           <Button
             onClick={() => RejectBookDialog(bookReject.id, rejectMsg)}
             variant="outlined"
-            className={classes.root}
             color="warning"
             size="small"
           >

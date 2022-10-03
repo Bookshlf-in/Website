@@ -1,0 +1,33 @@
+.AdminBookNav.MuiAppBar-root {
+    background: transparent;
+    box-shadow: none;
+}
+
+.AdminBookNav .MuiToolbar-root {
+    background: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232));
+    padding: 0px 24px;
+}
+
+.AdminBookNav-btn {
+    padding: 5px;
+    margin-right: 2em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.AdminBookNav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: saturate(200%) blur(1.875rem);
+    color: black;
+    transition: 0.3s;
+}
+
+.AdminBookNav-btn-active {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: saturate(200%) blur(1.875rem);
+    color: black;
+}
+
+.AdminBookVerification .MuiTypography-root {
+    font-size: 12px;
+}

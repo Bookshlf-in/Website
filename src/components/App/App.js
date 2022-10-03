@@ -22,7 +22,7 @@ import SearchResult from "../SearchResult/SearchPanel";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
-import AdminBook from "../AdminPanel/BookDetails";
+import AdminBook from "../AdminPanel/Book/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
@@ -102,7 +102,7 @@ const App = () => {
           <Route path="/AdminTrack/:orderId">
             <AdminTrack />
           </Route>
-          <Route path="/Admin/:panel/:subpanel">
+          <Route path="/Admin/:panel">
             <Admin />
           </Route>
           <Route path="/AdminCourier/Icarry/:orderId">

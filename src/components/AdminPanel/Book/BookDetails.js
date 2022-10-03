@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import axios from "../../axios";
-import SellerProfile from "./SellerProfile";
+import axios from "../../../axios";
+import SellerProfile from "../SellerProfile";
 
 // Components
 import { Stack, ClickAwayListener, Chip, Alert } from "@mui/material";
