@@ -22,7 +22,6 @@ import SearchResult from "../SearchResult/SearchPanel";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
-import AdminBook from "../AdminPanel/Book/BookDetails";
 import AdminTrack from "../AdminPanel/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
@@ -95,9 +94,6 @@ const App = () => {
           <Route path="/Checkout/:type">
             <Navbar />
             <Checkout />
-          </Route>
-          <Route path="/AdminBook/:bookId">
-            <AdminBook />
           </Route>
           <Route path="/AdminTrack/:orderId">
             <AdminTrack />

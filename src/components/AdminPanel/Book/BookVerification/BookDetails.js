@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { makeStyles } from "@mui/styles";
-import axios from "../../../axios";
-import SellerProfile from "../SellerProfile";
+import { Link } from "react-router-dom";
+
+// API
+import axios from "../../../../axios";
 
 // Components
 import { Stack, ClickAwayListener, Chip, Alert } from "@mui/material";
@@ -12,6 +12,9 @@ import { Typography, Avatar, Collapse, IconButton } from "@mui/material";
 import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 import { FormLabel, FormControl } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+
+// Custom Components
+import SellerProfile from "../../SellerProfile";
 
 // Icons
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
@@ -28,27 +31,15 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-const useStyles = makeStyles({
-  root: {
-    "& textarea": {
-      fontSize: "12px !important",
-    },
-  },
-});
-
-const BookDetails = () => {
-  // calling hooks
-  const classes = useStyles();
-  const bookId = useParams().bookId;
-
+const BookDetails = ({ bookId, setOpenBookDetails }) => {
   // functionality States
-  const [load, setload] = useState(true);
+  const [Load, setLoad] = useState(true);
   const [book, setbook] = useState({});
   const [tagFieldChanges, settagFieldChanges] = useState(false);
   const [openTagMenu, setOpenTagMenu] = useState(false);
   const [updating, setupdating] = useState(false);
   const [showSellerDetails, setShowSellerDetails] = useState(false);
-  const [showBookDetails, setShowBookDetails] = useState(false);
+  const [showBookDetails, setShowBookDetails] = useState(true);
   const [alert, setalert] = useState({
     show: false,
     type: "info",
@@ -112,14 +103,14 @@ const BookDetails = () => {
             })
             .then((profile) => {
               setseller(profile.data);
-              setload(false);
+              setLoad(false);
             })
             .catch((error) => {
-              setload(false);
+              setLoad(false);
             });
         })
         .catch((error) => {
-          setload(false);
+          setLoad(false);
         });
     };
     fetchData();
@@ -188,7 +179,7 @@ const BookDetails = () => {
             setupdating(false);
             setalert({
               show: true,
-              msg: "Book Updated Successfully",
+              msg: "Book updated successfully",
               type: "success",
             });
             setTimeout(() => {
@@ -230,7 +221,7 @@ const BookDetails = () => {
           setupdating(false);
           setalert({
             show: true,
-            msg: "Book Updated Successfully",
+            msg: "Book updated successfully",
             type: "success",
           });
           setTimeout(() => {
@@ -318,8 +309,8 @@ const BookDetails = () => {
   };
 
   return (
-    <>
-      {load ? (
+    <Stack sx={{ minWidth: "50vw" }}>
+      {Load ? (
         <LinearProgress sx={{ width: "100%" }} />
       ) : (
         <Stack
@@ -327,11 +318,21 @@ const BookDetails = () => {
           spacing={1}
           sx={{
             width: "100%",
-            padding: "10px",
+            padding: "15px 24px",
           }}
           justifyContent="center"
           alignItems="center"
         >
+          <Button
+            onClick={() => setOpenBookDetails(false)}
+            variant="text"
+            color="error"
+            size="small"
+            fullWidth
+          >
+            Close
+          </Button>
+
           <Stack direction="column" spacing={1}>
             <Typography variant="h5">Book Images</Typography>
             <Alert severity="info" color="error">
@@ -423,9 +424,7 @@ const BookDetails = () => {
                 <Stack spacing={2} sx={{ paddingTop: "10px" }}>
                   <TextField
                     label="Book Title"
-                    variant="outlined"
                     value={bookName}
-                    className={classes.root}
                     onChange={(e) => setbookName(e.target.value)}
                     InputProps={{
                       endAdornment: (
@@ -434,113 +433,94 @@ const BookDetails = () => {
                         </InputAdornment>
                       ),
                     }}
+                    size="small"
                   />
                   <TextField
                     label="Book Description"
-                    variant="outlined"
                     multiline
                     value={bookDesc}
-                    className={classes.root}
                     onChange={(e) => setbookDesc(e.target.value)}
+                    size="small"
                   />
                   <Stack direction="row" spacing={2}>
                     <TextField
                       label="Book Selling Price"
-                      variant="outlined"
                       value={SP}
-                      className={classes.root}
                       onChange={(e) => setSP(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                     <TextField
                       label="Book MRP"
-                      variant="outlined"
                       value={mrp}
-                      className={classes.root}
                       onChange={(e) => setMrp(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                   </Stack>
                   <Stack direction="row" spacing={2}>
                     <TextField
                       label="Book Author"
-                      variant="outlined"
                       value={author}
-                      className={classes.root}
                       onChange={(e) => setAuthor(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                     <TextField
                       label="Book Edition"
-                      variant="outlined"
                       value={Edition}
-                      className={classes.root}
                       onChange={(e) => setEdition(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                     <TextField
                       label="Book ISBN"
-                      variant="outlined"
                       value={bookISBN}
-                      className={classes.root}
                       onChange={(e) => setbookISBN(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                   </Stack>
                   <Stack direction="row" spacing={2}>
                     <TextField
                       label="Book Quantity"
-                      variant="outlined"
                       value={Qnty}
-                      className={classes.root}
                       onChange={(e) => setQnty(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                     <TextField
                       label="Book Language"
-                      variant="outlined"
                       value={lang}
-                      className={classes.root}
                       onChange={(e) => setlang(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                     <TextField
                       label="Book Weight in Grams"
-                      variant="outlined"
                       value={Weight}
-                      className={classes.root}
                       onChange={(e) => setWeight(e.target.value)}
                       fullWidth
+                      size="small"
                     />
                   </Stack>
                   <div>
                     <TextField
-                      className={classes.root}
                       label="Book Tags"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <TagIcon />
+                            <TagIcon sx={{ fontSize: "12px" }} />
                           </InputAdornment>
                         ),
                         endAdornment: (
                           <InputAdornment position="end">
                             {tagFieldChanges ? (
-                              <CircularProgress
-                                style={{
-                                  color: "rgba(0,0,0,0.6)",
-                                  height: "15px",
-                                  width: "15px",
-                                  marginRight: "15px",
-                                }}
-                              />
-                            ) : (
-                              <></>
-                            )}
+                              <CircularProgress size={15} />
+                            ) : null}
                           </InputAdornment>
                         ),
                       }}
-                      variant="outlined"
                       value={tag}
                       onChange={(e) => handelTagSearch(e)}
                       helperText="Press Enter key to Add the Tag"
@@ -551,14 +531,16 @@ const BookDetails = () => {
                         }
                       }}
                       autoComplete="false"
+                      size="small"
                     />
                     <ClickAwayListener
                       onClickAway={() => setOpenTagMenu(false)}
                     >
                       {openTagMenu ? (
-                        <div className="searchTagresult">
+                        <div className="admin-searchTagresult">
                           {resulttags.map((TAG, idx) => (
                             <MenuItem
+                              sx={{ fontSize: "12px" }}
                               id="result-tag"
                               title={TAG.tag}
                               key={idx}
@@ -575,16 +557,17 @@ const BookDetails = () => {
                     </ClickAwayListener>
                   </div>
                   <Stack
-                    direction={{
-                      xs: "column",
-                      sm: "row",
-                      lg: "row",
-                      md: "row",
-                    }}
+                    direction="row"
                     spacing={1}
                     alignItems="center"
                     justifyContent="flex-start"
                     flexWrap="wrap"
+                    sx={{
+                      padding: "5px",
+                      border: "1px solid rgba(0,0,0,0.2)",
+                      borderRadius: "10px",
+                      maxWidth: "50vw",
+                    }}
                   >
                     {tags.map((TAG, idx) => (
                       <Chip
@@ -593,7 +576,6 @@ const BookDetails = () => {
                         onDelete={() => handleTagDelete(TAG)}
                         color="primary"
                         size="small"
-                        className={classes.root}
                       />
                     ))}
                   </Stack>
@@ -631,13 +613,12 @@ const BookDetails = () => {
                     </FormControl>
                     <TextField
                       label="Book Video Link (Youtube)"
-                      variant="outlined"
                       value={link}
-                      className={classes.root}
                       onChange={(e) => setlink(e.target.value)}
                       fullWidth
                       sx={{ maxWidth: 400 }}
                       color="error"
+                      size="small"
                     />
                   </Stack>
                   <Stack direction="row" spacing={2}>
@@ -646,13 +627,16 @@ const BookDetails = () => {
                       loading={updating}
                       loadingPosition="end"
                       variant="contained"
-                      className={classes.root}
                       onClick={UpdateBook}
                     >
                       Update Book
                     </LoadingButton>
                     {alert.show ? (
-                      <Alert severity={alert.type} className={classes.root}>
+                      <Alert
+                        severity={alert.type}
+                        size="small"
+                        sx={{ padding: "0px 16px" }}
+                      >
                         {alert.msg}
                       </Alert>
                     ) : null}
@@ -663,7 +647,8 @@ const BookDetails = () => {
           </Stack>
         </Stack>
       )}
-    </>
+    </Stack>
   );
 };
+
 export default BookDetails;

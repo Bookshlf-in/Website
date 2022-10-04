@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 // Components
@@ -18,6 +18,11 @@ const AdminNavbar = () => {
   // States
   const [Panel, setPanel] = useState(Number(params.panel));
   const [openSideBar, setOpenSideBar] = useState(false);
+
+  // update panel when text param changes
+  useEffect(() => {
+    setPanel(Number(params.panel));
+  }, [params]);
 
   return (
     <Stack className="adminPanel-container">

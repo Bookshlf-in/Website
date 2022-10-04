@@ -9,7 +9,7 @@ import { Stack, Typography } from "@mui/material";
 
 // custom Components
 import SellerBooks from "./SellerBooks";
-import BookVerification from "./BookVerification";
+import BookVerification from "./BookVerification/BookVerification";
 
 const BookNavButton = ({ panel, setPanel, btnTxt, value }) => {
   const handleClick = () => {
