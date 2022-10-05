@@ -215,12 +215,12 @@ const SellerProfile = (props) => {
         <Stack direction="row" spacing={2}>
           <UpdateIcon />
           <p className={classes.root}>Last Updated : </p>
-          <p className={classes.root}>{sellerData.updatedAt.substr(0, 10)}</p>
+          <p className={classes.root}>{sellerData?.updatedAt?.substr(0, 10)}</p>
         </Stack>
         <Stack direction="row" spacing={2}>
           <TimeIcon />
           <p className={classes.root}>Joined : </p>
-          <p className={classes.root}>{sellerData.createdAt.substr(0, 10)}</p>
+          <p className={classes.root}>{sellerData?.createdAt?.substr(0, 10)}</p>
         </Stack>
       </Stack>
     </Box>

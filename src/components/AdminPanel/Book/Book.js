@@ -10,6 +10,7 @@ import { Stack, Typography } from "@mui/material";
 // custom Components
 import SellerBooks from "./SellerBooks";
 import BookVerification from "./BookVerification/BookVerification";
+import AdminFindBook from "./AdminFindBook";
 
 const BookNavButton = ({ panel, setPanel, btnTxt, value }) => {
   const handleClick = () => {
@@ -47,6 +48,12 @@ const BookNavBar = ({ panel, setPanel }) => {
           btnTxt="Seller Books"
           value={1}
         />
+        <BookNavButton
+          panel={panel}
+          setPanel={setPanel}
+          btnTxt="Find Book"
+          value={2}
+        />
       </Toolbar>
     </AppBar>
   );
@@ -57,7 +64,13 @@ const AdminBook = () => {
   return (
     <Stack spacing={1}>
       <BookNavBar panel={panel} setPanel={setPanel} />
-      {panel === 0 ? <BookVerification /> : <SellerBooks />}
+      {panel === 0 ? (
+        <BookVerification />
+      ) : panel === 1 ? (
+        <SellerBooks />
+      ) : (
+        <AdminFindBook />
+      )}
     </Stack>
   );
 };

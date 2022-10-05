@@ -40,6 +40,7 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
   const [updating, setupdating] = useState(false);
   const [showSellerDetails, setShowSellerDetails] = useState(false);
   const [showBookDetails, setShowBookDetails] = useState(true);
+  const [bookNotFound, setBookNotFound] = useState(false);
   const [alert, setalert] = useState({
     show: false,
     type: "info",
@@ -68,6 +69,8 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
   // Loading Book Details
   useEffect(() => {
     const fetchData = async () => {
+      setBookNotFound(false);
+      setLoad(true);
       axios
         .get("/admin-getBookDetails", {
           params: { bookId: bookId },
@@ -75,7 +78,7 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
         .then((response) => {
           console.log(response.data);
           setbook(response.data);
-          setbookName(response.data.title);
+          setbookName(response.data?.title);
           setbookDesc(response.data?.description);
           setAuthor(response.data?.author);
           setEdition(
@@ -111,9 +114,14 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
         })
         .catch((error) => {
           setLoad(false);
+          setBookNotFound(true);
         });
     };
-    fetchData();
+    if (bookId.length >= 24) {
+      fetchData();
+    } else {
+      setBookNotFound(true);
+    }
   }, [bookId]);
 
   // tag searching on input
@@ -297,9 +305,7 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
 
   const GoogleSearchBookTitle = (props) => {
     const handelClick = () => {
-      window
-        .open("//" + "google.com/search?q=" + props.title, "_blank")
-        .focus();
+      window.open("//google.com/search?q=" + props.title, "_blank").focus();
     };
     return (
       <IconButton size="small" color="error" onClick={handelClick}>
@@ -312,6 +318,10 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
     <Stack sx={{ minWidth: "50vw" }}>
       {Load ? (
         <LinearProgress sx={{ width: "100%" }} />
+      ) : bookNotFound ? (
+        <Alert severity="error" size="small" sx={{ padding: "0px 16px" }}>
+          No Book Found with given Book ID
+        </Alert>
       ) : (
         <Stack
           direction="column"

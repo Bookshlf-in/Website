@@ -32,9 +32,10 @@ const FetchedBook = ({ book }) => {
         cursor: "pointer",
         padding: "10px",
         position: "relative",
+        backgroundColor: book.status === "Deleted" ? "#ffc6c6" : "white",
       }}
     >
-      <AdminBookDelete bookId={book._id} />
+      {book.status !== "Deleted" ? <AdminBookDelete bookId={book._id} /> : null}
       <Stack
         direction="column"
         sx={{ padding: "5px", height: "100%" }}
@@ -53,37 +54,44 @@ const FetchedBook = ({ book }) => {
         </Typography>
         <Stack justifyContent="flex-end" sx={{ height: "100%" }} spacing={1}>
           <Stack spacing={1}>
+            {book.status === "Deleted" ? (
+              <Typography variant="caption">Book Deleted</Typography>
+            ) : null}
             <Chip
               icon={<RupeeIcon sx={{ fontSize: "1em !important" }} />}
               label={book.price}
               size="small"
               sx={{ fontSize: "0.7em" }}
             />
-            <Chip
-              icon={
-                book.isApproved ? (
-                  <CheckIcon sx={{ fontSize: "1em !important" }} />
-                ) : (
-                  <PendingIcon sx={{ fontSize: "1em !important" }} />
-                )
-              }
-              label={book.isApproved ? "Approved" : "Approval Pending"}
-              color={book.isApproved ? "success" : "warning"}
-              size="small"
-              sx={{ fontSize: "0.7em" }}
-            />
+            {book.status !== "Deleted" ? (
+              <Chip
+                icon={
+                  book.isApproved ? (
+                    <CheckIcon sx={{ fontSize: "1em !important" }} />
+                  ) : (
+                    <PendingIcon sx={{ fontSize: "1em !important" }} />
+                  )
+                }
+                label={book.isApproved ? "Approved" : "Approval Pending"}
+                color={book.isApproved ? "success" : "warning"}
+                size="small"
+                sx={{ fontSize: "0.7em" }}
+              />
+            ) : null}
           </Stack>
 
-          <Button
-            variant="outlined"
-            endIcon={<EditIcon sx={{ fontSize: "12px !important" }} />}
-            color="primary"
-            size="small"
-            sx={{ fontSize: "12px", textTransform: "none", lineHeight: 0 }}
-            onClick={() => setOpenBookDetails(true)}
-          >
-            Edit Book Details
-          </Button>
+          {book.status !== "Deleted" ? (
+            <Button
+              variant="outlined"
+              endIcon={<EditIcon sx={{ fontSize: "12px !important" }} />}
+              color="primary"
+              size="small"
+              sx={{ fontSize: "12px", textTransform: "none", lineHeight: 0 }}
+              onClick={() => setOpenBookDetails(true)}
+            >
+              Edit Book Details
+            </Button>
+          ) : null}
           <Drawer
             anchor="right"
             open={openBookDetails}
@@ -94,17 +102,21 @@ const FetchedBook = ({ book }) => {
               setOpenBookDetails={setOpenBookDetails}
             />
           </Drawer>
-          <AdminBookApprove bookId={book._id} />
-          <Button
-            variant="outlined"
-            endIcon={<RejectIcon sx={{ fontSize: "12px !important" }} />}
-            color="error"
-            size="small"
-            sx={{ fontSize: "12px", textTransform: "none", lineHeight: 0 }}
-            onClick={() => setOpenRejectBook(true)}
-          >
-            Reject Book
-          </Button>
+          {book.status !== "Approved" && book.status !== "Deleted" ? (
+            <AdminBookApprove bookId={book._id} />
+          ) : null}
+          {book.status !== "Deleted" ? (
+            <Button
+              variant="outlined"
+              endIcon={<RejectIcon sx={{ fontSize: "12px !important" }} />}
+              color="error"
+              size="small"
+              sx={{ fontSize: "12px", textTransform: "none", lineHeight: 0 }}
+              onClick={() => setOpenRejectBook(true)}
+            >
+              Reject Book
+            </Button>
+          ) : null}
           <Drawer
             anchor="bottom"
             open={openRejectBook}
@@ -116,44 +128,6 @@ const FetchedBook = ({ book }) => {
               setOpenRejectBook={setOpenRejectBook}
             />
           </Drawer>
-          {/* <Stack direction="row" spacing={1}>
-                      {!true ? (
-                        <LoadingButton
-                          loading={checkId === book._id ? true : false}
-                          loadingPosition="start"
-                          startIcon={<CheckIcon />}
-                          variant="outlined"
-                          onClick={() => ApproveBook(book._id)}
-                          color="success"
-                          size="small"
-                          disabled={
-                            book.status === "Approval rejected" ? true : false
-                          }
-                          sx={{ fontSize: "9px" }}
-                        >
-                          {checkId === book._id ? "Approving..." : "Approve"}
-                        </LoadingButton>
-                      ) : null}
-                      {!true ? (
-                        <LoadingButton
-                          loading={rejectId === book._id ? true : false}
-                          loadingPosition="start"
-                          startIcon={<CancelIcon />}
-                          variant="outlined"
-                          onClick={() => RejectBook(book, book._id)}
-                          color="warning"
-                          size="small"
-                          disabled={
-                            book.status === "Approval rejected" ? true : false
-                          }
-                          sx={{ fontSize: "9px" }}
-                        >
-                          {book.status === "Approval rejected"
-                            ? "Rejected"
-                            : "Reject"}
-                        </LoadingButton>
-                      ) : null}
-                    </Stack> */}
         </Stack>
       </Stack>
     </Paper>
