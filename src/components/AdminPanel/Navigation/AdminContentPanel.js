@@ -4,7 +4,7 @@ import { Stack } from "@mui/material";
 // Other Components
 import Books from "../Book/Book";
 import Seller from "../Sellers";
-import Orders from "../Orders";
+import Orders from "../Order/Orders";
 import Messages from "../Messages";
 import Profile from "../FindProfile";
 import Users from "../Users";
