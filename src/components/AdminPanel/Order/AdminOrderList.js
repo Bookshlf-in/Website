@@ -1,12 +1,11 @@
 import { React, useState, useContext } from "react";
-import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
-import { AdminContext } from "../../Context/adminContext";
-import axios from "../../axios";
+import { AdminContext } from "../../../Context/adminContext";
+import axios from "../../../axios";
 
 // components
 import { Stack, Button, Pagination, Chip } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Typography, Divider } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -18,26 +17,9 @@ import PendingIcon from "@mui/icons-material/AccessTimeRounded";
 import RupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 // micro components
-import CopyableText from "../MicroComponents/customCopyText";
+import CopyableText from "../../MicroComponents/customCopyText";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    fontFamily: "PT sans !important",
-    "& p": {
-      fontFamily: "PT sans !important",
-    },
-    "& ul": {
-      "& li": {
-        "& button": {
-          fontFamily: "PT sans !important",
-        },
-      },
-    },
-  },
-}));
-
-const GetOrderDetails = () => {
-  const classes = useStyles();
+const AdminOrderList = () => {
   const history = useHistory();
 
   const [admin, setAdmin] = useContext(AdminContext);
@@ -46,9 +28,11 @@ const GetOrderDetails = () => {
   const [orderLoad, setorderLoad] = useState(false);
 
   // data States
-  const [orderList, setorderList] = useState(admin.orderDetails.data);
-  const [page, setpage] = useState(admin.orderDetails.page);
-  const [totalPages, settotalPages] = useState(admin.orderDetails.totalPages);
+  const [orderList, setorderList] = useState(admin.order.orderDetails.data);
+  const [page, setpage] = useState(admin.order.orderDetails.page);
+  const [totalPages, settotalPages] = useState(
+    admin.order.orderDetails.totalPages
+  );
   const [orderstatus, setOrderStatus] = useState("Order placed");
 
   const [orderRevenue, setOrderRevenue] = useState(0);
@@ -70,6 +54,7 @@ const GetOrderDetails = () => {
       });
     return result;
   };
+
   const getAllSellerEarnings = async (orders) => {
     return await Promise.all(
       orders.map(async (order) => {
@@ -116,13 +101,31 @@ const GetOrderDetails = () => {
       .then((response) => {
         setAdmin({
           ...admin,
-          orderDetails: {
-            data: response.data.data,
-            page: pageNo,
-            totalPages: response.data.totalPages,
-            status: orderstatus,
+          order: {
+            ...admin.order,
+            orderDetails: {
+              data: response.data.data,
+              page: pageNo,
+              totalPages: response.data.totalPages,
+              status: orderstatus,
+            },
           },
         });
+        localStorage.setItem(
+          "bookshlf_admin",
+          JSON.stringify({
+            ...admin,
+            order: {
+              ...admin.order,
+              orderDetails: {
+                data: response.data.data,
+                page: pageNo,
+                totalPages: response.data.totalPages,
+                status: orderstatus,
+              },
+            },
+          })
+        );
         setorderLoad(false);
         setorderList(response.data.data);
         settotalPages(response.data.totalPages);
@@ -150,13 +153,13 @@ const GetOrderDetails = () => {
       "Dec",
     ];
     const dayNames = [
+      "Sunday",
       "Monday",
       "Tuesday",
       "Wednesday",
       "Thursday",
       "Friday",
       "Saturday",
-      "Sunday",
     ];
     const d = new Date(date);
     const newdate = d.getDate();
@@ -175,25 +178,27 @@ const GetOrderDetails = () => {
     return newDate;
   };
 
+  const ColTxt = ({ txt }) => {
+    return (
+      <Typography sx={{ fontSize: "11px" }} align="justify">
+        {txt}
+      </Typography>
+    );
+  };
+
   const columns = [
     {
       field: "orderDetail",
       headerName: "Order Detail",
-      width: 220,
+      width: 200,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack sx={{ whiteSpace: "normal", width: "100%" }} spacing={1}>
-            <Typography sx={{ fontSize: "11px" }} align="justify">
-              {cellValue.value[0]}
-            </Typography>
+            <ColTxt txt={cellValue.value[0]} />
             <CopyableText text={cellValue.value[1]} />
-            <Typography sx={{ fontSize: "11px" }} align="justify">
-              {"Weight : " + cellValue.value[2] + " g"}
-            </Typography>
-            <Typography sx={{ fontSize: "11px" }} align="justify">
-              {"Date : " + handleDate(cellValue.value[3])}
-            </Typography>
+            <ColTxt txt={"Weight : " + cellValue.value[2] + " g"} />
+            <ColTxt txt={"Date : " + handleDate(cellValue.value[3])} />
           </Stack>
         );
       },
@@ -201,44 +206,42 @@ const GetOrderDetails = () => {
     {
       field: "orderTotal",
       headerName: "Order Total",
-      width: 180,
+      width: 150,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack sx={{ width: "100%" }} spacing={1}>
             <Stack>
-              <Typography sx={{ fontSize: "11px" }}>Item Price</Typography>
+              <ColTxt txt="Item Price" />
               <Chip
-                icon={<RupeeIcon sx={{ height: 12, width: 12 }} />}
+                icon={<RupeeIcon sx={{ height: 10, width: 10 }} />}
                 label={cellValue.value[0]}
                 size="small"
                 variant="filled"
                 color="info"
-                sx={{ height: "20px", fontSize: "9px" }}
+                sx={{ height: "auto", fontSize: "10px", padding: "2px 0px" }}
               />
             </Stack>
             <Stack>
-              <Typography sx={{ fontSize: "11px" }}>
-                Shipping Charges
-              </Typography>
+              <ColTxt txt="Shipping Charges" />
               <Chip
-                icon={<RupeeIcon sx={{ height: 12, width: 12 }} />}
+                icon={<RupeeIcon sx={{ height: 10, width: 10 }} />}
                 label={cellValue.value[1]}
                 size="small"
                 variant="outlined"
                 color="default"
-                sx={{ height: "20px", fontSize: "9px" }}
+                sx={{ height: "auto", fontSize: "10px", padding: "2px 0px" }}
               />
             </Stack>
             <Stack>
-              <Typography sx={{ fontSize: "11px" }}>Order Total</Typography>
+              <ColTxt txt="Order Total" />
               <Chip
-                icon={<RupeeIcon sx={{ height: 12, width: 12 }} />}
+                icon={<RupeeIcon sx={{ height: 10, width: 10 }} />}
                 label={cellValue.value[2]}
                 size="small"
                 variant="filled"
                 color="success"
-                sx={{ height: "20px", fontSize: "9px" }}
+                sx={{ height: "auto", fontSize: "10px", padding: "2px 0px" }}
               />
             </Stack>
           </Stack>
@@ -248,53 +251,47 @@ const GetOrderDetails = () => {
     {
       field: "payment",
       headerName: "Payment",
-      width: 180,
+      width: 160,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack sx={{ width: "100%" }} spacing={1}>
             <Stack>
-              <Typography sx={{ fontSize: "11px" }}>Payment Mode</Typography>
+              <ColTxt txt="Payment Mode" />
               <Chip
-                sx={{ height: "20px", fontSize: "9px" }}
+                sx={{ height: "auto", fontSize: "10px", padding: "2px 0px" }}
                 label={cellValue.value[0]}
                 size="small"
                 color="default"
               />
             </Stack>
             <Stack>
-              <Typography sx={{ fontSize: "11px" }}>
-                Customer Payment
-              </Typography>
+              <ColTxt txt="Customer Payment" />
               <Chip
-                sx={{ height: "20px", fontSize: "9px" }}
+                sx={{ height: "auto", fontSize: "10px", padding: "2px 0px" }}
                 label={cellValue.value[1]}
                 size="small"
                 icon={
                   cellValue.value[1] === "Paid" ? (
-                    <CheckIcon sx={{ height: 12, width: 12 }} />
+                    <CheckIcon sx={{ height: 10, width: 10 }} />
                   ) : (
-                    <PendingIcon sx={{ height: 12, width: 12 }} />
+                    <PendingIcon sx={{ height: 10, width: 10 }} />
                   )
                 }
                 color={cellValue.value[1] === "Paid" ? "success" : "warning"}
               />
             </Stack>
             <Stack>
-              <Typography sx={{ fontSize: "11px" }}>Seller Payment</Typography>
+              <ColTxt txt="Seller Payment" />
               <Chip
-                sx={{ height: "20px", fontSize: "9px" }}
-                label={
-                  cellValue.value[2]
-                    ? "Paid to Seller"
-                    : "Pending Seller Payment"
-                }
+                sx={{ height: "auto", fontSize: "10px", padding: "2px 0px" }}
+                label={cellValue.value[2] ? "Paid" : "Pending"}
                 size="small"
                 icon={
                   cellValue.value[2] ? (
-                    <CheckIcon sx={{ height: 12, width: 12 }} />
+                    <CheckIcon sx={{ height: 10, width: 10 }} />
                   ) : (
-                    <PendingIcon sx={{ height: 12, width: 12 }} />
+                    <PendingIcon sx={{ height: 10, width: 10 }} />
                   )
                 }
                 color={cellValue.value[2] ? "success" : "warning"}
@@ -334,14 +331,12 @@ const GetOrderDetails = () => {
     {
       field: "customerContact",
       headerName: "Customer Contact",
-      width: 210,
+      width: 180,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack sx={{ width: "100%" }} spacing={1}>
-            <Typography sx={{ fontSize: "11px" }}>
-              {cellValue.value[0]}
-            </Typography>
+            <ColTxt txt={cellValue.value[0]} />
             <CopyableText text={cellValue.value[1]} />
             <CopyableText text={cellValue.value[2]} />
           </Stack>
@@ -351,14 +346,12 @@ const GetOrderDetails = () => {
     {
       field: "sellerContact",
       headerName: "Seller Contact",
-      width: 210,
+      width: 180,
       sortable: false,
       renderCell: (cellValue) => {
         return (
           <Stack sx={{ width: "100%" }} spacing={1}>
-            <Typography sx={{ fontSize: "11px" }}>
-              {cellValue.value[0]}
-            </Typography>
+            <ColTxt txt={cellValue.value[0]} />
             <CopyableText text={cellValue.value[1]} />
             <CopyableText text={cellValue.value[2]} />
           </Stack>
@@ -374,7 +367,6 @@ const GetOrderDetails = () => {
         return (
           <Stack spacing={2}>
             <Button
-              className={classes.root}
               size="small"
               onClick={() => history.push(`/AdminTrack/${link.value[0]}`)}
               variant="contained"
@@ -383,7 +375,6 @@ const GetOrderDetails = () => {
               {`Update & Track`}
             </Button>
             <Button
-              className={classes.root}
               size="small"
               href={link.value[1]}
               target="_blank"
@@ -420,6 +411,7 @@ const GetOrderDetails = () => {
         order.sellerName,
         order.sellerId,
         order.sellerAddress.phoneNo,
+        order.sellerAddress?.altPhoneNo,
       ],
       trackOrder: [order._id, order?.externalTrackingLink],
     };
@@ -427,32 +419,34 @@ const GetOrderDetails = () => {
 
   return (
     <Stack
-      direction="column"
-      spacing={2}
+      direction="row"
+      spacing={1}
       sx={{
         height: "1660px",
         width: "100%",
-        padding: "10px",
+        padding: "0px 10px",
       }}
-      justifyContent="center"
-      alignItems="center"
       className="admin-orders"
+      divider={<Divider flexItem orientation="vertical" />}
     >
-      <Stack direction="row" spacing={2}>
+      <Stack spacing={2} sx={{ maxWidth: 150 }}>
         <LoadingButton
           loading={orderLoad}
           loadingPosition="start"
           startIcon={<LoadIcon />}
-          variant="contained"
+          variant="outlined"
           size="small"
-          className={classes.root}
-          color="success"
+          color="primary"
           onClick={() => GetOrderList(1, orderstatus)}
         >
-          Fetch Order List
+          Order List
         </LoadingButton>
-        <FormControl variant="filled" sx={{ m: 1, minWidth: 150 }} size="small">
-          <InputLabel id="order-status" className={classes.root}>
+        <FormControl
+          variant="outlined"
+          sx={{ m: 1, minWidth: 150 }}
+          size="small"
+        >
+          <InputLabel id="order-status" sx={{ fontSize: "12px" }}>
             Order Status
           </InputLabel>
           <Select
@@ -462,17 +456,33 @@ const GetOrderDetails = () => {
               GetOrderList(page, e.target.value);
             }}
             label="Order Status"
-            className={classes.root}
             size="small"
+            sx={{ fontSize: "12px" }}
           >
-            <MenuItem value="Order placed">Placed</MenuItem>
-            <MenuItem value="Order Confirmed">Confirmed</MenuItem>
-            <MenuItem value="Packed">Packed</MenuItem>
-            <MenuItem value="Shipped">Shipped</MenuItem>
-            <MenuItem value="Delivered">Delivered</MenuItem>
-            <MenuItem value="RTO">RTO</MenuItem>
-            <MenuItem value="Returned">Returned</MenuItem>
-            <MenuItem value="Cancelled">Cancelled</MenuItem>
+            <MenuItem value="Order placed" sx={{ fontSize: "12px" }}>
+              Placed
+            </MenuItem>
+            <MenuItem value="Order Confirmed" sx={{ fontSize: "12px" }}>
+              Confirmed
+            </MenuItem>
+            <MenuItem value="Packed" sx={{ fontSize: "12px" }}>
+              Packed
+            </MenuItem>
+            <MenuItem value="Shipped" sx={{ fontSize: "12px" }}>
+              Shipped
+            </MenuItem>
+            <MenuItem value="Delivered" sx={{ fontSize: "12px" }}>
+              Delivered
+            </MenuItem>
+            <MenuItem value="RTO" sx={{ fontSize: "12px" }}>
+              RTO
+            </MenuItem>
+            <MenuItem value="Returned" sx={{ fontSize: "12px" }}>
+              Returned
+            </MenuItem>
+            <MenuItem value="Cancelled" sx={{ fontSize: "12px" }}>
+              Cancelled
+            </MenuItem>
           </Select>
         </FormControl>
         {/* ======================= Stats ====================== */}
@@ -482,12 +492,12 @@ const GetOrderDetails = () => {
           startIcon={<LoadIcon />}
           variant="contained"
           size="small"
-          className={classes.root}
           color="primary"
           onClick={() => CalculateStats(orderList)}
+          sx={{ textTransform: "none" }}
           disabled={orderstatus !== "Delivered"}
         >
-          Calculate Statistics
+          Get Stats
         </LoadingButton>
         <Stack
           sx={{
@@ -496,45 +506,51 @@ const GetOrderDetails = () => {
             padding: "5px 10px",
           }}
         >
-          <Typography sx={{ fontSize: "11px", fontFamily: "Monospace" }}>
-            <strong>Revenue : </strong>
-            {orderRevenue}
+          <Typography sx={{ fontSize: "11px" }}>
+            Revenue : {Math.round(orderRevenue, 2)}
           </Typography>
-          <Typography sx={{ fontSize: "11px", fontFamily: "Monospace" }}>
-            <strong>Profits : </strong> {orderProfit}
+          <Typography sx={{ fontSize: "11px" }}>
+            Profits : {Math.round(orderProfit, 2)}
           </Typography>
         </Stack>
         {/* ====================================================== */}
       </Stack>
-      <Pagination
-        count={totalPages}
-        page={page}
-        onChange={(e, pageNo) => {
-          GetOrderList(pageNo, orderstatus);
-        }}
-        color="primary"
-        className={classes.root}
-      />
-      <DataGrid
-        sx={{
-          width: "100%",
-          padding: "10px",
-        }}
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowBuffer={4}
-        rowHeight={145}
-        className={classes.root}
-        loading={orderLoad}
-        hideFooter
-        hideFooterPagination
-        disableColumnFilter
-        disableColumnMenu
-        disableColumnSelection
-      />
+      <Stack
+        sx={{ flexGrow: 1 }}
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={(e, pageNo) => {
+            GetOrderList(pageNo, orderstatus);
+          }}
+          color="primary"
+          size="small"
+          shape="rounded"
+        />
+        <DataGrid
+          sx={{
+            width: "100%",
+            padding: 0,
+          }}
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowBuffer={4}
+          rowHeight={145}
+          loading={orderLoad}
+          hideFooter
+          hideFooterPagination
+          disableColumnFilter
+          disableColumnMenu
+          disableColumnSelection
+        />
+      </Stack>
     </Stack>
   );
 };
 
-export default GetOrderDetails;
+export default AdminOrderList;

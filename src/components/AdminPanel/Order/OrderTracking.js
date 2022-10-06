@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "../../axios";
+import axios from "../../../axios";
 
 // components
 import { Stack, Chip, Avatar, Typography } from "@mui/material";
@@ -18,8 +18,8 @@ import RupeeIcon from "@mui/icons-material/CurrencyRupeeRounded";
 import WeightIcon from "@mui/icons-material/FitnessCenter";
 
 // Micro Components
-import SendMail from "../MicroComponents/Mail";
-import CopyableText from "../MicroComponents/customCopyText";
+import SendMail from "../../MicroComponents/Mail";
+import CopyableText from "../../MicroComponents/customCopyText";
 
 const getSteps = () => {
   return ["Order Placed", "Order Shipped", "Order En Route", "Order Delivered"];

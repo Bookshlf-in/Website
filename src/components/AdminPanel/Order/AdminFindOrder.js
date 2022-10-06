@@ -1,12 +1,11 @@
 import { React, useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "../../axios";
+import axios from "../../../axios";
 
 // Components
-import { Stack } from "@mui/material";
+import { Stack, Typography, Chip, Divider } from "@mui/material";
 import { TextField, Button, CircularProgress } from "@mui/material";
 import { InputAdornment, IconButton } from "@mui/material";
-import { Typography, Chip } from "@mui/material";
 // Icons
 import IDIcon from "@mui/icons-material/Notes";
 import CheckIcon from "@mui/icons-material/Check";
@@ -14,9 +13,35 @@ import CloseIcon from "@mui/icons-material/Close";
 import PendingIcon from "@mui/icons-material/Pending";
 import SearchIcon from "@mui/icons-material/Search";
 
-const GetOrderDetails = () => {
+const ListItem = ({ head, body, orderId }) => {
   const history = useHistory();
+  return (
+    <Stack
+      spacing={1}
+      sx={{
+        padding: "10px",
+        border: "1px solid rgba(0,0,0,0.2)",
+        borderRadius: "5px",
+        width: "100%",
+      }}
+    >
+      <Typography variant="body2">{head}</Typography>
+      <Typography variant="caption">{body}</Typography>
+      {orderId.length === 24 ? (
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => history.push(`/AdminTrack/${orderId}`)}
+          sx={{ maxWidth: 250 }}
+        >
+          Get Full Order Details
+        </Button>
+      ) : null}
+    </Stack>
+  );
+};
 
+const AdminFindOrder = () => {
   // Data States
   const [order, setOrder] = useState(null);
   const [orderId, setOrderId] = useState("");
@@ -46,7 +71,6 @@ const GetOrderDetails = () => {
       .then((response) => {
         setLoading(false);
         setOrder(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -57,30 +81,35 @@ const GetOrderDetails = () => {
 
   return (
     <Stack
-      sx={{ padding: "24px" }}
+      sx={{ padding: "0px 10px" }}
       spacing={2}
       justifyContent="center"
-      alignItems="center"
+      direction="row"
+      divider={<Divider flexItem orientation="vertical" />}
     >
-      <Stack spacing={2} sx={{ width: "400px" }}>
+      <Stack spacing={2} sx={{ width: "300px" }}>
+        <Typography>Find Order</Typography>
         <TextField
           label="Order ID"
           type="text"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <IDIcon size="small" color={isError ? "error" : "primary"} />
+                <IDIcon
+                  sx={{ fontSize: "12px" }}
+                  color={isError ? "error" : "primary"}
+                />
               </InputAdornment>
             ),
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton size="small">
                   {isError ? (
-                    <CloseIcon color="error" />
+                    <CloseIcon sx={{ fontSize: "12px" }} color="error" />
                   ) : isValid ? (
-                    <CheckIcon color="success" />
+                    <CheckIcon sx={{ fontSize: "12px" }} color="success" />
                   ) : (
-                    <PendingIcon color="warning" />
+                    <PendingIcon sx={{ fontSize: "12px" }} color="warning" />
                   )}
                 </IconButton>
               </InputAdornment>
@@ -93,7 +122,6 @@ const GetOrderDetails = () => {
               ? "Valid Order ID Found"
               : "Enter 24 digit Order ID"
           }
-          variant="outlined"
           error={isError}
           color={isValid ? "success" : "primary"}
           fullWidth
@@ -101,6 +129,7 @@ const GetOrderDetails = () => {
           onChange={(e) => handleChange(e.target.value)}
           size="small"
           focused={isValid}
+          sx={{ "& div": { "& input": { fontSize: "12px !important" } } }}
         />
         <Button
           size="small"
@@ -115,48 +144,24 @@ const GetOrderDetails = () => {
             )
           }
         >
-          Get Order Details
+          Find Order
         </Button>
       </Stack>
-      <Stack
-        direction="row"
-        spacing={2}
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Stack
-          spacing={1}
-          sx={{
-            width: "400px",
-            border: "1px solid black",
-            borderRadius: "10px",
-            padding: "10px",
-          }}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Typography variant="h6">Order</Typography>
-          <Typography>{order?.title}</Typography>
-          <Typography>{order?.orderTotal}</Typography>
-          <Typography>
-            Seller Payment Status :
-            {order?.isSellerPaid ? (
-              <Chip label="Paid" size="small" />
-            ) : (
-              <Chip label="Pending" size="small" />
-            )}
-          </Typography>
-          <Chip label={order?.status[order?.status.length - 1]} />
-          <Button
-            onClick={() => history.push(`/AdminTrack/${orderId}`)}
-            variant="contained"
-          >
-            Get Full Order Details
-          </Button>
-        </Stack>
+
+      <Stack spacing={1} sx={{ flexGrow: 1 }}>
+        <Typography>Found Results</Typography>
+        {order ? (
+          <ListItem
+            head={order.title}
+            body={order.orderTotal}
+            orderId={orderId}
+          />
+        ) : (
+          <ListItem head={"Nothing to show here"} body={""} orderId={""} />
+        )}
       </Stack>
     </Stack>
   );
 };
 
-export default GetOrderDetails;
+export default AdminFindOrder;

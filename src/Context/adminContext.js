@@ -13,7 +13,10 @@ export const CurrentAdminProvider = (props) => {
       page: 1,
       noOfBooksInOnePage: 24,
     },
-    orderDetails: { data: [], page: 1, totalPages: 0 },
+    order: {
+      panel: 0,
+      orderDetails: { data: [], page: 1, totalPages: 0 },
+    },
   });
 
   useEffect(() => {

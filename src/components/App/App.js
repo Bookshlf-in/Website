@@ -22,7 +22,7 @@ import SearchResult from "../SearchResult/SearchPanel";
 import BookDetails from "../BookDetails/BookDetails";
 import Admin from "../AdminPanel/AdminPanel";
 import Blog from "../Blog/Blog";
-import AdminTrack from "../AdminPanel/OrderTracking";
+import AdminTrack from "../AdminPanel/Order/OrderTracking";
 import SellerProfile from "../SellerPanel/SellerProfile";
 import Wallet from "../Wallet/Wallet";
 import Terms from "../Footer/Terms";
@@ -101,15 +101,6 @@ const App = () => {
           <Route path="/Admin/:panel">
             <Admin />
           </Route>
-          <Route path="/AdminCourier/Icarry/:orderId">
-            <ICarry />
-          </Route>
-          <Route path="/AdminCourier/Nimbuspost/:orderId">
-            <Nimbuspost />
-          </Route>
-          <Route path="/AdminCourier/EnviaShipping/:orderId">
-            <EnviaShipping />
-          </Route>
           <Route path="/SellerProfile/:sellerId">
             <Navbar />
             <SellerProfile />
@@ -125,6 +116,18 @@ const App = () => {
             <Navbar />
             <Wallet />
           </Route>
+
+          {/* External Courier Paths */}
+          <Route path="/AdminCourier/Icarry/:orderId">
+            <ICarry />
+          </Route>
+          <Route path="/AdminCourier/Nimbuspost/:orderId">
+            <Nimbuspost />
+          </Route>
+          <Route path="/AdminCourier/EnviaShipping/:orderId">
+            <EnviaShipping />
+          </Route>
+          {/* ========================= */}
           <Route path="/" component={Home} exact />
           <Route component={NotFoundPage} status={404} />
         </Switch>

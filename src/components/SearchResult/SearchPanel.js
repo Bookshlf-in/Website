@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
@@ -13,6 +13,9 @@ import { InputLabel, MenuItem, FormControl } from "@mui/material";
 import SearchBar from "./Searchbar";
 import BookshlfLoader from "../MicroComponents/BookshlfLoader";
 import SearchBook from "./SearchBook";
+
+// Context
+import { GlobalContext } from "../../Context/pageSearchContext";
 
 // Use Styles
 const useStyles = makeStyles(() => ({
@@ -43,6 +46,8 @@ const booksperpage =
     : 18;
 
 const Search = () => {
+  // context state
+  const { globalState, globalDispatch } = React.useContext(GlobalContext);
   // Calling Hooks
   const classes = useStyles();
   const params = useParams();
@@ -54,20 +59,29 @@ const Search = () => {
   const [books, setbooks] = useState([]);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(1);
-  const [filter, setFilter] = useState(0);
+  const [filter, setFilter] = useState(
+    globalState.tag_id ? globalState.tag_id : 0
+  );
   const [filterParams, setFilterParams] = useState({
     q: params.query,
     noOfBooksInOnePage: booksperpage,
-    page: page,
+    page: globalState.page ? globalState.page : 1,
+    ...globalState.tag,
   });
 
   useEffect(() => {
     const fetchdata = async () => {
       setLoading(true);
-      setpage(1);
-      const newQuery = { ...filterParams, q: params.query, page: 1 };
-      delete newQuery?.sortByDate;
-      delete newQuery?.sortByPrice;
+      setpage(globalState.page ? globalState.page : 1);
+      const newQuery = {
+        ...filterParams,
+        q: params.query,
+        page: globalState.page ? globalState.page : 1,
+      };
+      if (!globalState.tag) {
+        delete newQuery?.sortByDate;
+        delete newQuery?.sortByPrice;
+      }
       makeRequest(newQuery);
     };
     fetchdata();
@@ -100,12 +114,20 @@ const Search = () => {
   // changing Page
   const changePage = (pageNo) => {
     setpage(pageNo);
+    globalDispatch({
+      type: "SET_PAGE",
+      payload: pageNo,
+    });
     setFilterParams({ ...filterParams, page: pageNo });
   };
 
   // changing Filter
   const handelFilterChange = (e) => {
     setFilter(e.target.value);
+    globalDispatch({
+      type: "SET_TAG_ID",
+      payload: e.target.value,
+    });
     switch (e.target.value) {
       case 0:
         setFilterParams((prev) => {
@@ -114,12 +136,20 @@ const Search = () => {
           delete Filter?.sortByPrice;
           return Filter;
         });
+        globalDispatch({
+          type: "SET_TAG",
+          payload: "",
+        });
         break;
       case 1:
         setFilterParams((prev) => {
           const Filter = { ...prev, sortByPrice: "asc" };
           delete Filter?.sortByDate;
           return Filter;
+        });
+        globalDispatch({
+          type: "SET_TAG",
+          payload: { sortByPrice: "asc" },
         });
         break;
       case 2:
@@ -128,6 +158,10 @@ const Search = () => {
           delete Filter?.sortByPrice;
           return Filter;
         });
+        globalDispatch({
+          type: "SET_TAG",
+          payload: { sortByDate: "desc" },
+        });
         break;
       case 3:
         setFilterParams((prev) => {
@@ -135,12 +169,20 @@ const Search = () => {
           delete Filter?.sortByDate;
           return Filter;
         });
+        globalDispatch({
+          type: "SET_TAG",
+          payload: { sortByPrice: "desc" },
+        });
         break;
       case 4:
         setFilterParams((prev) => {
           const Filter = { ...prev, sortByDate: "asc" };
           delete Filter?.sortByPrice;
           return Filter;
+        });
+        globalDispatch({
+          type: "SET_TAG",
+          payload: { sortByDate: "asc" },
         });
         break;
     }

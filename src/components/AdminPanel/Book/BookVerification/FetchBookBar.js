@@ -35,7 +35,6 @@ const FetchBookBar = () => {
 
   // fetchings book lists
   const getBooks = async (pageNo, isApproved, noOfBooksInOnePage) => {
-    console.log(pageNo, page);
     setLoad(true);
     axios
       .get("/admin-getBookList", {
