@@ -6,12 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 import { CurrentUserProvider } from "./Context/userContext";
 import { CurrentAdminProvider } from "./Context/adminContext";
 import { HelmetProvider } from "react-helmet-async";
+import { GlobalContextProvider } from "./Context/pageSearchContext";
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
       <CurrentUserProvider>
         <CurrentAdminProvider>
-          <App />
+          <GlobalContextProvider>
+            <App />
+          </GlobalContextProvider>
         </CurrentAdminProvider>
       </CurrentUserProvider>
     </HelmetProvider>

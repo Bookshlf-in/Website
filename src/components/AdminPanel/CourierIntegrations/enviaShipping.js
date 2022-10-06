@@ -12,9 +12,9 @@ import { Grid, Chip, CircularProgress } from "@mui/material";
 import RupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const enviaTestURL = {
-  rate: "/proxy/https://api-test.envia.com/ship/rate/",
-  courierList: "/proxy/https://queries-test.envia.com/available-carrier/IN/0",
-  createShipment: "/proxy/https://api-test.envia.com/ship/generate/",
+  rate: "/proxy/https://api.envia.com/ship/rate/",
+  courierList: "/proxy/https://queries.envia.com/available-carrier/IN/0",
+  createShipment: "/proxy/https://api.envia.com/ship/generate/",
 };
 
 const EnviaShipping = () => {
