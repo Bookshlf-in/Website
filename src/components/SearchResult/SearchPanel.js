@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { makeStyles } from "@mui/styles";
+
+// User Context
+import { UserContext } from "../../Context/userContext";
+
+// API
 import axios from "../../axios";
 
 // Components
@@ -14,28 +18,6 @@ import SearchBar from "./Searchbar";
 import BookshlfLoader from "../MicroComponents/BookshlfLoader";
 import SearchBook from "./SearchBook";
 
-// Context
-import { GlobalContext } from "../../Context/pageSearchContext";
-
-// Use Styles
-const useStyles = makeStyles(() => ({
-  root: {
-    fontSize: "12px",
-    "& li": {
-      marginLeft: "3px",
-      "& button": {
-        fontFamily: "PT sans !important",
-      },
-    },
-    "& div": {
-      fontSize: "12px !important",
-    },
-    "& label": {
-      fontSize: "12px !important",
-    },
-  },
-}));
-
 const booksperpage =
   window.innerWidth <= 400
     ? 5
@@ -46,65 +28,50 @@ const booksperpage =
     : 18;
 
 const Search = () => {
-  // context state
-  const { globalState, globalDispatch } = React.useContext(GlobalContext);
+  // user
+  const [user, setUser] = useContext(UserContext);
+
   // Calling Hooks
-  const classes = useStyles();
   const params = useParams();
 
   // Functionality States
   const [Loading, setLoading] = useState(false);
 
   // Data states
-  const [books, setbooks] = useState([]);
-  const [page, setpage] = useState(1);
-  const [totalPages, settotalPages] = useState(1);
-  const [filter, setFilter] = useState(
-    globalState.tag_id ? globalState.tag_id : 0
-  );
+  const [books, setbooks] = useState(user?.Search?.data);
+  const [page, setpage] = useState(user?.Search?.page);
+  const [totalPages, settotalPages] = useState(user?.Search?.totalPages);
+  const [filter, setFilter] = useState(0);
   const [filterParams, setFilterParams] = useState({
     q: params.query,
     noOfBooksInOnePage: booksperpage,
-    page: globalState.page ? globalState.page : 1,
-    ...globalState.tag,
+    page: user?.Search?.page ? user?.Search?.page : 1,
   });
 
   useEffect(() => {
-    const fetchdata = async () => {
-      setLoading(true);
-      setpage(globalState.page ? globalState.page : 1);
-      const newQuery = {
-        ...filterParams,
-        q: params.query,
-        page: globalState.page ? globalState.page : 1,
-      };
-      if (!globalState.tag) {
-        delete newQuery?.sortByDate;
-        delete newQuery?.sortByPrice;
-      }
-      makeRequest(newQuery);
-    };
-    fetchdata();
-  }, [params.query]);
+    makeRequest();
+  }, [params.query, filterParams]);
 
-  useEffect(() => {
-    const fetchdata = async () => {
-      setLoading(true);
-      makeRequest(filterParams);
-    };
-    fetchdata();
-  }, [filterParams]);
-
-  const makeRequest = (params) => {
-    setFilterParams(params);
+  const makeRequest = () => {
+    setLoading(true);
+    setpage(user?.Search?.page ? user?.Search?.page : 1);
     axios
       .get("/search", {
-        params: params,
+        params: filterParams,
       })
       .then((response) => {
         setbooks(response.data.data);
         settotalPages(response.data.totalPages);
         setLoading(false);
+        setUser({
+          ...user,
+          Search: {
+            ...user.Search,
+            data: response.data.data,
+            page: user?.Search?.page ? user?.Search?.page : 1,
+            totalPages: response.data.totalPages,
+          },
+        });
       })
       .catch((error) => {
         setLoading(false);
@@ -114,20 +81,13 @@ const Search = () => {
   // changing Page
   const changePage = (pageNo) => {
     setpage(pageNo);
-    globalDispatch({
-      type: "SET_PAGE",
-      payload: pageNo,
-    });
     setFilterParams({ ...filterParams, page: pageNo });
+    setUser({ ...user, Search: { ...user.Search, page: pageNo } });
   };
 
   // changing Filter
   const handelFilterChange = (e) => {
     setFilter(e.target.value);
-    globalDispatch({
-      type: "SET_TAG_ID",
-      payload: e.target.value,
-    });
     switch (e.target.value) {
       case 0:
         setFilterParams((prev) => {
@@ -136,20 +96,12 @@ const Search = () => {
           delete Filter?.sortByPrice;
           return Filter;
         });
-        globalDispatch({
-          type: "SET_TAG",
-          payload: "",
-        });
         break;
       case 1:
         setFilterParams((prev) => {
           const Filter = { ...prev, sortByPrice: "asc" };
           delete Filter?.sortByDate;
           return Filter;
-        });
-        globalDispatch({
-          type: "SET_TAG",
-          payload: { sortByPrice: "asc" },
         });
         break;
       case 2:
@@ -158,10 +110,6 @@ const Search = () => {
           delete Filter?.sortByPrice;
           return Filter;
         });
-        globalDispatch({
-          type: "SET_TAG",
-          payload: { sortByDate: "desc" },
-        });
         break;
       case 3:
         setFilterParams((prev) => {
@@ -169,20 +117,12 @@ const Search = () => {
           delete Filter?.sortByDate;
           return Filter;
         });
-        globalDispatch({
-          type: "SET_TAG",
-          payload: { sortByPrice: "desc" },
-        });
         break;
       case 4:
         setFilterParams((prev) => {
           const Filter = { ...prev, sortByDate: "asc" };
           delete Filter?.sortByPrice;
           return Filter;
-        });
-        globalDispatch({
-          type: "SET_TAG",
-          payload: { sortByDate: "asc" },
         });
         break;
     }
@@ -205,35 +145,19 @@ const Search = () => {
         className="search-book-container"
       >
         <SearchBar />
-        <FormControl
-          fullWidth
-          className={classes.root}
-          color="success"
-          variant="standard"
-          size="small"
-        >
-          <InputLabel id="demo-simple-select-label">Filter Books</InputLabel>
+        <FormControl fullWidth color="success" variant="standard" size="small">
+          <InputLabel id="search-filter">Filter Books</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
+            labelId="search-filter"
             value={filter}
             label="Filter Books"
             onChange={handelFilterChange}
           >
-            <MenuItem value={0} className={classes.root}>
-              Default
-            </MenuItem>
-            <MenuItem value={1} className={classes.root}>
-              Price Low to High
-            </MenuItem>
-            <MenuItem value={2} className={classes.root}>
-              Newest
-            </MenuItem>
-            <MenuItem value={3} className={classes.root}>
-              Price High to Low
-            </MenuItem>
-            <MenuItem value={4} className={classes.root}>
-              Oldest
-            </MenuItem>
+            <MenuItem value={0}>Default</MenuItem>
+            <MenuItem value={1}>Price Low to High</MenuItem>
+            <MenuItem value={2}>Newest</MenuItem>
+            <MenuItem value={3}>Price High to Low</MenuItem>
+            <MenuItem value={4}>Oldest</MenuItem>
           </Select>
         </FormControl>
         {!Loading ? (
@@ -243,7 +167,7 @@ const Search = () => {
             justifyContent="center"
             sx={{ paddingRight: "16px" }}
           >
-            {books.length
+            {books && books.length
               ? books.map((book) => (
                   <Grid item xs={12} sm={4} md={3} lg={2} key={book._id}>
                     <SearchBook book={book} />
@@ -256,14 +180,13 @@ const Search = () => {
                 justifyContent="center"
                 alignItems="center"
               >
-                {books.length ? (
+                {books && books.length ? (
                   <Pagination
                     variant="outlined"
                     color="warning"
                     size="small"
                     page={page}
                     count={totalPages}
-                    className={classes.root}
                     showFirstButton
                     showLastButton
                     onChange={(e, pageNo) => changePage(pageNo)}

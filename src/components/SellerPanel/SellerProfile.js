@@ -173,17 +173,16 @@ const SellerProfile = (props) => {
                       alt={seller.name}
                       sx={{ height: 100, width: 100 }}
                     />
-                    {seller.isVerified ? (
+                    {seller.isVerified && (
                       <Chip
-                        label={seller.isVerified ? "Verified" : "Not Verified"}
-                        color={seller.isVerified ? "success" : "error"}
+                        className={classes.root}
+                        icon={<CheckIcon />}
+                        label="Verified"
+                        color="success"
                         size="small"
-                        variant="outlined"
-                        icon={
-                          seller.isVerified ? <CheckIcon /> : <CancelIcon />
-                        }
+                        variant="filled"
                       />
-                    ) : null}
+                    )}
                     <Chip
                       label={seller._id}
                       color="primary"

@@ -119,14 +119,13 @@ const SellerProfile = (props) => {
             sx={{ width: 56, height: 56 }}
             src={sellerData.photo}
           />
-          {sellerData.isVerified && <Chip
-            className={classes.root}
-            icon={<CheckIcon />}
-            label="Verified"
-            color="success"
+          <Chip
+            label={sellerData.IsVerified ? "Verified" : "Not Verified"}
+            color={sellerData.IsVerified ? "success" : "error"}
             size="small"
-            variant="filled"
-          />}
+            variant="outlined"
+            icon={sellerData.IsVerified ? <CheckIcon /> : <CancelIcon />}
+          />
         </Stack>
         <Stack direction="row" spacing={2}>
           <PersonIcon />
