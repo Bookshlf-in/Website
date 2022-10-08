@@ -1,4 +1,4 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { UserContext } from "../../Context/userContext";
 import axios from "../../axios";
 
@@ -12,53 +12,84 @@ import { Collapse, CircularProgress, Alert } from "@mui/material";
 import NameIcon from "@mui/icons-material/Person";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
+import SubjectIcon from "@mui/icons-material/Subject";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 // Contact Component
 const Contact = () => {
+  // User Context
   const [user] = useContext(UserContext);
-  const [isLoggedIn, setisLoggedIn] = useState(user !== null);
+
+  // loader states
+  const [isLoggedIn] = useState(!!user);
   const [Load, setLoad] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [errorParam, setErrorParam] = useState([]);
 
-  const [queryType, setQueryType] = useState("");
-  const [orderId, setOrderId] = useState("");
-  const [number, setNumber] = useState("");
-
+  // data states
+  const [userProfile, setUserProfile] = useState({});
+  const [alert, setAlert] = useState({});
   const [msgParam, setMsgParam] = useState({
     name: "",
     email: "",
     subject: "",
+    phoneNo: "",
+    queryType: "GENERAL",
     message: "",
   });
 
-  const [alertMsg, setAlertMsg] = useState("");
-  const [open, setOpen] = useState(false);
-
-  const handleQueryChange = (e) => {
-    setQueryType(e.target.value);
-    setOpen(true);
+  const getUserProfile = () => {
+    axios.get("/getUserProfile").then((response) => {
+      setUserProfile(response.data);
+      setMsgParam({
+        ...msgParam,
+        name: response.data.name,
+        email: response.data.email,
+      });
+    });
   };
+
+  useEffect(() => {
+    if (user) {
+      getUserProfile();
+    }
+  }, [user]);
 
   const sendMessage = () => {
     setLoad(true);
-    if (msgParam.subject === "Order Help")
-      msgParam.message = `orderID : ${orderId}` + " " + msgParam.message;
-    msgParam.message = `Ph : ${number}` + " " + msgParam.message;
-
     console.log(msgParam);
     axios
       .post("/sendMessage", msgParam)
       .then((res) => {
         setLoad(false);
-        setAlertMsg("Message Sent Succesfully!");
+        setAlert({
+          show: true,
+          type: true,
+          msg: "Message Sent Succesfully!",
+        });
         setOpen(false);
+        setErrorParam([]);
+        checkError("");
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err.response.data.errors);
+        setErrorParam(err.response.data.errors);
         setLoad(false);
-        setAlertMsg("ERR");
+        setAlert({
+          show: true,
+          type: false,
+          msg: "Please try again",
+        });
       });
+  };
+
+  const handleChange = (e) => {
+    setMsgParam({ ...msgParam, [e.target.name]: e.target.value });
+  };
+
+  const checkError = (param) => {
+    return errorParam.find((error) => error.param === param) !== undefined;
   };
 
   return (
@@ -74,7 +105,7 @@ const Contact = () => {
       <Stack
         sx={{
           bgcolor: "rgb(2,4,74)",
-          height: "100%",
+          minHeight: "calc(100vh - 78px)",
           width: "100%",
           maxWidth: "1366px",
           borderRadius: "25px",
@@ -170,7 +201,7 @@ const Contact = () => {
         </Stack>
         <Stack
           sx={{
-            bgcolor: "rgb(255,255,255)",
+            bgcolor: "rgba(255,255,255)",
             padding: "25px",
             borderRadius: "15px",
             width: "100%",
@@ -178,42 +209,57 @@ const Contact = () => {
           }}
           spacing={2}
         >
-          {!isLoggedIn ? (
-            <>
-              <TextField
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <NameIcon sx={{ fontSize: 12 }} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Name"
-                sx={{ minWidth: 300 }}
-                onChange={(e) =>
-                  setMsgParam({ ...msgParam, name: e.target.value })
-                }
-                value={msgParam.name}
-              />
-              <TextField
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <MailIcon sx={{ fontSize: 12 }} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Mail"
-                sx={{ minWidth: 300 }}
-                onChange={(e) =>
-                  setMsgParam({ ...msgParam, email: e.target.value })
-                }
-                value={msgParam.email}
-              />
-            </>
-          ) : null}
+          <TextField
+            variant="outlined"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <NameIcon sx={{ fontSize: 12 }} />
+                </InputAdornment>
+              ),
+            }}
+            label="Name"
+            sx={{ minWidth: 300 }}
+            onChange={handleChange}
+            name="name"
+            value={msgParam?.name}
+            disabled={isLoggedIn}
+            error={checkError("name")}
+          />
+          <TextField
+            type="email"
+            variant="outlined"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <MailIcon sx={{ fontSize: 12 }} />
+                </InputAdornment>
+              ),
+            }}
+            label="Mail"
+            sx={{ minWidth: 300 }}
+            onChange={handleChange}
+            name="email"
+            value={msgParam?.email}
+            disabled={isLoggedIn}
+            error={checkError("email")}
+          />
+          <TextField
+            variant="outlined"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SubjectIcon sx={{ fontSize: 12 }} />
+                </InputAdornment>
+              ),
+            }}
+            label="Subject"
+            helperText="A small title of your query"
+            onChange={handleChange}
+            name="subject"
+            value={msgParam?.subject}
+            error={checkError("subject")}
+          />
           <TextField
             variant="outlined"
             InputProps={{
@@ -224,10 +270,11 @@ const Contact = () => {
               ),
             }}
             label="Contact Number"
-            sx={{ minWidth: 300 }}
             helperText="Enter 10 Digit Mobile Number"
-            onChange={(e) => setNumber(e.target.value)}
-            value={number}
+            onChange={handleChange}
+            name="phoneNo"
+            value={msgParam?.phoneNo}
+            error={checkError("phoneNo")}
           />
           <FormControl fullWidth>
             <InputLabel id="contact-query-type">Query Type</InputLabel>
@@ -235,86 +282,84 @@ const Contact = () => {
               labelId="contact-query-type"
               label="Query Type"
               onChange={(e) => {
-                handleQueryChange(e);
-                setMsgParam({ ...msgParam, subject: e.target.value });
+                handleChange(e);
+                setOpen(true);
               }}
-              value={queryType}
+              name="queryType"
+              value={msgParam.queryType ? msgParam.queryType : "General Query"}
+              error={checkError("queryType")}
             >
-              <MenuItem value={"General Query"}>General Query</MenuItem>
-              <MenuItem value={"Order Help"}>Order Help</MenuItem>
-              <MenuItem value={"Feedback"}>Feedback</MenuItem>
+              <MenuItem value={"GENERAL"}>General Query</MenuItem>
+              <MenuItem value={"ORDER_HELP"}>Order Help</MenuItem>
+              <MenuItem value={"FEEDBACK"}>Feedback</MenuItem>
             </Select>
           </FormControl>
           <Collapse in={open}>
-            {queryType === "General Query" ? (
+            {msgParam?.queryType === "GENERAL" ? (
               <TextField
                 variant="outlined"
                 multiline
                 minRows={5}
                 label="Your Query"
                 fullWidth
-                onChange={(e) =>
-                  setMsgParam({ ...msgParam, message: e.target.value })
-                }
-                value={msgParam.message}
+                onChange={handleChange}
+                name="message"
+                value={msgParam?.message}
+                error={checkError("message")}
               />
-            ) : queryType === "Order Help" ? (
+            ) : msgParam?.queryType === "ORDER_HELP" ? (
               <Stack spacing={2}>
                 <TextField
                   variant="outlined"
                   label="Order Id"
                   helperText="24 digit Order Id"
-                  onChange={(e) => setOrderId(e.target.value)}
-                  value={orderId}
+                  onChange={handleChange}
+                  name="orderId"
+                  value={msgParam.orderId ? msgParam.orderId : ""}
+                  error={checkError("orderId")}
                 />
                 <TextField
                   variant="outlined"
                   multiline
                   minRows={5}
                   label="Your Message"
-                  onChange={(e) =>
-                    setMsgParam({ ...msgParam, message: e.target.value })
-                  }
-                  value={msgParam.message}
+                  onChange={handleChange}
+                  name="message"
+                  value={msgParam?.message}
+                  error={checkError("message")}
                 />
               </Stack>
-            ) : (
+            ) : msgParam?.queryType === "FEEDBACK" ? (
               <TextField
                 variant="outlined"
                 multiline
                 minRows={5}
                 label="Your Feedback"
-                onChange={(e) =>
-                  setMsgParam({ ...msgParam, message: e.target.value })
-                }
-                value={msgParam.message}
+                onChange={handleChange}
+                name="message"
+                value={msgParam?.message}
                 fullWidth
+                error={checkError("message")}
               />
-            )}
-            <Button
-              sx={{ marginTop: "10px" }}
-              variant="outlined"
-              color="success"
-              endIcon={
-                Load ? <CircularProgress size={15} color="inherit" /> : null
-              }
-              disabled={Load}
-              onClick={sendMessage}
-            >
-              Send
-            </Button>
+            ) : null}
           </Collapse>
-          {alertMsg.length ? (
-            alertMsg === "ERR" ? (
-              <Alert variant="outlined" color="error" severity="error">
-                Some Error Occured Please Try Again!
-              </Alert>
-            ) : (
-              <Alert color="success" severity="success">
-                Message Sent!. We Will get back to you soon.
-              </Alert>
-            )
-          ) : null}
+          <Button
+            sx={{ marginTop: "10px", maxWidth: 100 }}
+            variant="outlined"
+            color="success"
+            endIcon={
+              Load ? <CircularProgress size={15} color="inherit" /> : null
+            }
+            disabled={Load}
+            onClick={sendMessage}
+          >
+            Send
+          </Button>
+          {alert && alert.show && (
+            <Alert severity={alert.type ? "success" : "error"}>
+              {alert.msg}
+            </Alert>
+          )}
         </Stack>
       </Stack>
     </Stack>
