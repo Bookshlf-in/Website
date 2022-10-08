@@ -1,7 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
-import axios from "../../axios.js";
 
 // importing Navbar Components
 import "./Navbar.css";

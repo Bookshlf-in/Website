@@ -200,7 +200,7 @@ const Footer = () => {
           >
             IIIT Lucknow, Ahmamau 226002 UP, India
           </Typography>
-          <Typography
+          {/* <Typography
             variant="caption"
             color="primary"
             sx={{ cursor: "pointer" }}
@@ -208,7 +208,7 @@ const Footer = () => {
             className={classes.root}
           >
             +91 97926 66122
-          </Typography>
+          </Typography> */}
           <Typography
             variant="caption"
             color="primary"
