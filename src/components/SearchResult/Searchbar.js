@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
@@ -9,6 +9,7 @@ import { ClickAwayListener, CircularProgress } from "@mui/material";
 
 // Icons
 import SearchIcon from "@mui/icons-material/Search";
+import { debounce } from "../../debounce";
 
 const useStyles = makeStyles(() => ({
   stack: {
@@ -120,9 +121,6 @@ const Searchbar = () => {
 
   // book title search on input
   const handelBookTitleSearch = (e) => {
-    setsearchFieldChanges(true);
-    setSearch(e.target.value);
-    setOpenTitleMenu(true);
     const fetchdata = async () => {
       axios
         .get(`/searchTitle?q=${e.target.value}`)
@@ -137,9 +135,6 @@ const Searchbar = () => {
 
   // tag searching on input
   const handelTagSearch = (e) => {
-    settagFieldChanges(true);
-    setSearch(e.target.value);
-    setOpenTagMenu(true);
     const fetchdata = async () => {
       axios
         .get(`/searchTag?q=${e.target.value}`)
@@ -151,6 +146,13 @@ const Searchbar = () => {
     };
     fetchdata();
   };
+
+  const handleDebounceBookTitleSearch = useCallback(
+    debounce(handelBookTitleSearch),
+    []
+  );
+
+  const handleDebounceTagSearch = useCallback(debounce(handelTagSearch), []);
 
   // Searching Title
   const handelTitleAdd = (titlename) => {
@@ -183,7 +185,12 @@ const Searchbar = () => {
             input: classes.inputInput,
           }}
           value={Search}
-          onChange={(e) => handelBookTitleSearch(e)}
+          onChange={(e) => {
+            setsearchFieldChanges(true);
+            setSearch(e.target.value);
+            setOpenTitleMenu(true);
+            handleDebounceBookTitleSearch(e);
+          }}
           onKeyPress={handleKeyPress}
           inputProps={{ "aria-label": "search" }}
         />
@@ -225,7 +232,12 @@ const Searchbar = () => {
             input: classes.inputInput,
           }}
           value={Search}
-          onChange={(e) => handelTagSearch(e)}
+          onChange={(e) => {
+            settagFieldChanges(true);
+            setSearch(e.target.value);
+            setOpenTagMenu(true);
+            handleDebounceTagSearch(e);
+          }}
           onKeyPress={handleKeyPress}
           inputProps={{ "aria-label": "search" }}
         />
