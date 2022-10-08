@@ -1,10 +1,9 @@
 export const debounce = (fn) => {
   let timer;
-  return function () {
+  return function (e) {
     clearTimeout(timer);
-    const args = arguments;
     timer = setTimeout(() => {
-      fn.apply(this, args);
+      fn.apply(this,[e]);
     }, 500);
   };
 };
