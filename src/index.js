@@ -8,16 +8,13 @@ import { HelmetProvider } from "react-helmet-async";
 // Context
 import { CurrentUserProvider } from "./Context/userContext";
 import { CurrentAdminProvider } from "./Context/adminContext";
-import { GlobalContextProvider } from "./Context/pageSearchContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
       <CurrentUserProvider>
         <CurrentAdminProvider>
-          <GlobalContextProvider>
-            <App />
-          </GlobalContextProvider>
+          <App />
         </CurrentAdminProvider>
       </CurrentUserProvider>
     </HelmetProvider>

@@ -221,14 +221,16 @@ const AccountDetails = (props) => {
               alt={sellerDetails.Name}
               sx={{ height: 100, width: 100 }}
             />
-            <Chip
-              label={sellerDetails.IsVerified ? "Verified" : "Not Verified"}
-              color={sellerDetails.IsVerified ? "success" : "error"}
-              size="small"
-              variant="outlined"
-              icon={sellerDetails.IsVerified ? <CheckIcon /> : <CancelIcon />}
-              sx={{ fontFamily: "Roboto" }}
-            />
+            {sellerDetails?.isVerified && (
+              <Chip
+                className={classes.root}
+                icon={<CheckIcon />}
+                label="Verified"
+                color="success"
+                size="small"
+                variant="filled"
+              />
+            )}
             <Chip
               label={sellerDetails.ID}
               color="primary"
