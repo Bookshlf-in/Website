@@ -1,7 +1,8 @@
-import { React, useState } from "react";
+import { React, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
+import { debounce } from "../../debounce";
 
 // Components
 import InputBase from "@mui/material/InputBase";
@@ -101,9 +102,6 @@ const Searchbar = () => {
 
   // book title search on input
   const handelBookTitleSearch = (e) => {
-    setsearchFieldChanges(true);
-    setSearch(e.target.value);
-    setOpenTitleMenu(true);
     const fetchdata = async () => {
       axios
         .get(`/searchTitle?q=${e.target.value}`)
@@ -115,6 +113,8 @@ const Searchbar = () => {
     };
     fetchdata();
   };
+
+  const handleDebounceSearch = useCallback(debounce(handelBookTitleSearch), []);
 
   // Searching Title
   const handelTitleAdd = (titlename) => {
@@ -133,7 +133,12 @@ const Searchbar = () => {
           root: classes.inputRoot,
           input: classes.inputInput,
         }}
-        onChange={(e) => handelBookTitleSearch(e)}
+        onChange={(e) => {
+          setsearchFieldChanges(true);
+          setSearch(e.target.value);
+          setOpenTitleMenu(true);
+          handleDebounceSearch(e);
+        }}
         onKeyPress={handleKeyPress}
         inputProps={{ "aria-label": "search" }}
       />

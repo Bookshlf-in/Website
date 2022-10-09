@@ -4,6 +4,7 @@ import axios from "../../../axios";
 
 //
 import { Radio, RadioGroup, FormControlLabel, Divider } from "@mui/material";
+import { InputLabel, Select, MenuItem } from "@mui/material";
 import { TextField, Button, Alert, Stack } from "@mui/material";
 import { Typography, Tooltip, FormLabel, FormControl } from "@mui/material";
 import { Grid, Chip, CircularProgress } from "@mui/material";
@@ -12,6 +13,12 @@ import { Grid, Chip, CircularProgress } from "@mui/material";
 import RupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const enviaTestURL = {
+  rate: "/proxy/https://api-test.envia.com/ship/rate/",
+  courierList: "/proxy/https://queries-test.envia.com/available-carrier/IN/0",
+  createShipment: "/proxy/https://api-test.envia.com/ship/generate/",
+};
+
+const enviaURL = {
   rate: "/proxy/https://api.envia.com/ship/rate/",
   courierList: "/proxy/https://queries.envia.com/available-carrier/IN/0",
   createShipment: "/proxy/https://api.envia.com/ship/generate/",
@@ -27,6 +34,7 @@ const EnviaShipping = () => {
   const [orderUpdate, setOrderUpdate] = useState(false);
   const [shipment, setShipment] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [paymentMode, setPaymentMode] = useState("COD");
 
   // States
   const [order, setOrder] = useState({});
@@ -38,6 +46,7 @@ const EnviaShipping = () => {
   const [courierList, setCourierList] = useState([]);
   const [carrier, setCarrier] = useState({});
   const [pdf, setPdf] = useState("");
+  const [codCommission, setCodCommission] = useState(0);
 
   // Header Auth
   const Auth = {
@@ -158,12 +167,18 @@ const EnviaShipping = () => {
       },
       settings: {
         currency: "INR",
+        cashOnDelivery: order.orderTotal,
       },
     };
 
     // console.log(params);
+    const URL =
+      process.env.REACT_APP_NODE_ENV === "development"
+        ? enviaTestURL.rate
+        : enviaURL.rate;
+    if (paymentMode === "Prepaid") delete params.settings.cashOnDelivery;
     const result = axios
-      .post(enviaTestURL.rate, params, Auth)
+      .post(URL, params, Auth)
       .then((res) => {
         // console.log(res.data);
         if (res.data.meta === "rate") return res.data.data;
@@ -188,14 +203,23 @@ const EnviaShipping = () => {
       .flat(1)
       .filter((carrier) => carrier !== undefined)
       .sort((a, b) => {
-        return a.totalPrice - b.totalPrice;
+        return (
+          a.totalPrice +
+          a.cashOnDeliveryCommission -
+          (b.totalPrice + b.cashOnDeliveryCommission)
+        );
       });
   };
 
   const fetchServices = async () => {
     setServicesLoad(true);
+    const URL =
+      process.env.REACT_APP_NODE_ENV === "development"
+        ? enviaTestURL.courierList
+        : enviaURL.courierList;
+
     axios
-      .get(enviaTestURL.courierList, Auth)
+      .get(URL, Auth)
       .then(async (res) => {
         // console.log(res.data.data);
         const carriers = await getAllCarriersRate(res.data.data);
@@ -208,19 +232,21 @@ const EnviaShipping = () => {
       });
   };
 
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (value) => {
+    // console.log(value);
     setCarrier({
-      carrier: courierList[e.target.value].carrier,
-      service: courierList[e.target.value].service,
+      carrier: courierList[value].carrier,
+      service: courierList[value].service,
       type: 0,
     });
+    setCodCommission(courierList[value].cashOnDeliveryCommission);
   };
 
   const updateOrder = async (shipmentData) => {
     const externalTrackingLink = shipmentData.trackUrl;
     const externalTrackingDetails = `${shipmentData.carrier}, Service: ${shipmentData.service}, Tracking Number : ${shipmentData.trackingNumber}`;
-    const adminDeliveryExpense = shipmentData.totalPrice;
-
+    const adminDeliveryExpense = shipmentData.totalPrice + codCommission;
+    // console.log(adminDeliveryExpense);
     axios
       .post("/admin-updateOrder", {
         orderId: order._id,
@@ -296,10 +322,17 @@ const EnviaShipping = () => {
         printFormat: "PDF",
         printSize: "STOCK_4X6",
         currency: "INR",
+        cashOnDelivery: order.orderTotal,
       },
     };
+    const URL =
+      process.env.REACT_APP_NODE_ENV === "development"
+        ? enviaTestURL.createShipment
+        : enviaURL.createShipment;
+
+    if (paymentMode === "Prepaid") delete params.settings.cashOnDelivery;
     axios
-      .post(enviaTestURL.createShipment, params, Auth)
+      .post(URL, params, Auth)
       .then(async (res) => {
         // console.log(res.data);
         setPdf(res.data.data[0].label);
@@ -345,6 +378,7 @@ const EnviaShipping = () => {
             padding: "10px",
             border: "1px solid rgba(0,0,0,0.2)",
             borderRadius: "10px",
+            width: 300,
           }}
         >
           <Typography variant="h6" sx={{ fontFamily: "Staatliches" }}>
@@ -355,7 +389,6 @@ const EnviaShipping = () => {
             variant="outlined"
             size="small"
             fullWidth
-            sx={{ maxWidth: 150 }}
             onChange={(e) => setWeight(e.target.value)}
             value={weight}
           />
@@ -364,7 +397,6 @@ const EnviaShipping = () => {
             variant="outlined"
             size="small"
             fullWidth
-            sx={{ maxWidth: 150 }}
             onChange={(e) => setLength(e.target.value)}
             value={length}
           />
@@ -373,7 +405,6 @@ const EnviaShipping = () => {
             variant="outlined"
             size="small"
             fullWidth
-            sx={{ maxWidth: 150 }}
             onChange={(e) => setBreadth(e.target.value)}
             value={breadth}
           />
@@ -382,10 +413,24 @@ const EnviaShipping = () => {
             variant="outlined"
             size="small"
             fullWidth
-            sx={{ maxWidth: 150 }}
             onChange={(e) => setHeight(e.target.value)}
             value={height}
           />
+          <FormControl variant="outlined" size="small">
+            <InputLabel id="payment-mode">Payment Mode</InputLabel>
+            <Select
+              labelId="payment-mode"
+              value={paymentMode}
+              onChange={(e) => {
+                setPaymentMode(e.target.value);
+              }}
+              label="Payment Mode"
+              size="small"
+            >
+              <MenuItem value="COD">Cash On Delivery</MenuItem>
+              <MenuItem value="Prepaid">Prepaid</MenuItem>
+            </Select>
+          </FormControl>
           <Button
             variant="contained"
             color="secondary"
@@ -440,7 +485,7 @@ const EnviaShipping = () => {
                     <FormControlLabel
                       value={idx}
                       control={<Radio size="small" />}
-                      onClick={handleRadioChange}
+                      onChange={(e) => handleRadioChange(e.target.value)}
                       label={
                         <Stack
                           direction="row"
@@ -453,7 +498,11 @@ const EnviaShipping = () => {
                             variant="outlined"
                             color="success"
                             icon={<RupeeIcon sx={{ height: 12 }} />}
-                            label={carrier.totalPrice}
+                            label={Math.round(
+                              carrier.totalPrice +
+                                carrier.cashOnDeliveryCommission,
+                              2
+                            )}
                             sx={{ minWidth: 100 }}
                           />
                           <Stack spacing={1}>
