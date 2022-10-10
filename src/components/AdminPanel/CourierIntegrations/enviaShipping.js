@@ -155,9 +155,9 @@ const EnviaShipping = () => {
           weightUnit: "KG",
           lengthUnit: "CM",
           dimensions: {
-            length: length,
-            width: breadth,
-            height: height,
+            length: Number(length),
+            width: Number(breadth),
+            height: Number(height),
           },
         },
       ],
@@ -244,9 +244,8 @@ const EnviaShipping = () => {
 
   const updateOrder = async (shipmentData) => {
     const externalTrackingLink = shipmentData.trackUrl;
-    const externalTrackingDetails = `${shipmentData.carrier}, Service: ${shipmentData.service}, Tracking Number : ${shipmentData.trackingNumber}`;
+    const externalTrackingDetails = `${shipmentData.carrier}, Shipment Label : ${shipmentData.label}`;
     const adminDeliveryExpense = shipmentData.totalPrice + codCommission;
-    // console.log(adminDeliveryExpense);
     axios
       .post("/admin-updateOrder", {
         orderId: order._id,
@@ -311,9 +310,9 @@ const EnviaShipping = () => {
           weightUnit: "KG",
           lengthUnit: "CM",
           dimensions: {
-            length: length,
-            width: breadth,
-            height: height,
+            length: Number(length),
+            width: Number(breadth),
+            height: Number(height),
           },
         },
       ],
@@ -334,7 +333,7 @@ const EnviaShipping = () => {
     axios
       .post(URL, params, Auth)
       .then(async (res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setPdf(res.data.data[0].label);
         setOrderUpdate(true);
         await updateOrder(res.data.data[0]);
