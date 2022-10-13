@@ -1,0 +1,68 @@
+.admin-support {
+    min-height: calc(100vh - 48px);
+    padding: 0;
+}
+
+.admin-support-sidebar {
+    min-width: 250px;
+    max-width: 300px;
+}
+
+.MuiButton-root.admin-ComposeMailBtn {
+    margin: 10px;
+    border-radius: 16px;
+    color: #001d35;
+    height: 56px;
+    padding: 0 24px 0 0;
+    min-width: 150px;
+    font-size: .875rem;
+    background-color: #c2e7ff;
+    box-shadow: 0 1px 2px 0 #0000, 0 1px 3px 1px #0000;
+}
+
+.MuiButton-root.admin-ComposeMailBtn:hover {
+    transition: box-shadow .08s linear, min-width .15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
+    background-color: #c2e7ff;
+}
+
+.admin-sidebar-btn {
+    box-shadow: inset 0 0 0 1px transparent;
+    border-radius: 0 16px 16px 0;
+    height: 32px;
+    padding: 0 12px 0 26px;
+    cursor: pointer;
+}
+
+.admin-sidebar-btn-active {
+    background-color: #d3e3fd;
+}
+
+.admin-sidebar-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.admin-sidebar-btn-active:hover {
+    background-color: #d3e3fd;
+}
+
+.admin-supportContent {
+    padding: 10px 0px;
+    flex-grow: 1;
+}
+
+.admin-support-msg {
+    padding: 10px;
+    box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
+    cursor: pointer;
+    width: 100%;
+}
+
+.admin-support-msg:hover {
+    box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    z-index: 2;
+}
+
+.admin-support-msg-read {
+    background-color: rgba(0, 0, 0, 0.08);
+}
