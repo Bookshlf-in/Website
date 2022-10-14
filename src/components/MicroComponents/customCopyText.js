@@ -6,11 +6,11 @@ import { Stack, Tooltip, Typography } from "@mui/material";
 import CopyIcon from "@mui/icons-material/ContentCopy";
 import CopiedIcon from "@mui/icons-material/Check";
 
-const CopyableText = (props) => {
+const CopyableText = ({ text, fontSize }) => {
   const [copied, setcopied] = useState(false);
 
   const CopyText = () => {
-    navigator.clipboard.writeText(props.text);
+    navigator.clipboard.writeText(text);
     setcopied(true);
     setTimeout(() => {
       setcopied(false);
@@ -33,9 +33,9 @@ const CopyableText = (props) => {
       <Typography
         variant="caption"
         color={copied ? "primary" : "default"}
-        sx={{ fontSize: props.fontSize ? props.fontSize : "9px", flexGrow: 1 }}
+        sx={{ fontSize: fontSize ? fontSize : "9px", flexGrow: 1 }}
       >
-        {props.text}
+        {text}
       </Typography>
       <Tooltip
         arrow

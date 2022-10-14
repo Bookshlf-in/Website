@@ -5,7 +5,7 @@ import { Stack } from "@mui/material";
 import Books from "../Book/Book";
 import Seller from "../Sellers";
 import Orders from "../Order/Orders";
-import Messages from "../Messages";
+import Support from "../Support/Support";
 import Profile from "../FindProfile";
 import Users from "../Users";
 import Wallet from "../Billing/Wallet";
@@ -22,7 +22,7 @@ const AdminContentPanel = ({ Panel, setPanel, history }) => {
         ) : Panel === 2 ? (
           <Profile />
         ) : Panel === 3 ? (
-          <Messages />
+          <Support />
         ) : Panel === 4 ? (
           <Seller />
         ) : Panel === 5 ? (

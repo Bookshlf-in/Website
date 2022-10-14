@@ -15,6 +15,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 // Custom Components
 import SellerProfile from "../../SellerProfile";
+import CopyableText from "../../../MicroComponents/customCopyText";
 
 // Icons
 import TagIcon from "@mui/icons-material/LocalOfferRounded";
@@ -432,6 +433,7 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
               </Button>
               <Collapse in={showBookDetails}>
                 <Stack spacing={2} sx={{ paddingTop: "10px" }}>
+                  <CopyableText text={bookId} fontSize="16px" />
                   <TextField
                     label="Book Title"
                     value={bookName}
