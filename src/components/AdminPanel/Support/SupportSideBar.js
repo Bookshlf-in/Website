@@ -36,7 +36,7 @@ const SidebarBtn = ({ panel, setPanel, value, Icon, txt }) => {
 const SupportSideBar = ({ panel, setPanel }) => {
   return (
     <Stack className="admin-support-sidebar" spacing={2}>
-      <ComposeMail value="Compose" type="SEND_MULTIPLE" />
+      <ComposeMail value="Compose" type="DEFAULT" />
       <SidebarBtn
         panel={panel}
         setPanel={setPanel}

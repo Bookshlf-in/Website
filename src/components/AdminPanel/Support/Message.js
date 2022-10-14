@@ -182,24 +182,24 @@ const Message = ({ data }) => {
           <Stack direction="row" spacing={2}>
             <ListItem
               primary={<Typography variant="body2">Name</Typography>}
-              secondary={<CopyableText text={data.name} fontSize="12px" />}
+              secondary={<CopyableText text={data?.name} fontSize="12px" />}
             />
             <ListItem
               primary={<Typography variant="body2">Mail</Typography>}
-              secondary={<CopyableText text={data.email} fontSize="12px" />}
+              secondary={<CopyableText text={data?.email} fontSize="12px" />}
             />
             <ListItem
               primary={<Typography variant="body2">Contact Number</Typography>}
-              secondary={<CopyableText text={data.phoneNo} fontSize="12px" />}
+              secondary={<CopyableText text={data?.phoneNo} fontSize="12px" />}
             />
           </Stack>
           <ListItem
             primary={<Typography variant="body2">Subject</Typography>}
-            secondary={<CopyableText text={data.subject} fontSize="12px" />}
+            secondary={<CopyableText text={data?.subject} fontSize="12px" />}
           />
           <ListItem
             primary={<Typography variant="body2">Query Type</Typography>}
-            secondary={<CopyableText text={data.queryType} fontSize="12px" />}
+            secondary={<CopyableText text={data?.queryType} fontSize="12px" />}
           />
           {data?.orderId && (
             <ListItem
@@ -209,7 +209,7 @@ const Message = ({ data }) => {
           )}
           <ListItem
             primary={<Typography variant="body2">Message</Typography>}
-            secondary={<Typography variant="body2">{data.message}</Typography>}
+            secondary={<Typography variant="body2">{data?.message}</Typography>}
           />
           <Stack spacing={2} direction="row" alignItems="center">
             <ComposeMail value="Reply" emailData={data} type="DEFAULT" />
