@@ -30,6 +30,7 @@ const ComposeMail = ({ value, type, emailData }) => {
   // loading states
   const [open, setOpen] = useState(false);
   const [sending, setSending] = useState(false);
+  const [show, setShow] = useState(false);
 
   // States
   const [data, setData] = useState({
@@ -76,11 +77,12 @@ const ComposeMail = ({ value, type, emailData }) => {
   const sendEmail = async () => {
     setSending(true);
     const params = await generateParams();
-    console.log(params);
+    // console.log(params);
     axios
       .post("/admin-sendEmail", params)
       .then((res) => {
-        console.log("email Sent!");
+        // console.log("email Sent!");
+        setShow(true);
         setSending(false);
       })
       .catch((err) => {
@@ -182,9 +184,11 @@ const ComposeMail = ({ value, type, emailData }) => {
             >
               Send
             </Button>
-            <Alert size="small" sx={{ padding: "0px 16px" }}>
-              Mail Sent Successfully!
-            </Alert>
+            {show && (
+              <Alert size="small" sx={{ padding: "0px 16px" }}>
+                Mail Sent Successfully!
+              </Alert>
+            )}
           </Stack>
         </Stack>
       </Dialog>
