@@ -169,6 +169,7 @@ REACT_APP_NODE_ENV=development
 
 ## Future Plans
 
+- Finalize and implement new designs for website.
 - Adding Next Js Framework for Server Side Rendering.
 - Adding React Redux for States centeralization and better API Syncronization.
 - Adding Theme Provider of mui.
