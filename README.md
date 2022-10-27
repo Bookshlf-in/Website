@@ -8,7 +8,7 @@ Online E-Commerce Store for Selling & Purchasing Used Books. Specially for Compe
 
 - It Is a Student Oriented Platform.
 - Bookshlf Pickups Books from Partnered Seller and sells to the buyer in any corner of India.
-- Under Bookshlf Partnership Program the Partner is eligible for upto 60% of the profit earned by selling thier books.
+- Under Bookshlf Partnership Program the Partner is eligible for 60% of the profit earned by selling thier books.
 
 # Index
 
