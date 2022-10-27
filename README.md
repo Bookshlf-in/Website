@@ -178,6 +178,7 @@ REACT_APP_NODE_ENV=development
 - Online Payments (Card / UPI)
 - Coupons
 - Enhanced Search with Recommendations
+- User specific recommendation in home page
 
 > Note : These are not mandatory upcoming changes. More changes can be introduced later.
 
