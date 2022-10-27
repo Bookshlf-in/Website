@@ -170,7 +170,7 @@ REACT_APP_NODE_ENV=development
 
 ## Figma Designs
 
-![Homepage](https://www.figma.com/file/PW6ToxVoqbghcGxvEXOvzE/Bookshlf-github?node-id=0%3A1)
+- [Homepage](https://www.figma.com/file/PW6ToxVoqbghcGxvEXOvzE/Bookshlf-github?node-id=0%3A1)
 
 ## Future Plans
 
