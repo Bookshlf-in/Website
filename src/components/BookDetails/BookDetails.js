@@ -3,12 +3,17 @@ import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
+
+// API
 import axios from "../../axios";
+
+// CSS
+import "./BookDetails.css";
 
 // Custom Components
 import Booksnaps from "./Booksnaps";
 import BookDesc from "./BookDesc";
-import "./BookDetails.css";
+import BookPurchaseAdmin from "./BookPurchaseAdmin";
 
 // Components
 import Grid from "@mui/material/Grid";
@@ -31,7 +36,6 @@ import BuynowIcon from "@mui/icons-material/LocalMall";
 const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
-    fontFamily: "PT sans !important",
   },
   Button: {
     maxWidth: 280,
@@ -298,6 +302,9 @@ const BookDetails = () => {
             >
               <strong>Buy Now</strong>
             </LoadingButton>
+            {user && user.roles.includes("admin") && (
+              <BookPurchaseAdmin bookId={params.bookId} />
+            )}
           </Stack>
           <BookDesc bookdetails={book} />
         </Stack>

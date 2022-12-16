@@ -21,7 +21,6 @@ import SearchBook from "./SearchBook";
 const Search = () => {
   // search
   const [search, setSearch] = useContext(SearchContext);
-  console.log(search);
 
   // Calling Hooks
   const params = useParams();
@@ -43,7 +42,6 @@ const Search = () => {
         params: { ...filterParams, q: params.query },
       })
       .then((response) => {
-        console.log(response.data);
         setbooks(response.data.data);
         settotalPages(response.data.totalPages);
         setSearch({
