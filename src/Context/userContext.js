@@ -74,12 +74,12 @@ export const CurrentUserProvider = (props) => {
   };
 
   useEffect(() => {
-    // verifying to
+    // verifying token
     if (user) {
       verifyToken();
       localStorage.setItem("bookshlf_user", JSON.stringify(user));
     }
-  }, [user?.authHeader, user?.Search]);
+  }, [user?.authHeader]);
 
   return (
     <UserContext.Provider value={[user, setUser]}>

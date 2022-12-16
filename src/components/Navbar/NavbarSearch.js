@@ -42,7 +42,6 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit",
     width: "100%",
     color: "white !important",
   },
