@@ -15,7 +15,7 @@ const bookshlfSignature = `<p style="font-size:12px;margin: 5px 10px">Best Regar
 <p style="font-size:10px;font-family:Montserrat,sans-serif; margin: 5px 0px;"> M : <a style="text-decoration:none;" href="tel:+91 97926 66122" target="_blank"> +91 97926 66122</a> </p>
 <a style="font-size:10px;font-family:Montserrat,sans-serif; margin: 5px 0px; text-decoration:none;" href="https://bookshlf.in" target="_blank">www.bookshlf.in</a> <br> 
 <span><a href="https://www.youtube.com/channel/UCvZJWq7cQ4-cGJFsCWIppGQ" target="_blank" ><img src="https://lh4.googleusercontent.com/7fb7KCJzkYhsPpO5Xl2mLrBuXyeIvu0QX-YYTDpAK8sXkC7dsLiPeb44HW-94ctdVfcCkO9bBEEV5jQ1cV5k-K8BYFaeEV0FfJyDKVvEnFkIpa3dF21n8GjIfflMh763Ql_AlnSxMG9HqLsV8Q" height="20" width="20"/></a></span>
-<span><a href="https://instagram.com/_bookshlf" target="_blank"><img src="https://lh5.googleusercontent.com/1B9dtT07bCRWkriWK0XoomKlLBuVffG013I4Oi3nPzGqgf8flpq0Leh9XbuOQawzwWmYL8ncWQ7D_MZrabpBftPwjLe2A83LsDrz6_1ywbodNr5aEYGZDDqwwTOp9BWDiS50laPXBkWAIR8CZw" height="20" width="20"/></a></span> </div> </div>`;
+<span><a href="https://instagram.com/_bookshlf" target="_blank"><img src="https://lh5.googleusercontent.com/ufGENV_gt-_cq6oOGxIsUO1wYOFE3UhjJ4LxMxMzjiUPtB4jBFxcDGNT5LO1K9jVxNAJ3AVqxy2fbetFSulm1DQ5ZShNThhxTha3VurbYRqcanHVht9JTjf1NGf3c87V2Rp28ZzwdxSNZmJ7s-tP4HBnBJQar8CRiBEWp860nosZgZ9w54IncYn-ahJbrw" height="20" width="20"/></a></span> </div> </div>`;
 
 const formatDate = (date) => {
   const newDate = new Date(date);
