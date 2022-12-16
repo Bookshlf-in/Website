@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 // User Context
-import { UserContext } from "../../Context/userContext";
+import { SearchContext } from "../../Context/searchContext";
 
 // API
 import axios from "../../axios";
@@ -14,22 +14,13 @@ import { Alert, AlertTitle, Pagination } from "@mui/material";
 import { InputLabel, MenuItem, FormControl } from "@mui/material";
 
 // Custom Components
-import SearchBar from "./Searchbar";
+// import SearchBar from "./Searchbar";
 import BookshlfLoader from "../MicroComponents/BookshlfLoader";
 import SearchBook from "./SearchBook";
 
-const booksperpage =
-  window.innerWidth <= 400
-    ? 5
-    : window.innerWidth <= 800
-    ? 9
-    : window.innerWidth <= 1200
-    ? 12
-    : 18;
-
 const Search = () => {
-  // user
-  const [user, setUser] = useContext(UserContext);
+  // search
+  const [search, setSearch] = useContext(SearchContext);
 
   // Calling Hooks
   const params = useParams();
@@ -38,51 +29,44 @@ const Search = () => {
   const [Loading, setLoading] = useState(false);
 
   // Data states
-  const [books, setbooks] = useState(user?.Search?.data);
-  const [page, setpage] = useState(user?.Search?.page);
-  const [totalPages, settotalPages] = useState(user?.Search?.totalPages);
-  const [filter, setFilter] = useState(0);
-  const [filterParams, setFilterParams] = useState({
-    q: params.query,
-    noOfBooksInOnePage: booksperpage,
-    page: user?.Search?.page ? user?.Search?.page : 1,
-  });
-
-  useEffect(() => {
-    makeRequest();
-  }, [params.query, filterParams]);
+  const [books, setbooks] = useState(search.books);
+  const [page, setpage] = useState(search.page);
+  const [totalPages, settotalPages] = useState(search.totalPages);
+  const [filter, setFilter] = useState(search.filter);
+  const [filterParams, setFilterParams] = useState(search.filterParams);
 
   const makeRequest = () => {
     setLoading(true);
-    setpage(user?.Search?.page ? user?.Search?.page : 1);
     axios
       .get("/search", {
-        params: filterParams,
+        params: { ...filterParams, q: params.query },
       })
       .then((response) => {
         setbooks(response.data.data);
         settotalPages(response.data.totalPages);
-        setLoading(false);
-        setUser({
-          ...user,
-          Search: {
-            ...user.Search,
-            data: response.data.data,
-            page: user?.Search?.page ? user?.Search?.page : 1,
-            totalPages: response.data.totalPages,
-          },
+        setSearch({
+          books: response.data.data,
+          page: page,
+          totalPages: response.data.totalPages,
+          filter: filter,
+          filterParams: { ...filterParams, q: params.query },
         });
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
       });
   };
 
+  useEffect(() => {
+    makeRequest();
+  }, [params.query, filterParams, page]);
+
   // changing Page
   const changePage = (pageNo) => {
     setpage(pageNo);
     setFilterParams({ ...filterParams, page: pageNo });
-    setUser({ ...user, Search: { ...user.Search, page: pageNo } });
+    setSearch({ ...search, page: pageNo });
   };
 
   // changing Filter
@@ -125,6 +109,8 @@ const Search = () => {
           return Filter;
         });
         break;
+      default:
+        break;
     }
   };
 
@@ -144,8 +130,13 @@ const Search = () => {
         alignItems="center"
         className="search-book-container"
       >
-        <SearchBar />
-        <FormControl fullWidth color="success" variant="standard" size="small">
+        {/* <SearchBar /> */}
+        <FormControl
+          color="primary"
+          variant="filled"
+          size="small"
+          sx={{ minWidth: 250 }}
+        >
           <InputLabel id="search-filter">Filter Books</InputLabel>
           <Select
             labelId="search-filter"
@@ -187,8 +178,6 @@ const Search = () => {
                     size="small"
                     page={page}
                     count={totalPages}
-                    showFirstButton
-                    showLastButton
                     onChange={(e, pageNo) => changePage(pageNo)}
                   />
                 ) : (

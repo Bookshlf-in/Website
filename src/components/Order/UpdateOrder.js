@@ -265,13 +265,7 @@ const UpdateOrder = () => {
                 className={classes.root}
                 onChange={(e) => setMrp(e.target.value)}
               />
-              <TextField
-                label="Book Quantity"
-                variant="standard"
-                value={Qnty}
-                className={classes.root}
-                onChange={(e) => setQnty(e.target.value)}
-              />
+
               <TextField
                 label="Book Language"
                 variant="standard"

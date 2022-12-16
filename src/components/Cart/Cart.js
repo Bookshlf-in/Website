@@ -94,26 +94,6 @@ const Cart = () => {
     else setcartLoading(false);
   }, []);
 
-  // Increase Item Value
-  const handelAddItem = (id, index) => {
-    setcart(
-      cart.map((item) =>
-        item._id === id ? { ...item, purchaseQty: item.purchaseQty + 1 } : item
-      )
-    );
-    setamount((prev) => prev + cart[index].price);
-  };
-
-  // Decrease Item Value
-  const handelRemoveItem = (id, index) => {
-    setcart(
-      cart.map((item) =>
-        item._id === id ? { ...item, purchaseQty: item.purchaseQty - 1 } : item
-      )
-    );
-    setamount((prev) => prev - cart[index].price);
-  };
-
   // Handeling Cart Changes
   const handelCart = (bookId) => {
     setremovingId(bookId);
@@ -228,7 +208,7 @@ const Cart = () => {
                   size="small"
                   color="warning"
                   className={classes.Button}
-                  disabled={cart.length == 0}
+                  disabled={cart.length === 0}
                   onClick={Checkout}
                 >
                   Checkout
@@ -302,7 +282,7 @@ const Cart = () => {
                         size="small"
                         className={classes.root}
                       />
-                      <ButtonGroup
+                      {/* <ButtonGroup
                         disableElevation
                         variant="outlined"
                         size="small"
@@ -333,11 +313,11 @@ const Cart = () => {
                         >
                           <AddIcon color="success" />
                         </IconButton>
-                      </ButtonGroup>
+                      </ButtonGroup> */}
 
-                      <Typography variant="caption" className={classes.root}>
+                      {/* <Typography variant="caption" className={classes.root}>
                         Available Qty : <strong>{product.qty}</strong>
-                      </Typography>
+                      </Typography> */}
                     </Stack>
                     <Stack
                       sx={{ width: "100%" }}

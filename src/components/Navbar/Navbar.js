@@ -1,4 +1,4 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React, useState, useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import { useHistory } from "react-router-dom";
 
@@ -75,7 +75,7 @@ const Navbar = () => {
           </Drawer>
         </div>
         <div className="nav-desktop-item">
-          <img src="/images/logo.png" width="130px" />
+          <img src="/images/logo.png" width="130px" alt="Search..." />
         </div>
         <div className="nav-desktop-item">
           <NavbarItems />

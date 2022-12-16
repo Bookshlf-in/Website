@@ -1,8 +1,9 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 // API
 import axios from "../../../../axios";
+import { debounce } from "../../../../debounce";
 
 // Components
 import { Stack, ClickAwayListener, Chip, Alert } from "@mui/material";
@@ -127,9 +128,8 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
 
   // tag searching on input
   const handelTagSearch = (e) => {
-    settagFieldChanges(true);
-    setTag(e.target.value);
     setOpenTagMenu(true);
+    settagFieldChanges(true);
     const fetchdata = async () => {
       axios
         .get("/searchTag", {
@@ -154,6 +154,8 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
     setOpenTagMenu(false);
     setTag("");
   };
+
+  const handleDebounceSearch = useCallback(debounce(handelTagSearch), []);
 
   // Deleting Tags of Book
   const handleTagDelete = (tagname) => {
@@ -534,7 +536,10 @@ const BookDetails = ({ bookId, setOpenBookDetails }) => {
                         ),
                       }}
                       value={tag}
-                      onChange={(e) => handelTagSearch(e)}
+                      onChange={(e) => {
+                        setTag(e.target.value);
+                        handleDebounceSearch(e);
+                      }}
                       helperText="Press Enter key to Add the Tag"
                       onKeyPress={(e) => {
                         if (e.key === "Enter") {
