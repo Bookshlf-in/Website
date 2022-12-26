@@ -246,7 +246,7 @@ const OrdersAnalytics = () => {
         Orders Detailed Analytics
       </Typography>
       <Typography variant="h6" sx={{ fontFamily: DMsans, padding: "0px 10px" }}>
-        Current Month : {month + " " + year}{" "}
+        Current Month : {monthName + " " + year}{" "}
         <Chip color="success" label="Ongoing" size="small" />
       </Typography>
       <Stack direction="row" spacing={2} sx={{ padding: "10px" }}>
