@@ -12,6 +12,7 @@ import ProfileIcon from "@mui/icons-material/AccountCircleRounded";
 import SellersIcon from "@mui/icons-material/ContactMailRounded";
 import HomeIcon from "@mui/icons-material/HomeRounded";
 import WalletIcon from "@mui/icons-material/AccountBalanceWalletRounded";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
 // Custom Admin Sidebar Navbutton
 const AdminNavButton = ({
@@ -139,11 +140,20 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
+            btnIcon={<AnalyticsIcon sx={{ fontSize: "1em" }} />}
+            btnText="Analytics"
+            Panel={Panel}
+            setPanel={setPanel}
+            value={7}
+            openSideBar={openSideBar}
+            setOpenSideBar={setOpenSideBar}
+          />
+          <AdminNavButton
             btnIcon={<HomeIcon sx={{ fontSize: "1em" }} />}
             btnText="Home"
             Panel={Panel}
             setPanel={setPanel}
-            value={7}
+            value={8}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />

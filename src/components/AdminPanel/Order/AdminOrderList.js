@@ -35,59 +35,6 @@ const AdminOrderList = () => {
   );
   const [orderstatus, setOrderStatus] = useState("Order placed");
 
-  const [orderRevenue, setOrderRevenue] = useState(0);
-  const [orderProfit, setOrderProfit] = useState(0);
-  const [statsLoad, setStatsLoad] = useState(false);
-
-  const getOneSellerEarning = async (orderPrice) => {
-    const result = axios
-      .get("/getSellerEarning", {
-        params: {
-          price: orderPrice,
-        },
-      })
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-    return result;
-  };
-
-  const getAllSellerEarnings = async (orders) => {
-    return await Promise.all(
-      orders.map(async (order) => {
-        const sellerEarning = await getOneSellerEarning(Number(order.price));
-        return sellerEarning;
-      })
-    );
-  };
-
-  // Calculating Stats for each page
-  const CalculateStats = async (orders) => {
-    setStatsLoad(true);
-    setOrderProfit(0);
-    setOrderRevenue(0);
-    const earnings = await getAllSellerEarnings(orders);
-    for (let i = 0; i < earnings.length; i++) {
-      setOrderRevenue((prev) => {
-        return prev + orders[i].orderTotal;
-      });
-      setOrderProfit((prev) => {
-        return (
-          prev +
-          orders[i].orderTotal -
-          (earnings[i].sellerEarning +
-            (orders[i].adminDeliveryExpense
-              ? orders[i].adminDeliveryExpense
-              : 0))
-        );
-      });
-    }
-    setStatsLoad(false);
-  };
-
   const GetOrderList = (pageNo, orderStatus) => {
     setorderLoad(true);
     setpage(pageNo);
@@ -485,35 +432,6 @@ const AdminOrderList = () => {
             </MenuItem>
           </Select>
         </FormControl>
-        {/* ======================= Stats ====================== */}
-        <LoadingButton
-          loading={statsLoad}
-          loadingPosition="start"
-          startIcon={<LoadIcon />}
-          variant="contained"
-          size="small"
-          color="primary"
-          onClick={() => CalculateStats(orderList)}
-          sx={{ textTransform: "none" }}
-          disabled={orderstatus !== "Delivered"}
-        >
-          Get Stats
-        </LoadingButton>
-        <Stack
-          sx={{
-            border: "1px solid rgba(0,0,0,0.2)",
-            borderRadius: "5px",
-            padding: "5px 10px",
-          }}
-        >
-          <Typography sx={{ fontSize: "11px" }}>
-            Revenue : {Math.round(orderRevenue, 2)}
-          </Typography>
-          <Typography sx={{ fontSize: "11px" }}>
-            Profits : {Math.round(orderProfit, 2)}
-          </Typography>
-        </Stack>
-        {/* ====================================================== */}
       </Stack>
       <Stack
         sx={{ flexGrow: 1 }}

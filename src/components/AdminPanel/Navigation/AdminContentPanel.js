@@ -9,9 +9,10 @@ import Support from "../Support/Support";
 import Profile from "../FindProfile";
 import Users from "../Users";
 import Wallet from "../Billing/Wallet";
+import Analytics from "../Analytics/Analytics";
 
 const AdminContentPanel = ({ Panel, setPanel, history }) => {
-  if (Panel === 7) history.push("/");
+  if (Panel === 8) history.push("/");
   return (
     <Stack className="adminPanel-content">
       <Stack className="adminPanel-content-float">
@@ -29,6 +30,8 @@ const AdminContentPanel = ({ Panel, setPanel, history }) => {
           <Users />
         ) : Panel === 6 ? (
           <Wallet />
+        ) : Panel === 7 ? (
+          <Analytics />
         ) : null}
       </Stack>
     </Stack>
