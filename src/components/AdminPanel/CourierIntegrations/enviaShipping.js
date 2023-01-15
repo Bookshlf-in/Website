@@ -149,7 +149,7 @@ const EnviaShipping = () => {
           content: "Books",
           amount: 1,
           type: "box",
-          weight: Math.round(order.weightInGrams / 1000, 2),
+          weight: Math.round(weight / 1000, 2),
           insurance: order.orderTotal > 2000 ? 1 : 0,
           declaredValue: order.orderTotal,
           weightUnit: "KG",
@@ -171,7 +171,7 @@ const EnviaShipping = () => {
       },
     };
 
-    // console.log(params);
+    console.log(params);
     const URL =
       process.env.REACT_APP_NODE_ENV === "development"
         ? enviaTestURL.rate
@@ -221,7 +221,7 @@ const EnviaShipping = () => {
     axios
       .get(URL, Auth)
       .then(async (res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         const carriers = await getAllCarriersRate(res.data.data);
         setCourierList(carriers);
         setServicesLoad(false);
@@ -304,7 +304,7 @@ const EnviaShipping = () => {
           content: "Books",
           amount: 1,
           type: "box",
-          weight: Math.round(order.weightInGrams / 1000, 2),
+          weight: Math.round(weight / 1000, 2),
           insurance: order.orderTotal > 2000 ? 1 : 0,
           declaredValue: order.orderTotal,
           weightUnit: "KG",
