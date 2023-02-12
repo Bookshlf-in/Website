@@ -32,29 +32,35 @@ export const CurrentUserProvider = (props) => {
           axios
             .get("/getCurrentBalance")
             .then((balance) => {
-              setUser({
-                ...user,
-                roles: roles,
-                cartitems: cart.data.count,
-                wishlist: wishlist.data.count,
-                balance: Math.round(balance.data.walletBalance * 10) / 10,
+              setUser((prev) => {
+                return {
+                  ...prev,
+                  roles: roles,
+                  cartitems: cart.data.count,
+                  wishlist: wishlist.data.count,
+                  balance: Math.round(balance.data.walletBalance * 10) / 10,
+                };
               });
             })
             .catch((error) => {
-              setUser({
-                ...user,
-                roles: roles,
-                cartitems: cart.data.count,
-                wishlist: wishlist.data.count,
-                balance: 0,
+              setUser((prev) => {
+                return {
+                  ...prev,
+                  roles: roles,
+                  cartitems: cart.data.count,
+                  wishlist: wishlist.data.count,
+                  balance: 0,
+                };
               });
             });
         } else {
-          setUser({
-            ...user,
-            roles: roles,
-            cartitems: cart.data.count,
-            wishlist: wishlist.data.count,
+          setUser((prev) => {
+            return {
+              ...prev,
+              roles: roles,
+              cartitems: cart.data.count,
+              wishlist: wishlist.data.count,
+            };
           });
         }
       });
@@ -66,6 +72,10 @@ export const CurrentUserProvider = (props) => {
     axios
       .get("/getUserProfile")
       .then((response) => {
+        // console.log(response.data);
+        setUser((prev) => {
+          return { ...prev, adminPermissions: response.data.adminPermissions };
+        });
         FetchCount(response.data.roles);
       })
       .catch((error) => {
@@ -76,10 +86,15 @@ export const CurrentUserProvider = (props) => {
   useEffect(() => {
     // verifying token
     if (user) {
+      // console.log(user);
       verifyToken();
-      localStorage.setItem("bookshlf_user", JSON.stringify(user));
     }
   }, [user?.authHeader]);
+
+  useEffect(() => {
+    // console.log("use effect called - local", user);
+    localStorage.setItem("bookshlf_user", JSON.stringify(user));
+  }, [user]);
 
   return (
     <UserContext.Provider value={[user, setUser]}>

@@ -141,7 +141,7 @@ Made with [contributors-img](https://contrib.rocks).
 - Inside `.env` File Recently Created Add Following lines of Code
 
 ```
-REACT_APP_BOOKSHLF=https://bookshlf.herokuapp.com/
+REACT_APP_BOOKSHLF=https://backend-dot-bookshlf-webapp-5.el.r.appspot.com/
 REACT_APP_NODE_ENV=development
 ```
 

@@ -5,12 +5,16 @@ import axios from "../../axios";
 import { Stack, Box, TextField, Button } from "@mui/material";
 import { CircularProgress, Grid, Pagination } from "@mui/material";
 import { InputLabel, Select, MenuItem, FormControl } from "@mui/material";
-import { Typography, Tooltip, Chip } from "@mui/material";
+import { Chip, InputAdornment, Divider } from "@mui/material";
 
 // Icons
 import ReplayIcon from "@mui/icons-material/Replay";
-import CopyIcon from "@mui/icons-material/ContentCopy";
-import CopiedIcon from "@mui/icons-material/FileCopy";
+
+// Micro components
+import CopyableText from "../MicroComponents/customCopyText";
+
+// custom components
+import UserProfile from "./UserProfile";
 
 const Users = () => {
   // States
@@ -20,6 +24,10 @@ const Users = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalUsers, setTotalUsers] = useState(0);
   const [Loading, setLoading] = useState(false);
+
+  const [userProfile, setUserProfile] = useState(null);
+  const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("");
 
   const getUserList = (pageNo, UsersPerPage) => {
     setLoading(true);
@@ -56,72 +64,69 @@ const Users = () => {
       .catch((error) => {});
   }, []);
 
-  // Custom Copy Component
-  const CopyableText = (props) => {
-    const [copied, setcopied] = useState(false);
-
-    const CopyText = () => {
-      navigator.clipboard.writeText(props.text);
-      setcopied(true);
-      setTimeout(() => {
-        setcopied(false);
-      }, 3000);
-    };
-
-    return (
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          cursor: "pointer",
-          padding: "5px",
-          borderRadius: "5px",
-          border: "1px solid rgba(0,0,0,0.2)",
-        }}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography
-          variant="caption"
-          color={copied ? "primary" : "default"}
-          sx={{ fontSize: "9px" }}
-        >
-          {props.text}
-        </Typography>
-        <Tooltip
-          arrow
-          title="Click to Copy"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="caption" onClick={CopyText}>
-            {!copied ? (
-              <CopyIcon color="inhert" sx={{ height: 12, width: 12 }} />
-            ) : (
-              <CopiedIcon color="inhert" sx={{ height: 12, width: 12 }} />
-            )}
-          </Typography>
-        </Tooltip>
-
-        {copied ? (
-          <Typography sx={{ fontSize: "8px" }} color="primary">
-            Copied!
-          </Typography>
-        ) : null}
-      </Stack>
-    );
+  const getUserProfile = (param) => {
+    axios
+      .get("/admin-getUserProfile", {
+        params: param,
+      })
+      .then((res) => {
+        setUserProfile(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   };
 
   return (
-    <Stack spacing={2} sx={{ width: "100%", paddingTop: "24px" }}>
+    <Stack spacing={2} sx={{ paddingTop: "24px" }}>
+      <Stack spacing={2} sx={{ padding: "15px 24px" }} direction="row">
+        <TextField
+          value={userEmail}
+          label="Email"
+          onChange={(e) => setUserEmail(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  onClick={() => getUserProfile({ email: userEmail })}
+                  size="small"
+                  variant="outlined"
+                >
+                  Find User
+                </Button>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ minWidth: 400 }}
+        />
+        <TextField
+          value={userId}
+          label="User ID"
+          onChange={(e) => setUserId(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  onClick={() => getUserProfile({ userId: userId })}
+                  size="small"
+                  variant="outlined"
+                >
+                  Find User
+                </Button>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ minWidth: 400 }}
+        />
+      </Stack>
+      <Stack spacing={2} sx={{ padding: "0px 24px" }} direction="row">
+        {userProfile && <UserProfile data={userProfile} />}
+      </Stack>
+      <Divider orientation="horizontal" flexItem />
       <Stack
-        direction="row"
         spacing={2}
-        sx={{ width: "100%" }}
-        justifyContent="space-evenly"
+        direction="row"
+        sx={{ padding: "0px 24px" }}
         alignItems="center"
       >
         <Button
@@ -139,6 +144,7 @@ const Users = () => {
         </Button>
         <Pagination
           count={totalPages}
+          size="small"
           variant="outlined"
           shape="rounded"
           page={page}
@@ -150,7 +156,12 @@ const Users = () => {
           showLastButton
           color="success"
         />
-        <FormControl sx={{ minWidth: 200 }} color="success">
+        <FormControl
+          sx={{ minWidth: 200 }}
+          color="success"
+          size="small"
+          variant="standard"
+        >
           <InputLabel id="usersPerPage">Users Per Page</InputLabel>
           <Select
             labelId="usersPerPage"
@@ -168,42 +179,46 @@ const Users = () => {
         </FormControl>
         <Button>Total Users : {totalUsers}</Button>
       </Stack>
-      <Grid container spacing={1} justifyContent="center" sx={{ padding: 0 }}>
-        {users.map((user) => (
-          <Grid key={user._id} item xs={12} sm={6} md={4} lg={3}>
-            <Box
-              sx={{
-                padding: "10px",
-                border: "2px solid rgba(0,0,0,0.3)",
-                borderRadius: "5px",
-                height: 200,
-              }}
-            >
-              <Stack sx={{ width: "100%", height: "100%" }} spacing={2}>
-                <Stack spacing={2} direction="row">
-                  {user.roles.map((role) => (
-                    <Chip
-                      variant="filled"
-                      color={
-                        role === "seller"
-                          ? "warning"
-                          : role === "admin"
-                          ? "error"
-                          : "success"
-                      }
-                      label={role}
-                      size="small"
-                    />
-                  ))}
+      <Stack sx={{ padding: "0px 24px 15px 24px" }}>
+        <Grid container spacing={1} justifyContent="center" sx={{ padding: 0 }}>
+          {users.map((user) => (
+            <Grid key={user._id} item xs={12} sm={6} md={4} lg={3}>
+              <Box
+                sx={{
+                  padding: "10px",
+                  border: "2px solid rgba(0,0,0,0.3)",
+                  borderRadius: "5px",
+                  height: 200,
+                }}
+              >
+                <Stack spacing={2}>
+                  <Stack spacing={2} direction="row">
+                    {user.roles.map((role) => (
+                      <div key={role}>
+                        <Chip
+                          variant="filled"
+                          color={
+                            role === "seller"
+                              ? "warning"
+                              : role === "admin"
+                              ? "error"
+                              : "success"
+                          }
+                          label={role}
+                          size="small"
+                        />
+                      </div>
+                    ))}
+                  </Stack>
+                  <CopyableText text={user._id} />
+                  <CopyableText text={user.email} />
+                  <CopyableText text={user.name} />
                 </Stack>
-                <CopyableText text={user._id} />
-                <CopyableText text={user.email} />
-                <CopyableText text={user.name} />
-              </Stack>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Stack>
     </Stack>
   );
 };

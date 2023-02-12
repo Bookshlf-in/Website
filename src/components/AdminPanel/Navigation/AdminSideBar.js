@@ -85,6 +85,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
+
           <AdminNavButton
             btnIcon={<OrderIcon sx={{ fontSize: "1em" }} />}
             btnText="Orders"
@@ -95,20 +96,11 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             setOpenSideBar={setOpenSideBar}
           />
           <AdminNavButton
-            btnIcon={<ProfileIcon sx={{ fontSize: "1em" }} />}
-            btnText="Find Profile"
-            Panel={Panel}
-            setPanel={setPanel}
-            value={2}
-            openSideBar={openSideBar}
-            setOpenSideBar={setOpenSideBar}
-          />
-          <AdminNavButton
             btnIcon={<ChatIcon sx={{ fontSize: "1em" }} />}
             btnText="Messages"
             Panel={Panel}
             setPanel={setPanel}
-            value={3}
+            value={2}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -117,7 +109,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Seller"
             Panel={Panel}
             setPanel={setPanel}
-            value={4}
+            value={3}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -126,7 +118,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="User"
             Panel={Panel}
             setPanel={setPanel}
-            value={5}
+            value={4}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -135,7 +127,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Billing"
             Panel={Panel}
             setPanel={setPanel}
-            value={6}
+            value={5}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -144,7 +136,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Analytics"
             Panel={Panel}
             setPanel={setPanel}
-            value={7}
+            value={6}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
@@ -153,7 +145,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             btnText="Home"
             Panel={Panel}
             setPanel={setPanel}
-            value={8}
+            value={7}
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
