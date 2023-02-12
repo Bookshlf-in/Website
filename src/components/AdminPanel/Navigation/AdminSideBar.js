@@ -85,6 +85,7 @@ const AdminSideBar = ({ Panel, setPanel, openSideBar, setOpenSideBar }) => {
             openSideBar={openSideBar}
             setOpenSideBar={setOpenSideBar}
           />
+
           <AdminNavButton
             btnIcon={<OrderIcon sx={{ fontSize: "1em" }} />}
             btnText="Orders"

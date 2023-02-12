@@ -11,13 +11,55 @@ import { Grid, Chip, CircularProgress } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import RupeeIcon from "@mui/icons-material/CurrencyRupee";
 
+const statesData = [
+  { zoneId: 1475, state: "Andaman and Nicobar Islands", stateCode: "AN" },
+  { zoneId: 1476, state: "Andhra Pradesh", stateCode: "AP" },
+  { zoneId: 1477, state: "Arunachal Pradesh", stateCode: "AR" },
+  { zoneId: 1478, state: "Assam", stateCode: "AS" },
+  { zoneId: 1479, state: "Bihar", stateCode: "BI" },
+  { zoneId: 1480, state: "Chandigarh", stateCode: "CH" },
+  { zoneId: 1481, state: "Dadra and Nagar Haveli", stateCode: "DA" },
+  { zoneId: 1482, state: "Daman and Diu", stateCode: "DM" },
+  { zoneId: 1483, state: "Delhi", stateCode: "DE" },
+  { zoneId: 1484, state: "Goa", stateCode: "GO" },
+  { zoneId: 1485, state: "Gujarat", stateCode: "GU" },
+  { zoneId: 1486, state: "Haryana", stateCode: "HA" },
+  { zoneId: 1487, state: "Himachal Pradesh", stateCode: "HP" },
+  { zoneId: 1488, state: "Jammu and Kashmir", stateCode: "JA" },
+  { zoneId: 1489, state: "Karnataka", stateCode: "KA" },
+  { zoneId: 1490, state: "Kerala", stateCode: "KE" },
+  { zoneId: 1491, state: "Lakshadweep Islands", stateCode: "LI" },
+  { zoneId: 1492, state: "Madhya Pradesh", stateCode: "MP" },
+  { zoneId: 1493, state: "Maharashtra", stateCode: "MA" },
+  { zoneId: 1494, state: "Manipur", stateCode: "MN" },
+  { zoneId: 1495, state: "Meghalaya", stateCode: "ME" },
+  { zoneId: 1496, state: "Mizoram", stateCode: "MI" },
+  { zoneId: 1497, state: "Nagaland", stateCode: "NA" },
+  { zoneId: 1498, state: "Odisha", stateCode: "OD" },
+  { zoneId: 1499, state: "Puducherry", stateCode: "PO" },
+  { zoneId: 1500, state: "Punjab", stateCode: "PU" },
+  { zoneId: 1501, state: "Rajasthan", stateCode: "RA" },
+  { zoneId: 1502, state: "Sikkim", stateCode: "SI" },
+  { zoneId: 1503, state: "Tamil Nadu", stateCode: "TN" },
+  { zoneId: 1504, state: "Tripura", stateCode: "TR" },
+  { zoneId: 1505, state: "Uttar Pradesh", stateCode: "UP" },
+  { zoneId: 1506, state: "West Bengal", stateCode: "WB" },
+  { zoneId: 4231, state: "Telangana", stateCode: "TS" },
+  { zoneId: 4239, state: "Jharkhand", stateCode: "JH" },
+  { zoneId: 4240, state: "Uttarakhand", stateCode: "UK" },
+  { zoneId: 4241, state: "Chattisgarh", stateCode: "CG" },
+  { zoneId: 4242, state: "Ladakh", stateCode: "LA" },
+];
+
 const ICarry = () => {
   const params = useParams();
   const ICarryURL = "/proxy/https://www.icarry.in/api_login";
 
   const [order, setOrder] = useState({});
-  const [username, setUsername] = useState("ela3089");
-  const [key, setKey] = useState("");
+  const [username, setUsername] = useState(
+    process.env.REACT_APP_ICARRY_USERNAME
+  );
+  const [key, setKey] = useState(process.env.REACT_APP_ICARRY_KEY);
   const [showLogin, setShowLogin] = useState(true);
   const [token, setToken] = useState("");
   const [weight, setWeight] = useState(0);
@@ -48,7 +90,9 @@ const ICarry = () => {
         params: { orderId: params.orderId },
       })
       .then((res) => {
+        console.log(res.data);
         setOrder(res.data);
+        setWeight(res.data.weightInGrams);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -100,8 +144,8 @@ const ICarry = () => {
       breadth: Number(breadth),
       height: Number(height),
       weight: Number(weight),
-      origin_pincode: 208013,
-      destination_pincode: 226002,
+      origin_pincode: order.customerAddress.zipCode,
+      destination_pincode: order.sellerAddress.zipCode,
       destination_country_code: "IN",
       origin_country_code: "IN",
       shipment_mode: "S",
@@ -138,51 +182,16 @@ const ICarry = () => {
   };
 
   const getStateId = (stateName) => {
-    const stateIds = [
-      { zoneId: 1475, state: "Andaman and Nicobar Islands", stateCode: "AN" },
-      { zoneId: 1476, state: "Andhra Pradesh", stateCode: "AP" },
-      { zoneId: 1477, state: "Arunachal Pradesh", stateCode: "AR" },
-      { zoneId: 1478, state: "Assam", stateCode: "AS" },
-      { zoneId: 1479, state: "Bihar", stateCode: "BI" },
-      { zoneId: 1480, state: "Chandigarh", stateCode: "CH" },
-      { zoneId: 1481, state: "Dadra and Nagar Haveli", stateCode: "DA" },
-      { zoneId: 1482, state: "Daman and Diu", stateCode: "DM" },
-      { zoneId: 1483, state: "Delhi", stateCode: "DE" },
-      { zoneId: 1484, state: "Goa", stateCode: "GO" },
-      { zoneId: 1485, state: "Gujarat", stateCode: "GU" },
-      { zoneId: 1486, state: "Haryana", stateCode: "HA" },
-      { zoneId: 1487, state: "Himachal Pradesh", stateCode: "HP" },
-      { zoneId: 1488, state: "Jammu and Kashmir", stateCode: "JA" },
-      { zoneId: 1489, state: "Karnataka", stateCode: "KA" },
-      { zoneId: 1490, state: "Kerala", stateCode: "KE" },
-      { zoneId: 1491, state: "Lakshadweep Islands", stateCode: "LI" },
-      { zoneId: 1492, state: "Madhya Pradesh", stateCode: "MP" },
-      { zoneId: 1493, state: "Maharashtra", stateCode: "MA" },
-      { zoneId: 1494, state: "Manipur", stateCode: "MN" },
-      { zoneId: 1495, state: "Meghalaya", stateCode: "ME" },
-      { zoneId: 1496, state: "Mizoram", stateCode: "MI" },
-      { zoneId: 1497, state: "Nagaland", stateCode: "NA" },
-      { zoneId: 1498, state: "Odisha", stateCode: "OD" },
-      { zoneId: 1499, state: "Puducherry", stateCode: "PO" },
-      { zoneId: 1500, state: "Punjab", stateCode: "PU" },
-      { zoneId: 1501, state: "Rajasthan", stateCode: "RA" },
-      { zoneId: 1502, state: "Sikkim", stateCode: "SI" },
-      { zoneId: 1503, state: "Tamil Nadu", stateCode: "TN" },
-      { zoneId: 1504, state: "Tripura", stateCode: "TR" },
-      { zoneId: 1505, state: "Uttar Pradesh", stateCode: "UP" },
-      { zoneId: 1506, state: "West Bengal", stateCode: "WB" },
-      { zoneId: 4231, state: "Telangana", stateCode: "TS" },
-      { zoneId: 4239, state: "Jharkhand", stateCode: "JH" },
-      { zoneId: 4240, state: "Uttarakhand", stateCode: "UK" },
-      { zoneId: 4241, state: "Chattisgarh", stateCode: "CG" },
-      { zoneId: 4242, state: "Ladakh", stateCode: "LA" },
-    ];
+    return statesData.find((s) => s.state === stateName).zoneId;
+  };
 
-    return stateIds.find((s) => s.state === stateName).zoneId;
+  const getStateCode = (stateName) => {
+    return statesData.find((s) => s.state === stateName).stateCode;
   };
 
   const createAddress = async (address, name) => {
     const bodyParams = {
+      nickname: name,
       name: name,
       email: "bookshlf.in@gmail.com",
       phone: address.phoneNo.toString(),
@@ -220,58 +229,83 @@ const ICarry = () => {
     setShipmentLoad(false);
     const addresses = [
       { address: order.customerAddress, name: order.customerName },
-      { address: order.sellerAddress, name: order.sellerName },
     ];
     const addressIds = await addAllAddresses(addresses);
     console.log(addressIds);
-    // axios
-    //   .post("/proxy/https://api.nimbuspost.com/v1/shipments", obj)
-    //   .then((response) => {
-    //     setShipmentLoad(false);
-    //     console.log(response.data);
-    //     if (response.data.status) {
-    //       const data = response.data.data;
-    //       setSuccessMsg("Order Placed Successfully!");
-    //       updateOrder(data);
-    //     } else {
-    //       setErrorMsg(response.data.message);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     setShipmentLoad(false);
-    //     setErrorMsg("Some error occurred");
-    //     console.log("Error occurred in nimbuspost", error);
-    //   });
-  };
-
-  const updateOrder = (shipmentData) => {
-    const externalTrackingLink = `https://ship.nimbuspost.com/shipping/tracking/${shipmentData.awb_number}`;
-    const externalTrackingDetails = `${shipmentData.courier_name}, Label: ${shipmentData.label}`;
-    const courierId = shipmentData.courier_id;
-    const adminDeliveryExpense = courierList.find(
-      (e) => e.id === courierId
-    ).total_charges;
+    const shipmentBody = {
+      pickup_address_id: addressIds[0],
+      client_order_id: params.orderId,
+      consignee: {
+        name: order.customerName,
+        mobile: order.customerAddress.phoneNo.toString(),
+        address: order.customerAddress.address,
+        city: order.customerAddress.city,
+        pincode: order.customerAddress.zipCode.toString(),
+        state: getStateCode(order.customerAddress.state),
+        country_code: "IN",
+      },
+      parcel: {
+        type: ["COD"],
+        value: order.orderTotal,
+        currency: "INR",
+        contents: order.title.substring(0, Math.max(order.title.length, 255)),
+        dimensions: [length, breadth, height, "cm"],
+        weight: [weight, "gm"],
+      },
+      courier_id: courierId,
+    };
 
     axios
-      .post("/admin-updateOrder", {
-        orderId: order._id,
-        externalTrackingLink,
-        externalTrackingDetails,
-        adminDeliveryExpense,
-      })
+      .post(
+        `/proxy/https://www.icarry.in/api_add_ shipment_surface&api_token=${token}`,
+        shipmentBody
+      )
       .then((response) => {
-        axios
-          .post("/admin-markOrderAsPacked", { orderId: order._id })
-          .then(() => {
-            setSuccessMsg("Order Updated");
-            window.location.reload();
-          });
+        setShipmentLoad(false);
+        console.log(response.data);
+        if (response.data.status) {
+          const data = response.data.data;
+          setSuccessMsg("Order Placed Successfully!");
+          // updateOrder(data);
+        } else {
+          setErrorMsg(response.data.message);
+        }
       })
       .catch((error) => {
-        console.log(error);
-        setErrorMsg("Some error occurred while updating order");
+        setShipmentLoad(false);
+        setErrorMsg("Some error occurred");
+        console.log("Error occurred in nimbuspost", error);
       });
   };
+
+  // const updateOrder = (shipmentData) => {
+  //   const externalTrackingLink = `https://ship.nimbuspost.com/shipping/tracking/${shipmentData.awb_number}`;
+  //   const externalTrackingDetails = `${shipmentData.courier_name}, Label: ${shipmentData.label}`;
+  //   const courierId = shipmentData.courier_id;
+  //   const adminDeliveryExpense = courierList.find(
+  //     (e) => e.id === courierId
+  //   ).total_charges;
+
+  //   axios
+  //     .post("/admin-updateOrder", {
+  //       orderId: order._id,
+  //       externalTrackingLink,
+  //       externalTrackingDetails,
+  //       adminDeliveryExpense,
+  //     })
+  //     .then((response) => {
+  //       axios
+  //         .post("/admin-markOrderAsPacked", { orderId: order._id })
+  //         .then(() => {
+  //           setSuccessMsg("Order Updated");
+  //           window.location.reload();
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       setErrorMsg("Some error occurred while updating order");
+  //     });
+  // };
 
   return (
     <Stack
@@ -338,14 +372,14 @@ const ICarry = () => {
             value={key}
           />
           <Stack direction="row" spacing={2}>
-            <Link
+            {/* <Link
               to={{ pathname: "https://www.icarry.in/api" }}
               target="_blank"
             >
               <Button variant="outlined" size="small">
                 Get New Key
               </Button>
-            </Link>
+            </Link> */}
             <Button
               size="small"
               disabled={loginLoad}
