@@ -23,9 +23,9 @@ const useStyles = makeStyles({
   },
 });
 
-const UserProfile = (props) => {
+const UserProfile = ({ data }) => {
   const classes = useStyles();
-  const userData = props.data;
+  const userData = data;
 
   return (
     <Box

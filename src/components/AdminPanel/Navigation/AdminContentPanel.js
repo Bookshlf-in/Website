@@ -9,7 +9,6 @@ import Books from "../Book/Book";
 import Seller from "../Sellers";
 import Orders from "../Order/Orders";
 import Support from "../Support/Support";
-import Profile from "../FindProfile";
 import Users from "../Users";
 import Wallet from "../Billing/Wallet";
 import Analytics from "../Analytics/Analytics";
@@ -27,10 +26,7 @@ const PermissionAlert = ({ user, permission, content }) => {
 
 const AdminContentPanel = ({ Panel, setPanel, history }) => {
   const [user] = useContext(UserContext);
-
-  console.log(user);
-  console.log(user.adminPermissions?.includes("BOOKS"));
-  if (Panel === 8) history.push("/");
+  if (Panel === 7) history.push("/");
   return (
     <Stack className="adminPanel-content">
       <Stack className="adminPanel-content-float">
@@ -46,29 +42,23 @@ const AdminContentPanel = ({ Panel, setPanel, history }) => {
           <PermissionAlert
             user={user}
             permission="MESSAGES"
-            content={<Profile />}
-          />
-        ) : Panel === 3 ? (
-          <PermissionAlert
-            user={user}
-            permission="MESSAGES"
             content={<Support />}
           />
-        ) : Panel === 4 ? (
+        ) : Panel === 3 ? (
           <PermissionAlert
             user={user}
             permission="SELLERS"
             content={<Seller />}
           />
-        ) : Panel === 5 ? (
+        ) : Panel === 4 ? (
           <PermissionAlert user={user} permission="USERS" content={<Users />} />
-        ) : Panel === 6 ? (
+        ) : Panel === 5 ? (
           <PermissionAlert
             user={user}
             permission="WALLET"
             content={<Wallet />}
           />
-        ) : Panel === 7 ? (
+        ) : Panel === 6 ? (
           <PermissionAlert
             user={user}
             permission="ANALYTICS"

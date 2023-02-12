@@ -13,6 +13,7 @@ import Pagination from "@mui/material/Pagination";
 import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { TextField, InputAdornment, Button } from "@mui/material";
 
 // icons
 import LoadIcon from "@mui/icons-material/AutorenewRounded";
@@ -21,6 +22,9 @@ import CheckIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelIcon from "@mui/icons-material/CancelRounded";
 import PersonIcon from "@mui/icons-material/PersonRounded";
 import IDIcon from "@mui/icons-material/AssignmentIndRounded";
+
+// custom components
+import SellerProfile from "./SellerProfile";
 
 const useStyles = makeStyles({
   root: {
@@ -54,6 +58,23 @@ const Sellers = () => {
   const [NotverifiedSeller, setNotVerifiedSeller] = useState([]);
   const [page, setpage] = useState(1);
   const [totalPages, settotalPages] = useState(0);
+
+  const [sellerProfile, setSellerProfile] = useState(null);
+  const [sellerEmail, setSellerEmail] = useState("");
+  const [sellerId, setSellerId] = useState("");
+
+  const getSellerProfile = (param) => {
+    axios
+      .get("/admin-getSellerProfile", {
+        params: param,
+      })
+      .then((res) => {
+        setSellerProfile(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
 
   // fetching sellers list
   const handelgetSellers = (pageNo) => {
@@ -122,6 +143,49 @@ const Sellers = () => {
       alignItems="center"
       className="seller-verify-container"
     >
+      <Stack spacing={2} sx={{ padding: "15px 24px" }} direction="row">
+        <TextField
+          value={sellerEmail}
+          label="Email"
+          onChange={(e) => setSellerEmail(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  onClick={() => getSellerProfile({ email: sellerEmail })}
+                  size="small"
+                  variant="outlined"
+                >
+                  Find Seller
+                </Button>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ minWidth: 400 }}
+        />
+        <TextField
+          value={sellerId}
+          label="Seller ID"
+          onChange={(e) => setSellerId(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  onClick={() => getSellerProfile({ sellerId: sellerId })}
+                  size="small"
+                  variant="outlined"
+                >
+                  Find Seller
+                </Button>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ minWidth: 400 }}
+        />
+      </Stack>
+      <Stack spacing={2} sx={{ padding: "0px 24px" }} direction="row">
+        {sellerProfile && <SellerProfile data={sellerProfile} />}
+      </Stack>
       <Stack
         direction="row"
         spacing={2}
