@@ -11,7 +11,7 @@ import Signup from "../Signup/Signup";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 import Cart from "../Cart/Cart";
-import Checkout from "../Cart/Checkout";
+import Checkout from "../Checkout/Checkout";
 import Wishlist from "../Cart/Wishlist";
 import AddReviews from "../Reviews/AddReviews";
 import UserProfile from "../UserProfile/UserProfile";
