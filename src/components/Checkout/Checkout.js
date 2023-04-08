@@ -9,20 +9,12 @@ import { Helmet } from "react-helmet-async";
 import axios from "../../axios";
 
 //  Components
-import { Grid, Stack, Divider } from "@mui/material";
-import { Alert, AlertTitle, Skeleton, Typography, Chip } from "@mui/material";
-import { Button, TextField } from "@mui/material";
-
-import LoadingButton from "@mui/lab/LoadingButton";
+import { Stack, Button } from "@mui/material";
+import { Alert, AlertTitle, Typography } from "@mui/material";
 
 // Icons
-import RupeeIcon from "@mui/icons-material/CurrencyRupee";
 import BackIcon from "@mui/icons-material/ArrowBackIosRounded";
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
-import ShippingIcon from "@mui/icons-material/LocalShipping";
-
-import CallIcon from "@mui/icons-material/CallRounded";
-import CheckIcon from "@mui/icons-material/CheckCircle";
 
 // Checkout Components
 import CheckoutLoading from "./CheckoutLoading";
@@ -30,12 +22,13 @@ import CheckoutStepper from "./CheckoutStepper";
 import CheckoutAddress from "./CheckoutAddress";
 import CheckoutPayment from "./CheckoutPayment";
 import CheckoutOrderReview from "./CheckoutOrderReview";
+import CheckoutOrderPlace from "./CheckoutOrderPlace";
 
 const PanelTitle = [
   "Shipping Address",
   "Payment Details",
   "Review Order",
-  "Place Order",
+  "Confirm Order",
 ];
 
 const Payment = () => {
@@ -94,43 +87,48 @@ const Payment = () => {
     setPanel((prev) => prev - 1);
   };
 
+  const buildRequest = () => {
+    if (checkoutType === "cart")
+      return {
+        url: "/purchaseCart",
+        body: {
+          customerAddressId: addressId,
+        },
+      };
+
+    return {
+      url: "/purchaseBook",
+      body: {
+        bookId: checkoutType,
+        customerAddressId: addressId,
+        purchaseQty: 1,
+      },
+    };
+  };
   // Purchasing Order
   const handelPlaceOrder = () => {
     setorderLoad(true);
-    if (checkoutType === "cart") {
-      axios
-        .post("/purchaseCart", {
-          customerAddressId: addressId,
-        })
-        .then((response) => {
-          setorderPlaced(true);
-          setorderLoad(false);
+    const request = buildRequest();
+    axios
+      .post(request.url, request.body)
+      .then((res) => {
+        setorderPlaced(true);
+        setorderLoad(false);
+        if (checkoutType === "cart") {
           localStorage.setItem(
             "bookshlf_user",
             JSON.stringify({ ...user, cartitems: 0 })
           );
           setUser({ ...user, cartitems: 0 });
-          setTimeout(() => {
-            history.push("/UserPanel/2");
-          }, 3000);
-        })
-        .catch((error) => {});
-    } else {
-      axios
-        .post("/purchaseBook", {
-          bookId: checkoutType,
-          customerAddressId: addressId,
-          purchaseQty: 1,
-        })
-        .then((response) => {
-          setorderPlaced(true);
-          setorderLoad(false);
-          setTimeout(() => {
-            history.push("/UserPanel/2");
-          }, 3000);
-        })
-        .catch((error) => {});
-    }
+        }
+        setTimeout(() => {
+          history.push("/UserPanel/2");
+        }, 3000);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        setorderLoad(false);
+      });
   };
 
   const CheckoutHeading = () => {
@@ -175,8 +173,7 @@ const Payment = () => {
                 padding: "15px 24px",
                 border: "1px solid rgba(0,0,0,0.2)",
                 borderRadius: "5px",
-                maxWidth: 600,
-                minWidth: 350,
+                width: 450,
               }}
               spacing={2}
             >
@@ -192,17 +189,23 @@ const Payment = () => {
                   checkout={checkout}
                   checkoutType={checkoutType}
                 />
-              ) : (
+              ) : panel === 2 ? (
                 <CheckoutOrderReview
                   address={address}
                   addressId={addressId}
                   checkout={checkout}
                 />
+              ) : (
+                <CheckoutOrderPlace
+                  orderLoad={orderLoad}
+                  orderPlaced={orderPlaced}
+                  handlePlaceOrder={handelPlaceOrder}
+                />
               )}
               <Stack
                 direction="row"
                 sx={{ width: "100%" }}
-                justifyContent="space-between"
+                justifyContent={panel === 0 ? "flex-end" : "space-between"}
                 spacing={2}
                 alignItems="center"
               >
@@ -213,6 +216,8 @@ const Payment = () => {
                     startIcon={<BackIcon />}
                     size="small"
                     color="warning"
+                    disabled={!addressId.length || orderLoad || orderPlaced}
+                    sx={{ width: 200 }}
                   >
                     {PanelTitle[panel - 1]}
                   </Button>
@@ -223,6 +228,8 @@ const Payment = () => {
                     variant="contained"
                     endIcon={<NextIcon />}
                     size="small"
+                    disabled={!addressId.length || orderLoad || orderPlaced}
+                    sx={{ width: 200 }}
                   >
                     {PanelTitle[panel + 1]}
                   </Button>
