@@ -1,6 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
-import { UserContext } from "../../../Context/userContext";
-import axios from "../../../axios";
+import { UserContext } from "../../../context/userContext";
+import axios from "../../../api/axios";
 
 // MUI Components
 import { Stack, Typography, Button } from "@mui/material";
@@ -130,15 +130,6 @@ const Contact = () => {
             You can also drop us a mail or Whatsapp us.
           </Typography>
           <Stack spacing={3} sx={{ padding: "25px 0px" }}>
-            <Button
-              variant="outlined"
-              startIcon={<CallIcon />}
-              sx={{ maxWidth: 200 }}
-              color="warning"
-              onClick={() => window.open("tel:+91 97926 66122", "_blank")}
-            >
-              <Typography variant="body2">+91 97926 66122</Typography>
-            </Button>
             <Button
               variant="outlined"
               startIcon={<MailIcon />}

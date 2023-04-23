@@ -1,8 +1,8 @@
 import { React, useState, useContext } from "react";
 import { styled } from "@mui/styles";
-import { UserContext } from "../../../Context/userContext";
+import { UserContext } from "../../../context/userContext";
 import { useHistory } from "react-router-dom";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Components
 import { Box, Stack, Typography, Alert } from "@mui/material";

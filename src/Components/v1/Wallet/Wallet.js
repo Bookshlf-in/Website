@@ -1,8 +1,8 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Helmet } from "react-helmet-async";
-import { UserContext } from "../../../Context/userContext";
+import { UserContext } from "../../../context/userContext";
 import { makeStyles } from "@mui/styles";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 import "./Wallet.css";
 
 // Wallet Components

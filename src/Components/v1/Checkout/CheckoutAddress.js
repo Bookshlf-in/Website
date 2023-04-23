@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // api
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 //  Components
 import { Stack, Divider } from "@mui/material";

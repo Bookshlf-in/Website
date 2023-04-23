@@ -13,16 +13,16 @@ import {
 
 // Theme
 //---- fonts
-import { DMsans } from "../../../../../Theme/fonts";
+import { DMsans } from "../../../../../assets/Theme/fonts";
 
 // Utils
-import { currentDate } from "../../../../../Methods/Utils/Dates/currentDate";
+import { currentDate } from "../../../../../assets/utils/dates/currentDate";
 
 // apex charts
 import Chart from "react-apexcharts";
 
 // Methods
-import { makeRequest } from "../../../../../Methods/AdminPanel/Analytics/OrdersAnalytics";
+import { makeRequest } from "../../../../../service/AdminPanel/Analytics/OrdersAnalytics";
 
 const OrderStatsTable = ({
   placed,

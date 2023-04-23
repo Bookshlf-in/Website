@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { makeStyles } from "@mui/styles";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Components
 import { Stack, Chip, Avatar, Typography, Button } from "@mui/material";

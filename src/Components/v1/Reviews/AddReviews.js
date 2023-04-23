@@ -1,8 +1,8 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { UserContext } from "../../../Context/userContext";
-import axios from "../../../axios";
+import { UserContext } from "../../../context/userContext";
+import axios from "../../../api/axios";
 
 // Components
 import { Stack, Avatar, Skeleton } from "@mui/material";

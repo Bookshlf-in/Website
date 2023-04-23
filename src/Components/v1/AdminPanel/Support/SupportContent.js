@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // API
-import axios from "../../../../axios";
+import axios from "../../../../api/axios";
 
 // MUI Components
 import { Stack, Pagination, Alert } from "@mui/material";

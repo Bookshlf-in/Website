@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Components
 import Stack from "@mui/material/Stack";

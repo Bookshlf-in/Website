@@ -3,10 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 // User Context
-import { SearchContext } from "../../../Context/searchContext";
+import { SearchContext } from "../../../context/searchContext";
 
 // API
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Components
 import { Grid, Stack, Typography, Select } from "@mui/material";

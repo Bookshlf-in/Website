@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // API
-import axios from "../../../../axios";
+import axios from "../../../../api/axios";
 
 // MUI Components
 import { TextField, Button, Dialog } from "@mui/material";

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Mui Components
 import { IconButton, Stack, Typography } from "@mui/material";

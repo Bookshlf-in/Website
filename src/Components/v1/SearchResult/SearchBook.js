@@ -1,7 +1,7 @@
 import { React, useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../../Context/userContext";
-import axios from "../../../axios";
+import { UserContext } from "../../../context/userContext";
+import axios from "../../../api/axios";
 
 // Mui Components
 import { Box, Stack, Chip, Typography, Alert } from "@mui/material";
