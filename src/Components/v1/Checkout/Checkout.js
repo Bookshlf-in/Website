@@ -2,11 +2,11 @@ import { useState, useEffect, useContext } from "react";
 
 // react router
 import { useHistory, useParams } from "react-router-dom";
-import { UserContext } from "../../../Context/userContext";
+import { UserContext } from "../../../context/userContext";
 import { Helmet } from "react-helmet-async";
 
 // api
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 //  Components
 import { Stack, Button } from "@mui/material";
@@ -170,10 +170,10 @@ const Payment = () => {
             <CheckoutStepper panel={panel} />
             <Stack
               sx={{
-                padding: "15px 24px",
+                padding: "15px 10px",
                 border: "1px solid rgba(0,0,0,0.2)",
                 borderRadius: "5px",
-                width: 450,
+                width: 350,
               }}
               spacing={2}
             >
@@ -217,7 +217,6 @@ const Payment = () => {
                     size="small"
                     color="warning"
                     disabled={!addressId.length || orderLoad || orderPlaced}
-                    sx={{ width: 200 }}
                   >
                     {PanelTitle[panel - 1]}
                   </Button>
@@ -229,7 +228,6 @@ const Payment = () => {
                     endIcon={<NextIcon />}
                     size="small"
                     disabled={!addressId.length || orderLoad || orderPlaced}
-                    sx={{ width: 200 }}
                   >
                     {PanelTitle[panel + 1]}
                   </Button>

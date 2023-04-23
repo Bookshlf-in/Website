@@ -1,9 +1,9 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../../../Context/userContext";
+import { UserContext } from "../../../context/userContext";
 import { Helmet } from "react-helmet-async";
 import { makeStyles } from "@mui/styles";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Components
 import Grid from "@mui/material/Grid";

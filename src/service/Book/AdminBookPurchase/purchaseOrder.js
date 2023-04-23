@@ -1,5 +1,5 @@
 // API
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Open Dialog
 export const handleOpen = (setOpen) => {

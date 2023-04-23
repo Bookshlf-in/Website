@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { AdminContext } from "../../../../Context/adminContext";
+import { AdminContext } from "../../../../context/adminContext";
 
 // custom Styling
 import "./Order.css";

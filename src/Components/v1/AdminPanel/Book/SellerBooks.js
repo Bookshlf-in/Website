@@ -1,6 +1,6 @@
 import { React, useState, useContext } from "react";
-import { AdminContext } from "../../../../Context/adminContext";
-import axios from "../../../../axios";
+import { AdminContext } from "../../../../context/adminContext";
+import axios from "../../../../api/axios";
 
 // MUI Components
 import { Grid, Stack, Button, Alert } from "@mui/material";

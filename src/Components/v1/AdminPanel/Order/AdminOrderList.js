@@ -1,7 +1,7 @@
 import { React, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { AdminContext } from "../../../../Context/adminContext";
-import axios from "../../../../axios";
+import { AdminContext } from "../../../../context/adminContext";
+import axios from "../../../../api/axios";
 
 // components
 import { Stack, Button, Pagination, Chip } from "@mui/material";

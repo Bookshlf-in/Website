@@ -1,8 +1,8 @@
 import { React, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import axios from "../../../axios";
-import { debounce } from "../../../debounce";
+import axios from "../../../api/axios";
+import { debounce } from "../../../api/debounce";
 
 // Components
 import InputBase from "@mui/material/InputBase";

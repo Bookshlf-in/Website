@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet-async";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 import * as EmailValidator from "email-validator";
 import "./Signup.css";
 

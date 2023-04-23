@@ -13,7 +13,7 @@ import {
   handleOpen,
   handleClose,
   adminBookPurchase,
-} from "../../../Methods/Book/AdminBookPurchase/purchaseOrder";
+} from "../../../service/Book/AdminBookPurchase/purchaseOrder";
 
 const BookPurchaseAdmin = ({ bookId }) => {
   // states

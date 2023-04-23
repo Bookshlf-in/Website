@@ -2,8 +2,8 @@ import { React, useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 // API
-import axios from "../../../../../axios";
-import { debounce } from "../../../../../debounce";
+import axios from "../../../../../api/axios";
+import { debounce } from "../../../../../api/debounce";
 
 // Components
 import { Stack, ClickAwayListener, Chip, Alert } from "@mui/material";

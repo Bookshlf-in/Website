@@ -1,8 +1,8 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { UserContext } from "../../../Context/userContext";
-import axios from "../../../axios";
+import { UserContext } from "../../../context/userContext";
+import axios from "../../../api/axios";
 
 // Components
 import Stack from "@mui/material/Stack";

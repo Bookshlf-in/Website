@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 // API
-import axios from "../axios";
+import axios from "../api/axios";
 
 // User Context
 export const UserContext = createContext();

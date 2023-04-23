@@ -1,8 +1,8 @@
 import { React, useState, useContext } from "react";
-import { AdminContext } from "../../../../../Context/adminContext";
+import { AdminContext } from "../../../../../context/adminContext";
 
 // API
-import axios from "../../../../../axios";
+import axios from "../../../../../api/axios";
 
 // MUI Components
 import { Button, CircularProgress } from "@mui/material";

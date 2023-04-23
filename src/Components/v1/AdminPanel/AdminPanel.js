@@ -1,5 +1,5 @@
 import { React, useContext } from "react";
-import { UserContext } from "../../../Context/userContext";
+import { UserContext } from "../../../context/userContext";
 import { Helmet } from "react-helmet-async";
 
 // Custom CSS

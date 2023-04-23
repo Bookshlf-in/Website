@@ -1,5 +1,5 @@
 import { React, useState, useContext } from "react";
-import { AdminContext } from "../../../../Context/adminContext";
+import { AdminContext } from "../../../../context/adminContext";
 
 // MUI Components
 import { Stack, Button, TextField } from "@mui/material";

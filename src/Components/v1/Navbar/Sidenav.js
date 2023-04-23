@@ -1,6 +1,6 @@
 import { React, useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../../Context/userContext";
+import { UserContext } from "../../../context/userContext";
 
 // Components
 import { Stack, Divider, Chip } from "@mui/material";

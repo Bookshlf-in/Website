@@ -1,8 +1,8 @@
 import { React, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../../../Context/userContext";
-import { AdminContext } from "../../../Context/adminContext";
-import axios from "../../../axios.js";
+import { UserContext } from "../../../context/userContext";
+import { AdminContext } from "../../../context/adminContext";
+import axios from "../../../api/axios.js";
 
 // Components
 import { Stack, IconButton, Menu, MenuItem, Avatar } from "@mui/material";

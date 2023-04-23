@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "../../../../Context/userContext";
+import { UserContext } from "../../../../context/userContext";
 
 // Components
 import { Stack, Alert } from "@mui/material";

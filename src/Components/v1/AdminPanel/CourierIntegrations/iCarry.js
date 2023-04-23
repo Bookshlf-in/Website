@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "../../../../axios";
+import axios from "../../../../api/axios";
 
 import { Radio, RadioGroup, FormControlLabel, Divider } from "@mui/material";
 import { TextField, Button, Alert, AlertTitle, Stack } from "@mui/material";

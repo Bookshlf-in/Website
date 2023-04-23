@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { makeStyles } from "@mui/styles";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 import { useHistory } from "react-router-dom";
 
 // components

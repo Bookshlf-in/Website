@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Components
 import { Stack, Chip, Avatar, Typography, Popover } from "@mui/material";
@@ -280,13 +280,7 @@ const Orders = () => {
             color="warning"
           >
             To Update Book Details, Contact Admin
-            <Link to={{ pathname: "tel:97926 66122" }} target="_blank">
-              <Chip
-                label="+91 97926 66122"
-                size="small"
-                sx={{ fontSize: "10px" }}
-              />
-            </Link>
+            <br />
             <Link
               to={{ pathname: "mailto:bookshlf.in@gmail.com" }}
               target="_blank"

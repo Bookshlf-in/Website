@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import axios from "../../../axios";
+import axios from "../../../api/axios";
 
 // Components
 import { Box, Stack, Typography, Alert, Button } from "@mui/material";
