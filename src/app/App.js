@@ -42,9 +42,9 @@ const App = () => {
       {process.env.REACT_APP_NODE_ENV === "development" ? <BetaNotify /> : null}
       {!location.pathname.startsWith("/Admin") && <Navbar />}
       <Routes>
-        <Route path="/auth/Login" element={<Login />} />
-        <Route path="auth//recovery" element={<ForgotPassword />} />
-        <Route path="/auth/Signup" element={<Signup />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/PasswordRecovery" element={<ForgotPassword />} />
+        <Route path="/Signup" element={<Signup />} />
         <Route path="/About" element={<About />} />
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Cart" element={<Cart />} />
