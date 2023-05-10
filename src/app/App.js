@@ -3,36 +3,36 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 // Components
-import Navbar from "../components/v1/Navbar/Navbar";
-import Home from "../components/v1/Home/Home";
-import Login from "../components/v1/Login/Login";
-import ForgotPassword from "../components/v1/Login/ForgotPassword";
-import Signup from "../components/v1/Signup/Signup";
-import About from "../components/v1/About/About";
-import Contact from "../components/v1/Contact/Contact";
-import Cart from "../components/v1/Cart/Cart";
-import Checkout from "../components/v1/Checkout/Checkout";
-import Wishlist from "../components/v1/Cart/Wishlist";
-import AddReviews from "../components/v1/Reviews/AddReviews";
-import UserProfile from "../components/v1/UserProfile/UserProfile";
-import Track from "../components/v1/Order/OrderTracking";
-import SellerPanel from "../components/v1/SellerPanel/SellerPanel";
-import UpdateOrder from "../components/v1/Order/UpdateOrder";
-import SearchResult from "../components/v1/SearchResult/SearchPanel";
-import BookDetails from "../components/v1/BookDetails/BookDetails";
-import Admin from "../components/v1/AdminPanel/AdminPanel";
-import Blog from "../components/v1/Blog/Blog";
-import AdminTrack from "../components/v1/AdminPanel/Order/OrderTracking";
-import SellerProfile from "../components/v1/SellerPanel/SellerProfile";
-import Wallet from "../components/v1/Wallet/Wallet";
-import Terms from "../components/v1/Footer/Terms";
+import Navbar from "../components/Navbar/Navbar";
+import Home from "../components/Home/Home";
+import Login from "../components/Login/Login";
+import ForgotPassword from "../components/Login/ForgotPassword";
+import Signup from "../components/Signup/Signup";
+import About from "../components/About/About";
+import Contact from "../components/Contact/Contact";
+import Cart from "../components/Cart/Cart";
+import Checkout from "../components/Checkout/Checkout";
+import Wishlist from "../components/Cart/Wishlist";
+import AddReviews from "../components/Reviews/AddReviews";
+import UserProfile from "../components/UserProfile/UserProfile";
+import Track from "../components/Order/OrderTracking";
+import SellerPanel from "../components/SellerPanel/SellerPanel";
+import UpdateOrder from "../components/Order/UpdateOrder";
+import SearchResult from "../components/SearchResult/SearchPanel";
+import BookDetails from "../components/BookDetails/BookDetails";
+import Admin from "../components/AdminPanel/AdminPanel";
+import Blog from "../components/Blog/Blog";
+import AdminTrack from "../components/AdminPanel/Order/OrderTracking";
+import SellerProfile from "../components/SellerPanel/SellerProfile";
+import Wallet from "../components/Wallet/Wallet";
+import Terms from "../components/Footer/Terms";
 import BetaNotify from "../assets/components/BetaNotify";
-import NotFoundPage from "../components/v1/Home/NotFoundPage";
+import NotFoundPage from "../components/Home/NotFoundPage";
 
 // external courier integrations
-import ICarry from "../components/v1/AdminPanel/CourierIntegrations/iCarry";
-import Nimbuspost from "../components/v1/AdminPanel/CourierIntegrations/Nimbuspost";
-import EnviaShipping from "../components/v1/AdminPanel/CourierIntegrations/enviaShipping";
+import ICarry from "../components/AdminPanel/CourierIntegrations/iCarry";
+import Nimbuspost from "../components/AdminPanel/CourierIntegrations/Nimbuspost";
+import EnviaShipping from "../components/AdminPanel/CourierIntegrations/enviaShipping";
 
 const App = () => {
   return (
