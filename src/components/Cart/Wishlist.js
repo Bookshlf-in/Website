@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
@@ -24,7 +24,7 @@ import SellerIcon from "@mui/icons-material/AccountCircle";
 import NextIcon from "@mui/icons-material/NavigateNextRounded";
 
 const Wishlist = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [user, setUser] = useContext(UserContext);
 
   // Functionality States
@@ -177,7 +177,7 @@ const Wishlist = () => {
                           color="warning"
                           variant="outlined"
                           onClick={() =>
-                            history.push(`/BookDetails/${item.bookId}`)
+                            navigate(`/BookDetails/${item.bookId}`)
                           }
                         >
                           More Details

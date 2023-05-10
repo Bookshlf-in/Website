@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 // Components
 import { Drawer } from "@mui/material";
@@ -12,7 +12,7 @@ import AdminContentPanel from "./AdminContentPanel";
 
 const AdminNavbar = () => {
   // Hooks Call
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   // States
@@ -39,7 +39,11 @@ const AdminNavbar = () => {
           setOpenSideBar={setOpenSideBar}
         />
       </Drawer>
-      <AdminContentPanel Panel={Panel} setPanel={setPanel} history={history} />
+      <AdminContentPanel
+        Panel={Panel}
+        setPanel={setPanel}
+        navigate={navigate}
+      />
     </Stack>
   );
 };

@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
 import * as EmailValidator from "email-validator";
@@ -36,7 +36,7 @@ import LeftIcon from "@mui/icons-material/ArrowLeftRounded";
 import Verify from "./Verify";
 
 const UserSignup = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Function States
   const [emailError, setemailError] = useState(false);
@@ -58,9 +58,9 @@ const UserSignup = () => {
 
   // Handeling SignUP Navbar
   const handelNav = (e, value) => {
-    if (value === "1") history.push("/");
-    if (value === "2") history.push("/Login");
-    if (value === "3") history.push("/Signup");
+    if (value === "1") navigate("/");
+    if (value === "2") navigate("/Login");
+    if (value === "3") navigate("/Signup");
   };
 
   // checking if both input passwords are matching

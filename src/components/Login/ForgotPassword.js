@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
@@ -36,7 +36,7 @@ import PasswordIcon from "@mui/icons-material/PasswordRounded";
 import UpdateIcon from "@mui/icons-material/Cached";
 
 const ForgotPassword = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   // context states
   const [, setUser] = useContext(UserContext);
 
@@ -92,10 +92,10 @@ const ForgotPassword = () => {
           cartitems: 0,
           wishlist: 0,
         });
-        history.push("/");
+        navigate("/");
       })
       .catch((error) => {
-        history.push("/Login");
+        navigate("/Login");
       });
   };
 
@@ -106,9 +106,9 @@ const ForgotPassword = () => {
 
   // Handeling Recovery Navbar
   const handelNav = (e, value) => {
-    if (value === "1") history.push("/");
-    if (value === "2") history.push("/PasswordRecovery");
-    if (value === "3") history.push("/Login");
+    if (value === "1") navigate("/");
+    if (value === "2") navigate("/PasswordRecovery");
+    if (value === "3") navigate("/Login");
   };
 
   // OTP Countdown

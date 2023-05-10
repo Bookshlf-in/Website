@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
 import "./AddBook.css";
@@ -59,7 +59,7 @@ const Flexible = {
 };
 
 const AddBook = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // functionality states
   const [checked, setChecked] = useState(false);
@@ -235,7 +235,7 @@ const AddBook = (props) => {
             show: false,
             msg: "",
           });
-          history.push("/SellerPanel/2");
+          navigate("/SellerPanel/2");
         }, 1000);
       })
       .catch((error) => {

@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import axios from "../../api/axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // components
 import Stack from "@mui/material/Stack";
@@ -26,7 +26,7 @@ import IDIcon from "@mui/icons-material/AssignmentIndRounded";
 import SellerProfile from "./SellerProfile";
 
 const Sellers = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // functionality states
   const [sellersload, setsellersload] = useState(false);
@@ -89,7 +89,7 @@ const Sellers = () => {
         .then((response) => {
           console.log(response.data);
           setsellerverifyId("");
-          history.go(0);
+          navigate(0);
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -103,7 +103,7 @@ const Sellers = () => {
         .then((response) => {
           console.log(response.data);
           setsellerverifyId("");
-          history.go(0);
+          navigate(0);
         })
         .catch((error) => {
           console.log(error.response.data);

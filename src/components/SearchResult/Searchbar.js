@@ -1,5 +1,5 @@
 import { React, useState, useCallback } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import axios from "../../axios";
 
@@ -98,7 +98,7 @@ const useStyles = makeStyles(() => ({
 
 const Searchbar = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   // functionality states
@@ -115,7 +115,7 @@ const Searchbar = () => {
   // Search on Enter
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      history.push(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
+      navigate(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
     }
   };
 
@@ -158,14 +158,14 @@ const Searchbar = () => {
   const handelTitleAdd = (titlename) => {
     setOpenTitleMenu(false);
     setSearch(titlename);
-    history.push(`/SearchResult/${titlename === "" ? "tag:ALL" : titlename}`);
+    navigate(`/SearchResult/${titlename === "" ? "tag:ALL" : titlename}`);
   };
 
   // Searching Tags
   const handelTagAdd = (tagname) => {
     setOpenTagMenu(false);
     setSearch(tagname);
-    history.push(`/SearchResult/tag:${tagname}`);
+    navigate(`/SearchResult/tag:${tagname}`);
   };
 
   return (

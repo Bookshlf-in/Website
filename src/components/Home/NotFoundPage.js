@@ -1,12 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // mui
 import { Button } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 
 const NotFoundPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <div className="error-404">
       <h1>
@@ -23,7 +23,7 @@ const NotFoundPage = () => {
         startIcon={<HomeIcon />}
         variant="contained"
         size="small"
-        onClick={() => history.push("/")}
+        onClick={() => navigate("/")}
       >
         Home
       </Button>

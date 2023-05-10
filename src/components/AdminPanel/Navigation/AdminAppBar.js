@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Components
 import { AppBar, Toolbar } from "@mui/material";
@@ -10,7 +10,7 @@ import HomeIcon from "@mui/icons-material/Home";
 
 // Custom Admin AppBar
 const AdminAppBar = ({ openSideBar, setOpenSideBar }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <AppBar position="sticky">
       <Toolbar variant="dense">
@@ -36,7 +36,7 @@ const AdminAppBar = ({ openSideBar, setOpenSideBar }) => {
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
-          onClick={() => history.push("/")}
+          onClick={() => navigate("/")}
         >
           <HomeIcon />
         </IconButton>

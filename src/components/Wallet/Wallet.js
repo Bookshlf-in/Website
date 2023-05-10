@@ -87,7 +87,7 @@ const Wallet = () => {
             msg: response.data.msg,
             severity: "success",
           });
-          // history.go(0);
+          // navigate(0);
           setUpdateTxn((prev) => prev + 1);
           setTimeout(() => {
             setAlert({

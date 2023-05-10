@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Components
 import Stack from "@mui/material/Stack";
@@ -19,14 +19,14 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const BookDesc = (props) => {
   const book = props.bookdetails;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    history.push(`/SellerProfile/${props.bookdetails.seller._id}`);
+    navigate(`/SellerProfile/${props.bookdetails.seller._id}`);
   };
 
   const handelTagClick = (tagName) => {
-    history.push(`/SearchResult/tag:${tagName}`);
+    navigate(`/SearchResult/tag:${tagName}`);
   };
 
   return (

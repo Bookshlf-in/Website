@@ -1,5 +1,5 @@
 import { React, useState, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { debounce } from "../../api/debounce";
 
@@ -14,7 +14,7 @@ import { Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Searchbar = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // functionality states
   const [searchFieldChanges, setsearchFieldChanges] = useState(false);
@@ -29,7 +29,7 @@ const Searchbar = () => {
     // event.preventDefault();
     if (event.key === "Enter") {
       event.preventDefault();
-      history.push(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
+      navigate(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
     }
   };
 
@@ -52,7 +52,7 @@ const Searchbar = () => {
   // Searching Title
   const handelTitleAdd = (titlename) => {
     setOpenTitleMenu(false);
-    history.push(`/SearchResult/${titlename === "" ? "tag:ALL" : titlename}`);
+    navigate(`/SearchResult/${titlename === "" ? "tag:ALL" : titlename}`);
   };
 
   return (

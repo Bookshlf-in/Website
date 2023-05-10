@@ -1,5 +1,5 @@
 import { React } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 
 // Components
@@ -35,104 +35,50 @@ import Nimbuspost from "../components/AdminPanel/CourierIntegrations/Nimbuspost"
 import EnviaShipping from "../components/AdminPanel/CourierIntegrations/enviaShipping";
 
 const App = () => {
+  const location = useLocation();
+  // console.log(location);
   return (
-    <Router>
-      <div className="App">
-        {process.env.REACT_APP_NODE_ENV === "development" ? (
-          <BetaNotify />
-        ) : null}
-        <Switch>
-          <Route path="/Login" component={Login} />
-          <Route path="/PasswordRecovery">
-            <ForgotPassword />
-          </Route>
-          <Route path="/Signup" component={Signup} />
-          <Route path="/About">
-            <Navbar />
-            <About />
-          </Route>
-          <Route path="/Contact">
-            <Navbar />
-            <Contact />
-          </Route>
-          <Route path="/Cart">
-            <Navbar />
-            <Cart />
-          </Route>
-          <Route path="/Track/:orderId">
-            <Navbar />
-            <Track />
-          </Route>
-          <Route path="/AddReview/:orderId">
-            <Navbar />
-            <AddReviews />
-          </Route>
-          <Route path="/UserPanel/:panel">
-            <Navbar />
-            <UserProfile />
-          </Route>
-          <Route path="/SellerPanel/:panel">
-            <Navbar />
-            <SellerPanel />
-          </Route>
-          <Route path="/SellerBookUpdate/:bookId">
-            <Navbar />
-            <UpdateOrder />
-          </Route>
-          <Route path="/SearchResult/:query">
-            <Navbar />
-            <SearchResult />
-          </Route>
-          <Route path="/BookDetails/:bookId">
-            <Navbar />
-            <BookDetails />
-          </Route>
-          <Route path="/Wishlist">
-            <Navbar />
-            <Wishlist />
-          </Route>
-          <Route path="/Checkout/:type">
-            <Navbar />
-            <Checkout />
-          </Route>
-          <Route path="/AdminTrack/:orderId">
-            <AdminTrack />
-          </Route>
-          <Route path="/Admin/:panel">
-            <Admin />
-          </Route>
-          <Route path="/SellerProfile/:sellerId">
-            <Navbar />
-            <SellerProfile />
-          </Route>
-          <Route path="/Blog">
-            <Navbar />
-            <Blog />
-          </Route>
-          <Route path="/TermsofUsePrivacyPolicy">
-            <Terms />
-          </Route>
-          <Route path="/Wallet">
-            <Navbar />
-            <Wallet />
-          </Route>
+    <div className="App">
+      {process.env.REACT_APP_NODE_ENV === "development" ? <BetaNotify /> : null}
+      {!location.pathname.startsWith("/Admin") && <Navbar />}
+      <Routes>
+        <Route path="/auth/Login" element={<Login />} />
+        <Route path="auth//recovery" element={<ForgotPassword />} />
+        <Route path="/auth/Signup" element={<Signup />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/Track/:orderId" element={<Track />} />
+        <Route path="/AddReview/:orderId" element={<AddReviews />} />
+        <Route path="/UserPanel/:panel" element={<UserProfile />} />
+        <Route path="/SellerPanel/:panel" element={<SellerPanel />} />
+        <Route path="/SellerBookUpdate/:bookId" element={<UpdateOrder />} />
+        <Route path="/SearchResult/:query" element={<SearchResult />} />
+        <Route path="/BookDetails/:bookId" element={<BookDetails />} />
+        <Route path="/Wishlist" element={<Wishlist />} />
+        <Route path="/Checkout/:type" element={<Checkout />} />
+        <Route path="/AdminTrack/:orderId" element={<AdminTrack />} />
+        <Route path="/Admin/:panel" element={<Admin />} />
+        <Route path="/SellerProfile/:sellerId" element={<SellerProfile />} />
+        <Route path="/Blog" element={<Blog />} />
+        <Route path="/TermsofUsePrivacyPolicy" element={<Terms />} />
+        <Route path="/Wallet" element={<Wallet />} />
 
-          {/* External Courier Paths */}
-          <Route path="/AdminCourier/Icarry/:orderId">
-            <ICarry />
-          </Route>
-          <Route path="/AdminCourier/Nimbuspost/:orderId">
-            <Nimbuspost />
-          </Route>
-          <Route path="/AdminCourier/EnviaShipping/:orderId">
-            <EnviaShipping />
-          </Route>
-          {/* ========================= */}
-          <Route path="/" component={Home} exact />
-          <Route component={NotFoundPage} status={404} />
-        </Switch>
-      </div>
-    </Router>
+        {/* External Courier Paths */}
+        <Route path="/AdminCourier/Icarry/:orderId" element={<ICarry />} />
+        <Route
+          path="/AdminCourier/Nimbuspost/:orderId"
+          element={<Nimbuspost />}
+        />
+        <Route
+          path="/AdminCourier/EnviaShipping/:orderId"
+          element={<EnviaShipping />}
+        />
+        {/* ========================= */}
+        <Route path="/" element={<Home />} exact />
+        <Route element={<NotFoundPage />} status={404} />
+      </Routes>
+    </div>
   );
 };
 

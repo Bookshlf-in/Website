@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Components
 import { Stack, Paper, Divider } from "@mui/material";
@@ -24,10 +24,10 @@ const AdminNavButton = ({
   openSideBar,
   setOpenSideBar,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleClick = () => {
     setPanel(value);
-    history.push(`/Admin/${value}`);
+    navigate(`/Admin/${value}`);
     setOpenSideBar(false);
   };
 

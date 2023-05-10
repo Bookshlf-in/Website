@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
@@ -27,7 +27,7 @@ import CheckoutIcon from "@mui/icons-material/RedoRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const Cart = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [user, setUser] = useContext(UserContext);
 
   // Functionality States
@@ -113,7 +113,7 @@ const Cart = () => {
   const Checkout = async () => {
     setcheckout(true);
     await UpdateAllPurchaseQty();
-    history.push("/Checkout/cart");
+    navigate("/Checkout/cart");
     setcheckout(false);
   };
 
@@ -164,7 +164,7 @@ const Cart = () => {
                     cursor: "pointer",
                   }}
                   color="secondary"
-                  onClick={() => history.push("/SearchResult/tag:ALL")}
+                  onClick={() => navigate("/SearchResult/tag:ALL")}
                 >
                   Continue Shopping
                 </Button>
@@ -328,7 +328,7 @@ const Cart = () => {
                           color="primary"
                           size="small"
                           onClick={() =>
-                            history.push(`/BookDetails/${product.bookId}`)
+                            navigate(`/BookDetails/${product.bookId}`)
                           }
                         >
                           More Details

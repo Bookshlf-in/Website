@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "../../api/axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // components
 import List from "@mui/material/List";
@@ -63,7 +63,7 @@ const CircularProgressStyle = {
 };
 
 const WithdrawGrid = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [Load, setLoad] = useState(false);
   const [withdrawList, setwithdrawList] = useState(props.data);
@@ -95,7 +95,7 @@ const WithdrawGrid = (props) => {
             icon: "Complete",
           });
           setTimeout(() => {
-            history.go(0);
+            navigate(0);
           }, 5000);
         })
         .catch((error) => {

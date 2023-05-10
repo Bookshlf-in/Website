@@ -1,5 +1,5 @@
 import { React, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
@@ -31,7 +31,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import ErrorIcon from "@mui/icons-material/Error";
 
 const Login = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // context states
   const [, setUser] = useContext(UserContext);
@@ -55,9 +55,9 @@ const Login = () => {
 
   // Handeling Login Navbar
   const handelNav = (e, value) => {
-    if (value === "1") history.push("/");
-    if (value === "2") history.push("/Login");
-    if (value === "3") history.push("/Signup");
+    if (value === "1") navigate("/");
+    if (value === "2") navigate("/Login");
+    if (value === "3") navigate("/Signup");
   };
 
   // handeling Login
@@ -91,7 +91,7 @@ const Login = () => {
               balance: 0,
             });
             setloginLoad(false);
-            history.push("/");
+            navigate("/");
           })
           .catch((error) => {
             setloginLoad(false);
@@ -267,7 +267,7 @@ const Login = () => {
           direction="row"
         >
           <Button
-            onClick={() => history.push("/PasswordRecovery")}
+            onClick={() => navigate("/PasswordRecovery")}
             size="small"
             sx={{
               letterSpacing: "1px",
@@ -297,7 +297,7 @@ const Login = () => {
             Login
           </LoadingButton>
           <Button
-            onClick={() => history.push("/Signup")}
+            onClick={() => navigate("/Signup")}
             color="secondary"
             variant="contained"
           >

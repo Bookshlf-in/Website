@@ -1,6 +1,6 @@
 import { React, useState, useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 
 import {
@@ -29,7 +29,7 @@ const responses = [
 ];
 
 const UpdateReviews = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // User Context
   const [user] = useContext(UserContext);
@@ -69,7 +69,7 @@ const UpdateReviews = () => {
         endIcon={user ? open ? <UpIcon /> : <DownIcon /> : <> </>}
         onClick={() => {
           if (user) setOpen((prev) => !prev);
-          else history.push("/Login");
+          else navigate("/Login");
         }}
         color="warning"
         size="small"
