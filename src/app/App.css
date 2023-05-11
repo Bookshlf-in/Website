@@ -1,14 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Staatliches");
-@import url("https://fonts.googleapis.com/css2?family=Roboto");
-@import url("https://fonts.googleapis.com/css2?family=PT+Sans");
-@import url("https://fonts.googleapis.com/css?family=Montserrat");
-
-html,
-body {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 5px;

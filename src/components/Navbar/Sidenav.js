@@ -82,11 +82,7 @@ const Sidenav = () => {
   return (
     <Stack className="main-sidenav" spacing={0} sx={{ minWidth: 200 }}>
       <Link to="/">
-        <MenuStack
-          title={true}
-          icon={"/images/bookshlf-2022-independence.gif"}
-          label=""
-        />
+        <MenuStack title={true} icon={"/images/logo.png"} label="" />
       </Link>
       <Link to="/">
         <MenuStack icon={<HomeIcon color="primary" />} label="Home" />

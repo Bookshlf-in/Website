@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
-import axios from "../../api/axios";
+import { UserContext } from "../../../context/userContext";
+import axios from "../../../api/axios";
 
 // Components
 import Stack from "@mui/material/Stack";

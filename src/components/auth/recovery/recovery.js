@@ -1,10 +1,10 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from "../../../context/userContext";
 import { Helmet } from "react-helmet-async";
-import axios from "../../api/axios";
+import axios from "../../../api/axios";
 import * as EmailValidator from "email-validator";
-import "./ForgotPassword.css";
+import "./recovery.css";
 
 // Components
 import Stack from "@mui/material/Stack";

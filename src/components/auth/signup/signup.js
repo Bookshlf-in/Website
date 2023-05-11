@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import axios from "../../api/axios";
+import axios from "../../../api/axios";
 import * as EmailValidator from "email-validator";
-import "./Signup.css";
+import "./signup.css";
 
 // Components
 import Stack from "@mui/material/Stack";
@@ -33,7 +33,7 @@ import CheckCircle from "@mui/icons-material/CheckCircleRounded";
 import LeftIcon from "@mui/icons-material/ArrowLeftRounded";
 
 // Verify Component
-import Verify from "./Verify";
+import Verify from "./verify";
 
 const UserSignup = () => {
   const navigate = useNavigate();

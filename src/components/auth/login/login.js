@@ -1,10 +1,10 @@
 import { React, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from "../../../context/userContext";
 import { Helmet } from "react-helmet-async";
-import axios from "../../api/axios";
+import axios from "../../../api/axios";
 import * as EmailValidator from "email-validator";
-import "./Login.css";
+import "./login.css";
 
 // Components
 import Stack from "@mui/material/Stack";
@@ -267,7 +267,7 @@ const Login = () => {
           direction="row"
         >
           <Button
-            onClick={() => navigate("/PasswordRecovery")}
+            onClick={() => navigate("/auth/recovery")}
             size="small"
             sx={{
               letterSpacing: "1px",
@@ -297,7 +297,7 @@ const Login = () => {
             Login
           </LoadingButton>
           <Button
-            onClick={() => navigate("/Signup")}
+            onClick={() => navigate("/auth/signup")}
             color="secondary"
             variant="contained"
           >

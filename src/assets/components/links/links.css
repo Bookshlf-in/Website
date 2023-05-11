@@ -1,0 +1,29 @@
+/* NavLink Css */
+.navlink {
+    display: inline-block;
+    color: #8f8f8f;
+    text-transform: capitalize;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.navlink-active {
+    color: #ffffff !important;
+}
+
+.navlink:after {
+    display: block;
+    padding: 2px;
+    content: '';
+    border-bottom: solid 1px #ffffff;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+
+.navlink:hover:after {
+    transform: scaleX(1);
+}
+
+.navlink-active:after {
+    transform: scaleX(1);
+}
