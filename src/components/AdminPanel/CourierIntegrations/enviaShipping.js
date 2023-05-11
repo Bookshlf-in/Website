@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 
 //
@@ -25,7 +25,7 @@ const enviaURL = {
 };
 
 const EnviaShipping = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   // Loading States
@@ -259,7 +259,7 @@ const EnviaShipping = () => {
           .then(() => {
             setUpdate(true);
             setTimeout(() => {
-              history.push(`/AdminTrack/${order._id}`);
+              navigate(`/AdminTrack/${order._id}`);
             }, 2000);
           });
       })

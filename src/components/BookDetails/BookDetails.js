@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { Helmet } from "react-helmet-async";
 
@@ -40,7 +40,7 @@ import BuynowIcon from "@mui/icons-material/LocalMall";
 // }));
 
 const BookDetails = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
   const bookId = params.bookId;
 
@@ -193,7 +193,7 @@ const BookDetails = () => {
   // Purchase Book
   const handelCheckout = () => {
     if (user) {
-      history.push(`/Checkout/${bookId}`);
+      navigate(`/Checkout/${bookId}`);
     } else {
       setOpen(true);
       setSeverity("error");

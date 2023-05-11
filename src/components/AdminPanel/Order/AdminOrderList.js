@@ -1,5 +1,5 @@
 import { React, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../../../context/adminContext";
 import axios from "../../../api/axios";
 
@@ -20,7 +20,7 @@ import RupeeIcon from "@mui/icons-material/CurrencyRupee";
 import CopyableText from "../../MicroComponents/customCopyText";
 
 const AdminOrderList = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [admin, setAdmin] = useContext(AdminContext);
 
@@ -315,7 +315,7 @@ const AdminOrderList = () => {
           <Stack spacing={2}>
             <Button
               size="small"
-              onClick={() => history.push(`/AdminTrack/${link.value[0]}`)}
+              onClick={() => navigate(`/AdminTrack/${link.value[0]}`)}
               variant="contained"
               sx={{ fontSize: "10px" }}
             >

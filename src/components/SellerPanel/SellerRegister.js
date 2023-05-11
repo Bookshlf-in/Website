@@ -1,6 +1,6 @@
 import { React, useState, useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 
 // Components
@@ -14,7 +14,7 @@ import AddIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import BackIcon from "@mui/icons-material/ArrowBackRounded";
 
 export default function SellerRegister() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [user, setUser] = useContext(UserContext);
 
   // states
@@ -92,7 +92,7 @@ export default function SellerRegister() {
       roles: [...Array.from(user.roles), "seller"],
     });
     setTimeout(() => {
-      history.go(0);
+      navigate(0);
     }, 3000);
   };
 

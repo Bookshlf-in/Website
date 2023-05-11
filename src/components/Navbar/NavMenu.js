@@ -1,5 +1,5 @@
 import { React, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { AdminContext } from "../../context/adminContext";
 import axios from "../../api/axios";
@@ -51,7 +51,7 @@ const MenuStack = (props) => {
 };
 
 const NavbarMenu = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [user, setUser] = useContext(UserContext);
   const [admin, setAdmin] = useContext(AdminContext);
@@ -69,7 +69,7 @@ const NavbarMenu = () => {
 
   const handelNavigate = (path) => {
     setAnchorEl(null);
-    history.push(path);
+    navigate(path);
   };
 
   const handelLogout = () => {
@@ -77,7 +77,7 @@ const NavbarMenu = () => {
     axios
       .get("/signOut")
       .then(() => {
-        history.go(0);
+        navigate(0);
         setLogLoad(false);
         setUser(null);
         setAdmin(null);

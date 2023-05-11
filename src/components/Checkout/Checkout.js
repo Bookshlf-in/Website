@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 
 // react router
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { Helmet } from "react-helmet-async";
 
@@ -33,7 +33,7 @@ const PanelTitle = [
 
 const Payment = () => {
   // Calling Hooks
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   // Primary States
@@ -122,7 +122,7 @@ const Payment = () => {
           setUser({ ...user, cartitems: 0 });
         }
         setTimeout(() => {
-          history.push("/UserPanel/2");
+          navigate("/UserPanel/2");
         }, 3000);
       })
       .catch((err) => {

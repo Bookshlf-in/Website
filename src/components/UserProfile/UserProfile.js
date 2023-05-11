@@ -1,6 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { UserContext } from "../../context/userContext";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
 
@@ -45,7 +45,7 @@ const UserProfile = () => {
   const [user] = useContext(UserContext);
 
   // Hooks Call
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   // component states
@@ -98,7 +98,7 @@ const UserProfile = () => {
 
   // Changing Panel
   const handleChange = (event, newValue) => {
-    history.push(`/UserPanel/${newValue}`);
+    navigate(`/UserPanel/${newValue}`);
     setPanel(newValue);
   };
 

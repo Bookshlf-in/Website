@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
 
 // Components
@@ -14,7 +14,7 @@ import PendingIcon from "@mui/icons-material/Pending";
 import SearchIcon from "@mui/icons-material/Search";
 
 const ListItem = ({ head, body, orderId }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <Stack
       spacing={1}
@@ -31,7 +31,7 @@ const ListItem = ({ head, body, orderId }) => {
         <Button
           variant="outlined"
           size="small"
-          onClick={() => history.push(`/AdminTrack/${orderId}`)}
+          onClick={() => navigate(`/AdminTrack/${orderId}`)}
           sx={{ maxWidth: 250 }}
         >
           Get Full Order Details

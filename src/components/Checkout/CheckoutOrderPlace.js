@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Stack, Divider, Chip, Button, CircularProgress } from "@mui/material";
 import { Alert, Typography, Checkbox, Collapse } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -7,7 +7,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const CheckoutOrderPlace = ({ orderLoad, orderPlaced, handlePlaceOrder }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
 
   const handleChange = () => {
@@ -86,7 +86,7 @@ const CheckoutOrderPlace = ({ orderLoad, orderPlaced, handlePlaceOrder }) => {
           <CheckCircleIcon sx={{ height: 50, width: 50 }} color="success" />
           <Button
             onClick={() => {
-              history.push("/userpanel/2");
+              navigate("/userpanel/2");
             }}
             variant="outlined"
           >

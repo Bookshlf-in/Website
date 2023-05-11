@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import axios from "../../api/axios";
 
@@ -20,7 +20,7 @@ import CheckCircle from "@mui/icons-material/CheckCircleRounded";
 import UpdateIcon from "@mui/icons-material/Cached";
 
 const Verify = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Context
   const [, setUser] = useContext(UserContext);
@@ -77,10 +77,10 @@ const Verify = (props) => {
           cartitems: 0,
           wishlist: 0,
         });
-        history.push("/");
+        navigate("/");
       })
       .catch((error) => {
-        history.push("/Login");
+        navigate("/Login");
       });
   };
 

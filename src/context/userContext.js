@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // API
 import axios from "../api/axios";
@@ -9,7 +9,7 @@ export const UserContext = createContext();
 
 export const CurrentUserProvider = (props) => {
   // Calling Hooks
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Fetching from browser local storage
   const [user, setUser] = useState(
@@ -21,7 +21,7 @@ export const CurrentUserProvider = (props) => {
     setUser(null);
     localStorage.removeItem("bookshlf_user");
     delete axios.defaults.headers.common["Authorization"];
-    history.go(0);
+    navigate(0);
   };
 
   // function to get count of wishlist & cart items

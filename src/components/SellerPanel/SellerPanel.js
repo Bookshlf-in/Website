@@ -1,6 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { UserContext } from "../../context/userContext";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../api/axios";
 
 // Components
@@ -49,7 +49,7 @@ const SellerPanel = () => {
   const [user] = useContext(UserContext);
 
   // Hooks Call
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   // component states
@@ -125,7 +125,7 @@ const SellerPanel = () => {
   }, [params.panel]);
 
   const handleChange = (event, newValue) => {
-    history.push(`/SellerPanel/${newValue}`);
+    navigate(`/SellerPanel/${newValue}`);
     setPanel(newValue);
   };
 

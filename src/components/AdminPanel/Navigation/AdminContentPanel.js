@@ -24,9 +24,9 @@ const PermissionAlert = ({ user, permission, content }) => {
   );
 };
 
-const AdminContentPanel = ({ Panel, setPanel, history }) => {
+const AdminContentPanel = ({ Panel, setPanel, navigate }) => {
   const [user] = useContext(UserContext);
-  if (Panel === 7) history.push("/");
+  if (Panel === 7) navigate("/");
   return (
     <Stack className="adminPanel-content">
       <Stack className="adminPanel-content-float">

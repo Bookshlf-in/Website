@@ -1,6 +1,6 @@
 import { React, useState, useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // importing Navbar Components
 import "./Navbar.css";
@@ -38,7 +38,7 @@ const NotiBubble = {
 };
 
 const Navbar = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [user] = useContext(UserContext);
 
   // Functionality States
@@ -89,7 +89,7 @@ const Navbar = () => {
         >
           <NavbarSearch />
           <Stack direction="row" spacing={1} className="nav-desktop-item">
-            <IconButton onClick={() => history.push("/Cart")} size="small">
+            <IconButton onClick={() => navigate("/Cart")} size="small">
               <Badge
                 badgeContent={user?.cartitems}
                 color="secondary"
@@ -98,7 +98,7 @@ const Navbar = () => {
                 <ShoppingCartIcon sx={NavIconStyle} />
               </Badge>
             </IconButton>
-            <IconButton onClick={() => history.push("/Wishlist")} size="small">
+            <IconButton onClick={() => navigate("/Wishlist")} size="small">
               <Badge
                 badgeContent={user?.wishlist}
                 color="secondary"
@@ -108,7 +108,7 @@ const Navbar = () => {
               </Badge>
             </IconButton>
             {user?.roles?.includes("seller") ? (
-              <IconButton onClick={() => history.push("/Wallet")} size="small">
+              <IconButton onClick={() => navigate("/Wallet")} size="small">
                 <Badge
                   badgeContent={user?.balance}
                   color="warning"
