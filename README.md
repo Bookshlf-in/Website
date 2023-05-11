@@ -36,14 +36,15 @@ Online E-Commerce Store for Selling & Purchasing Used Books. Specially for Compe
 You will need `node` and `npm` installed globally on your machine.
 
 - [Download and Install Nodejs](https://nodejs.org/en/download/)
+- Open terminal, write the following command and press enter.
 
-* Open terminal, write the following command and press enter.
-
-```
+```bash
 $ npm -v
 ```
 
 The terminal should return your npm version.
+
+> NOTE : npm version 14 and above is required!
 
 ## How to set up your local environment
 
@@ -118,7 +119,24 @@ git merge dev
 
 **9.** On Github, create a pull request from your feature branch. Always make the PR against the dev branch! Make sure to summarize your changes you made, and if there's anything specific you want reviewed or tested, note that in the PR.
 
-**10.** When approved, your branch will be merged into master and you're done! Thanks for contributing! :)
+**10.** Basic CI Checks should pass and when approved, your branch will be merged into master and you're done! Thanks for contributing!
+
+# API KEYS
+
+> This is a Neccessary Step to make APIs Work.
+
+#### To Make API Requests Possible, Follow below Steps after Locally Setting Up Project.
+
+- Create a File Named `.env` into Main Repository Folder eg : `...\Website\.env`.
+- See `Demo.env.txt` for more clarity.
+- Inside `.env` File Recently Created Add Following lines of Code
+
+```bash
+REACT_APP_BOOKSHLF=http://localhost:4000
+REACT_APP_NODE_ENV=development
+```
+
+- Save and Restart your Project (if already running) with `npm start` to make changes Appear.
 
 ## Contributors
 
@@ -130,47 +148,8 @@ Made with [contributors-img](https://contrib.rocks).
 
 > Don't forget to ⭐ this repository !!
 
-# API KEYS
-
-- This is a Neccessary Step to make APIs Work.
-
-#### To Make API Requests Possible, Follow below Steps after Locally Setting Up Project.
-
-- Create a File Named `.env` into Main Repository Folder eg : `...\Website\.env`.
-- See `Demo.env.txt` for more clarity.
-- Inside `.env` File Recently Created Add Following lines of Code
-
-```
-REACT_APP_BOOKSHLF=https://backend-dot-bookshlf-webapp-5.el.r.appspot.com/
-REACT_APP_NODE_ENV=development
-```
-
-- Save and Restart your Project (if already running) with `npm start` to make changes Appear.
-
-# Screenshots
-
-![about](https://user-images.githubusercontent.com/56078689/150652118-c9a16ed7-9d64-468f-9301-ee2610458e91.png)
-![addbook](https://user-images.githubusercontent.com/56078689/150652120-0ae6e910-5ad4-4d1d-9054-60b10470e66d.png)
-![address](https://user-images.githubusercontent.com/56078689/150652126-dc0c5a0e-a8f9-4263-b3ab-a23d9d380e9e.png)
-![bookdetails](https://user-images.githubusercontent.com/56078689/150652129-be5ba10c-36d0-44f9-9958-9228c470adb9.png)
-![cart](https://user-images.githubusercontent.com/56078689/150652130-ac89daa6-ee38-4a41-beea-4651a1eee00c.png)
-![checkout](https://user-images.githubusercontent.com/56078689/150652136-e6b37fb5-473f-4d74-86e0-0aee83bc62d7.png)
-![contact](https://user-images.githubusercontent.com/55583961/198352629-ca8afcbc-ba3c-49e1-a294-21ddb42a8263.png)
-![home1](https://user-images.githubusercontent.com/56078689/150652144-7a9bea54-2961-42c5-b9c6-826e8070d8ac.png)
-![home2](https://user-images.githubusercontent.com/56078689/150652147-763f8fec-e894-4641-9e83-219fef8c4b17.png)
-![home3](https://user-images.githubusercontent.com/56078689/150652153-2baced4f-b03c-4a87-a99e-e7d429a7ab72.png)
-![login](https://user-images.githubusercontent.com/56078689/150652158-3e3ae064-ecf2-4381-bb13-8df6b0dc3a6c.png)
-![order](https://user-images.githubusercontent.com/56078689/150652161-d409b76f-1eeb-40fd-9440-7e8d44659e1e.png)
-![recovery](https://user-images.githubusercontent.com/56078689/150652163-df7f004c-9b5a-46ce-9a08-90f32b5e2d63.png)
-![search](https://user-images.githubusercontent.com/56078689/150652167-6f32a830-24ce-457a-9954-320fc7f4ca22.png)
-![signup](https://user-images.githubusercontent.com/56078689/150652170-8b496caa-7091-4da4-afec-12466f5eff66.png)
-![wallet](https://user-images.githubusercontent.com/56078689/150652172-513d9463-a27d-4cbb-ba35-8216c7791140.png)
-![wishlist](https://user-images.githubusercontent.com/56078689/150652173-88c351ed-76d0-4b31-8861-1a44fcab88e3.png)
-
 ## Future Plans
 
-- Finalize and implement new designs for website.
-- Methods Centralization
 - Adding Next Js Framework for Server Side Rendering.
 - Adding React Redux for States centeralization and better API Syncronization.
 - Adding Theme Provider of mui.
