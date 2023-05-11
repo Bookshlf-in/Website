@@ -4,26 +4,26 @@ name: CI
 
 on:
   push:
-    branches: [ "main" , "dev" ]
+    branches: ["main", "dev"]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: ["main", "dev"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CI: false
     strategy:
       matrix:
         node-version: [16.x, 18.x, 20.x]
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: npm install, build and test
-      run: 
-        npm install
-        CI=false npm run build --if-present
-        npm test
-        npm start 
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: npm install, build and test
+        run: npm install
+        run: npm run build
+        run: npm test
