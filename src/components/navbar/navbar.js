@@ -1,6 +1,6 @@
-import {React, useState, useContext} from "react";
-import {UserContext} from "../../context/userContext";
-import {useNavigate, useLocation, Link} from "react-router-dom";
+import { React, useContext } from "react";
+import { UserContext } from "../../context/userContext";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 // importing Navbar Components
 import "./navbar.css";
@@ -10,15 +10,16 @@ import SideNav from "./sidenav.js";
 import NavbarSearch from "./navbarsearch";
 
 // importing Material UI components
-import {AppBar, Toolbar, Stack, Drawer} from "@mui/material";
-import {Button, IconButton, Badge} from "@mui/material";
+import { AppBar, Toolbar, Stack } from "@mui/material";
+import { Button, IconButton, Badge } from "@mui/material";
 
 // Icons
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import MenuIcon from "@mui/icons-material/Menu";
 import NavLink from "../../assets/components/links/navlink";
+
+import { isLocationAuth } from "../../assets/utils/commons";
 
 const NavIconStyle = {
   color: "white",
@@ -33,18 +34,13 @@ const NotiBubble = {
   },
 };
 
-const isLocationAuth = (pathname) => {
-  if (pathname.startsWith("/auth")) return true;
-  return false;
-};
-
-const AuthNavItem = ({pathname}) => {
+const AuthNavItem = ({ pathname }) => {
   const activePath = pathname.split("/")[2];
   return (
     <Stack
       direction="row"
       spacing={4}
-      sx={{flexGrow: 1}}
+      sx={{ flexGrow: 1 }}
       alignItems="center"
       justifyContent="flex-end"
     >
@@ -54,7 +50,7 @@ const AuthNavItem = ({pathname}) => {
   );
 };
 
-const NavMenuBase = ({user, navigate}) => {
+const NavMenuBase = ({ user, navigate }) => {
   return (
     <Stack className="nav-menu-base" justifyContent="center">
       {user ? (
@@ -74,7 +70,7 @@ const NavMenuBase = ({user, navigate}) => {
   );
 };
 
-const NavBarIconItems = ({user, navigate}) => {
+const NavBarIconItems = ({ user, navigate }) => {
   return (
     <Stack
       direction="row"
@@ -124,7 +120,7 @@ const NavBarIconItems = ({user, navigate}) => {
   );
 };
 
-const BaseNavItem = ({user}) => {
+const BaseNavItem = ({ user }) => {
   const navigate = useNavigate();
   return (
     <Stack
@@ -146,41 +142,14 @@ const Navbar = () => {
   const location = useLocation();
   const [user] = useContext(UserContext);
 
-  // Functionality States
-  const [openSideNav, setOpenSideNav] = useState(false);
-
   return (
     <AppBar position="static" className="navbar">
-      <Toolbar variant="regular" sx={{height: "100%"}}>
+      <Toolbar variant="regular" sx={{ height: "100%" }}>
         {!isLocationAuth(location.pathname) && (
           <div className="nav-mobile-item">
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{mr: 1}}
-              onClick={() => setOpenSideNav((prev) => !prev)}
-            >
-              <Badge
-                variant="dot"
-                badgeContent={user?.cartitems + user?.wishlist > 0 ? 1 : 0}
-                color="warning"
-              >
-                <MenuIcon />
-              </Badge>
-            </IconButton>
+            <SideNav />
           </div>
         )}
-        <div className="nav-mobile-item">
-          <Drawer
-            anchor="left"
-            open={openSideNav}
-            onClose={() => setOpenSideNav((prev) => !prev)}
-            transitionDuration={500}
-          >
-            <SideNav />
-          </Drawer>
-        </div>
 
         {(isLocationAuth(location.pathname) || window.innerWidth >= 996) && (
           <div className="nav-logo">

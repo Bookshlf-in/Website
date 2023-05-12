@@ -1,17 +1,35 @@
 import { React, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
 import { debounce } from "../../api/debounce";
 
 // Components
-import InputBase from "@mui/material/InputBase";
-import MenuItem from "@mui/material/MenuItem";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { LinearProgress } from "@mui/material";
-import { Stack } from "@mui/material";
-import { DMsans } from "../../assets/Theme/fonts";
+import { InputBase, MenuItem, ClickAwayListener } from "@mui/material";
+import { LinearProgress, Stack } from "@mui/material";
+
 // Icons
 import SearchIcon from "@mui/icons-material/Search";
+
+// Service
+import { BookSearch } from "../../service/search/booksearch";
+
+const NavProgress = () => {
+  return (
+    <div className="search-bar-progress">
+      <LinearProgress color="inherit" sx={{ height: "1px" }} />
+    </div>
+  );
+};
+
+const NavIcon = ({ navigate, search }) => {
+  return (
+    <div
+      className="navbar-search-icon"
+      onClick={() => navigate(`/SearchResult/${search}`)}
+    >
+      <SearchIcon />
+    </div>
+  );
+};
 
 const Searchbar = () => {
   const navigate = useNavigate();
@@ -22,88 +40,71 @@ const Searchbar = () => {
 
   // Data States
   const [Search, setSearch] = useState("");
-  const [resulttitles, setresultTitles] = useState([]);
+  const [resultTitles, setresultTitles] = useState([]);
 
   // Search on Enter
   const handleKeyPress = (event) => {
-    // event.preventDefault();
     if (event.key === "Enter") {
       event.preventDefault();
+      setOpenTitleMenu(false);
       navigate(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
     }
   };
 
   // book title search on input
-  const handelBookTitleSearch = (e) => {
-    const fetchdata = async () => {
-      axios
-        .get(`/searchTitle?q=${e.target.value}`)
-        .then((response) => {
-          setresultTitles(response.data);
-          setsearchFieldChanges(false);
-        })
-        .catch((error) => {});
-    };
-    fetchdata();
+  const handelBookTitleSearch = async (title) => {
+    const response = await BookSearch(title);
+    if (response.success) {
+      setresultTitles(response.data);
+      setsearchFieldChanges(false);
+    }
   };
 
-  const handleDebounceSearch = useCallback(debounce(handelBookTitleSearch), []);
+  const DebounceSearch = useCallback(debounce(handelBookTitleSearch), []);
 
   // Searching Title
-  const handelTitleAdd = (titlename) => {
+  const handelTitleAdd = (title) => {
     setOpenTitleMenu(false);
-    navigate(`/SearchResult/${titlename === "" ? "tag:ALL" : titlename}`);
+    setSearch(title);
+    navigate(`/SearchResult/${title}`);
+  };
+
+  // Handle Change
+  const handleChange = (e) => {
+    setsearchFieldChanges(true);
+    setSearch(e.target.value);
+    setOpenTitleMenu(true);
+    DebounceSearch(e.target.value);
   };
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      spacing={0}
-      className="search-bar-container"
-    >
-      {searchFieldChanges && (
-        <div className="search-bar-progress">
-          <LinearProgress color="inherit" sx={{ height: "1px" }} />
-        </div>
-      )}
+    <Stack direction="row" className="search-bar-container">
+      {searchFieldChanges && <NavProgress />}
       <InputBase
         placeholder="Search"
-        sx={{
-          width: "100%",
-          color: "white !important",
-          padding: "5px",
-          fontFamily: DMsans,
-          fontSize: "12px",
-        }}
-        onChange={(e) => {
-          setsearchFieldChanges(true);
-          setSearch(e.target.value);
-          setOpenTitleMenu(true);
-          handleDebounceSearch(e);
-        }}
+        className="nav-search-input"
+        value={Search}
+        onChange={handleChange}
         onKeyPress={handleKeyPress}
       />
-      <div className="navbar-search-icon">
-        <SearchIcon />
-      </div>
+      <NavIcon navigate={navigate} search={Search} />
       <ClickAwayListener onClickAway={() => setOpenTitleMenu(false)}>
-        {!openTitleMenu ? (
-          <></>
-        ) : (
+        {openTitleMenu ? (
           <div className="navbar-search-menu">
-            {resulttitles.map((Title, idx) => (
+            {resultTitles.map((book, idx) => (
               <MenuItem
-                title={Title.title}
+                title={book.title}
                 key={idx}
-                value={Title.title}
-                onClick={() => handelTitleAdd(Title.title)}
+                value={book.title}
+                onClick={() => handelTitleAdd(book.title)}
                 className="navbar-search-menuitem"
               >
-                {Title.title}
+                {book.title}
               </MenuItem>
             ))}
           </div>
+        ) : (
+          <></>
         )}
       </ClickAwayListener>
     </Stack>

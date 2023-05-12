@@ -1,9 +1,10 @@
-import { React, useContext } from "react";
+import { React, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
 // Components
-import { Stack, Divider, Chip } from "@mui/material";
+import { Stack, Divider } from "@mui/material";
+import { IconButton, Badge, Drawer } from "@mui/material";
 
 // Icons
 import HomeIcon from "@mui/icons-material/HomeRounded";
@@ -14,136 +15,126 @@ import SupportIcon from "@mui/icons-material/SupportAgentRounded";
 import CartIcon from "@mui/icons-material/ShoppingCart";
 import WishlistIcon from "@mui/icons-material/Favorite";
 import WalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import SellBookIcon from "@mui/icons-material/ShoppingBag";
+import MenuIcon from "@mui/icons-material/Menu";
 
 // Custom Menu Item Stack
-const MenuStack = (props) => {
+const SideNavLink = ({ path, Icon, label, count = 0, setOpen }) => {
   return (
-    <Stack
-      direction="row"
-      spacing={1}
-      justifyContent="flex-start"
-      alignItems="center"
-      sx={{
-        background: props.title
-          ? "linear-gradient(90deg, rgb(17, 16, 16) 0%, rgb(63, 62, 62) 100%)"
-          : "white",
-        padding: "10px 16px",
-        width: "100%",
-        "& svg": {
-          height: 16,
-          width: 16,
-        },
-        "& img": {
-          height: 20,
-        },
-        "& div": {
-          fontFamily: "Roboto",
-          fontSize: "12px",
-          color: "rgba(0,0,0,0.8)",
-        },
-      }}
-    >
-      <Stack justifyContent="center" alignItems="center">
-        {props.title ? <img src={props.icon} /> : props.icon}
-      </Stack>
+    <Link to={path} onClick={() => setOpen((prev) => !prev)}>
       <Stack
-        justifyContent="center"
-        alignItems="center"
         direction="row"
-        spacing={1}
+        spacing={2}
+        justifyContent="flex-start"
+        alignItems="center"
+        className="sidenav-link"
       >
-        <span>{props.label}</span>
-        {props.badge ? (
-          <Chip
-            label={props.Count}
-            size="small"
-            color="warning"
-            variant="outlined"
-            sx={{
-              height: "auto",
-              "& span": {
-                fontSize: "10px",
-                fontWeight: "bolder",
-                letterSpacing: "0.1em",
-              },
-            }}
-          />
-        ) : null}
+        <Badge badgeContent={count} color="primary">
+          {Icon}
+        </Badge>
+        <span className="sidenav-label">{label}</span>
       </Stack>
+      <Divider orientation="horizontal" flexItem={true} />
+    </Link>
+  );
+};
+
+const SideNavLinks = ({ user, setOpen }) => {
+  return (
+    <Stack className="sidenav-links" spacing={0} sx={{ minWidth: 200 }}>
+      <div className="sidenav-logo">
+        <img src="/images/logo.png" width="145px" alt="Bookshlf" />
+      </div>
+      <SideNavLink
+        path="/"
+        Icon={<HomeIcon />}
+        label="Home"
+        setOpen={setOpen}
+      />
+      <SideNavLink
+        path="/SearchResult/tag:ALL"
+        Icon={<AllBookIcon />}
+        label="All Books"
+        setOpen={setOpen}
+      />
+      <SideNavLink
+        path="/SellerPanel/2"
+        Icon={<BookIcon />}
+        label="Your Books"
+        setOpen={setOpen}
+      />
+      <SideNavLink
+        path="/cart"
+        Icon={<CartIcon />}
+        label="Cart"
+        count={user?.cartitems}
+        setOpen={setOpen}
+      />
+      <SideNavLink
+        path="/wishlist"
+        Icon={<WishlistIcon />}
+        label="Wishlist"
+        count={user?.wishlist}
+        setOpen={setOpen}
+      />
+      <SideNavLink
+        path="/wallet"
+        Icon={<WalletIcon />}
+        label="Wallet"
+        count={user?.balance}
+        setOpen={setOpen}
+      />
+      <SideNavLink
+        path="/contact"
+        Icon={<SupportIcon />}
+        label="Contact"
+        setOpen={setOpen}
+      />
+      <SideNavLink
+        path="/about"
+        Icon={<InfoIcon />}
+        label="About Us"
+        setOpen={setOpen}
+      />
     </Stack>
+  );
+};
+
+const SideNavDrawer = ({ user, open, setOpen }) => {
+  return (
+    <Drawer
+      anchor="left"
+      open={open}
+      onClose={() => setOpen((prev) => !prev)}
+      transitionDuration={500}
+    >
+      <SideNavLinks user={user} setOpen={setOpen} />
+    </Drawer>
   );
 };
 
 const Sidenav = () => {
   const [user] = useContext(UserContext);
+  const [open, setOpen] = useState(false);
 
   return (
-    <Stack className="main-sidenav" spacing={0} sx={{ minWidth: 200 }}>
-      <Link to="/">
-        <MenuStack title={true} icon={"/images/logo.png"} label="" />
-      </Link>
-      <Link to="/">
-        <MenuStack icon={<HomeIcon color="primary" />} label="Home" />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/SearchResult/tag:ALL">
-        <MenuStack icon={<AllBookIcon color="primary" />} label="All Books" />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/SellerPanel/2">
-        <MenuStack icon={<BookIcon color="success" />} label="Your Books" />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/SellerPanel/5">
-        <MenuStack icon={<SellBookIcon color="success" />} label="Sell Books" />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/Cart">
-        <MenuStack
-          icon={<CartIcon color="secondary" />}
-          label="Cart"
-          badge={true}
-          Count={user?.cartitems}
-        />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/Wishlist">
-        <MenuStack
-          icon={<WishlistIcon color="secondary" />}
-          label="Wishlist"
-          badge={true}
-          Count={user?.wishlist}
-        />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/Wallet">
-        <MenuStack
-          icon={<WalletIcon color="secondary" />}
-          label="Wallet"
-          badge={true}
-          Count={user?.balance}
-        />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link
-        to={{
-          pathname: "https://github.com/Bookshlf-in",
-        }}
-        target="_blank"
+    <div>
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        sx={{ mr: 1 }}
+        onClick={() => setOpen((prev) => !prev)}
       >
-        <MenuStack icon={<GitHubIcon color="default" />} label="Contribute" />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/About">
-        <MenuStack icon={<InfoIcon color="info" />} label="About Us" />
-      </Link>
-      <Divider orientation="horizontal" flexItem={true} />
-      <Link to="/Contact">
-        <MenuStack icon={<SupportIcon color="warning" />} label="Contact Us" />
-      </Link>
-    </Stack>
+        <Badge
+          variant="dot"
+          badgeContent={user?.cartitems + user?.wishlist > 0 ? 1 : 0}
+          color="warning"
+        >
+          <MenuIcon />
+        </Badge>
+      </IconButton>
+      <SideNavDrawer user={user} open={open} setOpen={setOpen} />
+    </div>
   );
 };
 

@@ -34,6 +34,7 @@
   position: absolute;
   right: 5%;
   bottom: 12.48%;
+  cursor: pointer;
 }
 
 .navbar-search-icon>svg {
@@ -88,6 +89,48 @@
 
 .nav-menu-base {
   padding-left: 55px;
+}
+
+/* Sidenav Css */
+.sidenav-logo {
+  background-color: #1E1E1E;
+  height: 78px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.sidenav-link {
+  padding: 10px 15px;
+  color: #1E1E1E;
+  font-size: 12px;
+}
+
+.sidenav-label {
+  width: 70px;
+}
+
+.sidenav-link svg {
+  color: #1E1E1E;
+}
+
+.sidenav-link .MuiBadge-badge {
+  padding: 0px 4px;
+  font-size: 10px;
+  font-family: 'DM Sans', sans-serif;
+  border: 2px solid #ffffff;
+  top: 2px;
+  right: -3px;
+  background-color: #F4A946;
+}
+
+.nav-search-input.MuiInputBase-root {
+  width: 100%;
+  color: #ffffff;
+  padding: 5px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -158,7 +201,7 @@
   }
 
   .search-bar-container {
-    max-width: 300px;
+    min-width: 200px;
     width: auto;
   }
 

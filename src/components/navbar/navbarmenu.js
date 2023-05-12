@@ -5,9 +5,10 @@ import { AdminContext } from "../../context/adminContext";
 import axios from "../../api/axios";
 
 // Components
-import { Stack, IconButton, Menu, MenuItem, Avatar } from "@mui/material";
+import { Stack, IconButton, Menu, MenuItem } from "@mui/material";
 
 // Icons
+import UserIcon from "@mui/icons-material/AccountCircleOutlined";
 import AccountIcon from "@mui/icons-material/AccountCircleTwoTone";
 import OrderIcon from "@mui/icons-material/LocalShippingTwoTone";
 import AdminIcon from "@mui/icons-material/AdminPanelSettingsTwoTone";
@@ -54,7 +55,7 @@ const NavbarMenu = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useContext(UserContext);
-  const [admin, setAdmin] = useContext(AdminContext);
+  const [, setAdmin] = useContext(AdminContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [logLoad, setLogLoad] = useState(false);
@@ -93,11 +94,7 @@ const NavbarMenu = () => {
   return (
     <Stack>
       <IconButton onClick={handleClick} size="small">
-        <Avatar
-          src="/images/user.png"
-          alt="My Account"
-          sx={{ height: 30, width: 30 }}
-        />
+        <UserIcon sx={{ color: "#F4A946" }} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
