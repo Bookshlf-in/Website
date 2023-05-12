@@ -91,6 +91,31 @@
   padding-left: 55px;
 }
 
+/* Nav Menu Right*/
+.nav-menu-item {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+}
+
+.nav-menu-item svg {
+  color: #F4A946;
+  font-size: 14px;
+}
+
+.nav-menu-logout {
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: rgba(255, 86, 79, 0.1);
+  color: #FF564F;
+  font-size: 14px;
+}
+
+.nav-menu-logout svg {
+  color: #FF564F;
+  font-size: 16px;
+}
+
 /* Sidenav Css */
 .sidenav-logo {
   background-color: #1E1E1E;
