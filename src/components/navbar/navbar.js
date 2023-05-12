@@ -1,17 +1,17 @@
-import { React, useState, useContext } from "react";
-import { UserContext } from "../../context/userContext";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import {React, useState, useContext} from "react";
+import {UserContext} from "../../context/userContext";
+import {useNavigate, useLocation, Link} from "react-router-dom";
 
 // importing Navbar Components
-import "./Navbar.css";
-import NavbarMenu from "./NavMenu";
-import NavbarItems from "./NavbarItems";
-import SideNav from "./Sidenav.js";
-import NavbarSearch from "./NavbarSearch";
+import "./navbar.css";
+import NavbarMenu from "./navbarmenu";
+import NavbarItems from "./navbarlinks";
+import SideNav from "./sidenav.js";
+import NavbarSearch from "./navbarsearch";
 
 // importing Material UI components
-import { AppBar, Toolbar, Stack, Drawer } from "@mui/material";
-import { Button, IconButton, Badge } from "@mui/material";
+import {AppBar, Toolbar, Stack, Drawer} from "@mui/material";
+import {Button, IconButton, Badge} from "@mui/material";
 
 // Icons
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -38,13 +38,13 @@ const isLocationAuth = (pathname) => {
   return false;
 };
 
-const AuthNavItem = ({ pathname }) => {
+const AuthNavItem = ({pathname}) => {
   const activePath = pathname.split("/")[2];
   return (
     <Stack
       direction="row"
       spacing={4}
-      sx={{ flexGrow: 1 }}
+      sx={{flexGrow: 1}}
       alignItems="center"
       justifyContent="flex-end"
     >
@@ -54,7 +54,7 @@ const AuthNavItem = ({ pathname }) => {
   );
 };
 
-const NavMenuBase = ({ user, navigate }) => {
+const NavMenuBase = ({user, navigate}) => {
   return (
     <Stack className="nav-menu-base" justifyContent="center">
       {user ? (
@@ -74,7 +74,7 @@ const NavMenuBase = ({ user, navigate }) => {
   );
 };
 
-const NavBarIconItems = ({ user, navigate }) => {
+const NavBarIconItems = ({user, navigate}) => {
   return (
     <Stack
       direction="row"
@@ -124,7 +124,7 @@ const NavBarIconItems = ({ user, navigate }) => {
   );
 };
 
-const BaseNavItem = ({ user }) => {
+const BaseNavItem = ({user}) => {
   const navigate = useNavigate();
   return (
     <Stack
@@ -151,14 +151,14 @@ const Navbar = () => {
 
   return (
     <AppBar position="static" className="navbar">
-      <Toolbar variant="regular" sx={{ height: "100%" }}>
+      <Toolbar variant="regular" sx={{height: "100%"}}>
         {!isLocationAuth(location.pathname) && (
           <div className="nav-mobile-item">
             <IconButton
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 1 }}
+              sx={{mr: 1}}
               onClick={() => setOpenSideNav((prev) => !prev)}
             >
               <Badge
