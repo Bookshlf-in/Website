@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
 
+// Components
 import Login from "../components/auth/login/login";
 import Recovery from "../components/auth/recovery/recovery";
 import Signup from "../components/auth/signup/signup";

@@ -1,5 +1,5 @@
 // AUTH
-export const login = "";
+export const login = "/signIn";
 export const logout = "/signOut";
 
 // SEARCH

@@ -1,0 +1,53 @@
+.container {
+    padding: 15px 24px;
+    min-height: calc(100vh - 78px);
+    width: 100%;
+    background-color: #FDFDFD;
+    align-items: center;
+    justify-content: center;
+}
+
+.MuiTypography-root {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.bookshlf-input .MuiOutlinedInput-root {
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 16px;
+}
+
+.bookshlf-input .MuiOutlinedInput-notchedOutline {
+    border: 1px solid #8f8f8f;
+}
+
+.bookshlf-input .Mui-focused .MuiOutlinedInput-notchedOutline {
+    border: 1px solid #F4A946 !important;
+}
+
+.bookshlf-input .Mui-focused.MuiInputLabel-root {
+    color: #F4A946 !important;
+}
+
+.bookshlf-btn.MuiButton-root {
+    font-family: 'DM Sans', sans-serif;
+    color: #FFFFFF;
+    background: #F4A946;
+    border-radius: 57px;
+    width: 160px;
+    height: 48px;
+    text-transform: capitalize;
+}
+
+.bookshlf-btn.MuiButton-root:hover {
+    font-family: 'DM Sans', sans-serif;
+    color: #FFFFFF;
+    background: rgba(244, 169, 70, 0.85);
+    border-radius: 57px;
+    width: 160px;
+    height: 48px;
+}
+
+.bookshlf-btn.MuiButton-root.Mui-disabled {
+    background: rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+}

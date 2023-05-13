@@ -27,3 +27,17 @@
 .navlink-active:after {
     transform: scaleX(1);
 }
+
+.base-link.MuiTypography-root {
+    font-family: 'DM Sans', sans-serif;
+    color: #8f8f8f;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 600px) {
+    .base-link.MuiTypography-root {
+        font-size: 12px;
+    }
+}

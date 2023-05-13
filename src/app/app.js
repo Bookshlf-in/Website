@@ -38,7 +38,7 @@ const App = () => {
   return (
     <div className="App">
       {process.env.REACT_APP_NODE_ENV === "development" ? <Notify /> : null}
-      {!location.pathname.startsWith("/Admin") && <Navbar />}
+      {!location.pathname.startsWith("/admin") && <Navbar />}
       <Routes>
         <Route path="/About" element={<About />} />
         <Route path="/Contact" element={<Contact />} />
