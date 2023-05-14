@@ -1,21 +1,22 @@
 import { React, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../../context/userContext";
-import "../auth.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
+import "./auth.css";
 
 // Components
 import { Stack, Typography } from "@mui/material";
-import Container from "../../../assets/components/container";
-import Textfield from "../../../assets/components/input/textfield";
-import Passwordfield from "../../../assets/components/input/passwordfield";
-import LoadingButton from "../../../assets/components/buttons/loadingbutton";
-import Link from "../../../assets/components/links/link";
+import Container from "../../assets/components/container";
+import Textfield from "../../assets/components/input/textfield";
+import Passwordfield from "../../assets/components/input/passwordfield";
+import LoadingButton from "../../assets/components/buttons/loadingbutton";
+import Link from "../../assets/components/links/link";
 
 // services
-import { handleLogin } from "../../../service/auth/login";
+import { handleLogin } from "../../service/auth/login";
 
 const Login = () => {
   const navigate = useNavigate();
+  const routeParams = useParams();
 
   // context states
   const [, setUser] = useContext(UserContext);
@@ -36,7 +37,7 @@ const Login = () => {
 
   // data states
   const [params, setParams] = useState({
-    email: "",
+    email: routeParams?.email,
     password: "",
   });
 
@@ -82,10 +83,10 @@ const Login = () => {
 
   return (
     <Container title="Bookshlf | Login">
-      <Typography variant="h2" mb={8}>
+      <Typography variant="h2" mb={8} className="auth-title">
         Login
       </Typography>
-      <Stack className="login-container">
+      <Stack className="auth-container">
         <Stack spacing={4} mb={8} alignItems="center">
           <Textfield
             name="email"

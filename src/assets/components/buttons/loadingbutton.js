@@ -3,7 +3,7 @@ const LoadingButton = ({ loading, size, children, ...props }) => {
   return (
     <Button
       {...props}
-      disabled={loading}
+      disabled={loading || props.disabled}
       endIcon={
         loading ? <CircularProgress size={size} color="inherit" /> : <></>
       }
