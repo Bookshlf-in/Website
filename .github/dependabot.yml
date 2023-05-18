@@ -6,3 +6,7 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "Dependency Update: "
+    assignees:
+      - "mrhb787"
+    labels:
+      - "dependency"
