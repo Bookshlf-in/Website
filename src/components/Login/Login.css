@@ -1,8 +1,0 @@
-.login-bg input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px rgb(35, 47, 62) inset;
-  -webkit-text-fill-color: rgb(255, 255, 255);
-}
-.login-bg input:-webkit-autofill:focus {
-  -webkit-text-fill-color: rgb(255, 255, 255);
-  -webkit-box-shadow: 0 0 0px 1000px rgb(35, 47, 62) inset;
-}

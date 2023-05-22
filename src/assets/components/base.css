@@ -1,0 +1,130 @@
+.container {
+    padding: 15px 24px;
+    min-height: calc(100vh - 78px);
+    width: 100%;
+    background-color: #FDFDFD;
+    align-items: center;
+    justify-content: center;
+}
+
+.MuiTypography-root {
+    font-family: 'DM Sans', sans-serif !important;
+}
+
+.bookshlf-input .MuiOutlinedInput-root {
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 16px;
+}
+
+.bookshlf-input .MuiOutlinedInput-notchedOutline {
+    border: 1px solid #8f8f8f;
+}
+
+.bookshlf-input .Mui-focused .MuiOutlinedInput-notchedOutline {
+    border: 1px solid #F4A946 !important;
+}
+
+.bookshlf-input .Mui-focused.MuiInputLabel-root {
+    color: #F4A946 !important;
+}
+
+.bookshlf-btn.MuiButton-root {
+    font-family: 'DM Sans', sans-serif;
+    color: #FFFFFF;
+    background: #F4A946;
+    border-radius: 57px;
+    width: 160px;
+    height: 48px;
+    text-transform: capitalize;
+}
+
+.bookshlf-btn.MuiButton-root:hover {
+    font-family: 'DM Sans', sans-serif;
+    color: #FFFFFF;
+    background: rgba(244, 169, 70, 0.85);
+    border-radius: 57px;
+    width: 160px;
+    height: 48px;
+}
+
+.bookshlf-btn.MuiButton-root.Mui-disabled {
+    background: rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+}
+
+.bookshlf-otp-container {
+    position: relative;
+    padding: 13px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.bookshlf-otp-label {
+    position: absolute;
+    font-size: 12px !important;
+    top: -20px;
+}
+
+.bookshlf-otp-container>div {
+    align-items: center;
+    gap: 8px;
+}
+
+input.bookshlf-otp-input {
+    height: 30px !important;
+    width: 30px !important;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+input.bookshlf-otp-input:focus {
+    border: 2px solid #F4A946;
+}
+
+.otp-send-btn.MuiButton-root {
+    color: #FFFFFF;
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F4A946;
+    padding: 5px 10px;
+    border-radius: 16px;
+}
+
+.otp-send-btn.MuiButton-root:hover {
+    background-color: rgba(244, 169, 70, 0.8);
+}
+
+.otp-send-btn.MuiButton-root.Mui-disabled {
+    background: rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+}
+
+.otp-send-alert.MuiAlert-root {
+    position: absolute;
+    right: 10px;
+    bottom: -30px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.otp-send-alert.MuiAlert-root .MuiAlert-icon {
+    font-size: 12px;
+    padding: 0;
+}
+
+.otp-send-alert.MuiAlert-root .MuiAlert-message {
+    padding: 0;
+}
+
+@media screen and (max-width:600px) {
+    .bookshlf-otp-container.MuiStack-root {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+    }
+}

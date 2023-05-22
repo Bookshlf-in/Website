@@ -1,0 +1,248 @@
+.navbar.MuiAppBar-root {
+  background-color: #1E1E1E;
+  padding-left: 100px;
+  padding-right: 100px;
+  height: 78px;
+}
+
+/* Navbar Logo */
+.nav-logo img {
+  cursor: pointer;
+  width: 145px;
+}
+
+.navbar-base-items {
+  width: 100%;
+  padding-left: 65px;
+}
+
+.nav-base-links {
+  flex-grow: 1;
+}
+
+/* Navbar Search */
+.search-bar-container {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 5px 10px;
+  width: 300px;
+  height: 37px;
+  position: relative;
+}
+
+.navbar-search-icon {
+  position: absolute;
+  right: 5%;
+  bottom: 12.48%;
+  cursor: pointer;
+}
+
+.navbar-search-icon>svg {
+  height: 15px;
+  width: 15px;
+}
+
+.navbar-search-menu {
+  position: absolute;
+  left: 0;
+  top: 34px;
+  width: 100%;
+  padding-left: 15px;
+  background-color: #ffffff;
+  z-index: 200;
+  max-height: 400px;
+  overflow-Y: auto;
+  overflow-X: hidden;
+  box-shadow: 0 4px 6px rgb(32 33 36 / 28%);
+  border-radius: 0px 0px 5px 5px;
+
+}
+
+.navbar-search-menuitem {
+  font-size: 10px !important;
+  padding: 5px 0px !important;
+  color: #8f8f8f !important;
+}
+
+.search-bar-progress {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  color: #ffffff;
+  padding: 0px 15px;
+}
+
+.nav-mobile-item {
+  display: none;
+}
+
+.navbar-login-btn.MuiButton-root {
+  width: 70px;
+  height: 35px;
+  border: 1px solid #ffffff;
+  border-radius: 28px;
+  color: #ffffff;
+  text-transform: capitalize;
+  font-family: "DM sans", sans-serif;
+}
+
+.nav-menu-base {
+  padding-left: 55px;
+}
+
+/* Nav Menu Right*/
+.nav-menu-item {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+}
+
+.nav-menu-item svg {
+  color: #F4A946;
+  font-size: 14px;
+}
+
+.nav-menu-logout {
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: rgba(255, 86, 79, 0.1);
+  color: #FF564F;
+  font-size: 14px;
+}
+
+.nav-menu-logout svg {
+  color: #FF564F;
+  font-size: 16px;
+}
+
+/* Sidenav Css */
+.sidenav-logo {
+  background-color: #1E1E1E;
+  height: 78px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.sidenav-link {
+  padding: 10px 15px;
+  color: #1E1E1E;
+  font-size: 12px;
+}
+
+.sidenav-label {
+  width: 70px;
+}
+
+.sidenav-link svg {
+  color: #1E1E1E;
+}
+
+.sidenav-link .MuiBadge-badge {
+  padding: 0px 4px;
+  font-size: 10px;
+  font-family: 'DM Sans', sans-serif;
+  border: 2px solid #ffffff;
+  top: 2px;
+  right: -3px;
+  background-color: #F4A946;
+}
+
+.nav-search-input.MuiInputBase-root {
+  width: 100%;
+  color: #ffffff;
+  padding: 5px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+}
+
+@media screen and (max-width: 1200px) {
+  .navbar.MuiAppBar-root {
+    padding-left: 24px;
+    padding-right: 24px;
+    transition: 0.5s;
+  }
+
+  .nav-logo img {
+    width: 100px;
+    transition: 0.5s;
+  }
+
+  .navbar-base-items {
+    padding-left: 25px;
+  }
+
+  .search-bar-container {
+    width: 250px;
+  }
+
+  .nav-menu-base {
+    padding-left: 35px;
+  }
+
+}
+
+@media screen and (max-width: 996px) {
+
+  .search-bar-container {
+    width: 200px;
+  }
+
+  .nav-menu-base {
+    padding-left: 15px;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .navbar.MuiAppBar-root {
+    padding-left: 0;
+    padding-right: 0;
+    transition: 0.5s;
+  }
+
+  .nav-logo img {
+    width: 80px;
+    transition: 0.5s;
+  }
+
+  .nav-desktop-item {
+    display: none !important;
+  }
+
+  .sidenav-menu li {
+    min-height: 0 !important;
+  }
+
+  .nav-mobile-item {
+    display: block;
+  }
+
+  .navbar-base-items {
+    width: auto;
+    padding-left: 0px;
+  }
+
+  .search-bar-container {
+    min-width: 200px;
+    width: auto;
+  }
+
+  .navbar-search-menuitem {
+    font-size: 10px !important;
+    padding: 5px 0px !important;
+    min-height: 0px !important;
+  }
+
+  .navbar-login-btn.MuiButton-root {
+    min-width: auto;
+    width: 50px;
+    height: 25px;
+    border: 1px solid #ffffff;
+    border-radius: 28px;
+    color: #ffffff;
+  }
+
+}

@@ -1,9 +1,9 @@
-export const debounce = (fn) => {
+export const debounce = (func, timeout = 500) => {
   let timer;
-  return (e) => {
+  return (...args) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      fn.apply(this, [e]);
-    }, 500);
+      func.apply(this, args);
+    }, timeout);
   };
 };

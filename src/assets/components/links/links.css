@@ -1,0 +1,43 @@
+/* NavLink Css */
+.navlink {
+    display: inline-block;
+    color: #8f8f8f;
+    text-transform: capitalize;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.navlink-active {
+    color: #ffffff !important;
+}
+
+.navlink:after {
+    display: block;
+    padding: 2px;
+    content: '';
+    border-bottom: solid 1px #ffffff;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+
+.navlink:hover:after {
+    transform: scaleX(1);
+}
+
+.navlink-active:after {
+    transform: scaleX(1);
+}
+
+.base-link.MuiTypography-root {
+    font-family: 'DM Sans', sans-serif;
+    color: #8f8f8f;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 600px) {
+    .base-link.MuiTypography-root {
+        font-size: 12px;
+    }
+}

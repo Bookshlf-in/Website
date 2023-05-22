@@ -1,13 +1,10 @@
 import { React } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import "./App.css";
+import "./app.css";
 
 // Components
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/navbar/navbar";
 import Home from "../components/Home/Home";
-import Login from "../components/Login/Login";
-import ForgotPassword from "../components/Login/ForgotPassword";
-import Signup from "../components/Signup/Signup";
 import About from "../components/About/About";
 import Contact from "../components/Contact/Contact";
 import Cart from "../components/Cart/Cart";
@@ -26,7 +23,7 @@ import AdminTrack from "../components/AdminPanel/Order/OrderTracking";
 import SellerProfile from "../components/SellerPanel/SellerProfile";
 import Wallet from "../components/Wallet/Wallet";
 import Terms from "../components/Footer/Terms";
-import BetaNotify from "../assets/components/BetaNotify";
+import Notify from "../assets/components/notify";
 import NotFoundPage from "../components/Home/NotFoundPage";
 
 // external courier integrations
@@ -34,17 +31,15 @@ import ICarry from "../components/AdminPanel/CourierIntegrations/iCarry";
 import Nimbuspost from "../components/AdminPanel/CourierIntegrations/Nimbuspost";
 import EnviaShipping from "../components/AdminPanel/CourierIntegrations/enviaShipping";
 
+import Router from "../route/router";
+
 const App = () => {
   const location = useLocation();
-  // console.log(location);
   return (
     <div className="App">
-      {process.env.REACT_APP_NODE_ENV === "development" ? <BetaNotify /> : null}
-      {!location.pathname.startsWith("/Admin") && <Navbar />}
+      {process.env.REACT_APP_NODE_ENV === "development" ? <Notify /> : null}
+      {!location.pathname.startsWith("/admin") && <Navbar />}
       <Routes>
-        <Route path="/Login" element={<Login />} />
-        <Route path="/PasswordRecovery" element={<ForgotPassword />} />
-        <Route path="/Signup" element={<Signup />} />
         <Route path="/About" element={<About />} />
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Cart" element={<Cart />} />
@@ -63,8 +58,6 @@ const App = () => {
         <Route path="/Blog" element={<Blog />} />
         <Route path="/TermsofUsePrivacyPolicy" element={<Terms />} />
         <Route path="/Wallet" element={<Wallet />} />
-
-        {/* External Courier Paths */}
         <Route path="/AdminCourier/Icarry/:orderId" element={<ICarry />} />
         <Route
           path="/AdminCourier/Nimbuspost/:orderId"
@@ -74,10 +67,11 @@ const App = () => {
           path="/AdminCourier/EnviaShipping/:orderId"
           element={<EnviaShipping />}
         />
-        {/* ========================= */}
         <Route path="/" element={<Home />} exact />
         <Route element={<NotFoundPage />} status={404} />
       </Routes>
+
+      <Router />
     </div>
   );
 };
