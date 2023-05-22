@@ -10,7 +10,7 @@ import SideNav from "./sidenav.js";
 import NavbarSearch from "./navbarsearch";
 
 // importing Material UI components
-import { AppBar, Toolbar, Stack } from "@mui/material";
+import { AppBar, Toolbar, Stack, Tooltip } from "@mui/material";
 import { Button, IconButton, Badge } from "@mui/material";
 
 // Icons
@@ -84,36 +84,44 @@ const NavBarIconItems = ({ user, navigate }) => {
         className="nav-desktop-item"
         justifyContent="center"
       >
-        <IconButton onClick={() => navigate("/Cart")} size="small">
-          <Badge
-            badgeContent={user?.cartitems}
-            color="secondary"
-            sx={NotiBubble}
-          >
-            <ShoppingCartIcon sx={NavIconStyle} />
-          </Badge>
-        </IconButton>
-        <IconButton onClick={() => navigate("/Wishlist")} size="small">
-          <Badge
-            badgeContent={user?.wishlist}
-            color="secondary"
-            sx={NotiBubble}
-          >
-            <FavoriteIcon sx={NavIconStyle} />
-          </Badge>
-        </IconButton>
-        {user?.roles?.includes("seller") && (
-          <IconButton onClick={() => navigate("/Wallet")} size="small">
+        <Tooltip arrow title="Cart">
+          <IconButton onClick={() => navigate("/Cart")} size="small">
             <Badge
-              badgeContent={user?.balance}
-              color="warning"
-              max={9999}
-              showZero={true}
+              badgeContent={user?.cartitems}
+              color="secondary"
               sx={NotiBubble}
             >
-              <AccountBalanceWalletIcon sx={NavIconStyle} />
+              <ShoppingCartIcon sx={NavIconStyle} />
             </Badge>
           </IconButton>
+        </Tooltip>
+
+        <Tooltip arrow title="Wishlist">
+          <IconButton onClick={() => navigate("/Wishlist")} size="small">
+            <Badge
+              badgeContent={user?.wishlist}
+              color="secondary"
+              sx={NotiBubble}
+            >
+              <FavoriteIcon sx={NavIconStyle} />
+            </Badge>
+          </IconButton>
+        </Tooltip>
+
+        {user?.roles?.includes("seller") && (
+          <Tooltip arrow title="Wallet">
+            <IconButton onClick={() => navigate("/Wallet")} size="small">
+              <Badge
+                badgeContent={user?.balance}
+                color="warning"
+                max={9999}
+                showZero={true}
+                sx={NotiBubble}
+              >
+                <AccountBalanceWalletIcon sx={NavIconStyle} />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         )}
       </Stack>
     </Stack>

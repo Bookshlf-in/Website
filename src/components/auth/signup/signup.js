@@ -75,7 +75,9 @@ const UserSignup = () => {
     };
     const response = await handelSignup(modifiedParams);
     if (response.success) {
-      const sendOtp = await handelSendOtp({ email: params.email });
+      const sendOtp = await handelSendOtp("EMAIL_VERIFICATION", {
+        email: params.email,
+      });
       if (sendOtp.success) {
         navigate(`/auth/verify/${params.email}`);
       }

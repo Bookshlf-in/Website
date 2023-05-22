@@ -1,4 +1,9 @@
-import { register, verifyEmailOtp, verifyEmail } from "../../api/endpoints";
+import {
+  register,
+  verifyEmailOtp,
+  verifyEmail,
+  recoveryEmailOtp,
+} from "../../api/endpoints";
 import { PostRequest } from "../../api/requests/postAPI";
 
 export const handelSignup = async (requestBody) => {
@@ -6,8 +11,9 @@ export const handelSignup = async (requestBody) => {
   return response;
 };
 
-export const handelSendOtp = async (requestBody) => {
-  const response = await PostRequest(verifyEmailOtp, requestBody);
+export const handelSendOtp = async (type, requestBody) => {
+  const url = type === "EMAIL_VERIFICATION" ? verifyEmailOtp : recoveryEmailOtp;
+  const response = await PostRequest(url, requestBody);
   return response;
 };
 

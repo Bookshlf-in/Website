@@ -119,3 +119,12 @@ input.bookshlf-otp-input:focus {
 .otp-send-alert.MuiAlert-root .MuiAlert-message {
     padding: 0;
 }
+
+@media screen and (max-width:600px) {
+    .bookshlf-otp-container.MuiStack-root {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+    }
+}

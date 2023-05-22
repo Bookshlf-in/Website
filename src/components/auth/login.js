@@ -37,7 +37,7 @@ const Login = () => {
 
   // data states
   const [params, setParams] = useState({
-    email: routeParams?.email,
+    email: routeParams.email ? routeParams.email : "",
     password: "",
   });
 

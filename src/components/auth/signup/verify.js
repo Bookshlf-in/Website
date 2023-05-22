@@ -19,6 +19,17 @@ const Verify = () => {
   const params = useParams();
   const [Otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    show: false,
+    type: "success",
+    msg: "OTP Sent",
+  });
+
+  const hideAlert = () => {
+    setTimeout(() => {
+      setAlert({ show: false, type: "success", msg: "OTP Sent" });
+    }, 60000);
+  };
 
   useEffect(() => {
     if (
@@ -33,12 +44,23 @@ const Verify = () => {
     setLoading(true);
     const response = await handleVerify({ email: params.email, otp: Otp });
     if (response.success) {
-      navigate(`/auth/login/${params.email}`);
+      setAlert({
+        show: true,
+        type: "success",
+        msg: "Email Verified Successfully!",
+      });
+      setTimeout(() => {
+        navigate(`/auth/login/${params.email}`);
+      }, 3000);
     } else handleVerifyEmailError(response.data.errors);
     setLoading(false);
   };
 
-  const handleVerifyEmailError = (errors) => {};
+  const handleVerifyEmailError = (errors) => {
+    setAlert({ show: true, type: "error", msg: errors[0].error });
+    hideAlert();
+  };
+
   return (
     <Container title="Account Verification | Bookshlf">
       <Typography variant="h2" mb={8} className="auth-title">
@@ -57,7 +79,7 @@ const Verify = () => {
           <Alert severity="info">
             Didn't Recieve OTP ? Check You Mail Spam!
           </Alert>
-          <OtpField otp={Otp} setOtp={setOtp} />
+          <OtpField otp={Otp} setOtp={setOtp} email={params.email} />
           <LoadingButton
             fullWidth
             size={12}
@@ -66,6 +88,7 @@ const Verify = () => {
           >
             Verify
           </LoadingButton>
+          {alert.show && <Alert severity={alert.type}>{alert.msg}</Alert>}
         </Stack>
         <Stack
           direction="row"

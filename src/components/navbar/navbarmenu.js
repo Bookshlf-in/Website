@@ -42,7 +42,6 @@ const NavbarMenu = () => {
   const handelLogout = async () => {
     const response = await Logout();
     if (response.success) {
-      navigate(0);
       setUser(null);
       setAdmin(null);
     }

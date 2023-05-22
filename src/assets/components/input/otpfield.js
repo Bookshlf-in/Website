@@ -5,20 +5,51 @@ import OtpInput from "react-otp-input";
 import Counter from "../../counter";
 import { handelSendOtp } from "../../../service/auth/signup";
 
-const OtpField = ({ otp, setOtp, otpLength = 6, email }) => {
-  const [counter, setCounter] = useState(60);
+const OtpField = ({
+  otp,
+  setOtp,
+  otpLength = 6,
+  email,
+  time = 60,
+  type = "EMAIL_VERIFICATION",
+}) => {
+  const [counter, setCounter] = useState(time);
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    show: false,
+    type: "success",
+    msg: "OTP Sent",
+  });
+
+  const hideAlert = () => {
+    setTimeout(() => {
+      setAlert({ show: false, type: "success", msg: "OTP Sent" });
+    }, 60000);
+  };
 
   const sendOtp = async () => {
     setLoading(true);
-    const response = await handelSendOtp({ email: email });
-    setCounter(60);
+    const response = await handelSendOtp(type, { email: email });
     if (response.success) {
-    } else handleOtpSendError();
+      setAlert({ show: true, type: "success", msg: "OTP Sent" });
+      setCounter(60);
+      hideAlert();
+    } else {
+      console.log(response.data);
+      handleOtpSendError(
+        response.data.errors
+          ? { errors: response.data.errors, type: "array" }
+          : { errors: response.data.error, type: "object" }
+      );
+    }
     setLoading(false);
   };
 
-  const handleOtpSendError = () => {};
+  const handleOtpSendError = (errors, type) => {
+    if (type === "array")
+      setAlert({ show: true, type: "error", msg: errors.errors[0].error });
+    else setAlert({ show: true, type: "error", msg: errors.errors });
+  };
 
   return (
     <Stack className="bookshlf-otp-container" direction="row">
@@ -44,7 +75,11 @@ const OtpField = ({ otp, setOtp, otpLength = 6, email }) => {
           Send OTP
         </Button>
       )}
-      {counter > 0 && <Alert className="otp-send-alert"> OTP Sent</Alert>}
+      {alert.show && (
+        <Alert className="otp-send-alert" severity={alert.type}>
+          {alert.msg}
+        </Alert>
+      )}
     </Stack>
   );
 };
