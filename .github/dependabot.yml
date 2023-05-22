@@ -10,3 +10,4 @@ updates:
       - "mrhb787"
     labels:
       - "dependency"
+    target-branch: "dev"
