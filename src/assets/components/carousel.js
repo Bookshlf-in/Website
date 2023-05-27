@@ -1,5 +1,4 @@
 import { React, useState, useEffect, useRef, useCallback } from "react";
-import "./Home.css";
 
 // Components
 import { Button, IconButton, Fade } from "@mui/material";

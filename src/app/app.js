@@ -4,7 +4,6 @@ import "./app.css";
 
 // Components
 import Navbar from "../components/navbar/navbar";
-import Home from "../components/Home/Home";
 import About from "../components/About/About";
 import Contact from "../components/Contact/Contact";
 import Cart from "../components/Cart/Cart";
@@ -24,7 +23,7 @@ import SellerProfile from "../components/SellerPanel/SellerProfile";
 import Wallet from "../components/Wallet/Wallet";
 import Terms from "../components/Footer/Terms";
 import Notify from "../assets/components/notify";
-import NotFoundPage from "../components/Home/NotFoundPage";
+import NotFoundPage from "../components/home/NotFoundPage";
 
 // external courier integrations
 import ICarry from "../components/AdminPanel/CourierIntegrations/iCarry";
@@ -67,7 +66,6 @@ const App = () => {
           path="/AdminCourier/EnviaShipping/:orderId"
           element={<EnviaShipping />}
         />
-        <Route path="/" element={<Home />} exact />
         <Route element={<NotFoundPage />} status={404} />
       </Routes>
 

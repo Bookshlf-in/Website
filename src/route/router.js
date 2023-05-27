@@ -5,6 +5,7 @@ import Login from "../components/auth/login";
 import Recovery from "../components/auth/recovery/recovery";
 import Signup from "../components/auth/signup/signup";
 import Verify from "../components/auth/signup/verify";
+import Home from "../components/home/home";
 
 const Router = () => {
   const routes = useRoutes([
@@ -47,6 +48,10 @@ const Router = () => {
           element: <Recovery />,
         },
       ],
+    },
+    {
+      path: "/",
+      element: <Home />,
     },
   ]);
   return routes;
