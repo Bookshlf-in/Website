@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import "./search.css";
 
 // User Context
 import { SearchContext } from "../../context/searchContext";
@@ -16,7 +17,7 @@ import { InputLabel, MenuItem, FormControl } from "@mui/material";
 // Custom Components
 // import SearchBar from "./Searchbar";
 import BookshlfLoader from "../MicroComponents/BookshlfLoader";
-import SearchBook from "./SearchBook";
+import SearchBook from "./searchbook";
 
 const Search = () => {
   // search
@@ -122,13 +123,8 @@ const Search = () => {
       <Stack
         direction="column"
         spacing={2}
-        sx={{
-          width: "100%",
-          padding: "10px",
-        }}
         justifyContent="center"
         alignItems="center"
-        className="search-book-container"
       >
         {/* <SearchBar /> */}
         <FormControl
@@ -152,15 +148,10 @@ const Search = () => {
           </Select>
         </FormControl>
         {!Loading ? (
-          <Grid
-            container
-            spacing={2}
-            justifyContent="center"
-            sx={{ paddingRight: "16px" }}
-          >
+          <Grid container spacing={1} justifyContent="center">
             {books && books.length
               ? books.map((book) => (
-                  <Grid item xs={12} sm={4} md={3} lg={2} key={book._id}>
+                  <Grid item xs={12} sm={4} md={3} lg={3} key={book._id}>
                     <SearchBook book={book} />
                   </Grid>
                 ))

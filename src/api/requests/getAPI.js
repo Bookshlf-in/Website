@@ -1,15 +1,5 @@
 import axios from "../axios";
-import { isUATEnvironment } from "../../assets/utils/commons";
-
-const PrintInUATEnvironment = (requestURL, requestParams, requestResponse) => {
-  const Request = {
-    type: "GET",
-    url: requestURL,
-    params: requestParams,
-    response: requestResponse,
-  };
-  if (isUATEnvironment()) console.log(Request);
-};
+import { PrintInUATEnvironment } from "../../assets/utils/commons";
 
 export const GetRequest = async (requestURL, requestParams) => {
   const response = await axios
@@ -20,6 +10,12 @@ export const GetRequest = async (requestURL, requestParams) => {
     .catch((err) => {
       return { data: err.response.data, success: false };
     });
-  PrintInUATEnvironment(requestURL, requestParams, response);
+  const Request = {
+    type: "GET",
+    url: requestURL,
+    params: requestParams,
+    response: response,
+  };
+  PrintInUATEnvironment(Request);
   return response;
 };

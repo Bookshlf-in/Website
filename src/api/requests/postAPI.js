@@ -1,15 +1,5 @@
 import axios from "../axios";
-import { isUATEnvironment } from "../../assets/utils/commons";
-
-const PrintInUATEnvironment = (requestURL, requestBody, requestResponse) => {
-  const Request = {
-    type: "POST",
-    url: requestURL,
-    body: requestBody,
-    response: requestResponse,
-  };
-  if (isUATEnvironment()) console.log(Request);
-};
+import { PrintInUATEnvironment } from "../../assets/utils/commons";
 
 export const PostRequest = async (requestURL, requestBody) => {
   const response = await axios
@@ -20,6 +10,12 @@ export const PostRequest = async (requestURL, requestBody) => {
     .catch((err) => {
       return { data: err.response.data, success: false };
     });
-  PrintInUATEnvironment(requestURL, requestBody, response);
+  const Request = {
+    type: "POST",
+    url: requestURL,
+    body: requestBody,
+    response: response,
+  };
+  PrintInUATEnvironment(Request);
   return response;
 };

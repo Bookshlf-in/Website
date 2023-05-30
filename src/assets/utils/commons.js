@@ -8,7 +8,15 @@ export const isUATEnvironment = () => {
   return false;
 };
 
+export const PrintInUATEnvironment = (data) => {
+  if (isUATEnvironment()) console.log(data);
+};
+
 export const userRoleCheck = (user, role) => {
   if (user?.roles?.includes(role)) return true;
   return false;
+};
+
+export const trimText = (text, maxLength) => {
+  return text.length >= maxLength ? text.substr(0, maxLength) + "..." : text;
 };
