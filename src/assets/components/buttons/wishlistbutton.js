@@ -75,7 +75,9 @@ const WishlistButton = ({ book, size, fontSize }) => {
     });
   };
 
-  const handelWishlist = async () => {
+  const handelWishlist = async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     setLoading(true);
     if (isLoggedIn()) {
       if (!book.wishlist) addToWishlist();

@@ -15,9 +15,9 @@ const NavbarItems = () => {
     >
       <NavLink path="/" name="Home" active={activePath.length === 1} />
       <NavLink
-        path="/SearchResult/tag:ALL"
+        path="/search/tag:ALL"
         name="All Books"
-        active={activePath.startsWith("/SearchResult")}
+        active={activePath.startsWith("/search")}
       />
       <NavLink
         path="/SellerPanel/2"

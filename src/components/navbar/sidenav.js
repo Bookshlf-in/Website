@@ -51,7 +51,7 @@ const SideNavLinks = ({ user, setOpen }) => {
         setOpen={setOpen}
       />
       <SideNavLink
-        path="/SearchResult/tag:ALL"
+        path="/search/tag:ALL"
         Icon={<AllBookIcon />}
         label="All Books"
         setOpen={setOpen}

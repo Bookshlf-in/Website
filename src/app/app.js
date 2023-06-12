@@ -14,7 +14,6 @@ import UserProfile from "../components/UserProfile/UserProfile";
 import Track from "../components/Order/OrderTracking";
 import SellerPanel from "../components/SellerPanel/SellerPanel";
 import UpdateOrder from "../components/Order/UpdateOrder";
-import SearchResult from "../components/SearchResult/SearchPanel";
 import BookDetails from "../components/BookDetails/BookDetails";
 import Admin from "../components/AdminPanel/AdminPanel";
 import Blog from "../components/Blog/Blog";
@@ -47,7 +46,6 @@ const App = () => {
         <Route path="/UserPanel/:panel" element={<UserProfile />} />
         <Route path="/SellerPanel/:panel" element={<SellerPanel />} />
         <Route path="/SellerBookUpdate/:bookId" element={<UpdateOrder />} />
-        <Route path="/SearchResult/:query" element={<SearchResult />} />
         <Route path="/BookDetails/:bookId" element={<BookDetails />} />
         <Route path="/Wishlist" element={<Wishlist />} />
         <Route path="/Checkout/:type" element={<Checkout />} />

@@ -76,8 +76,10 @@ const CartButton = ({ book }) => {
     });
   };
 
-  const handleCart = async () => {
+  const handleCart = async (e) => {
     setLoading(true);
+    e.stopPropagation();
+    e.preventDefault();
     if (isLoggedIn()) {
       if (!book.cart) addToCart();
       else deleteFromCart();

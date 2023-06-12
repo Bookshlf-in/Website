@@ -6,13 +6,15 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: rgb(247, 224, 189);
+  background: transparent;
+  overflow: overlay;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgb(255, 182, 73);
   border-radius: 5px;
+  transition: height 0.2s ease-in-out;
 }
 
 /* Handle on hover */

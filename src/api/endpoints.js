@@ -8,7 +8,8 @@ export const verifyEmail = "/verifyEmail";
 export const passwordReset = "/resetPassword";
 
 // SEARCH
-export const searchURL = "/searchTitle";
+export const searchTitle = "/searchTitle";
+export const searchBook = "/search";
 
 // WISHLIST
 export const addWishlist = "/addWishlistItem";

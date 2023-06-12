@@ -151,7 +151,7 @@ const Navbar = () => {
   const [user] = useContext(UserContext);
 
   return (
-    <AppBar position="static" className="navbar">
+    <AppBar position="sticky" className="navbar">
       <Toolbar variant="regular" sx={{ height: "100%" }}>
         {!isLocationAuth(location.pathname) && (
           <div className="nav-mobile-item">
