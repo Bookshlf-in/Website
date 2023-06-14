@@ -1,8 +1,9 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import "./home.css";
 
 // Home Components
-import Carousel from "./Carousel";
+import Carousel from "../../assets/components/carousel";
 import Categories from "./Categories";
 import Benefits from "./Benefits";
 import Reviews from "../Reviews/CustomerReviews";

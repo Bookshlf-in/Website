@@ -12,6 +12,7 @@ import LoadingButton from "../../assets/components/buttons/loadingbutton";
 import Link from "../../assets/components/links/link";
 
 // services
+import { isEnterKey } from "../../assets/utils/commons";
 import { handleLogin } from "../../service/auth/login";
 
 const Login = () => {
@@ -45,6 +46,13 @@ const Login = () => {
     setParams({ ...params, [e.target.name]: e.target.value });
     if (e.target.value === "") {
       setDefault();
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (isEnterKey(e)) {
+      e.preventDefault();
+      tryLogin();
     }
   };
 
@@ -107,6 +115,7 @@ const Login = () => {
             onChange={handleChange}
             error={passwordError}
             helperText={passworderrorMsg}
+            onKeyPress={handleKeyPress}
           />
           <LoadingButton
             fullWidth

@@ -221,13 +221,12 @@
   }
 
   .navbar-base-items {
-    width: auto;
+    width: 100%;
     padding-left: 0px;
   }
 
   .search-bar-container {
-    min-width: 200px;
-    width: auto;
+    width: 100%;
   }
 
   .navbar-search-menuitem {

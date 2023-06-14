@@ -7,3 +7,8 @@
   scroll-behavior: smooth;
   font-family: 'DM Sans', sans-serif;
 }
+
+body {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}

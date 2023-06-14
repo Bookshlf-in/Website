@@ -10,7 +10,8 @@ import { LinearProgress, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 // Service
-import { BookSearch } from "../../service/search/booksearch";
+import { BookSearchTitle } from "../../service/search/booksearch";
+import { trimText } from "../../assets/utils/commons";
 
 const NavProgress = () => {
   return (
@@ -24,7 +25,7 @@ const NavIcon = ({ navigate, search }) => {
   return (
     <div
       className="navbar-search-icon"
-      onClick={() => navigate(`/SearchResult/${search}`)}
+      onClick={() => navigate(`/search/${search}`)}
     >
       <SearchIcon />
     </div>
@@ -47,13 +48,13 @@ const Searchbar = () => {
     if (event.key === "Enter") {
       event.preventDefault();
       setOpenTitleMenu(false);
-      navigate(`/SearchResult/${Search === "" ? "tag:ALL" : Search}`);
+      navigate(`/search/${Search === "" ? "tag:ALL" : Search}`);
     }
   };
 
   // book title search on input
   const handelBookTitleSearch = async (title) => {
-    const response = await BookSearch(title);
+    const response = await BookSearchTitle(title);
     if (response.success) {
       setresultTitles(response.data);
       setsearchFieldChanges(false);
@@ -66,7 +67,7 @@ const Searchbar = () => {
   const handelTitleAdd = (title) => {
     setOpenTitleMenu(false);
     setSearch(title);
-    navigate(`/SearchResult/${title}`);
+    navigate(`/search/${title}`);
   };
 
   // Handle Change
@@ -83,7 +84,7 @@ const Searchbar = () => {
       <InputBase
         placeholder="Search"
         className="nav-search-input"
-        value={Search}
+        value={trimText(Search, 35)}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
       />

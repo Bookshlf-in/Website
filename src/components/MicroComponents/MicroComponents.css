@@ -1,7 +1,11 @@
 /* ========== Bookshlf Loader ========== */
 .bookshlf-loader {
   animation: fadeinout 1s infinite;
+  height: auto;
+  width: 70px;
+  margin: 10px;
 }
+
 @keyframes fadeinout {
   0% {
     opacity: 0;

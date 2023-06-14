@@ -5,6 +5,9 @@ import Login from "../components/auth/login";
 import Recovery from "../components/auth/recovery/recovery";
 import Signup from "../components/auth/signup/signup";
 import Verify from "../components/auth/signup/verify";
+import Home from "../components/home/home";
+import Search from "../components/search/search";
+import OrderTracking from "../components/Order/tracking/tracking";
 
 const Router = () => {
   const routes = useRoutes([
@@ -47,6 +50,32 @@ const Router = () => {
           element: <Recovery />,
         },
       ],
+    },
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/search",
+      element: <Search />,
+      children: [
+        {
+          path: ":query",
+          element: <Search />,
+        },
+        {
+          path: ":query/:filters",
+          element: <Search />,
+        },
+        {
+          path: ":query/:filters/:page",
+          element: <Search />,
+        },
+      ],
+    },
+    {
+      path: "/track/:orderId",
+      element: <OrderTracking />,
     },
   ]);
   return routes;

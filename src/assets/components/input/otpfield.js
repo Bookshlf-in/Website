@@ -35,20 +35,17 @@ const OtpField = ({
       setCounter(60);
       hideAlert();
     } else {
-      console.log(response.data);
       handleOtpSendError(
         response.data.errors
-          ? { errors: response.data.errors, type: "array" }
-          : { errors: response.data.error, type: "object" }
+          ? response.data.errors[0].error
+          : response.data.error
       );
     }
     setLoading(false);
   };
 
-  const handleOtpSendError = (errors, type) => {
-    if (type === "array")
-      setAlert({ show: true, type: "error", msg: errors.errors[0].error });
-    else setAlert({ show: true, type: "error", msg: errors.errors });
+  const handleOtpSendError = (error) => {
+    setAlert({ show: true, type: "error", msg: error });
   };
 
   return (

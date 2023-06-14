@@ -16,7 +16,7 @@ import {
 import { DMsans } from "../../../../assets/Theme/fonts";
 
 // Utils
-import { currentDate } from "../../../../assets/utils/dates/currentDate";
+import { currentDate } from "../../../../assets/utils/date";
 
 // apex charts
 import Chart from "react-apexcharts";

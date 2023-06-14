@@ -11,6 +11,10 @@
     font-family: 'DM Sans', sans-serif !important;
 }
 
+.MuiMenuItem-root {
+    font-family: "DM Sans", sans-serif !important;
+}
+
 .bookshlf-input .MuiOutlinedInput-root {
     font-family: 'DM Sans', sans-serif;
     border-radius: 16px;
@@ -120,11 +124,41 @@ input.bookshlf-otp-input:focus {
     padding: 0;
 }
 
+.search-book-btn.MuiButton-root {
+    height: 30px;
+    background: #F4A946;
+    border-radius: 8px;
+    color: #000000;
+}
+
+.search-book-btn.MuiButton-root:hover {
+    background: rgba(244, 169, 70, 0.7);
+}
+
 @media screen and (max-width:600px) {
+    .container {
+        padding: 10px 8px;
+    }
+
     .bookshlf-otp-container.MuiStack-root {
         flex-direction: column;
         gap: 8px;
         justify-content: center;
         align-items: center;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .search-book-btn.MuiButton-root {
+        height: 24px;
+
+    }
+
+    .search-book-cart-button.MuiButton-root {
+        height: 24px;
+    }
+
+    .search-book-cart-button.MuiButton-root svg {
+        height: 16px;
     }
 }
