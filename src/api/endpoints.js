@@ -18,3 +18,7 @@ export const deleteWishlist = "/deleteWishlistItem";
 // CART
 export const addCart = "/addCartItem";
 export const deleteCart = "/deleteCartItem";
+
+// ORDER
+export const orderDetails = "/getOrderDetails";
+export const orderCancel = "/cancelOrder";

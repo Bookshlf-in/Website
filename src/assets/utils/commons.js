@@ -41,3 +41,20 @@ export const StringtoArray = (string, splitter = "&") => {
   if (string === undefined || string === "default") return ["default"];
   return string.split(splitter);
 };
+
+export const isEnterKey = (e) => {
+  return e.key === "Enter";
+};
+
+export const AddressFormat = (address = {}) => {
+  return (
+    address.address +
+    ", " +
+    address.city +
+    " " +
+    address.state +
+    " (" +
+    address.zipCode +
+    ")"
+  );
+};

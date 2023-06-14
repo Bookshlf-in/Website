@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 import "./search.css";
 
 // Components
@@ -9,7 +10,7 @@ import { Stack } from "@mui/material";
 import Container from "../../assets/components/container";
 import SearchFilter from "./searchfilter";
 import SearchResult from "./searchresults";
-import BottomPagination from "./bottompagination";
+import Pagination from "./pagination";
 import BookshlfLoader from "../MicroComponents/BookshlfLoader";
 
 // Services
@@ -26,6 +27,8 @@ const Search = () => {
   // Data states
   const [books, setbooks] = useState([]);
   const [totalPages, settotalPages] = useState(1);
+  const [user] = useContext(UserContext);
+
   const makeRequest = async () => {
     setLoading(true);
     const response = await BookSearch({
@@ -42,7 +45,7 @@ const Search = () => {
 
   useEffect(() => {
     makeRequest();
-  }, [query, page, filters]);
+  }, [query, page, filters, user]);
 
   return (
     <Container title="Search | Bookshlf">
@@ -50,9 +53,7 @@ const Search = () => {
         <SearchFilter page={Number(page)} totalPages={totalPages} />
         {loading && <BookshlfLoader />}
         {!loading && <SearchResult books={books} />}
-        {!loading && (
-          <BottomPagination page={Number(page)} totalPages={totalPages} />
-        )}
+        {!loading && <Pagination page={Number(page)} totalPages={totalPages} />}
       </Stack>
     </Container>
   );

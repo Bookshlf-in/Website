@@ -1,0 +1,81 @@
+.track-box {
+    background: #FDFDFD;
+    box-shadow: 10px 10px 28px -2px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    width: 100%;
+}
+
+.tracking-dayname {
+    font-weight: bold !important;
+    font-size: 2em !important;
+    color: #1E1E1E !important;
+}
+
+.tracking-monthyear {
+    font-weight: bold !important;
+    color: #1E1E1E !important;
+    font-size: 1.2em !important;
+}
+
+.tracking-date {
+    font-weight: bold !important;
+    color: #F4A946 !important;
+    font-size: 4em !important;
+}
+
+.order-current-status {
+    text-transform: capitalize;
+    font-weight: bold !important;
+    color: #2d82f9 !important;
+    font-size: 2em !important;
+}
+
+.order-cancel-btn {
+    background-color: rgb(255, 86, 79) !important;
+    color: #FDFDFD !important;
+    font-family: "DM Sans", sans-serif !important;
+    text-transform: capitalize !important;
+    border-radius: 12px !important;
+    padding: 10px 15px !important;
+}
+
+.track-order-image {
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.track-detail-title {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+.track-detail-text {
+    font-size: 12px !important;
+    color: #0071f3 !important;
+}
+
+.track-box .Mui-active {
+    color: #1692f1 !important;
+}
+
+.track-box .Mui-completed {
+    color: rgb(4, 154, 4) !important;
+}
+
+.step-content {
+    font-size: 12px !important;
+    padding: 10px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    border-radius: 12px;
+}
+
+@media screen and (max-width:600px) {
+    .track-order-image {
+        height: 200px;
+        width: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+}

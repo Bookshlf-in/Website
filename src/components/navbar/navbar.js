@@ -29,7 +29,6 @@ const NavIconStyle = {
 
 const NotiBubble = {
   "& span": {
-    fontFamily: "Roboto !important",
     fontSize: "9px",
   },
 };

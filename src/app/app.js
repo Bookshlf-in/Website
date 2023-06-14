@@ -11,7 +11,6 @@ import Checkout from "../components/Checkout/Checkout";
 import Wishlist from "../components/Cart/Wishlist";
 import AddReviews from "../components/Reviews/AddReviews";
 import UserProfile from "../components/UserProfile/UserProfile";
-import Track from "../components/Order/OrderTracking";
 import SellerPanel from "../components/SellerPanel/SellerPanel";
 import UpdateOrder from "../components/Order/UpdateOrder";
 import BookDetails from "../components/BookDetails/BookDetails";
@@ -41,7 +40,6 @@ const App = () => {
         <Route path="/About" element={<About />} />
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Cart" element={<Cart />} />
-        <Route path="/Track/:orderId" element={<Track />} />
         <Route path="/AddReview/:orderId" element={<AddReviews />} />
         <Route path="/UserPanel/:panel" element={<UserProfile />} />
         <Route path="/SellerPanel/:panel" element={<SellerPanel />} />

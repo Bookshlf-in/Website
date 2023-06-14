@@ -8,7 +8,7 @@ export const GetRequest = async (requestURL, requestParams) => {
       return { data: res.data, success: true };
     })
     .catch((err) => {
-      return { data: err.response.data, success: false };
+      return { data: err?.response?.data, success: false };
     });
   const Request = {
     type: "GET",

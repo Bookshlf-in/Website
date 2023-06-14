@@ -4,7 +4,7 @@ import { UserContext } from "../../context/userContext";
 import { AdminContext } from "../../context/adminContext";
 
 // Components
-import { Tooltip } from "@mui/material";
+import { Tooltip, Divider } from "@mui/material";
 import { Stack, IconButton, Menu, MenuItem } from "@mui/material";
 
 // Icons
@@ -85,22 +85,11 @@ const NavbarMenu = () => {
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 0.5,
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 2,
-              left: 14,
-              width: 12,
-              height: 12,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
           },
         }}
       >
         <MenuStack Icon={<AccountIcon />} label="Profile" path="/UserPanel/1" />
+        <Divider />
         <MenuStack Icon={<OrderIcon />} label="Orders" path="/UserPanel/2" />
         <MenuStack
           Icon={<BookIcon />}
@@ -115,6 +104,7 @@ const NavbarMenu = () => {
         {userRoleCheck(user, "admin") && (
           <MenuStack Icon={<AdminIcon />} label="Admin" path="/admin/0" />
         )}
+        <Divider />
         <MenuItem onClick={handelLogout} className="nav-menu-logout">
           <Stack
             direction="row"

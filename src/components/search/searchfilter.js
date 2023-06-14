@@ -4,7 +4,7 @@ import { Stack, Typography, Divider } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 // Custom Components
-import BottomPagination from "./bottompagination";
+import Pagination from "./pagination";
 
 const FILTERS = [
   "sortByPrice=asc",
@@ -30,6 +30,7 @@ const SearchFilter = ({ page, totalPages }) => {
   const navigate = useNavigate();
   const { query, filters } = useParams();
   const [filter, setFilter] = useState(handleFilters(filters));
+
   const resolveParam = async (param) => {
     if (
       (isPresent(param, "default") && !isPresent(filter, "default")) ||
@@ -100,7 +101,7 @@ const SearchFilter = ({ page, totalPages }) => {
             </MenuItem>
           </Select>
         </FormControl>
-        <BottomPagination page={page} totalPages={totalPages} />
+        <Pagination page={page} totalPages={totalPages} />
       </Stack>
 
       <Divider />
