@@ -27,7 +27,7 @@ const AdminNavButton = ({
   const navigate = useNavigate();
   const handleClick = () => {
     setPanel(value);
-    navigate(`/Admin/${value}`);
+    navigate(`/admin/${value}`);
     setOpenSideBar(false);
   };
 

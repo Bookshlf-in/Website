@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
 import "./search.css";
 
 // Components
@@ -27,25 +26,24 @@ const Search = () => {
   // Data states
   const [books, setbooks] = useState([]);
   const [totalPages, settotalPages] = useState(1);
-  const [user] = useContext(UserContext);
-
-  const makeRequest = async () => {
-    setLoading(true);
-    const response = await BookSearch({
-      ...StringtoObject(filters),
-      q: query,
-      noOfBooksInOnePage: BooksPerPage(),
-    });
-    if (response.success) {
-      setbooks(response.data.data);
-      settotalPages(response.data.totalPages);
-    }
-    setLoading(false);
-  };
 
   useEffect(() => {
+    const makeRequest = async () => {
+      setLoading(true);
+      const response = await BookSearch({
+        ...StringtoObject(filters),
+        q: query,
+        noOfBooksInOnePage: BooksPerPage(),
+        page: Number(page),
+      });
+      if (response.success) {
+        setbooks(response.data.data);
+        settotalPages(response.data.totalPages);
+      }
+      setLoading(false);
+    };
     makeRequest();
-  }, [query, page, filters, user]);
+  }, [query, page, filters]);
 
   return (
     <Container title="Search | Bookshlf">
