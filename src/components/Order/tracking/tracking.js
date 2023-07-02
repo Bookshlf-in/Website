@@ -23,7 +23,6 @@ const Tracking = () => {
   const getOrderDetails = () => {
     GetRequest(orderDetails, { orderId: orderId }).then((response) => {
       setOrder(response.data);
-      console.log(response.data);
       setLoading(false);
     });
   };
