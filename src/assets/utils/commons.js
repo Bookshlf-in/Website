@@ -58,3 +58,9 @@ export const AddressFormat = (address = {}) => {
     ")"
   );
 };
+
+export const Sort = (data = [], key) => {
+  data.sort((a, b) => {
+    return a[key] < b[key] ? 1 : a[key] > b[key] ? -1 : 0;
+  });
+};

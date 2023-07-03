@@ -3,7 +3,15 @@ import { Helmet } from "react-helmet-async";
 import { Stack } from "@mui/material";
 import "./base.css";
 
-const Container = ({ title, children, isAutherized = true }) => {
+import PageLoader from "./pageloader";
+
+const Container = ({
+  title,
+  children,
+  isAutherized = true,
+  loading = false,
+  redirect = true,
+}) => {
   const navigate = useNavigate();
   if (!isAutherized) {
     navigate("/auth/login");
@@ -13,7 +21,7 @@ const Container = ({ title, children, isAutherized = true }) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <Stack className="container">{children}</Stack>
+      <Stack className="container">{loading ? <PageLoader /> : children}</Stack>
     </>
   );
 };

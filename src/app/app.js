@@ -10,7 +10,7 @@ import Cart from "../components/Cart/Cart";
 import Checkout from "../components/Checkout/Checkout";
 import Wishlist from "../components/Cart/Wishlist";
 import AddReviews from "../components/Reviews/AddReviews";
-import UserProfile from "../components/UserProfile/UserProfile";
+import UserProfile from "../components/userpanel/usernav";
 import SellerPanel from "../components/SellerPanel/SellerPanel";
 import UpdateOrder from "../components/Order/UpdateOrder";
 import BookDetails from "../components/BookDetails/BookDetails";
