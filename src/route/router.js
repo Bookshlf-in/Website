@@ -8,6 +8,8 @@ import Verify from "../components/auth/signup/verify";
 import Home from "../components/home/home";
 import Search from "../components/search/search";
 import OrderTracking from "../components/Order/tracking/tracking";
+import UserPanel from "../components/userpanel/userpanel";
+import Profile from "../components/userpanel/profile";
 
 const Router = () => {
   const routes = useRoutes([
@@ -76,6 +78,16 @@ const Router = () => {
     {
       path: "/track/:orderId",
       element: <OrderTracking />,
+    },
+    {
+      path: "/user",
+      element: <UserPanel />,
+      children: [
+        {
+          path: ":panel",
+          element: <Profile />,
+        },
+      ],
     },
   ]);
   return routes;

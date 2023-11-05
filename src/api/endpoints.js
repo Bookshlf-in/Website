@@ -21,4 +21,11 @@ export const deleteCart = "/deleteCartItem";
 
 // ORDER
 export const orderDetails = "/getOrderDetails";
+export const orderList = "/getOrderList";
 export const orderCancel = "/cancelOrder";
+
+// USER
+export const userProfile = "/getUserProfile";
+
+// ADDRESS
+export const addressList = "/getAddressList";
