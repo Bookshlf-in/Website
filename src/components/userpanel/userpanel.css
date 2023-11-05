@@ -1,0 +1,60 @@
+.user-profile {
+    padding: 15px 24px;
+    background-color: #1E1E1E;
+    width: 100%;
+    border-radius: 12px;
+    color: #FFFFFF;
+}
+
+.user-profile .MuiDivider-root {
+    border-color: #FFFFFF !important;
+}
+
+.user-name {
+    font-size: 48px !important;
+    font-weight: bolder !important;
+}
+
+.user-email {
+    font-size: 18px !important;
+}
+
+.user-id.MuiChip-root {
+    font-family: 'DM Sans', sans-serif !important;
+    border-radius: 5px;
+    max-width: 300px;
+}
+
+.user-roles {
+    font-size: 24px !important;
+}
+
+.user-role {
+    text-transform: capitalize !important;
+    border-radius: 5px !important;
+}
+
+.usernav-item {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    color: #F4A946 !important;
+    border-radius: 12px !important;
+    text-transform: capitalize !important;
+}
+
+.usernav-item:hover {
+    background-color: #1E1E1E;
+    transition: 0.3s;
+    color: #FFFFFF;
+}
+
+@media screen and (max-width : 400px) {
+    .user-name {
+        font-size: 32px !important;
+    }
+
+    .user-email {
+        font-size: 14px !important;
+    }
+}

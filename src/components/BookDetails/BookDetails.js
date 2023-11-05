@@ -68,6 +68,9 @@ const BookDetails = () => {
           },
         })
         .then((response) => {
+          if (response.data?.seller?._id !== "61ea1af611af83002056e1a0") {
+            navigate("/search/tag:ALL");
+          }
           setbook(response.data);
           setwishlist(response.data.wishlist);
           setcart(response.data.cart);
@@ -300,7 +303,7 @@ const BookDetails = () => {
             >
               <strong>Buy Now</strong>
             </LoadingButton>
-            {user && user.roles.includes("admin") && (
+            {user && user.roles?.includes("admin") && (
               <BookPurchaseAdmin bookId={params.bookId} />
             )}
           </Stack>

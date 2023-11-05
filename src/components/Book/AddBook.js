@@ -144,12 +144,12 @@ const AddBook = (props) => {
       axios
         .get("/searchTitle", { params: { q: e.target.value } })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setresultTitles(response.data);
           settitleFieldChanges(false);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          // console.log(error.response.data);
           settitleFieldChanges(false);
         });
     };
@@ -314,7 +314,7 @@ const AddBook = (props) => {
     for (let i = 0; i < urls.length; i++) {
       if (urls[i] === undefined) return false;
       else cnt++;
-      if (cnt == urls.length) return true;
+      if (cnt === urls.length) return true;
     }
   };
 

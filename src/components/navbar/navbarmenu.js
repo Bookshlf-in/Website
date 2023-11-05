@@ -88,9 +88,13 @@ const NavbarMenu = () => {
           },
         }}
       >
-        <MenuStack Icon={<AccountIcon />} label="Profile" path="/UserPanel/1" />
+        <MenuStack
+          Icon={<AccountIcon />}
+          label="Profile"
+          path="/user/profile"
+        />
         <Divider />
-        <MenuStack Icon={<OrderIcon />} label="Orders" path="/UserPanel/2" />
+        <MenuStack Icon={<OrderIcon />} label="Orders" path="/user/orders" />
         <MenuStack
           Icon={<BookIcon />}
           label="Your Books"
