@@ -11,6 +11,7 @@ import { Stack, Typography } from "@mui/material";
 import SellerBooks from "./SellerBooks";
 import BookVerification from "./BookVerification/BookVerification";
 import AdminFindBook from "./AdminFindBook";
+import BookshlfImageUploadUtility from "./ImageUploadUtility";
 
 const BookNavButton = ({ panel, setPanel, btnTxt, value }) => {
   const handleClick = () => {
@@ -54,6 +55,12 @@ const BookNavBar = ({ panel, setPanel }) => {
           btnTxt="Find Book"
           value={2}
         />
+        <BookNavButton
+          panel={panel}
+          setPanel={setPanel}
+          btnTxt="Image Upload"
+          value={3}
+        />
       </Toolbar>
     </AppBar>
   );
@@ -68,8 +75,12 @@ const AdminBook = () => {
         <BookVerification />
       ) : panel === 1 ? (
         <SellerBooks />
-      ) : (
+      ) : panel === 2 ? (
         <AdminFindBook />
+      ) : panel === 3 ? (
+        <BookshlfImageUploadUtility />
+      ) : (
+        <></>
       )}
     </Stack>
   );

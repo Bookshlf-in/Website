@@ -5,7 +5,11 @@ const LoadingButton = ({ loading, size, children, ...props }) => {
       {...props}
       disabled={loading || props.disabled}
       endIcon={
-        loading ? <CircularProgress size={size} color="inherit" /> : <></>
+        loading ? (
+          <CircularProgress size={size} color="inherit" />
+        ) : (
+          props.endIcon
+        )
       }
       className="bookshlf-btn"
     >
